@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="600.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+<BorderPane prefHeight="600.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sv.creation.adress.RootLayoutController">
   <!-- TODO Add Nodes -->
   <top>
     <MenuBar>
@@ -21,7 +21,7 @@
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" text="Datenbankeinsicht" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Schließen" />
+            <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Schließen" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Bearbeiten">
@@ -40,7 +40,7 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Hilfe">
           <items>
-            <MenuItem mnemonicParsing="false" text="Handbuch" />
+            <MenuItem mnemonicParsing="false" onAction="#handleHandbuch" text="Handbuch" />
             <MenuItem mnemonicParsing="false" text="Kontakt" />
             <MenuItem mnemonicParsing="false" text="Impressum" />
           </items>

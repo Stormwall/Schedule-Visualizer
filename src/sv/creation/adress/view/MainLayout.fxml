@@ -14,13 +14,13 @@
         <AnchorPane maxHeight="47.0" maxWidth="-1.0" minHeight="47.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
           <children>
             <Label layoutX="14.0" layoutY="14.0" text="Filter :" />
-            <Slider layoutX="112.0" layoutY="7.0" showTickMarks="false" />
-            <Slider layoutX="112.0" layoutY="26.0" />
-            <Label layoutX="65.0" layoutY="5.0" text="Startzeit" />
-            <Label layoutX="68.0" layoutY="21.0" text="Endzeit" />
-            <CheckBox layoutX="291.0" layoutY="14.0" mnemonicParsing="false" text="Pläne ohne Deadheading" />
-            <CheckBox layoutX="464.0" layoutY="14.0" mnemonicParsing="false" text="Kritische Elemente hervorheben" />
-            <Button layoutX="879.0" layoutY="12.0" mnemonicParsing="false" text="Filter anwenden" />
+            <Slider layoutX="118.0" layoutY="6.0" majorTickUnit="1.0" max="24.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" value="0.0" />
+            <Slider layoutX="342.0" layoutY="6.0" majorTickUnit="1.0" max="24.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" />
+            <Label layoutX="65.0" layoutY="14.0" text="Startzeit" />
+            <Label layoutX="294.0" layoutY="16.0" text="Endzeit" />
+            <CheckBox layoutX="516.0" layoutY="16.0" mnemonicParsing="false" text="Pläne ohne Deadheading" />
+            <CheckBox layoutX="683.0" layoutY="16.0" mnemonicParsing="false" text="Kritische Elemente hervorheben" />
+            <Button layoutY="12.0" mnemonicParsing="false" text="Filter anwenden" AnchorPane.rightAnchor="14.0" />
           </children>
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
