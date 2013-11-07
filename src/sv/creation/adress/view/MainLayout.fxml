@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
+<?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -10,12 +11,27 @@
   <children>
     <SplitPane dividerPositions="0.10040160642570281" focusTraversable="true" maxHeight="-1.0" orientation="VERTICAL" prefHeight="500.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <items>
-        <AnchorPane maxHeight="47.0" maxWidth="-1.0" minHeight="47.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+        <AnchorPane maxHeight="47.0" maxWidth="-1.0" minHeight="47.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+          <children>
+            <Label layoutX="14.0" layoutY="14.0" text="Filter :" />
+            <Slider layoutX="112.0" layoutY="7.0" showTickMarks="false" />
+            <Slider layoutX="112.0" layoutY="26.0" />
+            <Label layoutX="65.0" layoutY="5.0" text="Startzeit" />
+            <Label layoutX="68.0" layoutY="21.0" text="Endzeit" />
+            <CheckBox layoutX="291.0" layoutY="14.0" mnemonicParsing="false" text="Pläne ohne Deadheading" />
+            <CheckBox layoutX="464.0" layoutY="14.0" mnemonicParsing="false" text="Kritische Elemente hervorheben" />
+            <Button layoutX="879.0" layoutY="12.0" mnemonicParsing="false" text="Filter anwenden" />
+          </children>
+        </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
           <children>
             <SplitPane dividerPositions="0.1706827309236948" focusTraversable="true" prefHeight="445.0" prefWidth="998.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <items>
-                <AnchorPane maxHeight="-1.0" maxWidth="167.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
+                <AnchorPane maxHeight="-1.0" maxWidth="167.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                  <children>
+                    <TreeView prefHeight="443.0" prefWidth="167.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  </children>
+                </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                   <children>
                     <SplitPane dividerPositions="0.7074829931972789" focusTraversable="true" orientation="VERTICAL" prefHeight="443.0" prefWidth="823.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -26,19 +42,84 @@
                               <tabs>
                                 <Tab text="Untitled Tab 1">
                                   <content>
-                                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                      <children>
+                                        <AreaChart id="AreaChart" prefHeight="278.0" prefWidth="821.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <xAxis>
+                                            <CategoryAxis side="BOTTOM" />
+                                          </xAxis>
+                                          <yAxis>
+                                            <NumberAxis side="LEFT" />
+                                          </yAxis>
+                                        </AreaChart>
+                                      </children>
+                                    </AnchorPane>
                                   </content>
                                 </Tab>
                                 <Tab text="Untitled Tab 2">
                                   <content>
-                                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                      <children>
+                                        <AreaChart id="AreaChart" prefHeight="278.0" prefWidth="821.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <xAxis>
+                                            <CategoryAxis side="BOTTOM" />
+                                          </xAxis>
+                                          <yAxis>
+                                            <NumberAxis side="LEFT" />
+                                          </yAxis>
+                                        </AreaChart>
+                                      </children>
+                                    </AnchorPane>
                                   </content>
                                 </Tab>
                               </tabs>
                             </TabPane>
                           </children>
                         </AnchorPane>
-                        <AnchorPane maxHeight="-1.0" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+                        <AnchorPane maxHeight="-1.0" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                          <children>
+                            <SplitPane dividerPositions="0.7496947496947497" focusTraversable="true" prefHeight="126.0" prefWidth="821.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <items>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                  <children>
+                                    <ScrollPane prefHeight="124.0" prefWidth="611.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                      <content>
+                                        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="611.0">
+                                          <children>
+                                            <Label layoutX="7.0" layoutY="6.0" text="Details" />
+                                            <GridPane layoutX="25.0" layoutY="26.0" prefHeight="90.0">
+                                              <children>
+                                                <Label text="Dienst - ID" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                                <Label text="Eigenschaft" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                                <Label text="Eigenschaft" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                                <Label text="Wert" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                                <Label text="Wert" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <Label text="Wert" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <Label text="Eigenschaft" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                                                <Label text="Wert" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                              </children>
+                                              <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                              </columnConstraints>
+                                              <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              </rowConstraints>
+                                            </GridPane>
+                                          </children>
+                                        </AnchorPane>
+                                      </content>
+                                    </ScrollPane>
+                                  </children>
+                                </AnchorPane>
+                                <AnchorPane maxWidth="202.0" minHeight="0.0" minWidth="202.0" prefHeight="160.0" prefWidth="100.0" />
+                              </items>
+                            </SplitPane>
+                          </children>
+                        </AnchorPane>
                       </items>
                     </SplitPane>
                   </children>
