@@ -72,11 +72,5 @@ public class DBConnection {
 		}
 	}
 	
-	public static void main (String[]args){
-		DBConnection dbc=new DBConnection();
-		dbc.initDBConnection();
-		dbc.handleDB();
-	}
-	
 }
 
