@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 public class RootLayoutController {
 	
 	// Reference to the main application
-			private MainApplication mainApp;
+	private MainApplication mainApp;
 	
 
 	public void setMainApp(MainApplication mainApp) {
@@ -15,15 +15,13 @@ public class RootLayoutController {
 
 
 		
-	
-	
 
 	/**
 	 * Opens the Helpview.
 	 */
 	@FXML
-	private void handleHandbuch() {
-		
+	private void handleHandbuch() {			
+		mainApp.showHandbuch();
 	}
 	
 	

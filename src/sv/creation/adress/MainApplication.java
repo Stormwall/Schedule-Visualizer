@@ -5,14 +5,17 @@ import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Dialogs;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class MainApplication extends Application {
 	
 	private Stage primaryStage;
 	private BorderPane rootLayout;
+	private String username;
 	
 	// Load Rootlayout and handle scenes
 
@@ -28,12 +31,19 @@ public class MainApplication extends Application {
 	          rootLayout = (BorderPane) loader.load();
 	          Scene scene = new Scene(rootLayout);
 	          primaryStage.setScene(scene);
+	          
+	          	// Give the controller access to the main app
+				RootLayoutController controller = loader.getController();
+				controller.setMainApp(this);
+				
 	          primaryStage.show();
 	      } catch (IOException e) {
 	          // Exception gets thrown if the fxml file could not be loaded
 	          e.printStackTrace();
 	      }
-	      showMainScene();
+	      
+	      username = Dialogs.showInputDialog(primaryStage, "Tragen Sie bitte Ihren Namen ein:", "Benutzer", "Identifizierung");	      	      
+	      showMainScene();	      
 	}
 		
 	// Initiate mainview fxml
@@ -52,13 +62,35 @@ public class MainApplication extends Application {
 	      }
 	}
 	
-	// Open Helper fxml
+	// Initiate Handbuch fxml
+
+	public void showHandbuch(){
+		
+		try {
+			
+			// Load the fxml file and create a new stage for the popup
+		FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("view/HandbuchLayout.fxml"));		
+		AnchorPane page = (AnchorPane) loader.load();		
+	    Stage dialogStage = new Stage();	    
+	    dialogStage.setTitle("Handbuch");	    	    
+	    dialogStage.initModality(Modality.WINDOW_MODAL);	    
+	    dialogStage.initOwner(primaryStage);	    
+	    Scene scene = new Scene(page);	    
+	    dialogStage.setScene(scene);	 
+	    
+	    // Set the controller
+	    HandbuchLayoutController controller = loader.getController();
+	    controller.setDialogStage(dialogStage);
 	
-	public void showHandbuchScene(){
-		
-		
+	    dialogStage.show();	    
+
+	  } catch (IOException e) {
+	    // Exception gets thrown if the fxml file could not be loaded
+	    e.printStackTrace();
+	  }
+
+
 	}
-	
 	
 	
 	
