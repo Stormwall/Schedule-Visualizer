@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Dialogs;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
@@ -24,6 +25,7 @@ public class MainApplication extends Application {
 		
 		this.primaryStage = primaryStage;
 	    this.primaryStage.setTitle(" Schedule-Visualizer");
+	    this.primaryStage.getIcons().add(new Image("file:resources/images/IconFinal.png"));
 	    
 	      try {
 	          // Load the root layout from the fxml file
@@ -72,7 +74,8 @@ public class MainApplication extends Application {
 		FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("view/HandbuchLayout.fxml"));		
 		AnchorPane page = (AnchorPane) loader.load();		
 	    Stage dialogStage = new Stage();	    
-	    dialogStage.setTitle("Handbuch");	    	    
+	    dialogStage.setTitle("Handbuch");
+	    dialogStage.getIcons().add(new Image("file:resources/images/IconFinal.png"));
 	    dialogStage.initModality(Modality.WINDOW_MODAL);	    
 	    dialogStage.initOwner(primaryStage);	    
 	    Scene scene = new Scene(page);	    
