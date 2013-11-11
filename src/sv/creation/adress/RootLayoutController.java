@@ -16,6 +16,14 @@ public class RootLayoutController {
 
 		
 	/**
+	 * Opens the Kostenview.
+	 */
+	@FXML
+	private void handleKosten() {			
+		mainApp.showKosten();
+	}
+	
+	/**
 	 * Opens the Databasesview.
 	 */
 	@FXML
