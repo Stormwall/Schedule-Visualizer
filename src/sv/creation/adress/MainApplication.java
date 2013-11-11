@@ -48,7 +48,7 @@ public class MainApplication extends Application {
 	      showMainScene();	      
 	}
 		
-	// Initiate mainview fxml
+	// Initiate MainLayout fxml
 	
 	public void showMainScene(){
 		
