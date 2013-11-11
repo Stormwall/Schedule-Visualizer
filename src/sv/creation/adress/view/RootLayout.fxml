@@ -19,7 +19,7 @@
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" text="Drucken" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Datenbankeinsicht" />
+            <MenuItem mnemonicParsing="false" onAction="#handleDatenbank" text="Datenbankeinsicht" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Schließen" />
           </items>

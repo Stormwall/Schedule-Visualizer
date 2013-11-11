@@ -44,7 +44,7 @@ public class MainApplication extends Application {
 	          e.printStackTrace();
 	      }
 	      
-	      username = Dialogs.showInputDialog(primaryStage, "Tragen Sie bitte Ihren Namen ein:", "Benutzer", "Identifizierung");	      	      
+	      //username = Dialogs.showInputDialog(primaryStage, "Tragen Sie bitte Ihren Namen ein:", "Benutzer", "Identifizierung");	      	      
 	      showMainScene();	      
 	}
 		
@@ -91,6 +91,35 @@ public class MainApplication extends Application {
 	    // Exception gets thrown if the fxml file could not be loaded
 	    e.printStackTrace();
 	  }
+	}
+		
+		// Initiate DatenbankLayout fxml
+
+		public void showDatenbank(){
+			
+			try {
+				
+				// Load the fxml file and create a new stage for the popup
+			FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("view/DatenbankLayout.fxml"));		
+			AnchorPane page = (AnchorPane) loader.load();		
+		    Stage dialogStage = new Stage();	    
+		    dialogStage.setTitle("Datenbank");
+		    dialogStage.getIcons().add(new Image("file:resources/images/IconFinal.png"));
+		    dialogStage.initModality(Modality.WINDOW_MODAL);	    
+		    dialogStage.initOwner(primaryStage);	    
+		    Scene scene = new Scene(page);	    
+		    dialogStage.setScene(scene);	 
+		    
+		    // Set the controller
+		    DatenbankLayoutController controller = loader.getController();
+		    controller.setDialogStage(dialogStage);
+		
+		    dialogStage.show();	    
+
+		  } catch (IOException e) {
+		    // Exception gets thrown if the fxml file could not be loaded
+		    e.printStackTrace();
+		  }
 
 
 	}

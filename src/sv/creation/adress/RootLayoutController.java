@@ -15,7 +15,15 @@ public class RootLayoutController {
 
 
 		
-
+	/**
+	 * Opens the Databasesview.
+	 */
+	@FXML
+	private void handleDatenbank() {			
+		mainApp.showDatenbank();
+	}
+	
+	
 	/**
 	 * Opens the Helpview.
 	 */
