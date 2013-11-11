@@ -2,6 +2,7 @@ package sv.creation.adress;
 
 import java.io.IOException;
 
+import sv.creation.adress.model.Dienstplan;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class MainApplication extends Application {
 	
@@ -105,6 +107,7 @@ public class MainApplication extends Application {
 		    Stage dialogStage = new Stage();	    
 		    dialogStage.setTitle("Datenbank");
 		    dialogStage.getIcons().add(new Image("file:resources/images/IconFinal.png"));
+		    dialogStage.initStyle(StageStyle.UTILITY);
 		    dialogStage.initModality(Modality.WINDOW_MODAL);	    
 		    dialogStage.initOwner(primaryStage);	    
 		    Scene scene = new Scene(page);	    
