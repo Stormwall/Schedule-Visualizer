@@ -9,9 +9,9 @@ import java.sql.SQLException;
 public class DBConnection {
 
 	
-	private static final DBConnection dbcontroller=new DBConnection();
+	private static DBConnection instance=null;
 	private static Connection connection;
-	//Pfad, wo die Datenbank bzw. die Datei gespeichert wird
+	//Path where a empty database file was created
 	private static final String DB_PATH =System.getProperty("user.home")+"/"+"testdb.db";
 	
 	
@@ -30,10 +30,12 @@ public class DBConnection {
 	
 	//Singleton
 	public static DBConnection getInstance(){
-		return dbcontroller;
+		if(instance==null){
+			instance=new DBConnection();	
+		}return instance;
 	}
 	
-	public void initDBConnection(){
+	public static void initDBConnection(){
 		
 		try{
 			if(connection!=null)
@@ -41,7 +43,9 @@ public class DBConnection {
 			System.out.println("Creating DB Connection...");
 			connection=DriverManager.getConnection("jdbc:sqlite:" + DB_PATH);
 			if(!connection.isClosed())
-				System.out.println("...Connection established!");}
+				System.out.println("...Connection established!");		
+				createTables();
+				fillTables();}
 		catch(SQLException e){
 			throw new RuntimeException(e);
 		}
@@ -61,16 +65,28 @@ public class DBConnection {
 		});
 	}
 	
-	public void handleDB(){
+	public static void createTables(){
 		
 		try{
 			Statement stmnt=connection.createStatement();
-			stmnt.executeUpdate("CREATE TABLE books (author, title, publication, pages, price);");
+			//Checks if table exists or not
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS books (author, title, publication, pages, price);");
 		}catch(SQLException e){
 			System.out.println("Could not execute SQL-Query!");
 			e.printStackTrace();
 		}
 	}
 	
+	public static void fillTables(){
+		
+		try{
+			Statement stmnt=connection.createStatement();
+			//Fill values in specific tables
+			stmnt.executeUpdate("INSERT INTO books VALUES('Mustermann','Mustermanns Buch','01.01.2012','60','29.99');");
+		}catch(SQLException e){
+			System.out.println("Could not execute SQL-Query!");
+			e.printStackTrace();
+		}
+		
+	}
 }
-
