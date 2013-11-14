@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="500.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+<AnchorPane prefHeight="500.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sv.creation.adress.MainLayoutController">
   <!-- TODO Add Nodes -->
   <children>
     <SplitPane dividerPositions="0.10040160642570281" focusTraversable="true" maxHeight="-1.0" orientation="VERTICAL" prefHeight="500.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -34,7 +34,7 @@
                 </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                   <children>
-                    <SplitPane dividerPositions="0.7074829931972789" focusTraversable="true" orientation="VERTICAL" prefHeight="443.0" prefWidth="823.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <SplitPane dividerPositions="0.7505668934240363" focusTraversable="true" orientation="VERTICAL" prefHeight="443.0" prefWidth="823.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                       <items>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                           <children>
@@ -44,14 +44,12 @@
                                   <content>
                                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                       <children>
-                                        <AreaChart id="AreaChart" prefHeight="278.0" prefWidth="821.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                          <xAxis>
-                                            <CategoryAxis side="BOTTOM" />
-                                          </xAxis>
-                                          <yAxis>
-                                            <NumberAxis side="LEFT" />
-                                          </yAxis>
-                                        </AreaChart>
+                                        <SplitPane dividerPositions="0.5016949152542373" focusTraversable="true" orientation="VERTICAL" prefHeight="278.0" prefWidth="821.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <items>
+                                            <AnchorPane fx:id="upperPane" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+                                            <AnchorPane fx:id="lowerPane" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+                                          </items>
+                                        </SplitPane>
                                       </children>
                                     </AnchorPane>
                                   </content>
@@ -60,14 +58,12 @@
                                   <content>
                                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                       <children>
-                                        <AreaChart id="AreaChart" prefHeight="278.0" prefWidth="821.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                          <xAxis>
-                                            <CategoryAxis side="BOTTOM" />
-                                          </xAxis>
-                                          <yAxis>
-                                            <NumberAxis side="LEFT" />
-                                          </yAxis>
-                                        </AreaChart>
+                                        <SplitPane dividerPositions="0.5" focusTraversable="true" orientation="VERTICAL" prefHeight="278.0" prefWidth="821.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <items>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+                                          </items>
+                                        </SplitPane>
                                       </children>
                                     </AnchorPane>
                                   </content>
@@ -78,13 +74,13 @@
                         </AnchorPane>
                         <AnchorPane maxHeight="-1.0" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                           <children>
-                            <SplitPane dividerPositions="0.7496947496947497" focusTraversable="true" prefHeight="126.0" prefWidth="821.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <SplitPane dividerPositions="0.6068376068376068" focusTraversable="true" prefHeight="126.0" prefWidth="821.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                               <items>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                   <children>
-                                    <ScrollPane prefHeight="124.0" prefWidth="611.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ScrollPane prefHeight="124.0" prefWidth="493.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="0.0">
                                       <content>
-                                        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="611.0">
+                                        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="492.0">
                                           <children>
                                             <Label layoutX="7.0" layoutY="6.0" text="Details" />
                                             <GridPane layoutX="25.0" layoutY="26.0" prefHeight="90.0">
@@ -115,7 +111,17 @@
                                     </ScrollPane>
                                   </children>
                                 </AnchorPane>
-                                <AnchorPane maxWidth="202.0" minHeight="0.0" minWidth="202.0" prefHeight="160.0" prefWidth="100.0" />
+                                <AnchorPane maxWidth="319.0" minHeight="0.0" minWidth="319.0" prefHeight="160.0" prefWidth="100.0">
+                                  <children>
+                                    <TableView minWidth="-1.0" prefHeight="105.0" prefWidth="151.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="168.0" AnchorPane.topAnchor="0.0">
+                                      <columns>
+                                        <TableColumn prefWidth="75.0" text="Column X" />
+                                        <TableColumn prefWidth="75.0" text="Column X" />
+                                      </columns>
+                                    </TableView>
+                                    <Button layoutX="235.0" layoutY="71.0" mnemonicParsing="false" onAction="#createBothGraphics" text="Anwenden" />
+                                  </children>
+                                </AnchorPane>
                               </items>
                             </SplitPane>
                           </children>
