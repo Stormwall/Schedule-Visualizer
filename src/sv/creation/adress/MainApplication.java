@@ -2,7 +2,6 @@ package sv.creation.adress;
 
 import java.io.IOException;
 
-import sv.creation.adress.model.Dienstplan;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
