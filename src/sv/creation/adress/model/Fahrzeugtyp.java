@@ -8,7 +8,7 @@ public class Fahrzeugtyp {
 	private int fahrzeugkosten;
 	private int kilometerkosten;
 	private int stundenkosten;
-	private int kapazität;
+	private int kapazitaet;
 	/**
 	 * @param iD
 	 * @param code
@@ -16,10 +16,10 @@ public class Fahrzeugtyp {
 	 * @param fahrzeugkosten
 	 * @param kilometerkosten
 	 * @param stundenkosten
-	 * @param kapazität
+	 * @param kapazitï¿½t
 	 */
 	public Fahrzeugtyp(int iD, int code, String name, int fahrzeugkosten,
-			int kilometerkosten, int stundenkosten, int kapazität) {
+			int kilometerkosten, int stundenkosten, int kapazitaet) {
 		super();
 		ID = iD;
 		this.code = code;
@@ -27,7 +27,7 @@ public class Fahrzeugtyp {
 		this.fahrzeugkosten = fahrzeugkosten;
 		this.kilometerkosten = kilometerkosten;
 		this.stundenkosten = stundenkosten;
-		this.kapazität = kapazität;
+		this.kapazitaet = kapazitaet;
 	}
 	public int getID() {
 		return ID;
@@ -65,11 +65,11 @@ public class Fahrzeugtyp {
 	public void setStundenkosten(int stundenkosten) {
 		this.stundenkosten = stundenkosten;
 	}
-	public int getKapazität() {
-		return kapazität;
+	public int getKapazitaet() {
+		return kapazitaet;
 	}
-	public void setKapazität(int kapazität) {
-		this.kapazität = kapazität;
+	public void setKapazitaet(int kapazitaet) {
+		this.kapazitaet = kapazitaet;
 	}
 	
 	

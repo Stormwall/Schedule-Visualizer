@@ -70,7 +70,10 @@ public class DBConnection {
 		try{
 			Statement stmnt=connection.createStatement();
 			//Checks if table exists or not
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS books (author, title, publication, pages, price);");
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Diensttyp (DutyID int NOT NULL PRIMARY KEY, DutyType VARCHAR(50) NOT NULL);");
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Dienst (DutyID int NOT NULL PRIMARY KEY, BlockID int NOT NULL PRIMARY KEY, ServiceJourneyID int NOT NULL, FromStopID int NOT NULL, ToStopID int NOT NULL, DepTime date NOT NULL, ArrTime date NOT NULL, ElementType int NOT NULL, ServiceJourneyCode int);");
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Umlauf (DutyID int NOT NULL PRIMARY KEY, DutyType VARCHAR(50));");
+			
 		}catch(SQLException e){
 			System.out.println("Could not execute SQL-Query!");
 			e.printStackTrace();
