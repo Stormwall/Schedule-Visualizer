@@ -44,8 +44,8 @@ public class MainApplication extends Application {
 	          // Exception gets thrown if the fxml file could not be loaded
 	          e.printStackTrace();
 	      }
+	       //username = Dialogs.showInputDialog(primaryStage, "Tragen Sie bitte Ihren Namen ein:", "Benutzer", "Identifizierung");
 	      
-	      //username = Dialogs.showInputDialog(primaryStage, "Tragen Sie bitte Ihren Namen ein:", "Benutzer", "Identifizierung");	      	      
 	      showMainScene();	      
 	}
 		
@@ -57,7 +57,11 @@ public class MainApplication extends Application {
 	          // Load the fxml file and set into the center of the main layout
 	          FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("view/MainLayout.fxml"));
 	          AnchorPane overviewPage = (AnchorPane) loader.load();
-	          rootLayout.setCenter(overviewPage);	          
+	          rootLayout.setCenter(overviewPage);
+	          
+	          // Give the controller access to the main app
+				MainLayoutController controller = loader.getController();
+				controller.setMainApp(this);
 	       	          
 	      } catch (IOException e) {
 	          // Exception gets thrown if the fxml file could not be loaded
@@ -156,14 +160,28 @@ public class MainApplication extends Application {
 
 
 			}
+				
+		// Fehlermeldung bei nicht erstellter Grafik
+				
+		public void fehlerMeldungGrafikFehlt(){	
+			
+			Dialogs.showErrorDialog(primaryStage, "Es wurde noch keine Grafik erzeugt", "Zu früh", "Fehler");
+		}				
 	
+		// Methoden die den Zugriff auf die Main ermöglichen
+		
+		
+		public String getUsername() {
+			return username;
+		}
 	
+		public void setUsername(String username) {
+			this.username = username;
+		}
+		
+		// Main Method
 	
-	
-	
-	// Main Method
-
-	public static void main(String[] args) {
-		launch(args);
-	}
+		public static void main(String[] args) {
+			launch(args);
+		}
 }

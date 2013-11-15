@@ -14,13 +14,13 @@
         <AnchorPane maxHeight="47.0" maxWidth="-1.0" minHeight="47.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
           <children>
             <Label layoutX="14.0" layoutY="14.0" text="Filter :" />
-            <Slider layoutX="118.0" layoutY="6.0" majorTickUnit="1.0" max="24.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" value="0.0" />
-            <Slider layoutX="342.0" layoutY="6.0" majorTickUnit="1.0" max="24.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" />
+            <Slider fx:id="startzeitSlider" layoutX="118.0" layoutY="6.0" majorTickUnit="1.0" max="24.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" value="0.0" />
+            <Slider fx:id="endzeitSlider" layoutX="342.0" layoutY="6.0" majorTickUnit="1.0" max="24.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" value="24.0" />
             <Label layoutX="65.0" layoutY="14.0" text="Startzeit" />
             <Label layoutX="294.0" layoutY="16.0" text="Endzeit" />
             <CheckBox layoutX="516.0" layoutY="16.0" mnemonicParsing="false" text="Pläne ohne Deadheading" />
             <CheckBox layoutX="683.0" layoutY="16.0" mnemonicParsing="false" text="Kritische Elemente hervorheben" />
-            <Button layoutY="12.0" mnemonicParsing="false" text="Filter anwenden" AnchorPane.rightAnchor="14.0" />
+            <Button layoutY="12.0" mnemonicParsing="false" onAction="#refreshBothGraphics" text="Filter anwenden" AnchorPane.rightAnchor="14.0" />
           </children>
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
@@ -30,6 +30,7 @@
                 <AnchorPane maxHeight="-1.0" maxWidth="167.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                   <children>
                     <TreeView prefHeight="443.0" prefWidth="167.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                    <Button fx:id="createGraphic" mnemonicParsing="false" onAction="#createBothGraphics" text="Grafik Erstellen" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="34.0" />
                   </children>
                 </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
@@ -48,20 +49,6 @@
                                           <items>
                                             <AnchorPane fx:id="upperPane" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
                                             <AnchorPane fx:id="lowerPane" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
-                                          </items>
-                                        </SplitPane>
-                                      </children>
-                                    </AnchorPane>
-                                  </content>
-                                </Tab>
-                                <Tab text="Untitled Tab 2">
-                                  <content>
-                                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                      <children>
-                                        <SplitPane dividerPositions="0.5" focusTraversable="true" orientation="VERTICAL" prefHeight="278.0" prefWidth="821.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                          <items>
-                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
-                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
                                           </items>
                                         </SplitPane>
                                       </children>
@@ -119,7 +106,9 @@
                                         <TableColumn prefWidth="75.0" text="Column X" />
                                       </columns>
                                     </TableView>
-                                    <Button layoutX="235.0" layoutY="71.0" mnemonicParsing="false" onAction="#createBothGraphics" text="Anwenden" />
+                                    <Button fx:id="refreshGraphic" mnemonicParsing="false" onAction="#refreshBothGraphics" prefWidth="90.0" text="Anwenden" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="6.0" />
+                                    <Button mnemonicParsing="false" text="Übernehmen" AnchorPane.bottomAnchor="31.0" AnchorPane.rightAnchor="7.0" />
+                                    <CheckBox fx:id="hilfslinien" mnemonicParsing="false" text="Hilfslinien Anzeigen" AnchorPane.leftAnchor="160.0" AnchorPane.topAnchor="6.0" />
                                   </children>
                                 </AnchorPane>
                               </items>
