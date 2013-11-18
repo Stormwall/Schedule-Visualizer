@@ -43,7 +43,7 @@ public class MainLayoutController {
 	private int startzeitVar = 0;
 	private int endzeitVar = 24;	
 	
-	//Prüfvariable
+	//Prï¿½fvariable
 	
 	private boolean grafikErstellt = false;
 	private boolean hilfslinienAktiv = false;
@@ -65,6 +65,7 @@ public class MainLayoutController {
 		DBConnection dbc =new DBConnection();
 		dbc.initDBConnection();
 		dbc.createTables();
+		dbc.fillUmlaufplanIntoTables();
 		dbc.closeConnection();
 		
 		this.startzeitVar = (int) startzeitSlider.getValue();
@@ -75,7 +76,7 @@ public class MainLayoutController {
 		
 		startzeitSlider.valueProperty().addListener(new ChangeListener<Number>(){
 				public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
-						// Handhabung wenn die Checkbox angewählt wird
+						// Handhabung wenn die Checkbox angewï¿½hlt wird
 						startzeitVar = new_val.intValue();					
 						refreshBothGraphics();					
 						}			
@@ -86,7 +87,7 @@ public class MainLayoutController {
 		
 		endzeitSlider.valueProperty().addListener(new ChangeListener<Number>(){
 				public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
-						// Handhabung wenn die Checkbox angewählt wird
+						// Handhabung wenn die Checkbox angewï¿½hlt wird
 					endzeitVar = new_val.intValue();					
 					refreshBothGraphics();					
 					}			
@@ -97,7 +98,7 @@ public class MainLayoutController {
 				
 		hilfslinien.selectedProperty().addListener(new ChangeListener<Boolean>(){
 			public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) {
-					// Handhabung wenn die Checkbox angewählt wird
+					// Handhabung wenn die Checkbox angewï¿½hlt wird
 					if(new_val == true){
 						if(grafikErstellt == true){
 							refreshBothGraphics();
@@ -125,7 +126,7 @@ public class MainLayoutController {
 	@FXML
 	private void refreshBothGraphics() {
 		
-		//Hier wird das Feld gecleared und geprüft ob es schon existiert
+		//Hier wird das Feld gecleared und geprï¿½ft ob es schon existiert
 		if(this.grafikErstellt== true){
 			this.lowergc.clearRect(0, 0, this.lowerChart.getWidth(), this.lowerChart.getHeight());
 			this.uppergc.clearRect(0, 0, this.upperChart.getWidth(), this.upperChart.getHeight());
@@ -189,7 +190,7 @@ public class MainLayoutController {
 	    }
 		
 		this.upperPane.getChildren().add(this.upperChart);
-		// Bestätigung das ein Feld erzeugt wurde
+		// Bestï¿½tigung das ein Feld erzeugt wurde
 		this.grafikErstellt = true;
 	}
 	

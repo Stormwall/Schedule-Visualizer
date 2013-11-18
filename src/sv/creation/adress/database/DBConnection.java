@@ -4,6 +4,9 @@ import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Iterator;
+
+import sv.creation.adress.util.StringSplitter;
 
 
 public class DBConnection {
@@ -75,8 +78,8 @@ public class DBConnection {
 			//Checks if table exists or not
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Diensttyp (DutyID INTEGER NOT NULL PRIMARY KEY, DutyType VARCHAR(50) NOT NULL);");
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Dienst (BlockID INTEGER NOT NULL PRIMARY KEY, ServiceJourneyID INTEGER NOT NULL, FromStopID INTEGER NOT NULL, ToStopID INTEGER NOT NULL, DepTime date NOT NULL, ArrTime date NOT NULL, ElementType INTEGER NOT NULL, ServiceJourneyCode INTEGER);");
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Umlauf (BlockID INTEGER NOT NULL PRIMARY KEY, DutyType VARCHAR(50));");
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS FahrtZuUmlauf (ID INTEGER PRIMARY KEY AUTOINCREMENT, BlockID INTEGER NOT NULL, ServiceJourneyID INTEGER NOT NULL, FromStopID INTEGER NOT NULL, ToStopID INTEGER NOT NULL, DepTime VARCHAR(10) NOT NULL, ArrTime VARCHAR(10) NOT NULL, ElementType INTEGER NOT NULL, ServiceJourneyCode INTEGER);");
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Umlauf (BlockID INTEGER NOT NULL, Code INTEGER NOT NULL, Name INTEGER NOT NULL);");
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS FahrtZuUmlauf (ID INTEGER PRIMARY KEY AUTOINCREMENT, BlockID INTEGER NOT NULL, ServiceJourneyID INTEGER NOT NULL, FromStopID INTEGER NOT NULL, ToStopID INTEGER NOT NULL, DepTime VARCHAR(10) NOT NULL, ArrTime VARCHAR(10) NOT NULL, ElementType INTEGER NOT NULL);");
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Haltestellen (ID INTEGER NOT NULL PRIMARY KEY, Code INTEGER NOT NULL, Name INTEGER NOT NULL);");
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Linien (ID INTEGER NOT NULL PRIMARY KEY, Code INTEGER NOT NULL, Name INTEGER NOT NULL);");
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Fahrzeugtypen (ID INTEGER NOT NULL PRIMARY KEY, Code INTEGER NOT NULL, Name INTEGER NOT NULL, VehCost INTEGER NOT NULL, KmCost INTEGER NOT NULL, HourCost INTEGER NOT NULL, Capacity INTEGER NOT NULL);");
@@ -93,13 +96,35 @@ public class DBConnection {
 		}
 	}
 	
-	public static void fillTables(){
+	public void fillUmlaufplanIntoTables(){
+		
+		StringSplitter ss =new StringSplitter();
+		ss.readTxtUmlaufplan();
+		
 		
 		try{
 			Statement stmnt=connection.createStatement();
 			//Fill values in specific tables
-			//stmnt.executeUpdate("INSERT INTO books VALUES('Mustermann','Mustermanns Buch','01.01.2012','60','29.99');");
-		}catch(SQLException e){
+			
+			Iterator<Integer> it = ss.getId().iterator();
+			Iterator<Integer> it2 = ss.getVehTypeID().iterator();
+			Iterator<Integer> it3 = ss.getDepotID().iterator();
+			Iterator<Integer> it4 = ss.getBlockelementBlockID().iterator();
+			Iterator<String> it5 = ss.getBlockelementServiceJourneyID().iterator();
+			Iterator<Integer> it6 = ss.getBlockelementFromStopID().iterator();
+			Iterator<Integer> it7 = ss.getBlockelementToStopID().iterator();
+			Iterator<String> it8 = ss.getBlockelementDepTime().iterator();
+			Iterator<String> it9 = ss.getBlockelementArrTime().iterator();
+			Iterator<Integer> it10 = ss.getBlockelementElementType().iterator();
+
+			
+			while((it.hasNext()&&it2.hasNext()&&it3.hasNext())){
+			stmnt.executeUpdate("INSERT INTO Umlauf VALUES('"+it.next()+"','"+it2.next()+"','"+it3.next()+"');");
+			}
+			
+			while(it4.hasNext()&&it5.hasNext()&&it6.hasNext()&&it7.hasNext()&&it8.hasNext()&&it9.hasNext()&&it10.hasNext())
+			stmnt.executeUpdate("INSERT INTO FahrtZuUmlauf (BlockID, ServiceJourneyID, FromStopID, ToStopID, DepTime, ArrTime, ElementType) VALUES('"+it4.next()+"','"+it5.next()+"','"+it6.next()+"','"+it7.next()+"','"+it8.next()+"','"+it9.next()+"','"+it10.next()+"');");
+			}catch(SQLException e){
 			System.out.println("Could not execute SQL-Query!");
 			e.printStackTrace();
 		}
