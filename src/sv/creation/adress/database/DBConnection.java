@@ -35,7 +35,7 @@ public class DBConnection {
 		}return instance;
 	}
 	
-	public static void initDBConnection(){
+	public void initDBConnection(){
 		
 		try{
 			if(connection!=null)
@@ -51,7 +51,7 @@ public class DBConnection {
 		
 	}
 	
-	public static void closeConnection(){
+	public void closeConnection(){
 		
 		Runtime.getRuntime().addShutdownHook(new Thread(){
 			public void run(){
@@ -68,7 +68,7 @@ public class DBConnection {
 		});
 	}
 	
-	public static void createTables(){
+	public void createTables(){
 		
 		try{
 			Statement stmnt=connection.createStatement();

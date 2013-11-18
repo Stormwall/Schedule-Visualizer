@@ -183,11 +183,7 @@ public class MainApplication extends Application {
 		// Main Method
 	
 		public static void main(String[] args) {
-		//	launch(args);
+			launch(args);			
 			
-			//Für Testzwecke!!!!!!
-			DBConnection dbc =new DBConnection();
-			dbc.initDBConnection();
-			dbc.closeConnection();
 		}
 }

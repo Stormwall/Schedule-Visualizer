@@ -1,5 +1,6 @@
 package sv.creation.adress;
 
+import sv.creation.adress.database.DBConnection;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -59,6 +60,12 @@ public class MainLayoutController {
 	  
 	@FXML
 	  private void initialize() {
+		
+		//Erstellung der Datenbank
+		DBConnection dbc =new DBConnection();
+		dbc.initDBConnection();
+		dbc.createTables();
+		dbc.closeConnection();
 		
 		this.startzeitVar = (int) startzeitSlider.getValue();
 		this.endzeitVar = (int) endzeitSlider.getValue();
