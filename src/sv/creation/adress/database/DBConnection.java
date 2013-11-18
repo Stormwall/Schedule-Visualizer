@@ -9,10 +9,10 @@ import java.sql.SQLException;
 public class DBConnection {
 
 	
-	private static DBConnection instance=null;
+	public static DBConnection instance=null;
 	private static Connection connection;
 	//Path where a empty database file was created
-	private static final String DB_PATH =System.getProperty("user.home")+"/"+"testdb.db";
+	public static final String DB_PATH =System.getProperty("user.home")+"/"+"testdb.db";
 	
 	
 	static{
@@ -24,7 +24,7 @@ public class DBConnection {
 		}
 	}
 	
-	private DBConnection(){
+	public DBConnection(){
 		
 	}
 	
@@ -95,7 +95,7 @@ public class DBConnection {
 		try{
 			Statement stmnt=connection.createStatement();
 			//Fill values in specific tables
-			stmnt.executeUpdate("INSERT INTO books VALUES('Mustermann','Mustermanns Buch','01.01.2012','60','29.99');");
+			//stmnt.executeUpdate("INSERT INTO books VALUES('Mustermann','Mustermanns Buch','01.01.2012','60','29.99');");
 		}catch(SQLException e){
 			System.out.println("Could not execute SQL-Query!");
 			e.printStackTrace();

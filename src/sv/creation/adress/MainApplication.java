@@ -2,6 +2,7 @@ package sv.creation.adress;
 
 import java.io.IOException;
 
+import sv.creation.adress.database.DBConnection;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -165,10 +166,10 @@ public class MainApplication extends Application {
 				
 		public void fehlerMeldungGrafikFehlt(){	
 			
-			Dialogs.showErrorDialog(primaryStage, "Es wurde noch keine Grafik erzeugt", "Zu früh", "Fehler");
+			Dialogs.showErrorDialog(primaryStage, "Es wurde noch keine Grafik erzeugt", "Zu frï¿½h", "Fehler");
 		}				
 	
-		// Methoden die den Zugriff auf die Main ermöglichen
+		// Methoden die den Zugriff auf die Main ermï¿½glichen
 		
 		
 		public String getUsername() {
@@ -182,6 +183,10 @@ public class MainApplication extends Application {
 		// Main Method
 	
 		public static void main(String[] args) {
-			launch(args);
+		//	launch(args);
+			
+			//FÃ¼r Testzwecke!!!!!!
+			DBConnection dbc =new DBConnection();
+			dbc.initDBConnection();
 		}
 }
