@@ -1,58 +1,27 @@
 package sv.creation.adress.model;
 
-public class Umlaufplan extends Plan {
+import java.util.ArrayList;
+
+public class Umlaufplan {
 	
-	private int ID;
-	private int fahrzeugTypID;
-	private int halteStellenID;
-	
+	private ArrayList<Umlaufplanteil> umlaufplan = new ArrayList<Umlaufplanteil>();
+
 	/**
-	 * @param blockID
-	 * @param serviceJourney
-	 * @param fromStopID
-	 * @param toStopID
-	 * @param depTime
-	 * @param arrivalTime
-	 * @param elementType
-	 * @param iD
-	 * @param fahrzeugTypID
-	 * @param halteStellenID
+	 * @param umlaufplan
 	 */
-	public Umlaufplan(int blockID, int serviceJourney, int fromStopID,
-			int toStopID, String depTime, String arrivalTime, int elementType,
-			int iD, int fahrzeugTypID, int halteStellenID) {
-		super(blockID, serviceJourney, fromStopID, toStopID, depTime,
-				arrivalTime, elementType);
-		ID = iD;
-		this.fahrzeugTypID = fahrzeugTypID;
-		this.halteStellenID = halteStellenID;
+	public Umlaufplan(ArrayList<Umlaufplanteil> umlaufplan) {
+		super();
+		this.umlaufplan = umlaufplan;
 	}
 
-	public int getID() {
-		return ID;
-	}
-
-	public void setID(int iD) {
-		ID = iD;
-	}
-
-	public int getFahrzeugTypID() {
-		return fahrzeugTypID;
-	}
-
-	public void setFahrzeugTypID(int fahrzeugTypID) {
-		this.fahrzeugTypID = fahrzeugTypID;
-	}
-
-	public int getHalteStellenID() {
-		return halteStellenID;
-	}
-
-	public void setHalteStellenID(int halteStellenID) {
-		this.halteStellenID = halteStellenID;
-	}
 	
-	
+	public ArrayList<Umlaufplanteil> getUmlaufplan() {
+		return umlaufplan;
+	}
+
+	public void setUmlaufplan(ArrayList<Umlaufplanteil> umlaufplan) {
+		this.umlaufplan = umlaufplan;
+	}
 	
 	
 
