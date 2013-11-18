@@ -44,11 +44,14 @@ public class DBConnection {
 			connection=DriverManager.getConnection("jdbc:sqlite:" + DB_PATH);
 			if(!connection.isClosed())
 				System.out.println("...Connection established!");		
-				createTables();
-				fillTables();}
+				}
 		catch(SQLException e){
 			throw new RuntimeException(e);
 		}
+		
+	}
+	
+	public static void closeConnection(){
 		
 		Runtime.getRuntime().addShutdownHook(new Thread(){
 			public void run(){

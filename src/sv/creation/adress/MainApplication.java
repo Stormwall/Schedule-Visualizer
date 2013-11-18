@@ -188,5 +188,6 @@ public class MainApplication extends Application {
 			//Für Testzwecke!!!!!!
 			DBConnection dbc =new DBConnection();
 			dbc.initDBConnection();
+			dbc.closeConnection();
 		}
 }
