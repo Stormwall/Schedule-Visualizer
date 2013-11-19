@@ -1,0 +1,29 @@
+.background {
+    -fx-background-image: url("backgroundImages/background.jpg");
+	-fx-background-position: left bottom;
+}
+
+.background-paper {
+    -fx-background-color: white;
+	-fx-border-radius: 10 10 10 10;
+  	-fx-background-radius: 10 10 10 10;
+}
+
+.label-header {
+    -fx-font-size: 20pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-underline: true;
+    -fx-text-fill: black;
+    -fx-opacity: 1;
+}
+
+.button:hover {
+    -fx-background-color: darkgrey;
+}
+
+.button:pressed, .button:default:hover:pressed {
+  -fx-background-color: grey;
+  -fx-text-fill: #1d1d1d;
+}
+
+
