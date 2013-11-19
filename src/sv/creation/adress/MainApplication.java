@@ -2,7 +2,6 @@ package sv.creation.adress;
 
 import java.io.IOException;
 
-import sv.creation.adress.database.DBConnection;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,7 +17,6 @@ public class MainApplication extends Application {
 	
 	private Stage primaryStage;
 	private BorderPane rootLayout;
-	private String username;
 	
 	// Load Rootlayout and handle scenes
 
@@ -26,7 +24,7 @@ public class MainApplication extends Application {
 	public void start(Stage primaryStage) {
 		
 		this.primaryStage = primaryStage;
-	    this.primaryStage.setTitle(" Schedule-Visualizer");
+	    this.primaryStage.setTitle(" Schedule-Visualizer - "+System.getProperty("user.name"));
 	    this.primaryStage.getIcons().add(new Image("file:resources/images/IconFinal.png"));
 	    
 	      try {
@@ -44,9 +42,7 @@ public class MainApplication extends Application {
 	      } catch (IOException e) {
 	          // Exception gets thrown if the fxml file could not be loaded
 	          e.printStackTrace();
-	      }
-	       //username = Dialogs.showInputDialog(primaryStage, "Tragen Sie bitte Ihren Namen ein:", "Benutzer", "Identifizierung");
-	      
+	      }	      
 	      showMainScene();	      
 	}
 		
@@ -166,20 +162,9 @@ public class MainApplication extends Application {
 				
 		public void fehlerMeldungGrafikFehlt(){	
 			
-			Dialogs.showErrorDialog(primaryStage, "Es wurde noch keine Grafik erzeugt", "Zu fr�h", "Fehler");
+			Dialogs.showErrorDialog(primaryStage, "Es wurde noch keine Grafik erzeugt", "Noch nicht", "Fehler");
 		}				
-	
-		// Methoden die den Zugriff auf die Main erm�glichen
-		
-		
-		public String getUsername() {
-			return username;
-		}
-	
-		public void setUsername(String username) {
-			this.username = username;
-		}
-		
+			
 		// Main Method
 	
 		public static void main(String[] args) {

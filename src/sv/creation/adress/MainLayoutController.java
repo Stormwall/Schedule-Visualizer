@@ -1,6 +1,7 @@
 package sv.creation.adress;
 
 import sv.creation.adress.database.DBConnection;
+import javafx.animation.FadeTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -10,8 +11,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.util.Duration;
 
 public class MainLayoutController {
 	
@@ -30,6 +33,8 @@ public class MainLayoutController {
 	private Slider endzeitSlider;
 	@FXML
 	private CheckBox hilfslinien;
+	@FXML
+	private HBox filterPanel;
 	
 	// Konstruktion der Canvas Elemente
 	
@@ -65,12 +70,31 @@ public class MainLayoutController {
 		DBConnection dbc =new DBConnection();
 		dbc.initDBConnection();
 		dbc.createTables();
-		dbc.fillUmlaufplanIntoTables();
+		//dbc.fillUmlaufplanIntoTables();
 		dbc.closeConnection();
 		
-		this.startzeitVar = (int) startzeitSlider.getValue();
-		this.endzeitVar = (int) endzeitSlider.getValue();
+		// Listen for Resizechanges (Graphic)
 		
+		upperPane.widthProperty().addListener(new ChangeListener<Number>() {
+		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+		    	refreshBothGraphics();
+		    }
+		});
+		upperPane.heightProperty().addListener(new ChangeListener<Number>() {
+		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+		    	refreshBothGraphics();
+		    }
+		});	
+		lowerPane.widthProperty().addListener(new ChangeListener<Number>() {
+		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+		    	refreshBothGraphics();
+		    }
+		});
+		lowerPane.heightProperty().addListener(new ChangeListener<Number>() {
+		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+		    	refreshBothGraphics();
+		    }
+		});
 		
 		// Listen for selection changes (StartSlider)
 		
@@ -105,7 +129,8 @@ public class MainLayoutController {
 							createHelpLines();
 							hilfslinienAktiv = true;
 						}else{							
-							mainApp.fehlerMeldungGrafikFehlt();							
+							mainApp.fehlerMeldungGrafikFehlt();	
+							hilfslinien.setSelected(false);
 						}
 					}
 					// Handhabung wenn die Checkbox ausgeschaltet wird
@@ -130,8 +155,7 @@ public class MainLayoutController {
 		if(this.grafikErstellt== true){
 			this.lowergc.clearRect(0, 0, this.lowerChart.getWidth(), this.lowerChart.getHeight());
 			this.uppergc.clearRect(0, 0, this.upperChart.getWidth(), this.upperChart.getHeight());
-			this.startzeitVar = (int) this.startzeitSlider.getValue();
-			this.endzeitVar = (int) this.endzeitSlider.getValue();
+	
 			createUpperGraphic();
 			createLowerGraphic();
 			if(hilfslinienAktiv == true){
@@ -145,12 +169,21 @@ public class MainLayoutController {
 	@FXML
 	private void createBothGraphics() {	
 		
-		// Hier wird der Slider gelesen
-		this.startzeitVar = (int) this.startzeitSlider.getValue();
-		this.endzeitVar = (int) this.endzeitSlider.getValue();
 		createUpperGraphic();
-		createLowerGraphic();	
-		this.createGraphic.setVisible(false);
+		createLowerGraphic();
+		//Fades out Create Graphic Button
+		FadeTransition ft = new FadeTransition(Duration.millis(500), this.createGraphic);
+		ft.setFromValue(1.0);
+		ft.setToValue(0.0);
+		ft.setAutoReverse(true);
+		ft.play();
+		
+		//Fades in Filter Panel
+		FadeTransition fa = new FadeTransition(Duration.millis(500), this.filterPanel);
+		fa.setFromValue(0.0);
+		fa.setToValue(1.0);
+		fa.setAutoReverse(true);
+		fa.play();
 	}
 	
 	/**
