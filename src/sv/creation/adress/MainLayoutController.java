@@ -10,6 +10,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Slider;
+import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -20,13 +21,29 @@ public class MainLayoutController {
 	
 	// Zugriff auf Strukturelemente
 	@FXML
-	private AnchorPane upperPane;
+	private AnchorPane MainPane;
 	@FXML
-	private AnchorPane lowerPane;
+	private AnchorPane leftinnerPane;
+	@FXML
+	private AnchorPane rightinnerPane;
+	@FXML
+	private AnchorPane backgroundgraphicPane;
+	@FXML
+	private AnchorPane lowerDetailsPane;
+	@FXML
+	private AnchorPane upperGraphicPane;
+	@FXML
+	private AnchorPane lowerGraphicPane;
+	@FXML
+	private SplitPane graphicPane;
 	@FXML
 	private Button createGraphic;
 	@FXML
 	private Button refreshGraphic;
+	@FXML
+	private Button showFullscreen;
+	@FXML
+	private Button applyFilter;
 	@FXML
 	private Slider startzeitSlider;
 	@FXML
@@ -48,7 +65,7 @@ public class MainLayoutController {
 	private int startzeitVar = 0;
 	private int endzeitVar = 24;	
 	
-	//Pr�fvariable
+	//Pruefvariable
 	
 	private boolean grafikErstellt = false;
 	private boolean hilfslinienAktiv = false;
@@ -73,24 +90,37 @@ public class MainLayoutController {
 		//dbc.fillUmlaufplanIntoTables();
 		dbc.closeConnection();
 		
+		//Fades in Filter Panel
+		FadeTransition fa = new FadeTransition(Duration.millis(3000), this.leftinnerPane);
+		fa.setFromValue(0.0);
+		fa.setToValue(1.0);
+		fa.setAutoReverse(true);
+		fa.play();
+		
+		FadeTransition ft = new FadeTransition(Duration.millis(5000), this.rightinnerPane);
+		ft.setFromValue(0.0);
+		ft.setToValue(1.0);
+		ft.setAutoReverse(true);
+		ft.play();
+		
 		// Listen for Resizechanges (Graphic)
 		
-		upperPane.widthProperty().addListener(new ChangeListener<Number>() {
+		this.upperGraphicPane.widthProperty().addListener(new ChangeListener<Number>() {
 		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-		    	refreshBothGraphics();
+		    	refreshBothGraphics();		    	
 		    }
 		});
-		upperPane.heightProperty().addListener(new ChangeListener<Number>() {
+		this.upperGraphicPane.heightProperty().addListener(new ChangeListener<Number>() {
 		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-		    	refreshBothGraphics();
+		    	refreshBothGraphics();		    	
 		    }
 		});	
-		lowerPane.widthProperty().addListener(new ChangeListener<Number>() {
+		this.lowerGraphicPane.widthProperty().addListener(new ChangeListener<Number>() {
 		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-		    	refreshBothGraphics();
+		    	refreshBothGraphics();		    	
 		    }
 		});
-		lowerPane.heightProperty().addListener(new ChangeListener<Number>() {
+		this.lowerGraphicPane.heightProperty().addListener(new ChangeListener<Number>() {
 		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
 		    	refreshBothGraphics();
 		    }
@@ -98,29 +128,27 @@ public class MainLayoutController {
 		
 		// Listen for selection changes (StartSlider)
 		
-		startzeitSlider.valueProperty().addListener(new ChangeListener<Number>(){
+		this.startzeitSlider.valueProperty().addListener(new ChangeListener<Number>(){
 				public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
 						// Handhabung wenn die Checkbox angew�hlt wird
-						startzeitVar = new_val.intValue();					
-						refreshBothGraphics();					
+						startzeitVar = new_val.intValue();										
 						}			
 					}				
 				);
 		
 		// Listen for selection changes (EndSlider)
 		
-		endzeitSlider.valueProperty().addListener(new ChangeListener<Number>(){
+		this.endzeitSlider.valueProperty().addListener(new ChangeListener<Number>(){
 				public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
 						// Handhabung wenn die Checkbox angew�hlt wird
-					endzeitVar = new_val.intValue();					
-					refreshBothGraphics();					
+					endzeitVar = new_val.intValue();										
 					}			
 				}				
 		);
 				
 		// Listen for selection changes (Checkbox... Hilfslinien)
 				
-		hilfslinien.selectedProperty().addListener(new ChangeListener<Boolean>(){
+		this.hilfslinien.selectedProperty().addListener(new ChangeListener<Boolean>(){
 			public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) {
 					// Handhabung wenn die Checkbox angew�hlt wird
 					if(new_val == true){
@@ -169,6 +197,9 @@ public class MainLayoutController {
 	@FXML
 	private void createBothGraphics() {	
 		
+		this.lowerDetailsPane.setMaxHeight(lowerDetailsPane.getHeight());
+		this.lowerDetailsPane.setMinHeight(lowerDetailsPane.getHeight());
+		// Creates the Graphic
 		createUpperGraphic();
 		createLowerGraphic();
 		//Fades out Create Graphic Button
@@ -193,8 +224,8 @@ public class MainLayoutController {
 	private void createUpperGraphic() {
 		
 		//Initialize the Chart
-		this.upperChart = new Canvas(this.upperPane.getWidth(),this.upperPane.getHeight());
-		
+		this.upperChart = new Canvas(this.upperGraphicPane.getWidth(),this.upperGraphicPane.getHeight());
+				
 		//Erstellen des HintergrundgrafikKontextes
 		this.uppergc = this.upperChart.getGraphicsContext2D();
 		this.uppergc.clearRect(0, 0, this.upperChart.getWidth(), this.upperChart.getHeight());
@@ -222,7 +253,7 @@ public class MainLayoutController {
 			chartCounter = chartCounter + 1;
 	    }
 		
-		this.upperPane.getChildren().add(this.upperChart);
+		this.upperGraphicPane.getChildren().add(this.upperChart);
 		// Best�tigung das ein Feld erzeugt wurde
 		this.grafikErstellt = true;
 	}
@@ -234,8 +265,8 @@ public class MainLayoutController {
 	private void createLowerGraphic() {
 		
 		//Initialize the Chart
-		this.lowerChart = new Canvas(this.lowerPane.getWidth(),this.lowerPane.getHeight());
-		
+		this.lowerChart = new Canvas(this.lowerGraphicPane.getWidth(),this.lowerGraphicPane.getHeight());
+			
 		//Erstellen des HintergrundgrafikKontextes
 		this.lowergc = this.lowerChart.getGraphicsContext2D();
 		this.lowergc.clearRect(0, 0, this.lowerChart.getWidth(), this.lowerChart.getHeight());
@@ -264,7 +295,7 @@ public class MainLayoutController {
 			chartCounter = chartCounter + 1;
 		}
 		
-		this.lowerPane.getChildren().add(this.lowerChart);
+		this.lowerGraphicPane.getChildren().add(this.lowerChart);
 		}
 	
 	/**
@@ -319,9 +350,61 @@ public class MainLayoutController {
 			chartCounter = chartCounter + 1;
 		    }		
 	}
+	//Methoden zur Weitergabe der Werte an andere Klassen
+	
+	public boolean isHilfslinienAktiv() {
+		return hilfslinienAktiv;
+	}
+
+
+	public void setHilfslinienAktiv(boolean hilfslinienAktiv) {
+		this.hilfslinienAktiv = hilfslinienAktiv;
+	}
+	
+	public int getStartzeitVar() {
+		return startzeitVar;
+	}
+
+
+	public void setStartzeitVar(int startzeitVar) {
+		this.startzeitVar = startzeitVar;
+	}
+
+
+	public int getEndzeitVar() {
+		return endzeitVar;
+	}
+
+
+	public void setEndzeitVar(int endzeitVar) {
+		this.endzeitVar = endzeitVar;
+	}
+
+
+	public boolean isGrafikErstellt() {
+		return grafikErstellt;
+	}
+
+
+	public void setGrafikErstellt(boolean grafikErstellt) {
+		this.grafikErstellt = grafikErstellt;
+	}
+
 	
 	//Methoden zur Festsetzung der Main
+
+
+	public void openFullscreen() {
+		if(isGrafikErstellt()== true){
+		mainApp.showFullScreenGraphic(this);
+		}else{
+			mainApp.fehlerMeldungGrafikFehlt();
+		}
+	}
 	
+	//Methoden zur Festsetzung der Main	
+	
+
 	public MainApplication getMainApp() {
 		return mainApp;
 	}
