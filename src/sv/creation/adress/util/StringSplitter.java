@@ -126,7 +126,61 @@ public class StringSplitter {
 	private static ArrayList<String> reliefpointServiceJourneyID = new ArrayList<String>();
 	private static ArrayList<String> reliefpointStoppointID = new ArrayList<String>();
 	private static ArrayList<String> reliefpointStoptime = new ArrayList<String>();
-
+	
+	
+	//Array lists of DayIDs
+	private static ArrayList<Integer> dayID = new ArrayList<Integer>();
+	private static ArrayList<String> dayName = new ArrayList<String>();
+	
+	//Array lists of Trips
+	private static ArrayList<Integer> tripID = new ArrayList<Integer>();
+	private static ArrayList<Integer> dayOne = new ArrayList<Integer>();
+	private static ArrayList<Integer> dayTwo = new ArrayList<Integer>();
+	private static ArrayList<Integer> dayThree = new ArrayList<Integer>();
+	private static ArrayList<Integer> dayFour = new ArrayList<Integer>();
+	private static ArrayList<Integer> dayFive = new ArrayList<Integer>();
+	private static ArrayList<Integer> daySix = new ArrayList<Integer>();
+	private static ArrayList<Integer> daySeven = new ArrayList<Integer>();
+	
+	//Array lists of diensttypen file
+	private static ArrayList<String> name = new ArrayList<String>();
+	private static ArrayList<String> startTimeMin = new ArrayList<String>();
+	private static ArrayList<String> startTimeMax = new ArrayList<String>();
+	private static ArrayList<String> endTimeMin = new ArrayList<String>();
+	private static ArrayList<String> endTimeMax = new ArrayList<String>();
+	private static ArrayList<String> signOnTime = new ArrayList<String>();
+	private static ArrayList<String> signOffTime = new ArrayList<String>();
+	private static ArrayList<String> duratinMin = new ArrayList<String>();
+	private static ArrayList<String> durationMax = new ArrayList<String>();
+	private static ArrayList<String> workingTimeTotalMin = new ArrayList<String>();
+	private static ArrayList<String> workingTimeTotalMax = new ArrayList<String>();
+	private static ArrayList<String> workingTimeBeforeBreakMin = new ArrayList<String>();
+	private static ArrayList<String> workingTimeWithoutBreakMin = new ArrayList<String>();
+	private static ArrayList<String> workingTimeAfterLastBreakMin = new ArrayList<String>();
+	private static ArrayList<String> drivingTimeTotalMin = new ArrayList<String>();
+	private static ArrayList<String> drivingTimeTotalMax = new ArrayList<String>();
+	private static ArrayList<String> drivingTimeWithoutBreakMin = new ArrayList<String>();
+	private static ArrayList<String> drivingTimeWithoutBreakMax = new ArrayList<String>();
+	private static ArrayList<String> drivingTimeWithoutBreakMinInterruptionTime = new ArrayList<String>();
+	private static ArrayList<String> drivingTimeBeforeFirstBreakMin = new ArrayList<String>();
+	private static ArrayList<String> breakType = new ArrayList<String>();
+	private static ArrayList<String> breakTimeTotalMin = new ArrayList<String>();
+	private static ArrayList<String> breakTimeTotalMax = new ArrayList<String>();
+	private static ArrayList<String> breakTimeMin = new ArrayList<String>();
+	private static ArrayList<String> breakTimeMax = new ArrayList<String>();
+	private static ArrayList<Integer> pieceCountMin = new ArrayList<Integer>();
+	private static ArrayList<Integer> pieceCountMax = new ArrayList<Integer>();
+	private static ArrayList<String> allowedCumulatedWorkingTimeMax = new ArrayList<String>();
+	private static ArrayList<Float> dutyFixCost = new ArrayList<Float>();
+	private static ArrayList<Integer> isWorkRateConsidered = new ArrayList<Integer>();
+	private static ArrayList<Integer> isBreakRateConsidered = new ArrayList<Integer>();
+	private static ArrayList<Float> dutyCostPerMinute = new ArrayList<Float>();
+	private static ArrayList<Integer> isVehicleChangeAllowedDuringBreak = new ArrayList<Integer>();
+	private static ArrayList<String> breakTimeAllowsStarts = new ArrayList<String>();
+	private static ArrayList<String> breakTimeAllowsEnds = new ArrayList<String>();
+	private static ArrayList<String> workingtimeWithoutBreakMax = new ArrayList<String>();
+	
+	
 	public static ArrayList<String> convertStringToArraylist(String str) {
 
 		// "\\s*,\\s*" anstatt "," damit Leerzeichen vor und nach dem Komma im
@@ -207,6 +261,12 @@ public class StringSplitter {
 						dutyelementServiceJourneyCode
 								.add(zeilenelemente.get(8));
 					}
+					
+					if (zeilenelemente.size() == 1) {
+						int dayIdZahl=Integer.parseInt(zeilenelemente.get(0));
+						dayID.add(dayIdZahl);
+						zeilenelemente.clear();
+					}
 
 					// Size of the zeilenelemente array list will be reset
 					else
@@ -285,6 +345,7 @@ public class StringSplitter {
 						blockelementDepTime.add(zeilenelemente.get(4));
 						blockelementArrTime.add(zeilenelemente.get(5));
 						blockelementElementType.add(elementType);
+						zeilenelemente.clear();
 					}
 
 //					// ATTENTION: The data can contain 9 elements including
@@ -301,6 +362,12 @@ public class StringSplitter {
 //								.get(7));
 //
 //					}
+					
+					if (zeilenelemente.size() == 1) {
+						int dayIdZahl=Integer.parseInt(zeilenelemente.get(0));
+						dayID.add(dayIdZahl);
+						zeilenelemente.clear();
+					}
 
 					// Size of the zeilenelemente array list will be reset
 					else
@@ -321,14 +388,14 @@ public class StringSplitter {
 	// ******                                  *******
 	// ***********************************************
 
-	public static void readTxtFahrplan() {
+	public void readTxtFahrplan() {
 
 		try {
 
 			// testfahrplan.txt Data has to be in the project file in your
 			// workspace
 			BufferedReader fahrplan = new BufferedReader(new FileReader(
-					"testfahrplan.txt"));
+					"resources/quellen/testfahrplan2.txt"));
 			String zeile = null;
 			ArrayList<String> zeilenelemente = new ArrayList<String>();
 
@@ -337,7 +404,10 @@ public class StringSplitter {
 			boolean vehicleTypeGroup = false;
 			boolean line = false;
 			boolean vehicleCapToStop = false;
+			boolean vehTypeToVehTypeGroup =false;
 			boolean reliefpoint = false;
+			boolean days = false;
+			boolean deadruntime = false;
 
 			while ((zeile = fahrplan.readLine()) != null) {
 
@@ -358,10 +428,20 @@ public class StringSplitter {
 					vehicleTypeGroup = true;
 					continue;
 				}
+				
+				if (zeile.startsWith("$VEHTYPETOVEHTYPEGROUP")) {
+					stoppoint = false;
+					line = false;
+					vehicleTypeGroup = false;
+					vehTypeToVehTypeGroup = true;
+					continue;
+				}
+				
 				if (zeile.startsWith("$VEHTYPECAPTOSTOPPOINT")) {
 					stoppoint = false;
 					line = false;
 					vehicleTypeGroup = false;
+					vehTypeToVehTypeGroup = false;
 					vehicleCapToStop = true;
 					continue;
 				}
@@ -369,8 +449,32 @@ public class StringSplitter {
 					stoppoint = false;
 					line = false;
 					vehicleTypeGroup = false;
+					vehTypeToVehTypeGroup = false;
 					vehicleCapToStop = false;
 					reliefpoint = true;
+					continue;
+				}
+				
+				if (zeile.startsWith("$DEADRUNTIME")) {
+					stoppoint = false;
+					line = false;
+					vehicleTypeGroup = false;
+					vehTypeToVehTypeGroup = false;
+					vehicleCapToStop = false;
+					reliefpoint =false;
+					deadruntime=true;
+					continue;
+				}
+				
+				if (zeile.startsWith("$DAYS")) {
+					stoppoint = false;
+					line = false;
+					vehicleTypeGroup = false;
+					vehTypeToVehTypeGroup = false;
+					vehicleCapToStop = false;
+					reliefpoint = false;
+					deadruntime=false;
+					days = true;
 					continue;
 				}
 
@@ -422,7 +526,7 @@ public class StringSplitter {
 					// The vehicle to vehicle type group data will be split in
 					// separated array
 					// lists
-					if (zeilenelemente.size() == 2) {
+					if (zeilenelemente.size() == 2 && vehTypeToVehTypeGroup) {
 						vehicleToVehicleTypeGroupVehTypeID.add(zeilenelemente
 								.get(0));
 						vehicleToVehicleTypeGroupVehTypeGroupID
@@ -467,7 +571,7 @@ public class StringSplitter {
 
 					// The dead runtime data will be split in separated array
 					// lists
-					if (zeilenelemente.size() == 6) {
+					if (zeilenelemente.size() == 6 && deadruntime == true) {
 						deadruntimeFromStopID.add(zeilenelemente.get(0));
 						deadruntimeToStopID.add(zeilenelemente.get(1));
 						deadruntimeFromTime.add(zeilenelemente.get(2));
@@ -486,25 +590,169 @@ public class StringSplitter {
 						reliefpointStoptime.add(zeilenelemente.get(3));
 						zeilenelemente.clear();
 					}
+					
+					if (zeilenelemente.size() == 2) {
+					int dayZahl=Integer.parseInt(zeilenelemente.get(0));
+					dayID.add(dayZahl);
+					dayName.add(zeilenelemente.get(1));
+					zeilenelemente.clear();
+					}
+					
+					if (zeilenelemente.size() == 6 && days == true) {
+						int tripIDZiffer=Integer.parseInt(zeilenelemente.get(0));
+						int dayOneZiffer=Integer.parseInt(zeilenelemente.get(1));
+						int dayTwoZiffer=Integer.parseInt(zeilenelemente.get(2));
+						int dayThreeZiffer=Integer.parseInt(zeilenelemente.get(3));
+						int dayFourZiffer=Integer.parseInt(zeilenelemente.get(4));
+						int dayFiveZiffer=Integer.parseInt(zeilenelemente.get(5));
+						
+						tripID.add(tripIDZiffer);
+						dayOne.add(dayOneZiffer);
+						dayTwo.add(dayTwoZiffer);
+						dayThree.add(dayThreeZiffer);
+						dayFour.add(dayFourZiffer);
+						dayFive.add(dayFiveZiffer);
+						zeilenelemente.clear();
+					}
+					
+					if (zeilenelemente.size() == 7 && days == true) {
+						int tripIDZiffer=Integer.parseInt(zeilenelemente.get(0));
+						int dayOneZiffer=Integer.parseInt(zeilenelemente.get(1));
+						int dayTwoZiffer=Integer.parseInt(zeilenelemente.get(2));
+						int dayThreeZiffer=Integer.parseInt(zeilenelemente.get(3));
+						int dayFourZiffer=Integer.parseInt(zeilenelemente.get(4));
+						int dayFiveZiffer=Integer.parseInt(zeilenelemente.get(5));
+						int daySixZiffer=Integer.parseInt(zeilenelemente.get(6));
+						
+						tripID.add(tripIDZiffer);
+						dayOne.add(dayOneZiffer);
+						dayTwo.add(dayTwoZiffer);
+						dayThree.add(dayThreeZiffer);
+						dayFour.add(dayFourZiffer);
+						dayFive.add(dayFiveZiffer);
+						daySix.add(daySixZiffer);
+						zeilenelemente.clear();
+					}
+					
+					if (zeilenelemente.size() == 8 && days == true) {
+						int tripIDZiffer=Integer.parseInt(zeilenelemente.get(0));
+						int dayOneZiffer=Integer.parseInt(zeilenelemente.get(1));
+						int dayTwoZiffer=Integer.parseInt(zeilenelemente.get(2));
+						int dayThreeZiffer=Integer.parseInt(zeilenelemente.get(3));
+						int dayFourZiffer=Integer.parseInt(zeilenelemente.get(4));
+						int dayFiveZiffer=Integer.parseInt(zeilenelemente.get(5));
+						int daySixZiffer=Integer.parseInt(zeilenelemente.get(6));
+						int daySevenZiffer=Integer.parseInt(zeilenelemente.get(7));
+						
+						tripID.add(tripIDZiffer);
+						dayOne.add(dayOneZiffer);
+						dayTwo.add(dayTwoZiffer);
+						dayThree.add(dayThreeZiffer);
+						dayFour.add(dayFourZiffer);
+						dayFive.add(dayFiveZiffer);
+						daySix.add(daySixZiffer);
+						daySeven.add(daySevenZiffer);
+						zeilenelemente.clear();
+					}
 
 				}
 
 			}
 
-			// Testing the filled array lists
-			System.out.println(stopID);
-			System.out.println(lineCode);
-			System.out.println(vehicleTypeKmCost);
-			System.out.println(vehicleTypeGroupName);
-			System.out.println(vehicleToVehicleTypeGroupVehTypeGroupID);
-			System.out.println(vehicleCapToStopStoppointID);
-			System.out.println(serviceJourneyLineID);
-			System.out.println(deadruntimeDistance);
-			System.out.println(reliefpointStoptime);
+//			// Testing the filled array lists
+//			System.out.println(stopID);
+//			System.out.println(lineCode);
+//			System.out.println(vehicleTypeKmCost);
+//			System.out.println(vehicleTypeGroupName);
+//			System.out.println(vehicleToVehicleTypeGroupVehTypeGroupID);
+//			System.out.println(vehicleCapToStopStoppointID);
+//			System.out.println(serviceJourneyLineID);
+//			System.out.println(deadruntimeDistance);
+//			System.out.println(reliefpointStoptime);
+//			System.out.println(tripID);
 			fahrplan.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	// ***********************************************
+	// ****** Method to read the Fahrplan data *******
+	// ******                                  *******
+	// ***********************************************
+	
+	public void readTxtDiensttypen(){
+		
+		try {
+
+			// testfahrplan.txt Data has to be in the project file in your
+			// workspace
+			BufferedReader diensttypen = new BufferedReader(new FileReader(
+					"resources/quellen/testdiensttypen.txt"));
+			String zeile = null;
+			ArrayList<String> zeilenelemente = new ArrayList<String>();
+			while((zeile=diensttypen.readLine())!=null){
+			// All lines with relevant data will be read
+			if (!zeile.startsWith("*") && !zeile.startsWith("$")) {
+				Collections.addAll(zeilenelemente, zeile.split(";"));
+			
+				if(zeilenelemente.size()==35){
+					
+					int pieceCountMinZiffer=Integer.parseInt(zeilenelemente.get(25));
+					int pieceCountMaxZiffer=Integer.parseInt(zeilenelemente.get(26));
+					int isWorkRateConsideredZiffer = Integer.parseInt(zeilenelemente.get(29));
+					int isBreakRateConsideredZiffer=Integer.parseInt(zeilenelemente.get(30));
+					int isVehicleChangeAllowedDuringBreakZiffer=Integer.parseInt(zeilenelemente.get(32));
+					
+					float dutyFixCostZiffer=Float.parseFloat(zeilenelemente.get(28));
+					float dutyCostPerMinuteZiffer=Float.parseFloat(zeilenelemente.get(31));
+					
+					name.add(zeilenelemente.get(0));
+					startTimeMin.add(zeilenelemente.get(1));
+					startTimeMax.add(zeilenelemente.get(2));
+					endTimeMin.add(zeilenelemente.get(3));
+					endTimeMax.add(zeilenelemente.get(4));
+					signOnTime.add(zeilenelemente.get(5));
+					signOffTime.add(zeilenelemente.get(6));
+					duratinMin.add(zeilenelemente.get(7));
+					durationMax.add(zeilenelemente.get(8));
+					workingTimeTotalMin.add(zeilenelemente.get(9));
+					workingTimeTotalMax.add(zeilenelemente.get(10));
+					workingTimeBeforeBreakMin.add(zeilenelemente.get(11));
+					workingTimeWithoutBreakMin.add(zeilenelemente.get(12));
+					workingTimeAfterLastBreakMin.add(zeilenelemente.get(13));
+					drivingTimeTotalMin.add(zeilenelemente.get(14));
+					drivingTimeTotalMax.add(zeilenelemente.get(15));
+					drivingTimeWithoutBreakMin.add(zeilenelemente.get(16));
+					drivingTimeWithoutBreakMax.add(zeilenelemente.get(17));
+					drivingTimeWithoutBreakMinInterruptionTime.add(zeilenelemente.get(18));
+					drivingTimeBeforeFirstBreakMin.add(zeilenelemente.get(19));
+					breakType.add(zeilenelemente.get(20));
+					breakTimeTotalMin.add(zeilenelemente.get(21));
+					breakTimeTotalMax.add(zeilenelemente.get(22));
+					breakTimeMin.add(zeilenelemente.get(23));
+					breakTimeMax.add(zeilenelemente.get(24));
+					pieceCountMin.add(pieceCountMinZiffer);
+					pieceCountMax.add(pieceCountMaxZiffer);
+					allowedCumulatedWorkingTimeMax.add(zeilenelemente.get(27));
+					dutyFixCost.add(dutyFixCostZiffer);
+					isWorkRateConsidered.add(isWorkRateConsideredZiffer);
+					isBreakRateConsidered.add(isBreakRateConsideredZiffer);
+					dutyCostPerMinute.add(dutyCostPerMinuteZiffer);
+					isVehicleChangeAllowedDuringBreak.add(isVehicleChangeAllowedDuringBreakZiffer);
+					breakTimeAllowsStarts.add(zeilenelemente.get(33));
+					breakTimeAllowsEnds.add(zeilenelemente.get(34));
+					//workingtimeWithoutBreakMax.add(zeilenelemente.get(35));
+					zeilenelemente.clear();
+				}
+			}
+			}
+			System.out.println(breakTimeAllowsEnds);
+			diensttypen.close();
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
+			
 	}
 
 	public static void main(String[] args) {
@@ -794,6 +1042,190 @@ public class StringSplitter {
 
 	public static ArrayList<String> getReliefpointStoptime() {
 		return reliefpointStoptime;
+	}
+
+	public static ArrayList<Integer> getDayID() {
+		return dayID;
+	}
+
+	public static ArrayList<Integer> getTripID() {
+		return tripID;
+	}
+
+	public static ArrayList<Integer> getDayOne() {
+		return dayOne;
+	}
+
+	public static ArrayList<Integer> getDayTwo() {
+		return dayTwo;
+	}
+
+	public static ArrayList<Integer> getDayThree() {
+		return dayThree;
+	}
+
+	public static ArrayList<Integer> getDayFour() {
+		return dayFour;
+	}
+
+	public static ArrayList<Integer> getDayFive() {
+		return dayFive;
+	}
+
+	public static ArrayList<Integer> getDaySix() {
+		return daySix;
+	}
+
+	public static ArrayList<Integer> getDaySeven() {
+		return daySeven;
+	}
+
+	public static ArrayList<String> getDayName() {
+		return dayName;
+	}
+
+	public static ArrayList<String> getName() {
+		return name;
+	}
+
+	public static ArrayList<String> getStartTimeMin() {
+		return startTimeMin;
+	}
+
+	public static ArrayList<String> getStartTimeMax() {
+		return startTimeMax;
+	}
+
+	public static ArrayList<String> getEndTimeMin() {
+		return endTimeMin;
+	}
+
+	public static ArrayList<String> getEndTimeMax() {
+		return endTimeMax;
+	}
+
+	public static ArrayList<String> getSignOnTime() {
+		return signOnTime;
+	}
+
+	public static ArrayList<String> getSignOffTime() {
+		return signOffTime;
+	}
+
+	public static ArrayList<String> getDuratinMin() {
+		return duratinMin;
+	}
+
+	public static ArrayList<String> getDurationMax() {
+		return durationMax;
+	}
+
+	public static ArrayList<String> getWorkingTimeTotalMin() {
+		return workingTimeTotalMin;
+	}
+
+	public static ArrayList<String> getWorkingTimeTotalMax() {
+		return workingTimeTotalMax;
+	}
+
+	public static ArrayList<String> getWorkingTimeBeforeBreakMin() {
+		return workingTimeBeforeBreakMin;
+	}
+
+	public static ArrayList<String> getWorkingTimeWithoutBreakMin() {
+		return workingTimeWithoutBreakMin;
+	}
+
+	public static ArrayList<String> getWorkingTimeAfterLastBreakMin() {
+		return workingTimeAfterLastBreakMin;
+	}
+
+	public static ArrayList<String> getDrivingTimeTotalMin() {
+		return drivingTimeTotalMin;
+	}
+
+	public static ArrayList<String> getDrivingTimeTotalMax() {
+		return drivingTimeTotalMax;
+	}
+
+	public static ArrayList<String> getDrivingTimeWithoutBreakMin() {
+		return drivingTimeWithoutBreakMin;
+	}
+
+	public static ArrayList<String> getDrivingTimeWithoutBreakMax() {
+		return drivingTimeWithoutBreakMax;
+	}
+
+	public static ArrayList<String> getDrivingTimeWithoutBreakMinInterruptionTime() {
+		return drivingTimeWithoutBreakMinInterruptionTime;
+	}
+
+	public static ArrayList<String> getDrivingTimeBeforeFirstBreakMin() {
+		return drivingTimeBeforeFirstBreakMin;
+	}
+
+	public static ArrayList<String> getBreakType() {
+		return breakType;
+	}
+
+	public static ArrayList<String> getBreakTimeTotalMin() {
+		return breakTimeTotalMin;
+	}
+
+	public static ArrayList<String> getBreakTimeTotalMax() {
+		return breakTimeTotalMax;
+	}
+
+	public static ArrayList<String> getBreakTimeMin() {
+		return breakTimeMin;
+	}
+
+	public static ArrayList<String> getBreakTimeMax() {
+		return breakTimeMax;
+	}
+
+	public static ArrayList<Integer> getPieceCountMin() {
+		return pieceCountMin;
+	}
+
+	public static ArrayList<Integer> getPieceCountMax() {
+		return pieceCountMax;
+	}
+
+	public static ArrayList<String> getAllowedCumulatedWorkingTimeMax() {
+		return allowedCumulatedWorkingTimeMax;
+	}
+
+	public static ArrayList<Float> getDutyFixCost() {
+		return dutyFixCost;
+	}
+
+	public static ArrayList<Integer> getIsWorkRateConsidered() {
+		return isWorkRateConsidered;
+	}
+
+	public static ArrayList<Integer> getIsBreakRateConsidered() {
+		return isBreakRateConsidered;
+	}
+
+	public static ArrayList<Float> getDutyCostPerMinute() {
+		return dutyCostPerMinute;
+	}
+
+	public static ArrayList<Integer> getIsVehicleChangeAllowedDuringBreak() {
+		return isVehicleChangeAllowedDuringBreak;
+	}
+
+	public static ArrayList<String> getBreakTimeAllowsStarts() {
+		return breakTimeAllowsStarts;
+	}
+
+	public static ArrayList<String> getBreakTimeAllowsEnds() {
+		return breakTimeAllowsEnds;
+	}
+
+	public static ArrayList<String> getWorkingtimeWithoutBreakMax() {
+		return workingtimeWithoutBreakMax;
 	}
 	
 	
