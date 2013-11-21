@@ -67,12 +67,34 @@
                                   <content>
                                     <AnchorPane id="Content" fx:id="backgroundgraphicPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                       <children>
-                                        <SplitPane fx:id="graphicPane" disable="true" dividerPositions="0.5016949152542373" focusTraversable="true" orientation="VERTICAL" prefHeight="278.0" prefWidth="821.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                          <items>
-                                            <AnchorPane id="upperPane" fx:id="upperGraphicPane" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
-                                            <AnchorPane id="lowerPane" fx:id="lowerGraphicPane" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
-                                          </items>
-                                        </SplitPane>
+                                        <GridPane fx:id="graphicPane" prefHeight="297.0" prefWidth="821.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <children>
+                                            <ScrollPane fx:id="upperGraphicPane" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                              <content>
+                                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                              </content>
+                                            </ScrollPane>
+                                            <ScrollPane fx:id="lowerGraphicPane" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                              <content>
+                                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                              </content>
+                                            </ScrollPane>
+                                            <AnchorPane fx:id="yUp" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                            <AnchorPane fx:id="yLow" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                            <AnchorPane fx:id="xUp" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                            <AnchorPane fx:id="xLow" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          </children>
+                                          <columnConstraints>
+                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="100.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          </columnConstraints>
+                                          <rowConstraints>
+                                            <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          </rowConstraints>
+                                        </GridPane>
                                       </children>
                                     </AnchorPane>
                                   </content>

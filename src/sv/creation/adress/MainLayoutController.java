@@ -9,9 +9,10 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
-import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -31,11 +32,19 @@ public class MainLayoutController {
 	@FXML
 	private AnchorPane lowerDetailsPane;
 	@FXML
-	private AnchorPane upperGraphicPane;
+	private AnchorPane xUp;
 	@FXML
-	private AnchorPane lowerGraphicPane;
+	private AnchorPane yUp;
 	@FXML
-	private SplitPane graphicPane;
+	private AnchorPane xLow;
+	@FXML
+	private AnchorPane yLow;
+	@FXML
+	private ScrollPane upperGraphicPane;
+	@FXML
+	private ScrollPane lowerGraphicPane;
+	@FXML
+	private GridPane graphicPane;
 	@FXML
 	private Button createGraphic;
 	@FXML
@@ -57,13 +66,23 @@ public class MainLayoutController {
 	
 	private Canvas upperChart;
 	private Canvas lowerChart;
+	private Canvas upperXChart;
+	private Canvas upperYChart;
+	private Canvas lowerXChart;
+	private Canvas lowerYChart;
 	private GraphicsContext uppergc;
 	private GraphicsContext lowergc;
+	private GraphicsContext upperXgc;
+	private GraphicsContext upperYgc;
+	private GraphicsContext lowerXgc;
+	private GraphicsContext lowerYgc;
 	
 	// Attribute der statistischen Darstellung
 	
 	private int startzeitVar = 0;
-	private int endzeitVar = 24;	
+	private int endzeitVar = 24;
+	private double upperheight = 600;
+	private double lowerheight = 800;
 	
 	//Pruefvariable
 	
@@ -84,11 +103,11 @@ public class MainLayoutController {
 	  private void initialize() {
 		
 		//Erstellung der Datenbank
-		DBConnection dbc =new DBConnection();
-		dbc.initDBConnection();
-		dbc.createTables();
+		//DBConnection dbc =new DBConnection();
+		//dbc.initDBConnection();
+		//dbc.createTables();
 		//dbc.fillUmlaufplanIntoTables();
-		dbc.closeConnection();
+		//dbc.closeConnection();
 		
 		//Fades in Filter Panel
 		FadeTransition fa = new FadeTransition(Duration.millis(3000), this.leftinnerPane);
@@ -104,10 +123,9 @@ public class MainLayoutController {
 		ft.play();
 		
 		// Listen for Resizechanges (Graphic)
-		
 		this.upperGraphicPane.widthProperty().addListener(new ChangeListener<Number>() {
 		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-		    	refreshBothGraphics();		    	
+		       	refreshBothGraphics();		    	
 		    }
 		});
 		this.upperGraphicPane.heightProperty().addListener(new ChangeListener<Number>() {
@@ -123,6 +141,11 @@ public class MainLayoutController {
 		this.lowerGraphicPane.heightProperty().addListener(new ChangeListener<Number>() {
 		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
 		    	refreshBothGraphics();
+		    }
+		});
+		this.xLow.widthProperty().addListener(new ChangeListener<Number>() {
+		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+		    	refreshBothGraphics();		    	
 		    }
 		});
 		
@@ -183,10 +206,15 @@ public class MainLayoutController {
 		if(this.grafikErstellt== true){
 			this.lowergc.clearRect(0, 0, this.lowerChart.getWidth(), this.lowerChart.getHeight());
 			this.uppergc.clearRect(0, 0, this.upperChart.getWidth(), this.upperChart.getHeight());
+			this.lowerXgc.clearRect(0, 0, this.lowerXChart.getWidth(), this.lowerXChart.getHeight());
+			this.upperXgc.clearRect(0, 0, this.upperXChart.getWidth(), this.upperXChart.getHeight());
 	
 			createUpperGraphic();
 			createLowerGraphic();
-			if(hilfslinienAktiv == true){
+			createLowerXScale();
+			createUpperXScale();
+		
+			if(this.hilfslinienAktiv == true){
 				createHelpLines();
 			}
 		}
@@ -202,6 +230,8 @@ public class MainLayoutController {
 		// Creates the Graphic
 		createUpperGraphic();
 		createLowerGraphic();
+		createLowerXScale();
+		createUpperXScale();
 		//Fades out Create Graphic Button
 		FadeTransition ft = new FadeTransition(Duration.millis(500), this.createGraphic);
 		ft.setFromValue(1.0);
@@ -224,7 +254,7 @@ public class MainLayoutController {
 	private void createUpperGraphic() {
 		
 		//Initialize the Chart
-		this.upperChart = new Canvas(this.upperGraphicPane.getWidth(),this.upperGraphicPane.getHeight());
+		this.upperChart = new Canvas(this.upperGraphicPane.getWidth()-4,this.upperheight);
 				
 		//Erstellen des HintergrundgrafikKontextes
 		this.uppergc = this.upperChart.getGraphicsContext2D();
@@ -236,28 +266,69 @@ public class MainLayoutController {
 		
 		this.uppergc.setLineWidth(3);
 		this.uppergc.setStroke(Color.BLACK);
-		this.uppergc.strokeLine(40, 30, 40, this.upperChart.getHeight());		
+		this.uppergc.strokeLine(1, 0, 1, this.upperChart.getHeight());		
 		
-		double abstandNetz = (this.upperChart.getWidth()-40-30)/(this.endzeitVar-this.startzeitVar);				
+		double abstandNetz = (this.upperChart.getWidth()-30)/(this.endzeitVar-this.startzeitVar);				
 		this.uppergc.setLineWidth(1);
 		this.uppergc.setFont(Font.getDefault());
 		this.uppergc.setFill(Color.BLACK);
 		this.uppergc.setStroke(Color.BLACK);
 		// Variable zum Darstellen verschiedener Zeitpunkte
-		int chartCounter = startzeitVar ;
 		for(int i=0; i<=(endzeitVar-startzeitVar) ;i++) {
 			
-			double pixel=40+((i)*abstandNetz);
-			this.uppergc.strokeLine(pixel, 35, pixel, this.upperChart.getHeight());
-			this.uppergc.fillText(String.valueOf(chartCounter), pixel-4, 20);
-			chartCounter = chartCounter + 1;
+			double pixel=((i)*abstandNetz);
+			this.uppergc.strokeLine(pixel, 0, pixel, this.upperChart.getHeight());
 	    }
 		
-		this.upperGraphicPane.getChildren().add(this.upperChart);
+		this.upperGraphicPane.setContent(this.upperChart);
 		// Best�tigung das ein Feld erzeugt wurde
 		this.grafikErstellt = true;
 	}
+	/**
+	 * Creates The Upper X - Scale.
+	 */
+	@FXML
+	private void createUpperXScale() {
+		
+		// Hier wird das Skala Canvas erzeugt
+				this.upperXChart = new Canvas(this.xUp.getWidth(),this.xUp.getHeight());
+				// Hier der Graphic Context dazu erzeugt
+				this.upperXgc = this.upperXChart.getGraphicsContext2D();
+				this.upperXgc.clearRect(0, 0, this.upperXChart.getWidth(), this.upperXChart.getHeight());
+				
+				double abstandNetz = (this.upperXChart.getWidth()-30)/(this.endzeitVar-this.startzeitVar);				
+				this.upperXgc.setLineWidth(1);
+				this.upperXgc.setFont(Font.getDefault());
+				this.upperXgc.setFill(Color.BLACK);
+				this.upperXgc.setStroke(Color.BLACK);
+				
+				// Variable zum Darstellen verschiedener Zeitpunkte
+						int chartCounter = startzeitVar ;
+						for(int i=0; i<=(endzeitVar-startzeitVar) ;i++) {
+							
+							if(i == 0){
+								double pixel=((i)*abstandNetz);
+								this.upperXgc.fillText(String.valueOf(chartCounter), pixel+1, 15);
+								chartCounter = chartCounter + 1;	
+							}
+							if(i!=0){
+							double pixel=((i)*abstandNetz);
+							this.upperXgc.fillText(String.valueOf(chartCounter), pixel-4, 15);
+							chartCounter = chartCounter + 1;
+							}
+					    }
+						
+				this.xUp.getChildren().add(upperXChart);
+	}
 	
+	/**
+	 * Creates The Lower Y - Scale.
+	 */
+	@FXML
+	private void createUpperYScale() {
+		
+		
+	}
 	/**
 	 * Creates The Lower Graphic.
 	 */
@@ -265,7 +336,7 @@ public class MainLayoutController {
 	private void createLowerGraphic() {
 		
 		//Initialize the Chart
-		this.lowerChart = new Canvas(this.lowerGraphicPane.getWidth(),this.lowerGraphicPane.getHeight());
+		this.lowerChart = new Canvas(this.lowerGraphicPane.getWidth()-4,this.lowerheight);
 			
 		//Erstellen des HintergrundgrafikKontextes
 		this.lowergc = this.lowerChart.getGraphicsContext2D();
@@ -277,34 +348,77 @@ public class MainLayoutController {
 		
 		this.lowergc.setLineWidth(3);
 		this.lowergc.setStroke(Color.BLACK);
-		this.lowergc.strokeLine(40, 0, 40, this.lowerChart.getHeight()-30);
-		this.lowergc.strokeLine(40, this.lowerChart.getHeight()-30, this.lowerChart.getWidth()-30,this.lowerChart.getHeight()-30);
+		this.lowergc.strokeLine(1, 0, 1, this.lowerChart.getHeight());
+		this.lowergc.strokeLine(0, this.lowerChart.getHeight()-1, this.lowerChart.getWidth(),this.lowerChart.getHeight()-1);
 		
-		double abstandNetz = (this.lowerChart.getWidth()-40-30)/(this.endzeitVar-this.startzeitVar);				
+		double abstandNetz = (this.lowerChart.getWidth()-30)/(this.endzeitVar-this.startzeitVar);				
 		this.lowergc.setLineWidth(1);
 		this.lowergc.setFont(Font.getDefault());
 		this.lowergc.setFill(Color.BLACK);
 		this.lowergc.setStroke(Color.BLACK);	
 		// Variable zum Darstellen verschiedener Zeitpunkte
-		int chartCounter = this.startzeitVar;
 		for(int i=0; i<=(this.endzeitVar-this.startzeitVar) ;i++) {
 						
-			double pixel=40+((i)*abstandNetz);
-			this.lowergc.strokeLine(pixel, 0, pixel, this.lowerChart.getHeight()-30);
-			this.lowergc.fillText(String.valueOf(chartCounter), pixel-4,this.lowerChart.getHeight()-10);
-			chartCounter = chartCounter + 1;
+			double pixel=((i)*abstandNetz);
+			this.lowergc.strokeLine(pixel, 0, pixel, this.lowerChart.getHeight()-1);
 		}
 		
-		this.lowerGraphicPane.getChildren().add(this.lowerChart);
+		this.lowerGraphicPane.setContent(this.lowerChart);
 		}
+	/**
+	 * Creates The Lower X - Scale.
+	 */
+	@FXML
+	private void createLowerXScale() {
+		
+		// Hier wird das Skala Canvas erzeugt
+		this.lowerXChart = new Canvas(this.xLow.getWidth(),this.xLow.getHeight());
+		// Hier der Graphic Context dazu erzeugt
+		this.lowerXgc = this.lowerXChart.getGraphicsContext2D();
+		this.lowerXgc.clearRect(0, 0, this.lowerXChart.getWidth(), this.lowerXChart.getHeight());
+		
+		double abstandNetz = (this.lowerXChart.getWidth()-30)/(this.endzeitVar-this.startzeitVar);				
+		this.lowerXgc.setLineWidth(1);
+		this.lowerXgc.setFont(Font.getDefault());
+		this.lowerXgc.setFill(Color.BLACK);
+		this.lowerXgc.setStroke(Color.BLACK);
+		
+		// Variable zum Darstellen verschiedener Zeitpunkte
+				int chartCounter = startzeitVar ;
+				for(int i=0; i<=(endzeitVar-startzeitVar) ;i++) {
+					
+					if(i == 0){
+						double pixel=((i)*abstandNetz);
+						this.lowerXgc.fillText(String.valueOf(chartCounter), pixel+1, 15);
+						chartCounter = chartCounter + 1;	
+					}
+					if(i!=0){
+					double pixel=((i)*abstandNetz);
+					this.lowerXgc.fillText(String.valueOf(chartCounter), pixel-4, 15);
+					chartCounter = chartCounter + 1;
+					}
+			    }
+				
+		this.xLow.getChildren().add(lowerXChart);
+		
+	}
 	
+	/**
+	 * Creates The Lower Y - Scale.
+	 */
+	@FXML
+	private void createLowerYScale() {
+		
+		
+	}
+
 	/**
 	 * Creates The Helplines in the graphic.
 	 */
 	@FXML
 	private void createHelpLines() {
 		
-		double abstandNetz = (this.lowerChart.getWidth()-40-30)/(this.endzeitVar-this.startzeitVar);				
+		double abstandNetz = (this.lowerChart.getWidth()-30)/(this.endzeitVar-this.startzeitVar);				
 		this.lowergc.setLineWidth(1);
 		this.lowergc.setStroke(Color.LIGHTGREY);
 		this.uppergc.setLineWidth(1);
@@ -314,42 +428,45 @@ public class MainLayoutController {
 			int chartCounter = this.startzeitVar;
 			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
 								
-			double pixel=40+((i)*abstandNetz)+abstandNetz/4;
-			this.lowergc.strokeLine(pixel, 0, pixel, this.lowerChart.getHeight()-33);
+			double pixel=((i)*abstandNetz)+abstandNetz/4;
+			this.lowergc.strokeLine(pixel, 0, pixel, this.lowerChart.getHeight()-3);
 			chartCounter = chartCounter + 1;
 			}
 			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
 				
-			double pixel=40+((i)*abstandNetz)+abstandNetz/2;
-			this.lowergc.strokeLine(pixel, 0, pixel, this.lowerChart.getHeight()-33);
+			double pixel=((i)*abstandNetz)+abstandNetz/2;
+			this.lowergc.strokeLine(pixel, 0, pixel, this.lowerChart.getHeight()-3);
 			chartCounter = chartCounter + 1;
 			}
 			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
 				
-			double pixel=40+((i)*abstandNetz)+abstandNetz/4*3;
-			this.lowergc.strokeLine(pixel, 0, pixel, this.lowerChart.getHeight()-33);
+			double pixel=((i)*abstandNetz)+abstandNetz/4*3;
+			this.lowergc.strokeLine(pixel, 0, pixel, this.lowerChart.getHeight()-3);
 			chartCounter = chartCounter + 1;
 			}
-			for(int i=0; i<=(endzeitVar-startzeitVar) ;i++) {
+			
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
 				
-			double pixel=40+((i)*abstandNetz)+abstandNetz/4;
-			this.uppergc.strokeLine(pixel, 35, pixel, this.upperChart.getHeight());			
+			double pixel=((i)*abstandNetz)+abstandNetz/4;
+			this.uppergc.strokeLine(pixel, 0, pixel, this.lowerChart.getHeight());
 			chartCounter = chartCounter + 1;
-			 }
-				
-			for(int i=0; i<=(endzeitVar-startzeitVar) ;i++) {
-				
-			double pixel=40+((i)*abstandNetz)+abstandNetz/2;
-			this.uppergc.strokeLine(pixel, 35, pixel, this.upperChart.getHeight());			
+			}
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
+					
+			double pixel=((i)*abstandNetz)+abstandNetz/2;
+			this.uppergc.strokeLine(pixel, 0, pixel, this.lowerChart.getHeight());
 			chartCounter = chartCounter + 1;
-		    }
-			for(int i=0; i<=(endzeitVar-startzeitVar) ;i++) {
-				
-			double pixel=40+((i)*abstandNetz)+abstandNetz/4*3;
-			this.uppergc.strokeLine(pixel, 35, pixel, this.upperChart.getHeight());			
+			}
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
+					
+			double pixel=((i)*abstandNetz)+abstandNetz/4*3;
+			this.uppergc.strokeLine(pixel, 0, pixel, this.lowerChart.getHeight());
 			chartCounter = chartCounter + 1;
-		    }		
+			}
+					
 	}
+	
+	
 	//Methoden zur Weitergabe der Werte an andere Klassen
 	
 	public boolean isHilfslinienAktiv() {
