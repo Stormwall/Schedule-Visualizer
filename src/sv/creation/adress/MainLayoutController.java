@@ -154,7 +154,10 @@ public class MainLayoutController {
 		this.startzeitSlider.valueProperty().addListener(new ChangeListener<Number>(){
 				public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
 						// Handhabung wenn die Checkbox angew�hlt wird
-						startzeitVar = new_val.intValue();										
+						startzeitVar = new_val.intValue();	
+						if(startzeitVar > endzeitVar){
+							endzeitVar = endzeitVar+24;
+							}
 						}			
 					}				
 				);
@@ -163,8 +166,14 @@ public class MainLayoutController {
 		
 		this.endzeitSlider.valueProperty().addListener(new ChangeListener<Number>(){
 				public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
-						// Handhabung wenn die Checkbox angew�hlt wird
-					endzeitVar = new_val.intValue();										
+					// Handhabung wenn die Checkbox angew�hlt wird
+					endzeitVar = new_val.intValue();
+					if(startzeitVar > endzeitVar){
+						endzeitVar = new_val.intValue()+24;
+						}
+					if(startzeitVar < new_val.intValue()){
+						endzeitVar = new_val.intValue();
+						}
 					}			
 				}				
 		);
@@ -314,7 +323,11 @@ public class MainLayoutController {
 							if(i!=0){
 							double pixel=((i)*abstandNetz);
 							this.upperXgc.fillText(String.valueOf(chartCounter), pixel-4, 15);
+							if(chartCounter<23){
 							chartCounter = chartCounter + 1;
+							}else{
+								chartCounter = 0;
+								}
 							}
 					    }
 						
@@ -393,9 +406,14 @@ public class MainLayoutController {
 						chartCounter = chartCounter + 1;	
 					}
 					if(i!=0){
+						
 					double pixel=((i)*abstandNetz);
 					this.lowerXgc.fillText(String.valueOf(chartCounter), pixel-4, 15);
+					if(chartCounter<23){
 					chartCounter = chartCounter + 1;
+						}else{
+							chartCounter = 0;
+						}
 					}
 			    }
 				
