@@ -103,10 +103,13 @@ public class MainLayoutController {
 	  private void initialize() {
 		
 		//Erstellung der Datenbank
-		//DBConnection dbc =new DBConnection();
-		//dbc.initDBConnection();
-		//dbc.createTables();
-		//dbc.fillUmlaufplanIntoTables();
+		DBConnection dbc =new DBConnection();
+		dbc.initDBConnection();
+		dbc.createTables();
+		dbc.fillUmlaufplanIntoTables();
+		dbc.fillDienstplanIntoTable();
+		dbc.fillDiensttypenIntoTables();
+		dbc.fillFahrplanIntoTables();
 		//dbc.closeConnection();
 		
 		//Fades in Filter Panel
