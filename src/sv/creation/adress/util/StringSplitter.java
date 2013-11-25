@@ -237,15 +237,15 @@ public class StringSplitter {
 				// All lines with relevant data will be read
 				if (!zeile.startsWith("*") && !zeile.startsWith("$")) {
 					Collections.addAll(zeilenelemente, zeile.split(";"));
-
-					// The service types data will be split in separated array
-					// lists
-					if (zeilenelemente.size() == 2) {
-						//int idZiffer=Integer.parseInt(zeilenelemente.get(0));
-						dutyDutyID.add(zeilenelemente.get(0));
-						dutyDutyType.add(zeilenelemente.get(1));
-						zeilenelemente.clear();
-					}
+//
+//					// The service types data will be split in separated array
+//					// lists
+//					if (zeilenelemente.size() == 2) {
+//						//int idZiffer=Integer.parseInt(zeilenelemente.get(0));
+//						dutyDutyID.add(zeilenelemente.get(0));
+//						dutyDutyType.add(zeilenelemente.get(1));
+//						zeilenelemente.clear();
+//					}
 
 					// The service data will be split in seperated array lists
 					if (zeilenelemente.size() == 8) {
