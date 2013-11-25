@@ -143,6 +143,7 @@ public class DBConnection {
 //																	   + "FOREIGN KEY (ArrTime) REFERENCES ServiceJourney(ArrTime), "
 //																	   + "FOREIGN KEY (DepTime) REFERENCES ServiceJourney(DepTime), "
 //																	   + "FOREIGN KEY(DayID) REFERENCES Day(dayID));");
+			
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Stoppoint (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
 																	+ "StoppointID INTEGER NOT NULL, "
 																	+ "Code INTEGER NOT NULL, "
@@ -507,5 +508,10 @@ public class DBConnection {
 		  System.out.println("Could not execute SQL-Query!");
 		  e.printStackTrace(); }
 	}
+
+	public Connection getConnection() {
+		return connection;
+	}
+	
 	
 }

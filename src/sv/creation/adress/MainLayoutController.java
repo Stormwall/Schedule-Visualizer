@@ -1,6 +1,7 @@
 package sv.creation.adress;
 
 import sv.creation.adress.database.DBConnection;
+import sv.creation.adress.database.DBMatching;
 import javafx.animation.FadeTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -103,13 +104,18 @@ public class MainLayoutController {
 	  private void initialize() {
 		
 		//Erstellung der Datenbank
-		DBConnection dbc =new DBConnection();
-		dbc.initDBConnection();
-		dbc.createTables();
-		dbc.fillUmlaufplanIntoTables();
-		dbc.fillDienstplanIntoTable();
-		dbc.fillDiensttypenIntoTables();
-		dbc.fillFahrplanIntoTables();
+//		DBConnection dbc =new DBConnection();
+//		dbc.initDBConnection();
+//		dbc.createTables();
+//		dbc.fillUmlaufplanIntoTables();
+//		dbc.fillDienstplanIntoTable();
+//		dbc.fillDiensttypenIntoTables();
+//		dbc.fillFahrplanIntoTables();
+		DBMatching dbm=new DBMatching();
+		dbm.erstelleUmlaufplan();
+		dbm.test();
+		dbm.erstelleUmlaufplanDaten();
+		
 		//dbc.closeConnection();
 		
 		//Fades in Filter Panel

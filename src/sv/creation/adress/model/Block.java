@@ -1,6 +1,6 @@
 package sv.creation.adress.model;
 
-public class Linie {
+public class Block {
 	
 	private int id;
 	private int code;
@@ -11,7 +11,7 @@ public class Linie {
 	 * @param code
 	 * @param name
 	 */
-	public Linie(int id, int code, String name) {
+	public Block(int id, int code, String name) {
 		super();
 		this.id = id;
 		this.code = code;

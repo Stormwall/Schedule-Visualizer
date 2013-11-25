@@ -4,24 +4,34 @@ import java.util.ArrayList;
 
 public class Umlaufplan {
 	
-	private ArrayList<Umlaufplanteil> umlaufplan = new ArrayList<Umlaufplanteil>();
+	private int id;
+	private ArrayList<Block> umlauf = new ArrayList<Block>();
+	private ArrayList<Blockelement> fahrtZuUmlauf = new ArrayList<Blockelement>();
 
 	/**
 	 * @param umlaufplan
 	 */
-	public Umlaufplan(ArrayList<Umlaufplanteil> umlaufplan) {
-		super();
-		this.umlaufplan = umlaufplan;
+	public Umlaufplan(int id,ArrayList<Block> umlauf, ArrayList<Blockelement> fahrtZuUmlauf) {
+		// super();
+		this.id=id;
+		this.umlauf = umlauf;
+		this.fahrtZuUmlauf=fahrtZuUmlauf;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public ArrayList<Block> getUmlauf() {
+		return umlauf;
+	}
+
+	public ArrayList<Blockelement> getFahrtZuUmlauf() {
+		return fahrtZuUmlauf;
 	}
 
 	
-	public ArrayList<Umlaufplanteil> getUmlaufplan() {
-		return umlaufplan;
-	}
 
-	public void setUmlaufplan(ArrayList<Umlaufplanteil> umlaufplan) {
-		this.umlaufplan = umlaufplan;
-	}
 	
 	
 

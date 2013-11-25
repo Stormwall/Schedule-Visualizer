@@ -5,31 +5,31 @@ import java.util.ArrayList;
 public class Fahrplan {
 	
 	private ArrayList <Haltestellen> haltestellen = new ArrayList<Haltestellen>();
-	private ArrayList <Linie> linien = new ArrayList<Linie>();
+	private ArrayList <Block> Blockn = new ArrayList<Block>();
 	private ArrayList <Fahrzeugtyp> fahrzeugtypen = new ArrayList<Fahrzeugtyp>();
 	private ArrayList <Fahrzeugtypgruppen> fahrzeugtypgruppen = new ArrayList<Fahrzeugtypgruppen>();
-	private ArrayList <Linienfahrt> linienfahrten = new ArrayList<Linienfahrt>();
+	private ArrayList <Blockelement> Linienfahrten = new ArrayList<Blockelement>();
 	private ArrayList <Verbindung> verbindungen = new ArrayList<Verbindung>();
 	
 	/**
 	 * @param haltestellen
-	 * @param linien
+	 * @param Blockn
 	 * @param fahrzeugtypen
 	 * @param fahrzeugtypgruppen
-	 * @param linienfahrten
+	 * @param Linienfahrten
 	 * @param verbindungen
 	 */
 	public Fahrplan(ArrayList<Haltestellen> haltestellen,
-			ArrayList<Linie> linien, ArrayList<Fahrzeugtyp> fahrzeugtypen,
+			ArrayList<Block> Blockn, ArrayList<Fahrzeugtyp> fahrzeugtypen,
 			ArrayList<Fahrzeugtypgruppen> fahrzeugtypgruppen,
-			ArrayList<Linienfahrt> linienfahrten,
+			ArrayList<Blockelement> Linienfahrten,
 			ArrayList<Verbindung> verbindungen) {
 		super();
 		this.haltestellen = haltestellen;
-		this.linien = linien;
+		this.Blockn = Blockn;
 		this.fahrzeugtypen = fahrzeugtypen;
 		this.fahrzeugtypgruppen = fahrzeugtypgruppen;
-		this.linienfahrten = linienfahrten;
+		this.Linienfahrten = Linienfahrten;
 		this.verbindungen = verbindungen;
 	}
 
@@ -41,12 +41,12 @@ public class Fahrplan {
 		this.haltestellen = haltestellen;
 	}
 
-	public ArrayList<Linie> getLinien() {
-		return linien;
+	public ArrayList<Block> getBlockn() {
+		return Blockn;
 	}
 
-	public void setLinien(ArrayList<Linie> linien) {
-		this.linien = linien;
+	public void setBlockn(ArrayList<Block> Blockn) {
+		this.Blockn = Blockn;
 	}
 
 	public ArrayList<Fahrzeugtyp> getFahrzeugtypen() {
@@ -66,12 +66,12 @@ public class Fahrplan {
 		this.fahrzeugtypgruppen = fahrzeugtypgruppen;
 	}
 
-	public ArrayList<Linienfahrt> getLinienfahrten() {
-		return linienfahrten;
+	public ArrayList<Blockelement> getLinienfahrten() {
+		return Linienfahrten;
 	}
 
-	public void setLinienfahrten(ArrayList<Linienfahrt> linienfahrten) {
-		this.linienfahrten = linienfahrten;
+	public void setLinienfahrten(ArrayList<Blockelement> Linienfahrten) {
+		this.Linienfahrten = Linienfahrten;
 	}
 
 	public ArrayList<Verbindung> getVerbindungen() {
