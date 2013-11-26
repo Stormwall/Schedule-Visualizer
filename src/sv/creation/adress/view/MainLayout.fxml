@@ -2,11 +2,13 @@
 
 <?import java.lang.*?>
 <?import java.net.*?>
+<?import javafx.collections.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="500.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sv.creation.adress.MainLayoutController">
   <!-- TODO Add Nodes -->
@@ -15,7 +17,7 @@
       <items>
         <AnchorPane maxHeight="47.0" maxWidth="-1.0" minHeight="47.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
           <children>
-            <HBox id="HBox" fx:id="filterPanel" alignment="CENTER" layoutY="4.0" opacity="0.0" prefWidth="983.0" spacing="10.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0">
+            <HBox id="HBox" fx:id="filterPanel" alignment="CENTER" minWidth="-1.0" opacity="0.0" prefHeight="47.0" prefWidth="549.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
               <children>
                 <Label text="Startzeit" />
                 <Slider fx:id="startzeitSlider" majorTickUnit="1.0" max="24.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" value="0.0" />
@@ -24,20 +26,15 @@
                     <Insets left="20.0" fx:id="x1" />
                   </HBox.margin>
                 </Label>
-                <Slider fx:id="endzeitSlider" majorTickUnit="1.0" max="24.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" value="24.0" />
-                <CheckBox mnemonicParsing="false" text="Pläne ohne Deadheading">
+                <Slider fx:id="endzeitSlider" majorTickUnit="1.0" max="24.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" value="24.0">
                   <HBox.margin>
-                    <Insets left="35.0" />
+                    <Insets right="20.0" />
                   </HBox.margin>
-                </CheckBox>
-                <CheckBox mnemonicParsing="false" text="Kritische Elemente hervorheben" HBox.margin="$x1" />
-                <Button id="apply" fx:id="applyFilter" mnemonicParsing="false" onAction="#refreshBothGraphics" text="Anwenden">
-                  <HBox.margin>
-                    <Insets left="40.0" />
-                  </HBox.margin>
-                </Button>
+                </Slider>
+                <Button id="apply" fx:id="applyFilter" mnemonicParsing="false" onAction="#refreshBothGraphics" text="Anwenden" />
               </children>
             </HBox>
+            <Button fx:id="showFullscreen" mnemonicParsing="false" onAction="#openFullscreen" opacity="0.0" text="Vollbild anzeigen" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="13.0" />
           </children>
         </AnchorPane>
         <AnchorPane fx:id="MainPane" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
@@ -46,18 +43,136 @@
               <items>
                 <AnchorPane fx:id="leftinnerPane" maxHeight="-1.0" maxWidth="167.0" minHeight="0.0" minWidth="167.0" prefHeight="160.0" prefWidth="100.0" styleClass="background">
                   <children>
-                    <Button fx:id="createGraphic" mnemonicParsing="false" onAction="#createBothGraphics" text="Grafik Erstellen" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="34.0" />
-                    <Pane prefHeight="224.0" prefWidth="140.0" styleClass="background-paper" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="27.0">
+                    <GridPane prefHeight="443.0" prefWidth="167.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                       <children>
-                        <Label layoutX="9.0" layoutY="7.0" styleClass="label-header" text="Auswahl" />
+                        <HBox id="HBox" alignment="CENTER" prefHeight="41.0" prefWidth="167.0" spacing="5.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                          <children>
+                            <ChoiceBox prefWidth="99.00009999999747">
+                              <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                  <String fx:value="Item 1" />
+                                  <String fx:value="Item 2" />
+                                  <String fx:value="Item 3" />
+                                </FXCollections>
+                              </items>
+                            </ChoiceBox>
+                            <Button cancelButton="false" defaultButton="false" graphicTextGap="0.0" minWidth="16.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="23.0" text="+">
+                              <font>
+                                <Font size="10.0" fx:id="x2" />
+                              </font>
+                            </Button>
+                          </children>
+                        </HBox>
+                        <AnchorPane prefHeight="129.0" prefWidth="130.0" styleClass="background-paper" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                          <children>
+                            <Label layoutX="7.0" layoutY="0.0" styleClass="label-header" text="Umlaufpläne" />
+                            <GridPane prefHeight="155.0" prefWidth="147.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="2.0">
+                              <children>
+                                <Label text="Plan 1 :" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                <Label text="Plan 2 :" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                <Label text="Plan 3 :" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                                <Label text="Plan 4 :" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                                <Label text="Plan 5 :" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                                <Label text="Plan 6 :" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+                                <Label text="Plan 7 :" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+                              </children>
+                              <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              </columnConstraints>
+                              <padding>
+                                <Insets left="5.0" />
+                              </padding>
+                              <rowConstraints>
+                                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="18.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="19.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="19.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="19.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="19.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="19.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="19.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="19.0" vgrow="SOMETIMES" />
+                              </rowConstraints>
+                            </GridPane>
+                          </children>
+                          <GridPane.margin>
+                            <Insets left="10.0" right="10.0" fx:id="x3" />
+                          </GridPane.margin>
+                        </AnchorPane>
+                        <HBox id="HBox" alignment="CENTER" spacing="5.0" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                          <children>
+                            <ChoiceBox prefWidth="99.00009999999747">
+                              <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                  <String fx:value="Item 1" />
+                                  <String fx:value="Item 2" />
+                                  <String fx:value="Item 3" />
+                                </FXCollections>
+                              </items>
+                            </ChoiceBox>
+                            <Button cancelButton="false" defaultButton="false" font="$x2" graphicTextGap="0.0" minWidth="16.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="23.0" text="+" />
+                          </children>
+                        </HBox>
+                        <AnchorPane prefHeight="128.0" prefWidth="167.0" styleClass="background-paper" GridPane.columnIndex="0" GridPane.margin="$x3" GridPane.rowIndex="4">
+                          <children>
+                            <Label layoutX="7.0" layoutY="0.0" styleClass="label-header" text="Dienstpläne" />
+                            <GridPane prefHeight="155.0" prefWidth="147.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="3.0">
+                              <children>
+                                <Label text="Plan 1 :" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                <Label text="Plan 2 :" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                <Label text="Plan 3 :" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                                <Label text="Plan 4 :" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                                <Label text="Plan 5 :" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                                <Label text="Plan 6 :" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+                                <Label text="Plan 7 :" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+                              </children>
+                              <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              </columnConstraints>
+                              <padding>
+                                <Insets left="5.0" />
+                              </padding>
+                              <rowConstraints>
+                                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="18.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="19.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="19.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="19.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="19.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="19.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="19.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="19.0" vgrow="SOMETIMES" />
+                              </rowConstraints>
+                            </GridPane>
+                          </children>
+                          <padding>
+                            <Insets />
+                          </padding>
+                        </AnchorPane>
+                        <Button fx:id="createGraphic" mnemonicParsing="false" onAction="#createBothGraphics" text="Grafik Erstellen" GridPane.columnIndex="0" GridPane.rowIndex="6">
+                          <GridPane.margin>
+                            <Insets left="34.0" top="10.0" />
+                          </GridPane.margin>
+                        </Button>
                       </children>
-                    </Pane>
-                    <Button fx:id="showFullscreen" layoutX="28.0" layoutY="262.0" mnemonicParsing="false" onAction="#openFullscreen" text="Vollbild anzeigen" />
+                      <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      </columnConstraints>
+                      <rowConstraints>
+                        <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="-1.0" minHeight="10.0" prefHeight="160.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.0" minHeight="0.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="40.0" minHeight="6.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="-1.0" minHeight="10.0" prefHeight="160.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="-1.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="80.0" minHeight="0.0" prefHeight="47.0" vgrow="SOMETIMES" />
+                      </rowConstraints>
+                    </GridPane>
                   </children>
                 </AnchorPane>
                 <AnchorPane fx:id="rightinnerPane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                   <children>
-                    <SplitPane dividerPositions="0.7505668934240363" focusTraversable="true" orientation="VERTICAL" prefHeight="443.0" prefWidth="823.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <SplitPane dividerPositions="0.7551020408163265" focusTraversable="true" orientation="VERTICAL" prefHeight="443.0" prefWidth="823.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                       <items>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                           <children>
@@ -99,60 +214,275 @@
                                     </AnchorPane>
                                   </content>
                                 </Tab>
+                                <Tab text="Plan 2">
+                                  <content>
+                                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                      <children>
+                                        <GridPane id="graphicPane" prefHeight="297.0" prefWidth="821.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <children>
+                                            <ScrollPane id="upperGraphicPane" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                              <content>
+                                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                              </content>
+                                            </ScrollPane>
+                                            <ScrollPane id="lowerGraphicPane" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                              <content>
+                                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                              </content>
+                                            </ScrollPane>
+                                            <AnchorPane id="yUp" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                            <AnchorPane id="yLow" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                            <AnchorPane id="xUp" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                            <AnchorPane id="xLow" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          </children>
+                                          <columnConstraints>
+                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="100.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          </columnConstraints>
+                                          <rowConstraints>
+                                            <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          </rowConstraints>
+                                        </GridPane>
+                                      </children>
+                                    </AnchorPane>
+                                  </content>
+                                </Tab>
+                                <Tab text="Plan 3">
+                                  <content>
+                                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                      <children>
+                                        <GridPane id="graphicPane" prefHeight="297.0" prefWidth="821.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <children>
+                                            <ScrollPane id="upperGraphicPane" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                              <content>
+                                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                              </content>
+                                            </ScrollPane>
+                                            <ScrollPane id="lowerGraphicPane" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                              <content>
+                                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                              </content>
+                                            </ScrollPane>
+                                            <AnchorPane id="yUp" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                            <AnchorPane id="yLow" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                            <AnchorPane id="xUp" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                            <AnchorPane id="xLow" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          </children>
+                                          <columnConstraints>
+                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="100.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          </columnConstraints>
+                                          <rowConstraints>
+                                            <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          </rowConstraints>
+                                        </GridPane>
+                                      </children>
+                                    </AnchorPane>
+                                  </content>
+                                </Tab>
+                                <Tab text="Plan 4">
+                                  <content>
+                                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                      <children>
+                                        <GridPane id="graphicPane" prefHeight="297.0" prefWidth="821.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <children>
+                                            <ScrollPane id="upperGraphicPane" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                              <content>
+                                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                              </content>
+                                            </ScrollPane>
+                                            <ScrollPane id="lowerGraphicPane" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                              <content>
+                                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                              </content>
+                                            </ScrollPane>
+                                            <AnchorPane id="yUp" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                            <AnchorPane id="yLow" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                            <AnchorPane id="xUp" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                            <AnchorPane id="xLow" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          </children>
+                                          <columnConstraints>
+                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="100.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          </columnConstraints>
+                                          <rowConstraints>
+                                            <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          </rowConstraints>
+                                        </GridPane>
+                                      </children>
+                                    </AnchorPane>
+                                  </content>
+                                </Tab>
+                                <Tab text="Plan 5">
+                                  <content>
+                                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                      <children>
+                                        <GridPane id="graphicPane" prefHeight="297.0" prefWidth="821.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <children>
+                                            <ScrollPane id="upperGraphicPane" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                              <content>
+                                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                              </content>
+                                            </ScrollPane>
+                                            <ScrollPane id="lowerGraphicPane" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                              <content>
+                                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                              </content>
+                                            </ScrollPane>
+                                            <AnchorPane id="yUp" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                            <AnchorPane id="yLow" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                            <AnchorPane id="xUp" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                            <AnchorPane id="xLow" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          </children>
+                                          <columnConstraints>
+                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="100.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          </columnConstraints>
+                                          <rowConstraints>
+                                            <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          </rowConstraints>
+                                        </GridPane>
+                                      </children>
+                                    </AnchorPane>
+                                  </content>
+                                </Tab>
+                                <Tab text="Plan 6">
+                                  <content>
+                                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                      <children>
+                                        <GridPane id="graphicPane" prefHeight="297.0" prefWidth="821.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <children>
+                                            <ScrollPane id="upperGraphicPane" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                              <content>
+                                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                              </content>
+                                            </ScrollPane>
+                                            <ScrollPane id="lowerGraphicPane" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                              <content>
+                                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                              </content>
+                                            </ScrollPane>
+                                            <AnchorPane id="yUp" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                            <AnchorPane id="yLow" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                            <AnchorPane id="xUp" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                            <AnchorPane id="xLow" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          </children>
+                                          <columnConstraints>
+                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="100.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          </columnConstraints>
+                                          <rowConstraints>
+                                            <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          </rowConstraints>
+                                        </GridPane>
+                                      </children>
+                                    </AnchorPane>
+                                  </content>
+                                </Tab>
+                                <Tab text="Plan 7">
+                                  <content>
+                                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                      <children>
+                                        <GridPane id="graphicPane" prefHeight="297.0" prefWidth="821.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <children>
+                                            <ScrollPane id="upperGraphicPane" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                              <content>
+                                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                              </content>
+                                            </ScrollPane>
+                                            <ScrollPane id="lowerGraphicPane" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                              <content>
+                                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                              </content>
+                                            </ScrollPane>
+                                            <AnchorPane id="yUp" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                            <AnchorPane id="yLow" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                            <AnchorPane id="xUp" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                            <AnchorPane id="xLow" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          </children>
+                                          <columnConstraints>
+                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="100.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          </columnConstraints>
+                                          <rowConstraints>
+                                            <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          </rowConstraints>
+                                        </GridPane>
+                                      </children>
+                                    </AnchorPane>
+                                  </content>
+                                </Tab>
                               </tabs>
                             </TabPane>
                           </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="lowerDetailsPane" maxHeight="-1.0" minHeight="80.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                        <AnchorPane fx:id="lowerDetailsPane" maxHeight="105.0" minHeight="80.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                           <children>
-                            <SplitPane dividerPositions="0.6068376068376068" focusTraversable="true" prefHeight="126.0" prefWidth="821.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <SplitPane dividerPositions="0.24786324786324787" focusTraversable="true" maxHeight="-1.0" minHeight="107.0" prefHeight="126.0" prefWidth="821.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                               <items>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                <AnchorPane maxHeight="105.0" maxWidth="200.0" minHeight="0.0" minWidth="200.0" prefHeight="160.0" prefWidth="100.0">
                                   <children>
-                                    <ScrollPane prefHeight="124.0" prefWidth="493.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="0.0">
-                                      <content>
-                                        <AnchorPane id="Content" minHeight="-1.0" minWidth="0.0" prefHeight="200.0" prefWidth="492.0">
-                                          <children>
-                                            <Label layoutX="7.0" layoutY="6.0" styleClass="label-header" text="Details" />
-                                            <GridPane layoutX="30.0" layoutY="38.0" prefHeight="90.0">
-                                              <children>
-                                                <Label text="Dienst - ID" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                                                <Label text="Eigenschaft" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                                                <Label text="Eigenschaft" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                                                <Label text="Wert" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                                                <Label text="Wert" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <Label text="Wert" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <Label text="Eigenschaft" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-                                                <Label text="Wert" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                              </children>
-                                              <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                              </columnConstraints>
-                                              <rowConstraints>
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                              </rowConstraints>
-                                            </GridPane>
-                                          </children>
-                                        </AnchorPane>
-                                      </content>
-                                    </ScrollPane>
+                                    <GridPane layoutX="14.0" layoutY="8.0" prefHeight="90.0" prefWidth="187.0">
+                                      <children>
+                                        <Label text="Dienst - ID" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                        <Label text="Eigenschaft" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                        <Label text="Eigenschaft" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                        <Label text="Wert" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                        <Label text="Wert" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <Label text="Wert" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                        <Label text="Eigenschaft" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                                        <Label text="Wert" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                      </children>
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="141.0" minWidth="10.0" prefWidth="141.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="93.0" minWidth="10.0" prefWidth="46.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                    </GridPane>
                                   </children>
                                 </AnchorPane>
-                                <AnchorPane maxWidth="319.0" minHeight="0.0" minWidth="319.0" prefHeight="160.0" prefWidth="100.0">
+                                <AnchorPane maxHeight="-1.0" maxWidth="-1.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                   <children>
-                                    <TableView minWidth="-1.0" prefHeight="105.0" prefWidth="151.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="168.0" AnchorPane.topAnchor="0.0">
+                                    <TableView fx:id="dutyChoiceTable" editable="false" focusTraversable="true" minWidth="-1.0" prefHeight="103.0" prefWidth="458.0" tableMenuButtonVisible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="155.0" AnchorPane.topAnchor="0.0">
                                       <columns>
                                         <TableColumn prefWidth="75.0" text="Column X" />
                                         <TableColumn prefWidth="75.0" text="Column X" />
+                                        <TableColumn prefWidth="75.0" text="Column X" />
+                                        <TableColumn prefWidth="75.0" text="Column X" />
+                                        <TableColumn prefWidth="75.0" text="Column X" />
+                                        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="82.0" text="Column X" />
                                       </columns>
                                     </TableView>
-                                    <Button fx:id="refreshGraphic" mnemonicParsing="false" onAction="#refreshBothGraphics" prefWidth="90.0" text="Anwenden" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="6.0" />
-                                    <Button mnemonicParsing="false" text="Übernehmen" AnchorPane.bottomAnchor="31.0" AnchorPane.rightAnchor="7.0" />
-                                    <CheckBox fx:id="hilfslinien" mnemonicParsing="false" text="Hilfslinien Anzeigen" AnchorPane.leftAnchor="160.0" AnchorPane.topAnchor="6.0" />
+                                    <VBox id="VBox" alignment="CENTER" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="7.0">
+                                      <children>
+                                        <Button mnemonicParsing="false" text="Übernehmen" />
+                                        <Button fx:id="refreshGraphic" mnemonicParsing="false" onAction="#refreshBothGraphics" prefWidth="90.0" text="Anwenden" />
+                                      </children>
+                                    </VBox>
+                                    <CheckBox fx:id="hilfslinien" mnemonicParsing="false" text="Hilfslinien Anzeigen" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="6.0" />
                                   </children>
                                 </AnchorPane>
                               </items>

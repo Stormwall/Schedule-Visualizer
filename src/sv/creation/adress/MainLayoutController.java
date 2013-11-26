@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -44,6 +45,8 @@ public class MainLayoutController {
 	private ScrollPane upperGraphicPane;
 	@FXML
 	private ScrollPane lowerGraphicPane;
+	@FXML
+	private TableView dutyChoiceTable;
 	@FXML
 	private GridPane graphicPane;
 	@FXML
@@ -111,10 +114,10 @@ public class MainLayoutController {
 //		dbc.fillDienstplanIntoTable();
 //		dbc.fillDiensttypenIntoTables();
 //		dbc.fillFahrplanIntoTables();
-		DBMatching dbm=new DBMatching();
-		dbm.erstelleUmlaufplan();
-		dbm.test();
-		dbm.erstelleUmlaufplanDaten();
+//		DBMatching dbm=new DBMatching();		
+//		dbm.erstelleUmlaufplan();
+//		dbm.test();
+//		dbm.erstelleUmlaufplanDaten();
 		
 		//dbc.closeConnection();
 		
@@ -130,6 +133,10 @@ public class MainLayoutController {
 		ft.setToValue(1.0);
 		ft.setAutoReverse(true);
 		ft.play();
+		
+		// Sets the Column Resize Policy
+		
+		this.dutyChoiceTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		
 		// Listen for Resizechanges (Graphic)
 		this.upperGraphicPane.widthProperty().addListener(new ChangeListener<Number>() {
@@ -263,6 +270,12 @@ public class MainLayoutController {
 		fa.setToValue(1.0);
 		fa.setAutoReverse(true);
 		fa.play();
+		
+		FadeTransition faa = new FadeTransition(Duration.millis(500), this.showFullscreen);
+		faa.setFromValue(0.0);
+		faa.setToValue(1.0);
+		faa.setAutoReverse(true);
+		faa.play();
 	}
 	
 	/**
