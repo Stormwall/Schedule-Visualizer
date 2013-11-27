@@ -118,7 +118,11 @@
                             <Label layoutX="7.0" layoutY="0.0" styleClass="label-header" text="Dienstpläne" />
                             <GridPane prefHeight="155.0" prefWidth="147.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="3.0">
                               <children>
-                                <Label text="Plan 1 :" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                <Label text="Plan 1 :" wrapText="false" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                                  <tooltip>
+                                    <Tooltip text="Test" />
+                                  </tooltip>
+                                </Label>
                                 <Label text="Plan 2 :" GridPane.columnIndex="0" GridPane.rowIndex="2" />
                                 <Label text="Plan 3 :" GridPane.columnIndex="0" GridPane.rowIndex="3" />
                                 <Label text="Plan 4 :" GridPane.columnIndex="0" GridPane.rowIndex="4" />
