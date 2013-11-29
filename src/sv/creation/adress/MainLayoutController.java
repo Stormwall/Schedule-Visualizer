@@ -5,13 +5,18 @@ import sv.creation.adress.database.DBMatching;
 import javafx.animation.FadeTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -34,23 +39,93 @@ public class MainLayoutController {
 	@FXML
 	private AnchorPane lowerDetailsPane;
 	@FXML
-	private AnchorPane xUp;
+	private AnchorPane xUp1;
 	@FXML
-	private AnchorPane yUp;
+	private AnchorPane yUp1;
 	@FXML
-	private AnchorPane xLow;
+	private AnchorPane xLow1;
 	@FXML
-	private AnchorPane yLow;
+	private AnchorPane yLow1;
 	@FXML
-	private ScrollPane upperGraphicPane;
+	private AnchorPane xUp2;
 	@FXML
-	private ScrollPane lowerGraphicPane;
+	private AnchorPane yUp2;
+	@FXML
+	private AnchorPane xLow2;
+	@FXML
+	private AnchorPane yLow2;
+	@FXML
+	private AnchorPane xUp3;
+	@FXML
+	private AnchorPane yUp3;
+	@FXML
+	private AnchorPane xLow3;
+	@FXML
+	private AnchorPane yLow3;
+	@FXML
+	private AnchorPane xUp4;
+	@FXML
+	private AnchorPane yUp4;
+	@FXML
+	private AnchorPane xLow4;
+	@FXML
+	private AnchorPane yLow4;
+	@FXML
+	private AnchorPane xUp5;
+	@FXML
+	private AnchorPane yUp5;
+	@FXML
+	private AnchorPane xLow5;
+	@FXML
+	private AnchorPane yLow5;
+	@FXML
+	private AnchorPane xUp6;
+	@FXML
+	private AnchorPane yUp6;
+	@FXML
+	private AnchorPane xLow6;
+	@FXML
+	private AnchorPane yLow6;
+	@FXML
+	private AnchorPane xUp7;
+	@FXML
+	private AnchorPane yUp7;
+	@FXML
+	private AnchorPane xLow7;
+	@FXML
+	private AnchorPane yLow7;
+	@FXML
+	private ScrollPane upperGraphicPane1;
+	@FXML
+	private ScrollPane lowerGraphicPane1;
+	@FXML
+	private ScrollPane upperGraphicPane2;
+	@FXML
+	private ScrollPane lowerGraphicPane2;
+	@FXML
+	private ScrollPane upperGraphicPane3;
+	@FXML
+	private ScrollPane lowerGraphicPane3;
+	@FXML
+	private ScrollPane upperGraphicPane4;
+	@FXML
+	private ScrollPane lowerGraphicPane4;
+	@FXML
+	private ScrollPane upperGraphicPane5;
+	@FXML
+	private ScrollPane lowerGraphicPane5;
+	@FXML
+	private ScrollPane upperGraphicPane6;
+	@FXML
+	private ScrollPane lowerGraphicPane6;
+	@FXML
+	private ScrollPane upperGraphicPane7;
+	@FXML
+	private ScrollPane lowerGraphicPane7;
 	@FXML
 	private TableView dutyChoiceTable;
 	@FXML
 	private GridPane graphicPane;
-	@FXML
-	private Button createGraphic;
 	@FXML
 	private Button refreshGraphic;
 	@FXML
@@ -66,20 +141,149 @@ public class MainLayoutController {
 	@FXML
 	private HBox filterPanel;
 	
+	// Zugriff auf die unterschiedlichen TabPanes
+	@FXML
+	private ChoiceBox UPlan;
+	@FXML
+	private ChoiceBox DPlan;	
+	@FXML
+	private Label UPlan1;
+	@FXML
+	private Label UPlan2;
+	@FXML
+	private Label UPlan3;
+	@FXML
+	private Label UPlan4;
+	@FXML
+	private Label UPlan5;
+	@FXML
+	private Label UPlan6;
+	@FXML
+	private Label UPlan7;
+	@FXML
+	private Label UPlanValue1;
+	@FXML
+	private Label UPlanValue2;
+	@FXML
+	private Label UPlanValue3;
+	@FXML
+	private Label UPlanValue4;
+	@FXML
+	private Label UPlanValue5;
+	@FXML
+	private Label UPlanValue6;
+	@FXML
+	private Label UPlanValue7;
+	@FXML
+	private Label DPlan1;
+	@FXML
+	private Label DPlan2;
+	@FXML
+	private Label DPlan3;
+	@FXML
+	private Label DPlan4;
+	@FXML
+	private Label DPlan5;
+	@FXML
+	private Label DPlan6;
+	@FXML
+	private Label DPlan7;
+	@FXML
+	private Label DPlanValue1;
+	@FXML
+	private Label DPlanValue2;
+	@FXML
+	private Label DPlanValue3;
+	@FXML
+	private Label DPlanValue4;
+	@FXML
+	private Label DPlanValue5;
+	@FXML
+	private Label DPlanValue6;
+	@FXML
+	private Label DPlanValue7;
+	
+	// Zugriff auf die unterschiedlichen TabPanes
+	@FXML
+	private TabPane Planpane;
+	@FXML
+	private Tab Plan1;
+	@FXML
+	private Tab Plan2;
+	@FXML
+	private Tab Plan3;
+	@FXML
+	private Tab Plan4;
+	@FXML
+	private Tab Plan5;
+	@FXML
+	private Tab Plan6;
+	@FXML
+	private Tab Plan7;
+	
+	
 	// Konstruktion der Canvas Elemente
 	
-	private Canvas upperChart;
-	private Canvas lowerChart;
+	private Canvas upperChart1;
+	private Canvas lowerChart1;
+	private Canvas upperChart2;
+	private Canvas lowerChart2;
+	private Canvas upperChart3;
+	private Canvas lowerChart3;
+	private Canvas upperChart4;
+	private Canvas lowerChart4;
+	private Canvas upperChart5;
+	private Canvas lowerChart5;
+	private Canvas upperChart6;
+	private Canvas lowerChart6;
+	private Canvas upperChart7;
+	private Canvas lowerChart7;
 	private Canvas upperXChart;
 	private Canvas upperYChart;
 	private Canvas lowerXChart;
 	private Canvas lowerYChart;
-	private GraphicsContext uppergc;
-	private GraphicsContext lowergc;
-	private GraphicsContext upperXgc;
-	private GraphicsContext upperYgc;
-	private GraphicsContext lowerXgc;
-	private GraphicsContext lowerYgc;
+	private GraphicsContext uppergc1;
+	private GraphicsContext lowergc1;
+	private GraphicsContext uppergc2;
+	private GraphicsContext lowergc2;
+	private GraphicsContext uppergc3;
+	private GraphicsContext lowergc3;
+	private GraphicsContext uppergc4;
+	private GraphicsContext lowergc4;
+	private GraphicsContext uppergc5;
+	private GraphicsContext lowergc5;
+	private GraphicsContext uppergc6;
+	private GraphicsContext lowergc6;
+	private GraphicsContext uppergc7;
+	private GraphicsContext lowergc7;
+	private GraphicsContext upperXgc1;
+	private GraphicsContext upperYgc1;
+	private GraphicsContext lowerXgc1;
+	private GraphicsContext lowerYgc1;
+	private GraphicsContext upperXgc2;
+	private GraphicsContext upperYgc2;
+	private GraphicsContext lowerXgc2;
+	private GraphicsContext lowerYgc2;
+	private GraphicsContext upperXgc3;
+	private GraphicsContext upperYgc3;
+	private GraphicsContext lowerXgc3;
+	private GraphicsContext lowerYgc3;
+	private GraphicsContext upperXgc4;
+	private GraphicsContext upperYgc4;
+	private GraphicsContext lowerXgc4;
+	private GraphicsContext lowerYgc4;
+	private GraphicsContext upperXgc5;
+	private GraphicsContext upperYgc5;
+	private GraphicsContext lowerXgc5;
+	private GraphicsContext lowerYgc5;
+	private GraphicsContext upperXgc6;
+	private GraphicsContext upperYgc6;
+	private GraphicsContext lowerXgc6;
+	private GraphicsContext lowerYgc6;
+	private GraphicsContext upperXgc7;
+	private GraphicsContext upperYgc7;
+	private GraphicsContext lowerXgc7;
+	private GraphicsContext lowerYgc7;
 	
 	// Attribute der statistischen Darstellung
 	
@@ -134,34 +338,31 @@ public class MainLayoutController {
 		ft.setAutoReverse(true);
 		ft.play();
 		
-		// Sets the Column Resize Policy
+		// Sets the standardelement condition of the Interface
 		
 		this.dutyChoiceTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+		this.UPlan.setItems(FXCollections.observableArrayList("Umlaufplan  1a", "Umlaufplan 1b", "Umlaufplan 1c"));
+		this.DPlan.setItems(FXCollections.observableArrayList("Dienstplan  1a", "Dienstplan 1b", "Dienstplan 1c"));
 		
 		// Listen for Resizechanges (Graphic)
-		this.upperGraphicPane.widthProperty().addListener(new ChangeListener<Number>() {
+		this.upperGraphicPane1.widthProperty().addListener(new ChangeListener<Number>() {
 		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
 		       	refreshBothGraphics();		    	
 		    }
 		});
-		this.upperGraphicPane.heightProperty().addListener(new ChangeListener<Number>() {
+		this.upperGraphicPane1.heightProperty().addListener(new ChangeListener<Number>() {
 		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
 		    	refreshBothGraphics();		    	
 		    }
 		});	
-		this.lowerGraphicPane.widthProperty().addListener(new ChangeListener<Number>() {
+		this.lowerGraphicPane1.widthProperty().addListener(new ChangeListener<Number>() {
 		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
 		    	refreshBothGraphics();		    	
 		    }
 		});
-		this.lowerGraphicPane.heightProperty().addListener(new ChangeListener<Number>() {
+		this.lowerGraphicPane1.heightProperty().addListener(new ChangeListener<Number>() {
 		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
 		    	refreshBothGraphics();
-		    }
-		});
-		this.xLow.widthProperty().addListener(new ChangeListener<Number>() {
-		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-		    	refreshBothGraphics();		    	
 		    }
 		});
 		
@@ -202,7 +403,7 @@ public class MainLayoutController {
 					if(new_val == true){
 						if(grafikErstellt == true){
 							refreshBothGraphics();
-							createHelpLines();
+							createHelpLines();							
 							hilfslinienAktiv = true;
 						}else{							
 							mainApp.fehlerMeldungGrafikFehlt();	
@@ -229,10 +430,10 @@ public class MainLayoutController {
 		
 		//Hier wird das Feld gecleared und gepr�ft ob es schon existiert
 		if(this.grafikErstellt== true){
-			this.lowergc.clearRect(0, 0, this.lowerChart.getWidth(), this.lowerChart.getHeight());
-			this.uppergc.clearRect(0, 0, this.upperChart.getWidth(), this.upperChart.getHeight());
-			this.lowerXgc.clearRect(0, 0, this.lowerXChart.getWidth(), this.lowerXChart.getHeight());
-			this.upperXgc.clearRect(0, 0, this.upperXChart.getWidth(), this.upperXChart.getHeight());
+			this.lowergc1.clearRect(0, 0, this.lowerChart1.getWidth(), this.lowerChart1.getHeight());
+			this.uppergc1.clearRect(0, 0, this.upperChart1.getWidth(), this.upperChart1.getHeight());
+			this.lowerXgc1.clearRect(0, 0, this.lowerXChart.getWidth(), this.lowerXChart.getHeight());
+			this.upperXgc1.clearRect(0, 0, this.upperXChart.getWidth(), this.upperXChart.getHeight());
 	
 			createUpperGraphic();
 			createLowerGraphic();
@@ -257,12 +458,6 @@ public class MainLayoutController {
 		createLowerGraphic();
 		createLowerXScale();
 		createUpperXScale();
-		//Fades out Create Graphic Button
-		FadeTransition ft = new FadeTransition(Duration.millis(500), this.createGraphic);
-		ft.setFromValue(1.0);
-		ft.setToValue(0.0);
-		ft.setAutoReverse(true);
-		ft.play();
 		
 		//Fades in Filter Panel
 		FadeTransition fa = new FadeTransition(Duration.millis(500), this.filterPanel);
@@ -285,33 +480,33 @@ public class MainLayoutController {
 	private void createUpperGraphic() {
 		
 		//Initialize the Chart
-		this.upperChart = new Canvas(this.upperGraphicPane.getWidth()-4,this.upperheight);
+		this.upperChart1 = new Canvas(this.upperGraphicPane1.getWidth()-4,this.upperheight);
 				
 		//Erstellen des HintergrundgrafikKontextes
-		this.uppergc = this.upperChart.getGraphicsContext2D();
-		this.uppergc.clearRect(0, 0, this.upperChart.getWidth(), this.upperChart.getHeight());
+		this.uppergc1 = this.upperChart1.getGraphicsContext2D();
+		this.uppergc1.clearRect(0, 0, this.upperChart1.getWidth(), this.upperChart1.getHeight());
 		
 		//Erstellen des Hintergrundes
-		this.uppergc.setFill(Color.BEIGE);				
-		this.uppergc.fillRect(0, 0,this.upperChart.getWidth(),this.upperChart.getHeight());
+		this.uppergc1.setFill(Color.BEIGE);				
+		this.uppergc1.fillRect(0, 0,this.upperChart1.getWidth(),this.upperChart1.getHeight());
 		
-		this.uppergc.setLineWidth(3);
-		this.uppergc.setStroke(Color.BLACK);
-		this.uppergc.strokeLine(1, 0, 1, this.upperChart.getHeight());		
+		this.uppergc1.setLineWidth(3);
+		this.uppergc1.setStroke(Color.BLACK);
+		this.uppergc1.strokeLine(1, 0, 1, this.upperChart1.getHeight());		
 		
-		double abstandNetz = (this.upperChart.getWidth()-30)/(this.endzeitVar-this.startzeitVar);				
-		this.uppergc.setLineWidth(1);
-		this.uppergc.setFont(Font.getDefault());
-		this.uppergc.setFill(Color.BLACK);
-		this.uppergc.setStroke(Color.BLACK);
+		double abstandNetz = (this.upperChart1.getWidth()-30)/(this.endzeitVar-this.startzeitVar);				
+		this.uppergc1.setLineWidth(1);
+		this.uppergc1.setFont(Font.getDefault());
+		this.uppergc1.setFill(Color.BLACK);
+		this.uppergc1.setStroke(Color.BLACK);
 		// Variable zum Darstellen verschiedener Zeitpunkte
 		for(int i=0; i<=(endzeitVar-startzeitVar) ;i++) {
 			
 			double pixel=((i)*abstandNetz);
-			this.uppergc.strokeLine(pixel, 0, pixel, this.upperChart.getHeight());
+			this.uppergc1.strokeLine(pixel, 0, pixel, this.upperChart1.getHeight());
 	    }
 		
-		this.upperGraphicPane.setContent(this.upperChart);
+		this.upperGraphicPane1.setContent(this.upperChart1);
 		// Best�tigung das ein Feld erzeugt wurde
 		this.grafikErstellt = true;
 	}
@@ -322,16 +517,16 @@ public class MainLayoutController {
 	private void createUpperXScale() {
 		
 		// Hier wird das Skala Canvas erzeugt
-				this.upperXChart = new Canvas(this.xUp.getWidth(),this.xUp.getHeight());
+				this.upperXChart = new Canvas(this.upperGraphicPane1.getWidth(),this.xUp1.getHeight());
 				// Hier der Graphic Context dazu erzeugt
-				this.upperXgc = this.upperXChart.getGraphicsContext2D();
-				this.upperXgc.clearRect(0, 0, this.upperXChart.getWidth(), this.upperXChart.getHeight());
+				this.upperXgc1 = this.upperXChart.getGraphicsContext2D();
+				this.upperXgc1.clearRect(0, 0, this.upperXChart.getWidth(), this.upperXChart.getHeight());
 				
 				double abstandNetz = (this.upperXChart.getWidth()-30)/(this.endzeitVar-this.startzeitVar);				
-				this.upperXgc.setLineWidth(1);
-				this.upperXgc.setFont(Font.getDefault());
-				this.upperXgc.setFill(Color.BLACK);
-				this.upperXgc.setStroke(Color.BLACK);
+				this.upperXgc1.setLineWidth(1);
+				this.upperXgc1.setFont(Font.getDefault());
+				this.upperXgc1.setFill(Color.BLACK);
+				this.upperXgc1.setStroke(Color.BLACK);
 				
 				// Variable zum Darstellen verschiedener Zeitpunkte
 						int chartCounter = startzeitVar ;
@@ -339,12 +534,12 @@ public class MainLayoutController {
 							
 							if(i == 0){
 								double pixel=((i)*abstandNetz);
-								this.upperXgc.fillText(String.valueOf(chartCounter), pixel+1, 15);
+								this.upperXgc1.fillText(String.valueOf(chartCounter), pixel+1, 15);
 								chartCounter = chartCounter + 1;	
 							}
 							if(i!=0){
 							double pixel=((i)*abstandNetz);
-							this.upperXgc.fillText(String.valueOf(chartCounter), pixel-4, 15);
+							this.upperXgc1.fillText(String.valueOf(chartCounter), pixel-4, 15);
 							if(chartCounter<23){
 							chartCounter = chartCounter + 1;
 							}else{
@@ -353,7 +548,7 @@ public class MainLayoutController {
 							}
 					    }
 						
-				this.xUp.getChildren().add(upperXChart);
+				this.xUp1.getChildren().add(upperXChart);
 	}
 	
 	/**
@@ -371,34 +566,34 @@ public class MainLayoutController {
 	private void createLowerGraphic() {
 		
 		//Initialize the Chart
-		this.lowerChart = new Canvas(this.lowerGraphicPane.getWidth()-4,this.lowerheight);
+		this.lowerChart1 = new Canvas(this.lowerGraphicPane1.getWidth()-4,this.lowerheight);
 			
 		//Erstellen des HintergrundgrafikKontextes
-		this.lowergc = this.lowerChart.getGraphicsContext2D();
-		this.lowergc.clearRect(0, 0, this.lowerChart.getWidth(), this.lowerChart.getHeight());
+		this.lowergc1 = this.lowerChart1.getGraphicsContext2D();
+		this.lowergc1.clearRect(0, 0, this.lowerChart1.getWidth(), this.lowerChart1.getHeight());
 		
 		//Erstellen des Hintergrundes
-		this.lowergc.setFill(Color.BISQUE);				
-		this.lowergc.fillRect(0, 0,this.lowerChart.getWidth(),this.lowerChart.getHeight());
+		this.lowergc1.setFill(Color.BISQUE);				
+		this.lowergc1.fillRect(0, 0,this.lowerChart1.getWidth(),this.lowerChart1.getHeight());
 		
-		this.lowergc.setLineWidth(3);
-		this.lowergc.setStroke(Color.BLACK);
-		this.lowergc.strokeLine(1, 0, 1, this.lowerChart.getHeight());
-		this.lowergc.strokeLine(0, this.lowerChart.getHeight()-1, this.lowerChart.getWidth(),this.lowerChart.getHeight()-1);
+		this.lowergc1.setLineWidth(3);
+		this.lowergc1.setStroke(Color.BLACK);
+		this.lowergc1.strokeLine(1, 0, 1, this.lowerChart1.getHeight());
+		this.lowergc1.strokeLine(0, this.lowerChart1.getHeight()-1, this.lowerChart1.getWidth(),this.lowerChart1.getHeight()-1);
 		
-		double abstandNetz = (this.lowerChart.getWidth()-30)/(this.endzeitVar-this.startzeitVar);				
-		this.lowergc.setLineWidth(1);
-		this.lowergc.setFont(Font.getDefault());
-		this.lowergc.setFill(Color.BLACK);
-		this.lowergc.setStroke(Color.BLACK);	
+		double abstandNetz = (this.lowerChart1.getWidth()-30)/(this.endzeitVar-this.startzeitVar);				
+		this.lowergc1.setLineWidth(1);
+		this.lowergc1.setFont(Font.getDefault());
+		this.lowergc1.setFill(Color.BLACK);
+		this.lowergc1.setStroke(Color.BLACK);	
 		// Variable zum Darstellen verschiedener Zeitpunkte
 		for(int i=0; i<=(this.endzeitVar-this.startzeitVar) ;i++) {
 						
 			double pixel=((i)*abstandNetz);
-			this.lowergc.strokeLine(pixel, 0, pixel, this.lowerChart.getHeight()-1);
+			this.lowergc1.strokeLine(pixel, 0, pixel, this.lowerChart1.getHeight()-1);
 		}
 		
-		this.lowerGraphicPane.setContent(this.lowerChart);
+		this.lowerGraphicPane1.setContent(this.lowerChart1);
 		}
 	/**
 	 * Creates The Lower X - Scale.
@@ -407,16 +602,16 @@ public class MainLayoutController {
 	private void createLowerXScale() {
 		
 		// Hier wird das Skala Canvas erzeugt
-		this.lowerXChart = new Canvas(this.xLow.getWidth(),this.xLow.getHeight());
+		this.lowerXChart = new Canvas(this.lowerGraphicPane1.getWidth(),this.xLow1.getHeight());
 		// Hier der Graphic Context dazu erzeugt
-		this.lowerXgc = this.lowerXChart.getGraphicsContext2D();
-		this.lowerXgc.clearRect(0, 0, this.lowerXChart.getWidth(), this.lowerXChart.getHeight());
+		this.lowerXgc1 = this.lowerXChart.getGraphicsContext2D();
+		this.lowerXgc1.clearRect(0, 0, this.lowerXChart.getWidth(), this.lowerXChart.getHeight());
 		
 		double abstandNetz = (this.lowerXChart.getWidth()-30)/(this.endzeitVar-this.startzeitVar);				
-		this.lowerXgc.setLineWidth(1);
-		this.lowerXgc.setFont(Font.getDefault());
-		this.lowerXgc.setFill(Color.BLACK);
-		this.lowerXgc.setStroke(Color.BLACK);
+		this.lowerXgc1.setLineWidth(1);
+		this.lowerXgc1.setFont(Font.getDefault());
+		this.lowerXgc1.setFill(Color.BLACK);
+		this.lowerXgc1.setStroke(Color.BLACK);
 		
 		// Variable zum Darstellen verschiedener Zeitpunkte
 				int chartCounter = startzeitVar ;
@@ -424,13 +619,13 @@ public class MainLayoutController {
 					
 					if(i == 0){
 						double pixel=((i)*abstandNetz);
-						this.lowerXgc.fillText(String.valueOf(chartCounter), pixel+1, 15);
+						this.lowerXgc1.fillText(String.valueOf(chartCounter), pixel+1, 15);
 						chartCounter = chartCounter + 1;	
 					}
 					if(i!=0){
 						
 					double pixel=((i)*abstandNetz);
-					this.lowerXgc.fillText(String.valueOf(chartCounter), pixel-4, 15);
+					this.lowerXgc1.fillText(String.valueOf(chartCounter), pixel-4, 15);
 					if(chartCounter<23){
 					chartCounter = chartCounter + 1;
 						}else{
@@ -439,7 +634,7 @@ public class MainLayoutController {
 					}
 			    }
 				
-		this.xLow.getChildren().add(lowerXChart);
+		this.xLow1.getChildren().add(lowerXChart);
 		
 	}
 	
@@ -458,49 +653,49 @@ public class MainLayoutController {
 	@FXML
 	private void createHelpLines() {
 		
-		double abstandNetz = (this.lowerChart.getWidth()-30)/(this.endzeitVar-this.startzeitVar);				
-		this.lowergc.setLineWidth(1);
-		this.lowergc.setStroke(Color.LIGHTGREY);
-		this.uppergc.setLineWidth(1);
-		this.uppergc.setStroke(Color.LIGHTGREY);
+		double abstandNetz = (this.lowerChart1.getWidth()-30)/(this.endzeitVar-this.startzeitVar);				
+		this.lowergc1.setLineWidth(1);
+		this.lowergc1.setStroke(Color.LIGHTGREY);
+		this.uppergc1.setLineWidth(1);
+		this.uppergc1.setStroke(Color.LIGHTGREY);
 		
 		// Methoden zu Erstellung der dynamischen Hilfslinien
 			int chartCounter = this.startzeitVar;
 			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
 								
 			double pixel=((i)*abstandNetz)+abstandNetz/4;
-			this.lowergc.strokeLine(pixel, 0, pixel, this.lowerChart.getHeight()-3);
+			this.lowergc1.strokeLine(pixel, 0, pixel, this.lowerChart1.getHeight()-3);
 			chartCounter = chartCounter + 1;
 			}
 			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
 				
 			double pixel=((i)*abstandNetz)+abstandNetz/2;
-			this.lowergc.strokeLine(pixel, 0, pixel, this.lowerChart.getHeight()-3);
+			this.lowergc1.strokeLine(pixel, 0, pixel, this.lowerChart1.getHeight()-3);
 			chartCounter = chartCounter + 1;
 			}
 			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
 				
 			double pixel=((i)*abstandNetz)+abstandNetz/4*3;
-			this.lowergc.strokeLine(pixel, 0, pixel, this.lowerChart.getHeight()-3);
+			this.lowergc1.strokeLine(pixel, 0, pixel, this.lowerChart1.getHeight()-3);
 			chartCounter = chartCounter + 1;
 			}
 			
 			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
 				
 			double pixel=((i)*abstandNetz)+abstandNetz/4;
-			this.uppergc.strokeLine(pixel, 0, pixel, this.lowerChart.getHeight());
+			this.uppergc1.strokeLine(pixel, 0, pixel, this.lowerChart1.getHeight());
 			chartCounter = chartCounter + 1;
 			}
 			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
 					
 			double pixel=((i)*abstandNetz)+abstandNetz/2;
-			this.uppergc.strokeLine(pixel, 0, pixel, this.lowerChart.getHeight());
+			this.uppergc1.strokeLine(pixel, 0, pixel, this.lowerChart1.getHeight());
 			chartCounter = chartCounter + 1;
 			}
 			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
 					
 			double pixel=((i)*abstandNetz)+abstandNetz/4*3;
-			this.uppergc.strokeLine(pixel, 0, pixel, this.lowerChart.getHeight());
+			this.uppergc1.strokeLine(pixel, 0, pixel, this.lowerChart1.getHeight());
 			chartCounter = chartCounter + 1;
 			}
 					
