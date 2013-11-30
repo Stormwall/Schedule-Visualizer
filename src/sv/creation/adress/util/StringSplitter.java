@@ -2,6 +2,7 @@
 package sv.creation.adress.util;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -185,6 +186,8 @@ public class StringSplitter {
 		private static ArrayList<String> breakTimeAllowsStarts = new ArrayList<String>();
 		private static ArrayList<String> breakTimeAllowsEnds = new ArrayList<String>();
 		private static ArrayList<String> workingtimeWithoutBreakMax = new ArrayList<String>();
+		
+		private String filename=null;
 	
 	public static ArrayList<String> convertStringToArraylist(String str) {
 
@@ -222,8 +225,10 @@ public class StringSplitter {
 		try {
 
 			// test.txt Data has to be in the project file in your workspace
-			BufferedReader dienstplan = new BufferedReader(new FileReader(
-					"resources/quellen/testdienstplan.txt"));
+			File file =new File("resources/quellen/testdienstplan.txt");
+			BufferedReader dienstplan = new BufferedReader(new FileReader(file));
+			filename=file.getName();
+			
 			String zeile = null;
 			ArrayList<String> zeilenelemente = new ArrayList<String>();
 			boolean day=false;
@@ -315,8 +320,9 @@ public class StringSplitter {
 		try {
 
 			// testumlauf.txt Data has to be in the project file in your workspace
-			BufferedReader umlaufplan = new BufferedReader(new FileReader(
-					"resources/quellen/testumlauf.txt"));
+			File file =new File("resources/quellen/testumlauf2.txt");
+			BufferedReader umlaufplan = new BufferedReader(new FileReader(file));
+			filename=file.getName();
 			String zeile = null;
 			ArrayList<String> zeilenelemente = new ArrayList<String>();
 			boolean day=false;
@@ -344,7 +350,7 @@ public class StringSplitter {
 					}
 
 					// The block element data will be split, parsed and saved in separated array lists
-					if (zeilenelemente.size() == 7) {
+					if (zeilenelemente.size() == 8) {
 						int blockID=Integer.parseInt(zeilenelemente.get(0));
 						//int serviceJourneyID =Integer.parseInt(zeilenelemente.get(1));
 						int fromStopID=Integer.parseInt(zeilenelemente.get(2));
@@ -354,7 +360,19 @@ public class StringSplitter {
 						int elementType=Integer.parseInt(zeilenelemente.get(6));
 			
 						blockelementBlockID.add(blockID);
-						blockelementServiceJourneyID.add(zeilenelemente.get(1));
+						try{
+						Integer zahl=0;
+						zahl=Integer.parseInt(zeilenelemente.get(1));
+						if(zahl!=0){
+							String string=zahl.toString();
+							blockelementServiceJourneyID.add(string);
+						
+						
+						}	
+						else blockelementServiceJourneyID.add(zeilenelemente.get(1));
+						}catch(NumberFormatException e){
+							e.printStackTrace();
+						}
 						blockelementFromStopID.add(fromStopID);
 						blockelementToStopID.add(toStopID);
 						blockelementDepTime.add(zeilenelemente.get(4));
@@ -411,8 +429,9 @@ public class StringSplitter {
 
 			// testfahrplan.txt Data has to be in the project file in your
 			// workspace
-			BufferedReader fahrplan = new BufferedReader(new FileReader(
-					"resources/quellen/testfahrplan2.txt"));
+			File file =new File("resources/quellen/testfahrplan2.txt");
+			BufferedReader fahrplan = new BufferedReader(new FileReader(file));
+			filename=file.getName();
 			String zeile = null;
 			ArrayList<String> zeilenelemente = new ArrayList<String>();
 
@@ -1287,6 +1306,12 @@ public class StringSplitter {
 	public  ArrayList<String> getBlockelementDayID() {
 		return blockelementDayID;
 	}
+
+	public String getFilename() {
+		return filename;
+	}
+	
+	
 	
 	
 	

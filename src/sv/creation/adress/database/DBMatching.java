@@ -1,6 +1,5 @@
 package sv.creation.adress.database;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -42,7 +41,7 @@ public class DBMatching {
 			
 		try{
 		ResultSet rest2 = stmt
-					.executeQuery("SELECT  DISTINCT be.ID, be.BlockID, be.ServiceJourneyID, be.FromStopID, be.ToStopID, be.DepTime, be.ArrTime, be.elementType, be.ServiceJourneyCode FROM Blockelement AS be, Block WHERE Block.BlockID=Blockelement.BlockID;");
+					.executeQuery("SELECT DISTINCT be.ID, be.BlockID, be.ServiceJourneyID, sj.FromStopID, sj.ToStopID, sj.DepTime, sj.ArrTime, be.elementType FROM Blockelement AS be, Block, ServiceJourney AS sj WHERE Block.BlockID=be.BlockID AND be.ServiceJourneyID = sj.ServiceJourneyID;");
 			
 		while(rest2.next()){
 			int id=Integer.parseInt(rest2.getString("ID"));
@@ -56,7 +55,8 @@ public class DBMatching {
 			int serviceJourneyCode=Integer.parseInt(rest2.getString("ServiceJourneyCode"));
 			
 			fahrtZuUmlauf.add(new Blockelement(id,blockID,serviceJourneyID,fromStopID,toStopID,depTime,arrTime, elementType,serviceJourneyCode));
-			}
+		System.out.println("Hat geklappt!");	
+		}
 	
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block

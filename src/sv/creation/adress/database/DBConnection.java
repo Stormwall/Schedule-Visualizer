@@ -84,7 +84,8 @@ public class DBConnection {
 																	  + "BlockID INTEGER NOT NULL, "
 																	  + "ServiceJourneyID INTEGER NOT NULL, "
 																	  + "ElementType INTEGER NOT NULL, "
-																	  + "DayID INTEGER);");
+																	  + "DayID INTEGER,"
+																	  + "DienstplanID INTEGER NOT NULL);");
 //																	  + "FOREIGN KEY (DutyID) REFERENCES Duty(ID), "
 //																	  + "FOREIGN KEY (BlockID) REFERENCES Block(BlockID), "
 //																	  + "FOREIGN KEY (ServiceJourneyID) REFERENCES ServiceJourney(ID), "
@@ -127,6 +128,9 @@ public class DBConnection {
 																   + "BreakTimeAllowedEnds VARCHAR(30) NOT NULL "
 																   //+ "WorkingTimeWithoutBreakMax VARCHAR(30)"
 																   + ");");
+			
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Dienstplan (ID INTEGER PRIMARY KEY AUTOINCREMENT, Bezeichnung VARCHAR(255), FahrplanID INTEGER);");
+			
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Block (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
 																+ "BlockID INTEGER NOT NULL, "
 																+ "Code INTEGER NOT NULL, "
@@ -135,7 +139,8 @@ public class DBConnection {
 																	   + "BlockID INTEGER NOT NULL, "
 																	   + "ServiceJourneyID INTEGER NOT NULL, "
 																	   + "ElementType INTEGER NOT NULL, "
-																	   + "DayID INTEGER);");
+																	   + "DayID INTEGER,"
+																	   + "UmlaufplanID INTEGER NOT NULL);");
 //																	   + "FOREIGN KEY (BlockID) REFERENCES Block(BlockID), "
 //																	   + "FOREIGN KEY (ServiceJourneyID) REFERENCES ServiceJourney(ID), "
 //																	   + "FOREIGN KEY (FromStopID) REFERENCES ServiceJourney(FromStopID), "
@@ -143,6 +148,8 @@ public class DBConnection {
 //																	   + "FOREIGN KEY (ArrTime) REFERENCES ServiceJourney(ArrTime), "
 //																	   + "FOREIGN KEY (DepTime) REFERENCES ServiceJourney(DepTime), "
 //																	   + "FOREIGN KEY(DayID) REFERENCES Day(dayID));");
+			
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Umlaufplan (ID INTEGER PRIMARY KEY AUTOINCREMENT, Bezeichnung VARCHAR(255), FahrplanID INTEGER);");
 			
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Stoppoint (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
 																	+ "StoppointID INTEGER NOT NULL, "
@@ -190,7 +197,8 @@ public class DBConnection {
 																		 + "MaxShiftForwardSeconds INTEGER NOT NULL, "
 																		 + "FromStopBreakFacility INTEGER NOT NULL, "
 																		 + "ToStopBreakFacility INTEGER NOT NULL, "
-																		 + "Code INTEGER);");
+																		 + "Code INTEGER,"
+																		 + "FahrplanID INTEGER NOT NULL);");
 //																		 + "FOREIGN KEY (LineID) REFERENCES Line(ID), "
 //																		 + "FOREIGN KEY (VehTypeGroupID) REFERENCES VehicleTypeGroup(ID), "
 //																		 + "FOREIGN KEY(FromStopID) REFERENCES Stoppoint(ID), "
@@ -226,7 +234,10 @@ public class DBConnection {
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Day (dayID INTEGER NOT NULL PRIMARY KEY, "
 														      + "Name VARCHAR(10));");
 			
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Fahrplan (ID INTEGER PRIMARY KEY AUTOINCREMENT, Bezeichnung VARCHAR(255));");
+			
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS PrimeDelaySzenario (ID INTEGER PRIMARY KEY AUTOINCREMENT, DutyID INTEGER, VehicleID INTEGER, ServiceJourneyID VARCHAR(30) NOT NULL, DepTime VARCHAR(30) NOT NULL, Delay INTEGER NOT NULL); ");
+			
 
 			
 			ResultSet rest1 = stmnt
@@ -260,6 +271,8 @@ public class DBConnection {
 		  try{ Statement stmnt=connection.createStatement(); //Fill values in
 		  //specific tables
 		  
+		  stmnt.executeUpdate("INSERT INTO Umlaufplan (Bezeichnung) VALUES ('"+ss.getFilename()+"');");
+		  
 		  Iterator<Integer> it = ss.getId().iterator(); 
 		  Iterator<Integer> it2 =ss.getVehTypeID().iterator(); 
 		  Iterator<Integer> it3 =ss.getDepotID().iterator(); 
@@ -279,9 +292,10 @@ public class DBConnection {
 			  stmnt.executeUpdate("INSERT INTO Block (BlockID, Code, Name)  VALUES('"+it.next()+"','"+it2.next()+"','"+it3.next()+"');"); }
 		  
 		  
-		  while(it4.hasNext()&&it5.hasNext()&&it6.hasNext()&&it10.hasNext()){ stmnt.executeUpdate(
-		  "INSERT INTO Blockelement (BlockID, ServiceJourneyID, ElementType, DayID) VALUES('"
-		  +it4.next()+"','"+it5.next()+"','"+it10.next()+"','"+dayID+"');");}
+		  while(it4.hasNext()&&it5.hasNext()&&it6.hasNext()&&it10.hasNext()){ 
+			 stmnt.executeUpdate(
+		  "INSERT INTO Blockelement (BlockID, ServiceJourneyID, ElementType, DayID, UmlaufplanID) VALUES('"
+		  +it4.next()+"','"+it5.next()+"','"+it10.next()+"','"+dayID+"', (SELECT ID FROM Umlaufplan WHERE Bezeichnung='"+ss.getFilename()+"'));");}
 		  System.out.println("Umlaufplan importiert!");
 		  }catch(SQLException e){
 		  System.out.println("Could not execute SQL-Query!");
@@ -342,6 +356,7 @@ public class DBConnection {
 		  }catch(SQLException e){
 		  System.out.println("Could not execute SQL-Query!");
 		  e.printStackTrace(); }
+		 
 		
 	}
 	
@@ -353,6 +368,10 @@ public class DBConnection {
 		
 		  try{ Statement stmnt=connection.createStatement(); //Fill values in
 		  //specific tables
+		  
+		  stmnt.executeUpdate("INSERT INTO Dienstplan (Bezeichnung) VALUES ('"+ss.getFilename()+"');");
+		  
+		 // stmnt.executeUpdate("INSERT INTO Dienstplan (Bezeichnung, FahrplanID) VALUES ('"+ss.getFilename()+"',(SELECT f.ID FROM Fahrplan AS f, ServiceJourney, Dutyelement WHERE f.ID=ServiceJourney.FahrplanID AND ServiceJourney.ServiceJourneyID=Dutyelement.ServiceJourneyID));");
 		  
 		  Iterator<String> it = ss.getDutyDutyID().iterator(); 
 		  Iterator<String> it2 =ss.getDutyDutyType().iterator(); 
@@ -372,13 +391,18 @@ public class DBConnection {
 			 
 		  stmnt.executeUpdate("INSERT INTO Duty (DutyID, DutyType) VALUES('"+it.next()+"','"+it2.next()+"');"); }
 		   
-		  while(it3.hasNext()&&it4.hasNext()&&it5.hasNext()&&it10.hasNext()) 
+		  while(it3.hasNext()&&it4.hasNext()&&it5.hasNext()&&it10.hasNext()) {
 		  stmnt.executeUpdate(		  
-		  "INSERT INTO Dutyelement (DutyId, BlockID, ServiceJourneyID, ElementType, DayID) VALUES('"
-		  +it3.next()+"','"+it4.next()+"','"+it5.next()+"','"+it10.next()+"','"+dayID+"');");
+		  "INSERT INTO Dutyelement (DutyId, BlockID, ServiceJourneyID, ElementType, DayID, DienstplanID) VALUES('"
+		  +it3.next()+"','"+it4.next()+"','"+it5.next()+"','"+it10.next()+"','"+dayID+"', (SELECT ID FROM Dienstplan WHERE Bezeichnung='"+ss.getFilename()+"'));");}
+		  
+		  System.out.println("INSERT INTO Dienstplan(FahrplanID) VALUES(SELECT f.ID FROM Fahrplan AS f, ServiceJourney, Dutyelement, Dienstplan WHERE f.ID=ServiceJourney.FahrplanID AND ServiceJourney.ServiceJourneyID=Dutyelement.ServiceJourneyID AND Dienstplan.Bezeichnung='"+ss.getFilename()+"');");
+		 
+		  stmnt.executeUpdate("INSERT INTO Dienstplan(FahrplanID) VALUES((SELECT f.ID FROM Fahrplan AS f, ServiceJourney, Dutyelement, Dienstplan WHERE f.ID=ServiceJourney.FahrplanID AND ServiceJourney.ServiceJourneyID=Dutyelement.ServiceJourneyID AND Dienstplan.Bezeichnung='"+ss.getFilename()+"'));");
 		  }catch(SQLException e){
 		  System.out.println("Could not execute SQL-Query!");
 		  e.printStackTrace(); }
+		  
 		
 	}
 	
@@ -390,6 +414,8 @@ public class DBConnection {
 		
 		  try{ Statement stmnt=connection.createStatement(); //Fill values in
 		  //specific tables
+		  
+		  stmnt.executeUpdate("INSERT INTO Fahrplan (Bezeichnung) VALUES ('"+ss.getFilename()+"');");
 		  
 		  Iterator<Integer> it = ss.getStopID().iterator(); 
 		  Iterator<String> it2 =ss.getStopCode().iterator(); 
@@ -477,7 +503,9 @@ public class DBConnection {
 		  
 		  while((it23.hasNext()&&it24.hasNext()&&it25.hasNext()&&it26.hasNext()&&it27.hasNext()&&it28.hasNext()&&it29.hasNext()&&it30.hasNext()&&it31.hasNext()&&it32.hasNext()&&it33.hasNext()&&it34.hasNext()&&it35.hasNext()&&it36.hasNext())){
 			  
-			  stmnt.executeUpdate("INSERT INTO ServiceJourney (ServiceJourneyID, LineID, FromStopID, ToStopID, DepTime, ArrTime, MinAheadTime, MinLayoverTime, VehTypeGroupID, MaxShiftBackwardSeconds, MaxShiftForwardSeconds, FromStopBreakFacility, ToStopBreakFacility, Code) VALUES('"+it23.next()+"','"+it24.next()+"','"+it25.next()+"','"+it26.next()+"','"+it27.next()+"','"+it28.next()+"','"+it29.next()+"','"+it30.next()+"','"+it31.next()+"','"+it32.next()+"','"+it33.next()+"','"+it34.next()+"','"+it35.next()+"','"+it36.next()+"');"); 
+			  //System.out.println("INSERT INTO ServiceJourney (ServiceJourneyID, LineID, FromStopID, ToStopID, DepTime, ArrTime, MinAheadTime, MinLayoverTime, VehTypeGroupID, MaxShiftBackwardSeconds, MaxShiftForwardSeconds, FromStopBreakFacility, ToStopBreakFacility, Code, FahrplanID) VALUES('"+it23.next()+"','"+it24.next()+"','"+it25.next()+"','"+it26.next()+"','"+it27.next()+"','"+it28.next()+"','"+it29.next()+"','"+it30.next()+"','"+it31.next()+"','"+it32.next()+"','"+it33.next()+"','"+it34.next()+"','"+it35.next()+"','"+it36.next()+"', (SELECT ID FROM Fahrplan WHERE Bezeichnung='"+ss.getFilename()+"'));"); 
+		 
+			  stmnt.executeUpdate("INSERT INTO ServiceJourney (ServiceJourneyID, LineID, FromStopID, ToStopID, DepTime, ArrTime, MinAheadTime, MinLayoverTime, VehTypeGroupID, MaxShiftBackwardSeconds, MaxShiftForwardSeconds, FromStopBreakFacility, ToStopBreakFacility, Code, FahrplanID) VALUES('"+it23.next()+"','"+it24.next()+"','"+it25.next()+"','"+it26.next()+"','"+it27.next()+"','"+it28.next()+"','"+it29.next()+"','"+it30.next()+"','"+it31.next()+"','"+it32.next()+"','"+it33.next()+"','"+it34.next()+"','"+it35.next()+"','"+it36.next()+"', (SELECT ID FROM Fahrplan WHERE Bezeichnung='"+ss.getFilename()+"'));"); 
 		  }
 		  
 		  while((it37.hasNext()&&it38.hasNext()&&it39.hasNext()&&it40.hasNext()&&it41.hasNext()&&it42.hasNext())){
