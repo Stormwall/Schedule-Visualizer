@@ -66,6 +66,17 @@ public class StringSplitter {
 	private static ArrayList<Integer> blockelementElementType = new ArrayList<Integer>();
 	private static ArrayList<Integer> blockelementServiceJourneyCode = new ArrayList<Integer>();
 	
+	
+	// Array lists of sonderfahrt
+		private static ArrayList<Integer> sonderfahrtBlockID = new ArrayList<Integer>();
+		private static ArrayList<String> sonderfahrtServiceJourneyID = new ArrayList<String>();
+		private static ArrayList<Integer> sonderfahrtFromStopID = new ArrayList<Integer>();
+		private static ArrayList<Integer> sonderfahrtToStopID = new ArrayList<Integer>();
+		private static ArrayList<String> sonderfahrtDepTime = new ArrayList<String>();
+		private static ArrayList<String> sonderfahrtArrTime = new ArrayList<String>();
+		private static ArrayList<Integer> sonderfahrtElementType = new ArrayList<Integer>();
+		private static ArrayList<Integer> sonderfahrtServiceJourneyCode = new ArrayList<Integer>();
+	
 	//Array list of day id
 	private static ArrayList<String> blockelementDayID = new ArrayList<String>();
 
@@ -260,7 +271,19 @@ public class StringSplitter {
 						int elementTypeZiffer=Integer.parseInt(zeilenelemente.get(7));
 						dutyelementDutyType.add(zeilenelemente.get(0));
 						dutyelementBlockID.add(blockIDZiffer);
-						dutyelementServiceJourneyID.add(zeilenelemente.get(2));
+						try{
+							String zahl=null;
+							zahl=zeilenelemente.get(2);
+							if(zahl.matches("[0-9]+")){
+//								String string=Integer.toString(zahl);
+								dutyelementServiceJourneyID.add(zahl);
+							
+							
+							}	
+							else dutyelementServiceJourneyID.add(zeilenelemente.get(2));
+							}catch(NumberFormatException e){
+								e.printStackTrace();
+							}
 						dutyelementFromStopID.add(fromStopIDZiffer);
 						dutyelementToStopID.add(toStopIDZiffer);
 						dutyelementDepTime.add(zeilenelemente.get(5));
@@ -350,51 +373,53 @@ public class StringSplitter {
 					}
 
 					// The block element data will be split, parsed and saved in separated array lists
-					if (zeilenelemente.size() == 8) {
-						int blockID=Integer.parseInt(zeilenelemente.get(0));
-						//int serviceJourneyID =Integer.parseInt(zeilenelemente.get(1));
-						int fromStopID=Integer.parseInt(zeilenelemente.get(2));
-						int toStopID=Integer.parseInt(zeilenelemente.get(3));
-						//int depTime=Integer.parseInt(zeilenelemente.get(4));
-						//int arrTime=Integer.parseInt(zeilenelemente.get(5));
-						int elementType=Integer.parseInt(zeilenelemente.get(6));
-			
-						blockelementBlockID.add(blockID);
-						try{
-						Integer zahl=0;
-						zahl=Integer.parseInt(zeilenelemente.get(1));
-						if(zahl!=0){
-							String string=zahl.toString();
-							blockelementServiceJourneyID.add(string);
+					if (zeilenelemente.size() >= 7) {
+						String zahl=null;
+						zahl=zeilenelemente.get(1);
+						if(zahl.matches("[0-9]+")){
+							int blockID=Integer.parseInt(zeilenelemente.get(0));
+							//int serviceJourneyID =Integer.parseInt(zeilenelemente.get(1));
+							int fromStopID=Integer.parseInt(zeilenelemente.get(2));
+							int toStopID=Integer.parseInt(zeilenelemente.get(3));
+							//int depTime=Integer.parseInt(zeilenelemente.get(4));
+							//int arrTime=Integer.parseInt(zeilenelemente.get(5));
+							int elementType=Integer.parseInt(zeilenelemente.get(6));
+							
+							blockelementBlockID.add(blockID);
+							blockelementServiceJourneyID.add(zeilenelemente.get(1));
+//							blockelementFromStopID.add(fromStopID);
+//							blockelementToStopID.add(toStopID);
+//							blockelementDepTime.add(zeilenelemente.get(4));
+//							blockelementArrTime.add(zeilenelemente.get(5));
+							blockelementElementType.add(elementType);
+							
+						}else{
+							int blockID=Integer.parseInt(zeilenelemente.get(0));
+							//int serviceJourneyID =Integer.parseInt(zeilenelemente.get(1));
+							int fromStopID=Integer.parseInt(zeilenelemente.get(2));
+							int toStopID=Integer.parseInt(zeilenelemente.get(3));
+							//int depTime=Integer.parseInt(zeilenelemente.get(4));
+							//int arrTime=Integer.parseInt(zeilenelemente.get(5));
+							int elementType=Integer.parseInt(zeilenelemente.get(6));
+							
+							blockelementBlockID.add(blockID);
+							blockelementServiceJourneyID.add(zeilenelemente.get(1));
+//							blockelementFromStopID.add(fromStopID);
+//							blockelementToStopID.add(toStopID);
+//							blockelementDepTime.add(zeilenelemente.get(4));
+//							blockelementArrTime.add(zeilenelemente.get(5));
+							blockelementElementType.add(elementType);
 						
+						sonderfahrtServiceJourneyID.add(zahl);
+						sonderfahrtFromStopID.add(fromStopID);
+						sonderfahrtToStopID.add(toStopID);
+						sonderfahrtDepTime.add(zeilenelemente.get(4));
+						sonderfahrtArrTime.add(zeilenelemente.get(5));
 						
-						}	
-						else blockelementServiceJourneyID.add(zeilenelemente.get(1));
-						}catch(NumberFormatException e){
-							e.printStackTrace();
-						}
-						blockelementFromStopID.add(fromStopID);
-						blockelementToStopID.add(toStopID);
-						blockelementDepTime.add(zeilenelemente.get(4));
-						blockelementArrTime.add(zeilenelemente.get(5));
-						blockelementElementType.add(elementType);
 						zeilenelemente.clear();
-					}
+					}}
 
-//					// ATTENTION: The data can contain 9 elements including
-//					// ServiceJourneyCode
-//					if (zeilenelemente.size() == 8) {
-//						blockelementBlockID.add(zeilenelemente.get(0));
-//						blockelementServiceJourneyID.add(zeilenelemente.get(1));
-//						blockelementFromStopID.add(zeilenelemente.get(2));
-//						blockelementToStopID.add(zeilenelemente.get(3));
-//						blockelementDepTime.add(zeilenelemente.get(4));
-//						blockelementArrTime.add(zeilenelemente.get(5));
-//						blockelementElementType.add(zeilenelemente.get(6));
-//						blockelementServiceJourneyCode.add(zeilenelemente
-//								.get(7));
-//
-//					}
+
 					
 					if (zeilenelemente.size() == 1 && day==true) {
 						blockelementDayID.add(zeilenelemente.get(0));
@@ -1309,6 +1334,38 @@ public class StringSplitter {
 
 	public String getFilename() {
 		return filename;
+	}
+
+	public  ArrayList<Integer> getSonderfahrtBlockID() {
+		return sonderfahrtBlockID;
+	}
+
+	public  ArrayList<String> getSonderfahrtServiceJourneyID() {
+		return sonderfahrtServiceJourneyID;
+	}
+
+	public  ArrayList<Integer> getSonderfahrtFromStopID() {
+		return sonderfahrtFromStopID;
+	}
+
+	public  ArrayList<Integer> getSonderfahrtToStopID() {
+		return sonderfahrtToStopID;
+	}
+
+	public  ArrayList<String> getSonderfahrtDepTime() {
+		return sonderfahrtDepTime;
+	}
+
+	public  ArrayList<String> getSonderfahrtArrTime() {
+		return sonderfahrtArrTime;
+	}
+
+	public  ArrayList<Integer> getSonderfahrtElementType() {
+		return sonderfahrtElementType;
+	}
+
+	public  ArrayList<Integer> getSonderfahrtServiceJourneyCode() {
+		return sonderfahrtServiceJourneyCode;
 	}
 	
 	

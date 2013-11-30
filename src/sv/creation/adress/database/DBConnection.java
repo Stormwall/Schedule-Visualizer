@@ -137,7 +137,7 @@ public class DBConnection {
 																+ "Name INTEGER NOT NULL);");
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Blockelement (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
 																	   + "BlockID INTEGER NOT NULL, "
-																	   + "ServiceJourneyID INTEGER NOT NULL, "
+																	   + "ServiceJourneyID VARCHAR(30) NOT NULL, "
 																	   + "ElementType INTEGER NOT NULL, "
 																	   + "DayID INTEGER,"
 																	   + "UmlaufplanID INTEGER NOT NULL);");
@@ -238,6 +238,18 @@ public class DBConnection {
 			
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS PrimeDelaySzenario (ID INTEGER PRIMARY KEY AUTOINCREMENT, DutyID INTEGER, VehicleID INTEGER, ServiceJourneyID VARCHAR(30) NOT NULL, DepTime VARCHAR(30) NOT NULL, Delay INTEGER NOT NULL); ");
 			
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Sonderfahrt (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
+					   + "ServiceJourneyID VARCHAR(30) NOT NULL, "
+					   + "FromStopID INTEGER NOT NULL,"
+					   + "ToStopID INTEGER NOT NULL,"
+					   + "DepTime VARCHAR(30) NOT NULL,"
+					   + "ArrTime VARCHAR(30) NOT NULL);");
+//					   + "FOREIGN KEY (ServiceJourneyID) REFERENCES ServiceJourney(ID), "
+//					   + "FOREIGN KEY (FromStopID) REFERENCES ServiceJourney(FromStopID), "
+//					   + "FOREIGN KEY (ToStopID) REFERENCES ServiceJourney(ToStopID), "
+//					   + "FOREIGN KEY (ArrTime) REFERENCES ServiceJourney(ArrTime), "
+//					   + "FOREIGN KEY (DepTime) REFERENCES ServiceJourney(DepTime), "
+			
 
 			
 			ResultSet rest1 = stmnt
@@ -283,6 +295,16 @@ public class DBConnection {
 		  Iterator<String> it8 =ss.getBlockelementDepTime().iterator(); 
 		  Iterator<String> it9 =ss.getBlockelementArrTime().iterator(); 
 		  Iterator<Integer> it10 =ss.getBlockelementElementType().iterator();
+		  Iterator<Integer> it11 = ss.getId().iterator(); 
+		  Iterator<Integer> it12 =ss.getVehTypeID().iterator(); 
+		  Iterator<Integer> it13 =ss.getDepotID().iterator(); 
+		  Iterator<Integer> it14 =ss.getSonderfahrtBlockID().iterator(); 
+		  Iterator<String> it15 =ss.getSonderfahrtServiceJourneyID().iterator();
+		  Iterator<Integer>it16 = ss.getSonderfahrtFromStopID().iterator(); 
+		  Iterator<Integer>it17 = ss.getSonderfahrtToStopID().iterator(); 
+		  Iterator<String> it18 =ss.getSonderfahrtDepTime().iterator(); 
+		  Iterator<String> it19 =ss.getSonderfahrtArrTime().iterator(); 
+		  Iterator<Integer> it20 =ss.getSonderfahrtElementType().iterator();
 		  String dayID=ss.getBlockelementDayID().get(0);
 		  
 		  
@@ -292,16 +314,23 @@ public class DBConnection {
 			  stmnt.executeUpdate("INSERT INTO Block (BlockID, Code, Name)  VALUES('"+it.next()+"','"+it2.next()+"','"+it3.next()+"');"); }
 		  
 		  
-		  while(it4.hasNext()&&it5.hasNext()&&it6.hasNext()&&it10.hasNext()){ 
+		  while(it4.hasNext()&&it5.hasNext()&&it10.hasNext()){ 
 			 stmnt.executeUpdate(
 		  "INSERT INTO Blockelement (BlockID, ServiceJourneyID, ElementType, DayID, UmlaufplanID) VALUES('"
 		  +it4.next()+"','"+it5.next()+"','"+it10.next()+"','"+dayID+"', (SELECT ID FROM Umlaufplan WHERE Bezeichnung='"+ss.getFilename()+"'));");}
+		
+		  
+		  while(it15.hasNext()&&it16.hasNext()&&it17.hasNext()&&it18.hasNext()&&it19.hasNext()){ 
+
+			 stmnt.executeUpdate(
+		  "INSERT INTO Sonderfahrt (ServiceJourneyID, FromStopID, ToStopID, DepTime, Arrtime) VALUES('"
+		 +it15.next()+"','"+it16.next()+"','"+it17.next()+"','"+it18.next()+"','"+it19.next()+"');");}
 		  System.out.println("Umlaufplan importiert!");
 		  }catch(SQLException e){
 		  System.out.println("Could not execute SQL-Query!");
 		  e.printStackTrace(); }
-		
 	}
+
 	
 	public void fillDiensttypenIntoTables(){
 		

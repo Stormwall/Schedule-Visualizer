@@ -4,13 +4,13 @@ public class Blockelement {
 	
 	private int id;
 	private int blockID;
-	private int serviceJourneyID;
+	private String serviceJourneyID;
 	private int fromStopID;
 	private int toStopID;
 	private String depTime;
 	private String arrTime;
 	private int elementType;
-	private int serviceJourneyCode;
+	private String serviceJourneyCode;
 	
 	
 	/**
@@ -29,8 +29,8 @@ public class Blockelement {
 	 * @param toStopBreakFacility
 	 * @param code
 	 */
-	public Blockelement(int id, int blockID, int serviceJourneyID, int fromStopID, int toStopID,
-			String depTime, String arrTime, int elementType, int serviceJourneyCode) {
+	public Blockelement(int id, int blockID, String serviceJourneyID, int fromStopID, int toStopID,
+			String depTime, String arrTime, int elementType, String serviceJourneyCode) {
 		super();
 		this.id = id;
 		this.blockID = blockID;
@@ -54,7 +54,7 @@ public class Blockelement {
 	}
 
 
-	public int getServiceJourneyID() {
+	public String getServiceJourneyID() {
 		return serviceJourneyID;
 	}
 
@@ -84,7 +84,7 @@ public class Blockelement {
 	}
 
 
-	public int getServiceJourneyCode() {
+	public String getServiceJourneyCode() {
 		return serviceJourneyCode;
 	}
 

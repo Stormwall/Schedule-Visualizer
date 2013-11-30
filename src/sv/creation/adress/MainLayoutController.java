@@ -316,13 +316,13 @@ public class MainLayoutController {
 		dbc.createTables();
 		dbc.fillFahrplanIntoTables();
 		dbc.fillUmlaufplanIntoTables();
-		dbc.fillDienstplanIntoTable();
-		dbc.fillDiensttypenIntoTables();
+//		dbc.fillDienstplanIntoTable();
+//		dbc.fillDiensttypenIntoTables();
 		
-//		DBMatching dbm=new DBMatching();
-//		dbm.erstelleUmlaufplan();
-//		dbm.test();
-//		dbm.erstelleUmlaufplanDaten();
+		DBMatching dbm=new DBMatching();
+		dbm.erstelleUmlaufplan();
+		dbm.test();
+		dbm.erstelleUmlaufplanDaten();
 		
 		//dbc.closeConnection();
 		
