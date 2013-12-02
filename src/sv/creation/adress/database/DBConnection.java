@@ -76,10 +76,16 @@ public class DBConnection {
 		try {
 			Statement stmnt = connection.createStatement();
 			// Checks if table exists or not
+			//Dienstplantabelle
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Dienstplan (ID INTEGER PRIMARY KEY AUTOINCREMENT, Bezeichnung VARCHAR(255), FahrplanID INTEGER);");
+			
+			//Dutytabelle
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Duty (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
 															   + "DutyID VARCHAR(30) NOT NULL, "
 															   + "DutyType VARCHAR(50) NOT NULL);");
+			//Dutyelementtabelle
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Dutyelement (ID INTEGER PRIMARY KEY AUTOINCREMENT,"
+																	  //+ "DutyelementID INTEGER NOT NULL, "
 																	  + "DutyID INTEGER NOT NULL, "
 																	  + "BlockID INTEGER NOT NULL, "
 																	  + "ServiceJourneyID INTEGER NOT NULL, "
@@ -90,6 +96,8 @@ public class DBConnection {
 //																	  + "FOREIGN KEY (BlockID) REFERENCES Block(BlockID), "
 //																	  + "FOREIGN KEY (ServiceJourneyID) REFERENCES ServiceJourney(ID), "
 //																	  + "FOREIGN KEY(DayID) REFERENCES Day(dayID));");
+
+			//Dienstregeln
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Dutytype (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
 																   + "Name VARCHAR(30) NOT NULL, "
 																   + "StartTimeMin VARCHAR(30) NOT NULL, "
@@ -129,12 +137,15 @@ public class DBConnection {
 																   //+ "WorkingTimeWithoutBreakMax VARCHAR(30)"
 																   + ");");
 			
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Dienstplan (ID INTEGER PRIMARY KEY AUTOINCREMENT, Bezeichnung VARCHAR(255), FahrplanID INTEGER);");
+//Umlaeufe************************************************************************************************************************
+			
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Umlaufplan (ID INTEGER PRIMARY KEY AUTOINCREMENT, Bezeichnung VARCHAR(255), FahrplanID INTEGER);");			
 			
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Block (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
 																+ "BlockID INTEGER NOT NULL, "
 																+ "Code INTEGER NOT NULL, "
 																+ "Name INTEGER NOT NULL);");
+			
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Blockelement (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
 																	   + "BlockID INTEGER NOT NULL, "
 																	   + "ServiceJourneyID VARCHAR(30) NOT NULL, "
@@ -148,17 +159,32 @@ public class DBConnection {
 //																	   + "FOREIGN KEY (ArrTime) REFERENCES ServiceJourney(ArrTime), "
 //																	   + "FOREIGN KEY (DepTime) REFERENCES ServiceJourney(DepTime), "
 //																	   + "FOREIGN KEY(DayID) REFERENCES Day(dayID));");
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Sonderfahrt (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
+					   													+ "ServiceJourneyID VARCHAR(30) NOT NULL, "
+					   													+ "FromStopID INTEGER NOT NULL,"
+					   													+ "ToStopID INTEGER NOT NULL,"
+					   													+ "DepTime VARCHAR(30) NOT NULL,"
+					   													+ "ArrTime VARCHAR(30) NOT NULL);");
+//					   													+ "FOREIGN KEY (ServiceJourneyID) REFERENCES ServiceJourney(ID), "
+//					   													+ "FOREIGN KEY (FromStopID) REFERENCES ServiceJourney(FromStopID), "
+//					   													+ "FOREIGN KEY (ToStopID) REFERENCES ServiceJourney(ToStopID), "
+//					   													+ "FOREIGN KEY (ArrTime) REFERENCES ServiceJourney(ArrTime), "
+//					   													+ "FOREIGN KEY (DepTime) REFERENCES ServiceJourney(DepTime), "
 			
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Umlaufplan (ID INTEGER PRIMARY KEY AUTOINCREMENT, Bezeichnung VARCHAR(255), FahrplanID INTEGER);");
-			
+//Fahrplan*************************************************************************************************************************
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Stoppoint (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
 																	+ "StoppointID INTEGER NOT NULL, "
 																	+ "Code INTEGER NOT NULL, "
 																	+ "Name INTEGER NOT NULL);");
+			
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Line (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
-															   + "LineID INTEGERNOT NULL, "
+															   + "LineID INTEGER NOT NULL, "
 															   + "Code INTEGER NOT NULL, "
 															   + "Name INTEGER NOT NULL);");
+			
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Linebundle (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
+					   													+ "LineID INTEGER NOT NULL;");
+			
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS VehicleType (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
 																	  + "VehicleTypeID INTEGER NOT NULL, "
 																	  + "Code INTEGER NOT NULL, "
@@ -167,15 +193,18 @@ public class DBConnection {
 																	  + "KmCost INTEGER NOT NULL, "
 																	  + "HourCost INTEGER NOT NULL, "
 																	  + "Capacity INTEGER NOT NULL);");
+			
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS VehicleTypeGroup (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
 																		   + "VehicleTypeGroupID INTEGER NOT NULL, "
 																		   + "Code INTEGER NOT NULL, "
 																		   + "Name INTEGER NOT NULL);");
+			
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS VehicleTypeToVehicleTypeGroup (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
 																						+ "VehTypeID INTEGER NOT NULL, "
 																						+ "VehTypeGroupID INTEGER NOT NULL); ");
 //																						+ "FOREIGN KEY (VehTypeID) REFERENCES VehicleType(ID), "
 //																						+ "FOREIGN KEY (VehTypeGroupID) REFERENCES VehicleTypeGroup(ID));");
+			
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS VehicleCapToStoppoint (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
 																				+ "VehTypeID INTEGER NOT NULL, "
 																				+ "StoppointID INTEGER NOT NULL, "
@@ -183,6 +212,7 @@ public class DBConnection {
 																				+ "Max INTEGER NOT NULL); ");
 //																				+ "FOREIGN KEY (VehTypeID) REFERENCES VehicleType(ID), "
 //																				+ "FOREIGN KEY (StoppointID) REFERENCES Stoppoint(ID));");
+			
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS ServiceJourney (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
 																		 + "ServiceJourneyID INTEGER NOT NULL, "
 																		 + "LineID INTEGER NOT NULL, "
@@ -203,6 +233,7 @@ public class DBConnection {
 //																		 + "FOREIGN KEY (VehTypeGroupID) REFERENCES VehicleTypeGroup(ID), "
 //																		 + "FOREIGN KEY(FromStopID) REFERENCES Stoppoint(ID), "
 //																		 + "FOREIGN KEY(ToStopID) REFERENCES Stoppoint(ID));");
+			
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Deadruntime (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
 																	  + "FromStopID INTEGER NOT NULL, "
 																	  + "ToStopID INTEGER NOT NULL, "
@@ -235,20 +266,11 @@ public class DBConnection {
 														      + "Name VARCHAR(10));");
 			
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Fahrplan (ID INTEGER PRIMARY KEY AUTOINCREMENT, Bezeichnung VARCHAR(255));");
-			
+
+//Verspaetungsszenario*************************************************************************************************************
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS PrimeDelaySzenario (ID INTEGER PRIMARY KEY AUTOINCREMENT, DutyID INTEGER, VehicleID INTEGER, ServiceJourneyID VARCHAR(30) NOT NULL, DepTime VARCHAR(30) NOT NULL, Delay INTEGER NOT NULL); ");
 			
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Sonderfahrt (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
-					   + "ServiceJourneyID VARCHAR(30) NOT NULL, "
-					   + "FromStopID INTEGER NOT NULL,"
-					   + "ToStopID INTEGER NOT NULL,"
-					   + "DepTime VARCHAR(30) NOT NULL,"
-					   + "ArrTime VARCHAR(30) NOT NULL);");
-//					   + "FOREIGN KEY (ServiceJourneyID) REFERENCES ServiceJourney(ID), "
-//					   + "FOREIGN KEY (FromStopID) REFERENCES ServiceJourney(FromStopID), "
-//					   + "FOREIGN KEY (ToStopID) REFERENCES ServiceJourney(ToStopID), "
-//					   + "FOREIGN KEY (ArrTime) REFERENCES ServiceJourney(ArrTime), "
-//					   + "FOREIGN KEY (DepTime) REFERENCES ServiceJourney(DepTime), "
+
 			
 
 			
