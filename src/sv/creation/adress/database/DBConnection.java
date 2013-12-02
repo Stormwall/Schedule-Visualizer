@@ -171,7 +171,7 @@ public class DBConnection {
 //					   													+ "FOREIGN KEY (ArrTime) REFERENCES ServiceJourney(ArrTime), "
 //					   													+ "FOREIGN KEY (DepTime) REFERENCES ServiceJourney(DepTime), "
 			
-//Fahrplan*************************************************************************************************************************
+//Fahrplan**************************************************************************************************************************
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Stoppoint (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
 																	+ "StoppointID INTEGER NOT NULL, "
 																	+ "Code INTEGER NOT NULL, "
