@@ -1,20 +1,21 @@
 
 package sv.creation.adress.util;
 
+/**
+ * DESCRIPTION:
+ * This class deliveres methods for reading data from txt-files line by line and storeing them into array-lists.
+ * With these array-lists, the schedule data can be imported into the database.
+ * 
+ * CONTENTS:
+ * 
+ */
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-
-/**
- * 
- * Dies ist eine Klasse, die eine .txt-Datei zeilenweise einliest und in einer
- * ArrayList speichert. Mit dieser ArrayList kˆnnen die Werte in die Datenbank
- * importiert werden.
- * 
- */
 
 public class StringSplitter {
 
@@ -28,9 +29,10 @@ public class StringSplitter {
 	// ***********************************************************
 
 	private static ArrayList<String> stringList = new ArrayList<String>();
-
-	// ****** Dienstplan ******
-
+	//*************************
+	//******* duty roster******
+	//*************************
+	
 	// Array lists of duty
 	private static ArrayList<String> dutyDutyID = new ArrayList<String>();
 	private static ArrayList<String> dutyDutyType = new ArrayList<String>();
@@ -49,7 +51,9 @@ public class StringSplitter {
 	//Array list of day id
 	private static ArrayList<String> dutyelementDayID = new ArrayList<String>();
 
-	// ****** Umlaufplan ******
+	//*************************
+	//******* tour plan********
+	//*************************
 
 	// Array lists of block
 	private static ArrayList<Integer> id = new ArrayList<Integer>();
@@ -80,8 +84,10 @@ public class StringSplitter {
 	//Array list of day id
 	private static ArrayList<String> blockelementDayID = new ArrayList<String>();
 
-	// ****** Fahrplan ******
-
+	//*************************
+	//*********schedule********
+	//*************************
+	
 	// Array lists of stoppoint
 		private static ArrayList<Integer> stopID = new ArrayList<Integer>();
 		private static ArrayList<String> stopCode = new ArrayList<String>();
@@ -91,7 +97,11 @@ public class StringSplitter {
 		private static ArrayList<Integer> lineID = new ArrayList<Integer>();
 		private static ArrayList<String> lineCode = new ArrayList<String>();
 		private static ArrayList<String> lineName = new ArrayList<String>();
-
+		
+		/**
+		 *Array lists of linebundles
+		 */
+		
 		// Array lists of vehicle type
 		private static ArrayList<Integer> vehicleTypeID = new ArrayList<Integer>();
 		private static ArrayList<String> vehicleTypeCode = new ArrayList<String>();
@@ -145,7 +155,10 @@ public class StringSplitter {
 		private static ArrayList<String> reliefpointServiceJourneyID = new ArrayList<String>();
 		private static ArrayList<Integer> reliefpointStoppointID = new ArrayList<Integer>();
 		private static ArrayList<String> reliefpointStoptime = new ArrayList<String>();
-
+		
+		/**
+		 *Array lists of transfertimes
+		 */
 		//Array lists of DayIDs
 		private static ArrayList<Integer> dayID = new ArrayList<Integer>();
 		private static ArrayList<String> dayName = new ArrayList<String>();
@@ -160,7 +173,7 @@ public class StringSplitter {
 		private static ArrayList<Integer> daySix = new ArrayList<Integer>();
 		private static ArrayList<Integer> daySeven = new ArrayList<Integer>();
 		
-		//Array lists of diensttypen file
+		//Array lists of duty type (rules) file
 		private static ArrayList<String> name = new ArrayList<String>();
 		private static ArrayList<String> startTimeMin = new ArrayList<String>();
 		private static ArrayList<String> startTimeMax = new ArrayList<String>();
@@ -198,8 +211,9 @@ public class StringSplitter {
 		private static ArrayList<String> breakTimeAllowsEnds = new ArrayList<String>();
 		private static ArrayList<String> workingtimeWithoutBreakMax = new ArrayList<String>();
 		
+		//dutyrule name
 		private String filename=null;
-	
+	//correcting string format
 	public static ArrayList<String> convertStringToArraylist(String str) {
 
 		// "\\s*,\\s*" anstatt "," damit Leerzeichen vor und nach dem Komma im
@@ -211,7 +225,9 @@ public class StringSplitter {
 	}
 
 	public static void convertStringToDutyID(String str) {
-
+/**
+ * was passiert hier???
+ */
 		ArrayList<String> list = new ArrayList<String>();
 
 		Collections.addAll(list, str.split(":"));
@@ -220,14 +236,13 @@ public class StringSplitter {
 		list.clear();
 		Collections.addAll(list, wort.split(";"));
 		System.out.println(list.get(1).toString());
-	//	dutyDutyID.add(list.get(0));
 		dutyDutyType.add(list.get(1));
 		System.out.println(dutyDutyID);
 
 	}
 
 	// *************************************************
-	// ****** Method to read the Dienstplan data *******
+	// ****** Method to read the duty roster data ******
 	// ******                                    *******
 	// *************************************************
 
@@ -235,7 +250,12 @@ public class StringSplitter {
 
 		try {
 
-			// test.txt Data has to be in the project file in your workspace
+			//*************************************************************
+			//test.txt Data has to be in the project file in your workspace
+			//path and filename will have to be changed dynamically
+			// All lines with relevant data will be read
+			// The data will be split in seperated array lists
+			
 			File file =new File("resources/quellen/testdienstplan.txt");
 			BufferedReader dienstplan = new BufferedReader(new FileReader(file));
 			filename=file.getName();
@@ -243,27 +263,22 @@ public class StringSplitter {
 			String zeile = null;
 			ArrayList<String> zeilenelemente = new ArrayList<String>();
 			boolean day=false;
+
+			//loop for all data lines in txt-file
 			while ((zeile = dienstplan.readLine()) != null) {
 				
+				//checking if day relation exists in the txt-file
 				if (zeile.startsWith("$DAY")) {
 					day = true;
 					continue;
 				}
-
-				// All lines with relevant data will be read
+				
+				//****************************************************************************************************************
+				//reading data from day relation by splitting "zeile" and storing the resulting values into array "zeilenelemente"
 				if (!zeile.startsWith("*") && !zeile.startsWith("$")) {
 					Collections.addAll(zeilenelemente, zeile.split(";"));
-//
-//					// The service types data will be split in separated array
-//					// lists
-//					if (zeilenelemente.size() == 2) {
-//						//int idZiffer=Integer.parseInt(zeilenelemente.get(0));
-//						dutyDutyID.add(zeilenelemente.get(0));
-//						dutyDutyType.add(zeilenelemente.get(1));
-//						zeilenelemente.clear();
-//					}
 
-					// The service data will be split in seperated array lists
+					// The data is split in seperate array lists
 					if (zeilenelemente.size() == 8) {
 						int blockIDZiffer=Integer.parseInt(zeilenelemente.get(1));
 						int fromStopIDZiffer=Integer.parseInt(zeilenelemente.get(3));
@@ -271,19 +286,21 @@ public class StringSplitter {
 						int elementTypeZiffer=Integer.parseInt(zeilenelemente.get(7));
 						dutyelementDutyType.add(zeilenelemente.get(0));
 						dutyelementBlockID.add(blockIDZiffer);
+						
+						//distinction between regular journeys and exceptional journeys
 						try{
 							String zahl=null;
 							zahl=zeilenelemente.get(2);
 							if(zahl.matches("[0-9]+")){
-//								String string=Integer.toString(zahl);
 								dutyelementServiceJourneyID.add(zahl);
-							
-							
 							}	
 							else dutyelementServiceJourneyID.add(zeilenelemente.get(2));
 							}catch(NumberFormatException e){
 								e.printStackTrace();
 							}
+						/**
+						 * muss das nicht in die if?
+						 */
 						dutyelementFromStopID.add(fromStopIDZiffer);
 						dutyelementToStopID.add(toStopIDZiffer);
 						dutyelementDepTime.add(zeilenelemente.get(5));
@@ -291,8 +308,7 @@ public class StringSplitter {
 						dutyelementElementType.add(elementTypeZiffer);
 					}
 
-					// ATTENTION: The data can contain 9 elements including
-					// ServiceJourneyCode
+					// ATTENTION: The data can contain 9 elements including ServiceJourneyCode
 					if (zeilenelemente.size() == 9) {
 						int blockIDZiffer=Integer.parseInt(zeilenelemente.get(1));
 						int fromStopIDZiffer=Integer.parseInt(zeilenelemente.get(3));
@@ -309,7 +325,7 @@ public class StringSplitter {
 						dutyelementServiceJourneyCode
 								.add(zeilenelemente.get(8));
 					}
-					
+					//day for which the schedule is valid***********
 					if (zeilenelemente.size() == 1) {
 						dutyelementDayID.add(zeilenelemente.get(0));
 						zeilenelemente.clear();
@@ -334,8 +350,8 @@ public class StringSplitter {
 	}
 
 	// *************************************************
-	// ****** Method to read the Umlaufplan data *******
-	// ******                                    *******
+	// ****** Method to read the tour plan data ********
+	// ******                                   ********
 	// *************************************************
 
 	public void readTxtUmlaufplan() {
