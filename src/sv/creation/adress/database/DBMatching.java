@@ -66,14 +66,41 @@ public class DBMatching {
 	// **********************************************************************
 	
 	public void test() {
+		
+		DBConnection db = new DBConnection();
+		db.initDBConnection();
 
 		try {
-
-			ResultSet rest2 = stmt
-					.executeQuery("SELECT DISTINCT be.ID, be.BlockID, be.ServiceJourneyID, sj.FromStopID, sj.ToStopID, sj.DepTime, sj.ArrTime, be.elementType, sj.Code FROM Blockelement AS be, Block, ServiceJourney AS sj, Sonderfahrt AS sf WHERE Block.BlockID=be.BlockID AND (be.ServiceJourneyID = sj.ServiceJourneyID OR be.ServiceJourneyID=sf.ServiceJourneyID);");
-
+			stmt = db.getConnection().createStatement();
+			
+			ResultSet rest3=stmt.executeQuery("SELECT * FROM Blockelement;");
+			//rest3.first();
 			//All resulted datasets of the sql query will be added to the blockelement array list 
-			while (rest2.next()) {
+			while (rest3.next()) {
+//				ResultSet rest4=stmt.executeQuery("SELECT elementType FROM Blockelement;");
+				System.out.println(rest3.getString("ElementType"));
+				if(rest3.getString("ElementType").equals("1")){
+					
+					ResultSet rest2 = stmt
+							.executeQuery("SELECT be.ID, be.BlockID, be.ServiceJourneyID, sj.FromStopID, sj.ToStopID, sj.DepTime, sj.ArrTime, be.elementType FROM Blockelement AS be, ServiceJourney AS sj WHERE sj.serviceJourneyID='"+rest3.getString("ServiceJourneyID")+"';");
+						int id = Integer.parseInt(rest2.getString("ID"));
+						int blockID = Integer.parseInt(rest2.getString("BlockID"));
+						String serviceJourneyID = rest2
+								.getString("ServiceJourneyID");
+						int fromStopID = Integer
+								.parseInt(rest2.getString("FromStopID"));
+						int toStopID = Integer.parseInt(rest2.getString("ToStopID"));
+						String depTime = rest2.getString("DepTime");
+						String arrTime = rest2.getString("ArrTime");
+						int elementType = Integer.parseInt(rest2
+								.getString("ElementType"));
+
+						fahrtZuUmlauf.add(new Blockelement(id, blockID,
+								serviceJourneyID, fromStopID, toStopID, depTime,
+								arrTime, elementType));
+
+					
+				}else{ ResultSet rest2=stmt.executeQuery("SELECT be.ID, be.BlockID, be.ServiceJourneyID, ex.FromStopID, ex.ToStopID, ex.DepTime, ex.ArrTime, be.ElementType FROM Blockelement AS be, ExceptionalBlockelement AS ex WHERE ex.ServiceJourneyID='"+rest3.getString("ServiceJourneyID")+"';");
 				int id = Integer.parseInt(rest2.getString("ID"));
 				int blockID = Integer.parseInt(rest2.getString("BlockID"));
 				String serviceJourneyID = rest2
@@ -85,13 +112,17 @@ public class DBMatching {
 				String arrTime = rest2.getString("ArrTime");
 				int elementType = Integer.parseInt(rest2
 						.getString("ElementType"));
-				String serviceJourneyCode = rest2.getString("Code");
 
 				fahrtZuUmlauf.add(new Blockelement(id, blockID,
 						serviceJourneyID, fromStopID, toStopID, depTime,
-						arrTime, elementType, serviceJourneyCode));
+						arrTime, elementType));
+				//rest2.close();
+				}
 				System.out.println("Hat geklappt!");
+				System.out
+				.println(fahrtZuUmlauf.size());
 			}
+			
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -108,7 +139,9 @@ public class DBMatching {
 	public void erstelleUmlaufplanDaten() {
 		Umlaufplan umlaufplan = new Umlaufplan(1, umlauf, fahrtZuUmlauf);
 		System.out
-				.println(umlaufplan.getFahrtZuUmlauf().get(0).getFromStopID());
+				.println(umlaufplan.getFahrtZuUmlauf().get(0).getArrTime());
+		System.out
+		.println(umlaufplan.getFahrtZuUmlauf().size());
 	}
 
 }

@@ -11,7 +11,7 @@ package sv.creation.adress.database;
  * 3. filling tables with data from txt files using stringsplitter-class
  * 
  * TODO:
- * generell müssten import,  initale Erstellung der Relationen und  DB-Verbindung noch getrennt werden oder?
+ * generell mï¿½ssten import,  initale Erstellung der Relationen und  DB-Verbindung noch getrennt werden oder?
  * Zeile 36, 470, 516, 580, 630, 656
  */
 
@@ -406,10 +406,10 @@ public class DBConnection {
 		  +it4.next()+"','"+it5.next()+"','"+it10.next()+"','"+dayID+"', (SELECT ID FROM Umlaufplan WHERE Bezeichnung='"+ss.getFilename()+"'));");}
 		
 		  //fill special journey
-		  while(it15.hasNext()&&it16.hasNext()&&it17.hasNext()&&it18.hasNext()&&it19.hasNext()){ 
+		  while(it14.hasNext()&&it15.hasNext()&&it16.hasNext()&&it17.hasNext()&&it18.hasNext()&&it19.hasNext()){ 
 
 			 stmnt.executeUpdate(
-		  "INSERT INTO ExceptionalBlockelement (BlockID, ServiceJourneyID, FromStopID, ToStopID, DepTime, Arrtime) VALUES('"
+		  "INSERT INTO ExceptionalBlockelement (BlockID, ServiceJourneyID, FromStopID, ToStopID, DepTime, ArrTime) VALUES('"
 				  +it14.next()+"','"+it15.next()+"','"+it16.next()+"','"+it17.next()+"','"+it18.next()+"','"+it19.next()+"');");}
 		  
 		  System.out.println("Umlaufplan importiert!");
@@ -476,8 +476,8 @@ public class DBConnection {
 		  
 		  /**
 		   * TODO:
-		   * Dienstplanname aus textfile dateinamen in tabelle dienstplan einfügen
-		   * DienstplanID in dutytype Relation einfügen
+		   * Dienstplanname aus textfile dateinamen in tabelle dienstplan einfï¿½gen
+		   * DienstplanID in dutytype Relation einfï¿½gen
 		   * 
 		  */
 		  while((it.hasNext()&&it2.hasNext()&&it3.hasNext()&&it4.hasNext()&&it5.hasNext()&&it6.hasNext()&&it7.hasNext()&&it8.hasNext()&&it9.hasNext()&&it10.hasNext()&&it11.hasNext()&&it12.hasNext()&&it13.hasNext()&&it14.hasNext()&&it15.hasNext()&&it16.hasNext()&&it17.hasNext()&&it18.hasNext()&&it19.hasNext()&&it20.hasNext()&&it21.hasNext()&&it22.hasNext()&&it23.hasNext()&&it24.hasNext()&&it25.hasNext()&&it26.hasNext()&&it27.hasNext()&&it28.hasNext()&&it29.hasNext()&&it30.hasNext()&&it31.hasNext()&&it32.hasNext()&&it33.hasNext()&&it34.hasNext()&&it35.hasNext())){
@@ -522,7 +522,7 @@ public class DBConnection {
 		  Iterator<String> it5 =ss.getDutyelementServiceJourneyID().iterator();
 		  /**
 		   * TODO:
-		   * Stationen und Zeiten für die Dienste die Sonderfahrten bedienen müssen hier drin gespeichert werden
+		   * Stationen und Zeiten fï¿½r die Dienste die Sonderfahrten bedienen mï¿½ssen hier drin gespeichert werden
 		   * evtl. so trennen wie blockelemente?
 		   * ServiceJourneycode(Z512) muss wieder rein, wirft dann aber Fehler wegen static
 		  */

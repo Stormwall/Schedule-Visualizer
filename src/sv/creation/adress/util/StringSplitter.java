@@ -218,28 +218,11 @@ public class StringSplitter {
 	public static ArrayList<String> convertStringToArraylist(String str) {
 
 		// "\\s*,\\s*" anstatt "," damit Leerzeichen vor und nach dem Komma im
-		// urspr¸nglichen String ignoriert werden.
+		// urspr��nglichen String ignoriert werden.
 		Collections.addAll(stringList, str.split("\\s*,\\s*"));
 
 		System.out.println(stringList);
 		return stringList;
-	}
-
-	public static void convertStringToDutyID(String str) {
-/**
- * was passiert hier???
- */
-		ArrayList<String> list = new ArrayList<String>();
-
-		Collections.addAll(list, str.split(":"));
-		String wort = list.get(1);
-		System.out.println(wort);
-		list.clear();
-		Collections.addAll(list, wort.split(";"));
-		System.out.println(list.get(1).toString());
-		dutyDutyType.add(list.get(1));
-		System.out.println(dutyDutyID);
-
 	}
 
 	// *************************************************
@@ -393,40 +376,27 @@ public class StringSplitter {
 					if (zeilenelemente.size() >= 7) {
 						String zahl=null;
 						zahl=zeilenelemente.get(1);
+						
+						//if-clause checks the ServiceJourneyID. If the serviceJourneyID contains letters the dataset will be added to the exceptionalBlockelement table.
 						if(zahl.matches("[0-9]+")){
 							int blockID=Integer.parseInt(zeilenelemente.get(0));
-							//int serviceJourneyID =Integer.parseInt(zeilenelemente.get(1));
-							int fromStopID=Integer.parseInt(zeilenelemente.get(2));
-							int toStopID=Integer.parseInt(zeilenelemente.get(3));
-							//int depTime=Integer.parseInt(zeilenelemente.get(4));
-							//int arrTime=Integer.parseInt(zeilenelemente.get(5));
 							int elementType=Integer.parseInt(zeilenelemente.get(6));
 							
 							blockelementBlockID.add(blockID);
 							blockelementServiceJourneyID.add(zeilenelemente.get(1));
-//							blockelementFromStopID.add(fromStopID);
-//							blockelementToStopID.add(toStopID);
-//							blockelementDepTime.add(zeilenelemente.get(4));
-//							blockelementArrTime.add(zeilenelemente.get(5));
 							blockelementElementType.add(elementType);
 							
 						}else{
 							int blockID=Integer.parseInt(zeilenelemente.get(0));
-							//int serviceJourneyID =Integer.parseInt(zeilenelemente.get(1));
 							int fromStopID=Integer.parseInt(zeilenelemente.get(2));
 							int toStopID=Integer.parseInt(zeilenelemente.get(3));
-							//int depTime=Integer.parseInt(zeilenelemente.get(4));
-							//int arrTime=Integer.parseInt(zeilenelemente.get(5));
 							int elementType=Integer.parseInt(zeilenelemente.get(6));
 							
 							blockelementBlockID.add(blockID);
 							blockelementServiceJourneyID.add(zeilenelemente.get(1));
-//							blockelementFromStopID.add(fromStopID);
-//							blockelementToStopID.add(toStopID);
-//							blockelementDepTime.add(zeilenelemente.get(4));
-//							blockelementArrTime.add(zeilenelemente.get(5));
 							blockelementElementType.add(elementType);
 						
+							exceptionalblockelementBlockID.add(blockID);
 							exceptionalblockelementServiceJourneyID.add(zahl);
 							exceptionalblockelementFromStopID.add(fromStopID);
 							exceptionalblockelementToStopID.add(toStopID);
@@ -772,18 +742,6 @@ public class StringSplitter {
 				}
 
 			}
-
-//			// Testing the filled array lists
-//			System.out.println(stopID);
-//			System.out.println(lineCode);
-//			System.out.println(vehicleTypeKmCost);
-//			System.out.println(vehicleTypeGroupName);
-//			System.out.println(vehicleToVehicleTypeGroupVehTypeGroupID);
-//			System.out.println(vehicleCapToStopStoppointID);
-//			System.out.println(serviceJourneyLineID);
-//			System.out.println(deadruntimeDistance);
-//			System.out.println(reliefpointStoptime);
-//			System.out.println(tripID);
 			fahrplan.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -791,7 +749,7 @@ public class StringSplitter {
 	}
 	
 	// ***********************************************
-	// ****** Method to read the Fahrplan data *******
+	// ****** Method to read the duty type data *******
 	// ******                                  *******
 	// ***********************************************
 	
@@ -866,13 +824,6 @@ public class StringSplitter {
 			e.printStackTrace();
 		}
 			
-	}
-
-	public static void main(String[] args) {
-
-		//readTxtDienstplan();
-		//readTxtUmlaufplan();
-		//readTxtFahrplan();
 	}
 	
 	// ************************************************

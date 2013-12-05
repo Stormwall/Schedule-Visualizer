@@ -10,7 +10,6 @@ public class Blockelement {
 	private String depTime;
 	private String arrTime;
 	private int elementType;
-	private String serviceJourneyCode;
 	
 	
 	/**
@@ -30,7 +29,7 @@ public class Blockelement {
 	 * @param code
 	 */
 	public Blockelement(int id, int blockID, String serviceJourneyID, int fromStopID, int toStopID,
-			String depTime, String arrTime, int elementType, String serviceJourneyCode) {
+			String depTime, String arrTime, int elementType) {
 		super();
 		this.id = id;
 		this.blockID = blockID;
@@ -40,7 +39,6 @@ public class Blockelement {
 		this.depTime = depTime;
 		this.arrTime = arrTime;
 		this.elementType = elementType;
-		this.serviceJourneyCode = serviceJourneyCode;
 	}
 
 
@@ -82,12 +80,6 @@ public class Blockelement {
 	public int getElementType() {
 		return elementType;
 	}
-
-
-	public String getServiceJourneyCode() {
-		return serviceJourneyCode;
-	}
-
 
 
 
