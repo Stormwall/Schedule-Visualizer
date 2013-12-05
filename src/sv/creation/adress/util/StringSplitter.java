@@ -71,15 +71,16 @@ public class StringSplitter {
 	private static ArrayList<Integer> blockelementServiceJourneyCode = new ArrayList<Integer>();
 	
 	
-	// Array lists of sonderfahrt
-		private static ArrayList<Integer> sonderfahrtBlockID = new ArrayList<Integer>();
-		private static ArrayList<String> sonderfahrtServiceJourneyID = new ArrayList<String>();
-		private static ArrayList<Integer> sonderfahrtFromStopID = new ArrayList<Integer>();
-		private static ArrayList<Integer> sonderfahrtToStopID = new ArrayList<Integer>();
-		private static ArrayList<String> sonderfahrtDepTime = new ArrayList<String>();
-		private static ArrayList<String> sonderfahrtArrTime = new ArrayList<String>();
-		private static ArrayList<Integer> sonderfahrtElementType = new ArrayList<Integer>();
-		private static ArrayList<Integer> sonderfahrtServiceJourneyCode = new ArrayList<Integer>();
+	// Array lists of exceptional blockelements
+	
+		private static ArrayList<String> exceptionalblockelementServiceJourneyID = new ArrayList<String>();
+		private static ArrayList<Integer> exceptionalblockelementBlockID = new ArrayList<Integer>();
+		private static ArrayList<Integer> exceptionalblockelementFromStopID = new ArrayList<Integer>();
+		private static ArrayList<Integer> exceptionalblockelementToStopID = new ArrayList<Integer>();
+		private static ArrayList<String> exceptionalblockelementDepTime = new ArrayList<String>();
+		private static ArrayList<String> exceptionalblockelementArrTime = new ArrayList<String>();
+		private static ArrayList<Integer> exceptionalblockelementElementType = new ArrayList<Integer>();
+		private static ArrayList<Integer> exceptionalblockelementServiceJourneyCode = new ArrayList<Integer>();
 	
 	//Array list of day id
 	private static ArrayList<String> blockelementDayID = new ArrayList<String>();
@@ -426,11 +427,11 @@ public class StringSplitter {
 //							blockelementArrTime.add(zeilenelemente.get(5));
 							blockelementElementType.add(elementType);
 						
-						sonderfahrtServiceJourneyID.add(zahl);
-						sonderfahrtFromStopID.add(fromStopID);
-						sonderfahrtToStopID.add(toStopID);
-						sonderfahrtDepTime.add(zeilenelemente.get(4));
-						sonderfahrtArrTime.add(zeilenelemente.get(5));
+							exceptionalblockelementServiceJourneyID.add(zahl);
+							exceptionalblockelementFromStopID.add(fromStopID);
+							exceptionalblockelementToStopID.add(toStopID);
+							exceptionalblockelementDepTime.add(zeilenelemente.get(4));
+							exceptionalblockelementArrTime.add(zeilenelemente.get(5));
 						
 						zeilenelemente.clear();
 					}}
@@ -1352,36 +1353,36 @@ public class StringSplitter {
 		return filename;
 	}
 
-	public  ArrayList<Integer> getSonderfahrtBlockID() {
-		return sonderfahrtBlockID;
+	public  ArrayList<Integer> getExceptionalblockelementBlockID() {
+		return exceptionalblockelementBlockID;
 	}
 
-	public  ArrayList<String> getSonderfahrtServiceJourneyID() {
-		return sonderfahrtServiceJourneyID;
+	public  ArrayList<String> getExceptionalblockelementServiceJourneyID() {
+		return exceptionalblockelementServiceJourneyID;
 	}
 
-	public  ArrayList<Integer> getSonderfahrtFromStopID() {
-		return sonderfahrtFromStopID;
+	public  ArrayList<Integer> getExceptionalblockelementFromStopID() {
+		return exceptionalblockelementFromStopID;
 	}
 
-	public  ArrayList<Integer> getSonderfahrtToStopID() {
-		return sonderfahrtToStopID;
+	public  ArrayList<Integer> getExceptionalblockelementToStopID() {
+		return exceptionalblockelementToStopID;
 	}
 
-	public  ArrayList<String> getSonderfahrtDepTime() {
-		return sonderfahrtDepTime;
+	public  ArrayList<String> getExceptionalblockelementDepTime() {
+		return exceptionalblockelementDepTime;
 	}
 
-	public  ArrayList<String> getSonderfahrtArrTime() {
-		return sonderfahrtArrTime;
+	public  ArrayList<String> getExceptionalblockelementArrTime() {
+		return exceptionalblockelementArrTime;
 	}
 
-	public  ArrayList<Integer> getSonderfahrtElementType() {
-		return sonderfahrtElementType;
+	public  ArrayList<Integer> getExceptionalblockelementElementType() {
+		return exceptionalblockelementElementType;
 	}
 
-	public  ArrayList<Integer> getSonderfahrtServiceJourneyCode() {
-		return sonderfahrtServiceJourneyCode;
+	public  ArrayList<Integer> getExceptionalblockelementServiceJourneyCode() {
+		return exceptionalblockelementServiceJourneyCode;
 	}
 	
 	
