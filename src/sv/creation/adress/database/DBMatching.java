@@ -189,7 +189,7 @@ public class DBMatching {
           System.out
           .println(umlaufplan.getFahrtZuUmlauf().get(24).getArrTime());
           System.out
-          .println(umlaufplan.getFahrtZuUmlauf().get(1897).getServiceJourneyID());
+          .println(umlaufplan.getFahrtZuUmlauf().get(948).getServiceJourneyID());
           System.out
           .println(umlaufplan.getFahrtZuUmlauf().size());
     }
