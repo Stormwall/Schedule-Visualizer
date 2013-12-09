@@ -302,9 +302,7 @@ public class DBConnection {
 			//table for stoppoints and respective times which allow for a change of ressouurces
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Reliefpoint (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
 																	  + "ReliefpointID INTEGER NOT NULL, "
-																	  + "ServiceJourneyID INTEGER NOT NULL, "
-																	  + "StoppointID INTEGER NOT NULL, "
-																	  + "StopTime VARCHAR(10) NOT NULL); ");
+																	  + "ServiceJourneyID INTEGER NOT NULL);");
 //																 	  + "FOREIGN KEY(ServiceJourneyID) REFERENCES ServiceJourney(ID), "
 //																	  + "FOREIGN KEY (StoppointID) REFERENCES Stoppoint(ID));");
 			//table for days in which the respective service journey is valid

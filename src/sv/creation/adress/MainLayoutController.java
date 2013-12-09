@@ -311,17 +311,17 @@ public class MainLayoutController {
 	  private void initialize() {
 		
 		//Erstellung der Datenbank
-		DBConnection dbc =new DBConnection();
-		dbc.initDBConnection();
-		dbc.createTables();
-		dbc.fillFahrplanIntoTables();
-		dbc.fillUmlaufplanIntoTables();
-		dbc.fillDienstplanIntoTable();
-		dbc.fillDiensttypenIntoTables();
+//		DBConnection dbc =new DBConnection();
+//		dbc.initDBConnection();
+//		dbc.createTables();
+//		dbc.fillFahrplanIntoTables();
+//		dbc.fillUmlaufplanIntoTables();
+//		dbc.fillDienstplanIntoTable();
+//		dbc.fillDiensttypenIntoTables();
 		
 		DBMatching dbm=new DBMatching();
 		dbm.createUmlaufplanObject();
-		dbm.createDienstplanObject();
+//		dbm.createDienstplanObject();
 		
 		//dbc.closeConnection();
 		

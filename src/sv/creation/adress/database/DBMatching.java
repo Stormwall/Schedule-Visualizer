@@ -31,6 +31,12 @@ public class DBMatching {
     ArrayList<Blockelement> blockelement = new ArrayList<Blockelement>();
     ArrayList<Duty> duty = new ArrayList<Duty>();
     ArrayList<Dutyelement> dutyelement = new ArrayList<Dutyelement>();
+    
+    // ********************************
+    // ****** Umlaufplan object *******
+    // ********************************
+    
+    Umlaufplan umlaufplan;
 
     //Object of a database statement
     Statement stmt;
@@ -153,7 +159,7 @@ public class DBMatching {
     	 * WICHTIG!!!! Es muss noch die FahrplanID ausgelesen werden. DB Verknüpfung!!!!
     	 */
     	
-          Umlaufplan umlaufplan = new Umlaufplan(1, umlauf, blockelement);
+          umlaufplan = new Umlaufplan(1, umlauf, blockelement);
           
           //Testing the outputs
           System.out
@@ -316,5 +322,16 @@ public class DBMatching {
                         .println(dienstplan.getDutyelement().get(0).getArrTime());
  
     }
+
+    
+    // *****************************
+    // ****** Getter methods *******                                                                   
+    // *****************************
+    
+	public Umlaufplan getUmlaufplan() {
+		return umlaufplan;
+	}
+    
+    
     
 }
