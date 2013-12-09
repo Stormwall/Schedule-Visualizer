@@ -214,7 +214,7 @@ public class DBConnection {
 			//*******************************************************
 			
 			//table for schedule
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Fahrplan (ID INTEGER PRIMARY KEY AUTOINCREMENT, Bezeichnung VARCHAR(255));");
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Fahrplan (ID INTEGER PRIMARY KEY AUTOINCREMENT, Bezeichnung VARCHAR(255), VersNr VARCHAR(30), FileType VARCHAR(30));");
 			
 			//table for stoppoints
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Stoppoint (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -691,7 +691,7 @@ public class DBConnection {
 		  }
 		  //fill Reliefpoint
 		  while((it43.hasNext()&&it44.hasNext()&&it45.hasNext()&&it46.hasNext())){
-			  stmnt.executeUpdate("INSERT INTO Reliefpoint (ReliefpointID, ServiceJourneyID, StoppointID, StopTime) VALUES('"+it43.next()+"','"+it44.next()+"','"+it45.next()+"','"+it46.next()+"');"); 
+			  stmnt.executeUpdate("INSERT INTO Reliefpoint (ReliefpointID, ServiceJourneyID) VALUES('"+it43.next()+"','"+it44.next()+"');"); 
 		  }
 		  
 		  //fill days according to how much days are considered in the plan (min: 5, max: 7)
