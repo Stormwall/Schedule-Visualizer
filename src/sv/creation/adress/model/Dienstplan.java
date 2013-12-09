@@ -1,43 +1,34 @@
 package sv.creation.adress.model;
 
-public class Dienstplan extends Plan {
+import java.util.ArrayList;
+
+public class Dienstplan {
 	
 	
-	private int ID;
-	private String diensttyp;
-		
+	private int id;
+	private ArrayList<Duty> duty = new ArrayList<Duty>();
+	private ArrayList<Dutyelement> dutyelement = new ArrayList<Dutyelement>();
+
 	/**
-	 * @param blockID
-	 * @param serviceJourney
-	 * @param fromStopID
-	 * @param toStopID
-	 * @param depTime
-	 * @param arrivalTime
-	 * @param elementType
-	 * @param iD
-	 * @param diensttyp
+	 * @param umlaufplan
 	 */
-	public Dienstplan(int blockID, int serviceJourney, int fromStopID,
-			int toStopID, String depTime, String arrivalTime, int elementType,
-			int iD, String diensttyp) {
-		super(blockID, serviceJourney, fromStopID, toStopID, depTime,
-				arrivalTime, elementType);
-		ID = iD;
-		this.diensttyp = diensttyp;
+	public Dienstplan(int id,ArrayList<Duty> duty, ArrayList<Dutyelement> dutyelement) {
+		// super();
+		this.id=id;
+		this.duty = duty;
+		this.dutyelement=dutyelement;
 	}
-		
-	
-	public int getID() {
-		return ID;
+
+	public int getId() {
+		return id;
 	}
-	public void setID(int iD) {
-		ID = iD;
+
+	public ArrayList<Duty> getDuty() {
+		return duty;
 	}
-	public String getDiensttyp() {
-		return diensttyp;
-	}
-	public void setDiensttyp(String diensttyp) {
-		this.diensttyp = diensttyp;
+
+	public ArrayList<Dutyelement> getDutyelement() {
+		return dutyelement;
 	}
 
 	
