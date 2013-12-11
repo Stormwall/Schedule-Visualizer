@@ -2,10 +2,13 @@ package sv.creation.adress;
 
 import sv.creation.adress.database.DBConnection;
 import sv.creation.adress.database.DBMatching;
+import sv.creation.adress.model.Blockelement;
+import sv.creation.adress.model.Umlaufplan;
 import javafx.animation.FadeTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -17,7 +20,9 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -38,6 +43,8 @@ public class MainLayoutController {
 	private AnchorPane backgroundgraphicPane;
 	@FXML
 	private AnchorPane lowerDetailsPane;
+	@FXML
+	private ScrollPane tablePane;
 	@FXML
 	private AnchorPane xUp1;
 	@FXML
@@ -121,9 +128,7 @@ public class MainLayoutController {
 	@FXML
 	private ScrollPane upperGraphicPane7;
 	@FXML
-	private ScrollPane lowerGraphicPane7;
-	@FXML
-	private TableView dutyChoiceTable;
+	private ScrollPane lowerGraphicPane7;	
 	@FXML
 	private GridPane graphicPane;
 	@FXML
@@ -141,11 +146,16 @@ public class MainLayoutController {
 	@FXML
 	private HBox filterPanel;
 	
-	// Zugriff auf die unterschiedlichen TabPanes
+	// Erstellung der Detailtableviews
+	
+	private TableView<Blockelement> detailsUmlaufTable = new TableView<Blockelement>();
+	
+	
+	// Zugriff auf die unterschiedlichen TabPanes (Gridpane)
 	@FXML
-	private ChoiceBox UPlan;
+	private ChoiceBox<String> UPlan;
 	@FXML
-	private ChoiceBox DPlan;	
+	private ChoiceBox<String> DPlan;	
 	@FXML
 	private Label UPlan1;
 	@FXML
@@ -203,7 +213,7 @@ public class MainLayoutController {
 	@FXML
 	private Label DPlanValue7;
 	
-	// Zugriff auf die unterschiedlichen TabPanes
+	// Zugriff auf die unterschiedlichen Tabs
 	@FXML
 	private TabPane Planpane;
 	@FXML
@@ -221,8 +231,13 @@ public class MainLayoutController {
 	@FXML
 	private Tab Plan7;
 	
+	// Bau der Zugriffslisten
 	
-	// Konstruktion der Canvas Elemente
+	private ObservableList<Umlaufplan> umlaufplanliste = FXCollections.observableArrayList();
+
+	
+	
+	// Canvas Elemente
 	
 	private Canvas upperChart1;
 	private Canvas lowerChart1;
@@ -295,7 +310,11 @@ public class MainLayoutController {
 	//Pruefvariable
 	
 	private boolean grafikErstellt = false;
+	private boolean uppergrafikErstellt = false;
+	private boolean uDetailsTableErstellt = false;
+	private boolean lowergrafikErstellt = false;
 	private boolean hilfslinienAktiv = false;
+	private int umlaufChoice = 0;
 	
 	//Referenz zur MainApp
 	
@@ -307,17 +326,18 @@ public class MainLayoutController {
 	  * after the fxml file has been loaded.
 	  */
 	  
+	@SuppressWarnings("unchecked")
 	@FXML
 	  private void initialize() {
 		
 		//Erstellung der Datenbank
-		DBConnection dbc =new DBConnection();
-		dbc.initDBConnection();
-		dbc.createTables();
-		dbc.fillFahrplanIntoTables();
-		dbc.fillUmlaufplanIntoTables();
-		dbc.fillDienstplanIntoTable();
-		dbc.fillDiensttypenIntoTables();
+//		DBConnection dbc =new DBConnection();
+//		dbc.initDBConnection();
+//		dbc.createTables();
+//		dbc.fillFahrplanIntoTables();
+//		dbc.fillUmlaufplanIntoTables();
+//		dbc.fillDienstplanIntoTable();
+//		dbc.fillDiensttypenIntoTables();
 		
 		DBMatching dbm=new DBMatching();
 		dbm.createUmlaufplanObject();
@@ -338,31 +358,47 @@ public class MainLayoutController {
 		ft.setAutoReverse(true);
 		ft.play();
 		
-		// Sets the standardelement condition of the Interface
+		// Sets the Standardelement condition of the Interface
 		
-		this.dutyChoiceTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-		this.UPlan.setItems(FXCollections.observableArrayList("Umlaufplan  1a", "Umlaufplan 1b", "Umlaufplan 1c"));
+		detailsUmlaufTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+			
+		
+		//Umlaufpläne -- Choicebox wird gefüllt
+		
+		this.umlaufplanliste.add(dbm.getUmlaufplan());
+		this.umlaufplanliste.get(0).setName("Umlaufplan 1");
+		this.UPlan.setItems(FXCollections.observableArrayList(umlaufplanliste.get(0).getName()));
+		for(int i = 1; i < umlaufplanliste.size(); i++){
+			this.UPlan.getItems().add(umlaufplanliste.get(i).getName());
+		}		
+		
+		//Dienstpläme
+		
 		this.DPlan.setItems(FXCollections.observableArrayList("Dienstplan  1a", "Dienstplan 1b", "Dienstplan 1c"));
 		
 		// Listen for Resizechanges (Graphic)
 		this.upperGraphicPane1.widthProperty().addListener(new ChangeListener<Number>() {
 		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-		       	refreshBothGraphics();		    	
+		     	refreshBothGraphics();
 		    }
 		});
 		this.upperGraphicPane1.heightProperty().addListener(new ChangeListener<Number>() {
 		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-		    	refreshBothGraphics();		    	
+		    	refreshBothGraphics();
 		    }
 		});	
 		this.lowerGraphicPane1.widthProperty().addListener(new ChangeListener<Number>() {
 		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-		    	refreshBothGraphics();		    	
+		    	if(lowergrafikErstellt == true){
+		    	refreshBothGraphics();
+		    	}
 		    }
 		});
 		this.lowerGraphicPane1.heightProperty().addListener(new ChangeListener<Number>() {
 		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+		    	if(lowergrafikErstellt == true){
 		    	refreshBothGraphics();
+		    	}
 		    }
 		});
 		
@@ -401,10 +437,10 @@ public class MainLayoutController {
 			public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) {
 					// Handhabung wenn die Checkbox angew�hlt wird
 					if(new_val == true){
-						if(grafikErstellt == true){
+						if(uppergrafikErstellt == true){
 							refreshBothGraphics();
 							createHelpLines();							
-							hilfslinienAktiv = true;
+							hilfslinienAktiv = true;							
 						}else{							
 							mainApp.fehlerMeldungGrafikFehlt();	
 							hilfslinien.setSelected(false);
@@ -428,56 +464,30 @@ public class MainLayoutController {
 	@FXML
 	private void refreshBothGraphics() {
 		
-		//Hier wird das Feld gecleared und gepr�ft ob es schon existiert
-		if(this.grafikErstellt== true){
-			this.lowergc1.clearRect(0, 0, this.lowerChart1.getWidth(), this.lowerChart1.getHeight());
-			this.uppergc1.clearRect(0, 0, this.upperChart1.getWidth(), this.upperChart1.getHeight());
-			this.lowerXgc1.clearRect(0, 0, this.lowerXChart.getWidth(), this.lowerXChart.getHeight());
-			this.upperXgc1.clearRect(0, 0, this.upperXChart.getWidth(), this.upperXChart.getHeight());
-	
-			createUpperGraphic();
-			createLowerGraphic();
-			createLowerXScale();
-			createUpperXScale();
+		//Hier wird das Feld gecleared und gepr�ft ob es schon existiert	
+			
+			if(uppergrafikErstellt == true){
+				this.uppergc1.clearRect(0, 0, this.upperChart1.getWidth(), this.upperChart1.getHeight());
+				this.upperXgc1.clearRect(0, 0, this.upperXChart.getWidth(), this.upperXChart.getHeight());
+				createUpperGraphic();
+		       	}
+			if(lowergrafikErstellt == true){
+				this.lowergc1.clearRect(0, 0, this.lowerChart1.getWidth(), this.lowerChart1.getHeight());
+				this.lowerXgc1.clearRect(0, 0, this.lowerXChart.getWidth(), this.lowerXChart.getHeight());
+				createLowerGraphic();
+				createLowerXScale();
+			}
 		
 			if(this.hilfslinienAktiv == true){
-				createHelpLines();
+				createHelpLines();			
 			}
-		}
-	}
-	/**
-	 * Creates Both Graphics.
-	 */
-	@FXML
-	private void createBothGraphics() {	
-		
-		this.lowerDetailsPane.setMaxHeight(lowerDetailsPane.getHeight());
-		this.lowerDetailsPane.setMinHeight(lowerDetailsPane.getHeight());
-		// Creates the Graphic
-		createUpperGraphic();
-		createLowerGraphic();
-		createLowerXScale();
-		createUpperXScale();
-		
-		//Fades in Filter Panel
-		FadeTransition fa = new FadeTransition(Duration.millis(500), this.filterPanel);
-		fa.setFromValue(0.0);
-		fa.setToValue(1.0);
-		fa.setAutoReverse(true);
-		fa.play();
-		
-		FadeTransition faa = new FadeTransition(Duration.millis(500), this.showFullscreen);
-		faa.setFromValue(0.0);
-		faa.setToValue(1.0);
-		faa.setAutoReverse(true);
-		faa.play();
 	}
 	
 	/**
-	 * Creates The Upper Graphic.
+	 * Creates The Upper Background Graphic.
 	 */
 	@FXML
-	private void createUpperGraphic() {
+	private void createUpperBackgroundGraphic() {
 		
 		//Initialize the Chart
 		this.upperChart1 = new Canvas(this.upperGraphicPane1.getWidth()-4,this.upperheight);
@@ -509,7 +519,51 @@ public class MainLayoutController {
 		this.upperGraphicPane1.setContent(this.upperChart1);
 		// Best�tigung das ein Feld erzeugt wurde
 		this.grafikErstellt = true;
+	}	
+	
+	/**
+	 * Creates The Upper Graphic.
+	 */
+	@FXML
+	private void createUpperGraphic() {
+		
+		this.lowerDetailsPane.setMaxHeight(lowerDetailsPane.getHeight());
+		this.lowerDetailsPane.setMinHeight(lowerDetailsPane.getHeight());
+		
+		if(this.uppergrafikErstellt == true){
+			this.uppergc1.clearRect(0, 0, this.upperChart1.getWidth(), this.upperChart1.getHeight());
+			this.upperXgc1.clearRect(0, 0, this.upperXChart.getWidth(), this.upperXChart.getHeight());
+		}
+				
+		if(UPlan.getSelectionModel().getSelectedItem()!= null){
+			
+						
+		// Labelbeschriftungen für Umlaufpläne
+		this.UPlan1.setVisible(true);
+		this.UPlanValue1.setText(UPlan.getSelectionModel().getSelectedItem().toString());
+		this.UPlanValue1.setVisible(true);
+		this.uppergrafikErstellt = true;
+		
+		// Hintergrunderstellung
+		createUpperBackgroundGraphic();
+		createUpperXScale();
+		graphicTransition();		
+		
+		// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+		if(uDetailsTableErstellt == true){
+			this.detailsUmlaufTable.getColumns().clear();
+			this.uDetailsTableErstellt = false;
+		}
+		createUDetailsTable();
+		
+		
+		if(this.hilfslinienAktiv == true){
+			createHelpLines();
+			}
+		}
 	}
+			
+	
 	/**
 	 * Creates The Upper X - Scale.
 	 */
@@ -595,6 +649,44 @@ public class MainLayoutController {
 		
 		this.lowerGraphicPane1.setContent(this.lowerChart1);
 		}
+	
+	/**
+	 * Creates DetailsTable.
+	 */
+	@FXML
+	private void createUDetailsTable() {
+		
+				this.detailsUmlaufTable.setEditable(true);
+				
+				TableColumn<Blockelement, String> blockEleCol = new TableColumn<Blockelement, String>("Block-Ele.");
+				TableColumn<Blockelement, String> startzeitCol = new TableColumn<Blockelement, String>("Startzeit");
+				TableColumn<Blockelement, String> endzeitCol = new TableColumn<Blockelement, String>("Endzeit");
+				TableColumn<Blockelement, String> eleTypeCol = new TableColumn<Blockelement, String>("Ele.-Type");
+				TableColumn<Blockelement, String> blockCol = new TableColumn<Blockelement, String>("Block");
+				TableColumn<Blockelement, String> dauerCol = new TableColumn<Blockelement, String>("Dauer");		
+				
+				blockEleCol.setCellValueFactory(new PropertyValueFactory<Blockelement, String>("id"));
+				startzeitCol.setCellValueFactory(new PropertyValueFactory<Blockelement, String>("depTime"));
+				endzeitCol.setCellValueFactory(new PropertyValueFactory<Blockelement, String>("arrTime"));
+				eleTypeCol.setCellValueFactory(new PropertyValueFactory<Blockelement, String>("elementType"));
+				blockCol.setCellValueFactory(new PropertyValueFactory<Blockelement, String>("blockID"));
+				dauerCol.setCellValueFactory(new PropertyValueFactory<Blockelement, String>("firstName"));
+				
+				// Hereinladen der Daten
+				
+				ObservableList<Blockelement> data = FXCollections.observableArrayList();
+				
+				for ( int i = 0; i < this.umlaufplanliste.get(this.umlaufChoice).getFahrtZuUmlauf().size(); i++ ){					
+					data.add(this.umlaufplanliste.get(this.umlaufChoice).getFahrtZuUmlauf().get(i));
+				};
+				
+				this.detailsUmlaufTable.setItems(data);
+				this.detailsUmlaufTable.getColumns().addAll(blockEleCol, startzeitCol, endzeitCol, eleTypeCol, blockCol, dauerCol);		
+				this.tablePane.setContent(detailsUmlaufTable);
+				
+				uDetailsTableErstellt = true;
+	}
+	
 	/**
 	 * Creates The Lower X - Scale.
 	 */
@@ -653,52 +745,82 @@ public class MainLayoutController {
 	@FXML
 	private void createHelpLines() {
 		
-		double abstandNetz = (this.lowerChart1.getWidth()-30)/(this.endzeitVar-this.startzeitVar);				
-		this.lowergc1.setLineWidth(1);
-		this.lowergc1.setStroke(Color.LIGHTGREY);
-		this.uppergc1.setLineWidth(1);
-		this.uppergc1.setStroke(Color.LIGHTGREY);
-		
+		//double abstandNetz = (this.upperGraphicPane1.getWidth()-30)/(this.endzeitVar-this.startzeitVar);
+		double abstandNetz = (this.upperChart1.getWidth()-30)/(this.endzeitVar-this.startzeitVar);	
 		// Methoden zu Erstellung der dynamischen Hilfslinien
-			int chartCounter = this.startzeitVar;
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-								
+			
+		if(lowergrafikErstellt == true){
+			
+			this.lowergc1.setLineWidth(1);
+			this.lowergc1.setStroke(Color.LIGHTGREY);
+			
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {			
+				
 			double pixel=((i)*abstandNetz)+abstandNetz/4;
 			this.lowergc1.strokeLine(pixel, 0, pixel, this.lowerChart1.getHeight()-3);
-			chartCounter = chartCounter + 1;
+			
 			}
 			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
 				
 			double pixel=((i)*abstandNetz)+abstandNetz/2;
 			this.lowergc1.strokeLine(pixel, 0, pixel, this.lowerChart1.getHeight()-3);
-			chartCounter = chartCounter + 1;
+			
 			}
 			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
 				
 			double pixel=((i)*abstandNetz)+abstandNetz/4*3;
 			this.lowergc1.strokeLine(pixel, 0, pixel, this.lowerChart1.getHeight()-3);
-			chartCounter = chartCounter + 1;
+			
 			}
+		}
+		if(uppergrafikErstellt == true){	
+			
+			
+			
+			this.uppergc1.setLineWidth(1);
+			this.uppergc1.setStroke(Color.LIGHTGREY);
 			
 			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-				
+					
 			double pixel=((i)*abstandNetz)+abstandNetz/4;
-			this.uppergc1.strokeLine(pixel, 0, pixel, this.lowerChart1.getHeight());
-			chartCounter = chartCounter + 1;
+			this.uppergc1.strokeLine(pixel, 0, pixel, this.upperChart1.getHeight());			
+			
 			}
 			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
 					
 			double pixel=((i)*abstandNetz)+abstandNetz/2;
-			this.uppergc1.strokeLine(pixel, 0, pixel, this.lowerChart1.getHeight());
-			chartCounter = chartCounter + 1;
+			this.uppergc1.strokeLine(pixel, 0, pixel, this.upperChart1.getHeight());
+			
 			}
 			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
 					
 			double pixel=((i)*abstandNetz)+abstandNetz/4*3;
-			this.uppergc1.strokeLine(pixel, 0, pixel, this.lowerChart1.getHeight());
-			chartCounter = chartCounter + 1;
+			this.uppergc1.strokeLine(pixel, 0, pixel, this.upperChart1.getHeight());
+			
 			}
+		}
 					
+	}
+	
+	/**
+	 * Creates Filter Transitions.
+	 */
+	
+	public void graphicTransition(){
+		
+		//Fades in Filter Panel
+				FadeTransition fa = new FadeTransition(Duration.millis(500), this.filterPanel);
+				fa.setFromValue(0.0);
+				fa.setToValue(1.0);
+				fa.setAutoReverse(true);
+				fa.play();
+				
+				FadeTransition faa = new FadeTransition(Duration.millis(500), this.showFullscreen);
+				faa.setFromValue(0.0);
+				faa.setToValue(1.0);
+				faa.setAutoReverse(true);
+				faa.play();
+		
 	}
 	
 	

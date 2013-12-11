@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Umlaufplan {
 	
 	private int id;
+	private String name;
 	private ArrayList<Block> umlauf = new ArrayList<Block>();
 	private ArrayList<Blockelement> fahrtZuUmlauf = new ArrayList<Blockelement>();
 
@@ -29,6 +30,15 @@ public class Umlaufplan {
 	public ArrayList<Blockelement> getFahrtZuUmlauf() {
 		return fahrtZuUmlauf;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 
 	
 
