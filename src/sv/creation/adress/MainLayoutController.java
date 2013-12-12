@@ -254,10 +254,34 @@ public class MainLayoutController {
 	private Canvas lowerChart6;
 	private Canvas upperChart7;
 	private Canvas lowerChart7;
-	private Canvas upperXChart;
-	private Canvas upperYChart;
-	private Canvas lowerXChart;
-	private Canvas lowerYChart;
+	private Canvas upperXChart1;
+	private Canvas upperYChart1;
+	private Canvas lowerXChart1;
+	private Canvas lowerYChart1;
+	private Canvas upperXChart2;
+	private Canvas upperYChart2;
+	private Canvas lowerXChart2;
+	private Canvas lowerYChart2;
+	private Canvas upperXChart3;
+	private Canvas upperYChart3;
+	private Canvas lowerXChart3;
+	private Canvas lowerYChart3;
+	private Canvas upperXChart4;
+	private Canvas upperYChart4;
+	private Canvas lowerXChart4;
+	private Canvas lowerYChart4;
+	private Canvas upperXChart5;
+	private Canvas upperYChart5;
+	private Canvas lowerXChart5;
+	private Canvas lowerYChart5;
+	private Canvas upperXChart6;
+	private Canvas upperYChart6;
+	private Canvas lowerXChart6;
+	private Canvas lowerYChart6;
+	private Canvas upperXChart7;
+	private Canvas upperYChart7;
+	private Canvas lowerXChart7;
+	private Canvas lowerYChart7;
 	private GraphicsContext uppergc1;
 	private GraphicsContext lowergc1;
 	private GraphicsContext uppergc2;
@@ -310,12 +334,14 @@ public class MainLayoutController {
 	
 	//Pruefvariable
 	
-	private boolean grafikErstellt = false;
-	private boolean uppergrafikErstellt = false;
+	private boolean firstUppergrafikErstellt = false;
+	private boolean secondUppergrafikErstellt = false;
 	private boolean uDetailsTableErstellt = false;
 	private boolean lowergrafikErstellt = false;
 	private boolean hilfslinienAktiv = false;
+	private boolean addButtonPressed = true;
 	private int umlaufChoice = 0;
+	private int umlaufTabCounter = 0;
 	
 	//Referenz zur MainApp
 	
@@ -388,7 +414,67 @@ public class MainLayoutController {
 		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
 		    	refreshBothGraphics();
 		    }
-		});	
+		});
+		this.upperGraphicPane2.widthProperty().addListener(new ChangeListener<Number>() {
+		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+		     	refreshBothGraphics();
+		    }
+		});
+		this.upperGraphicPane2.heightProperty().addListener(new ChangeListener<Number>() {
+		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+		    	refreshBothGraphics();
+		    }
+		});
+		this.upperGraphicPane3.widthProperty().addListener(new ChangeListener<Number>() {
+		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+		     	refreshBothGraphics();
+		    }
+		});
+		this.upperGraphicPane3.heightProperty().addListener(new ChangeListener<Number>() {
+		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+		    	refreshBothGraphics();
+		    }
+		});
+		this.upperGraphicPane4.widthProperty().addListener(new ChangeListener<Number>() {
+		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+		     	refreshBothGraphics();
+		    }
+		});
+		this.upperGraphicPane4.heightProperty().addListener(new ChangeListener<Number>() {
+		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+		    	refreshBothGraphics();
+		    }
+		});
+		this.upperGraphicPane5.widthProperty().addListener(new ChangeListener<Number>() {
+		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+		     	refreshBothGraphics();
+		    }
+		});
+		this.upperGraphicPane5.heightProperty().addListener(new ChangeListener<Number>() {
+		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+		    	refreshBothGraphics();
+		    }
+		});
+		this.upperGraphicPane6.widthProperty().addListener(new ChangeListener<Number>() {
+		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+		     	refreshBothGraphics();
+		    }
+		});
+		this.upperGraphicPane6.heightProperty().addListener(new ChangeListener<Number>() {
+		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+		    	refreshBothGraphics();
+		    }
+		});
+		this.upperGraphicPane7.widthProperty().addListener(new ChangeListener<Number>() {
+		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+		     	refreshBothGraphics();
+		    }
+		});
+		this.upperGraphicPane7.heightProperty().addListener(new ChangeListener<Number>() {
+		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+		    	refreshBothGraphics();
+		    }
+		});
 		this.lowerGraphicPane1.widthProperty().addListener(new ChangeListener<Number>() {
 		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
 		    	if(lowergrafikErstellt == true){
@@ -439,7 +525,7 @@ public class MainLayoutController {
 			public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) {
 					// Handhabung wenn die Checkbox angew�hlt wird
 					if(new_val == true){
-						if(uppergrafikErstellt == true){
+						if(firstUppergrafikErstellt == true){
 							refreshBothGraphics();
 							createHelpLines();							
 							hilfslinienAktiv = true;							
@@ -468,14 +554,13 @@ public class MainLayoutController {
 		
 		//Hier wird das Feld gecleared und gepr�ft ob es schon existiert	
 			
-			if(uppergrafikErstellt == true){
-				this.uppergc1.clearRect(0, 0, this.upperChart1.getWidth(), this.upperChart1.getHeight());
-				this.upperXgc1.clearRect(0, 0, this.upperXChart.getWidth(), this.upperXChart.getHeight());
+			if(firstUppergrafikErstellt == true){
+				this.addButtonPressed = false;
 				createUpperGraphic();
 		       	}
 			if(lowergrafikErstellt == true){
 				this.lowergc1.clearRect(0, 0, this.lowerChart1.getWidth(), this.lowerChart1.getHeight());
-				this.lowerXgc1.clearRect(0, 0, this.lowerXChart.getWidth(), this.lowerXChart.getHeight());
+				this.lowerXgc1.clearRect(0, 0, this.lowerXChart1.getWidth(), this.lowerXChart1.getHeight());
 				createLowerGraphic();
 				createLowerXScale();
 			}
@@ -486,10 +571,112 @@ public class MainLayoutController {
 	}
 	
 	/**
-	 * Creates The Upper Background Graphic.
+	 * Creates The Upper Graphic.
 	 */
 	@FXML
-	private void createUpperBackgroundGraphic() {
+	private void createUpperGraphic() {
+		
+		this.lowerDetailsPane.setMaxHeight(lowerDetailsPane.getHeight());
+		this.lowerDetailsPane.setMinHeight(lowerDetailsPane.getHeight());
+		
+		
+				
+	 if(UPlan.getSelectionModel().getSelectedItem()!= null){
+		
+		 // Erstellung der Umlaufplangrafik auf dem ersten Tab
+		 
+		if(this.umlaufTabCounter >= 0){
+			
+			if(this.firstUppergrafikErstellt == true){
+			this.uppergc1.clearRect(0, 0, this.upperChart1.getWidth(), this.upperChart1.getHeight());
+			this.upperXgc1.clearRect(0, 0, this.upperXChart1.getWidth(), this.upperXChart1.getHeight());
+				if(this.secondUppergrafikErstellt == true){
+				this.uppergc2.clearRect(0, 0, this.upperChart1.getWidth(), this.upperChart1.getHeight());
+				}
+		}				
+		// Labelbeschriftungen für Umlaufpläne
+		this.UPlan1.setVisible(true);
+		this.UPlanValue1.setText(UPlan.getSelectionModel().getSelectedItem().toString());
+		this.UPlanValue1.setVisible(true);
+		this.UPlanValue1.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+		
+		// Zur Kontrolle ob es sich um einen Buttonklick handelt oder nicht
+		
+		if(this.addButtonPressed == true){
+		this.umlaufTabCounter = this.umlaufTabCounter + 1;
+		}
+		
+		// Zur Verhinderung vom doppelten Erschaffen der Grafiken 
+		
+		if(this.firstUppergrafikErstellt == false){
+			this.umlaufTabCounter = 0;
+		}
+		this.firstUppergrafikErstellt = true;
+		// Hintergrunderstellung
+		createUpperBackgroundGraphicFirstPane();
+		createUpperXScaleFirstPane();
+		graphicTransition();		
+		
+		// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+		if(uDetailsTableErstellt == true){
+			this.detailsUmlaufTable.getColumns().clear();
+			this.uDetailsTableErstellt = false;
+		}
+		createUDetailsTable();
+		
+		
+		if(this.hilfslinienAktiv == true){
+			createHelpLines();
+			}		
+		}
+		
+		 // Erstellung der Umlaufplangrafik auf dem zweiten Tab
+		
+		if(this.umlaufTabCounter >= 1){
+			
+			if(this.secondUppergrafikErstellt == true){
+			this.uppergc2.clearRect(0, 0, this.upperChart2.getWidth(), this.upperChart2.getHeight());
+		}				
+		// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
+		
+		this.Plan2.setDisable(false);
+		this.UPlan2.setVisible(true);
+		this.UPlanValue2.setText(UPlan.getSelectionModel().getSelectedItem().toString());
+		this.UPlanValue2.setVisible(true);
+		this.UPlanValue1.setStyle("-fx-background-color:white;");
+		this.UPlanValue2.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+		
+		// Zur Kontrolle ob es sich um einen Buttonklick handelt oder nicht
+		
+		if(this.addButtonPressed == true){
+		this.umlaufTabCounter = 2;
+		}
+		
+		// Zur Verhinderung vom doppelten Erschaffen der Grafiken 
+		
+		if(this.secondUppergrafikErstellt == false){
+			this.umlaufTabCounter = 1;
+		}
+		
+		this.secondUppergrafikErstellt = true;
+		
+		// Hintergrunderstellung
+		createUpperBackgroundGraphicSecondPane();		
+		
+						
+		}
+		
+		this.addButtonPressed = true;
+		
+	  }
+	}
+			
+	
+	/**
+	 * Creates The First Upper Background Graphic.
+	 */
+	@FXML
+	private void createUpperBackgroundGraphicFirstPane() {
 		
 		//Initialize the Chart
 		this.upperChart1 = new Canvas(this.upperGraphicPane1.getWidth()-4,this.upperheight);
@@ -519,67 +706,59 @@ public class MainLayoutController {
 	    }
 		
 		this.upperGraphicPane1.setContent(this.upperChart1);
-		// Best�tigung das ein Feld erzeugt wurde
-		this.grafikErstellt = true;
 	}	
 	
 	/**
-	 * Creates The Upper Graphic.
+	 * Creates the second Upper Background Graphic.
 	 */
 	@FXML
-	private void createUpperGraphic() {
+	private void createUpperBackgroundGraphicSecondPane() {
 		
-		this.lowerDetailsPane.setMaxHeight(lowerDetailsPane.getHeight());
-		this.lowerDetailsPane.setMinHeight(lowerDetailsPane.getHeight());
-		
-		if(this.uppergrafikErstellt == true){
-			this.uppergc1.clearRect(0, 0, this.upperChart1.getWidth(), this.upperChart1.getHeight());
-			this.upperXgc1.clearRect(0, 0, this.upperXChart.getWidth(), this.upperXChart.getHeight());
-		}
+		//Initialize the Chart
+		this.upperChart2 = new Canvas(this.upperGraphicPane2.getWidth()-4,this.upperheight);
 				
-		if(UPlan.getSelectionModel().getSelectedItem()!= null){
+		//Erstellen des HintergrundgrafikKontextes
+		this.uppergc2 = this.upperChart2.getGraphicsContext2D();
+		this.uppergc2.clearRect(0, 0, this.upperChart2.getWidth(), this.upperChart2.getHeight());
+		
+		//Erstellen des Hintergrundes
+		this.uppergc2.setFill(Color.BEIGE);				
+		this.uppergc2.fillRect(0, 0,this.upperChart2.getWidth(),this.upperChart2.getHeight());
+		
+		this.uppergc2.setLineWidth(3);
+		this.uppergc2.setStroke(Color.BLACK);
+		this.uppergc2.strokeLine(1, 0, 1, this.upperChart2.getHeight());		
+		
+		double abstandNetz = (this.upperChart2.getWidth()-30)/(this.endzeitVar-this.startzeitVar);				
+		this.uppergc2.setLineWidth(1);
+		this.uppergc2.setFont(Font.getDefault());
+		this.uppergc2.setFill(Color.BLACK);
+		this.uppergc2.setStroke(Color.BLACK);
+		// Variable zum Darstellen verschiedener Zeitpunkte
+		for(int i=0; i<=(endzeitVar-startzeitVar) ;i++) {
 			
-						
-		// Labelbeschriftungen für Umlaufpläne
-		this.UPlan1.setVisible(true);
-		this.UPlanValue1.setText(UPlan.getSelectionModel().getSelectedItem().toString());
-		this.UPlanValue1.setVisible(true);
-		this.UPlanValue1.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
-		this.uppergrafikErstellt = true;
+			double pixel=((i)*abstandNetz);
+			this.uppergc2.strokeLine(pixel, 0, pixel, this.upperChart2.getHeight());
+	    }
 		
-		// Hintergrunderstellung
-		createUpperBackgroundGraphic();
-		createUpperXScale();
-		graphicTransition();		
-		
-		// Erstellung/ Befüllen des Details Table-- Clearen des Alten
-		if(uDetailsTableErstellt == true){
-			this.detailsUmlaufTable.getColumns().clear();
-			this.uDetailsTableErstellt = false;
-		}
-		createUDetailsTable();
-		
-		
-		if(this.hilfslinienAktiv == true){
-			createHelpLines();
-			}
-		}
-	}
-			
+		this.upperGraphicPane2.setContent(this.upperChart2);
+	}	
+	
+	
 	
 	/**
-	 * Creates The Upper X - Scale.
+	 * Creates The Upper X - Scale for the first Tab.
 	 */
 	@FXML
-	private void createUpperXScale() {
+	private void createUpperXScaleFirstPane() {
 		
 		// Hier wird das Skala Canvas erzeugt
-				this.upperXChart = new Canvas(this.upperGraphicPane1.getWidth(),this.xUp1.getHeight());
+				this.upperXChart1 = new Canvas(this.upperGraphicPane1.getWidth(),this.xUp1.getHeight());
 				// Hier der Graphic Context dazu erzeugt
-				this.upperXgc1 = this.upperXChart.getGraphicsContext2D();
-				this.upperXgc1.clearRect(0, 0, this.upperXChart.getWidth(), this.upperXChart.getHeight());
+				this.upperXgc1 = this.upperXChart1.getGraphicsContext2D();
+				this.upperXgc1.clearRect(0, 0, this.upperXChart1.getWidth(), this.upperXChart1.getHeight());
 				
-				double abstandNetz = (this.upperXChart.getWidth()-30)/(this.endzeitVar-this.startzeitVar);				
+				double abstandNetz = (this.upperXChart1.getWidth()-30)/(this.endzeitVar-this.startzeitVar);				
 				this.upperXgc1.setLineWidth(1);
 				this.upperXgc1.setFont(Font.getDefault());
 				this.upperXgc1.setFill(Color.BLACK);
@@ -605,7 +784,7 @@ public class MainLayoutController {
 							}
 					    }
 						
-				this.xUp1.getChildren().add(upperXChart);
+				this.xUp1.getChildren().add(upperXChart1);
 	}
 	
 	/**
@@ -661,18 +840,18 @@ public class MainLayoutController {
 		
 				this.detailsUmlaufTable.setEditable(true);
 				
-				TableColumn<Blockelement, String> blockEleCol = new TableColumn<Blockelement, String>("Block-Ele.");
+				TableColumn<Blockelement, Integer> blockEleCol = new TableColumn<Blockelement, Integer>("Block-Ele.");
 				TableColumn<Blockelement, String> startzeitCol = new TableColumn<Blockelement, String>("Startzeit");
 				TableColumn<Blockelement, String> endzeitCol = new TableColumn<Blockelement, String>("Endzeit");
-				TableColumn<Blockelement, String> eleTypeCol = new TableColumn<Blockelement, String>("Ele.-Type");
-				TableColumn<Blockelement, String> blockCol = new TableColumn<Blockelement, String>("Block");
+				TableColumn<Blockelement, Integer> eleTypeCol = new TableColumn<Blockelement, Integer>("Ele.-Type");
+				TableColumn<Blockelement, Integer> blockCol = new TableColumn<Blockelement, Integer>("Block");
 				TableColumn<Blockelement, String> dauerCol = new TableColumn<Blockelement, String>("Dauer");		
 				
-				blockEleCol.setCellValueFactory(new PropertyValueFactory<Blockelement, String>("id"));
+				blockEleCol.setCellValueFactory(new PropertyValueFactory<Blockelement, Integer>("id"));
 				startzeitCol.setCellValueFactory(new PropertyValueFactory<Blockelement, String>("depTime"));
 				endzeitCol.setCellValueFactory(new PropertyValueFactory<Blockelement, String>("arrTime"));
-				eleTypeCol.setCellValueFactory(new PropertyValueFactory<Blockelement, String>("elementType"));
-				blockCol.setCellValueFactory(new PropertyValueFactory<Blockelement, String>("blockID"));
+				eleTypeCol.setCellValueFactory(new PropertyValueFactory<Blockelement, Integer>("elementType"));
+				blockCol.setCellValueFactory(new PropertyValueFactory<Blockelement, Integer>("blockID"));
 				dauerCol.setCellValueFactory(new PropertyValueFactory<Blockelement, String>("firstName"));
 				
 				blockEleCol.prefWidthProperty().bind(blockEleCol.widthProperty());
@@ -704,12 +883,12 @@ public class MainLayoutController {
 	private void createLowerXScale() {
 		
 		// Hier wird das Skala Canvas erzeugt
-		this.lowerXChart = new Canvas(this.lowerGraphicPane1.getWidth(),this.xLow1.getHeight());
+		this.lowerXChart1 = new Canvas(this.lowerGraphicPane1.getWidth(),this.xLow1.getHeight());
 		// Hier der Graphic Context dazu erzeugt
-		this.lowerXgc1 = this.lowerXChart.getGraphicsContext2D();
-		this.lowerXgc1.clearRect(0, 0, this.lowerXChart.getWidth(), this.lowerXChart.getHeight());
+		this.lowerXgc1 = this.lowerXChart1.getGraphicsContext2D();
+		this.lowerXgc1.clearRect(0, 0, this.lowerXChart1.getWidth(), this.lowerXChart1.getHeight());
 		
-		double abstandNetz = (this.lowerXChart.getWidth()-30)/(this.endzeitVar-this.startzeitVar);				
+		double abstandNetz = (this.lowerXChart1.getWidth()-30)/(this.endzeitVar-this.startzeitVar);				
 		this.lowerXgc1.setLineWidth(1);
 		this.lowerXgc1.setFont(Font.getDefault());
 		this.lowerXgc1.setFill(Color.BLACK);
@@ -736,7 +915,7 @@ public class MainLayoutController {
 					}
 			    }
 				
-		this.xLow1.getChildren().add(lowerXChart);
+		this.xLow1.getChildren().add(lowerXChart1);
 		
 	}
 	
@@ -783,7 +962,7 @@ public class MainLayoutController {
 			
 			}
 		}
-		if(uppergrafikErstellt == true){	
+		if(firstUppergrafikErstellt == true){	
 			
 			
 			
@@ -863,23 +1042,12 @@ public class MainLayoutController {
 	public void setEndzeitVar(int endzeitVar) {
 		this.endzeitVar = endzeitVar;
 	}
-
-
-	public boolean isGrafikErstellt() {
-		return grafikErstellt;
-	}
-
-
-	public void setGrafikErstellt(boolean grafikErstellt) {
-		this.grafikErstellt = grafikErstellt;
-	}
-
 	
 	//Methoden zur Festsetzung der Main
 
 
 	public void openFullscreen() {
-		if(isGrafikErstellt()== true){
+		if(this.firstUppergrafikErstellt== true){
 		mainApp.showFullScreenGraphic(this);
 		}else{
 			mainApp.fehlerMeldungGrafikFehlt();
