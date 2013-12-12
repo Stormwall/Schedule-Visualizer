@@ -98,22 +98,20 @@ public class DBMatching {
                  // blockelement array list
 
                  while (rest3.next()) {
-                        System.out.println(rest3.getString("ElementType"));
+                      //  System.out.println(rest3.getString("ElementType"));
                         int zahl=Integer.parseInt(rest3.getString("ElementType"));
                         
                         //if the blockelement is a service journey the first sql query will be execute
                         if (zahl==1) {
 
                                rest2 = stmt2
-                                            .executeQuery("SELECT be.ID, be.BlockID, be.ServiceJourneyID, sj.FromStopID, sj.ToStopID, sj.DepTime, sj.ArrTime, be.elementType FROM Blockelement AS be, ServiceJourney AS sj WHERE sj.serviceJourneyID='"
-                                                         + rest3.getString("ServiceJourneyID")
-                                                         + "';");
+                                            .executeQuery("SELECT be.ID,be.BlockID, be.ServiceJourneyID, sj.FromStopID, sj.ToStopID, sj.DepTime, sj.ArrTime,be.ElementType FROM Blockelement AS be, ServiceJourney AS sj WHERE sj.serviceJourneyID='"
+                                                         + rest3.getString("ServiceJourneyID")+"' AND be.ID='"+rest3.getString("ID")+"' AND be.BlockID='"+rest3.getString("BlockID")+"';");
                         //if the read blockelement is a exceptional servie journey the second sql query will be execute
                         } else {
                                rest2 = stmt3
                                             .executeQuery("SELECT be.ID, be.BlockID, be.ServiceJourneyID, ex.FromStopID, ex.ToStopID, ex.DepTime, ex.ArrTime, be.ElementType FROM Blockelement AS be, ExceptionalBlockelement AS ex WHERE ex.ServiceJourneyID='"
-                                                          + rest3.getString("ServiceJourneyID")
-                                                         + "';");
+                                                          + rest3.getString("ServiceJourneyID")+"' AND be.ID='"+rest3.getString("ID")+"' AND be.BlockID='"+rest3.getString("BlockID")+"';");
                         }
                        
                         //the attributes will be read and save in variables
@@ -135,6 +133,8 @@ public class DBMatching {
                                      serviceJourneyID, fromStopID, toStopID, depTime,
                                      arrTime, elementType));
                 
+                        System.out.println(id);
+                        System.out.println(blockID);
                         System.out.println("Hat geklappt!");
                         System.out.println(blockelement.size());
                  }
@@ -292,6 +292,8 @@ public class DBMatching {
                                      serviceJourneyID, fromStopID, toStopID, depTime,
                                      arrTime, elementType));
                 
+                        System.out.println(id);
+                        System.out.println(blockelement);
                         System.out.println("Hat geklappt!");
                         System.out.println(dutyelement.size());
                  }
