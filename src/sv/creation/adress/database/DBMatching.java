@@ -97,8 +97,7 @@ public class DBMatching {
                  // All resulted datasets of the sql query will be added to the
                  // blockelement array list
 
-                 while (rest3.next()) {
-                      //  System.out.println(rest3.getString("ElementType"));
+                 while (rest3.next()) { 
                         int zahl=Integer.parseInt(rest3.getString("ElementType"));
                         
                         //if the blockelement is a service journey the first sql query will be execute
@@ -118,7 +117,6 @@ public class DBMatching {
                         int id = Integer.parseInt(rest2.getString("ID"));
                         int blockID = Integer.parseInt(rest2.getString("BlockID"));
                         String serviceJourneyID = rest3.getString("ServiceJourneyID");
-                        System.out.println(serviceJourneyID);
                         int fromStopID = Integer
                                      .parseInt(rest2.getString("FromStopID"));
                         int toStopID = Integer.parseInt(rest2.getString("ToStopID"));
@@ -132,11 +130,7 @@ public class DBMatching {
                         blockelement.add(new Blockelement(id, blockID,
                                      serviceJourneyID, fromStopID, toStopID, depTime,
                                      arrTime, elementType));
-                
-                        System.out.println(id);
-                        System.out.println(blockID);
-                        System.out.println("Hat geklappt!");
-                        System.out.println(blockelement.size());
+
                  }
           } catch (SQLException e) {
                  // TODO Auto-generated catch block
@@ -161,43 +155,7 @@ public class DBMatching {
     	
           umlaufplan = new Umlaufplan(1, umlauf, blockelement);
           
-          //Testing the outputs
-          System.out
-                        .println(umlaufplan.getFahrtZuUmlauf().get(0).getArrTime());
-          System.out
-          .println(umlaufplan.getFahrtZuUmlauf().get(0).getArrTime());
-          System.out
-          .println(umlaufplan.getFahrtZuUmlauf().get(5).getBlockID());
-          System.out
-          .println(umlaufplan.getFahrtZuUmlauf().get(7).getArrTime());
-          System.out
-          .println(umlaufplan.getFahrtZuUmlauf().get(12).getDepTime());
-          System.out
-          .println(umlaufplan.getFahrtZuUmlauf().get(0).getArrTime());
-          System.out
-          .println(umlaufplan.getFahrtZuUmlauf().get(17).getServiceJourneyID());
-          System.out
-          .println(umlaufplan.getFahrtZuUmlauf().get(20).getServiceJourneyID());
-          System.out
-          .println(umlaufplan.getFahrtZuUmlauf().get(1).getServiceJourneyID());
-          System.out
-          .println(umlaufplan.getFahrtZuUmlauf().get(2).getServiceJourneyID());
-          System.out
-          .println(umlaufplan.getFahrtZuUmlauf().get(17).getServiceJourneyID());
-          System.out
-          .println(umlaufplan.getFahrtZuUmlauf().get(20).getServiceJourneyID());
-          System.out
-          .println(umlaufplan.getFahrtZuUmlauf().get(2).getArrTime());
-          System.out
-          .println(umlaufplan.getFahrtZuUmlauf().get(14).getBlockID());
-          System.out
-          .println(umlaufplan.getFahrtZuUmlauf().get(1).getFromStopID());
-          System.out
-          .println(umlaufplan.getFahrtZuUmlauf().get(24).getArrTime());
-          System.out
-          .println(umlaufplan.getFahrtZuUmlauf().get(948).getServiceJourneyID());
-          System.out
-          .println(umlaufplan.getFahrtZuUmlauf().size());
+          
     }
     
     // **********************************************************************

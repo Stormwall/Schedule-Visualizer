@@ -14,6 +14,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -400,8 +403,8 @@ public class StringSplitter {
 							exceptionalblockelementServiceJourneyID.add(zahl);
 							exceptionalblockelementFromStopID.add(fromStopID);
 							exceptionalblockelementToStopID.add(toStopID);
-							exceptionalblockelementDepTime.add(zeilenelemente.get(4));
-							exceptionalblockelementArrTime.add(zeilenelemente.get(5));
+							exceptionalblockelementDepTime.add(changeDateFormat(zeilenelemente.get(4)));
+							exceptionalblockelementArrTime.add(changeDateFormat(zeilenelemente.get(5)));
 						
 						zeilenelemente.clear();
 					}}
@@ -627,8 +630,8 @@ public class StringSplitter {
 						serviceJourneyLineID.add(serviceJourneyLineIDZiffer);
 						serviceJourneyFromStopID.add(serviceJourneyFromStopIDZiffer);
 						serviceJourneyToStopID.add(serviceJourneyToStopIDZiffer);
-						serviceJourneyDepTime.add(zeilenelemente.get(4));
-						serviceJourneyArrTime.add(zeilenelemente.get(5));
+						serviceJourneyDepTime.add(changeDateFormat(zeilenelemente.get(4)));
+						serviceJourneyArrTime.add(changeDateFormat(zeilenelemente.get(5)));
 						serviceJourneyMinAheadTime.add(serviceJourneyMinAheadTimeZiffer);
 						serviceJourneyMinLayoverTime.add(serviceJourneyMinLayoverTimeZiffer);
 						serviceJourneyVehTypeGroupID.add(serviceJourneyVehTypeGroupIDZiffer);
@@ -1337,8 +1340,43 @@ public class StringSplitter {
 	}
 	
 	
+	public String changeDateFormat(String date){
+		String []s1;
+		 
+		s1=date.split(":");
+		//Creates a new date contains hours and minutes
+		String newDate=""+s1[1]+":"+s1[2];
+		   return newDate;
+	}
 	
-	
+	public void berechneZeit(String date1, String date2){
+		
+		int hourDate1=0;
+		int minDate1=0;
+		int hourDate2;
+		int minDate2;
+		int hourDuration;
+		int minDuration;
+		
+		String []s1;
+		s1=date1.split(":");
+		hourDate1=Integer.parseInt(s1[0]);
+		minDate1=Integer.parseInt(s1[1]);
+		
+		String []s2;
+		s2=date2.split(":");
+		hourDate2=Integer.parseInt(s2[0]);
+		minDate2=Integer.parseInt(s2[1]);
+		
+		if(hourDate1<=hourDate2){
+			hourDuration=hourDate2-hourDate1;
+			minDuration=minDate2-minDate1;
+		}else if(hourDate1>hourDate2){
+			hourDuration=(24-hourDate1)+hourDate2;
+			
+		}
+		
+	}
 	
 }
 
