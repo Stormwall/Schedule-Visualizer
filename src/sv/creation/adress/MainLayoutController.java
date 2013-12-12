@@ -17,6 +17,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -361,12 +362,13 @@ public class MainLayoutController {
 		// Sets the Standardelement condition of the Interface
 		
 		detailsUmlaufTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+		tablePane.setHbarPolicy(ScrollBarPolicy.NEVER);
 			
 		
 		//Umlaufpläne -- Choicebox wird gefüllt
 		
 		this.umlaufplanliste.add(dbm.getUmlaufplan());
-		this.umlaufplanliste.get(0).setName("Umlaufplan 1");
+		this.umlaufplanliste.get(0).setName(" Umlaufplan 1 ");
 		this.UPlan.setItems(FXCollections.observableArrayList(umlaufplanliste.get(0).getName()));
 		for(int i = 1; i < umlaufplanliste.size(); i++){
 			this.UPlan.getItems().add(umlaufplanliste.get(i).getName());
@@ -542,6 +544,7 @@ public class MainLayoutController {
 		this.UPlan1.setVisible(true);
 		this.UPlanValue1.setText(UPlan.getSelectionModel().getSelectedItem().toString());
 		this.UPlanValue1.setVisible(true);
+		this.UPlanValue1.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
 		this.uppergrafikErstellt = true;
 		
 		// Hintergrunderstellung
@@ -671,6 +674,13 @@ public class MainLayoutController {
 				eleTypeCol.setCellValueFactory(new PropertyValueFactory<Blockelement, String>("elementType"));
 				blockCol.setCellValueFactory(new PropertyValueFactory<Blockelement, String>("blockID"));
 				dauerCol.setCellValueFactory(new PropertyValueFactory<Blockelement, String>("firstName"));
+				
+				blockEleCol.prefWidthProperty().bind(blockEleCol.widthProperty());
+				startzeitCol.prefWidthProperty().bind(startzeitCol.widthProperty());
+				endzeitCol.prefWidthProperty().bind(endzeitCol.widthProperty());
+				eleTypeCol.prefWidthProperty().bind(eleTypeCol.widthProperty());
+				blockCol.prefWidthProperty().bind(blockCol.widthProperty());
+				dauerCol.prefWidthProperty().bind(dauerCol.widthProperty());
 				
 				// Hereinladen der Daten
 				

@@ -75,7 +75,7 @@
                                 <Label fx:id="UPlan5" text="Plan 5 :" visible="false" GridPane.columnIndex="0" GridPane.rowIndex="5" />
                                 <Label fx:id="UPlan6" text="Plan 6 :" visible="false" GridPane.columnIndex="0" GridPane.rowIndex="6" />
                                 <Label fx:id="UPlan7" text="Plan 7 :" visible="false" GridPane.columnIndex="0" GridPane.rowIndex="7" />
-                                <Label fx:id="UPlanValue1" text="Label" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <Label fx:id="UPlanValue1" styleClass="label-tabChoice" text="Label" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                 <Label fx:id="UPlanValue2" text="Label" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                 <Label fx:id="UPlanValue3" text="Label" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                 <Label fx:id="UPlanValue4" text="Label" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
@@ -481,7 +481,7 @@
                                           <children>
                                             <ScrollPane fx:id="tablePane" fitToHeight="true" fitToWidth="true" prefHeight="101.0" prefWidth="458.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                               <content>
-                                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="99.0" prefWidth="455.0" />
                                               </content>
                                             </ScrollPane>
                                           </children>

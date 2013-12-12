@@ -16,6 +16,9 @@
     -fx-text-fill: black;
     -fx-opacity: 1;
 }
+.label-tabChoice {
+  
+}
 .split-pane > * > .split-pane-divider {	
 	-fx-cursor: default;
 }
@@ -28,4 +31,19 @@
   -fx-text-fill: #1d1d1d;
 }
 
+.table-view *.scroll-bar:horizontal *.increment-button,
+.table-view *.scroll-bar:horizontal *.decrement-button {
+    -fx-background-color: null;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
 
+.table-view *.scroll-bar:horizontal *.increment-arrow, 
+.table-view *.scroll-bar:horizontal *.decrement-arrow {
+    -fx-background-color: null;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-shape: null;
+}
