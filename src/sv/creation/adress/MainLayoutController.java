@@ -18,6 +18,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
+import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -336,6 +337,17 @@ public class MainLayoutController {
 	
 	private boolean firstUppergrafikErstellt = false;
 	private boolean secondUppergrafikErstellt = false;
+	private boolean thirdUppergrafikErstellt = false;
+	private boolean fourthUppergrafikErstellt = false;
+	private boolean fifthUppergrafikErstellt = false;
+	private boolean sixthUppergrafikErstellt = false;
+	private boolean seventhUppergrafikErstellt = false;
+	private boolean secondGrafikErstellt = false;
+	private boolean thirdGrafikErstellt = false;
+	private boolean fourthGrafikErstellt = false;
+	private boolean fifthGrafikErstellt = false;
+	private boolean sixthGrafikErstellt = false;
+	private boolean seventhGrafikErstellt = false;
 	private boolean uDetailsTableErstellt = false;
 	private boolean lowergrafikErstellt = false;
 	private boolean hilfslinienAktiv = false;
@@ -387,9 +399,7 @@ public class MainLayoutController {
 		
 		// Sets the Standardelement condition of the Interface
 		
-		detailsUmlaufTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-		tablePane.setHbarPolicy(ScrollBarPolicy.NEVER);
-			
+		detailsUmlaufTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);			
 		
 		//Umlaufpläne -- Choicebox wird gefüllt
 		
@@ -526,7 +536,6 @@ public class MainLayoutController {
 					// Handhabung wenn die Checkbox angew�hlt wird
 					if(new_val == true){
 						if(firstUppergrafikErstellt == true){
-							refreshBothGraphics();
 							createHelpLines();							
 							hilfslinienAktiv = true;							
 						}else{							
@@ -555,9 +564,28 @@ public class MainLayoutController {
 		//Hier wird das Feld gecleared und gepr�ft ob es schon existiert	
 			
 			if(firstUppergrafikErstellt == true){
+					this.xUp1.getChildren().clear();
+				if(secondUppergrafikErstellt == true){
+					this.xUp2.getChildren().clear();
+				}
+				if(thirdUppergrafikErstellt == true){
+					this.xUp3.getChildren().clear();
+				}
+				if(fourthUppergrafikErstellt == true){
+					this.xUp4.getChildren().clear();
+				}
+				if(fifthUppergrafikErstellt == true){
+					this.xUp5.getChildren().clear();
+				}
+				if(sixthUppergrafikErstellt == true){
+					this.xUp6.getChildren().clear();
+				}
+				if(seventhUppergrafikErstellt == true){
+					this.xUp7.getChildren().clear();
+				}
 				this.addButtonPressed = false;
 				createUpperGraphic();
-		       	}
+		       }
 			if(lowergrafikErstellt == true){
 				this.lowergc1.clearRect(0, 0, this.lowerChart1.getWidth(), this.lowerChart1.getHeight());
 				this.lowerXgc1.clearRect(0, 0, this.lowerXChart1.getWidth(), this.lowerXChart1.getHeight());
@@ -579,12 +607,13 @@ public class MainLayoutController {
 		this.lowerDetailsPane.setMaxHeight(lowerDetailsPane.getHeight());
 		this.lowerDetailsPane.setMinHeight(lowerDetailsPane.getHeight());
 		
-		
+	SingleSelectionModel<Tab> selectionModel = Planpane.getSelectionModel();	
 				
 	 if(UPlan.getSelectionModel().getSelectedItem()!= null){
-		
-		 // Erstellung der Umlaufplangrafik auf dem ersten Tab
 		 
+		 //
+		 // Erstellung der Umlaufplangrafik auf dem ersten Tab
+		 //
 		if(this.umlaufTabCounter >= 0){
 			
 			if(this.firstUppergrafikErstellt == true){
@@ -593,9 +622,25 @@ public class MainLayoutController {
 				if(this.secondUppergrafikErstellt == true){
 				this.uppergc2.clearRect(0, 0, this.upperChart1.getWidth(), this.upperChart1.getHeight());
 				}
+				if(this.thirdUppergrafikErstellt == true){
+					this.uppergc3.clearRect(0, 0, this.upperChart1.getWidth(), this.upperChart1.getHeight());
+				}
+				if(this.fourthUppergrafikErstellt == true){
+					this.uppergc4.clearRect(0, 0, this.upperChart1.getWidth(), this.upperChart1.getHeight());
+				}
+				if(this.fifthUppergrafikErstellt == true){
+					this.uppergc5.clearRect(0, 0, this.upperChart1.getWidth(), this.upperChart1.getHeight());
+				}
+				if(this.sixthUppergrafikErstellt == true){
+					this.uppergc6.clearRect(0, 0, this.upperChart1.getWidth(), this.upperChart1.getHeight());
+				}
+				if(this.seventhUppergrafikErstellt == true){
+					this.uppergc7.clearRect(0, 0, this.upperChart1.getWidth(), this.upperChart1.getHeight());
+				}
 		}				
 		// Labelbeschriftungen für Umlaufpläne
 		this.UPlan1.setVisible(true);
+		
 		this.UPlanValue1.setText(UPlan.getSelectionModel().getSelectedItem().toString());
 		this.UPlanValue1.setVisible(true);
 		this.UPlanValue1.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
@@ -603,6 +648,7 @@ public class MainLayoutController {
 		// Zur Kontrolle ob es sich um einen Buttonklick handelt oder nicht
 		
 		if(this.addButtonPressed == true){
+		selectionModel.select(this.Plan1);
 		this.umlaufTabCounter = this.umlaufTabCounter + 1;
 		}
 		
@@ -614,23 +660,23 @@ public class MainLayoutController {
 		this.firstUppergrafikErstellt = true;
 		// Hintergrunderstellung
 		createUpperBackgroundGraphicFirstPane();
-		createUpperXScaleFirstPane();
+		createUpperXScalePane(this.xUp1, this.upperGraphicPane1);
 		graphicTransition();		
 		
-		// Erstellung/ Befüllen des Details Table-- Clearen des Alten
-		if(uDetailsTableErstellt == true){
+			// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+			if(uDetailsTableErstellt == true){
 			this.detailsUmlaufTable.getColumns().clear();
 			this.uDetailsTableErstellt = false;
-		}
+			}
 		createUDetailsTable();
-		
-		
-		if(this.hilfslinienAktiv == true){
-			createHelpLines();
-			}		
+			
 		}
 		
+		
+		 //
 		 // Erstellung der Umlaufplangrafik auf dem zweiten Tab
+		 //
+		
 		
 		if(this.umlaufTabCounter >= 1){
 			
@@ -639,7 +685,7 @@ public class MainLayoutController {
 		}				
 		// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
 		
-		this.Plan2.setDisable(false);
+		this.Plan2.setDisable(false);		
 		this.UPlan2.setVisible(true);
 		this.UPlanValue2.setText(UPlan.getSelectionModel().getSelectedItem().toString());
 		this.UPlanValue2.setVisible(true);
@@ -649,6 +695,7 @@ public class MainLayoutController {
 		// Zur Kontrolle ob es sich um einen Buttonklick handelt oder nicht
 		
 		if(this.addButtonPressed == true){
+		selectionModel.select(this.Plan2);
 		this.umlaufTabCounter = 2;
 		}
 		
@@ -659,9 +706,234 @@ public class MainLayoutController {
 		}
 		
 		this.secondUppergrafikErstellt = true;
+		this.secondGrafikErstellt = true;
 		
 		// Hintergrunderstellung
-		createUpperBackgroundGraphicSecondPane();		
+		createUpperBackgroundGraphicSecondPane();
+		createUpperXScalePane(this.xUp2, this.upperGraphicPane2);
+		
+						
+		}
+		
+		 //
+		 // Erstellung der Umlaufplangrafik auf dem dritten Tab
+		 //
+		
+		
+		if(this.umlaufTabCounter >= 2){
+			
+			if(this.thirdUppergrafikErstellt == true){
+			this.uppergc3.clearRect(0, 0, this.upperChart3.getWidth(), this.upperChart3.getHeight());
+		}				
+		// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
+		
+		this.Plan3.setDisable(false);		
+		this.UPlan3.setVisible(true);
+		this.UPlanValue3.setText(UPlan.getSelectionModel().getSelectedItem().toString());
+		this.UPlanValue3.setVisible(true);
+		this.UPlanValue1.setStyle("-fx-background-color:white;");
+		this.UPlanValue2.setStyle("-fx-background-color:white;");
+		this.UPlanValue3.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+		
+		// Zur Kontrolle ob es sich um einen Buttonklick handelt oder nicht
+		
+		if(this.addButtonPressed == true){
+		selectionModel.select(this.Plan3);
+		this.umlaufTabCounter = 3;
+		}
+		
+		// Zur Verhinderung vom doppelten Erschaffen der Grafiken 
+		
+		if(this.thirdUppergrafikErstellt == false){
+			this.umlaufTabCounter = 2;
+		}
+		
+		this.thirdUppergrafikErstellt = true;
+		this.thirdGrafikErstellt = true;
+		
+		// Hintergrunderstellung
+		createUpperBackgroundGraphicThirdPane();
+		createUpperXScalePane(this.xUp3, this.upperGraphicPane3);		
+						
+		}
+		
+		 //
+		 // Erstellung der Umlaufplangrafik auf dem vierten Tab
+		 //
+		
+		
+		if(this.umlaufTabCounter >= 3){
+			
+			if(this.fourthUppergrafikErstellt == true){
+			this.uppergc4.clearRect(0, 0, this.upperChart4.getWidth(), this.upperChart4.getHeight());
+		}				
+		// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
+		
+		this.Plan4.setDisable(false);		
+		this.UPlan4.setVisible(true);
+		this.UPlanValue4.setText(UPlan.getSelectionModel().getSelectedItem().toString());
+		this.UPlanValue4.setVisible(true);
+		this.UPlanValue1.setStyle("-fx-background-color:white;");
+		this.UPlanValue2.setStyle("-fx-background-color:white;");
+		this.UPlanValue3.setStyle("-fx-background-color:white;");
+		this.UPlanValue4.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+		
+		// Zur Kontrolle ob es sich um einen Buttonklick handelt oder nicht
+		
+		if(this.addButtonPressed == true){
+		selectionModel.select(this.Plan4);
+		this.umlaufTabCounter = 4;
+		}
+		
+		// Zur Verhinderung vom doppelten Erschaffen der Grafiken 
+		
+		if(this.fourthUppergrafikErstellt == false){
+			this.umlaufTabCounter = 3;
+		}
+		
+		this.fourthUppergrafikErstellt = true;
+		this.fourthGrafikErstellt = true;
+		
+		// Hintergrunderstellung
+		createUpperBackgroundGraphicFourthPane();
+		createUpperXScalePane(this.xUp4, this.upperGraphicPane4);		
+						
+		}
+		
+		 //
+		 // Erstellung der Umlaufplangrafik auf dem fünften Tab
+		 //
+		
+		
+		if(this.umlaufTabCounter >= 4){
+			
+			if(this.fifthUppergrafikErstellt == true){
+			this.uppergc5.clearRect(0, 0, this.upperChart5.getWidth(), this.upperChart5.getHeight());
+		}				
+		// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
+		
+		this.Plan5.setDisable(false);		
+		this.UPlan5.setVisible(true);
+		this.UPlanValue5.setText(UPlan.getSelectionModel().getSelectedItem().toString());
+		this.UPlanValue5.setVisible(true);
+		this.UPlanValue1.setStyle("-fx-background-color:white;");
+		this.UPlanValue2.setStyle("-fx-background-color:white;");
+		this.UPlanValue3.setStyle("-fx-background-color:white;");
+		this.UPlanValue4.setStyle("-fx-background-color:white;");
+		this.UPlanValue5.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+		
+		// Zur Kontrolle ob es sich um einen Buttonklick handelt oder nicht
+		
+		if(this.addButtonPressed == true){
+		selectionModel.select(this.Plan5);
+		this.umlaufTabCounter = 5;
+		}
+		
+		// Zur Verhinderung vom doppelten Erschaffen der Grafiken 
+		
+		if(this.fifthUppergrafikErstellt == false){
+			this.umlaufTabCounter = 4;
+		}
+		
+		this.fifthUppergrafikErstellt = true;
+		this.fifthGrafikErstellt = true;
+		
+		// Hintergrunderstellung
+		createUpperBackgroundGraphicFifthPane();
+		createUpperXScalePane(this.xUp5, this.upperGraphicPane5);
+		
+						
+		}
+		
+		 //
+		 // Erstellung der Umlaufplangrafik auf dem sechsten Tab
+		 //
+		
+		
+		if(this.umlaufTabCounter >= 5){
+			
+			if(this.sixthUppergrafikErstellt == true){
+			this.uppergc6.clearRect(0, 0, this.upperChart6.getWidth(), this.upperChart6.getHeight());
+		}				
+		// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
+		
+		this.Plan6.setDisable(false);		
+		this.UPlan6.setVisible(true);
+		this.UPlanValue6.setText(UPlan.getSelectionModel().getSelectedItem().toString());
+		this.UPlanValue6.setVisible(true);
+		this.UPlanValue1.setStyle("-fx-background-color:white;");
+		this.UPlanValue2.setStyle("-fx-background-color:white;");
+		this.UPlanValue3.setStyle("-fx-background-color:white;");
+		this.UPlanValue4.setStyle("-fx-background-color:white;");
+		this.UPlanValue5.setStyle("-fx-background-color:white;");
+		this.UPlanValue6.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+		
+		// Zur Kontrolle ob es sich um einen Buttonklick handelt oder nicht
+		
+		if(this.addButtonPressed == true){
+		selectionModel.select(this.Plan6);
+		this.umlaufTabCounter = 6;
+		}
+		
+		// Zur Verhinderung vom doppelten Erschaffen der Grafiken 
+		
+		if(this.sixthUppergrafikErstellt == false){
+			this.umlaufTabCounter = 5;
+		}
+		
+		this.sixthUppergrafikErstellt = true;
+		this.sixthGrafikErstellt = true;
+		
+		// Hintergrunderstellung
+		createUpperBackgroundGraphicSixthPane();
+		createUpperXScalePane(this.xUp6, this.upperGraphicPane6);
+		
+						
+		}
+		
+		 //
+		 // Erstellung der Umlaufplangrafik auf dem siebten Tab
+		 //
+		
+		
+		if(this.umlaufTabCounter >= 6){
+			
+			if(this.seventhUppergrafikErstellt == true){
+			this.uppergc7.clearRect(0, 0, this.upperChart7.getWidth(), this.upperChart7.getHeight());
+		}				
+		// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
+		
+		this.Plan7.setDisable(false);		
+		this.UPlan7.setVisible(true);
+		this.UPlanValue7.setText(UPlan.getSelectionModel().getSelectedItem().toString());
+		this.UPlanValue7.setVisible(true);
+		this.UPlanValue1.setStyle("-fx-background-color:white;");
+		this.UPlanValue2.setStyle("-fx-background-color:white;");
+		this.UPlanValue3.setStyle("-fx-background-color:white;");
+		this.UPlanValue4.setStyle("-fx-background-color:white;");
+		this.UPlanValue5.setStyle("-fx-background-color:white;");
+		this.UPlanValue6.setStyle("-fx-background-color:white;");
+		this.UPlanValue7.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+		
+		// Zur Kontrolle ob es sich um einen Buttonklick handelt oder nicht
+		
+		if(this.addButtonPressed == true){
+		selectionModel.select(this.Plan7);
+		this.umlaufTabCounter = 7;
+		}
+		
+		// Zur Verhinderung vom doppelten Erschaffen der Grafiken 
+		
+		if(this.seventhUppergrafikErstellt == false){
+			this.umlaufTabCounter = 6;
+		}
+		
+		this.seventhUppergrafikErstellt = true;
+		this.seventhGrafikErstellt = true;
+		
+		// Hintergrunderstellung
+		createUpperBackgroundGraphicSeventhPane();
+		createUpperXScalePane(this.xUp7, this.upperGraphicPane7);
 		
 						
 		}
@@ -742,18 +1014,194 @@ public class MainLayoutController {
 	    }
 		
 		this.upperGraphicPane2.setContent(this.upperChart2);
-	}	
-	
-	
+	}
 	
 	/**
-	 * Creates The Upper X - Scale for the first Tab.
+	 * Creates the second Upper Background Graphic.
 	 */
 	@FXML
-	private void createUpperXScaleFirstPane() {
+	private void createUpperBackgroundGraphicThirdPane() {
+		
+		//Initialize the Chart
+		this.upperChart3 = new Canvas(this.upperGraphicPane3.getWidth()-4,this.upperheight);
+				
+		//Erstellen des HintergrundgrafikKontextes
+		this.uppergc3 = this.upperChart3.getGraphicsContext2D();
+		this.uppergc3.clearRect(0, 0, this.upperChart3.getWidth(), this.upperChart3.getHeight());
+		
+		//Erstellen des Hintergrundes
+		this.uppergc3.setFill(Color.BEIGE);				
+		this.uppergc3.fillRect(0, 0,this.upperChart3.getWidth(),this.upperChart3.getHeight());
+		
+		this.uppergc3.setLineWidth(3);
+		this.uppergc3.setStroke(Color.BLACK);
+		this.uppergc3.strokeLine(1, 0, 1, this.upperChart3.getHeight());		
+		
+		double abstandNetz = (this.upperChart3.getWidth()-30)/(this.endzeitVar-this.startzeitVar);				
+		this.uppergc3.setLineWidth(1);
+		this.uppergc3.setFont(Font.getDefault());
+		this.uppergc3.setFill(Color.BLACK);
+		this.uppergc3.setStroke(Color.BLACK);
+		// Variable zum Darstellen verschiedener Zeitpunkte
+		for(int i=0; i<=(endzeitVar-startzeitVar) ;i++) {
+			
+			double pixel=((i)*abstandNetz);
+			this.uppergc3.strokeLine(pixel, 0, pixel, this.upperChart3.getHeight());
+	    }
+		
+		this.upperGraphicPane3.setContent(this.upperChart3);
+	}	
+	
+	/**
+	 * Creates the second Upper Background Graphic.
+	 */
+	@FXML
+	private void createUpperBackgroundGraphicFourthPane() {
+		
+		//Initialize the Chart
+		this.upperChart4 = new Canvas(this.upperGraphicPane4.getWidth()-4,this.upperheight);
+				
+		//Erstellen des HintergrundgrafikKontextes
+		this.uppergc4 = this.upperChart4.getGraphicsContext2D();
+		this.uppergc4.clearRect(0, 0, this.upperChart4.getWidth(), this.upperChart4.getHeight());
+		
+		//Erstellen des Hintergrundes
+		this.uppergc4.setFill(Color.BEIGE);				
+		this.uppergc4.fillRect(0, 0,this.upperChart4.getWidth(),this.upperChart4.getHeight());
+		
+		this.uppergc4.setLineWidth(3);
+		this.uppergc4.setStroke(Color.BLACK);
+		this.uppergc4.strokeLine(1, 0, 1, this.upperChart4.getHeight());		
+		
+		double abstandNetz = (this.upperChart4.getWidth()-30)/(this.endzeitVar-this.startzeitVar);				
+		this.uppergc4.setLineWidth(1);
+		this.uppergc4.setFont(Font.getDefault());
+		this.uppergc4.setFill(Color.BLACK);
+		this.uppergc4.setStroke(Color.BLACK);
+		// Variable zum Darstellen verschiedener Zeitpunkte
+		for(int i=0; i<=(endzeitVar-startzeitVar) ;i++) {
+			
+			double pixel=((i)*abstandNetz);
+			this.uppergc4.strokeLine(pixel, 0, pixel, this.upperChart4.getHeight());
+	    }
+		
+		this.upperGraphicPane4.setContent(this.upperChart4);
+	}
+	
+	/**
+	 * Creates the second Upper Background Graphic.
+	 */
+	@FXML
+	private void createUpperBackgroundGraphicFifthPane() {
+		
+		//Initialize the Chart
+		this.upperChart5 = new Canvas(this.upperGraphicPane5.getWidth()-4,this.upperheight);
+				
+		//Erstellen des HintergrundgrafikKontextes
+		this.uppergc5 = this.upperChart5.getGraphicsContext2D();
+		this.uppergc5.clearRect(0, 0, this.upperChart5.getWidth(), this.upperChart5.getHeight());
+		
+		//Erstellen des Hintergrundes
+		this.uppergc5.setFill(Color.BEIGE);				
+		this.uppergc5.fillRect(0, 0,this.upperChart5.getWidth(),this.upperChart5.getHeight());
+		
+		this.uppergc5.setLineWidth(3);
+		this.uppergc5.setStroke(Color.BLACK);
+		this.uppergc5.strokeLine(1, 0, 1, this.upperChart5.getHeight());		
+		
+		double abstandNetz = (this.upperChart5.getWidth()-30)/(this.endzeitVar-this.startzeitVar);				
+		this.uppergc5.setLineWidth(1);
+		this.uppergc5.setFont(Font.getDefault());
+		this.uppergc5.setFill(Color.BLACK);
+		this.uppergc5.setStroke(Color.BLACK);
+		// Variable zum Darstellen verschiedener Zeitpunkte
+		for(int i=0; i<=(endzeitVar-startzeitVar) ;i++) {
+			
+			double pixel=((i)*abstandNetz);
+			this.uppergc5.strokeLine(pixel, 0, pixel, this.upperChart5.getHeight());
+	    }
+		
+		this.upperGraphicPane5.setContent(this.upperChart5);
+	}
+	
+	/**
+	 * Creates the second Upper Background Graphic.
+	 */
+	@FXML
+	private void createUpperBackgroundGraphicSixthPane() {
+		
+		//Initialize the Chart
+		this.upperChart6 = new Canvas(this.upperGraphicPane6.getWidth()-4,this.upperheight);
+				
+		//Erstellen des HintergrundgrafikKontextes
+		this.uppergc6 = this.upperChart6.getGraphicsContext2D();
+		this.uppergc6.clearRect(0, 0, this.upperChart6.getWidth(), this.upperChart6.getHeight());
+		
+		//Erstellen des Hintergrundes
+		this.uppergc6.setFill(Color.BEIGE);				
+		this.uppergc6.fillRect(0, 0,this.upperChart6.getWidth(),this.upperChart6.getHeight());
+		
+		this.uppergc3.setLineWidth(3);
+		this.uppergc6.setStroke(Color.BLACK);
+		this.uppergc6.strokeLine(1, 0, 1, this.upperChart6.getHeight());		
+		
+		double abstandNetz = (this.upperChart6.getWidth()-30)/(this.endzeitVar-this.startzeitVar);				
+		this.uppergc6.setLineWidth(1);
+		this.uppergc6.setFont(Font.getDefault());
+		this.uppergc6.setFill(Color.BLACK);
+		this.uppergc6.setStroke(Color.BLACK);
+		// Variable zum Darstellen verschiedener Zeitpunkte
+		for(int i=0; i<=(endzeitVar-startzeitVar) ;i++) {
+			
+			double pixel=((i)*abstandNetz);
+			this.uppergc6.strokeLine(pixel, 0, pixel, this.upperChart6.getHeight());
+	    }
+		
+		this.upperGraphicPane6.setContent(this.upperChart6);
+	}
+	
+	/**
+	 * Creates the seventh Upper Background Graphic.
+	 */
+	@FXML
+	private void createUpperBackgroundGraphicSeventhPane() {
+		
+		//Initialize the Chart
+		this.upperChart7 = new Canvas(this.upperGraphicPane7.getWidth()-4,this.upperheight);
+				
+		//Erstellen des HintergrundgrafikKontextes
+		this.uppergc7 = this.upperChart7.getGraphicsContext2D();
+		this.uppergc7.clearRect(0, 0, this.upperChart7.getWidth(), this.upperChart7.getHeight());
+		
+		//Erstellen des Hintergrundes
+		this.uppergc7.setFill(Color.BEIGE);				
+		this.uppergc7.fillRect(0, 0,this.upperChart7.getWidth(),this.upperChart7.getHeight());
+		
+		this.uppergc7.setLineWidth(3);
+		this.uppergc7.setStroke(Color.BLACK);
+		this.uppergc7.strokeLine(1, 0, 1, this.upperChart7.getHeight());		
+		
+		double abstandNetz = (this.upperChart7.getWidth()-30)/(this.endzeitVar-this.startzeitVar);				
+		this.uppergc7.setLineWidth(1);
+		this.uppergc7.setFont(Font.getDefault());
+		this.uppergc7.setFill(Color.BLACK);
+		this.uppergc7.setStroke(Color.BLACK);
+		// Variable zum Darstellen verschiedener Zeitpunkte
+		for(int i=0; i<=(endzeitVar-startzeitVar) ;i++) {
+			
+			double pixel=((i)*abstandNetz);
+			this.uppergc7.strokeLine(pixel, 0, pixel, this.upperChart7.getHeight());
+	    }
+		
+		this.upperGraphicPane7.setContent(this.upperChart7);
+	}
+	/**
+	 * Creates The Upper X - Scale for Tabs.
+	 */
+	private void createUpperXScalePane(AnchorPane xScale, ScrollPane xScrollPane) {
 		
 		// Hier wird das Skala Canvas erzeugt
-				this.upperXChart1 = new Canvas(this.upperGraphicPane1.getWidth(),this.xUp1.getHeight());
+				this.upperXChart1 = new Canvas(xScrollPane.getWidth(),this.xUp1.getHeight());
 				// Hier der Graphic Context dazu erzeugt
 				this.upperXgc1 = this.upperXChart1.getGraphicsContext2D();
 				this.upperXgc1.clearRect(0, 0, this.upperXChart1.getWidth(), this.upperXChart1.getHeight());
@@ -784,7 +1232,7 @@ public class MainLayoutController {
 							}
 					    }
 						
-				this.xUp1.getChildren().add(upperXChart1);
+				xScale.getChildren().add(upperXChart1);
 	}
 	
 	/**
@@ -927,14 +1375,38 @@ public class MainLayoutController {
 		
 		
 	}
+	
+	/**
+	 * Creates The Helplines in the graphic.
+	 */
+	private void createHelpLines() {
+		
+		createHelpLinesFirstTab();
+		if(this.secondGrafikErstellt == true){
+		createHelpLinesSecondTab();
+		}
+		if(this.thirdGrafikErstellt == true){
+			createHelpLinesThirdTab();
+		}
+		if(this.fourthGrafikErstellt == true){
+			createHelpLinesFourthTab();
+		}
+		if(this.fifthGrafikErstellt == true){
+			createHelpLinesFifthTab();
+		}
+		if(this.sixthGrafikErstellt == true){
+			createHelpLinesSixthTab();
+		}
+		if(this.seventhGrafikErstellt == true){
+			createHelpLinesSeventhTab();
+		}		
+	}
 
 	/**
 	 * Creates The Helplines in the graphic.
 	 */
-	@FXML
-	private void createHelpLines() {
+	private void createHelpLinesFirstTab() {
 		
-		//double abstandNetz = (this.upperGraphicPane1.getWidth()-30)/(this.endzeitVar-this.startzeitVar);
 		double abstandNetz = (this.upperChart1.getWidth()-30)/(this.endzeitVar-this.startzeitVar);	
 		// Methoden zu Erstellung der dynamischen Hilfslinien
 			
@@ -962,7 +1434,7 @@ public class MainLayoutController {
 			
 			}
 		}
-		if(firstUppergrafikErstellt == true){	
+		if(this.firstUppergrafikErstellt == true){	
 			
 			
 			
@@ -985,6 +1457,365 @@ public class MainLayoutController {
 					
 			double pixel=((i)*abstandNetz)+abstandNetz/4*3;
 			this.uppergc1.strokeLine(pixel, 0, pixel, this.upperChart1.getHeight());
+			
+			}
+		}
+					
+	}
+	/**
+	 * Creates The Helplines in the graphic.
+	 */
+	private void createHelpLinesSecondTab() {
+		
+		
+		double abstandNetz = (this.upperChart2.getWidth()-30)/(this.endzeitVar-this.startzeitVar);	
+		// Methoden zu Erstellung der dynamischen Hilfslinien
+			
+		if(lowergrafikErstellt == true){
+			
+			this.lowergc2.setLineWidth(1);
+			this.lowergc2.setStroke(Color.LIGHTGREY);
+			
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {			
+				
+			double pixel=((i)*abstandNetz)+abstandNetz/4;
+			this.lowergc2.strokeLine(pixel, 0, pixel, this.lowerChart2.getHeight()-3);
+			
+			}
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
+				
+			double pixel=((i)*abstandNetz)+abstandNetz/2;
+			this.lowergc2.strokeLine(pixel, 0, pixel, this.lowerChart2.getHeight()-3);
+			
+			}
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
+				
+			double pixel=((i)*abstandNetz)+abstandNetz/4*3;
+			this.lowergc2.strokeLine(pixel, 0, pixel, this.lowerChart2.getHeight()-3);
+			
+			}
+		}
+		
+		if(this.secondUppergrafikErstellt == true){	
+					
+			this.uppergc2.setLineWidth(1);
+			this.uppergc2.setStroke(Color.LIGHTGREY);
+			
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
+					
+			double pixel=((i)*abstandNetz)+abstandNetz/4;
+			this.uppergc2.strokeLine(pixel, 0, pixel, this.upperChart1.getHeight());			
+			
+			}
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
+					
+			double pixel=((i)*abstandNetz)+abstandNetz/2;
+			this.uppergc2.strokeLine(pixel, 0, pixel, this.upperChart1.getHeight());
+			
+			}
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
+					
+			double pixel=((i)*abstandNetz)+abstandNetz/4*3;
+			this.uppergc2.strokeLine(pixel, 0, pixel, this.upperChart1.getHeight());
+			
+			}
+		}
+					
+	}
+	/**
+	 * Creates The Helplines in the graphic.
+	 */
+	private void createHelpLinesThirdTab() {
+		
+		double abstandNetz = (this.upperChart3.getWidth()-30)/(this.endzeitVar-this.startzeitVar);	
+		// Methoden zu Erstellung der dynamischen Hilfslinien
+			
+		if(lowergrafikErstellt == true){
+			
+			this.lowergc3.setLineWidth(1);
+			this.lowergc3.setStroke(Color.LIGHTGREY);
+			
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {			
+				
+			double pixel=((i)*abstandNetz)+abstandNetz/4;
+			this.lowergc3.strokeLine(pixel, 0, pixel, this.lowerChart3.getHeight()-3);
+			
+			}
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
+				
+			double pixel=((i)*abstandNetz)+abstandNetz/2;
+			this.lowergc3.strokeLine(pixel, 0, pixel, this.lowerChart3.getHeight()-3);
+			
+			}
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
+				
+			double pixel=((i)*abstandNetz)+abstandNetz/4*3;
+			this.lowergc3.strokeLine(pixel, 0, pixel, this.lowerChart3.getHeight()-3);
+			
+			}
+		}
+		if(this.thirdUppergrafikErstellt == true){	
+			
+			
+			
+			this.uppergc3.setLineWidth(1);
+			this.uppergc3.setStroke(Color.LIGHTGREY);
+			
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
+					
+			double pixel=((i)*abstandNetz)+abstandNetz/4;
+			this.uppergc3.strokeLine(pixel, 0, pixel, this.upperChart3.getHeight());			
+			
+			}
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
+					
+			double pixel=((i)*abstandNetz)+abstandNetz/2;
+			this.uppergc3.strokeLine(pixel, 0, pixel, this.upperChart3.getHeight());
+			
+			}
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
+					
+			double pixel=((i)*abstandNetz)+abstandNetz/4*3;
+			this.uppergc3.strokeLine(pixel, 0, pixel, this.upperChart3.getHeight());
+			
+			}
+		}
+					
+	}
+	/**
+	 * Creates The Helplines in the graphic.
+	 */
+	private void createHelpLinesFourthTab() {
+		
+		double abstandNetz = (this.upperChart4.getWidth()-30)/(this.endzeitVar-this.startzeitVar);	
+		// Methoden zu Erstellung der dynamischen Hilfslinien
+			
+		if(lowergrafikErstellt == true){
+			
+			this.lowergc4.setLineWidth(1);
+			this.lowergc4.setStroke(Color.LIGHTGREY);
+			
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {			
+				
+			double pixel=((i)*abstandNetz)+abstandNetz/4;
+			this.lowergc4.strokeLine(pixel, 0, pixel, this.lowerChart4.getHeight()-3);
+			
+			}
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
+				
+			double pixel=((i)*abstandNetz)+abstandNetz/2;
+			this.lowergc4.strokeLine(pixel, 0, pixel, this.lowerChart4.getHeight()-3);
+			
+			}
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
+				
+			double pixel=((i)*abstandNetz)+abstandNetz/4*3;
+			this.lowergc4.strokeLine(pixel, 0, pixel, this.lowerChart4.getHeight()-3);
+			
+			}
+		}
+		if(this.fourthUppergrafikErstellt == true){	
+			
+			
+			
+			this.uppergc4.setLineWidth(1);
+			this.uppergc4.setStroke(Color.LIGHTGREY);
+			
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
+					
+			double pixel=((i)*abstandNetz)+abstandNetz/4;
+			this.uppergc4.strokeLine(pixel, 0, pixel, this.upperChart4.getHeight());			
+			
+			}
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
+					
+			double pixel=((i)*abstandNetz)+abstandNetz/2;
+			this.uppergc4.strokeLine(pixel, 0, pixel, this.upperChart4.getHeight());
+			
+			}
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
+					
+			double pixel=((i)*abstandNetz)+abstandNetz/4*3;
+			this.uppergc4.strokeLine(pixel, 0, pixel, this.upperChart4.getHeight());
+			
+			}
+		}
+					
+	}
+	/**
+	 * Creates The Helplines in the graphic.
+	 */
+	private void createHelpLinesFifthTab() {
+		
+		double abstandNetz = (this.upperChart5.getWidth()-30)/(this.endzeitVar-this.startzeitVar);	
+		// Methoden zu Erstellung der dynamischen Hilfslinien
+			
+		if(lowergrafikErstellt == true){
+			
+			this.lowergc5.setLineWidth(1);
+			this.lowergc5.setStroke(Color.LIGHTGREY);
+			
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {			
+				
+			double pixel=((i)*abstandNetz)+abstandNetz/4;
+			this.lowergc5.strokeLine(pixel, 0, pixel, this.lowerChart5.getHeight()-3);
+			
+			}
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
+				
+			double pixel=((i)*abstandNetz)+abstandNetz/2;
+			this.lowergc5.strokeLine(pixel, 0, pixel, this.lowerChart5.getHeight()-3);
+			
+			}
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
+				
+			double pixel=((i)*abstandNetz)+abstandNetz/4*3;
+			this.lowergc5.strokeLine(pixel, 0, pixel, this.lowerChart5.getHeight()-3);
+			
+			}
+		}
+		if(this.fifthUppergrafikErstellt == true){				
+			
+			
+			this.uppergc5.setLineWidth(1);
+			this.uppergc5.setStroke(Color.LIGHTGREY);
+			
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
+					
+			double pixel=((i)*abstandNetz)+abstandNetz/4;
+			this.uppergc5.strokeLine(pixel, 0, pixel, this.upperChart5.getHeight());			
+			
+			}
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
+					
+			double pixel=((i)*abstandNetz)+abstandNetz/2;
+			this.uppergc5.strokeLine(pixel, 0, pixel, this.upperChart5.getHeight());
+			
+			}
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
+					
+			double pixel=((i)*abstandNetz)+abstandNetz/4*3;
+			this.uppergc5.strokeLine(pixel, 0, pixel, this.upperChart5.getHeight());
+			
+			}
+		}
+					
+	}
+	/**
+	 * Creates The Helplines in the graphic.
+	 */
+	private void createHelpLinesSixthTab() {
+		
+		double abstandNetz = (this.upperChart6.getWidth()-30)/(this.endzeitVar-this.startzeitVar);	
+		// Methoden zu Erstellung der dynamischen Hilfslinien
+			
+		if(lowergrafikErstellt == true){
+			
+			this.lowergc6.setLineWidth(1);
+			this.lowergc6.setStroke(Color.LIGHTGREY);
+			
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {			
+				
+			double pixel=((i)*abstandNetz)+abstandNetz/4;
+			this.lowergc6.strokeLine(pixel, 0, pixel, this.lowerChart6.getHeight()-3);
+			
+			}
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
+				
+			double pixel=((i)*abstandNetz)+abstandNetz/2;
+			this.lowergc6.strokeLine(pixel, 0, pixel, this.lowerChart6.getHeight()-3);
+			
+			}
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
+				
+			double pixel=((i)*abstandNetz)+abstandNetz/4*3;
+			this.lowergc6.strokeLine(pixel, 0, pixel, this.lowerChart6.getHeight()-3);
+			
+			}
+		}
+		if(this.sixthUppergrafikErstellt == true){	
+			
+			
+			
+			this.uppergc6.setLineWidth(1);
+			this.uppergc6.setStroke(Color.LIGHTGREY);
+			
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
+					
+			double pixel=((i)*abstandNetz)+abstandNetz/4;
+			this.uppergc6.strokeLine(pixel, 0, pixel, this.upperChart6.getHeight());			
+			
+			}
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
+					
+			double pixel=((i)*abstandNetz)+abstandNetz/2;
+			this.uppergc6.strokeLine(pixel, 0, pixel, this.upperChart6.getHeight());
+			
+			}
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
+					
+			double pixel=((i)*abstandNetz)+abstandNetz/4*3;
+			this.uppergc6.strokeLine(pixel, 0, pixel, this.upperChart6.getHeight());
+			
+			}
+		}
+					
+	}
+	/**
+	 * Creates The Helplines in the graphic.
+	 */
+	private void createHelpLinesSeventhTab() {
+		
+		double abstandNetz = (this.upperChart7.getWidth()-30)/(this.endzeitVar-this.startzeitVar);	
+		// Methoden zu Erstellung der dynamischen Hilfslinien
+			
+		if(lowergrafikErstellt == true){
+			
+			this.lowergc7.setLineWidth(1);
+			this.lowergc7.setStroke(Color.LIGHTGREY);
+			
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {			
+				
+			double pixel=((i)*abstandNetz)+abstandNetz/4;
+			this.lowergc7.strokeLine(pixel, 0, pixel, this.lowerChart7.getHeight()-3);
+			
+			}
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
+				
+			double pixel=((i)*abstandNetz)+abstandNetz/2;
+			this.lowergc7.strokeLine(pixel, 0, pixel, this.lowerChart7.getHeight()-3);
+			
+			}
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
+				
+			double pixel=((i)*abstandNetz)+abstandNetz/4*3;
+			this.lowergc7.strokeLine(pixel, 0, pixel, this.lowerChart7.getHeight()-3);
+			
+			}
+		}
+		if(this.seventhUppergrafikErstellt == true){	
+			
+			
+			
+			this.uppergc7.setLineWidth(1);
+			this.uppergc7.setStroke(Color.LIGHTGREY);
+			
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
+					
+			double pixel=((i)*abstandNetz)+abstandNetz/4;
+			this.uppergc7.strokeLine(pixel, 0, pixel, this.upperChart7.getHeight());			
+			
+			}
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
+					
+			double pixel=((i)*abstandNetz)+abstandNetz/2;
+			this.uppergc7.strokeLine(pixel, 0, pixel, this.upperChart7.getHeight());
+			
+			}
+			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
+					
+			double pixel=((i)*abstandNetz)+abstandNetz/4*3;
+			this.uppergc7.strokeLine(pixel, 0, pixel, this.upperChart7.getHeight());
 			
 			}
 		}
