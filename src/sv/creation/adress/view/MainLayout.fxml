@@ -454,15 +454,15 @@
                                         <Label text="Anzahl der Fahrten" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                                         <Label text="Anzahl der Servicefahrten" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                                         <Label text="Anzahl der Leerfahrten" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                                        <Label text="Wert" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                                        <Label text="Wert" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                        <Label text="Wert" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                        <Label fx:id="anzahlFahrten" styleClass="label-detailsPane" text="Wert" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                        <Label fx:id="anzahlServiceFahrten" styleClass="label-detailsPane" text="Wert" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <Label fx:id="anzahlLeerFahrten" styleClass="label-detailsPane" text="Wert" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                         <Label text="Eigenschaft" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-                                        <Label text="Wert" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                        <Label fx:id="unknown" text="Wert" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                       </children>
                                       <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="141.0" minWidth="10.0" prefWidth="141.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="93.0" minWidth="10.0" prefWidth="46.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="151.0" minWidth="10.0" prefWidth="151.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="93.0" minWidth="10.0" prefWidth="36.0" />
                                       </columnConstraints>
                                       <rowConstraints>
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />

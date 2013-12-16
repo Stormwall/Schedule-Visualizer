@@ -19,6 +19,9 @@
 .label-tabChoice {
   
 }
+.label-detailsPane {
+  -fx-font-weight: bold;
+}
 .split-pane > * > .split-pane-divider {	
 	-fx-cursor: default;
 }

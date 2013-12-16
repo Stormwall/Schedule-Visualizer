@@ -10,6 +10,7 @@ public class Blockelement {
 	private String depTime;
 	private String arrTime;
 	private int elementType;
+	private String driveTime;
 	
 	
 	/**
@@ -80,6 +81,17 @@ public class Blockelement {
 	public int getElementType() {
 		return elementType;
 	}
+
+
+	public String getDriveTime() {
+		return driveTime;
+	}
+
+
+	public void setDriveTime(String driveTime) {
+		this.driveTime = driveTime;
+	}
+
 
 
 

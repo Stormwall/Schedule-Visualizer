@@ -1,9 +1,14 @@
 package sv.creation.adress;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import sv.creation.adress.database.DBConnection;
 import sv.creation.adress.database.DBMatching;
 import sv.creation.adress.model.Blockelement;
 import sv.creation.adress.model.Umlaufplan;
+import sv.creation.adress.util.StringSplitter;
 import javafx.animation.FadeTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -152,6 +157,17 @@ public class MainLayoutController {
 	
 	private TableView<Blockelement> detailsUmlaufTable = new TableView<Blockelement>();
 	
+	// Zugriff auf die Labels des DetailPane
+	
+	@FXML
+	private Label anzahlFahrten;
+	@FXML
+	private Label anzahlServiceFahrten;
+	@FXML
+	private Label anzahlLeerFahrten;
+	@FXML
+	private Label unknown;
+	
 	
 	// Zugriff auf die unterschiedlichen TabPanes (Gridpane)
 	@FXML
@@ -237,7 +253,15 @@ public class MainLayoutController {
 	
 	private ObservableList<Umlaufplan> umlaufplanliste = FXCollections.observableArrayList();
 
+	// Zuordnung der Umlaufpläne
 	
+	private Umlaufplan umlaufplanEins;
+	private Umlaufplan umlaufplanZwei;
+	private Umlaufplan umlaufplanDrei;
+	private Umlaufplan umlaufplanVier;
+	private Umlaufplan umlaufplanFuenf;
+	private Umlaufplan umlaufplanSechs;
+	private Umlaufplan umlaufplanSieben;
 	
 	// Canvas Elemente
 	
@@ -330,7 +354,13 @@ public class MainLayoutController {
 	
 	private int startzeitVar = 0;
 	private int endzeitVar = 24;
-	private double upperheight = 600;
+	private double upperheightEins = 600;
+	private double upperheightZwei = 1600;
+	private double upperheightDrei = 1600;
+	private double upperheightVier = 1600;
+	private double upperheightFuenf = 1600;
+	private double upperheightSechs = 1600;
+	private double upperheightSieben = 1600;
 	private double lowerheight = 800;
 	
 	//Pruefvariable
@@ -614,6 +644,8 @@ public class MainLayoutController {
 		 //
 		 // Erstellung der Umlaufplangrafik auf dem ersten Tab
 		 //
+		 // Löschen der bisherigen Elemente
+		 
 		if(this.umlaufTabCounter >= 0){
 			
 			if(this.firstUppergrafikErstellt == true){
@@ -637,14 +669,18 @@ public class MainLayoutController {
 				if(this.seventhUppergrafikErstellt == true){
 					this.uppergc7.clearRect(0, 0, this.upperChart1.getWidth(), this.upperChart1.getHeight());
 				}
-		}				
+		}
+			
+		if(this.UPlan1.isVisible() == false){
+			this.umlaufplanEins = this.umlaufplanliste.get(this.UPlan.getSelectionModel().getSelectedIndex());
+		}
 		// Labelbeschriftungen für Umlaufpläne
 		this.UPlan1.setVisible(true);
 		
 		this.UPlanValue1.setText(UPlan.getSelectionModel().getSelectedItem().toString());
 		this.UPlanValue1.setVisible(true);
 		this.UPlanValue1.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
-		
+				
 		// Zur Kontrolle ob es sich um einen Buttonklick handelt oder nicht
 		
 		if(this.addButtonPressed == true){
@@ -668,7 +704,9 @@ public class MainLayoutController {
 			this.detailsUmlaufTable.getColumns().clear();
 			this.uDetailsTableErstellt = false;
 			}
-		createUDetailsTable();
+		createUDetailsTable(this.umlaufplanEins);
+		fillDetailPaneUmlauf(this.umlaufplanEins);
+		createUmlaufElementGraphic(this.umlaufplanEins, this.upperGraphicPane1);
 			
 		}
 		
@@ -951,7 +989,7 @@ public class MainLayoutController {
 	private void createUpperBackgroundGraphicFirstPane() {
 		
 		//Initialize the Chart
-		this.upperChart1 = new Canvas(this.upperGraphicPane1.getWidth()-4,this.upperheight);
+		this.upperChart1 = new Canvas(this.upperGraphicPane1.getWidth()-4,this.upperheightEins);
 				
 		//Erstellen des HintergrundgrafikKontextes
 		this.uppergc1 = this.upperChart1.getGraphicsContext2D();
@@ -987,7 +1025,7 @@ public class MainLayoutController {
 	private void createUpperBackgroundGraphicSecondPane() {
 		
 		//Initialize the Chart
-		this.upperChart2 = new Canvas(this.upperGraphicPane2.getWidth()-4,this.upperheight);
+		this.upperChart2 = new Canvas(this.upperGraphicPane2.getWidth()-4,this.upperheightZwei);
 				
 		//Erstellen des HintergrundgrafikKontextes
 		this.uppergc2 = this.upperChart2.getGraphicsContext2D();
@@ -1023,7 +1061,7 @@ public class MainLayoutController {
 	private void createUpperBackgroundGraphicThirdPane() {
 		
 		//Initialize the Chart
-		this.upperChart3 = new Canvas(this.upperGraphicPane3.getWidth()-4,this.upperheight);
+		this.upperChart3 = new Canvas(this.upperGraphicPane3.getWidth()-4,this.upperheightDrei);
 				
 		//Erstellen des HintergrundgrafikKontextes
 		this.uppergc3 = this.upperChart3.getGraphicsContext2D();
@@ -1059,7 +1097,7 @@ public class MainLayoutController {
 	private void createUpperBackgroundGraphicFourthPane() {
 		
 		//Initialize the Chart
-		this.upperChart4 = new Canvas(this.upperGraphicPane4.getWidth()-4,this.upperheight);
+		this.upperChart4 = new Canvas(this.upperGraphicPane4.getWidth()-4,this.upperheightVier);
 				
 		//Erstellen des HintergrundgrafikKontextes
 		this.uppergc4 = this.upperChart4.getGraphicsContext2D();
@@ -1095,7 +1133,7 @@ public class MainLayoutController {
 	private void createUpperBackgroundGraphicFifthPane() {
 		
 		//Initialize the Chart
-		this.upperChart5 = new Canvas(this.upperGraphicPane5.getWidth()-4,this.upperheight);
+		this.upperChart5 = new Canvas(this.upperGraphicPane5.getWidth()-4,this.upperheightFuenf);
 				
 		//Erstellen des HintergrundgrafikKontextes
 		this.uppergc5 = this.upperChart5.getGraphicsContext2D();
@@ -1131,7 +1169,7 @@ public class MainLayoutController {
 	private void createUpperBackgroundGraphicSixthPane() {
 		
 		//Initialize the Chart
-		this.upperChart6 = new Canvas(this.upperGraphicPane6.getWidth()-4,this.upperheight);
+		this.upperChart6 = new Canvas(this.upperGraphicPane6.getWidth()-4,this.upperheightSechs);
 				
 		//Erstellen des HintergrundgrafikKontextes
 		this.uppergc6 = this.upperChart6.getGraphicsContext2D();
@@ -1167,7 +1205,7 @@ public class MainLayoutController {
 	private void createUpperBackgroundGraphicSeventhPane() {
 		
 		//Initialize the Chart
-		this.upperChart7 = new Canvas(this.upperGraphicPane7.getWidth()-4,this.upperheight);
+		this.upperChart7 = new Canvas(this.upperGraphicPane7.getWidth()-4,this.upperheightSieben);
 				
 		//Erstellen des HintergrundgrafikKontextes
 		this.uppergc7 = this.upperChart7.getGraphicsContext2D();
@@ -1280,11 +1318,21 @@ public class MainLayoutController {
 		this.lowerGraphicPane1.setContent(this.lowerChart1);
 		}
 	
+	
+	/**
+	 * Fills the DetailPane für die Umlaufpläne
+	 */
+	private void fillDetailPaneUmlauf(Umlaufplan umlaufplan) {
+		
+		this.anzahlFahrten.setVisible(true);
+		this.anzahlFahrten.setText(String.valueOf(umlaufplan.getFahrtZuUmlauf().size()));
+		
+	}
 	/**
 	 * Creates DetailsTable.
 	 */
-	@FXML
-	private void createUDetailsTable() {
+	@SuppressWarnings("unchecked")
+	private void createUDetailsTable(Umlaufplan umlaufplan) {
 		
 				this.detailsUmlaufTable.setEditable(true);
 				
@@ -1300,7 +1348,7 @@ public class MainLayoutController {
 				endzeitCol.setCellValueFactory(new PropertyValueFactory<Blockelement, String>("arrTime"));
 				eleTypeCol.setCellValueFactory(new PropertyValueFactory<Blockelement, Integer>("elementType"));
 				blockCol.setCellValueFactory(new PropertyValueFactory<Blockelement, Integer>("blockID"));
-				dauerCol.setCellValueFactory(new PropertyValueFactory<Blockelement, String>("firstName"));
+				dauerCol.setCellValueFactory(new PropertyValueFactory<Blockelement, String>("driveTime"));
 				
 				blockEleCol.prefWidthProperty().bind(blockEleCol.widthProperty());
 				startzeitCol.prefWidthProperty().bind(startzeitCol.widthProperty());
@@ -1313,8 +1361,36 @@ public class MainLayoutController {
 				
 				ObservableList<Blockelement> data = FXCollections.observableArrayList();
 				
-				for ( int i = 0; i < this.umlaufplanliste.get(this.umlaufChoice).getFahrtZuUmlauf().size(); i++ ){					
-					data.add(this.umlaufplanliste.get(this.umlaufChoice).getFahrtZuUmlauf().get(i));
+				for ( int i = 0; i < umlaufplan.getFahrtZuUmlauf().size(); i++ ){
+					
+					// Berrechnen der Dauer zwischen der Abfahrt und der Ankunft
+					
+					String depTime = umlaufplan.getFahrtZuUmlauf().get(i).getDepTime();
+					String arrtime = umlaufplan.getFahrtZuUmlauf().get(i).getArrTime();
+					
+					SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+						Date date1 = null;
+						Date date2 = null;
+						try {
+							date1 = format.parse(depTime);
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}					
+						try {
+							date2 = format.parse(arrtime);
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}					
+					long differenz = date2.getTime() - date1.getTime(); 
+					differenz = (differenz/1000)/60;
+					umlaufplan.getFahrtZuUmlauf().get(i).setDriveTime(differenz+" min");
+					
+					
+					// Hinzufügen der Daten
+					
+					data.add(umlaufplan.getFahrtZuUmlauf().get(i));
 				};
 				
 				this.detailsUmlaufTable.setItems(data);
@@ -1322,6 +1398,35 @@ public class MainLayoutController {
 				this.tablePane.setContent(detailsUmlaufTable);
 				
 				uDetailsTableErstellt = true;
+	}
+	
+	/**
+	 * Creates Elements in the Graphic.
+	 */
+	private void createUmlaufElementGraphic(Umlaufplan umlaufplan, ScrollPane scrollPane) {
+		
+		// Anzahl der Blockelemente werden ausgelesen
+		
+		for (int i = 0; i < umlaufplan.getUmlauf().size(); i++) {
+			
+			Canvas canvas = new Canvas(scrollPane.getWidth()-4,this.upperheightEins);
+			GraphicsContext gc = canvas.getGraphicsContext2D();
+				// Durchgehen jedes Blockelementes
+			
+			for (int j = 0; j < umlaufplan.getFahrtZuUmlauf().size(); j++) {				
+				
+				if(umlaufplan.getUmlauf().get(i).getId() == umlaufplan.getFahrtZuUmlauf().get(j).getBlockID()){
+					
+					System.out.println(umlaufplan.getFahrtZuUmlauf().get(j).getBlockID());
+				}
+				
+				
+			}
+			
+			//scrollPane.getChildrenUnmodifiable().add(canvas);
+		}
+		
+		
 	}
 	
 	/**

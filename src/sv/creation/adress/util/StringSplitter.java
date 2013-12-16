@@ -1352,7 +1352,7 @@ public class StringSplitter {
 	public int[] intParse(String date){
 		
 		String [] s1;
-		int [] zeit= new int[1];
+		int [] zeit= new int[2];
 		s1=date.split(":");
 		int hour=Integer.parseInt(s1[0]);
 		int minute=Integer.parseInt(s1[1]);
