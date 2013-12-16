@@ -1349,6 +1349,22 @@ public class StringSplitter {
 		   return newDate;
 	}
 	
+	public int[] intParse(String date){
+		
+		String [] s1;
+		int [] zeit= new int[1];
+		s1=date.split(":");
+		int hour=Integer.parseInt(s1[0]);
+		int minute=Integer.parseInt(s1[1]);
+		//Element on position 0 is the hour of the given time
+		zeit[0]=hour;
+		//Element on position 1 is the minute of the given time
+		zeit[1]=minute;
+		
+		return zeit;
+		
+	}
+	
 	public void berechneZeit(String date1, String date2){
 		
 		int hourDate1=0;
