@@ -673,6 +673,7 @@ public class MainLayoutController {
 			
 		if(this.UPlan1.isVisible() == false){
 			this.umlaufplanEins = this.umlaufplanliste.get(this.UPlan.getSelectionModel().getSelectedIndex());
+			this.upperheightEins = this.umlaufplanEins.getUmlauf().size()*40 + 10;
 		}
 		// Labelbeschriftungen für Umlaufpläne
 		this.UPlan1.setVisible(true);
@@ -706,7 +707,7 @@ public class MainLayoutController {
 			}
 		createUDetailsTable(this.umlaufplanEins);
 		fillDetailPaneUmlauf(this.umlaufplanEins);
-		createUmlaufElementGraphic(this.umlaufplanEins, this.upperGraphicPane1);
+		createUmlaufElementGraphic(this.umlaufplanEins, this.upperGraphicPane1, this.upperChart1, this.uppergc1);
 			
 		}
 		
@@ -1403,30 +1404,116 @@ public class MainLayoutController {
 	/**
 	 * Creates Elements in the Graphic.
 	 */
-	private void createUmlaufElementGraphic(Umlaufplan umlaufplan, ScrollPane scrollPane) {
+	private void createUmlaufElementGraphic(Umlaufplan umlaufplan, ScrollPane scrollPane, Canvas canvas, GraphicsContext gc ) {
 		
-		// Anzahl der Blockelemente werden ausgelesen
-		
-		for (int i = 0; i < umlaufplan.getUmlauf().size(); i++) {
-			
-			Canvas canvas = new Canvas(scrollPane.getWidth()-4,this.upperheightEins);
-			GraphicsContext gc = canvas.getGraphicsContext2D();
-				// Durchgehen jedes Blockelementes
-			
-			for (int j = 0; j < umlaufplan.getFahrtZuUmlauf().size(); j++) {				
+		double abstandNetz = (canvas.getWidth()-30)/(this.endzeitVar-this.startzeitVar);
 				
-				if(umlaufplan.getUmlauf().get(i).getId() == umlaufplan.getFahrtZuUmlauf().get(j).getBlockID()){
+		 // Auslesen der Blockanzahl		 
+		 for (int j = 0; j < umlaufplan.getUmlauf().size(); j++) {
+			 
+			 // Auslesen Blockelementanzahl
+			 for (int i = 0; i < umlaufplan.getFahrtZuUmlauf().size(); i++) {		
+			
+				// Abgleich mit den Werten
+				if(umlaufplan.getFahrtZuUmlauf().get(i).getBlockID() == umlaufplan.getUmlauf().get(j).getId()){
 					
-					System.out.println(umlaufplan.getFahrtZuUmlauf().get(j).getBlockID());
+					// Auslesen der Zeit als Integer
+					StringSplitter ss = new StringSplitter();
+					int [] zeit= new int[2];
+					zeit = ss.intParse(umlaufplan.getFahrtZuUmlauf().get(i).getDepTime());					
+					int startHour = zeit[0] ;
+					int startMin = zeit[1] ;					
+					zeit = ss.intParse(umlaufplan.getFahrtZuUmlauf().get(i).getArrTime());
+					int endHour = zeit[0];
+					int endMin = zeit[1];
+					
+					
+					// Belegung der Pixelwerte
+					if(this.startzeitVar <= startHour && this.endzeitVar > endHour){
+					int stundenDifferenz =	startHour - this.startzeitVar;
+					int startPixelX = (int) ((stundenDifferenz*abstandNetz) + ((abstandNetz/60)*startMin));
+					int startPixelY = 10 + (j*40);
+					int fahrtDauer = 0;
+					// Berrechnen der Dauer zwischen der Abfahrt und der Ankunft
+					
+					String depTime = umlaufplan.getFahrtZuUmlauf().get(i).getDepTime();
+					String arrtime = umlaufplan.getFahrtZuUmlauf().get(i).getArrTime();
+					
+					SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+						Date date1 = null;
+						Date date2 = null;
+						try {
+							date1 = format.parse(depTime);
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}					
+						try {
+							date2 = format.parse(arrtime);
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}					
+					long differenz = date2.getTime() - date1.getTime(); 
+					differenz = (differenz/1000)/60;										
+
+					fahrtDauer = (int) (differenz *(abstandNetz/60));
+					System.out.println(fahrtDauer);
+					
+					//Färben der Elemente
+					
+					switch(umlaufplan.getFahrtZuUmlauf().get(i).getElementType()){
+					
+					case 1:
+			        	// Servicefahrt
+			        	gc.setFill(Color.SEAGREEN);
+			            break;
+			        case 2:
+			        	// Leerfahrt Haltestellen
+			        	gc.setFill(Color.LIGHTCORAL);
+			            break;
+			        case 3:
+			        	// Fahrt ins Depot
+			        	gc.setFill(Color.ANTIQUEWHITE);
+			            break;
+			        case 4:
+			        	// Fahrt aus dem Depot
+			        	gc.setFill(Color.WHITESMOKE);
+			            break;
+			        case 5:
+			        	// Vorbereitung
+			        	gc.setFill(Color.GREEN);
+			            break;
+			        case 6:
+			        	// Nachbereitung
+			        	gc.setFill(Color.GREEN);
+			            break;
+			        case 7:
+			        	// Transfer
+			        	gc.setFill(Color.GREEN);
+			            break;
+			        case 8:
+			        	// Pause
+			        	gc.setFill(Color.ORANGE);
+			            break;
+			        case 9:
+			        	// Warten
+			        	gc.setFill(Color.LIGHTSKYBLUE);
+			            break;		
+			        case 10:
+			        	// LayoverTime
+			        	gc.setFill(Color.GREEN);
+			            break;
+			        } 
+					
+					// Malen der Elemente
+					
+					 gc.fillRoundRect(startPixelX, startPixelY, fahrtDauer, 20, 20, 10);
+					 gc.strokeRoundRect(startPixelX, startPixelY, fahrtDauer, 20, 20, 10);
+					}					
 				}
-				
-				
-			}
-			
-			//scrollPane.getChildrenUnmodifiable().add(canvas);
-		}
-		
-		
+		 	}			
+		}		
 	}
 	
 	/**
