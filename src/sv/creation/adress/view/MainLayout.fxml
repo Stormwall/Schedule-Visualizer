@@ -31,10 +31,10 @@
                     <Insets right="20.0" />
                   </HBox.margin>
                 </Slider>
-                <Button id="apply" fx:id="applyFilter" mnemonicParsing="false" onAction="#refreshBothGraphics" text="Anwenden" />
+                <Button id="apply" fx:id="applyFilter" mnemonicParsing="false" onAction="#refreshBothGraphics" styleClass="dark-blue" text="Anwenden" />
               </children>
             </HBox>
-            <Button fx:id="showFullscreen" mnemonicParsing="false" onAction="#openFullscreen" opacity="0.0" text="Vollbild anzeigen" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="13.0" />
+            <Button fx:id="showFullscreen" mnemonicParsing="false" onAction="#openFullscreen" opacity="0.0" styleClass="dark-blue" text="Vollbild anzeigen" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="13.0" />
           </children>
         </AnchorPane>
         <AnchorPane fx:id="MainPane" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
@@ -47,7 +47,7 @@
                       <children>
                         <HBox id="HBox" alignment="CENTER" prefHeight="41.0" prefWidth="167.0" spacing="5.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
                           <children>
-                            <ChoiceBox fx:id="UPlan" prefWidth="125.0">
+                            <ChoiceBox fx:id="UPlan" prefWidth="125.0" styleClass="flowPane, dark-blue-Choicebox">
                               <items>
                                 <FXCollections fx:factory="observableArrayList">
                                   <String fx:value="Item 1" />
@@ -56,7 +56,7 @@
                                 </FXCollections>
                               </items>
                             </ChoiceBox>
-                            <Button cancelButton="false" defaultButton="false" graphicTextGap="0.0" minWidth="16.0" mnemonicParsing="false" onAction="#createUpperGraphic" prefHeight="21.0" prefWidth="23.0" text="+">
+                            <Button cancelButton="false" defaultButton="false" graphicTextGap="0.0" minWidth="16.0" mnemonicParsing="false" onAction="#createUpperGraphic" prefHeight="21.0" prefWidth="23.0" styleClass="dark-blue-Choicebox" text="+">
                               <font>
                                 <Font size="10.0" fx:id="x2" />
                               </font>
@@ -108,7 +108,7 @@
                         </AnchorPane>
                         <HBox id="HBox" alignment="CENTER" spacing="5.0" GridPane.columnIndex="0" GridPane.rowIndex="3">
                           <children>
-                            <ChoiceBox fx:id="DPlan" prefWidth="125.0">
+                            <ChoiceBox fx:id="DPlan" prefWidth="125.0" styleClass="dark-blue-Choicebox, flowPane">
                               <items>
                                 <FXCollections fx:factory="observableArrayList">
                                   <String fx:value="Item 1" />
@@ -117,7 +117,7 @@
                                 </FXCollections>
                               </items>
                             </ChoiceBox>
-                            <Button cancelButton="false" defaultButton="false" font="$x2" graphicTextGap="0.0" minWidth="16.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="23.0" text="+" />
+                            <Button cancelButton="false" defaultButton="false" font="$x2" graphicTextGap="0.0" minWidth="16.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="23.0" styleClass="dark-blue-Choicebox" text="+" />
                           </children>
                         </HBox>
                         <AnchorPane prefHeight="128.0" prefWidth="167.0" styleClass="background-paper" GridPane.columnIndex="0" GridPane.margin="$x3" GridPane.rowIndex="4">
@@ -503,22 +503,23 @@
                           <children>
                             <SplitPane dividerPositions="0.24786324786324787" focusTraversable="true" maxHeight="-1.0" minHeight="107.0" prefHeight="126.0" prefWidth="821.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                               <items>
-                                <AnchorPane maxHeight="105.0" maxWidth="200.0" minHeight="0.0" minWidth="200.0" prefHeight="160.0" prefWidth="100.0">
+                                <AnchorPane maxHeight="105.0" maxWidth="200.0" minHeight="0.0" minWidth="200.0" prefHeight="160.0" prefWidth="100.0" styleClass="background">
                                   <children>
-                                    <GridPane layoutX="14.0" layoutY="8.0" prefHeight="90.0" prefWidth="187.0">
+                                    <GridPane layoutX="7.0" layoutY="6.0" prefHeight="90.0" prefWidth="187.0" styleClass="background-paper">
                                       <children>
-                                        <Label text="Anzahl der Fahrten" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                                        <Label text="Anzahl der Servicefahrten" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                                        <Label text="Anzahl der Leerfahrten" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                                        <Label fx:id="anzahlFahrten" styleClass="label-detailsPane" text="Wert" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                                        <Label fx:id="anzahlServiceFahrten" styleClass="label-detailsPane" text="Wert" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                        <Label fx:id="anzahlLeerFahrten" styleClass="label-detailsPane" text="Wert" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                        <Label text="Eigenschaft" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-                                        <Label fx:id="unknown" text="Wert" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                        <Label styleClass="label-versTwo" text="Anzahl der Fahrten" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                        <Label styleClass="label-versTwo" text="Anzahl der Servicefahrten" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <Label styleClass="label-versTwo" text="Anzahl der Leerfahrten" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                        <Label fx:id="anzahlFahrten" styleClass="label-header" text="Wert" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                                        <Label fx:id="anzahlServiceFahrten" styleClass="label-detailsPane" text="Wert" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                        <Label fx:id="anzahlLeerFahrten" styleClass="label-detailsPane" text="Wert" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                        <Label styleClass="label-versTwo" text="Eigenschaft" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                        <Label fx:id="unknown" text="Wert" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                                       </children>
                                       <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="151.0" minWidth="10.0" prefWidth="151.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="93.0" minWidth="10.0" prefWidth="36.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="151.0" minWidth="6.0" prefWidth="6.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="171.0" minWidth="10.0" prefWidth="144.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="93.0" minWidth="10.0" prefWidth="37.0" />
                                       </columnConstraints>
                                       <rowConstraints>
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -537,17 +538,17 @@
                                           <children>
                                             <ScrollPane fx:id="tablePane" fitToHeight="true" fitToWidth="true" prefHeight="101.0" prefWidth="458.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                               <content>
-                                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="99.0" prefWidth="455.0" />
+                                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="99.0" prefWidth="455.0" styleClass="background" />
                                               </content>
                                             </ScrollPane>
                                           </children>
                                         </AnchorPane>
-                                        <AnchorPane maxWidth="147.0" minHeight="0.0" minWidth="147.0" prefHeight="160.0" prefWidth="100.0">
+                                        <AnchorPane maxWidth="147.0" minHeight="0.0" minWidth="147.0" prefHeight="160.0" prefWidth="100.0" styleClass="background">
                                           <children>
                                             <VBox id="VBox" alignment="CENTER" spacing="5.0" AnchorPane.bottomAnchor="6.0" AnchorPane.rightAnchor="7.0">
                                               <children>
-                                                <Button mnemonicParsing="false" text="Übernehmen" />
-                                                <Button fx:id="refreshGraphic" mnemonicParsing="false" onAction="#refreshBothGraphics" prefWidth="90.0" text="Anwenden" />
+                                                <Button mnemonicParsing="false" prefWidth="99.0" styleClass="dark-blue" text="Übernehmen" />
+                                                <Button fx:id="refreshGraphic" mnemonicParsing="false" onAction="#refreshBothGraphics" prefWidth="101.0" styleClass="dark-blue" text="Anwenden" />
                                               </children>
                                             </VBox>
                                             <CheckBox fx:id="hilfslinien" mnemonicParsing="false" text="Hilfslinien Anzeigen" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="6.0" />

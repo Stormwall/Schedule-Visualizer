@@ -1516,7 +1516,7 @@ public class MainLayoutController {
 				};
 				
 				this.detailsUmlaufTable.setItems(data);
-				this.detailsUmlaufTable.getColumns().addAll(blockEleCol, startzeitCol, endzeitCol, eleTypeCol, blockCol, dauerCol);		
+				this.detailsUmlaufTable.getColumns().addAll(blockEleCol, startzeitCol, endzeitCol, eleTypeCol, blockCol, dauerCol);
 				this.tablePane.setContent(detailsUmlaufTable);
 				
 				uDetailsTableErstellt = true;
