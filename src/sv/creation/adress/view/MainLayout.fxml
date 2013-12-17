@@ -193,23 +193,31 @@
                                       <children>
                                         <GridPane fx:id="graphicPane" prefHeight="297.0" prefWidth="821.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                           <children>
-                                            <ScrollPane id="upperGraphicPane" fx:id="upperGraphicPane1" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                            <ScrollPane id="upperGraphicPane" fx:id="upperGraphicPane1" prefHeight="200.0" prefWidth="200.0" styleClass="mylistview" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                               <content>
                                                 <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
                                               </content>
                                             </ScrollPane>
-                                            <ScrollPane id="lowerGraphicPane" fx:id="lowerGraphicPane1" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                            <ScrollPane id="lowerGraphicPane" fx:id="lowerGraphicPane1" prefHeight="200.0" prefWidth="200.0" styleClass="mylistview" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                               <content>
                                                 <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
                                               </content>
                                             </ScrollPane>
-                                            <AnchorPane id="yUp" fx:id="yUp1" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                                            <AnchorPane id="yLow" fx:id="yLow1" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="2" />
                                             <AnchorPane id="xUp" fx:id="xUp1" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                                             <AnchorPane id="xLow" fx:id="xLow1" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                            <ScrollPane fx:id="yUp1" fitToHeight="false" fitToWidth="true" minWidth="27.0" prefHeight="130.0" prefWidth="27.0" styleClass="yScale" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                                              <content>
+                                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                              </content>
+                                            </ScrollPane>
+                                            <ScrollPane id="yUp1" fx:id="yLow1" fitToHeight="false" fitToWidth="true" minWidth="27.0" prefHeight="130.0" prefWidth="27.0" styleClass="yScale" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                                              <content>
+                                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                              </content>
+                                            </ScrollPane>
                                           </children>
                                           <columnConstraints>
-                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="100.0" />
+                                            <ColumnConstraints fillWidth="true" hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="100.0" />
                                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                           </columnConstraints>
                                           <rowConstraints>
@@ -229,23 +237,31 @@
                                       <children>
                                         <GridPane id="graphicPane" prefHeight="297.0" prefWidth="821.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                           <children>
-                                            <ScrollPane id="upperGraphicPane" fx:id="upperGraphicPane2" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                            <ScrollPane id="upperGraphicPane" fx:id="upperGraphicPane2" prefHeight="200.0" prefWidth="200.0" styleClass="mylistview" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                               <content>
                                                 <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
                                               </content>
                                             </ScrollPane>
-                                            <ScrollPane id="lowerGraphicPane" fx:id="lowerGraphicPane2" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                            <ScrollPane id="lowerGraphicPane" fx:id="lowerGraphicPane2" prefHeight="200.0" prefWidth="200.0" styleClass="mylistview" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                               <content>
                                                 <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
                                               </content>
                                             </ScrollPane>
-                                            <AnchorPane id="yUp" fx:id="yUp2" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                                            <AnchorPane id="yLow" fx:id="yLow2" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="2" />
                                             <AnchorPane id="xUp" fx:id="xUp2" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                                             <AnchorPane id="xLow" fx:id="xLow2" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                            <ScrollPane id="yUp1" fx:id="yUp2" fitToHeight="true" fitToWidth="true" minWidth="27.0" prefHeight="130.0" prefWidth="30.0" styleClass="yScale" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                                              <content>
+                                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                              </content>
+                                            </ScrollPane>
+                                            <ScrollPane id="yUp1" fx:id="yLow2" fitToHeight="false" fitToWidth="true" minWidth="27.0" prefHeight="130.0" prefWidth="30.0" styleClass="yScale" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                                              <content>
+                                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                              </content>
+                                            </ScrollPane>
                                           </children>
                                           <columnConstraints>
-                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="100.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="100.0" />
                                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                           </columnConstraints>
                                           <rowConstraints>
@@ -265,23 +281,31 @@
                                       <children>
                                         <GridPane id="graphicPane" prefHeight="297.0" prefWidth="821.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                           <children>
-                                            <ScrollPane id="upperGraphicPane" fx:id="upperGraphicPane3" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                            <ScrollPane id="upperGraphicPane" fx:id="upperGraphicPane3" prefHeight="200.0" prefWidth="200.0" styleClass="mylistview" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                               <content>
                                                 <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
                                               </content>
                                             </ScrollPane>
-                                            <ScrollPane id="lowerGraphicPane" fx:id="lowerGraphicPane3" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                            <ScrollPane id="lowerGraphicPane" fx:id="lowerGraphicPane3" prefHeight="200.0" prefWidth="200.0" styleClass="mylistview" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                               <content>
                                                 <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
                                               </content>
                                             </ScrollPane>
-                                            <AnchorPane id="yUp" fx:id="yUp3" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                                            <AnchorPane id="yLow" fx:id="yLow3" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="2" />
                                             <AnchorPane id="xUp" fx:id="xUp3" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                                             <AnchorPane id="xLow" fx:id="xLow3" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                            <ScrollPane id="yUp1" fx:id="yUp3" fitToHeight="false" fitToWidth="true" minWidth="27.0" prefHeight="130.0" prefWidth="30.0" styleClass="yScale" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                                              <content>
+                                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                              </content>
+                                            </ScrollPane>
+                                            <ScrollPane id="yUp1" fx:id="yLow3" fitToHeight="false" fitToWidth="true" minWidth="27.0" prefHeight="130.0" prefWidth="30.0" styleClass="yScale" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                                              <content>
+                                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                              </content>
+                                            </ScrollPane>
                                           </children>
                                           <columnConstraints>
-                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="100.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="100.0" />
                                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                           </columnConstraints>
                                           <rowConstraints>
@@ -301,23 +325,31 @@
                                       <children>
                                         <GridPane id="graphicPane" prefHeight="297.0" prefWidth="821.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                           <children>
-                                            <ScrollPane id="upperGraphicPane" fx:id="upperGraphicPane4" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                            <ScrollPane id="upperGraphicPane" fx:id="upperGraphicPane4" prefHeight="200.0" prefWidth="200.0" styleClass="mylistview" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                               <content>
                                                 <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
                                               </content>
                                             </ScrollPane>
-                                            <ScrollPane id="lowerGraphicPane" fx:id="lowerGraphicPane4" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                            <ScrollPane id="lowerGraphicPane" fx:id="lowerGraphicPane4" prefHeight="200.0" prefWidth="200.0" styleClass="mylistview" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                               <content>
                                                 <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
                                               </content>
                                             </ScrollPane>
-                                            <AnchorPane id="yUp" fx:id="yUp4" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                                            <AnchorPane id="yLow" fx:id="yLow4" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="2" />
                                             <AnchorPane id="xUp" fx:id="xUp4" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                                             <AnchorPane id="xLow" fx:id="xLow4" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                            <ScrollPane id="yUp1" fx:id="yUp4" fitToHeight="false" fitToWidth="true" minWidth="27.0" prefHeight="130.0" prefWidth="30.0" styleClass="yScale" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                                              <content>
+                                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                              </content>
+                                            </ScrollPane>
+                                            <ScrollPane id="yUp1" fx:id="yLow4" fitToHeight="false" fitToWidth="true" minWidth="27.0" prefHeight="130.0" prefWidth="30.0" styleClass="yScale" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                                              <content>
+                                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                              </content>
+                                            </ScrollPane>
                                           </children>
                                           <columnConstraints>
-                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="100.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="100.0" />
                                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                           </columnConstraints>
                                           <rowConstraints>
@@ -337,23 +369,31 @@
                                       <children>
                                         <GridPane id="graphicPane" prefHeight="297.0" prefWidth="821.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                           <children>
-                                            <ScrollPane id="upperGraphicPane" fx:id="upperGraphicPane5" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                            <ScrollPane id="upperGraphicPane" fx:id="upperGraphicPane5" prefHeight="200.0" prefWidth="200.0" styleClass="mylistview" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                               <content>
                                                 <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
                                               </content>
                                             </ScrollPane>
-                                            <ScrollPane id="lowerGraphicPane" fx:id="lowerGraphicPane5" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                            <ScrollPane id="lowerGraphicPane" fx:id="lowerGraphicPane5" prefHeight="200.0" prefWidth="200.0" styleClass="mylistview" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                               <content>
                                                 <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
                                               </content>
                                             </ScrollPane>
-                                            <AnchorPane id="yUp" fx:id="yUp5" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                                            <AnchorPane id="yLow" fx:id="yLow5" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="2" />
                                             <AnchorPane id="xUp" fx:id="xUp5" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                                             <AnchorPane id="xLow" fx:id="xLow5" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                            <ScrollPane id="yUp1" fx:id="yUp5" fitToHeight="false" fitToWidth="true" minWidth="27.0" prefHeight="130.0" prefWidth="30.0" styleClass="yScale" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                                              <content>
+                                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                              </content>
+                                            </ScrollPane>
+                                            <ScrollPane id="yUp1" fx:id="yLow5" fitToHeight="false" fitToWidth="true" minWidth="27.0" prefHeight="130.0" prefWidth="30.0" styleClass="yScale" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                                              <content>
+                                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                              </content>
+                                            </ScrollPane>
                                           </children>
                                           <columnConstraints>
-                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="100.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="100.0" />
                                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                           </columnConstraints>
                                           <rowConstraints>
@@ -373,23 +413,31 @@
                                       <children>
                                         <GridPane id="graphicPane" prefHeight="297.0" prefWidth="821.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                           <children>
-                                            <ScrollPane id="upperGraphicPane" fx:id="upperGraphicPane6" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                            <ScrollPane id="upperGraphicPane" fx:id="upperGraphicPane6" prefHeight="200.0" prefWidth="200.0" styleClass="mylistview" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                               <content>
                                                 <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
                                               </content>
                                             </ScrollPane>
-                                            <ScrollPane id="lowerGraphicPane" fx:id="lowerGraphicPane6" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                            <ScrollPane id="lowerGraphicPane" fx:id="lowerGraphicPane6" prefHeight="200.0" prefWidth="200.0" styleClass="mylistview" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                               <content>
                                                 <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
                                               </content>
                                             </ScrollPane>
-                                            <AnchorPane id="yUp" fx:id="yUp6" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                                            <AnchorPane id="yLow" fx:id="yLow6" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="2" />
                                             <AnchorPane id="xUp" fx:id="xUp6" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                                             <AnchorPane id="xLow" fx:id="xLow6" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                            <ScrollPane id="yUp1" fx:id="yUp6" fitToHeight="false" fitToWidth="true" minWidth="27.0" prefHeight="130.0" prefWidth="30.0" styleClass="yScale" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                                              <content>
+                                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                              </content>
+                                            </ScrollPane>
+                                            <ScrollPane id="yUp1" fx:id="yLow6" fitToHeight="false" fitToWidth="true" minWidth="27.0" prefHeight="130.0" prefWidth="30.0" styleClass="yScale" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                                              <content>
+                                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                              </content>
+                                            </ScrollPane>
                                           </children>
                                           <columnConstraints>
-                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="100.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="100.0" />
                                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                           </columnConstraints>
                                           <rowConstraints>
@@ -409,23 +457,31 @@
                                       <children>
                                         <GridPane id="graphicPane" prefHeight="297.0" prefWidth="821.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                           <children>
-                                            <ScrollPane id="upperGraphicPane" fx:id="upperGraphicPane7" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                            <ScrollPane id="upperGraphicPane" fx:id="upperGraphicPane7" prefHeight="200.0" prefWidth="200.0" styleClass="mylistview" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                               <content>
                                                 <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
                                               </content>
                                             </ScrollPane>
-                                            <ScrollPane id="lowerGraphicPane" fx:id="lowerGraphicPane7" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                            <ScrollPane id="lowerGraphicPane" fx:id="lowerGraphicPane7" prefHeight="200.0" prefWidth="200.0" styleClass="mylistview" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                               <content>
                                                 <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
                                               </content>
                                             </ScrollPane>
-                                            <AnchorPane id="yUp" fx:id="yUp7" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                                            <AnchorPane id="yLow" fx:id="yLow7" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="2" />
                                             <AnchorPane id="xUp" fx:id="xUp7" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                                             <AnchorPane id="xLow" fx:id="xLow7" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                            <ScrollPane id="yUp1" fx:id="yUp7" fitToHeight="false" fitToWidth="true" minWidth="27.0" prefHeight="130.0" prefWidth="30.0" styleClass="yScale" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                                              <content>
+                                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                              </content>
+                                            </ScrollPane>
+                                            <ScrollPane id="yUp1" fx:id="yLow7" fitToHeight="false" fitToWidth="true" minWidth="27.0" prefHeight="130.0" prefWidth="30.0" styleClass="yScale" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                                              <content>
+                                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                              </content>
+                                            </ScrollPane>
                                           </children>
                                           <columnConstraints>
-                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="100.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="100.0" />
                                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                           </columnConstraints>
                                           <rowConstraints>

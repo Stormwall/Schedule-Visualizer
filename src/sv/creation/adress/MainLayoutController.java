@@ -10,6 +10,8 @@ import sv.creation.adress.model.Blockelement;
 import sv.creation.adress.model.Umlaufplan;
 import sv.creation.adress.util.StringSplitter;
 import javafx.animation.FadeTransition;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -55,59 +57,59 @@ public class MainLayoutController {
 	@FXML
 	private AnchorPane xUp1;
 	@FXML
-	private AnchorPane yUp1;
+	private ScrollPane yUp1;
 	@FXML
 	private AnchorPane xLow1;
 	@FXML
-	private AnchorPane yLow1;
+	private ScrollPane yLow1;
 	@FXML
 	private AnchorPane xUp2;
 	@FXML
-	private AnchorPane yUp2;
+	private ScrollPane yUp2;
 	@FXML
 	private AnchorPane xLow2;
 	@FXML
-	private AnchorPane yLow2;
+	private ScrollPane yLow2;
 	@FXML
 	private AnchorPane xUp3;
 	@FXML
-	private AnchorPane yUp3;
+	private ScrollPane yUp3;
 	@FXML
 	private AnchorPane xLow3;
 	@FXML
-	private AnchorPane yLow3;
+	private ScrollPane yLow3;
 	@FXML
 	private AnchorPane xUp4;
 	@FXML
-	private AnchorPane yUp4;
+	private ScrollPane yUp4;
 	@FXML
 	private AnchorPane xLow4;
 	@FXML
-	private AnchorPane yLow4;
+	private ScrollPane yLow4;
 	@FXML
 	private AnchorPane xUp5;
 	@FXML
-	private AnchorPane yUp5;
+	private ScrollPane yUp5;
 	@FXML
 	private AnchorPane xLow5;
 	@FXML
-	private AnchorPane yLow5;
+	private ScrollPane yLow5;
 	@FXML
 	private AnchorPane xUp6;
 	@FXML
-	private AnchorPane yUp6;
+	private ScrollPane yUp6;
 	@FXML
 	private AnchorPane xLow6;
 	@FXML
-	private AnchorPane yLow6;
+	private ScrollPane yLow6;
 	@FXML
 	private AnchorPane xUp7;
 	@FXML
-	private AnchorPane yUp7;
+	private ScrollPane yUp7;
 	@FXML
 	private AnchorPane xLow7;
 	@FXML
-	private AnchorPane yLow7;
+	private ScrollPane yLow7;
 	@FXML
 	private ScrollPane upperGraphicPane1;
 	@FXML
@@ -429,7 +431,104 @@ public class MainLayoutController {
 		
 		// Sets the Standardelement condition of the Interface
 		
-		detailsUmlaufTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);			
+		detailsUmlaufTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+		
+		this.yUp1.setHbarPolicy(ScrollBarPolicy.NEVER);
+		this.yUp1.setVbarPolicy(ScrollBarPolicy.NEVER);
+		this.yUp2.setHbarPolicy(ScrollBarPolicy.NEVER);
+		this.yUp2.setVbarPolicy(ScrollBarPolicy.NEVER);
+		this.yUp3.setHbarPolicy(ScrollBarPolicy.NEVER);
+		this.yUp3.setVbarPolicy(ScrollBarPolicy.NEVER);
+		this.yUp4.setHbarPolicy(ScrollBarPolicy.NEVER);
+		this.yUp4.setVbarPolicy(ScrollBarPolicy.NEVER);
+		this.yUp5.setHbarPolicy(ScrollBarPolicy.NEVER);
+		this.yUp5.setVbarPolicy(ScrollBarPolicy.NEVER);
+		this.yUp6.setHbarPolicy(ScrollBarPolicy.NEVER);
+		this.yUp6.setVbarPolicy(ScrollBarPolicy.NEVER);
+		this.yUp7.setHbarPolicy(ScrollBarPolicy.NEVER);
+		this.yUp7.setVbarPolicy(ScrollBarPolicy.NEVER);
+		
+		this.yLow1.setHbarPolicy(ScrollBarPolicy.NEVER);
+		this.yLow1.setVbarPolicy(ScrollBarPolicy.NEVER);
+		this.yLow2.setHbarPolicy(ScrollBarPolicy.NEVER);
+		this.yLow2.setVbarPolicy(ScrollBarPolicy.NEVER);
+		this.yLow3.setHbarPolicy(ScrollBarPolicy.NEVER);
+		this.yLow3.setVbarPolicy(ScrollBarPolicy.NEVER);
+		this.yLow4.setHbarPolicy(ScrollBarPolicy.NEVER);
+		this.yLow4.setVbarPolicy(ScrollBarPolicy.NEVER);
+		this.yLow5.setHbarPolicy(ScrollBarPolicy.NEVER);
+		this.yLow5.setVbarPolicy(ScrollBarPolicy.NEVER);
+		this.yLow6.setHbarPolicy(ScrollBarPolicy.NEVER);
+		this.yLow6.setVbarPolicy(ScrollBarPolicy.NEVER);
+		this.yLow7.setHbarPolicy(ScrollBarPolicy.NEVER);
+		this.yLow7.setVbarPolicy(ScrollBarPolicy.NEVER);
+		
+		// Bindet die ScrollPanes aneinander 
+		
+		DoubleProperty vPosition = new SimpleDoubleProperty();
+	    vPosition.bind(this.upperGraphicPane1.vvalueProperty());
+	    vPosition.addListener(new ChangeListener() {
+	        @Override
+	        public void changed(ObservableValue arg0, Object arg1, Object arg2) {
+	        	yUp1.setVvalue((double) arg2);
+
+	        }
+	    });
+	    
+	    DoubleProperty aPosition = new SimpleDoubleProperty();
+	    aPosition.bind(this.upperGraphicPane2.vvalueProperty());
+	    aPosition.addListener(new ChangeListener() {
+	        @Override
+	        public void changed(ObservableValue arg0, Object arg1, Object arg2) {
+	        	yUp2.setVvalue((double) arg2);
+
+	        }
+	    });
+	    DoubleProperty bPosition = new SimpleDoubleProperty();
+	    bPosition.bind(this.upperGraphicPane3.vvalueProperty());
+	    bPosition.addListener(new ChangeListener() {
+	        @Override
+	        public void changed(ObservableValue arg0, Object arg1, Object arg2) {
+	        	yUp3.setVvalue((double) arg2);
+
+	        }
+	    });
+	    DoubleProperty cPosition = new SimpleDoubleProperty();
+	    cPosition.bind(this.upperGraphicPane4.vvalueProperty());
+	    cPosition.addListener(new ChangeListener() {
+	        @Override
+	        public void changed(ObservableValue arg0, Object arg1, Object arg2) {
+	        	yUp4.setVvalue((double) arg2);
+
+	        }
+	    });
+	    DoubleProperty dPosition = new SimpleDoubleProperty();
+	    dPosition.bind(this.upperGraphicPane5.vvalueProperty());
+	    dPosition.addListener(new ChangeListener() {
+	        @Override
+	        public void changed(ObservableValue arg0, Object arg1, Object arg2) {
+	        	yUp5.setVvalue((double) arg2);
+
+	        }
+	    });
+	    DoubleProperty ePosition = new SimpleDoubleProperty();
+	    ePosition.bind(this.upperGraphicPane6.vvalueProperty());
+	    ePosition.addListener(new ChangeListener() {
+	        @Override
+	        public void changed(ObservableValue arg0, Object arg1, Object arg2) {
+	        	yUp6.setVvalue((double) arg2);
+
+	        }
+	    });
+	    DoubleProperty fPosition = new SimpleDoubleProperty();
+	    fPosition.bind(this.upperGraphicPane7.vvalueProperty());
+	    fPosition.addListener(new ChangeListener() {
+	        @Override
+	        public void changed(ObservableValue arg0, Object arg1, Object arg2) {
+	        	yUp7.setVvalue((double) arg2);
+
+	        }
+	    });
 		
 		//Umlaufpläne -- Choicebox wird gefüllt
 		
@@ -674,6 +773,7 @@ public class MainLayoutController {
 		if(this.UPlan1.isVisible() == false){
 			this.umlaufplanEins = this.umlaufplanliste.get(this.UPlan.getSelectionModel().getSelectedIndex());
 			this.upperheightEins = this.umlaufplanEins.getUmlauf().size()*40 + 10;
+			createUpperYScale(yUp1, upperYChart1, upperYgc1, this.upperheightEins, this.umlaufplanEins);
 		}
 		// Labelbeschriftungen für Umlaufpläne
 		this.UPlan1.setVisible(true);
@@ -1277,11 +1377,32 @@ public class MainLayoutController {
 	/**
 	 * Creates The Lower Y - Scale.
 	 */
-	@FXML
-	private void createUpperYScale() {
+	private void createUpperYScale(ScrollPane scrollPane, Canvas canvas, GraphicsContext gc, double height, Umlaufplan umlaufplan) {
 		
+		//Initialize the Chart
+		canvas = new Canvas(30,height);
+		
+		//Erstellen des HintergrundgrafikKontextes		
+		gc = canvas.getGraphicsContext2D();
+		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		
+		//Eigenschaften der Beschriftung
+		gc.setLineWidth(1);
+		gc.setFont(Font.getDefault());
+		gc.setFill(Color.BLACK);
+		gc.setStroke(Color.BLACK);
+		// Auslesen der Werte		
+		for (int j = 0; j < umlaufplan.getUmlauf().size(); j++) {
+			
+			gc.fillText("B "+umlaufplan.getUmlauf().get(j).getId(), 4, 22 + (j*40));
+			
+		}
+		
+		scrollPane.setContent(canvas);
 		
 	}
+	
+	
 	/**
 	 * Creates The Lower Graphic.
 	 */
@@ -1458,7 +1579,6 @@ public class MainLayoutController {
 					differenz = (differenz/1000)/60;										
 
 					fahrtDauer = (int) (differenz *(abstandNetz/60));
-					System.out.println(fahrtDauer);
 					
 					//Färben der Elemente
 					
