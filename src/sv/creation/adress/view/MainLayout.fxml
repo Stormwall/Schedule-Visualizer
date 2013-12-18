@@ -555,7 +555,11 @@
                                                 <Button fx:id="refreshGraphic" mnemonicParsing="false" onAction="#refreshBothGraphics" prefWidth="101.0" styleClass="dark-blue" text="Anwenden" />
                                               </children>
                                             </VBox>
-                                            <CheckBox fx:id="hilfslinien" mnemonicParsing="false" text="Hilfslinien Anzeigen" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="6.0" />
+                                            <CheckBox fx:id="hilfslinien" mnemonicParsing="false" text="Hilfslinien Anzeigen" textFill="WHITE" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="6.0">
+                                              <font>
+                                                <Font name="Segoe UI Light" size="12.0" />
+                                              </font>
+                                            </CheckBox>
                                           </children>
                                         </AnchorPane>
                                       </items>
