@@ -235,7 +235,7 @@
                                     </AnchorPane>
                                   </content>
                                 </Tab>
-                                <Tab fx:id="Plan2" disable="false" text="Plan 2">
+                                <Tab fx:id="Plan2" disable="true" text="Plan 2">
                                   <content>
                                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                       <children>
@@ -279,7 +279,7 @@
                                     </AnchorPane>
                                   </content>
                                 </Tab>
-                                <Tab fx:id="Plan3" disable="false" text="Plan 3">
+                                <Tab fx:id="Plan3" disable="true" text="Plan 3">
                                   <content>
                                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                       <children>
@@ -323,7 +323,7 @@
                                     </AnchorPane>
                                   </content>
                                 </Tab>
-                                <Tab fx:id="Plan4" disable="false" text="Plan 4">
+                                <Tab fx:id="Plan4" disable="true" text="Plan 4">
                                   <content>
                                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                       <children>
@@ -367,7 +367,7 @@
                                     </AnchorPane>
                                   </content>
                                 </Tab>
-                                <Tab fx:id="Plan5" disable="false" text="Plan 5">
+                                <Tab fx:id="Plan5" disable="true" text="Plan 5">
                                   <content>
                                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                       <children>
@@ -411,7 +411,7 @@
                                     </AnchorPane>
                                   </content>
                                 </Tab>
-                                <Tab fx:id="Plan6" disable="false" text="Plan 6">
+                                <Tab fx:id="Plan6" disable="true" text="Plan 6">
                                   <content>
                                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                       <children>
@@ -455,7 +455,7 @@
                                     </AnchorPane>
                                   </content>
                                 </Tab>
-                                <Tab fx:id="Plan7" disable="false" text="Plan 7">
+                                <Tab fx:id="Plan7" disable="true" text="Plan 7">
                                   <content>
                                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                       <children>
