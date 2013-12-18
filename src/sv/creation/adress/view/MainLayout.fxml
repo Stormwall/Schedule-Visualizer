@@ -231,7 +231,7 @@
                                     </AnchorPane>
                                   </content>
                                 </Tab>
-                                <Tab fx:id="Plan2" disable="true" text="Plan 2">
+                                <Tab fx:id="Plan2" disable="false" text="Plan 2">
                                   <content>
                                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                       <children>
@@ -249,7 +249,7 @@
                                             </ScrollPane>
                                             <AnchorPane id="xUp" fx:id="xUp2" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                                             <AnchorPane id="xLow" fx:id="xLow2" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                            <ScrollPane id="yUp1" fx:id="yUp2" fitToHeight="true" fitToWidth="true" minWidth="27.0" prefHeight="130.0" prefWidth="30.0" styleClass="yScale" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                                            <ScrollPane id="yUp1" fx:id="yUp2" fitToHeight="false" fitToWidth="true" minWidth="27.0" prefHeight="130.0" prefWidth="30.0" styleClass="yScale" GridPane.columnIndex="0" GridPane.rowIndex="1">
                                               <content>
                                                 <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
                                               </content>
@@ -275,7 +275,7 @@
                                     </AnchorPane>
                                   </content>
                                 </Tab>
-                                <Tab fx:id="Plan3" disable="true" text="Plan 3">
+                                <Tab fx:id="Plan3" disable="false" text="Plan 3">
                                   <content>
                                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                       <children>
@@ -319,7 +319,7 @@
                                     </AnchorPane>
                                   </content>
                                 </Tab>
-                                <Tab fx:id="Plan4" disable="true" text="Plan 4">
+                                <Tab fx:id="Plan4" disable="false" text="Plan 4">
                                   <content>
                                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                       <children>
@@ -363,7 +363,7 @@
                                     </AnchorPane>
                                   </content>
                                 </Tab>
-                                <Tab fx:id="Plan5" disable="true" text="Plan 5">
+                                <Tab fx:id="Plan5" disable="false" text="Plan 5">
                                   <content>
                                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                       <children>
@@ -407,7 +407,7 @@
                                     </AnchorPane>
                                   </content>
                                 </Tab>
-                                <Tab fx:id="Plan6" disable="true" text="Plan 6">
+                                <Tab fx:id="Plan6" disable="false" text="Plan 6">
                                   <content>
                                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                       <children>
@@ -451,7 +451,7 @@
                                     </AnchorPane>
                                   </content>
                                 </Tab>
-                                <Tab fx:id="Plan7" disable="true" text="Plan 7">
+                                <Tab fx:id="Plan7" disable="false" text="Plan 7">
                                   <content>
                                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                       <children>

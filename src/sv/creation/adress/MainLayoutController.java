@@ -467,9 +467,9 @@ public class MainLayoutController {
 		
 		DoubleProperty vPosition = new SimpleDoubleProperty();
 	    vPosition.bind(this.upperGraphicPane1.vvalueProperty());
-	    vPosition.addListener(new ChangeListener() {
+	    vPosition.addListener(new ChangeListener<Object>() {
 	        @Override
-	        public void changed(ObservableValue arg0, Object arg1, Object arg2) {
+	        public void changed(ObservableValue<?> arg0, Object arg1, Object arg2) {
 	        	yUp1.setVvalue((double) arg2);
 
 	        }
@@ -477,54 +477,54 @@ public class MainLayoutController {
 	    
 	    DoubleProperty aPosition = new SimpleDoubleProperty();
 	    aPosition.bind(this.upperGraphicPane2.vvalueProperty());
-	    aPosition.addListener(new ChangeListener() {
+	    aPosition.addListener(new ChangeListener<Object>() {
 	        @Override
-	        public void changed(ObservableValue arg0, Object arg1, Object arg2) {
+	        public void changed(ObservableValue<?> arg0, Object arg1, Object arg2) {
 	        	yUp2.setVvalue((double) arg2);
 
 	        }
 	    });
 	    DoubleProperty bPosition = new SimpleDoubleProperty();
 	    bPosition.bind(this.upperGraphicPane3.vvalueProperty());
-	    bPosition.addListener(new ChangeListener() {
+	    bPosition.addListener(new ChangeListener<Object>() {
 	        @Override
-	        public void changed(ObservableValue arg0, Object arg1, Object arg2) {
+	        public void changed(ObservableValue<?> arg0, Object arg1, Object arg2) {
 	        	yUp3.setVvalue((double) arg2);
 
 	        }
 	    });
 	    DoubleProperty cPosition = new SimpleDoubleProperty();
 	    cPosition.bind(this.upperGraphicPane4.vvalueProperty());
-	    cPosition.addListener(new ChangeListener() {
+	    cPosition.addListener(new ChangeListener<Object>() {
 	        @Override
-	        public void changed(ObservableValue arg0, Object arg1, Object arg2) {
+	        public void changed(ObservableValue<?> arg0, Object arg1, Object arg2) {
 	        	yUp4.setVvalue((double) arg2);
 
 	        }
 	    });
 	    DoubleProperty dPosition = new SimpleDoubleProperty();
 	    dPosition.bind(this.upperGraphicPane5.vvalueProperty());
-	    dPosition.addListener(new ChangeListener() {
+	    dPosition.addListener(new ChangeListener<Object>() {
 	        @Override
-	        public void changed(ObservableValue arg0, Object arg1, Object arg2) {
+	        public void changed(ObservableValue<?> arg0, Object arg1, Object arg2) {
 	        	yUp5.setVvalue((double) arg2);
 
 	        }
 	    });
 	    DoubleProperty ePosition = new SimpleDoubleProperty();
 	    ePosition.bind(this.upperGraphicPane6.vvalueProperty());
-	    ePosition.addListener(new ChangeListener() {
+	    ePosition.addListener(new ChangeListener<Object>() {
 	        @Override
-	        public void changed(ObservableValue arg0, Object arg1, Object arg2) {
+	        public void changed(ObservableValue<?> arg0, Object arg1, Object arg2) {
 	        	yUp6.setVvalue((double) arg2);
 
 	        }
 	    });
 	    DoubleProperty fPosition = new SimpleDoubleProperty();
 	    fPosition.bind(this.upperGraphicPane7.vvalueProperty());
-	    fPosition.addListener(new ChangeListener() {
+	    fPosition.addListener(new ChangeListener<Object>() {
 	        @Override
-	        public void changed(ObservableValue arg0, Object arg1, Object arg2) {
+	        public void changed(ObservableValue<?> arg0, Object arg1, Object arg2) {
 	        	yUp7.setVvalue((double) arg2);
 
 	        }
