@@ -33,10 +33,11 @@ public class DBMatching {
     ArrayList<Dutyelement> dutyelement = new ArrayList<Dutyelement>();
     
     // ********************************
-    // ****** Umlaufplan object *******
+    // ****** Plan objects	    *******
     // ********************************
     
     Umlaufplan umlaufplan;
+    Dienstplan dienstplan;
 
     //Object of a database statement
     Statement stmt;
@@ -124,6 +125,7 @@ public class DBMatching {
                         String arrTime = rest2.getString("ArrTime");
                         int elementType = Integer.parseInt(rest2
                                      .getString("ElementType"));
+                        
                 
 
                         //all variables will be sum up to an umlaufelement
@@ -148,6 +150,7 @@ public class DBMatching {
     	
     	createBlock();
     	createBlockelement();
+    	System.out.println("Umlaufplan Objekt erstellt");
     	
     	/**
     	 * WICHTIG!!!! Es muss noch die FahrplanID ausgelesen werden. DB Verknüpfung!!!!
@@ -212,30 +215,26 @@ public class DBMatching {
                  // blockelement array list
 
                  while (rest3.next()) {
-                        System.out.println(rest3.getString("ElementType"));
                         int zahl=Integer.parseInt(rest3.getString("ElementType"));
                         
                         //if the blockelement is a service journey the first sql query will be execute
                         if (zahl==1) {
 
                                rest2 = stmt2
-                                            .executeQuery("SELECT be.ID, be.BlockID, be.ServiceJourneyID, sj.FromStopID, sj.ToStopID, sj.DepTime, sj.ArrTime, be.elementType FROM Blockelement AS be, ServiceJourney AS sj WHERE sj.serviceJourneyID='"
-                                                         + rest3.getString("ServiceJourneyID")
-                                                         + "';");
+                                            .executeQuery("SELECT de.ID, de.DutyID, de.BlockID, de.ServiceJourneyID, sj.FromStopID, sj.ToStopID, sj.DepTime, sj.ArrTime, de.elementType FROM Dutyelement AS de, ServiceJourney AS sj WHERE sj.serviceJourneyID='"
+                                                         + rest3.getString("ServiceJourneyID")+ "'  AND de.ID='"+rest3.getString("ID")+"' AND de.BlockID='"+rest3.getString("BlockID")+"' AND de.DutyID='"+rest3.getString("DutyID")+"';");
                         //if the read blockelement is a exceptional servie journey the second sql query will be execute
                         } else {
                                rest2 = stmt3
-                                            .executeQuery("SELECT be.ID, be.BlockID, be.ServiceJourneyID, ex.FromStopID, ex.ToStopID, ex.DepTime, ex.ArrTime, be.ElementType FROM Blockelement AS be, ExceptionalBlockelement AS ex WHERE ex.ServiceJourneyID='"
-                                                          + rest3.getString("ServiceJourneyID")
-                                                         + "';");
+                                            .executeQuery("SELECT de.ID, de.DutyID, de.BlockID, de.ServiceJourneyID, ex.FromStopID, ex.ToStopID, ex.DepTime, ex.ArrTime, de.ElementType FROM Dutyelement AS de, ExceptionalDutyelement AS ex WHERE ex.ServiceJourneyID='"
+                                                          + rest3.getString("ServiceJourneyID")+"' AND de.ID='"+rest3.getString("ID")+"' AND de.BlockID='"+rest3.getString("BlockID")+"' AND de.DutyID='"+rest3.getString("DutyID")+"' AND de.ID=ex.DutyelementID;");
                         }
                        
                         //the attributes will be read and save in variables
                         int id = Integer.parseInt(rest2.getString("ID"));
-                        int dutyID = Integer.parseInt(rest2.getString("DutyID"));
+                        String dutyID = rest2.getString("DutyID");
                         int blockID = Integer.parseInt(rest2.getString("BlockID"));
                         String serviceJourneyID = rest3.getString("ServiceJourneyID");
-                        System.out.println(serviceJourneyID);
                         int fromStopID = Integer
                                      .parseInt(rest2.getString("FromStopID"));
                         int toStopID = Integer.parseInt(rest2.getString("ToStopID"));
@@ -249,11 +248,8 @@ public class DBMatching {
                         dutyelement.add(new Dutyelement(id, dutyID, blockID,
                                      serviceJourneyID, fromStopID, toStopID, depTime,
                                      arrTime, elementType));
-                
-                        System.out.println(id);
-                        System.out.println(blockelement);
-                        System.out.println("Hat geklappt!");
-                        System.out.println(dutyelement.size());
+
+                     
                  }
           } catch (SQLException e) {
                  // TODO Auto-generated catch block
@@ -275,12 +271,10 @@ public class DBMatching {
     	/**
     	 * WICHTIG!!!! Es muss noch die FahrplanID ausgelesen werden. DB Verknüpfung!!!!
     	 */
-          Dienstplan dienstplan = new Dienstplan(1, duty, dutyelement);
+          dienstplan = new Dienstplan(1, duty, dutyelement);
           
-          //Testing the outputs
-          System.out
-                        .println(dienstplan.getDutyelement().get(0).getArrTime());
- 
+          System.out.println("Dienstplan objekt erstellt");
+          
     }
 
     
@@ -291,7 +285,10 @@ public class DBMatching {
 	public Umlaufplan getUmlaufplan() {
 		return umlaufplan;
 	}
-    
+	
+	public Dienstplan getDienstplan(){
+		return dienstplan;
+	}
     
     
 }

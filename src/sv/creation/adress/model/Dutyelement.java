@@ -3,7 +3,7 @@ package sv.creation.adress.model;
 public class Dutyelement {
 
 	private int id;
-	private int dutyID;
+	private String dutyID;
 	private int blockID;
 	private String serviceJourneyID;
 	private int fromStopID;
@@ -29,7 +29,7 @@ public class Dutyelement {
 	 * @param toStopBreakFacility
 	 * @param code
 	 */
-	public Dutyelement(int id, int dutyID, int blockID, String serviceJourneyID, int fromStopID, int toStopID,
+	public Dutyelement(int id, String dutyID, int blockID, String serviceJourneyID, int fromStopID, int toStopID,
 			String depTime, String arrTime, int elementType) {
 		super();
 		this.id = id;
@@ -84,7 +84,7 @@ public class Dutyelement {
 	}
 
 
-	public int getDutyID() {
+	public String getDutyID() {
 		return dutyID;
 	}
 	

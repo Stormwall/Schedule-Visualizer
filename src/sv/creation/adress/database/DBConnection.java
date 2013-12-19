@@ -118,7 +118,7 @@ public class DBConnection {
 																	  //+ "DutyelementID INTEGER NOT NULL, "
 																	  + "DutyID INTEGER NOT NULL, "
 																	  + "BlockID INTEGER NOT NULL, "
-																	  + "ServiceJourneyID INTEGER NOT NULL, "
+																	  + "ServiceJourneyID VARCHAR(30) NOT NULL, "
 																	  + "ElementType INTEGER NOT NULL, "
 																	  + "DayID INTEGER,"
 																	  + "DienstplanID INTEGER NOT NULL);");
@@ -126,6 +126,24 @@ public class DBConnection {
 //																	  + "FOREIGN KEY (BlockID) REFERENCES Block(BlockID), "
 //																	  + "FOREIGN KEY (ServiceJourneyID) REFERENCES ServiceJourney(ID), "
 //																	  + "FOREIGN KEY(DayID) REFERENCES Day(dayID));");
+			
+			//table for specific tour elements (left over from initial solution for the tour planning problem)
+			//e.g. journeys from or to depots, waiting times etc.
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS ExceptionalDutyelement (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
+																					+ "DutyID VARCHAR(30) NOT NULL, "
+																					+ "BlockID VARCHAR(30) NOT NULL, "
+																					+ "ServiceJourneyID VARCHAR(30) NOT NULL, "
+																					+ "FromStopID INTEGER NOT NULL,"
+																					+ "ToStopID INTEGER NOT NULL,"
+																					+ "DepTime VARCHAR(30) NOT NULL,"
+																					+ "ArrTime VARCHAR(30) NOT NULL,"
+																					+ "DienstplanID INTEGER NOT NULL,"
+																					+ "DutyelementID VARCHAR(30) NOT NULL);");
+//					   																+ "FOREIGN KEY (ServiceJourneyID) REFERENCES ServiceJourney(ID), "
+//					   																+ "FOREIGN KEY (FromStopID) REFERENCES ServiceJourney(FromStopID), "
+//					   																+ "FOREIGN KEY (ToStopID) REFERENCES ServiceJourney(ToStopID), "
+//					   																+ "FOREIGN KEY (ArrTime) REFERENCES ServiceJourney(ArrTime), "
+//					   																+ "FOREIGN KEY (DepTime) REFERENCES ServiceJourney(DepTime), "
 
 			//duty types (work time rules)
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Dutytype (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -202,7 +220,8 @@ public class DBConnection {
 																					+ "FromStopID INTEGER NOT NULL,"
 																					+ "ToStopID INTEGER NOT NULL,"
 																					+ "DepTime VARCHAR(30) NOT NULL,"
-																					+ "ArrTime VARCHAR(30) NOT NULL);");
+																					+ "ArrTime VARCHAR(30) NOT NULL,"
+																					+ "UmlaufplanID INTEGER NOT NULL);");
 //					   																+ "FOREIGN KEY (ServiceJourneyID) REFERENCES ServiceJourney(ID), "
 //					   																+ "FOREIGN KEY (FromStopID) REFERENCES ServiceJourney(FromStopID), "
 //					   																+ "FOREIGN KEY (ToStopID) REFERENCES ServiceJourney(ToStopID), "
@@ -387,7 +406,7 @@ public class DBConnection {
 		  Iterator<Integer>it17 = ss.getExceptionalblockelementToStopID().iterator(); 
 		  Iterator<String> it18 =ss.getExceptionalblockelementDepTime().iterator(); 
 		  Iterator<String> it19 =ss.getExceptionalblockelementArrTime().iterator(); 
-		  Iterator<Integer> it20 =ss.getExceptionalblockelementElementType().iterator();
+//		  Iterator<Integer> it20 =ss.getExceptionalblockelementElementType().iterator();
 		  
 		  String dayID=ss.getBlockelementDayID().get(0);
 		  
@@ -407,10 +426,14 @@ public class DBConnection {
 		  while(it14.hasNext()&&it15.hasNext()&&it16.hasNext()&&it17.hasNext()&&it18.hasNext()&&it19.hasNext()){ 
 
 			 stmnt.executeUpdate(
-		  "INSERT INTO ExceptionalBlockelement (BlockID, ServiceJourneyID, FromStopID, ToStopID, DepTime, ArrTime) VALUES('"
-				  +it14.next()+"','"+it15.next()+"','"+it16.next()+"','"+it17.next()+"','"+it18.next()+"','"+it19.next()+"');");}
+		  "INSERT INTO ExceptionalBlockelement (BlockID, ServiceJourneyID, FromStopID, ToStopID, DepTime, ArrTime, UmlaufplanID) VALUES('"
+				  +it14.next()+"','"+it15.next()+"','"+it16.next()+"','"+it17.next()+"','"+it18.next()+"','"+it19.next()+"', (SELECT ID FROM Umlaufplan WHERE Bezeichnung='"+ss.getFilename()+"'));");}
 		  
 		  System.out.println("Umlaufplan importiert!");
+		  
+		  //All umlaufplan array lists will be cleared
+		  ss.clearUmlaufplanArraylists();
+		  
 		  //catch for filling tour plan tables
 		  }catch(SQLException e){
 		  System.out.println("Could not execute SQL-Query!");
@@ -530,9 +553,25 @@ public class DBConnection {
 //		  Iterator<String> it9 = StringSplitter.getDutyelementArrTime().iterator(); 
 		  Iterator<Integer> it10 = ss.getDutyelementElementType().iterator();
 		  
+		  //exceptional journeys
+		  Iterator<String> it13 =ss.getExceptionaldutyelementDutyID().iterator(); 
+		  Iterator<Integer> it14 =ss.getExceptionaldutyelementBlockID().iterator(); 
+		  Iterator<String> it15 =ss.getExceptionaldutyelementServiceJourneyID().iterator();
+		  Iterator<Integer>it16 = ss.getExceptionaldutyelementFromStopID().iterator(); 
+		  Iterator<Integer>it17 = ss.getExceptionaldutyelementToStopID().iterator(); 
+		  Iterator<String> it18 =ss.getExceptionaldutyelementDepTime().iterator(); 
+		  Iterator<String> it19 =ss.getExceptionaldutyelementArrTime().iterator(); 
+		  
+		  
+		  Iterator<Integer> it24 = ss.getExceptionaldutyelementDutyelementID().iterator();
+		  
+		  
 		  //DutyelementServiceJourneyCode not included in current plans, but left because future plans may contain values 
 		  //Iterator<String> it11 = StringSplitter.getDutyelementServiceJourneyCode().iterator();
-		  String dayID = ss.getDutyelementDayID().get(0);
+		  String dayID=null;
+		  if(ss.getDutyelementDayID()!=null){
+		  dayID = ss.getDutyelementDayID().get(0);
+		  }
 		  		  
 		  //fill duty roster
 		  stmnt.executeUpdate("INSERT INTO Dienstplan(FahrplanID) VALUES((SELECT f.ID FROM Fahrplan AS f, ServiceJourney, Dutyelement, Dienstplan WHERE f.ID=ServiceJourney.FahrplanID AND ServiceJourney.ServiceJourneyID=Dutyelement.ServiceJourneyID AND Dienstplan.Bezeichnung='"+ss.getFilename()+"'));");
@@ -547,6 +586,18 @@ public class DBConnection {
 		  stmnt.executeUpdate(		  
 		  "INSERT INTO Dutyelement (DutyId, BlockID, ServiceJourneyID, ElementType, DayID, DienstplanID) VALUES('"
 		  +it3.next()+"','"+it4.next()+"','"+it5.next()+"','"+it10.next()+"','"+dayID+"', (SELECT ID FROM Dienstplan WHERE Bezeichnung='"+ss.getFilename()+"'));");}
+		  
+		  
+		  //fill special journey
+		  while(it13.hasNext()&&it14.hasNext()&&it15.hasNext()&&it16.hasNext()&&it17.hasNext()&&it18.hasNext()&&it19.hasNext()&&it24.hasNext()){ 
+
+			 stmnt.executeUpdate(
+		  "INSERT INTO ExceptionalDutyelement (DutyID, BlockID, ServiceJourneyID, FromStopID, ToStopID, DepTime, ArrTime, DienstplanID, DutyelementID) VALUES('"
+				  +it13.next()+"','"+it14.next()+"','"+it15.next()+"','"+it16.next()+"','"+it17.next()+"','"+it18.next()+"','"+it19.next()+"', (SELECT ID FROM Dienstplan WHERE Bezeichnung='"+ss.getFilename()+"'), '"+it24.next()+"');");}
+
+	
+		  //All Dienstplan array lists will be cleared
+		  ss.clearDienstplanArraylists();
 		  
 		  //catch for filling duty roster tables
 		  }catch(SQLException e){
@@ -710,6 +761,9 @@ public class DBConnection {
 	  
 			  stmnt.executeUpdate("INSERT INTO Days (TRIPID, d1, d2, d3, d4, d5, d6, d7) VALUES('"+it49.next()+"','"+it50.next()+"','"+it51.next()+"','"+it52.next()+"','"+it53.next()+"','"+it54.next()+"','"+it55.next()+"','"+it56.next()+"');");
 		  }
+		  
+		  //All Fahrplan array lists will be cleared
+		  ss.clearFahrplanArraylists();
 		  
 		  System.out.println("Fahrplan importiert!");
 		  

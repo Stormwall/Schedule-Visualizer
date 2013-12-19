@@ -41,15 +41,24 @@ public class StringSplitter {
 	private static ArrayList<String> dutyDutyType = new ArrayList<String>();
 
 	// Array lists of dutyelement
-	private static ArrayList<String> dutyelementDutyType = new ArrayList<String>();
+	private static ArrayList<String> dutyelementDutyID = new ArrayList<String>();
 	private static ArrayList<Integer> dutyelementBlockID = new ArrayList<Integer>();
 	private static ArrayList<String> dutyelementServiceJourneyID = new ArrayList<String>();
-	private static ArrayList<Integer> dutyelementFromStopID = new ArrayList<Integer>();
-	private static ArrayList<Integer> dutyelementToStopID = new ArrayList<Integer>();
-	private static ArrayList<String> dutyelementDepTime = new ArrayList<String>();
-	private static ArrayList<String> dutyelementArrTime = new ArrayList<String>();
 	private static ArrayList<Integer> dutyelementElementType = new ArrayList<Integer>();
 	private static ArrayList<String> dutyelementServiceJourneyCode = new ArrayList<String>();
+	
+	// Array lists of exceptional dutyelements
+	
+	private static ArrayList<String> exceptionaldutyelementServiceJourneyID = new ArrayList<String>();
+	private static ArrayList<String> exceptionaldutyelementDutyID = new ArrayList<String>();
+	private static ArrayList<Integer> exceptionaldutyelementBlockID = new ArrayList<Integer>();
+	private static ArrayList<Integer> exceptionaldutyelementFromStopID = new ArrayList<Integer>();
+	private static ArrayList<Integer> exceptionaldutyelementToStopID = new ArrayList<Integer>();
+	private static ArrayList<String> exceptionaldutyelementDepTime = new ArrayList<String>();
+	private static ArrayList<String> exceptionaldutyelementArrTime = new ArrayList<String>();
+	private static ArrayList<Integer> exceptionaldutyelementElementType = new ArrayList<Integer>();
+	private static ArrayList<Integer> exceptionaldutyelementServiceJourneyCode = new ArrayList<Integer>();
+	private static ArrayList<Integer> exceptionaldutyelementDutyelementID = new ArrayList<Integer>();
 	
 	//Array list of day id
 	private static ArrayList<String> dutyelementDayID = new ArrayList<String>();
@@ -84,6 +93,7 @@ public class StringSplitter {
 		private static ArrayList<String> exceptionalblockelementArrTime = new ArrayList<String>();
 		private static ArrayList<Integer> exceptionalblockelementElementType = new ArrayList<Integer>();
 		private static ArrayList<Integer> exceptionalblockelementServiceJourneyCode = new ArrayList<Integer>();
+		
 	
 	//Array list of day id
 	private static ArrayList<String> blockelementDayID = new ArrayList<String>();
@@ -243,11 +253,12 @@ public class StringSplitter {
 			// All lines with relevant data will be read
 			// The data will be split in seperated array lists
 			
-			File file =new File("resources/quellen/testdienstplan.txt");
+			File file =new File("resources/quellen/dienstplan4.txt");
 			BufferedReader dienstplan = new BufferedReader(new FileReader(file));
 			filename=file.getName();
 			
 			String zeile = null;
+			int dutyelementID=0;
 			ArrayList<String> zeilenelemente = new ArrayList<String>();
 			boolean day=false;
 
@@ -266,52 +277,61 @@ public class StringSplitter {
 					Collections.addAll(zeilenelemente, zeile.split(";"));
 
 					// The data is split in seperate array lists
-					if (zeilenelemente.size() == 8) {
+					if (zeilenelemente.size() >= 8) {
+						dutyelementID++;
 						int blockIDZiffer=Integer.parseInt(zeilenelemente.get(1));
 						int fromStopIDZiffer=Integer.parseInt(zeilenelemente.get(3));
 						int toStopIDZiffer=Integer.parseInt(zeilenelemente.get(4));
 						int elementTypeZiffer=Integer.parseInt(zeilenelemente.get(7));
-						dutyelementDutyType.add(zeilenelemente.get(0));
-						dutyelementBlockID.add(blockIDZiffer);
+						
 						
 						//distinction between regular journeys and exceptional journeys
 						try{
-							String zahl=null;
-							zahl=zeilenelemente.get(2);
-							if(zahl.matches("[0-9]+")){
-								dutyelementServiceJourneyID.add(zahl);
+							
+							String elementType=null;
+							elementType=zeilenelemente.get(7);
+							
+							if(elementType.equals("1")){
+								dutyelementServiceJourneyID.add(zeilenelemente.get(2));
+								dutyelementDutyID.add(zeilenelemente.get(0));
+								dutyelementBlockID.add(blockIDZiffer);
+								dutyelementElementType.add(elementTypeZiffer);
 							}	
-							else dutyelementServiceJourneyID.add(zeilenelemente.get(2));
+							else{
+								dutyelementServiceJourneyID.add(zeilenelemente.get(2));
+								dutyelementDutyID.add(zeilenelemente.get(0));
+								dutyelementBlockID.add(blockIDZiffer);
+								dutyelementElementType.add(elementTypeZiffer);
+								
+								exceptionaldutyelementServiceJourneyID.add(zeilenelemente.get(2));
+								exceptionaldutyelementBlockID.add(blockIDZiffer);
+								exceptionaldutyelementDutyID.add(zeilenelemente.get(0));
+								exceptionaldutyelementFromStopID.add(Integer.parseInt(zeilenelemente.get(3)));
+								exceptionaldutyelementToStopID.add(Integer.parseInt(zeilenelemente.get(4)));
+								exceptionaldutyelementDepTime.add(changeDateFormat(zeilenelemente.get(5)));
+								exceptionaldutyelementArrTime.add(changeDateFormat(zeilenelemente.get(6)));
+								exceptionaldutyelementElementType.add(Integer.parseInt(zeilenelemente.get(7)));
+								exceptionaldutyelementDutyelementID.add(dutyelementID);
+							}
 							}catch(NumberFormatException e){
 								e.printStackTrace();
 							}
-						/**
-						 * muss das nicht in die if?
-						 */
-						dutyelementFromStopID.add(fromStopIDZiffer);
-						dutyelementToStopID.add(toStopIDZiffer);
-						dutyelementDepTime.add(zeilenelemente.get(5));
-						dutyelementArrTime.add(zeilenelemente.get(6));
-						dutyelementElementType.add(elementTypeZiffer);
 					}
-
+/**
 					// ATTENTION: The data can contain 9 elements including ServiceJourneyCode
 					if (zeilenelemente.size() == 9) {
 						int blockIDZiffer=Integer.parseInt(zeilenelemente.get(1));
 						int fromStopIDZiffer=Integer.parseInt(zeilenelemente.get(3));
 						int toStopIDZiffer=Integer.parseInt(zeilenelemente.get(4));
 						int elementTypeZiffer=Integer.parseInt(zeilenelemente.get(7));
-						dutyelementDutyType.add(zeilenelemente.get(0));
+						dutyelementDutyID.add(zeilenelemente.get(0));
 						dutyelementBlockID.add(blockIDZiffer);
 						dutyelementServiceJourneyID.add(zeilenelemente.get(2));
-						dutyelementFromStopID.add(fromStopIDZiffer);
-						dutyelementToStopID.add(toStopIDZiffer);
-						dutyelementDepTime.add(zeilenelemente.get(5));
-						dutyelementArrTime.add(zeilenelemente.get(6));
 						dutyelementElementType.add(elementTypeZiffer);
 						dutyelementServiceJourneyCode
 								.add(zeilenelemente.get(8));
 					}
+					*/
 					//day for which the schedule is valid***********
 					if (zeilenelemente.size() == 1) {
 						dutyelementDayID.add(zeilenelemente.get(0));
@@ -319,7 +339,7 @@ public class StringSplitter {
 					}
 					if (day==false) {
 						String dayId="NULL";
-						blockelementDayID.add(dayId);
+						dutyelementDayID.add(dayId);
 						zeilenelemente.clear();
 					}
 
@@ -346,7 +366,7 @@ public class StringSplitter {
 		try {
 
 			// testumlauf.txt Data has to be in the project file in your workspace
-			File file =new File("resources/quellen/testumlauf2.txt");
+			File file =new File("resources/quellen/umlaufplan4.txt");
 			BufferedReader umlaufplan = new BufferedReader(new FileReader(file));
 			filename=file.getName();
 			String zeile = null;
@@ -444,7 +464,7 @@ public class StringSplitter {
 
 			// testfahrplan.txt Data has to be in the project file in your
 			// workspace
-			File file =new File("resources/quellen/testfahrplan2.txt");
+			File file =new File("resources/quellen/fahrplan2.txt");
 			BufferedReader fahrplan = new BufferedReader(new FileReader(file));
 			filename=file.getName();
 			String zeile = null;
@@ -613,7 +633,7 @@ public class StringSplitter {
 
 					// The service journey data will be split in separated array
 					// lists
-					if (zeilenelemente.size() == 14) {
+					if (zeilenelemente.size() == 11 || zeilenelemente.size()==14) {
 						int serviceJourneyIDZiffer=Integer.parseInt(zeilenelemente.get(0));
 						int serviceJourneyLineIDZiffer=Integer.parseInt(zeilenelemente.get(1));
 						int serviceJourneyFromStopIDZiffer=Integer.parseInt(zeilenelemente.get(2));
@@ -623,8 +643,14 @@ public class StringSplitter {
 						int serviceJourneyVehTypeGroupIDZiffer=Integer.parseInt(zeilenelemente.get(8));
 						int serviceJourneyMaxShiftBackwardSecondsZiffer=Integer.parseInt(zeilenelemente.get(9));
 						int serviceJourneyMaxShiftForwardSecondsZiffer=Integer.parseInt(zeilenelemente.get(10));
-						int serviceJourneyFromStopBreakFacilityZiffer=Integer.parseInt(zeilenelemente.get(11));
-						int serviceJourneyToStopBreakFacilityZiffer=Integer.parseInt(zeilenelemente.get(12));
+						int serviceJourneyFromStopBreakFacilityZiffer=0;
+						if(zeilenelemente.size()==14&&zeilenelemente.get(11)!=null){
+						serviceJourneyFromStopBreakFacilityZiffer=Integer.parseInt(zeilenelemente.get(11));
+						}
+						int serviceJourneyToStopBreakFacilityZiffer=0;
+						if(zeilenelemente.size()==14&&zeilenelemente.get(12)!=null){
+							serviceJourneyToStopBreakFacilityZiffer=Integer.parseInt(zeilenelemente.get(12));
+						}
 
 						serviceJourneyID.add(serviceJourneyIDZiffer);
 						serviceJourneyLineID.add(serviceJourneyLineIDZiffer);
@@ -643,7 +669,9 @@ public class StringSplitter {
 								serviceJourneyFromStopBreakFacilityZiffer);
 						serviceJourneyToStopBreakFacility.add(
 								serviceJourneyToStopBreakFacilityZiffer);
-						serviceJourneyCode.add(zeilenelemente.get(13));
+						if(zeilenelemente.size()==14&&zeilenelemente.get(13)!=null){
+							serviceJourneyCode.add(zeilenelemente.get(13));
+						}else serviceJourneyCode.add("NULL");
 						zeilenelemente.clear();
 					}
 
@@ -829,6 +857,122 @@ public class StringSplitter {
 			
 	}
 	
+	public void clearUmlaufplanArraylists(){
+		
+		id.clear();
+		vehTypeID.clear();
+		depotID.clear();
+		
+		blockelementArrTime.clear();
+		blockelementBlockID.clear();
+		blockelementDayID.clear();
+		blockelementDepTime.clear();
+		blockelementElementType.clear();
+		blockelementFromStopID.clear();
+		blockelementServiceJourneyCode.clear();
+		blockelementToStopID.clear();
+		
+		exceptionalblockelementArrTime.clear();
+		exceptionalblockelementBlockID.clear();
+		exceptionalblockelementDepTime.clear();
+		exceptionalblockelementElementType.clear();
+		exceptionalblockelementFromStopID.clear();
+		exceptionalblockelementServiceJourneyCode.clear();
+		exceptionalblockelementServiceJourneyID.clear();
+		exceptionalblockelementToStopID.clear();
+	}
+	
+	public void clearDienstplanArraylists(){
+		
+		dutyDutyID.clear();
+		dutyDutyType.clear();
+		
+		dutyCostPerMinute.clear();
+		dutyelementBlockID.clear();
+		dutyelementDayID.clear();
+		dutyelementDutyID.clear();
+		dutyelementElementType.clear();
+		dutyelementServiceJourneyCode.clear();
+		dutyelementServiceJourneyID.clear();
+		dutyFixCost.clear();
+		
+		exceptionaldutyelementArrTime.clear();
+		exceptionaldutyelementBlockID.clear();
+		exceptionaldutyelementDepTime.clear();
+		exceptionaldutyelementDutyelementID.clear();
+		exceptionaldutyelementDutyID.clear();
+		exceptionaldutyelementElementType.clear();
+		exceptionaldutyelementFromStopID.clear();
+		exceptionaldutyelementServiceJourneyCode.clear();
+		exceptionaldutyelementServiceJourneyID.clear();
+		exceptionaldutyelementToStopID.clear();
+	}
+	
+	public void clearFahrplanArraylists(){
+		
+		stopID.clear();
+		stopCode.clear();
+		stopName.clear();
+		
+		lineID.clear();
+		lineCode.clear();
+		lineName.clear();
+		
+		vehicleCapToStopMax.clear();
+		vehicleCapToStopMin.clear();
+		vehicleCapToStopStoppointID.clear();
+		vehicleCapToStopVehTypeID.clear();
+		vehicleToVehicleTypeGroupVehTypeGroupID.clear();
+		vehicleToVehicleTypeGroupVehTypeID.clear();
+		vehicleTypeCapacity.clear();
+		vehicleTypeCode.clear();
+		vehicleTypeGroupCode.clear();
+		vehicleTypeGroupID.clear();
+		vehicleTypeGroupName.clear();
+		vehicleTypeHourCost.clear();
+		vehicleTypeID.clear();
+		vehicleTypeKmCost.clear();
+		vehicleTypeName.clear();
+		vehicleTypeVehCost.clear();
+		vehTypeID.clear();
+		
+		serviceJourneyArrTime.clear();
+		serviceJourneyCode.clear();
+		serviceJourneyDepTime.clear();
+		serviceJourneyFromStopBreakFacility.clear();
+		serviceJourneyFromStopID.clear();
+		serviceJourneyID.clear();
+		serviceJourneyLineID.clear();
+		serviceJourneyMaxShiftBackwardSeconds.clear();
+		serviceJourneyMaxShiftForwardSeconds.clear();
+		serviceJourneyMinAheadTime.clear();
+		serviceJourneyMinLayoverTime.clear();
+		serviceJourneyToStopBreakFacility.clear();
+		serviceJourneyToStopID.clear();
+		serviceJourneyVehTypeGroupID.clear();
+		
+		deadruntimeDistance.clear();
+		deadruntimeFromStopID.clear();
+		deadruntimeFromTime.clear();
+		deadruntimeRuntime.clear();
+		deadruntimeToStopID.clear();
+		deadruntimeToTime.clear();
+		
+		reliefpointID.clear();
+		reliefpointServiceJourneyID.clear();
+		reliefpointStoppointID.clear();
+		reliefpointStoptime.clear();
+		
+		tripID.clear();
+		dayFive.clear();
+		dayFour.clear();
+		dayOne.clear();
+		daySeven.clear();
+		daySix.clear();
+		dayThree.clear();
+		dayTwo.clear();
+	}
+	
 	// ************************************************
 	// ****** Getter Methods of the array lists *******
 	// ******                                   *******
@@ -848,7 +992,7 @@ public class StringSplitter {
 	}
 
 	public  ArrayList<String> getDutyelementDutyType() {
-		return dutyelementDutyType;
+		return dutyelementDutyID;
 	}
 
 	public ArrayList<Integer> getDutyelementBlockID() {
@@ -857,22 +1001,6 @@ public class StringSplitter {
 
 	public ArrayList<String> getDutyelementServiceJourneyID() {
 		return dutyelementServiceJourneyID;
-	}
-
-	public  ArrayList<Integer> getDutyelementFromStopID() {
-		return dutyelementFromStopID;
-	}
-
-	public  ArrayList<Integer> getDutyelementToStopID() {
-		return dutyelementToStopID;
-	}
-
-	public  ArrayList<String> getDutyelementDepTime() {
-		return dutyelementDepTime;
-	}
-
-	public  ArrayList<String> getDutyelementArrTime() {
-		return dutyelementArrTime;
 	}
 
 	public ArrayList<Integer> getDutyelementElementType() {
@@ -1339,7 +1467,52 @@ public class StringSplitter {
 		return exceptionalblockelementServiceJourneyCode;
 	}
 	
+	public static ArrayList<String> getDutyelementDutyID() {
+		return dutyelementDutyID;
+	}
+
+	public ArrayList<String> getExceptionaldutyelementServiceJourneyID() {
+		return exceptionaldutyelementServiceJourneyID;
+	}
+
+	public ArrayList<String> getExceptionaldutyelementDutyID() {
+		return exceptionaldutyelementDutyID;
+	}
+
+	public  ArrayList<Integer> getExceptionaldutyelementBlockID() {
+		return exceptionaldutyelementBlockID;
+	}
+
+	public  ArrayList<Integer> getExceptionaldutyelementFromStopID() {
+		return exceptionaldutyelementFromStopID;
+	}
+
+	public  ArrayList<Integer> getExceptionaldutyelementToStopID() {
+		return exceptionaldutyelementToStopID;
+	}
+
+	public  ArrayList<String> getExceptionaldutyelementDepTime() {
+		return exceptionaldutyelementDepTime;
+	}
+
+	public  ArrayList<String> getExceptionaldutyelementArrTime() {
+		return exceptionaldutyelementArrTime;
+	}
+
+	public  ArrayList<Integer> getExceptionaldutyelementElementType() {
+		return exceptionaldutyelementElementType;
+	}
+
+	public  ArrayList<Integer> getExceptionaldutyelementServiceJourneyCode() {
+		return exceptionaldutyelementServiceJourneyCode;
+	}
 	
+	
+
+	public ArrayList<Integer> getExceptionaldutyelementDutyelementID() {
+		return exceptionaldutyelementDutyelementID;
+	}
+
 	public String changeDateFormat(String date){
 		String []s1;
 		 
@@ -1395,4 +1568,5 @@ public class StringSplitter {
 	}
 	
 }
+
 
