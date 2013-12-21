@@ -147,6 +147,10 @@ public class MainLayoutController {
 	@FXML
 	private Button applyFilter;
 	@FXML
+	private Button loeschenUmlaufplan;
+	@FXML
+	private Button loeschenDienstplan;
+	@FXML
 	private Slider startzeitSlider;
 	@FXML
 	private Slider endzeitSlider;
@@ -777,7 +781,7 @@ public class MainLayoutController {
 		}
 		// Labelbeschriftungen für Umlaufpläne
 		this.UPlan1.setVisible(true);
-		
+		this.loeschenUmlaufplan.setVisible(true);
 		this.UPlanValue1.setText(UPlan.getSelectionModel().getSelectedItem().toString());
 		this.UPlanValue1.setVisible(true);
 		this.UPlanValue1.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
@@ -821,7 +825,13 @@ public class MainLayoutController {
 			
 			if(this.secondUppergrafikErstellt == true){
 			this.uppergc2.clearRect(0, 0, this.upperChart2.getWidth(), this.upperChart2.getHeight());
-		}				
+		}
+		// Initiale Belegung der Grafik
+			if(this.UPlan2.isVisible() == false){
+				this.umlaufplanZwei = this.umlaufplanliste.get(this.UPlan.getSelectionModel().getSelectedIndex());
+				this.upperheightZwei = this.umlaufplanZwei.getUmlauf().size()*40 + 10;
+				createUpperYScale(yUp2, upperYChart2, upperYgc2, this.upperheightZwei, this.umlaufplanZwei);
+			}	
 		// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
 		
 		this.Plan2.setDisable(false);		
@@ -851,6 +861,15 @@ public class MainLayoutController {
 		createUpperBackgroundGraphicSecondPane();
 		createUpperXScalePane(this.xUp2, this.upperGraphicPane2);
 		
+		// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+		if(uDetailsTableErstellt == true){
+			this.detailsUmlaufTable.getColumns().clear();
+			this.uDetailsTableErstellt = false;
+		}
+		createUDetailsTable(this.umlaufplanZwei);
+		fillDetailPaneUmlauf(this.umlaufplanZwei);
+		createUmlaufElementGraphic(this.umlaufplanZwei, this.upperGraphicPane2, this.upperChart2, this.uppergc2);
+		
 						
 		}
 		
@@ -863,7 +882,13 @@ public class MainLayoutController {
 			
 			if(this.thirdUppergrafikErstellt == true){
 			this.uppergc3.clearRect(0, 0, this.upperChart3.getWidth(), this.upperChart3.getHeight());
-		}				
+		}
+			// Initiale Belegung der Grafik
+			if(this.UPlan3.isVisible() == false){
+				this.umlaufplanDrei = this.umlaufplanliste.get(this.UPlan.getSelectionModel().getSelectedIndex());
+				this.upperheightDrei = this.umlaufplanDrei.getUmlauf().size()*40 + 10;
+				createUpperYScale(yUp3, upperYChart3, upperYgc3, this.upperheightDrei, this.umlaufplanDrei);
+			}		
 		// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
 		
 		this.Plan3.setDisable(false);		
@@ -893,7 +918,16 @@ public class MainLayoutController {
 		// Hintergrunderstellung
 		createUpperBackgroundGraphicThirdPane();
 		createUpperXScalePane(this.xUp3, this.upperGraphicPane3);		
-						
+		
+		// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+				if(uDetailsTableErstellt == true){
+					this.detailsUmlaufTable.getColumns().clear();
+					this.uDetailsTableErstellt = false;
+				}
+		createUDetailsTable(this.umlaufplanDrei);
+		fillDetailPaneUmlauf(this.umlaufplanDrei);
+		createUmlaufElementGraphic(this.umlaufplanDrei, this.upperGraphicPane3, this.upperChart3, this.uppergc3);		
+		
 		}
 		
 		 //
@@ -905,7 +939,13 @@ public class MainLayoutController {
 			
 			if(this.fourthUppergrafikErstellt == true){
 			this.uppergc4.clearRect(0, 0, this.upperChart4.getWidth(), this.upperChart4.getHeight());
-		}				
+		}
+			// Initiale Belegung der Grafik
+			if(this.UPlan4.isVisible() == false){
+				this.umlaufplanVier = this.umlaufplanliste.get(this.UPlan.getSelectionModel().getSelectedIndex());
+				this.upperheightVier = this.umlaufplanVier.getUmlauf().size()*40 + 10;
+				createUpperYScale(yUp4, upperYChart4, upperYgc4, this.upperheightVier, this.umlaufplanVier);
+			}
 		// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
 		
 		this.Plan4.setDisable(false);		
@@ -936,7 +976,15 @@ public class MainLayoutController {
 		// Hintergrunderstellung
 		createUpperBackgroundGraphicFourthPane();
 		createUpperXScalePane(this.xUp4, this.upperGraphicPane4);		
-						
+		
+		// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+				if(uDetailsTableErstellt == true){
+					this.detailsUmlaufTable.getColumns().clear();
+					this.uDetailsTableErstellt = false;
+				}
+		createUDetailsTable(this.umlaufplanVier);
+		fillDetailPaneUmlauf(this.umlaufplanVier);
+		createUmlaufElementGraphic(this.umlaufplanVier, this.upperGraphicPane4, this.upperChart4, this.uppergc4);
 		}
 		
 		 //
@@ -948,7 +996,13 @@ public class MainLayoutController {
 			
 			if(this.fifthUppergrafikErstellt == true){
 			this.uppergc5.clearRect(0, 0, this.upperChart5.getWidth(), this.upperChart5.getHeight());
-		}				
+		}	
+			// Initiale Belegung der Grafik
+			if(this.UPlan5.isVisible() == false){
+				this.umlaufplanFuenf = this.umlaufplanliste.get(this.UPlan.getSelectionModel().getSelectedIndex());
+				this.upperheightFuenf = this.umlaufplanFuenf.getUmlauf().size()*40 + 10;
+				createUpperYScale(yUp5, upperYChart5, upperYgc5, this.upperheightFuenf, this.umlaufplanFuenf);
+			}
 		// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
 		
 		this.Plan5.setDisable(false);		
@@ -981,7 +1035,14 @@ public class MainLayoutController {
 		createUpperBackgroundGraphicFifthPane();
 		createUpperXScalePane(this.xUp5, this.upperGraphicPane5);
 		
-						
+		// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+				if(uDetailsTableErstellt == true){
+					this.detailsUmlaufTable.getColumns().clear();
+					this.uDetailsTableErstellt = false;
+				}
+		createUDetailsTable(this.umlaufplanFuenf);
+		fillDetailPaneUmlauf(this.umlaufplanFuenf);
+		createUmlaufElementGraphic(this.umlaufplanFuenf, this.upperGraphicPane5, this.upperChart5, this.uppergc5);
 		}
 		
 		 //
@@ -993,7 +1054,13 @@ public class MainLayoutController {
 			
 			if(this.sixthUppergrafikErstellt == true){
 			this.uppergc6.clearRect(0, 0, this.upperChart6.getWidth(), this.upperChart6.getHeight());
-		}				
+		}	
+			// Initiale Belegung der Grafik
+			if(this.UPlan6.isVisible() == false){
+				this.umlaufplanSechs = this.umlaufplanliste.get(this.UPlan.getSelectionModel().getSelectedIndex());
+				this.upperheightSechs = this.umlaufplanSechs.getUmlauf().size()*40 + 10;
+				createUpperYScale(yUp6, upperYChart6, upperYgc6, this.upperheightSechs, this.umlaufplanSechs);
+			}
 		// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
 		
 		this.Plan6.setDisable(false);		
@@ -1027,7 +1094,14 @@ public class MainLayoutController {
 		createUpperBackgroundGraphicSixthPane();
 		createUpperXScalePane(this.xUp6, this.upperGraphicPane6);
 		
-						
+		// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+				if(uDetailsTableErstellt == true){
+					this.detailsUmlaufTable.getColumns().clear();
+					this.uDetailsTableErstellt = false;
+				}	
+		createUDetailsTable(this.umlaufplanSechs);
+		fillDetailPaneUmlauf(this.umlaufplanSechs);
+		createUmlaufElementGraphic(this.umlaufplanSechs, this.upperGraphicPane6, this.upperChart6, this.uppergc6);
 		}
 		
 		 //
@@ -1039,7 +1113,13 @@ public class MainLayoutController {
 			
 			if(this.seventhUppergrafikErstellt == true){
 			this.uppergc7.clearRect(0, 0, this.upperChart7.getWidth(), this.upperChart7.getHeight());
-		}				
+		}	
+			// Initiale Belegung der Grafik
+			if(this.UPlan7.isVisible() == false){
+				this.umlaufplanSieben = this.umlaufplanliste.get(this.UPlan.getSelectionModel().getSelectedIndex());
+				this.upperheightSieben = this.umlaufplanSieben.getUmlauf().size()*40 + 10;
+				createUpperYScale(yUp7, upperYChart7, upperYgc7, this.upperheightSieben, this.umlaufplanSieben);
+			}
 		// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
 		
 		this.Plan7.setDisable(false);		
@@ -1074,7 +1154,14 @@ public class MainLayoutController {
 		createUpperBackgroundGraphicSeventhPane();
 		createUpperXScalePane(this.xUp7, this.upperGraphicPane7);
 		
-						
+		// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+				if(uDetailsTableErstellt == true){
+					this.detailsUmlaufTable.getColumns().clear();
+					this.uDetailsTableErstellt = false;
+				}				
+		createUDetailsTable(this.umlaufplanSieben);
+		fillDetailPaneUmlauf(this.umlaufplanSieben);
+		createUmlaufElementGraphic(this.umlaufplanSieben, this.upperGraphicPane7, this.upperChart7, this.uppergc7);
 		}
 		
 		this.addButtonPressed = true;
@@ -1338,6 +1425,7 @@ public class MainLayoutController {
 	 * Creates The Upper X - Scale for Tabs.
 	 */
 	private void createUpperXScalePane(AnchorPane xScale, ScrollPane xScrollPane) {
+	
 		
 		// Hier wird das Skala Canvas erzeugt
 				this.upperXChart1 = new Canvas(xScrollPane.getWidth(),this.xUp1.getHeight());
