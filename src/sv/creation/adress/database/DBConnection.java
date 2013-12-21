@@ -379,7 +379,7 @@ public class DBConnection {
 	public void fillUmlaufplanIntoTables() {
 		
 		//temporary stringsplitter object that contains the the data from text files in array lists
-		StringSplitter ss = new StringSplitter();
+		StringSplitter ss = StringSplitter.getInstance();
 		//invoke stringsplitter method for reading the data in  txt-files
 		ss.readTxtUmlaufplan();
 
@@ -448,7 +448,7 @@ public class DBConnection {
 	public void fillDiensttypenIntoTables(){
 		
 		//temporary stringsplitter object that contains the the data from text files in array lists
-		StringSplitter ss = new StringSplitter();
+		StringSplitter ss = StringSplitter.getInstance();
 		//invoke stringsplitter method for reading the data in  txt-files
 		ss.readTxtDiensttypen();
 		
@@ -523,7 +523,7 @@ public class DBConnection {
 	public void fillDienstplanIntoTable(){
 		
 		//temporary stringsplitter object that contains the the data from text files in array lists
-		StringSplitter ss = new StringSplitter();
+		StringSplitter ss = StringSplitter.getInstance();
 		//invoke stringsplitter method for reading the data in  txt-files
 		ss.readTxtDienstplan();
 
@@ -613,7 +613,7 @@ public class DBConnection {
 	public void fillFahrplanIntoTables(){
 		
 		//temporary stringsplitter object that contains the the data from text files in array lists
-		StringSplitter ss = new StringSplitter();
+		StringSplitter ss = StringSplitter.getInstance();
 		//invoke stringsplitter method for reading the data in  txt-files
 		ss.readTxtFahrplan();
 

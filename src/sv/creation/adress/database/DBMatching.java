@@ -38,6 +38,13 @@ public class DBMatching {
     
     Umlaufplan umlaufplan;
     Dienstplan dienstplan;
+    
+    // *********************************
+    // ****** ArrayList of plans *******
+    // *********************************
+    
+    ArrayList<Umlaufplan> umlaufplanliste=new ArrayList<Umlaufplan>();
+    ArrayList<Dienstplan> dienstplanliste=new ArrayList<Dienstplan>();
 
     //Object of a database statement
     Statement stmt;
@@ -155,8 +162,16 @@ public class DBMatching {
     	/**
     	 * WICHTIG!!!! Es muss noch die FahrplanID ausgelesen werden. DB Verknüpfung!!!!
     	 */
-    	
-          umlaufplan = new Umlaufplan(1, umlauf, blockelement);
+//    	
+//    	for (int i = 0; i < blockelement.size(); i++) {
+//			int anzahlPlaene=0;
+//    		if(blockelement.get(i).getBlockID()==0){
+//    			anzahlPlaene++;
+//    		}
+    		umlaufplan = new Umlaufplan(1, umlauf, blockelement);
+    		
+//    		umlaufplanliste.add(umlaufplan);
+//		}
           
           
     }
@@ -227,9 +242,8 @@ public class DBMatching {
                         } else {
                                rest2 = stmt3
                                             .executeQuery("SELECT de.ID, de.DutyID, de.BlockID, de.ServiceJourneyID, ex.FromStopID, ex.ToStopID, ex.DepTime, ex.ArrTime, de.ElementType FROM Dutyelement AS de, ExceptionalDutyelement AS ex WHERE ex.ServiceJourneyID='"
-                                                          + rest3.getString("ServiceJourneyID")+"' AND de.ID='"+rest3.getString("ID")+"' AND de.BlockID='"+rest3.getString("BlockID")+"' AND de.DutyID='"+rest3.getString("DutyID")+"' AND de.ID=ex.DutyelementID;");
+                                                          + rest3.getString("ServiceJourneyID")+"' AND de.ID='"+rest3.getString("ID")+"' AND de.BlockID='"+rest3.getString("BlockID")+"' AND de.DutyID='"+rest3.getString("DutyID")+"' AND ex.DutyelementID='"+rest3.getString("ID")+"';");
                         }
-                       
                         //the attributes will be read and save in variables
                         int id = Integer.parseInt(rest2.getString("ID"));
                         String dutyID = rest2.getString("DutyID");
@@ -248,6 +262,7 @@ public class DBMatching {
                         dutyelement.add(new Dutyelement(id, dutyID, blockID,
                                      serviceJourneyID, fromStopID, toStopID, depTime,
                                      arrTime, elementType));
+                        
 
                      
                  }

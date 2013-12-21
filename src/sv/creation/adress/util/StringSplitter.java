@@ -14,13 +14,21 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import sv.creation.adress.database.DBConnection;
+
 public class StringSplitter {
+	
+	public static StringSplitter instance=null;
 
 	// ***********************************************************
 	// ***********************************************************
@@ -227,6 +235,14 @@ public class StringSplitter {
 		
 		//dutyrule name
 		private String filename=null;
+		
+		// Singleton
+		public static StringSplitter getInstance() {
+			if (instance == null) {
+				instance = new StringSplitter();
+			}
+			return instance;
+		}
 	//correcting string format
 	public static ArrayList<String> convertStringToArraylist(String str) {
 
@@ -257,8 +273,24 @@ public class StringSplitter {
 			BufferedReader dienstplan = new BufferedReader(new FileReader(file));
 			filename=file.getName();
 			
+			DBConnection db = new DBConnection();
+	          db.initDBConnection();
+			Statement stmnt;
+			int anzahl=0;
+			try {
+				stmnt = db.getConnection().createStatement();
+				ResultSet rest1=stmnt.executeQuery("SELECT COUNT(*) AS anzahl FROM Dutyelement;");
+				anzahl=rest1.getInt("anzahl");
+				db.closeConnection();
+				
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			int dutyelementID=anzahl;
+			
 			String zeile = null;
-			int dutyelementID=0;
 			ArrayList<String> zeilenelemente = new ArrayList<String>();
 			boolean day=false;
 
