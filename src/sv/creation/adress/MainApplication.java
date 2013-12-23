@@ -2,6 +2,7 @@ package sv.creation.adress;
 
 import java.io.IOException;
 
+import sv.creation.adress.model.Umlaufplan;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -183,6 +184,38 @@ public class MainApplication extends Application {
 			  // Exception gets thrown if the fxml file could not be loaded
 			   e.printStackTrace();
 			 }
+		}
+		
+		// Initiate Edit U-Plan fxml
+
+		public void showEditUPlan(Umlaufplan umlaufplan){
+			
+			try {
+				
+				// Load the fxml file and create a new stage for the popup
+			FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("view/EditU_Plan.fxml"));		
+			AnchorPane page = (AnchorPane) loader.load();		
+		    Stage dialogStage = new Stage();	    
+		    dialogStage.setTitle("Umlaufplanbearbeitung");
+		    dialogStage.getIcons().add(new Image("file:resources/images/IconFinal.png"));
+		    dialogStage.initModality(Modality.WINDOW_MODAL);	    
+		    dialogStage.initOwner(primaryStage);	    
+		    Scene scene = new Scene(page);	    
+		    dialogStage.setScene(scene);	 
+		    
+		    // Set the controller with all data
+		    EditU_PlanController controller = loader.getController();		    
+		    controller.setUmlaufplan(umlaufplan);
+		    controller.setDialogStage(dialogStage);
+		    
+		    
+		
+		    dialogStage.show();	    
+
+		  } catch (IOException e) {
+		    // Exception gets thrown if the fxml file could not be loaded
+		    e.printStackTrace();
+		  }
 		}
 				
 		// Fehlermeldung bei nicht erstellter Grafik

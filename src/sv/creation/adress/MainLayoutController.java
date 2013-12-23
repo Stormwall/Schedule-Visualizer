@@ -16,6 +16,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -32,6 +33,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -812,6 +814,13 @@ public class MainLayoutController {
 		createUDetailsTable(this.umlaufplanEins);
 		fillDetailPaneUmlauf(this.umlaufplanEins);
 		createUmlaufElementGraphic(this.umlaufplanEins, this.upperGraphicPane1, this.upperChart1, this.uppergc1);
+		this.upperChart1.addEventHandler(MouseEvent.MOUSE_CLICKED, 
+			       new EventHandler<MouseEvent>() {
+	           @Override
+	           public void handle(MouseEvent e) {
+	               mainApp.showEditUPlan(umlaufplanEins);
+	           }
+	       });
 			
 		}
 		
@@ -2220,6 +2229,131 @@ public class MainLayoutController {
 			}
 		}
 					
+	}
+	/**
+	 * Deletes the latest U-Plan
+	 */
+	@FXML
+	public void deleteLastUPlan(){
+		
+		int pruefcounter = 0;
+		
+		// An dieser Stelle wird das richtige Objekt herausgefunden
+		
+		if (this.UPlan1.isVisible() == true) {
+			if (this.UPlan2.isVisible() == true) {
+				pruefcounter = 1;
+				if (this.UPlan3.isVisible() == true) {
+					pruefcounter = 2;
+					if (this.UPlan4.isVisible() == true) {
+						pruefcounter = 3;
+						if (this.UPlan5.isVisible() == true) {
+							pruefcounter = 4;
+							if (this.UPlan6.isVisible() == true) {
+								pruefcounter = 5;
+								if (this.UPlan7.isVisible() == true) {
+									pruefcounter = 6;
+								}								
+							}							
+						}						
+					}					
+				}
+			}
+		}
+				
+				
+		// Hier werden die Schritte für den Löschvorgang bestimmt	
+		
+		switch (pruefcounter) {
+		case 0:
+			this.UPlan1.setVisible(false);
+			this.UPlanValue1.setVisible(false);
+			this.upperGraphicPane1.setContent(null);
+			this.xUp1.getChildren().clear();
+			this.yUp1.setContent(null);
+			this.loeschenUmlaufplan.setVisible(false);
+			this.firstUppergrafikErstellt = false;
+			this.umlaufplanEins = null;
+			break;
+		case 1:
+			this.UPlan2.setVisible(false);
+			this.UPlanValue2.setVisible(false);
+			this.upperGraphicPane2.setContent(null);
+			this.xUp2.getChildren().clear();
+			this.yUp2.setContent(null);
+			this.Plan2.setDisable(true);
+			this.secondUppergrafikErstellt = false;
+			this.umlaufplanZwei = null;
+			this.UPlanValue1.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+			break;
+		case 2:
+			this.UPlan3.setVisible(false);
+			this.UPlanValue3.setVisible(false);
+			this.upperGraphicPane3.setContent(null);
+			this.xUp3.getChildren().clear();
+			this.yUp3.setContent(null);
+			this.Plan3.setDisable(true);
+			this.thirdUppergrafikErstellt = false;
+			this.umlaufplanDrei = null;;
+			this.UPlanValue2.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+			break;
+		case 3:
+			this.UPlan4.setVisible(false);
+			this.UPlanValue4.setVisible(false);
+			this.upperGraphicPane4.setContent(null);
+			this.xUp4.getChildren().clear();
+			this.yUp4.setContent(null);
+			this.Plan4.setDisable(true);
+			this.fourthUppergrafikErstellt = false;
+			this.umlaufplanVier = null;;
+			this.UPlanValue3.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+			break;
+		case 4:
+			this.UPlan5.setVisible(false);
+			this.UPlanValue5.setVisible(false);
+			this.upperGraphicPane5.setContent(null);
+			this.xUp5.getChildren().clear();
+			this.yUp5.setContent(null);
+			this.Plan5.setDisable(true);
+			this.fifthUppergrafikErstellt = false;
+			this.umlaufplanFuenf = null;;
+			this.UPlanValue4.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+			break;
+		case 5:
+			this.UPlan6.setVisible(false);
+			this.UPlanValue6.setVisible(false);
+			this.upperGraphicPane6.setContent(null);
+			this.xUp6.getChildren().clear();
+			this.yUp6.setContent(null);
+			this.Plan6.setDisable(true);
+			this.sixthUppergrafikErstellt = false;
+			this.umlaufplanSechs = null;;
+			this.UPlanValue5.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+			break;
+		case 6:
+			this.UPlan7.setVisible(false);
+			this.UPlanValue7.setVisible(false);
+			this.upperGraphicPane7.setContent(null);
+			this.xUp7.getChildren().clear();
+			this.yUp7.setContent(null);
+			this.Plan7.setDisable(true);
+			this.seventhUppergrafikErstellt = false;
+			this.umlaufplanSieben = null;;
+			this.UPlanValue6.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+			break;
+		default:	
+			break;
+		}
+		
+	}
+	
+	/**
+	 * Deletes the latest D-Plan
+	 */
+	@FXML
+	public void deleteLastDPlan(){
+		
+		
 	}
 	
 	/**
