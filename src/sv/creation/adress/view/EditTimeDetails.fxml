@@ -19,9 +19,9 @@
     <HBox id="HBox" alignment="CENTER" layoutX="14.0" layoutY="18.0" spacing="5.0">
       <children>
         <Label styleClass="label-white" text="Startzeit" />
-        <TextField prefWidth="53.0" />
+        <TextField fx:id="startzeitStunde" prefWidth="53.0" />
         <Label styleClass="label-white" text=":" />
-        <TextField prefWidth="53.0" text="" />
+        <TextField fx:id="startzeitMinute" prefWidth="53.0" text="" />
       </children>
     </HBox>
     <HBox id="HBox" alignment="CENTER" layoutX="14.0" layoutY="52.0" spacing="5.0">
@@ -31,9 +31,9 @@
             <Insets right="4.0" />
           </HBox.margin>
         </Label>
-        <TextField prefWidth="53.0" />
+        <TextField fx:id="endzeitStunde" prefWidth="53.0" />
         <Label styleClass="label-white" text=":" />
-        <TextField prefWidth="53.0" text="" />
+        <TextField fx:id="endzeitMinute" prefWidth="53.0" text="" />
       </children>
     </HBox>
   </children>

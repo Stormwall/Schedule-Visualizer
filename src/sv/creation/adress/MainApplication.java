@@ -241,7 +241,7 @@ public class MainApplication extends Application {
 
 	// Initiate Edit Time Details fxml
 
-	public boolean showEditTimeDetails() {
+	public boolean showEditTimeDetails(String startzeit, String endzeit) {
 
 		try {
 
@@ -263,6 +263,8 @@ public class MainApplication extends Application {
 			// Set the controller with all data
 			EditTimeDetailsLayoutController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
+			controller.setStartzeit(startzeit);
+			controller.setEndzeit(endzeit);
 
 			// Show the dialog and wait until the user closes it
 			dialogStage.showAndWait();
@@ -279,10 +281,10 @@ public class MainApplication extends Application {
 
 	// Fehlermeldung bei nicht erstellter Grafik
 
-	public void fehlerMeldungGrafikFehlt() {
+	public void fehlerMeldung(String fehlermeldungA,String fehlermeldungB, String fehlermeldungC) {
 
 		Dialogs.showErrorDialog(primaryStage,
-				"Es wurde noch keine Grafik erzeugt", "Noch nicht", "Fehler");
+				fehlermeldungA, fehlermeldungB, fehlermeldungC);
 	}
 
 	// Main Method

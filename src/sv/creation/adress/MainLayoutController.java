@@ -753,7 +753,10 @@ public class MainLayoutController {
 								createHelpLines();
 								hilfslinienAktiv = true;
 							} else {
-								mainApp.fehlerMeldungGrafikFehlt();
+								String fehlerA = "Es wurde noch keine Grafik erzeugt";
+								String fehlerB = "Noch nicht";
+								String fehlerC = "Fehler";
+								mainApp.fehlerMeldung(fehlerA,fehlerB,fehlerC);
 								hilfslinien.setSelected(false);
 							}
 						}
@@ -2692,7 +2695,10 @@ public class MainLayoutController {
 		if (this.firstUppergrafikErstellt == true) {
 			mainApp.showFullScreenGraphic(this);
 		} else {
-			mainApp.fehlerMeldungGrafikFehlt();
+			String fehlerA = "Es wurde noch keine Grafik erzeugt";
+			String fehlerB = "Noch nicht";
+			String fehlerC = "Fehler";
+			mainApp.fehlerMeldung(fehlerA,fehlerB,fehlerC);
 		}
 	}
 

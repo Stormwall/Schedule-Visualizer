@@ -19,7 +19,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -67,7 +66,7 @@ public class EditU_PlanController {
 	private void initialize() {
 
 		// Anordnung der Tabelle
-		elementsTable
+		this.elementsTable
 				.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		
 		// Listen for Resizechanges (Graphic)
@@ -86,7 +85,7 @@ public class EditU_PlanController {
 	 */
 	@FXML
 	private void handleauswaehlen() {
-
+		
 		int blockAuswahl = 0;
 
 		if (this.blockChoice.getSelectionModel().getSelectedItem() != null) {
@@ -128,12 +127,34 @@ public class EditU_PlanController {
 	 */
 	@FXML
 	private void handlebearbeiten() {
+		
+		// Fehlerbehebung bei keiner Auswahl
+		
+		if (this.elementsTable.getSelectionModel().getSelectedItem() != null) {		
+			
+			// Ausgewähltes Element auslesen
+			
+			Blockelement blockelement = this.elementsTable.getSelectionModel().getSelectedItem();
+			
+			// Variablen werden belegt
+			String startzeit = blockelement.getDepTime();
+			String endzeit = blockelement.getArrTime();
+			int id = blockelement.getId();
 
-		boolean okClicked = mainApp.showEditTimeDetails();
-		if (okClicked) {
-			// refreshPersonTable();
-			// showPersonDetails(selectedPerson);
+			boolean okClicked = mainApp.showEditTimeDetails(startzeit,endzeit);
+			if (okClicked) {
+				// refreshPersonTable();
+				// showPersonDetails(selectedPerson);
+			}
+			
+		} else {
+			String fehlerA = "Es wurde noch Element ausgewählt";
+			String fehlerB = "Was soll bearbeitet werden ?";
+			String fehlerC = "Fehler";
+			this.mainApp.fehlerMeldung(fehlerA,fehlerB,fehlerC);
 		}
+		
+		
 	}
 	
 
