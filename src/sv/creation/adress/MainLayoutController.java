@@ -42,7 +42,7 @@ import javafx.scene.text.Font;
 import javafx.util.Duration;
 
 public class MainLayoutController {
-	
+
 	// Zugriff auf Strukturelemente
 	@FXML
 	private AnchorPane MainPane;
@@ -139,7 +139,7 @@ public class MainLayoutController {
 	@FXML
 	private ScrollPane upperGraphicPane7;
 	@FXML
-	private ScrollPane lowerGraphicPane7;	
+	private ScrollPane lowerGraphicPane7;
 	@FXML
 	private GridPane graphicPane;
 	@FXML
@@ -160,13 +160,13 @@ public class MainLayoutController {
 	private CheckBox hilfslinien;
 	@FXML
 	private HBox filterPanel;
-	
+
 	// Erstellung der Detailtableviews
-	
+
 	private TableView<Blockelement> detailsUmlaufTable = new TableView<Blockelement>();
-	
+
 	// Zugriff auf die Labels des DetailPane
-	
+
 	@FXML
 	private Label anzahlFahrten;
 	@FXML
@@ -175,13 +175,12 @@ public class MainLayoutController {
 	private Label anzahlLeerFahrten;
 	@FXML
 	private Label unknown;
-	
-	
+
 	// Zugriff auf die unterschiedlichen TabPanes (Gridpane)
 	@FXML
 	private ChoiceBox<String> UPlan;
 	@FXML
-	private ChoiceBox<String> DPlan;	
+	private ChoiceBox<String> DPlan;
 	@FXML
 	private Label UPlan1;
 	@FXML
@@ -238,7 +237,7 @@ public class MainLayoutController {
 	private Label DPlanValue6;
 	@FXML
 	private Label DPlanValue7;
-	
+
 	// Zugriff auf die unterschiedlichen Tabs
 	@FXML
 	private TabPane Planpane;
@@ -256,13 +255,14 @@ public class MainLayoutController {
 	private Tab Plan6;
 	@FXML
 	private Tab Plan7;
-	
+
 	// Bau der Zugriffslisten
-	
-	private ObservableList<Umlaufplan> umlaufplanliste = FXCollections.observableArrayList();
+
+	private ObservableList<Umlaufplan> umlaufplanliste = FXCollections
+			.observableArrayList();
 
 	// Zuordnung der Umlaufpläne
-	
+
 	private Umlaufplan umlaufplanEins;
 	private Umlaufplan umlaufplanZwei;
 	private Umlaufplan umlaufplanDrei;
@@ -270,9 +270,9 @@ public class MainLayoutController {
 	private Umlaufplan umlaufplanFuenf;
 	private Umlaufplan umlaufplanSechs;
 	private Umlaufplan umlaufplanSieben;
-	
+
 	// Canvas Elemente
-	
+
 	private Canvas upperChart1;
 	private Canvas lowerChart1;
 	private Canvas upperChart2;
@@ -357,9 +357,9 @@ public class MainLayoutController {
 	private GraphicsContext upperYgc7;
 	private GraphicsContext lowerXgc7;
 	private GraphicsContext lowerYgc7;
-	
+
 	// Attribute der statistischen Darstellung
-	
+
 	private int startzeitVar = 0;
 	private int endzeitVar = 24;
 	private double upperheightEins = 600;
@@ -370,9 +370,9 @@ public class MainLayoutController {
 	private double upperheightSechs = 1600;
 	private double upperheightSieben = 1600;
 	private double lowerheight = 800;
-	
-	//Pruefvariable
-	
+
+	// Pruefvariable
+
 	private boolean firstUppergrafikErstellt = false;
 	private boolean secondUppergrafikErstellt = false;
 	private boolean thirdUppergrafikErstellt = false;
@@ -392,53 +392,55 @@ public class MainLayoutController {
 	private boolean addButtonPressed = true;
 	private int umlaufChoice = 0;
 	private int umlaufTabCounter = 0;
-	
-	//Referenz zur MainApp
-	
+
+	// Referenz zur MainApp
+
 	private MainApplication mainApp;
-	
-	
+
 	/**
-	  * Initializes the controller class. This method is automatically called
-	  * after the fxml file has been loaded.
-	  */
-	  
+	 * Initializes the controller class. This method is automatically called
+	 * after the fxml file has been loaded.
+	 */
+
 	@SuppressWarnings("unchecked")
 	@FXML
-	  private void initialize() {
-		
-		//Erstellung der Datenbank
-//		DBConnection dbc =new DBConnection();
-//		dbc.initDBConnection();
-//		dbc.createTables();
-//		dbc.fillFahrplanIntoTables();
-//		dbc.fillUmlaufplanIntoTables();
-//		dbc.fillDienstplanIntoTable();
-//		dbc.fillDiensttypenIntoTables();
-		
-		DBMatching dbm=new DBMatching();
+	private void initialize() {
+
+		// Erstellung der Datenbank
+		// DBConnection dbc =new DBConnection();
+		// dbc.initDBConnection();
+		// dbc.createTables();
+		// dbc.fillFahrplanIntoTables();
+		// dbc.fillUmlaufplanIntoTables();
+		// dbc.fillDienstplanIntoTable();
+		// dbc.fillDiensttypenIntoTables();
+
+		DBMatching dbm = new DBMatching();
 		dbm.createUmlaufplanObject();
-//		dbm.createDienstplanObject();
-		
-		//dbc.closeConnection();
-		
-		//Fades in Filter Panel
-		FadeTransition fa = new FadeTransition(Duration.millis(3000), this.leftinnerPane);
+		// dbm.createDienstplanObject();
+
+		// dbc.closeConnection();
+
+		// Fades in Filter Panel
+		FadeTransition fa = new FadeTransition(Duration.millis(3000),
+				this.leftinnerPane);
 		fa.setFromValue(0.0);
 		fa.setToValue(1.0);
 		fa.setAutoReverse(true);
 		fa.play();
-		
-		FadeTransition ft = new FadeTransition(Duration.millis(5000), this.rightinnerPane);
+
+		FadeTransition ft = new FadeTransition(Duration.millis(5000),
+				this.rightinnerPane);
 		ft.setFromValue(0.0);
 		ft.setToValue(1.0);
 		ft.setAutoReverse(true);
 		ft.play();
-		
+
 		// Sets the Standardelement condition of the Interface
-		
-		detailsUmlaufTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-		
+
+		detailsUmlaufTable
+				.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
 		this.yUp1.setHbarPolicy(ScrollBarPolicy.NEVER);
 		this.yUp1.setVbarPolicy(ScrollBarPolicy.NEVER);
 		this.yUp2.setHbarPolicy(ScrollBarPolicy.NEVER);
@@ -453,7 +455,7 @@ public class MainLayoutController {
 		this.yUp6.setVbarPolicy(ScrollBarPolicy.NEVER);
 		this.yUp7.setHbarPolicy(ScrollBarPolicy.NEVER);
 		this.yUp7.setVbarPolicy(ScrollBarPolicy.NEVER);
-		
+
 		this.yLow1.setHbarPolicy(ScrollBarPolicy.NEVER);
 		this.yLow1.setVbarPolicy(ScrollBarPolicy.NEVER);
 		this.yLow2.setHbarPolicy(ScrollBarPolicy.NEVER);
@@ -468,1196 +470,1415 @@ public class MainLayoutController {
 		this.yLow6.setVbarPolicy(ScrollBarPolicy.NEVER);
 		this.yLow7.setHbarPolicy(ScrollBarPolicy.NEVER);
 		this.yLow7.setVbarPolicy(ScrollBarPolicy.NEVER);
-		
-		// Bindet die ScrollPanes aneinander 
-		
+
+		// Bindet die ScrollPanes aneinander
+
 		DoubleProperty vPosition = new SimpleDoubleProperty();
-	    vPosition.bind(this.upperGraphicPane1.vvalueProperty());
-	    vPosition.addListener(new ChangeListener<Object>() {
-	        @Override
-	        public void changed(ObservableValue<?> arg0, Object arg1, Object arg2) {
-	        	yUp1.setVvalue((double) arg2);
+		vPosition.bind(this.upperGraphicPane1.vvalueProperty());
+		vPosition.addListener(new ChangeListener<Object>() {
+			@Override
+			public void changed(ObservableValue<?> arg0, Object arg1,
+					Object arg2) {
+				yUp1.setVvalue((double) arg2);
 
-	        }
-	    });
-	    
-	    DoubleProperty aPosition = new SimpleDoubleProperty();
-	    aPosition.bind(this.upperGraphicPane2.vvalueProperty());
-	    aPosition.addListener(new ChangeListener<Object>() {
-	        @Override
-	        public void changed(ObservableValue<?> arg0, Object arg1, Object arg2) {
-	        	yUp2.setVvalue((double) arg2);
+			}
+		});
 
-	        }
-	    });
-	    DoubleProperty bPosition = new SimpleDoubleProperty();
-	    bPosition.bind(this.upperGraphicPane3.vvalueProperty());
-	    bPosition.addListener(new ChangeListener<Object>() {
-	        @Override
-	        public void changed(ObservableValue<?> arg0, Object arg1, Object arg2) {
-	        	yUp3.setVvalue((double) arg2);
+		DoubleProperty aPosition = new SimpleDoubleProperty();
+		aPosition.bind(this.upperGraphicPane2.vvalueProperty());
+		aPosition.addListener(new ChangeListener<Object>() {
+			@Override
+			public void changed(ObservableValue<?> arg0, Object arg1,
+					Object arg2) {
+				yUp2.setVvalue((double) arg2);
 
-	        }
-	    });
-	    DoubleProperty cPosition = new SimpleDoubleProperty();
-	    cPosition.bind(this.upperGraphicPane4.vvalueProperty());
-	    cPosition.addListener(new ChangeListener<Object>() {
-	        @Override
-	        public void changed(ObservableValue<?> arg0, Object arg1, Object arg2) {
-	        	yUp4.setVvalue((double) arg2);
+			}
+		});
+		DoubleProperty bPosition = new SimpleDoubleProperty();
+		bPosition.bind(this.upperGraphicPane3.vvalueProperty());
+		bPosition.addListener(new ChangeListener<Object>() {
+			@Override
+			public void changed(ObservableValue<?> arg0, Object arg1,
+					Object arg2) {
+				yUp3.setVvalue((double) arg2);
 
-	        }
-	    });
-	    DoubleProperty dPosition = new SimpleDoubleProperty();
-	    dPosition.bind(this.upperGraphicPane5.vvalueProperty());
-	    dPosition.addListener(new ChangeListener<Object>() {
-	        @Override
-	        public void changed(ObservableValue<?> arg0, Object arg1, Object arg2) {
-	        	yUp5.setVvalue((double) arg2);
+			}
+		});
+		DoubleProperty cPosition = new SimpleDoubleProperty();
+		cPosition.bind(this.upperGraphicPane4.vvalueProperty());
+		cPosition.addListener(new ChangeListener<Object>() {
+			@Override
+			public void changed(ObservableValue<?> arg0, Object arg1,
+					Object arg2) {
+				yUp4.setVvalue((double) arg2);
 
-	        }
-	    });
-	    DoubleProperty ePosition = new SimpleDoubleProperty();
-	    ePosition.bind(this.upperGraphicPane6.vvalueProperty());
-	    ePosition.addListener(new ChangeListener<Object>() {
-	        @Override
-	        public void changed(ObservableValue<?> arg0, Object arg1, Object arg2) {
-	        	yUp6.setVvalue((double) arg2);
+			}
+		});
+		DoubleProperty dPosition = new SimpleDoubleProperty();
+		dPosition.bind(this.upperGraphicPane5.vvalueProperty());
+		dPosition.addListener(new ChangeListener<Object>() {
+			@Override
+			public void changed(ObservableValue<?> arg0, Object arg1,
+					Object arg2) {
+				yUp5.setVvalue((double) arg2);
 
-	        }
-	    });
-	    DoubleProperty fPosition = new SimpleDoubleProperty();
-	    fPosition.bind(this.upperGraphicPane7.vvalueProperty());
-	    fPosition.addListener(new ChangeListener<Object>() {
-	        @Override
-	        public void changed(ObservableValue<?> arg0, Object arg1, Object arg2) {
-	        	yUp7.setVvalue((double) arg2);
+			}
+		});
+		DoubleProperty ePosition = new SimpleDoubleProperty();
+		ePosition.bind(this.upperGraphicPane6.vvalueProperty());
+		ePosition.addListener(new ChangeListener<Object>() {
+			@Override
+			public void changed(ObservableValue<?> arg0, Object arg1,
+					Object arg2) {
+				yUp6.setVvalue((double) arg2);
 
-	        }
-	    });
-		
-		//Umlaufpläne -- Choicebox wird gefüllt
-		
+			}
+		});
+		DoubleProperty fPosition = new SimpleDoubleProperty();
+		fPosition.bind(this.upperGraphicPane7.vvalueProperty());
+		fPosition.addListener(new ChangeListener<Object>() {
+			@Override
+			public void changed(ObservableValue<?> arg0, Object arg1,
+					Object arg2) {
+				yUp7.setVvalue((double) arg2);
+
+			}
+		});
+
+		// Umlaufpläne -- Choicebox wird gefüllt
+
 		this.umlaufplanliste.add(dbm.getUmlaufplan());
 		this.umlaufplanliste.get(0).setName(" Umlaufplan 1 ");
-		this.UPlan.setItems(FXCollections.observableArrayList(umlaufplanliste.get(0).getName()));
-		for(int i = 1; i < umlaufplanliste.size(); i++){
+		this.UPlan.setItems(FXCollections.observableArrayList(umlaufplanliste
+				.get(0).getName()));
+		for (int i = 1; i < umlaufplanliste.size(); i++) {
 			this.UPlan.getItems().add(umlaufplanliste.get(i).getName());
-		}		
-		
-		//Dienstpläme
-		
-		this.DPlan.setItems(FXCollections.observableArrayList("Dienstplan  1a", "Dienstplan 1b", "Dienstplan 1c"));
-		
+		}
+
+		// Dienstpläne
+
+		this.DPlan.setItems(FXCollections.observableArrayList("Dienstplan  1a",
+				"Dienstplan 1b", "Dienstplan 1c"));
+
 		// Listen for Resizechanges (Graphic)
-		this.upperGraphicPane1.widthProperty().addListener(new ChangeListener<Number>() {
-		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-		     	refreshBothGraphics();
-		    }
-		});
-		this.upperGraphicPane1.heightProperty().addListener(new ChangeListener<Number>() {
-		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-		    	refreshBothGraphics();
-		    }
-		});
-		this.upperGraphicPane2.widthProperty().addListener(new ChangeListener<Number>() {
-		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-		     	refreshBothGraphics();
-		    }
-		});
-		this.upperGraphicPane2.heightProperty().addListener(new ChangeListener<Number>() {
-		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-		    	refreshBothGraphics();
-		    }
-		});
-		this.upperGraphicPane3.widthProperty().addListener(new ChangeListener<Number>() {
-		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-		     	refreshBothGraphics();
-		    }
-		});
-		this.upperGraphicPane3.heightProperty().addListener(new ChangeListener<Number>() {
-		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-		    	refreshBothGraphics();
-		    }
-		});
-		this.upperGraphicPane4.widthProperty().addListener(new ChangeListener<Number>() {
-		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-		     	refreshBothGraphics();
-		    }
-		});
-		this.upperGraphicPane4.heightProperty().addListener(new ChangeListener<Number>() {
-		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-		    	refreshBothGraphics();
-		    }
-		});
-		this.upperGraphicPane5.widthProperty().addListener(new ChangeListener<Number>() {
-		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-		     	refreshBothGraphics();
-		    }
-		});
-		this.upperGraphicPane5.heightProperty().addListener(new ChangeListener<Number>() {
-		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-		    	refreshBothGraphics();
-		    }
-		});
-		this.upperGraphicPane6.widthProperty().addListener(new ChangeListener<Number>() {
-		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-		     	refreshBothGraphics();
-		    }
-		});
-		this.upperGraphicPane6.heightProperty().addListener(new ChangeListener<Number>() {
-		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-		    	refreshBothGraphics();
-		    }
-		});
-		this.upperGraphicPane7.widthProperty().addListener(new ChangeListener<Number>() {
-		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-		     	refreshBothGraphics();
-		    }
-		});
-		this.upperGraphicPane7.heightProperty().addListener(new ChangeListener<Number>() {
-		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-		    	refreshBothGraphics();
-		    }
-		});
-		this.lowerGraphicPane1.widthProperty().addListener(new ChangeListener<Number>() {
-		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-		    	if(lowergrafikErstellt == true){
-		    	refreshBothGraphics();
-		    	}
-		    }
-		});
-		this.lowerGraphicPane1.heightProperty().addListener(new ChangeListener<Number>() {
-		    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-		    	if(lowergrafikErstellt == true){
-		    	refreshBothGraphics();
-		    	}
-		    }
-		});
-		
-		// Listen for selection changes (StartSlider)
-		
-		this.startzeitSlider.valueProperty().addListener(new ChangeListener<Number>(){
-				public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
-						// Handhabung wenn die Checkbox angew�hlt wird
-						startzeitVar = new_val.intValue();	
-						if(startzeitVar > endzeitVar){
-							endzeitVar = endzeitVar+24;
-							}
-						}			
-					}				
-				);
-		
-		// Listen for selection changes (EndSlider)
-		
-		this.endzeitSlider.valueProperty().addListener(new ChangeListener<Number>(){
-				public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
-					// Handhabung wenn die Checkbox angew�hlt wird
-					endzeitVar = new_val.intValue();
-					if(startzeitVar > endzeitVar){
-						endzeitVar = new_val.intValue()+24;
-						}
-					if(startzeitVar < new_val.intValue()){
-						endzeitVar = new_val.intValue();
-						}
-					}			
-				}				
-		);
-				
-		// Listen for selection changes (Checkbox... Hilfslinien)
-				
-		this.hilfslinien.selectedProperty().addListener(new ChangeListener<Boolean>(){
-			public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) {
-					// Handhabung wenn die Checkbox angew�hlt wird
-					if(new_val == true){
-						if(firstUppergrafikErstellt == true){
-							createHelpLines();							
-							hilfslinienAktiv = true;							
-						}else{							
-							mainApp.fehlerMeldungGrafikFehlt();	
-							hilfslinien.setSelected(false);
+		this.upperGraphicPane1.widthProperty().addListener(
+				new ChangeListener<Number>() {
+					@Override
+					public void changed(
+							ObservableValue<? extends Number> observableValue,
+							Number oldSceneWidth, Number newSceneWidth) {
+						refreshBothGraphics();
+					}
+				});
+		this.upperGraphicPane1.heightProperty().addListener(
+				new ChangeListener<Number>() {
+					@Override
+					public void changed(
+							ObservableValue<? extends Number> observableValue,
+							Number oldSceneWidth, Number newSceneWidth) {
+						refreshBothGraphics();
+					}
+				});
+		this.upperGraphicPane2.widthProperty().addListener(
+				new ChangeListener<Number>() {
+					@Override
+					public void changed(
+							ObservableValue<? extends Number> observableValue,
+							Number oldSceneWidth, Number newSceneWidth) {
+						refreshBothGraphics();
+					}
+				});
+		this.upperGraphicPane2.heightProperty().addListener(
+				new ChangeListener<Number>() {
+					@Override
+					public void changed(
+							ObservableValue<? extends Number> observableValue,
+							Number oldSceneWidth, Number newSceneWidth) {
+						refreshBothGraphics();
+					}
+				});
+		this.upperGraphicPane3.widthProperty().addListener(
+				new ChangeListener<Number>() {
+					@Override
+					public void changed(
+							ObservableValue<? extends Number> observableValue,
+							Number oldSceneWidth, Number newSceneWidth) {
+						refreshBothGraphics();
+					}
+				});
+		this.upperGraphicPane3.heightProperty().addListener(
+				new ChangeListener<Number>() {
+					@Override
+					public void changed(
+							ObservableValue<? extends Number> observableValue,
+							Number oldSceneWidth, Number newSceneWidth) {
+						refreshBothGraphics();
+					}
+				});
+		this.upperGraphicPane4.widthProperty().addListener(
+				new ChangeListener<Number>() {
+					@Override
+					public void changed(
+							ObservableValue<? extends Number> observableValue,
+							Number oldSceneWidth, Number newSceneWidth) {
+						refreshBothGraphics();
+					}
+				});
+		this.upperGraphicPane4.heightProperty().addListener(
+				new ChangeListener<Number>() {
+					@Override
+					public void changed(
+							ObservableValue<? extends Number> observableValue,
+							Number oldSceneWidth, Number newSceneWidth) {
+						refreshBothGraphics();
+					}
+				});
+		this.upperGraphicPane5.widthProperty().addListener(
+				new ChangeListener<Number>() {
+					@Override
+					public void changed(
+							ObservableValue<? extends Number> observableValue,
+							Number oldSceneWidth, Number newSceneWidth) {
+						refreshBothGraphics();
+					}
+				});
+		this.upperGraphicPane5.heightProperty().addListener(
+				new ChangeListener<Number>() {
+					@Override
+					public void changed(
+							ObservableValue<? extends Number> observableValue,
+							Number oldSceneWidth, Number newSceneWidth) {
+						refreshBothGraphics();
+					}
+				});
+		this.upperGraphicPane6.widthProperty().addListener(
+				new ChangeListener<Number>() {
+					@Override
+					public void changed(
+							ObservableValue<? extends Number> observableValue,
+							Number oldSceneWidth, Number newSceneWidth) {
+						refreshBothGraphics();
+					}
+				});
+		this.upperGraphicPane6.heightProperty().addListener(
+				new ChangeListener<Number>() {
+					@Override
+					public void changed(
+							ObservableValue<? extends Number> observableValue,
+							Number oldSceneWidth, Number newSceneWidth) {
+						refreshBothGraphics();
+					}
+				});
+		this.upperGraphicPane7.widthProperty().addListener(
+				new ChangeListener<Number>() {
+					@Override
+					public void changed(
+							ObservableValue<? extends Number> observableValue,
+							Number oldSceneWidth, Number newSceneWidth) {
+						refreshBothGraphics();
+					}
+				});
+		this.upperGraphicPane7.heightProperty().addListener(
+				new ChangeListener<Number>() {
+					@Override
+					public void changed(
+							ObservableValue<? extends Number> observableValue,
+							Number oldSceneWidth, Number newSceneWidth) {
+						refreshBothGraphics();
+					}
+				});
+		this.lowerGraphicPane1.widthProperty().addListener(
+				new ChangeListener<Number>() {
+					@Override
+					public void changed(
+							ObservableValue<? extends Number> observableValue,
+							Number oldSceneWidth, Number newSceneWidth) {
+						if (lowergrafikErstellt == true) {
+							refreshBothGraphics();
 						}
 					}
-					// Handhabung wenn die Checkbox ausgeschaltet wird
-					if(new_val == false){
-						hilfslinienAktiv = false;
-						refreshBothGraphics();
-						
-					}					
-				}			
-			}				
-		);	
-	  }
-	
-	
+				});
+		this.lowerGraphicPane1.heightProperty().addListener(
+				new ChangeListener<Number>() {
+					@Override
+					public void changed(
+							ObservableValue<? extends Number> observableValue,
+							Number oldSceneWidth, Number newSceneWidth) {
+						if (lowergrafikErstellt == true) {
+							refreshBothGraphics();
+						}
+					}
+				});
+
+		// Listen for selection changes (StartSlider)
+
+		this.startzeitSlider.valueProperty().addListener(
+				new ChangeListener<Number>() {
+					public void changed(ObservableValue<? extends Number> ov,
+							Number old_val, Number new_val) {
+						// Handhabung wenn die Checkbox angew�hlt wird
+						startzeitVar = new_val.intValue();
+						if (startzeitVar > endzeitVar) {
+							endzeitVar = endzeitVar + 24;
+						}
+					}
+				});
+
+		// Listen for selection changes (EndSlider)
+
+		this.endzeitSlider.valueProperty().addListener(
+				new ChangeListener<Number>() {
+					public void changed(ObservableValue<? extends Number> ov,
+							Number old_val, Number new_val) {
+						// Handhabung wenn die Checkbox angew�hlt wird
+						endzeitVar = new_val.intValue();
+						if (startzeitVar > endzeitVar) {
+							endzeitVar = new_val.intValue() + 24;
+						}
+						if (startzeitVar < new_val.intValue()) {
+							endzeitVar = new_val.intValue();
+						}
+					}
+				});
+
+		// Listen for selection changes (Checkbox... Hilfslinien)
+
+		this.hilfslinien.selectedProperty().addListener(
+				new ChangeListener<Boolean>() {
+					public void changed(ObservableValue<? extends Boolean> ov,
+							Boolean old_val, Boolean new_val) {
+						// Handhabung wenn die Checkbox angew�hlt wird
+						if (new_val == true) {
+							if (firstUppergrafikErstellt == true) {
+								createHelpLines();
+								hilfslinienAktiv = true;
+							} else {
+								mainApp.fehlerMeldungGrafikFehlt();
+								hilfslinien.setSelected(false);
+							}
+						}
+						// Handhabung wenn die Checkbox ausgeschaltet wird
+						if (new_val == false) {
+							hilfslinienAktiv = false;
+							refreshBothGraphics();
+
+						}
+					}
+				});
+	}
+
 	/**
 	 * Refreshes Both Graphics.
 	 */
 	@FXML
 	private void refreshBothGraphics() {
-		
-		//Hier wird das Feld gecleared und gepr�ft ob es schon existiert	
-			
-			if(firstUppergrafikErstellt == true){
-					this.xUp1.getChildren().clear();
-				if(secondUppergrafikErstellt == true){
-					this.xUp2.getChildren().clear();
-				}
-				if(thirdUppergrafikErstellt == true){
-					this.xUp3.getChildren().clear();
-				}
-				if(fourthUppergrafikErstellt == true){
-					this.xUp4.getChildren().clear();
-				}
-				if(fifthUppergrafikErstellt == true){
-					this.xUp5.getChildren().clear();
-				}
-				if(sixthUppergrafikErstellt == true){
-					this.xUp6.getChildren().clear();
-				}
-				if(seventhUppergrafikErstellt == true){
-					this.xUp7.getChildren().clear();
-				}
-				this.addButtonPressed = false;
-				createUpperGraphic();
-		       }
-			if(lowergrafikErstellt == true){
-				this.lowergc1.clearRect(0, 0, this.lowerChart1.getWidth(), this.lowerChart1.getHeight());
-				this.lowerXgc1.clearRect(0, 0, this.lowerXChart1.getWidth(), this.lowerXChart1.getHeight());
-				createLowerGraphic();
-				createLowerXScale();
+
+		// Hier wird das Feld gecleared und gepr�ft ob es schon existiert
+
+		if (firstUppergrafikErstellt == true) {
+			this.xUp1.getChildren().clear();
+			if (secondUppergrafikErstellt == true) {
+				this.xUp2.getChildren().clear();
 			}
-		
-			if(this.hilfslinienAktiv == true){
-				createHelpLines();			
+			if (thirdUppergrafikErstellt == true) {
+				this.xUp3.getChildren().clear();
 			}
+			if (fourthUppergrafikErstellt == true) {
+				this.xUp4.getChildren().clear();
+			}
+			if (fifthUppergrafikErstellt == true) {
+				this.xUp5.getChildren().clear();
+			}
+			if (sixthUppergrafikErstellt == true) {
+				this.xUp6.getChildren().clear();
+			}
+			if (seventhUppergrafikErstellt == true) {
+				this.xUp7.getChildren().clear();
+			}
+			this.addButtonPressed = false;
+			createUpperGraphic();
+		}
+		if (lowergrafikErstellt == true) {
+			this.lowergc1.clearRect(0, 0, this.lowerChart1.getWidth(),
+					this.lowerChart1.getHeight());
+			this.lowerXgc1.clearRect(0, 0, this.lowerXChart1.getWidth(),
+					this.lowerXChart1.getHeight());
+			createLowerGraphic();
+			createLowerXScale();
+		}
+
+		if (this.hilfslinienAktiv == true) {
+			createHelpLines();
+		}
 	}
-	
+
 	/**
 	 * Creates The Upper Graphic.
 	 */
 	@FXML
 	private void createUpperGraphic() {
-		
+
 		this.lowerDetailsPane.setMaxHeight(lowerDetailsPane.getHeight());
 		this.lowerDetailsPane.setMinHeight(lowerDetailsPane.getHeight());
-		
-	SingleSelectionModel<Tab> selectionModel = Planpane.getSelectionModel();	
-				
-	 if(UPlan.getSelectionModel().getSelectedItem()!= null){
-		 
-		 //
-		 // Erstellung der Umlaufplangrafik auf dem ersten Tab
-		 //
-		 // Löschen der bisherigen Elemente
-		 
-		if(this.umlaufTabCounter >= 0){
-			
-			if(this.firstUppergrafikErstellt == true){
-			this.uppergc1.clearRect(0, 0, this.upperChart1.getWidth(), this.upperChart1.getHeight());
-			this.upperXgc1.clearRect(0, 0, this.upperXChart1.getWidth(), this.upperXChart1.getHeight());
-				if(this.secondUppergrafikErstellt == true){
-				this.uppergc2.clearRect(0, 0, this.upperChart1.getWidth(), this.upperChart1.getHeight());
+
+		SingleSelectionModel<Tab> selectionModel = Planpane.getSelectionModel();
+
+		if (UPlan.getSelectionModel().getSelectedItem() != null) {
+
+			//
+			// Erstellung der Umlaufplangrafik auf dem ersten Tab
+			//
+			// Löschen der bisherigen Elemente
+
+			if (this.umlaufTabCounter >= 0) {
+
+				if (this.firstUppergrafikErstellt == true) {
+					this.uppergc1.clearRect(0, 0, this.upperChart1.getWidth(),
+							this.upperChart1.getHeight());
+					this.upperXgc1.clearRect(0, 0,
+							this.upperXChart1.getWidth(),
+							this.upperXChart1.getHeight());
+					if (this.secondUppergrafikErstellt == true) {
+						this.uppergc2.clearRect(0, 0,
+								this.upperChart1.getWidth(),
+								this.upperChart1.getHeight());
+					}
+					if (this.thirdUppergrafikErstellt == true) {
+						this.uppergc3.clearRect(0, 0,
+								this.upperChart1.getWidth(),
+								this.upperChart1.getHeight());
+					}
+					if (this.fourthUppergrafikErstellt == true) {
+						this.uppergc4.clearRect(0, 0,
+								this.upperChart1.getWidth(),
+								this.upperChart1.getHeight());
+					}
+					if (this.fifthUppergrafikErstellt == true) {
+						this.uppergc5.clearRect(0, 0,
+								this.upperChart1.getWidth(),
+								this.upperChart1.getHeight());
+					}
+					if (this.sixthUppergrafikErstellt == true) {
+						this.uppergc6.clearRect(0, 0,
+								this.upperChart1.getWidth(),
+								this.upperChart1.getHeight());
+					}
+					if (this.seventhUppergrafikErstellt == true) {
+						this.uppergc7.clearRect(0, 0,
+								this.upperChart1.getWidth(),
+								this.upperChart1.getHeight());
+					}
 				}
-				if(this.thirdUppergrafikErstellt == true){
-					this.uppergc3.clearRect(0, 0, this.upperChart1.getWidth(), this.upperChart1.getHeight());
+
+				if (this.UPlan1.isVisible() == false) {
+					this.umlaufplanEins = this.umlaufplanliste.get(this.UPlan
+							.getSelectionModel().getSelectedIndex());
+					this.upperheightEins = this.umlaufplanEins.getUmlauf()
+							.size() * 40 + 10;
+					createUpperYScale(yUp1, upperYChart1, upperYgc1,
+							this.upperheightEins, this.umlaufplanEins);
 				}
-				if(this.fourthUppergrafikErstellt == true){
-					this.uppergc4.clearRect(0, 0, this.upperChart1.getWidth(), this.upperChart1.getHeight());
+				// Labelbeschriftungen für Umlaufpläne
+				this.UPlan1.setVisible(true);
+				this.loeschenUmlaufplan.setVisible(true);
+				this.UPlanValue1.setText(UPlan.getSelectionModel()
+						.getSelectedItem().toString());
+				this.UPlanValue1.setVisible(true);
+				this.UPlanValue1
+						.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+
+				// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
+				// nicht
+
+				if (this.addButtonPressed == true) {
+					selectionModel.select(this.Plan1);
+					this.umlaufTabCounter = this.umlaufTabCounter + 1;
 				}
-				if(this.fifthUppergrafikErstellt == true){
-					this.uppergc5.clearRect(0, 0, this.upperChart1.getWidth(), this.upperChart1.getHeight());
+
+				// Zur Verhinderung vom doppelten Erschaffen der Grafiken
+
+				if (this.firstUppergrafikErstellt == false) {
+					this.umlaufTabCounter = 0;
 				}
-				if(this.sixthUppergrafikErstellt == true){
-					this.uppergc6.clearRect(0, 0, this.upperChart1.getWidth(), this.upperChart1.getHeight());
-				}
-				if(this.seventhUppergrafikErstellt == true){
-					this.uppergc7.clearRect(0, 0, this.upperChart1.getWidth(), this.upperChart1.getHeight());
-				}
-		}
-			
-		if(this.UPlan1.isVisible() == false){
-			this.umlaufplanEins = this.umlaufplanliste.get(this.UPlan.getSelectionModel().getSelectedIndex());
-			this.upperheightEins = this.umlaufplanEins.getUmlauf().size()*40 + 10;
-			createUpperYScale(yUp1, upperYChart1, upperYgc1, this.upperheightEins, this.umlaufplanEins);
-		}
-		// Labelbeschriftungen für Umlaufpläne
-		this.UPlan1.setVisible(true);
-		this.loeschenUmlaufplan.setVisible(true);
-		this.UPlanValue1.setText(UPlan.getSelectionModel().getSelectedItem().toString());
-		this.UPlanValue1.setVisible(true);
-		this.UPlanValue1.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
-				
-		// Zur Kontrolle ob es sich um einen Buttonklick handelt oder nicht
-		
-		if(this.addButtonPressed == true){
-		selectionModel.select(this.Plan1);
-		this.umlaufTabCounter = this.umlaufTabCounter + 1;
-		}
-		
-		// Zur Verhinderung vom doppelten Erschaffen der Grafiken 
-		
-		if(this.firstUppergrafikErstellt == false){
-			this.umlaufTabCounter = 0;
-		}
-		this.firstUppergrafikErstellt = true;
-		// Hintergrunderstellung
-		createUpperBackgroundGraphicFirstPane();
-		createUpperXScalePane(this.xUp1, this.upperGraphicPane1);
-		graphicTransition();		
-		
-			// Erstellung/ Befüllen des Details Table-- Clearen des Alten
-			if(uDetailsTableErstellt == true){
-			this.detailsUmlaufTable.getColumns().clear();
-			this.uDetailsTableErstellt = false;
-			}
-		createUDetailsTable(this.umlaufplanEins);
-		fillDetailPaneUmlauf(this.umlaufplanEins);
-		createUmlaufElementGraphic(this.umlaufplanEins, this.upperGraphicPane1, this.upperChart1, this.uppergc1);
-		this.upperChart1.addEventHandler(MouseEvent.MOUSE_CLICKED, 
-			       new EventHandler<MouseEvent>() {
-	           @Override
-	           public void handle(MouseEvent e) {
-	               mainApp.showEditUPlan(umlaufplanEins);
-	           }
-	       });
-			
-		}
-		
-		
-		 //
-		 // Erstellung der Umlaufplangrafik auf dem zweiten Tab
-		 //
-		
-		
-		if(this.umlaufTabCounter >= 1){
-			
-			if(this.secondUppergrafikErstellt == true){
-			this.uppergc2.clearRect(0, 0, this.upperChart2.getWidth(), this.upperChart2.getHeight());
-		}
-		// Initiale Belegung der Grafik
-			if(this.UPlan2.isVisible() == false){
-				this.umlaufplanZwei = this.umlaufplanliste.get(this.UPlan.getSelectionModel().getSelectedIndex());
-				this.upperheightZwei = this.umlaufplanZwei.getUmlauf().size()*40 + 10;
-				createUpperYScale(yUp2, upperYChart2, upperYgc2, this.upperheightZwei, this.umlaufplanZwei);
-			}	
-		// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
-		
-		this.Plan2.setDisable(false);		
-		this.UPlan2.setVisible(true);
-		this.UPlanValue2.setText(UPlan.getSelectionModel().getSelectedItem().toString());
-		this.UPlanValue2.setVisible(true);
-		this.UPlanValue1.setStyle("-fx-background-color:white;");
-		this.UPlanValue2.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
-		
-		// Zur Kontrolle ob es sich um einen Buttonklick handelt oder nicht
-		
-		if(this.addButtonPressed == true){
-		selectionModel.select(this.Plan2);
-		this.umlaufTabCounter = 2;
-		}
-		
-		// Zur Verhinderung vom doppelten Erschaffen der Grafiken 
-		
-		if(this.secondUppergrafikErstellt == false){
-			this.umlaufTabCounter = 1;
-		}
-		
-		this.secondUppergrafikErstellt = true;
-		this.secondGrafikErstellt = true;
-		
-		// Hintergrunderstellung
-		createUpperBackgroundGraphicSecondPane();
-		createUpperXScalePane(this.xUp2, this.upperGraphicPane2);
-		
-		// Erstellung/ Befüllen des Details Table-- Clearen des Alten
-		if(uDetailsTableErstellt == true){
-			this.detailsUmlaufTable.getColumns().clear();
-			this.uDetailsTableErstellt = false;
-		}
-		createUDetailsTable(this.umlaufplanZwei);
-		fillDetailPaneUmlauf(this.umlaufplanZwei);
-		createUmlaufElementGraphic(this.umlaufplanZwei, this.upperGraphicPane2, this.upperChart2, this.uppergc2);
-		
-						
-		}
-		
-		 //
-		 // Erstellung der Umlaufplangrafik auf dem dritten Tab
-		 //
-		
-		
-		if(this.umlaufTabCounter >= 2){
-			
-			if(this.thirdUppergrafikErstellt == true){
-			this.uppergc3.clearRect(0, 0, this.upperChart3.getWidth(), this.upperChart3.getHeight());
-		}
-			// Initiale Belegung der Grafik
-			if(this.UPlan3.isVisible() == false){
-				this.umlaufplanDrei = this.umlaufplanliste.get(this.UPlan.getSelectionModel().getSelectedIndex());
-				this.upperheightDrei = this.umlaufplanDrei.getUmlauf().size()*40 + 10;
-				createUpperYScale(yUp3, upperYChart3, upperYgc3, this.upperheightDrei, this.umlaufplanDrei);
-			}		
-		// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
-		
-		this.Plan3.setDisable(false);		
-		this.UPlan3.setVisible(true);
-		this.UPlanValue3.setText(UPlan.getSelectionModel().getSelectedItem().toString());
-		this.UPlanValue3.setVisible(true);
-		this.UPlanValue1.setStyle("-fx-background-color:white;");
-		this.UPlanValue2.setStyle("-fx-background-color:white;");
-		this.UPlanValue3.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
-		
-		// Zur Kontrolle ob es sich um einen Buttonklick handelt oder nicht
-		
-		if(this.addButtonPressed == true){
-		selectionModel.select(this.Plan3);
-		this.umlaufTabCounter = 3;
-		}
-		
-		// Zur Verhinderung vom doppelten Erschaffen der Grafiken 
-		
-		if(this.thirdUppergrafikErstellt == false){
-			this.umlaufTabCounter = 2;
-		}
-		
-		this.thirdUppergrafikErstellt = true;
-		this.thirdGrafikErstellt = true;
-		
-		// Hintergrunderstellung
-		createUpperBackgroundGraphicThirdPane();
-		createUpperXScalePane(this.xUp3, this.upperGraphicPane3);		
-		
-		// Erstellung/ Befüllen des Details Table-- Clearen des Alten
-				if(uDetailsTableErstellt == true){
+				this.firstUppergrafikErstellt = true;
+				// Hintergrunderstellung
+				createUpperBackgroundGraphicFirstPane();
+				createUpperXScalePane(this.xUp1, this.upperGraphicPane1);
+				graphicTransition();
+
+				// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+				if (uDetailsTableErstellt == true) {
 					this.detailsUmlaufTable.getColumns().clear();
 					this.uDetailsTableErstellt = false;
 				}
-		createUDetailsTable(this.umlaufplanDrei);
-		fillDetailPaneUmlauf(this.umlaufplanDrei);
-		createUmlaufElementGraphic(this.umlaufplanDrei, this.upperGraphicPane3, this.upperChart3, this.uppergc3);		
-		
-		}
-		
-		 //
-		 // Erstellung der Umlaufplangrafik auf dem vierten Tab
-		 //
-		
-		
-		if(this.umlaufTabCounter >= 3){
-			
-			if(this.fourthUppergrafikErstellt == true){
-			this.uppergc4.clearRect(0, 0, this.upperChart4.getWidth(), this.upperChart4.getHeight());
-		}
-			// Initiale Belegung der Grafik
-			if(this.UPlan4.isVisible() == false){
-				this.umlaufplanVier = this.umlaufplanliste.get(this.UPlan.getSelectionModel().getSelectedIndex());
-				this.upperheightVier = this.umlaufplanVier.getUmlauf().size()*40 + 10;
-				createUpperYScale(yUp4, upperYChart4, upperYgc4, this.upperheightVier, this.umlaufplanVier);
+				createUDetailsTable(this.umlaufplanEins);
+				fillDetailPaneUmlauf(this.umlaufplanEins);
+				createUmlaufElementGraphic(this.umlaufplanEins,
+						this.upperGraphicPane1, this.upperChart1, this.uppergc1);
+
+				// Fügt den Eventhändler hinzu
+				this.upperChart1.addEventHandler(MouseEvent.MOUSE_CLICKED,
+						new EventHandler<MouseEvent>() {
+							@Override
+							public void handle(MouseEvent e) {
+								boolean okClicked = mainApp
+										.showEditUPlan(umlaufplanEins);
+								if (okClicked) {
+									// refreshPersonTable();
+									// showPersonDetails(selectedPerson);
+								}
+							}
+						});
+
 			}
-		// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
-		
-		this.Plan4.setDisable(false);		
-		this.UPlan4.setVisible(true);
-		this.UPlanValue4.setText(UPlan.getSelectionModel().getSelectedItem().toString());
-		this.UPlanValue4.setVisible(true);
-		this.UPlanValue1.setStyle("-fx-background-color:white;");
-		this.UPlanValue2.setStyle("-fx-background-color:white;");
-		this.UPlanValue3.setStyle("-fx-background-color:white;");
-		this.UPlanValue4.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
-		
-		// Zur Kontrolle ob es sich um einen Buttonklick handelt oder nicht
-		
-		if(this.addButtonPressed == true){
-		selectionModel.select(this.Plan4);
-		this.umlaufTabCounter = 4;
-		}
-		
-		// Zur Verhinderung vom doppelten Erschaffen der Grafiken 
-		
-		if(this.fourthUppergrafikErstellt == false){
-			this.umlaufTabCounter = 3;
-		}
-		
-		this.fourthUppergrafikErstellt = true;
-		this.fourthGrafikErstellt = true;
-		
-		// Hintergrunderstellung
-		createUpperBackgroundGraphicFourthPane();
-		createUpperXScalePane(this.xUp4, this.upperGraphicPane4);		
-		
-		// Erstellung/ Befüllen des Details Table-- Clearen des Alten
-				if(uDetailsTableErstellt == true){
+
+			//
+			// Erstellung der Umlaufplangrafik auf dem zweiten Tab
+			//
+
+			if (this.umlaufTabCounter >= 1) {
+
+				if (this.secondUppergrafikErstellt == true) {
+					this.uppergc2.clearRect(0, 0, this.upperChart2.getWidth(),
+							this.upperChart2.getHeight());
+				}
+				// Initiale Belegung der Grafik
+				if (this.UPlan2.isVisible() == false) {
+					this.umlaufplanZwei = this.umlaufplanliste.get(this.UPlan
+							.getSelectionModel().getSelectedIndex());
+					this.upperheightZwei = this.umlaufplanZwei.getUmlauf()
+							.size() * 40 + 10;
+					createUpperYScale(yUp2, upperYChart2, upperYgc2,
+							this.upperheightZwei, this.umlaufplanZwei);
+				}
+				// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
+
+				this.Plan2.setDisable(false);
+				this.UPlan2.setVisible(true);
+				this.UPlanValue2.setText(UPlan.getSelectionModel()
+						.getSelectedItem().toString());
+				this.UPlanValue2.setVisible(true);
+				this.UPlanValue1.setStyle("-fx-background-color:white;");
+				this.UPlanValue2
+						.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+
+				// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
+				// nicht
+
+				if (this.addButtonPressed == true) {
+					selectionModel.select(this.Plan2);
+					this.umlaufTabCounter = 2;
+				}
+
+				// Zur Verhinderung vom doppelten Erschaffen der Grafiken
+
+				if (this.secondUppergrafikErstellt == false) {
+					this.umlaufTabCounter = 1;
+				}
+
+				this.secondUppergrafikErstellt = true;
+				this.secondGrafikErstellt = true;
+
+				// Hintergrunderstellung
+				createUpperBackgroundGraphicSecondPane();
+				createUpperXScalePane(this.xUp2, this.upperGraphicPane2);
+
+				// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+				if (uDetailsTableErstellt == true) {
 					this.detailsUmlaufTable.getColumns().clear();
 					this.uDetailsTableErstellt = false;
 				}
-		createUDetailsTable(this.umlaufplanVier);
-		fillDetailPaneUmlauf(this.umlaufplanVier);
-		createUmlaufElementGraphic(this.umlaufplanVier, this.upperGraphicPane4, this.upperChart4, this.uppergc4);
-		}
-		
-		 //
-		 // Erstellung der Umlaufplangrafik auf dem fünften Tab
-		 //
-		
-		
-		if(this.umlaufTabCounter >= 4){
-			
-			if(this.fifthUppergrafikErstellt == true){
-			this.uppergc5.clearRect(0, 0, this.upperChart5.getWidth(), this.upperChart5.getHeight());
-		}	
-			// Initiale Belegung der Grafik
-			if(this.UPlan5.isVisible() == false){
-				this.umlaufplanFuenf = this.umlaufplanliste.get(this.UPlan.getSelectionModel().getSelectedIndex());
-				this.upperheightFuenf = this.umlaufplanFuenf.getUmlauf().size()*40 + 10;
-				createUpperYScale(yUp5, upperYChart5, upperYgc5, this.upperheightFuenf, this.umlaufplanFuenf);
+				createUDetailsTable(this.umlaufplanZwei);
+				fillDetailPaneUmlauf(this.umlaufplanZwei);
+				createUmlaufElementGraphic(this.umlaufplanZwei,
+						this.upperGraphicPane2, this.upperChart2, this.uppergc2);
+
 			}
-		// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
-		
-		this.Plan5.setDisable(false);		
-		this.UPlan5.setVisible(true);
-		this.UPlanValue5.setText(UPlan.getSelectionModel().getSelectedItem().toString());
-		this.UPlanValue5.setVisible(true);
-		this.UPlanValue1.setStyle("-fx-background-color:white;");
-		this.UPlanValue2.setStyle("-fx-background-color:white;");
-		this.UPlanValue3.setStyle("-fx-background-color:white;");
-		this.UPlanValue4.setStyle("-fx-background-color:white;");
-		this.UPlanValue5.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
-		
-		// Zur Kontrolle ob es sich um einen Buttonklick handelt oder nicht
-		
-		if(this.addButtonPressed == true){
-		selectionModel.select(this.Plan5);
-		this.umlaufTabCounter = 5;
-		}
-		
-		// Zur Verhinderung vom doppelten Erschaffen der Grafiken 
-		
-		if(this.fifthUppergrafikErstellt == false){
-			this.umlaufTabCounter = 4;
-		}
-		
-		this.fifthUppergrafikErstellt = true;
-		this.fifthGrafikErstellt = true;
-		
-		// Hintergrunderstellung
-		createUpperBackgroundGraphicFifthPane();
-		createUpperXScalePane(this.xUp5, this.upperGraphicPane5);
-		
-		// Erstellung/ Befüllen des Details Table-- Clearen des Alten
-				if(uDetailsTableErstellt == true){
+
+			//
+			// Erstellung der Umlaufplangrafik auf dem dritten Tab
+			//
+
+			if (this.umlaufTabCounter >= 2) {
+
+				if (this.thirdUppergrafikErstellt == true) {
+					this.uppergc3.clearRect(0, 0, this.upperChart3.getWidth(),
+							this.upperChart3.getHeight());
+				}
+				// Initiale Belegung der Grafik
+				if (this.UPlan3.isVisible() == false) {
+					this.umlaufplanDrei = this.umlaufplanliste.get(this.UPlan
+							.getSelectionModel().getSelectedIndex());
+					this.upperheightDrei = this.umlaufplanDrei.getUmlauf()
+							.size() * 40 + 10;
+					createUpperYScale(yUp3, upperYChart3, upperYgc3,
+							this.upperheightDrei, this.umlaufplanDrei);
+				}
+				// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
+
+				this.Plan3.setDisable(false);
+				this.UPlan3.setVisible(true);
+				this.UPlanValue3.setText(UPlan.getSelectionModel()
+						.getSelectedItem().toString());
+				this.UPlanValue3.setVisible(true);
+				this.UPlanValue1.setStyle("-fx-background-color:white;");
+				this.UPlanValue2.setStyle("-fx-background-color:white;");
+				this.UPlanValue3
+						.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+
+				// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
+				// nicht
+
+				if (this.addButtonPressed == true) {
+					selectionModel.select(this.Plan3);
+					this.umlaufTabCounter = 3;
+				}
+
+				// Zur Verhinderung vom doppelten Erschaffen der Grafiken
+
+				if (this.thirdUppergrafikErstellt == false) {
+					this.umlaufTabCounter = 2;
+				}
+
+				this.thirdUppergrafikErstellt = true;
+				this.thirdGrafikErstellt = true;
+
+				// Hintergrunderstellung
+				createUpperBackgroundGraphicThirdPane();
+				createUpperXScalePane(this.xUp3, this.upperGraphicPane3);
+
+				// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+				if (uDetailsTableErstellt == true) {
 					this.detailsUmlaufTable.getColumns().clear();
 					this.uDetailsTableErstellt = false;
 				}
-		createUDetailsTable(this.umlaufplanFuenf);
-		fillDetailPaneUmlauf(this.umlaufplanFuenf);
-		createUmlaufElementGraphic(this.umlaufplanFuenf, this.upperGraphicPane5, this.upperChart5, this.uppergc5);
-		}
-		
-		 //
-		 // Erstellung der Umlaufplangrafik auf dem sechsten Tab
-		 //
-		
-		
-		if(this.umlaufTabCounter >= 5){
-			
-			if(this.sixthUppergrafikErstellt == true){
-			this.uppergc6.clearRect(0, 0, this.upperChart6.getWidth(), this.upperChart6.getHeight());
-		}	
-			// Initiale Belegung der Grafik
-			if(this.UPlan6.isVisible() == false){
-				this.umlaufplanSechs = this.umlaufplanliste.get(this.UPlan.getSelectionModel().getSelectedIndex());
-				this.upperheightSechs = this.umlaufplanSechs.getUmlauf().size()*40 + 10;
-				createUpperYScale(yUp6, upperYChart6, upperYgc6, this.upperheightSechs, this.umlaufplanSechs);
+				createUDetailsTable(this.umlaufplanDrei);
+				fillDetailPaneUmlauf(this.umlaufplanDrei);
+				createUmlaufElementGraphic(this.umlaufplanDrei,
+						this.upperGraphicPane3, this.upperChart3, this.uppergc3);
+
 			}
-		// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
-		
-		this.Plan6.setDisable(false);		
-		this.UPlan6.setVisible(true);
-		this.UPlanValue6.setText(UPlan.getSelectionModel().getSelectedItem().toString());
-		this.UPlanValue6.setVisible(true);
-		this.UPlanValue1.setStyle("-fx-background-color:white;");
-		this.UPlanValue2.setStyle("-fx-background-color:white;");
-		this.UPlanValue3.setStyle("-fx-background-color:white;");
-		this.UPlanValue4.setStyle("-fx-background-color:white;");
-		this.UPlanValue5.setStyle("-fx-background-color:white;");
-		this.UPlanValue6.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
-		
-		// Zur Kontrolle ob es sich um einen Buttonklick handelt oder nicht
-		
-		if(this.addButtonPressed == true){
-		selectionModel.select(this.Plan6);
-		this.umlaufTabCounter = 6;
-		}
-		
-		// Zur Verhinderung vom doppelten Erschaffen der Grafiken 
-		
-		if(this.sixthUppergrafikErstellt == false){
-			this.umlaufTabCounter = 5;
-		}
-		
-		this.sixthUppergrafikErstellt = true;
-		this.sixthGrafikErstellt = true;
-		
-		// Hintergrunderstellung
-		createUpperBackgroundGraphicSixthPane();
-		createUpperXScalePane(this.xUp6, this.upperGraphicPane6);
-		
-		// Erstellung/ Befüllen des Details Table-- Clearen des Alten
-				if(uDetailsTableErstellt == true){
+
+			//
+			// Erstellung der Umlaufplangrafik auf dem vierten Tab
+			//
+
+			if (this.umlaufTabCounter >= 3) {
+
+				if (this.fourthUppergrafikErstellt == true) {
+					this.uppergc4.clearRect(0, 0, this.upperChart4.getWidth(),
+							this.upperChart4.getHeight());
+				}
+				// Initiale Belegung der Grafik
+				if (this.UPlan4.isVisible() == false) {
+					this.umlaufplanVier = this.umlaufplanliste.get(this.UPlan
+							.getSelectionModel().getSelectedIndex());
+					this.upperheightVier = this.umlaufplanVier.getUmlauf()
+							.size() * 40 + 10;
+					createUpperYScale(yUp4, upperYChart4, upperYgc4,
+							this.upperheightVier, this.umlaufplanVier);
+				}
+				// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
+
+				this.Plan4.setDisable(false);
+				this.UPlan4.setVisible(true);
+				this.UPlanValue4.setText(UPlan.getSelectionModel()
+						.getSelectedItem().toString());
+				this.UPlanValue4.setVisible(true);
+				this.UPlanValue1.setStyle("-fx-background-color:white;");
+				this.UPlanValue2.setStyle("-fx-background-color:white;");
+				this.UPlanValue3.setStyle("-fx-background-color:white;");
+				this.UPlanValue4
+						.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+
+				// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
+				// nicht
+
+				if (this.addButtonPressed == true) {
+					selectionModel.select(this.Plan4);
+					this.umlaufTabCounter = 4;
+				}
+
+				// Zur Verhinderung vom doppelten Erschaffen der Grafiken
+
+				if (this.fourthUppergrafikErstellt == false) {
+					this.umlaufTabCounter = 3;
+				}
+
+				this.fourthUppergrafikErstellt = true;
+				this.fourthGrafikErstellt = true;
+
+				// Hintergrunderstellung
+				createUpperBackgroundGraphicFourthPane();
+				createUpperXScalePane(this.xUp4, this.upperGraphicPane4);
+
+				// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+				if (uDetailsTableErstellt == true) {
 					this.detailsUmlaufTable.getColumns().clear();
 					this.uDetailsTableErstellt = false;
-				}	
-		createUDetailsTable(this.umlaufplanSechs);
-		fillDetailPaneUmlauf(this.umlaufplanSechs);
-		createUmlaufElementGraphic(this.umlaufplanSechs, this.upperGraphicPane6, this.upperChart6, this.uppergc6);
-		}
-		
-		 //
-		 // Erstellung der Umlaufplangrafik auf dem siebten Tab
-		 //
-		
-		
-		if(this.umlaufTabCounter >= 6){
-			
-			if(this.seventhUppergrafikErstellt == true){
-			this.uppergc7.clearRect(0, 0, this.upperChart7.getWidth(), this.upperChart7.getHeight());
-		}	
-			// Initiale Belegung der Grafik
-			if(this.UPlan7.isVisible() == false){
-				this.umlaufplanSieben = this.umlaufplanliste.get(this.UPlan.getSelectionModel().getSelectedIndex());
-				this.upperheightSieben = this.umlaufplanSieben.getUmlauf().size()*40 + 10;
-				createUpperYScale(yUp7, upperYChart7, upperYgc7, this.upperheightSieben, this.umlaufplanSieben);
+				}
+				createUDetailsTable(this.umlaufplanVier);
+				fillDetailPaneUmlauf(this.umlaufplanVier);
+				createUmlaufElementGraphic(this.umlaufplanVier,
+						this.upperGraphicPane4, this.upperChart4, this.uppergc4);
 			}
-		// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
-		
-		this.Plan7.setDisable(false);		
-		this.UPlan7.setVisible(true);
-		this.UPlanValue7.setText(UPlan.getSelectionModel().getSelectedItem().toString());
-		this.UPlanValue7.setVisible(true);
-		this.UPlanValue1.setStyle("-fx-background-color:white;");
-		this.UPlanValue2.setStyle("-fx-background-color:white;");
-		this.UPlanValue3.setStyle("-fx-background-color:white;");
-		this.UPlanValue4.setStyle("-fx-background-color:white;");
-		this.UPlanValue5.setStyle("-fx-background-color:white;");
-		this.UPlanValue6.setStyle("-fx-background-color:white;");
-		this.UPlanValue7.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
-		
-		// Zur Kontrolle ob es sich um einen Buttonklick handelt oder nicht
-		
-		if(this.addButtonPressed == true){
-		selectionModel.select(this.Plan7);
-		this.umlaufTabCounter = 7;
-		}
-		
-		// Zur Verhinderung vom doppelten Erschaffen der Grafiken 
-		
-		if(this.seventhUppergrafikErstellt == false){
-			this.umlaufTabCounter = 6;
-		}
-		
-		this.seventhUppergrafikErstellt = true;
-		this.seventhGrafikErstellt = true;
-		
-		// Hintergrunderstellung
-		createUpperBackgroundGraphicSeventhPane();
-		createUpperXScalePane(this.xUp7, this.upperGraphicPane7);
-		
-		// Erstellung/ Befüllen des Details Table-- Clearen des Alten
-				if(uDetailsTableErstellt == true){
+
+			//
+			// Erstellung der Umlaufplangrafik auf dem fünften Tab
+			//
+
+			if (this.umlaufTabCounter >= 4) {
+
+				if (this.fifthUppergrafikErstellt == true) {
+					this.uppergc5.clearRect(0, 0, this.upperChart5.getWidth(),
+							this.upperChart5.getHeight());
+				}
+				// Initiale Belegung der Grafik
+				if (this.UPlan5.isVisible() == false) {
+					this.umlaufplanFuenf = this.umlaufplanliste.get(this.UPlan
+							.getSelectionModel().getSelectedIndex());
+					this.upperheightFuenf = this.umlaufplanFuenf.getUmlauf()
+							.size() * 40 + 10;
+					createUpperYScale(yUp5, upperYChart5, upperYgc5,
+							this.upperheightFuenf, this.umlaufplanFuenf);
+				}
+				// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
+
+				this.Plan5.setDisable(false);
+				this.UPlan5.setVisible(true);
+				this.UPlanValue5.setText(UPlan.getSelectionModel()
+						.getSelectedItem().toString());
+				this.UPlanValue5.setVisible(true);
+				this.UPlanValue1.setStyle("-fx-background-color:white;");
+				this.UPlanValue2.setStyle("-fx-background-color:white;");
+				this.UPlanValue3.setStyle("-fx-background-color:white;");
+				this.UPlanValue4.setStyle("-fx-background-color:white;");
+				this.UPlanValue5
+						.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+
+				// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
+				// nicht
+
+				if (this.addButtonPressed == true) {
+					selectionModel.select(this.Plan5);
+					this.umlaufTabCounter = 5;
+				}
+
+				// Zur Verhinderung vom doppelten Erschaffen der Grafiken
+
+				if (this.fifthUppergrafikErstellt == false) {
+					this.umlaufTabCounter = 4;
+				}
+
+				this.fifthUppergrafikErstellt = true;
+				this.fifthGrafikErstellt = true;
+
+				// Hintergrunderstellung
+				createUpperBackgroundGraphicFifthPane();
+				createUpperXScalePane(this.xUp5, this.upperGraphicPane5);
+
+				// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+				if (uDetailsTableErstellt == true) {
 					this.detailsUmlaufTable.getColumns().clear();
 					this.uDetailsTableErstellt = false;
-				}				
-		createUDetailsTable(this.umlaufplanSieben);
-		fillDetailPaneUmlauf(this.umlaufplanSieben);
-		createUmlaufElementGraphic(this.umlaufplanSieben, this.upperGraphicPane7, this.upperChart7, this.uppergc7);
+				}
+				createUDetailsTable(this.umlaufplanFuenf);
+				fillDetailPaneUmlauf(this.umlaufplanFuenf);
+				createUmlaufElementGraphic(this.umlaufplanFuenf,
+						this.upperGraphicPane5, this.upperChart5, this.uppergc5);
+			}
+
+			//
+			// Erstellung der Umlaufplangrafik auf dem sechsten Tab
+			//
+
+			if (this.umlaufTabCounter >= 5) {
+
+				if (this.sixthUppergrafikErstellt == true) {
+					this.uppergc6.clearRect(0, 0, this.upperChart6.getWidth(),
+							this.upperChart6.getHeight());
+				}
+				// Initiale Belegung der Grafik
+				if (this.UPlan6.isVisible() == false) {
+					this.umlaufplanSechs = this.umlaufplanliste.get(this.UPlan
+							.getSelectionModel().getSelectedIndex());
+					this.upperheightSechs = this.umlaufplanSechs.getUmlauf()
+							.size() * 40 + 10;
+					createUpperYScale(yUp6, upperYChart6, upperYgc6,
+							this.upperheightSechs, this.umlaufplanSechs);
+				}
+				// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
+
+				this.Plan6.setDisable(false);
+				this.UPlan6.setVisible(true);
+				this.UPlanValue6.setText(UPlan.getSelectionModel()
+						.getSelectedItem().toString());
+				this.UPlanValue6.setVisible(true);
+				this.UPlanValue1.setStyle("-fx-background-color:white;");
+				this.UPlanValue2.setStyle("-fx-background-color:white;");
+				this.UPlanValue3.setStyle("-fx-background-color:white;");
+				this.UPlanValue4.setStyle("-fx-background-color:white;");
+				this.UPlanValue5.setStyle("-fx-background-color:white;");
+				this.UPlanValue6
+						.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+
+				// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
+				// nicht
+
+				if (this.addButtonPressed == true) {
+					selectionModel.select(this.Plan6);
+					this.umlaufTabCounter = 6;
+				}
+
+				// Zur Verhinderung vom doppelten Erschaffen der Grafiken
+
+				if (this.sixthUppergrafikErstellt == false) {
+					this.umlaufTabCounter = 5;
+				}
+
+				this.sixthUppergrafikErstellt = true;
+				this.sixthGrafikErstellt = true;
+
+				// Hintergrunderstellung
+				createUpperBackgroundGraphicSixthPane();
+				createUpperXScalePane(this.xUp6, this.upperGraphicPane6);
+
+				// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+				if (uDetailsTableErstellt == true) {
+					this.detailsUmlaufTable.getColumns().clear();
+					this.uDetailsTableErstellt = false;
+				}
+				createUDetailsTable(this.umlaufplanSechs);
+				fillDetailPaneUmlauf(this.umlaufplanSechs);
+				createUmlaufElementGraphic(this.umlaufplanSechs,
+						this.upperGraphicPane6, this.upperChart6, this.uppergc6);
+			}
+
+			//
+			// Erstellung der Umlaufplangrafik auf dem siebten Tab
+			//
+
+			if (this.umlaufTabCounter >= 6) {
+
+				if (this.seventhUppergrafikErstellt == true) {
+					this.uppergc7.clearRect(0, 0, this.upperChart7.getWidth(),
+							this.upperChart7.getHeight());
+				}
+				// Initiale Belegung der Grafik
+				if (this.UPlan7.isVisible() == false) {
+					this.umlaufplanSieben = this.umlaufplanliste.get(this.UPlan
+							.getSelectionModel().getSelectedIndex());
+					this.upperheightSieben = this.umlaufplanSieben.getUmlauf()
+							.size() * 40 + 10;
+					createUpperYScale(yUp7, upperYChart7, upperYgc7,
+							this.upperheightSieben, this.umlaufplanSieben);
+				}
+				// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
+
+				this.Plan7.setDisable(false);
+				this.UPlan7.setVisible(true);
+				this.UPlanValue7.setText(UPlan.getSelectionModel()
+						.getSelectedItem().toString());
+				this.UPlanValue7.setVisible(true);
+				this.UPlanValue1.setStyle("-fx-background-color:white;");
+				this.UPlanValue2.setStyle("-fx-background-color:white;");
+				this.UPlanValue3.setStyle("-fx-background-color:white;");
+				this.UPlanValue4.setStyle("-fx-background-color:white;");
+				this.UPlanValue5.setStyle("-fx-background-color:white;");
+				this.UPlanValue6.setStyle("-fx-background-color:white;");
+				this.UPlanValue7
+						.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+
+				// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
+				// nicht
+
+				if (this.addButtonPressed == true) {
+					selectionModel.select(this.Plan7);
+					this.umlaufTabCounter = 7;
+				}
+
+				// Zur Verhinderung vom doppelten Erschaffen der Grafiken
+
+				if (this.seventhUppergrafikErstellt == false) {
+					this.umlaufTabCounter = 6;
+				}
+
+				this.seventhUppergrafikErstellt = true;
+				this.seventhGrafikErstellt = true;
+
+				// Hintergrunderstellung
+				createUpperBackgroundGraphicSeventhPane();
+				createUpperXScalePane(this.xUp7, this.upperGraphicPane7);
+
+				// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+				if (uDetailsTableErstellt == true) {
+					this.detailsUmlaufTable.getColumns().clear();
+					this.uDetailsTableErstellt = false;
+				}
+				createUDetailsTable(this.umlaufplanSieben);
+				fillDetailPaneUmlauf(this.umlaufplanSieben);
+				createUmlaufElementGraphic(this.umlaufplanSieben,
+						this.upperGraphicPane7, this.upperChart7, this.uppergc7);
+			}
+
+			this.addButtonPressed = true;
+
 		}
-		
-		this.addButtonPressed = true;
-		
-	  }
 	}
-			
-	
+
 	/**
 	 * Creates The First Upper Background Graphic.
 	 */
 	@FXML
 	private void createUpperBackgroundGraphicFirstPane() {
-		
-		//Initialize the Chart
-		this.upperChart1 = new Canvas(this.upperGraphicPane1.getWidth()-4,this.upperheightEins);
-				
-		//Erstellen des HintergrundgrafikKontextes
+
+		// Initialize the Chart
+		this.upperChart1 = new Canvas(this.upperGraphicPane1.getWidth() - 4,
+				this.upperheightEins);
+
+		// Erstellen des HintergrundgrafikKontextes
 		this.uppergc1 = this.upperChart1.getGraphicsContext2D();
-		this.uppergc1.clearRect(0, 0, this.upperChart1.getWidth(), this.upperChart1.getHeight());
-		
-		//Erstellen des Hintergrundes
-		this.uppergc1.setFill(Color.BEIGE);				
-		this.uppergc1.fillRect(0, 0,this.upperChart1.getWidth(),this.upperChart1.getHeight());
-		
+		this.uppergc1.clearRect(0, 0, this.upperChart1.getWidth(),
+				this.upperChart1.getHeight());
+
+		// Erstellen des Hintergrundes
+		this.uppergc1.setFill(Color.BEIGE);
+		this.uppergc1.fillRect(0, 0, this.upperChart1.getWidth(),
+				this.upperChart1.getHeight());
+
 		this.uppergc1.setLineWidth(3);
 		this.uppergc1.setStroke(Color.BLACK);
-		this.uppergc1.strokeLine(1, 0, 1, this.upperChart1.getHeight());		
-		
-		double abstandNetz = (this.upperChart1.getWidth()-30)/(this.endzeitVar-this.startzeitVar);				
+		this.uppergc1.strokeLine(1, 0, 1, this.upperChart1.getHeight());
+
+		double abstandNetz = (this.upperChart1.getWidth() - 30)
+				/ (this.endzeitVar - this.startzeitVar);
 		this.uppergc1.setLineWidth(1);
 		this.uppergc1.setFont(Font.getDefault());
 		this.uppergc1.setFill(Color.BLACK);
 		this.uppergc1.setStroke(Color.BLACK);
 		// Variable zum Darstellen verschiedener Zeitpunkte
-		for(int i=0; i<=(endzeitVar-startzeitVar) ;i++) {
-			
-			double pixel=((i)*abstandNetz);
-			this.uppergc1.strokeLine(pixel, 0, pixel, this.upperChart1.getHeight());
-	    }
-		
+		for (int i = 0; i <= (endzeitVar - startzeitVar); i++) {
+
+			double pixel = ((i) * abstandNetz);
+			this.uppergc1.strokeLine(pixel, 0, pixel,
+					this.upperChart1.getHeight());
+		}
+
 		this.upperGraphicPane1.setContent(this.upperChart1);
-	}	
-	
+	}
+
 	/**
 	 * Creates the second Upper Background Graphic.
 	 */
 	@FXML
 	private void createUpperBackgroundGraphicSecondPane() {
-		
-		//Initialize the Chart
-		this.upperChart2 = new Canvas(this.upperGraphicPane2.getWidth()-4,this.upperheightZwei);
-				
-		//Erstellen des HintergrundgrafikKontextes
+
+		// Initialize the Chart
+		this.upperChart2 = new Canvas(this.upperGraphicPane2.getWidth() - 4,
+				this.upperheightZwei);
+
+		// Erstellen des HintergrundgrafikKontextes
 		this.uppergc2 = this.upperChart2.getGraphicsContext2D();
-		this.uppergc2.clearRect(0, 0, this.upperChart2.getWidth(), this.upperChart2.getHeight());
-		
-		//Erstellen des Hintergrundes
-		this.uppergc2.setFill(Color.BEIGE);				
-		this.uppergc2.fillRect(0, 0,this.upperChart2.getWidth(),this.upperChart2.getHeight());
-		
+		this.uppergc2.clearRect(0, 0, this.upperChart2.getWidth(),
+				this.upperChart2.getHeight());
+
+		// Erstellen des Hintergrundes
+		this.uppergc2.setFill(Color.BEIGE);
+		this.uppergc2.fillRect(0, 0, this.upperChart2.getWidth(),
+				this.upperChart2.getHeight());
+
 		this.uppergc2.setLineWidth(3);
 		this.uppergc2.setStroke(Color.BLACK);
-		this.uppergc2.strokeLine(1, 0, 1, this.upperChart2.getHeight());		
-		
-		double abstandNetz = (this.upperChart2.getWidth()-30)/(this.endzeitVar-this.startzeitVar);				
+		this.uppergc2.strokeLine(1, 0, 1, this.upperChart2.getHeight());
+
+		double abstandNetz = (this.upperChart2.getWidth() - 30)
+				/ (this.endzeitVar - this.startzeitVar);
 		this.uppergc2.setLineWidth(1);
 		this.uppergc2.setFont(Font.getDefault());
 		this.uppergc2.setFill(Color.BLACK);
 		this.uppergc2.setStroke(Color.BLACK);
 		// Variable zum Darstellen verschiedener Zeitpunkte
-		for(int i=0; i<=(endzeitVar-startzeitVar) ;i++) {
-			
-			double pixel=((i)*abstandNetz);
-			this.uppergc2.strokeLine(pixel, 0, pixel, this.upperChart2.getHeight());
-	    }
-		
+		for (int i = 0; i <= (endzeitVar - startzeitVar); i++) {
+
+			double pixel = ((i) * abstandNetz);
+			this.uppergc2.strokeLine(pixel, 0, pixel,
+					this.upperChart2.getHeight());
+		}
+
 		this.upperGraphicPane2.setContent(this.upperChart2);
 	}
-	
+
 	/**
 	 * Creates the second Upper Background Graphic.
 	 */
 	@FXML
 	private void createUpperBackgroundGraphicThirdPane() {
-		
-		//Initialize the Chart
-		this.upperChart3 = new Canvas(this.upperGraphicPane3.getWidth()-4,this.upperheightDrei);
-				
-		//Erstellen des HintergrundgrafikKontextes
+
+		// Initialize the Chart
+		this.upperChart3 = new Canvas(this.upperGraphicPane3.getWidth() - 4,
+				this.upperheightDrei);
+
+		// Erstellen des HintergrundgrafikKontextes
 		this.uppergc3 = this.upperChart3.getGraphicsContext2D();
-		this.uppergc3.clearRect(0, 0, this.upperChart3.getWidth(), this.upperChart3.getHeight());
-		
-		//Erstellen des Hintergrundes
-		this.uppergc3.setFill(Color.BEIGE);				
-		this.uppergc3.fillRect(0, 0,this.upperChart3.getWidth(),this.upperChart3.getHeight());
-		
+		this.uppergc3.clearRect(0, 0, this.upperChart3.getWidth(),
+				this.upperChart3.getHeight());
+
+		// Erstellen des Hintergrundes
+		this.uppergc3.setFill(Color.BEIGE);
+		this.uppergc3.fillRect(0, 0, this.upperChart3.getWidth(),
+				this.upperChart3.getHeight());
+
 		this.uppergc3.setLineWidth(3);
 		this.uppergc3.setStroke(Color.BLACK);
-		this.uppergc3.strokeLine(1, 0, 1, this.upperChart3.getHeight());		
-		
-		double abstandNetz = (this.upperChart3.getWidth()-30)/(this.endzeitVar-this.startzeitVar);				
+		this.uppergc3.strokeLine(1, 0, 1, this.upperChart3.getHeight());
+
+		double abstandNetz = (this.upperChart3.getWidth() - 30)
+				/ (this.endzeitVar - this.startzeitVar);
 		this.uppergc3.setLineWidth(1);
 		this.uppergc3.setFont(Font.getDefault());
 		this.uppergc3.setFill(Color.BLACK);
 		this.uppergc3.setStroke(Color.BLACK);
 		// Variable zum Darstellen verschiedener Zeitpunkte
-		for(int i=0; i<=(endzeitVar-startzeitVar) ;i++) {
-			
-			double pixel=((i)*abstandNetz);
-			this.uppergc3.strokeLine(pixel, 0, pixel, this.upperChart3.getHeight());
-	    }
-		
+		for (int i = 0; i <= (endzeitVar - startzeitVar); i++) {
+
+			double pixel = ((i) * abstandNetz);
+			this.uppergc3.strokeLine(pixel, 0, pixel,
+					this.upperChart3.getHeight());
+		}
+
 		this.upperGraphicPane3.setContent(this.upperChart3);
-	}	
-	
+	}
+
 	/**
 	 * Creates the second Upper Background Graphic.
 	 */
 	@FXML
 	private void createUpperBackgroundGraphicFourthPane() {
-		
-		//Initialize the Chart
-		this.upperChart4 = new Canvas(this.upperGraphicPane4.getWidth()-4,this.upperheightVier);
-				
-		//Erstellen des HintergrundgrafikKontextes
+
+		// Initialize the Chart
+		this.upperChart4 = new Canvas(this.upperGraphicPane4.getWidth() - 4,
+				this.upperheightVier);
+
+		// Erstellen des HintergrundgrafikKontextes
 		this.uppergc4 = this.upperChart4.getGraphicsContext2D();
-		this.uppergc4.clearRect(0, 0, this.upperChart4.getWidth(), this.upperChart4.getHeight());
-		
-		//Erstellen des Hintergrundes
-		this.uppergc4.setFill(Color.BEIGE);				
-		this.uppergc4.fillRect(0, 0,this.upperChart4.getWidth(),this.upperChart4.getHeight());
-		
+		this.uppergc4.clearRect(0, 0, this.upperChart4.getWidth(),
+				this.upperChart4.getHeight());
+
+		// Erstellen des Hintergrundes
+		this.uppergc4.setFill(Color.BEIGE);
+		this.uppergc4.fillRect(0, 0, this.upperChart4.getWidth(),
+				this.upperChart4.getHeight());
+
 		this.uppergc4.setLineWidth(3);
 		this.uppergc4.setStroke(Color.BLACK);
-		this.uppergc4.strokeLine(1, 0, 1, this.upperChart4.getHeight());		
-		
-		double abstandNetz = (this.upperChart4.getWidth()-30)/(this.endzeitVar-this.startzeitVar);				
+		this.uppergc4.strokeLine(1, 0, 1, this.upperChart4.getHeight());
+
+		double abstandNetz = (this.upperChart4.getWidth() - 30)
+				/ (this.endzeitVar - this.startzeitVar);
 		this.uppergc4.setLineWidth(1);
 		this.uppergc4.setFont(Font.getDefault());
 		this.uppergc4.setFill(Color.BLACK);
 		this.uppergc4.setStroke(Color.BLACK);
 		// Variable zum Darstellen verschiedener Zeitpunkte
-		for(int i=0; i<=(endzeitVar-startzeitVar) ;i++) {
-			
-			double pixel=((i)*abstandNetz);
-			this.uppergc4.strokeLine(pixel, 0, pixel, this.upperChart4.getHeight());
-	    }
-		
+		for (int i = 0; i <= (endzeitVar - startzeitVar); i++) {
+
+			double pixel = ((i) * abstandNetz);
+			this.uppergc4.strokeLine(pixel, 0, pixel,
+					this.upperChart4.getHeight());
+		}
+
 		this.upperGraphicPane4.setContent(this.upperChart4);
 	}
-	
+
 	/**
 	 * Creates the second Upper Background Graphic.
 	 */
 	@FXML
 	private void createUpperBackgroundGraphicFifthPane() {
-		
-		//Initialize the Chart
-		this.upperChart5 = new Canvas(this.upperGraphicPane5.getWidth()-4,this.upperheightFuenf);
-				
-		//Erstellen des HintergrundgrafikKontextes
+
+		// Initialize the Chart
+		this.upperChart5 = new Canvas(this.upperGraphicPane5.getWidth() - 4,
+				this.upperheightFuenf);
+
+		// Erstellen des HintergrundgrafikKontextes
 		this.uppergc5 = this.upperChart5.getGraphicsContext2D();
-		this.uppergc5.clearRect(0, 0, this.upperChart5.getWidth(), this.upperChart5.getHeight());
-		
-		//Erstellen des Hintergrundes
-		this.uppergc5.setFill(Color.BEIGE);				
-		this.uppergc5.fillRect(0, 0,this.upperChart5.getWidth(),this.upperChart5.getHeight());
-		
+		this.uppergc5.clearRect(0, 0, this.upperChart5.getWidth(),
+				this.upperChart5.getHeight());
+
+		// Erstellen des Hintergrundes
+		this.uppergc5.setFill(Color.BEIGE);
+		this.uppergc5.fillRect(0, 0, this.upperChart5.getWidth(),
+				this.upperChart5.getHeight());
+
 		this.uppergc5.setLineWidth(3);
 		this.uppergc5.setStroke(Color.BLACK);
-		this.uppergc5.strokeLine(1, 0, 1, this.upperChart5.getHeight());		
-		
-		double abstandNetz = (this.upperChart5.getWidth()-30)/(this.endzeitVar-this.startzeitVar);				
+		this.uppergc5.strokeLine(1, 0, 1, this.upperChart5.getHeight());
+
+		double abstandNetz = (this.upperChart5.getWidth() - 30)
+				/ (this.endzeitVar - this.startzeitVar);
 		this.uppergc5.setLineWidth(1);
 		this.uppergc5.setFont(Font.getDefault());
 		this.uppergc5.setFill(Color.BLACK);
 		this.uppergc5.setStroke(Color.BLACK);
 		// Variable zum Darstellen verschiedener Zeitpunkte
-		for(int i=0; i<=(endzeitVar-startzeitVar) ;i++) {
-			
-			double pixel=((i)*abstandNetz);
-			this.uppergc5.strokeLine(pixel, 0, pixel, this.upperChart5.getHeight());
-	    }
-		
+		for (int i = 0; i <= (endzeitVar - startzeitVar); i++) {
+
+			double pixel = ((i) * abstandNetz);
+			this.uppergc5.strokeLine(pixel, 0, pixel,
+					this.upperChart5.getHeight());
+		}
+
 		this.upperGraphicPane5.setContent(this.upperChart5);
 	}
-	
+
 	/**
 	 * Creates the second Upper Background Graphic.
 	 */
 	@FXML
 	private void createUpperBackgroundGraphicSixthPane() {
-		
-		//Initialize the Chart
-		this.upperChart6 = new Canvas(this.upperGraphicPane6.getWidth()-4,this.upperheightSechs);
-				
-		//Erstellen des HintergrundgrafikKontextes
+
+		// Initialize the Chart
+		this.upperChart6 = new Canvas(this.upperGraphicPane6.getWidth() - 4,
+				this.upperheightSechs);
+
+		// Erstellen des HintergrundgrafikKontextes
 		this.uppergc6 = this.upperChart6.getGraphicsContext2D();
-		this.uppergc6.clearRect(0, 0, this.upperChart6.getWidth(), this.upperChart6.getHeight());
-		
-		//Erstellen des Hintergrundes
-		this.uppergc6.setFill(Color.BEIGE);				
-		this.uppergc6.fillRect(0, 0,this.upperChart6.getWidth(),this.upperChart6.getHeight());
-		
+		this.uppergc6.clearRect(0, 0, this.upperChart6.getWidth(),
+				this.upperChart6.getHeight());
+
+		// Erstellen des Hintergrundes
+		this.uppergc6.setFill(Color.BEIGE);
+		this.uppergc6.fillRect(0, 0, this.upperChart6.getWidth(),
+				this.upperChart6.getHeight());
+
 		this.uppergc3.setLineWidth(3);
 		this.uppergc6.setStroke(Color.BLACK);
-		this.uppergc6.strokeLine(1, 0, 1, this.upperChart6.getHeight());		
-		
-		double abstandNetz = (this.upperChart6.getWidth()-30)/(this.endzeitVar-this.startzeitVar);				
+		this.uppergc6.strokeLine(1, 0, 1, this.upperChart6.getHeight());
+
+		double abstandNetz = (this.upperChart6.getWidth() - 30)
+				/ (this.endzeitVar - this.startzeitVar);
 		this.uppergc6.setLineWidth(1);
 		this.uppergc6.setFont(Font.getDefault());
 		this.uppergc6.setFill(Color.BLACK);
 		this.uppergc6.setStroke(Color.BLACK);
 		// Variable zum Darstellen verschiedener Zeitpunkte
-		for(int i=0; i<=(endzeitVar-startzeitVar) ;i++) {
-			
-			double pixel=((i)*abstandNetz);
-			this.uppergc6.strokeLine(pixel, 0, pixel, this.upperChart6.getHeight());
-	    }
-		
+		for (int i = 0; i <= (endzeitVar - startzeitVar); i++) {
+
+			double pixel = ((i) * abstandNetz);
+			this.uppergc6.strokeLine(pixel, 0, pixel,
+					this.upperChart6.getHeight());
+		}
+
 		this.upperGraphicPane6.setContent(this.upperChart6);
 	}
-	
+
 	/**
 	 * Creates the seventh Upper Background Graphic.
 	 */
 	@FXML
 	private void createUpperBackgroundGraphicSeventhPane() {
-		
-		//Initialize the Chart
-		this.upperChart7 = new Canvas(this.upperGraphicPane7.getWidth()-4,this.upperheightSieben);
-				
-		//Erstellen des HintergrundgrafikKontextes
+
+		// Initialize the Chart
+		this.upperChart7 = new Canvas(this.upperGraphicPane7.getWidth() - 4,
+				this.upperheightSieben);
+
+		// Erstellen des HintergrundgrafikKontextes
 		this.uppergc7 = this.upperChart7.getGraphicsContext2D();
-		this.uppergc7.clearRect(0, 0, this.upperChart7.getWidth(), this.upperChart7.getHeight());
-		
-		//Erstellen des Hintergrundes
-		this.uppergc7.setFill(Color.BEIGE);				
-		this.uppergc7.fillRect(0, 0,this.upperChart7.getWidth(),this.upperChart7.getHeight());
-		
+		this.uppergc7.clearRect(0, 0, this.upperChart7.getWidth(),
+				this.upperChart7.getHeight());
+
+		// Erstellen des Hintergrundes
+		this.uppergc7.setFill(Color.BEIGE);
+		this.uppergc7.fillRect(0, 0, this.upperChart7.getWidth(),
+				this.upperChart7.getHeight());
+
 		this.uppergc7.setLineWidth(3);
 		this.uppergc7.setStroke(Color.BLACK);
-		this.uppergc7.strokeLine(1, 0, 1, this.upperChart7.getHeight());		
-		
-		double abstandNetz = (this.upperChart7.getWidth()-30)/(this.endzeitVar-this.startzeitVar);				
+		this.uppergc7.strokeLine(1, 0, 1, this.upperChart7.getHeight());
+
+		double abstandNetz = (this.upperChart7.getWidth() - 30)
+				/ (this.endzeitVar - this.startzeitVar);
 		this.uppergc7.setLineWidth(1);
 		this.uppergc7.setFont(Font.getDefault());
 		this.uppergc7.setFill(Color.BLACK);
 		this.uppergc7.setStroke(Color.BLACK);
 		// Variable zum Darstellen verschiedener Zeitpunkte
-		for(int i=0; i<=(endzeitVar-startzeitVar) ;i++) {
-			
-			double pixel=((i)*abstandNetz);
-			this.uppergc7.strokeLine(pixel, 0, pixel, this.upperChart7.getHeight());
-	    }
-		
+		for (int i = 0; i <= (endzeitVar - startzeitVar); i++) {
+
+			double pixel = ((i) * abstandNetz);
+			this.uppergc7.strokeLine(pixel, 0, pixel,
+					this.upperChart7.getHeight());
+		}
+
 		this.upperGraphicPane7.setContent(this.upperChart7);
 	}
+
 	/**
 	 * Creates The Upper X - Scale for Tabs.
 	 */
 	private void createUpperXScalePane(AnchorPane xScale, ScrollPane xScrollPane) {
-	
-		
+
 		// Hier wird das Skala Canvas erzeugt
-				this.upperXChart1 = new Canvas(xScrollPane.getWidth(),this.xUp1.getHeight());
-				// Hier der Graphic Context dazu erzeugt
-				this.upperXgc1 = this.upperXChart1.getGraphicsContext2D();
-				this.upperXgc1.clearRect(0, 0, this.upperXChart1.getWidth(), this.upperXChart1.getHeight());
-				
-				double abstandNetz = (this.upperXChart1.getWidth()-30)/(this.endzeitVar-this.startzeitVar);				
-				this.upperXgc1.setLineWidth(1);
-				this.upperXgc1.setFont(Font.getDefault());
-				this.upperXgc1.setFill(Color.BLACK);
-				this.upperXgc1.setStroke(Color.BLACK);
-				
-				// Variable zum Darstellen verschiedener Zeitpunkte
-						int chartCounter = startzeitVar ;
-						for(int i=0; i<=(endzeitVar-startzeitVar) ;i++) {
-							
-							if(i == 0){
-								double pixel=((i)*abstandNetz);
-								this.upperXgc1.fillText(String.valueOf(chartCounter), pixel+1, 15);
-								chartCounter = chartCounter + 1;	
-							}
-							if(i!=0){
-							double pixel=((i)*abstandNetz);
-							this.upperXgc1.fillText(String.valueOf(chartCounter), pixel-4, 15);
-							if(chartCounter<23){
-							chartCounter = chartCounter + 1;
-							}else{
-								chartCounter = 0;
-								}
-							}
-					    }
-						
-				xScale.getChildren().add(upperXChart1);
+		this.upperXChart1 = new Canvas(xScrollPane.getWidth(),
+				this.xUp1.getHeight());
+		// Hier der Graphic Context dazu erzeugt
+		this.upperXgc1 = this.upperXChart1.getGraphicsContext2D();
+		this.upperXgc1.clearRect(0, 0, this.upperXChart1.getWidth(),
+				this.upperXChart1.getHeight());
+
+		double abstandNetz = (this.upperXChart1.getWidth() - 30)
+				/ (this.endzeitVar - this.startzeitVar);
+		this.upperXgc1.setLineWidth(1);
+		this.upperXgc1.setFont(Font.getDefault());
+		this.upperXgc1.setFill(Color.BLACK);
+		this.upperXgc1.setStroke(Color.BLACK);
+
+		// Variable zum Darstellen verschiedener Zeitpunkte
+		int chartCounter = startzeitVar;
+		for (int i = 0; i <= (endzeitVar - startzeitVar); i++) {
+
+			if (i == 0) {
+				double pixel = ((i) * abstandNetz);
+				this.upperXgc1.fillText(String.valueOf(chartCounter),
+						pixel + 1, 15);
+				chartCounter = chartCounter + 1;
+			}
+			if (i != 0) {
+				double pixel = ((i) * abstandNetz);
+				this.upperXgc1.fillText(String.valueOf(chartCounter),
+						pixel - 4, 15);
+				if (chartCounter < 23) {
+					chartCounter = chartCounter + 1;
+				} else {
+					chartCounter = 0;
+				}
+			}
+		}
+
+		xScale.getChildren().add(upperXChart1);
 	}
-	
+
 	/**
 	 * Creates The Lower Y - Scale.
 	 */
-	private void createUpperYScale(ScrollPane scrollPane, Canvas canvas, GraphicsContext gc, double height, Umlaufplan umlaufplan) {
-		
-		//Initialize the Chart
-		canvas = new Canvas(30,height);
-		
-		//Erstellen des HintergrundgrafikKontextes		
+	private void createUpperYScale(ScrollPane scrollPane, Canvas canvas,
+			GraphicsContext gc, double height, Umlaufplan umlaufplan) {
+
+		// Initialize the Chart
+		canvas = new Canvas(30, height);
+
+		// Erstellen des HintergrundgrafikKontextes
 		gc = canvas.getGraphicsContext2D();
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-		
-		//Eigenschaften der Beschriftung
+
+		// Eigenschaften der Beschriftung
 		gc.setLineWidth(1);
 		gc.setFont(Font.getDefault());
 		gc.setFill(Color.BLACK);
 		gc.setStroke(Color.BLACK);
-		// Auslesen der Werte		
+		// Auslesen der Werte
 		for (int j = 0; j < umlaufplan.getUmlauf().size(); j++) {
-			
-			gc.fillText("B "+umlaufplan.getUmlauf().get(j).getId(), 4, 22 + (j*40));
-			
+
+			gc.fillText("B " + umlaufplan.getUmlauf().get(j).getId(), 4,
+					22 + (j * 40));
+
 		}
-		
+
 		scrollPane.setContent(canvas);
-		
+
 	}
-	
-	
+
 	/**
 	 * Creates The Lower Graphic.
 	 */
 	@FXML
 	private void createLowerGraphic() {
-		
-		//Initialize the Chart
-		this.lowerChart1 = new Canvas(this.lowerGraphicPane1.getWidth()-4,this.lowerheight);
-			
-		//Erstellen des HintergrundgrafikKontextes
+
+		// Initialize the Chart
+		this.lowerChart1 = new Canvas(this.lowerGraphicPane1.getWidth() - 4,
+				this.lowerheight);
+
+		// Erstellen des HintergrundgrafikKontextes
 		this.lowergc1 = this.lowerChart1.getGraphicsContext2D();
-		this.lowergc1.clearRect(0, 0, this.lowerChart1.getWidth(), this.lowerChart1.getHeight());
-		
-		//Erstellen des Hintergrundes
-		this.lowergc1.setFill(Color.BISQUE);				
-		this.lowergc1.fillRect(0, 0,this.lowerChart1.getWidth(),this.lowerChart1.getHeight());
-		
+		this.lowergc1.clearRect(0, 0, this.lowerChart1.getWidth(),
+				this.lowerChart1.getHeight());
+
+		// Erstellen des Hintergrundes
+		this.lowergc1.setFill(Color.BISQUE);
+		this.lowergc1.fillRect(0, 0, this.lowerChart1.getWidth(),
+				this.lowerChart1.getHeight());
+
 		this.lowergc1.setLineWidth(3);
 		this.lowergc1.setStroke(Color.BLACK);
 		this.lowergc1.strokeLine(1, 0, 1, this.lowerChart1.getHeight());
-		this.lowergc1.strokeLine(0, this.lowerChart1.getHeight()-1, this.lowerChart1.getWidth(),this.lowerChart1.getHeight()-1);
-		
-		double abstandNetz = (this.lowerChart1.getWidth()-30)/(this.endzeitVar-this.startzeitVar);				
+		this.lowergc1.strokeLine(0, this.lowerChart1.getHeight() - 1,
+				this.lowerChart1.getWidth(), this.lowerChart1.getHeight() - 1);
+
+		double abstandNetz = (this.lowerChart1.getWidth() - 30)
+				/ (this.endzeitVar - this.startzeitVar);
 		this.lowergc1.setLineWidth(1);
 		this.lowergc1.setFont(Font.getDefault());
 		this.lowergc1.setFill(Color.BLACK);
-		this.lowergc1.setStroke(Color.BLACK);	
+		this.lowergc1.setStroke(Color.BLACK);
 		// Variable zum Darstellen verschiedener Zeitpunkte
-		for(int i=0; i<=(this.endzeitVar-this.startzeitVar) ;i++) {
-						
-			double pixel=((i)*abstandNetz);
-			this.lowergc1.strokeLine(pixel, 0, pixel, this.lowerChart1.getHeight()-1);
+		for (int i = 0; i <= (this.endzeitVar - this.startzeitVar); i++) {
+
+			double pixel = ((i) * abstandNetz);
+			this.lowergc1.strokeLine(pixel, 0, pixel,
+					this.lowerChart1.getHeight() - 1);
 		}
-		
+
 		this.lowerGraphicPane1.setContent(this.lowerChart1);
-		}
-	
-	
+	}
+
 	/**
 	 * Fills the DetailPane für die Umlaufpläne
 	 */
 	private void fillDetailPaneUmlauf(Umlaufplan umlaufplan) {
-		
+
 		this.anzahlFahrten.setVisible(true);
-		this.anzahlFahrten.setText(String.valueOf(umlaufplan.getFahrtZuUmlauf().size()));
-		
+		this.anzahlFahrten.setText(String.valueOf(umlaufplan.getFahrtZuUmlauf()
+				.size()));
+
 	}
+
 	/**
 	 * Creates DetailsTable.
 	 */
 	@SuppressWarnings("unchecked")
 	private void createUDetailsTable(Umlaufplan umlaufplan) {
-		
-				this.detailsUmlaufTable.setEditable(true);
-				
-				TableColumn<Blockelement, Integer> blockEleCol = new TableColumn<Blockelement, Integer>("Block-Ele.");
-				TableColumn<Blockelement, String> startzeitCol = new TableColumn<Blockelement, String>("Startzeit");
-				TableColumn<Blockelement, String> endzeitCol = new TableColumn<Blockelement, String>("Endzeit");
-				TableColumn<Blockelement, Integer> eleTypeCol = new TableColumn<Blockelement, Integer>("Ele.-Type");
-				TableColumn<Blockelement, Integer> blockCol = new TableColumn<Blockelement, Integer>("Block");
-				TableColumn<Blockelement, String> dauerCol = new TableColumn<Blockelement, String>("Dauer");		
-				
-				blockEleCol.setCellValueFactory(new PropertyValueFactory<Blockelement, Integer>("id"));
-				startzeitCol.setCellValueFactory(new PropertyValueFactory<Blockelement, String>("depTime"));
-				endzeitCol.setCellValueFactory(new PropertyValueFactory<Blockelement, String>("arrTime"));
-				eleTypeCol.setCellValueFactory(new PropertyValueFactory<Blockelement, Integer>("elementType"));
-				blockCol.setCellValueFactory(new PropertyValueFactory<Blockelement, Integer>("blockID"));
-				dauerCol.setCellValueFactory(new PropertyValueFactory<Blockelement, String>("driveTime"));
-				
-				blockEleCol.prefWidthProperty().bind(blockEleCol.widthProperty());
-				startzeitCol.prefWidthProperty().bind(startzeitCol.widthProperty());
-				endzeitCol.prefWidthProperty().bind(endzeitCol.widthProperty());
-				eleTypeCol.prefWidthProperty().bind(eleTypeCol.widthProperty());
-				blockCol.prefWidthProperty().bind(blockCol.widthProperty());
-				dauerCol.prefWidthProperty().bind(dauerCol.widthProperty());
-				
-				// Hereinladen der Daten
-				
-				ObservableList<Blockelement> data = FXCollections.observableArrayList();
-				
-				for ( int i = 0; i < umlaufplan.getFahrtZuUmlauf().size(); i++ ){
-					
-					// Berrechnen der Dauer zwischen der Abfahrt und der Ankunft
-					
-					String depTime = umlaufplan.getFahrtZuUmlauf().get(i).getDepTime();
-					String arrtime = umlaufplan.getFahrtZuUmlauf().get(i).getArrTime();
-					
-					SimpleDateFormat format = new SimpleDateFormat("HH:mm");
-						Date date1 = null;
-						Date date2 = null;
-						try {
-							date1 = format.parse(depTime);
-						} catch (ParseException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}					
-						try {
-							date2 = format.parse(arrtime);
-						} catch (ParseException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}					
-					long differenz = date2.getTime() - date1.getTime(); 
-					differenz = (differenz/1000)/60;
-					umlaufplan.getFahrtZuUmlauf().get(i).setDriveTime(differenz+" min");
-					
-					
-					// Hinzufügen der Daten
-					
-					data.add(umlaufplan.getFahrtZuUmlauf().get(i));
-				};
-				
-				this.detailsUmlaufTable.setItems(data);
-				this.detailsUmlaufTable.getColumns().addAll(blockEleCol, startzeitCol, endzeitCol, eleTypeCol, blockCol, dauerCol);
-				this.tablePane.setContent(detailsUmlaufTable);
-				
-				uDetailsTableErstellt = true;
+
+		this.detailsUmlaufTable.setEditable(true);
+
+		TableColumn<Blockelement, Integer> blockEleCol = new TableColumn<Blockelement, Integer>(
+				"Block-Ele.");
+		TableColumn<Blockelement, String> startzeitCol = new TableColumn<Blockelement, String>(
+				"Startzeit");
+		TableColumn<Blockelement, String> endzeitCol = new TableColumn<Blockelement, String>(
+				"Endzeit");
+		TableColumn<Blockelement, Integer> eleTypeCol = new TableColumn<Blockelement, Integer>(
+				"Ele.-Type");
+		TableColumn<Blockelement, Integer> blockCol = new TableColumn<Blockelement, Integer>(
+				"Block");
+		TableColumn<Blockelement, String> dauerCol = new TableColumn<Blockelement, String>(
+				"Dauer");
+
+		blockEleCol
+				.setCellValueFactory(new PropertyValueFactory<Blockelement, Integer>(
+						"id"));
+		startzeitCol
+				.setCellValueFactory(new PropertyValueFactory<Blockelement, String>(
+						"depTime"));
+		endzeitCol
+				.setCellValueFactory(new PropertyValueFactory<Blockelement, String>(
+						"arrTime"));
+		eleTypeCol
+				.setCellValueFactory(new PropertyValueFactory<Blockelement, Integer>(
+						"elementType"));
+		blockCol.setCellValueFactory(new PropertyValueFactory<Blockelement, Integer>(
+				"blockID"));
+		dauerCol.setCellValueFactory(new PropertyValueFactory<Blockelement, String>(
+				"driveTime"));
+
+		blockEleCol.prefWidthProperty().bind(blockEleCol.widthProperty());
+		startzeitCol.prefWidthProperty().bind(startzeitCol.widthProperty());
+		endzeitCol.prefWidthProperty().bind(endzeitCol.widthProperty());
+		eleTypeCol.prefWidthProperty().bind(eleTypeCol.widthProperty());
+		blockCol.prefWidthProperty().bind(blockCol.widthProperty());
+		dauerCol.prefWidthProperty().bind(dauerCol.widthProperty());
+
+		// Hereinladen der Daten
+
+		ObservableList<Blockelement> data = FXCollections.observableArrayList();
+
+		for (int i = 0; i < umlaufplan.getFahrtZuUmlauf().size(); i++) {
+
+			// Berrechnen der Dauer zwischen der Abfahrt und der Ankunft
+
+			String depTime = umlaufplan.getFahrtZuUmlauf().get(i).getDepTime();
+			String arrtime = umlaufplan.getFahrtZuUmlauf().get(i).getArrTime();
+
+			SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+			Date date1 = null;
+			Date date2 = null;
+			try {
+				date1 = format.parse(depTime);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				date2 = format.parse(arrtime);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			long differenz = date2.getTime() - date1.getTime();
+			differenz = (differenz / 1000) / 60;
+			umlaufplan.getFahrtZuUmlauf().get(i)
+					.setDriveTime(differenz + " min");
+
+			// Hinzufügen der Daten
+
+			data.add(umlaufplan.getFahrtZuUmlauf().get(i));
+		}
+		;
+
+		this.detailsUmlaufTable.setItems(data);
+		this.detailsUmlaufTable.getColumns().addAll(blockEleCol, startzeitCol,
+				endzeitCol, eleTypeCol, blockCol, dauerCol);
+		this.tablePane.setContent(detailsUmlaufTable);
+
+		uDetailsTableErstellt = true;
 	}
-	
+
 	/**
 	 * Creates Elements in the Graphic.
 	 */
-	private void createUmlaufElementGraphic(Umlaufplan umlaufplan, ScrollPane scrollPane, Canvas canvas, GraphicsContext gc ) {
-		
-		double abstandNetz = (canvas.getWidth()-30)/(this.endzeitVar-this.startzeitVar);
-				
-		 // Auslesen der Blockanzahl		 
-		 for (int j = 0; j < umlaufplan.getUmlauf().size(); j++) {
-			 
-			 // Auslesen Blockelementanzahl
-			 for (int i = 0; i < umlaufplan.getFahrtZuUmlauf().size(); i++) {		
-			
+	private void createUmlaufElementGraphic(Umlaufplan umlaufplan,
+			ScrollPane scrollPane, Canvas canvas, GraphicsContext gc) {
+
+		double abstandNetz = (canvas.getWidth() - 30)
+				/ (this.endzeitVar - this.startzeitVar);
+
+		// Auslesen der Blockanzahl
+		for (int j = 0; j < umlaufplan.getUmlauf().size(); j++) {
+
+			// Auslesen Blockelementanzahl
+			for (int i = 0; i < umlaufplan.getFahrtZuUmlauf().size(); i++) {
+
 				// Abgleich mit den Werten
-				if(umlaufplan.getFahrtZuUmlauf().get(i).getBlockID() == umlaufplan.getUmlauf().get(j).getId()){
-					
+				if (umlaufplan.getFahrtZuUmlauf().get(i).getBlockID() == umlaufplan
+						.getUmlauf().get(j).getId()) {
+
 					// Auslesen der Zeit als Integer
 					StringSplitter ss = new StringSplitter();
-					int [] zeit= new int[2];
-					zeit = ss.intParse(umlaufplan.getFahrtZuUmlauf().get(i).getDepTime());					
-					int startHour = zeit[0] ;
-					int startMin = zeit[1] ;					
-					zeit = ss.intParse(umlaufplan.getFahrtZuUmlauf().get(i).getArrTime());
+					int[] zeit = new int[2];
+					zeit = ss.intParse(umlaufplan.getFahrtZuUmlauf().get(i)
+							.getDepTime());
+					int startHour = zeit[0];
+					int startMin = zeit[1];
+					zeit = ss.intParse(umlaufplan.getFahrtZuUmlauf().get(i)
+							.getArrTime());
 					int endHour = zeit[0];
 					int endMin = zeit[1];
-					
-					
+
 					// Belegung der Pixelwerte
-					if(this.startzeitVar <= startHour && this.endzeitVar > endHour){
-					int stundenDifferenz =	startHour - this.startzeitVar;
-					int startPixelX = (int) ((stundenDifferenz*abstandNetz) + ((abstandNetz/60)*startMin));
-					int startPixelY = 10 + (j*40);
-					int fahrtDauer = 0;
-					// Berrechnen der Dauer zwischen der Abfahrt und der Ankunft
-					
-					String depTime = umlaufplan.getFahrtZuUmlauf().get(i).getDepTime();
-					String arrtime = umlaufplan.getFahrtZuUmlauf().get(i).getArrTime();
-					
-					SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+					if (this.startzeitVar <= startHour
+							&& this.endzeitVar > endHour) {
+						int stundenDifferenz = startHour - this.startzeitVar;
+						int startPixelX = (int) ((stundenDifferenz * abstandNetz) + ((abstandNetz / 60) * startMin));
+						int startPixelY = 10 + (j * 40);
+						int fahrtDauer = 0;
+						// Berrechnen der Dauer zwischen der Abfahrt und der
+						// Ankunft
+
+						String depTime = umlaufplan.getFahrtZuUmlauf().get(i)
+								.getDepTime();
+						String arrtime = umlaufplan.getFahrtZuUmlauf().get(i)
+								.getArrTime();
+
+						SimpleDateFormat format = new SimpleDateFormat("HH:mm");
 						Date date1 = null;
 						Date date2 = null;
 						try {
@@ -1665,581 +1886,632 @@ public class MainLayoutController {
 						} catch (ParseException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
-						}					
+						}
 						try {
 							date2 = format.parse(arrtime);
 						} catch (ParseException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
-						}					
-					long differenz = date2.getTime() - date1.getTime(); 
-					differenz = (differenz/1000)/60;										
+						}
+						long differenz = date2.getTime() - date1.getTime();
+						differenz = (differenz / 1000) / 60;
 
-					fahrtDauer = (int) (differenz *(abstandNetz/60));
-					
-					//Färben der Elemente
-					
-					switch(umlaufplan.getFahrtZuUmlauf().get(i).getElementType()){
-					
-					case 1:
-			        	// Servicefahrt
-			        	gc.setFill(Color.SEAGREEN);
-			            break;
-			        case 2:
-			        	// Leerfahrt Haltestellen
-			        	gc.setFill(Color.LIGHTCORAL);
-			            break;
-			        case 3:
-			        	// Fahrt ins Depot
-			        	gc.setFill(Color.ANTIQUEWHITE);
-			            break;
-			        case 4:
-			        	// Fahrt aus dem Depot
-			        	gc.setFill(Color.WHITESMOKE);
-			            break;
-			        case 5:
-			        	// Vorbereitung
-			        	gc.setFill(Color.GREEN);
-			            break;
-			        case 6:
-			        	// Nachbereitung
-			        	gc.setFill(Color.GREEN);
-			            break;
-			        case 7:
-			        	// Transfer
-			        	gc.setFill(Color.GREEN);
-			            break;
-			        case 8:
-			        	// Pause
-			        	gc.setFill(Color.ORANGE);
-			            break;
-			        case 9:
-			        	// Warten
-			        	gc.setFill(Color.LIGHTSKYBLUE);
-			            break;		
-			        case 10:
-			        	// LayoverTime
-			        	gc.setFill(Color.GREEN);
-			            break;
-			        } 
-					
-					// Malen der Elemente
-					
-					 gc.fillRoundRect(startPixelX, startPixelY, fahrtDauer, 20, 20, 10);
-					 gc.strokeRoundRect(startPixelX, startPixelY, fahrtDauer, 20, 20, 10);
-					}					
+						fahrtDauer = (int) (differenz * (abstandNetz / 60));
+
+						// Färben der Elemente
+
+						switch (umlaufplan.getFahrtZuUmlauf().get(i)
+								.getElementType()) {
+
+						case 1:
+							// Servicefahrt
+							gc.setFill(Color.SEAGREEN);
+							break;
+						case 2:
+							// Leerfahrt Haltestellen
+							gc.setFill(Color.LIGHTCORAL);
+							break;
+						case 3:
+							// Fahrt ins Depot
+							gc.setFill(Color.ANTIQUEWHITE);
+							break;
+						case 4:
+							// Fahrt aus dem Depot
+							gc.setFill(Color.WHITESMOKE);
+							break;
+						case 5:
+							// Vorbereitung
+							gc.setFill(Color.GREEN);
+							break;
+						case 6:
+							// Nachbereitung
+							gc.setFill(Color.GREEN);
+							break;
+						case 7:
+							// Transfer
+							gc.setFill(Color.GREEN);
+							break;
+						case 8:
+							// Pause
+							gc.setFill(Color.ORANGE);
+							break;
+						case 9:
+							// Warten
+							gc.setFill(Color.LIGHTSKYBLUE);
+							break;
+						case 10:
+							// LayoverTime
+							gc.setFill(Color.GREEN);
+							break;
+						}
+
+						// Malen der Elemente
+
+						gc.fillRoundRect(startPixelX, startPixelY, fahrtDauer,
+								20, 20, 10);
+						gc.strokeRoundRect(startPixelX, startPixelY,
+								fahrtDauer, 20, 20, 10);
+					}
 				}
-		 	}			
-		}		
+			}
+		}
 	}
-	
+
 	/**
 	 * Creates The Lower X - Scale.
 	 */
 	@FXML
 	private void createLowerXScale() {
-		
+
 		// Hier wird das Skala Canvas erzeugt
-		this.lowerXChart1 = new Canvas(this.lowerGraphicPane1.getWidth(),this.xLow1.getHeight());
+		this.lowerXChart1 = new Canvas(this.lowerGraphicPane1.getWidth(),
+				this.xLow1.getHeight());
 		// Hier der Graphic Context dazu erzeugt
 		this.lowerXgc1 = this.lowerXChart1.getGraphicsContext2D();
-		this.lowerXgc1.clearRect(0, 0, this.lowerXChart1.getWidth(), this.lowerXChart1.getHeight());
-		
-		double abstandNetz = (this.lowerXChart1.getWidth()-30)/(this.endzeitVar-this.startzeitVar);				
+		this.lowerXgc1.clearRect(0, 0, this.lowerXChart1.getWidth(),
+				this.lowerXChart1.getHeight());
+
+		double abstandNetz = (this.lowerXChart1.getWidth() - 30)
+				/ (this.endzeitVar - this.startzeitVar);
 		this.lowerXgc1.setLineWidth(1);
 		this.lowerXgc1.setFont(Font.getDefault());
 		this.lowerXgc1.setFill(Color.BLACK);
 		this.lowerXgc1.setStroke(Color.BLACK);
-		
+
 		// Variable zum Darstellen verschiedener Zeitpunkte
-				int chartCounter = startzeitVar ;
-				for(int i=0; i<=(endzeitVar-startzeitVar) ;i++) {
-					
-					if(i == 0){
-						double pixel=((i)*abstandNetz);
-						this.lowerXgc1.fillText(String.valueOf(chartCounter), pixel+1, 15);
-						chartCounter = chartCounter + 1;	
-					}
-					if(i!=0){
-						
-					double pixel=((i)*abstandNetz);
-					this.lowerXgc1.fillText(String.valueOf(chartCounter), pixel-4, 15);
-					if(chartCounter<23){
+		int chartCounter = startzeitVar;
+		for (int i = 0; i <= (endzeitVar - startzeitVar); i++) {
+
+			if (i == 0) {
+				double pixel = ((i) * abstandNetz);
+				this.lowerXgc1.fillText(String.valueOf(chartCounter),
+						pixel + 1, 15);
+				chartCounter = chartCounter + 1;
+			}
+			if (i != 0) {
+
+				double pixel = ((i) * abstandNetz);
+				this.lowerXgc1.fillText(String.valueOf(chartCounter),
+						pixel - 4, 15);
+				if (chartCounter < 23) {
 					chartCounter = chartCounter + 1;
-						}else{
-							chartCounter = 0;
-						}
-					}
-			    }
-				
+				} else {
+					chartCounter = 0;
+				}
+			}
+		}
+
 		this.xLow1.getChildren().add(lowerXChart1);
-		
+
 	}
-	
+
 	/**
 	 * Creates The Lower Y - Scale.
 	 */
 	@FXML
 	private void createLowerYScale() {
-		
-		
+
 	}
-	
+
 	/**
 	 * Creates The Helplines in the graphic.
 	 */
 	private void createHelpLines() {
-		
+
 		createHelpLinesFirstTab();
-		if(this.secondGrafikErstellt == true){
-		createHelpLinesSecondTab();
+		if (this.secondGrafikErstellt == true) {
+			createHelpLinesSecondTab();
 		}
-		if(this.thirdGrafikErstellt == true){
+		if (this.thirdGrafikErstellt == true) {
 			createHelpLinesThirdTab();
 		}
-		if(this.fourthGrafikErstellt == true){
+		if (this.fourthGrafikErstellt == true) {
 			createHelpLinesFourthTab();
 		}
-		if(this.fifthGrafikErstellt == true){
+		if (this.fifthGrafikErstellt == true) {
 			createHelpLinesFifthTab();
 		}
-		if(this.sixthGrafikErstellt == true){
+		if (this.sixthGrafikErstellt == true) {
 			createHelpLinesSixthTab();
 		}
-		if(this.seventhGrafikErstellt == true){
+		if (this.seventhGrafikErstellt == true) {
 			createHelpLinesSeventhTab();
-		}		
+		}
 	}
 
 	/**
 	 * Creates The Helplines in the graphic.
 	 */
 	private void createHelpLinesFirstTab() {
-		
-		double abstandNetz = (this.upperChart1.getWidth()-30)/(this.endzeitVar-this.startzeitVar);	
+
+		double abstandNetz = (this.upperChart1.getWidth() - 30)
+				/ (this.endzeitVar - this.startzeitVar);
 		// Methoden zu Erstellung der dynamischen Hilfslinien
-			
-		if(lowergrafikErstellt == true){
-			
+
+		if (lowergrafikErstellt == true) {
+
 			this.lowergc1.setLineWidth(1);
 			this.lowergc1.setStroke(Color.LIGHTGREY);
-			
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {			
-				
-			double pixel=((i)*abstandNetz)+abstandNetz/4;
-			this.lowergc1.strokeLine(pixel, 0, pixel, this.lowerChart1.getHeight()-3);
-			
+
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 4;
+				this.lowergc1.strokeLine(pixel, 0, pixel,
+						this.lowerChart1.getHeight() - 3);
+
 			}
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-				
-			double pixel=((i)*abstandNetz)+abstandNetz/2;
-			this.lowergc1.strokeLine(pixel, 0, pixel, this.lowerChart1.getHeight()-3);
-			
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 2;
+				this.lowergc1.strokeLine(pixel, 0, pixel,
+						this.lowerChart1.getHeight() - 3);
+
 			}
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-				
-			double pixel=((i)*abstandNetz)+abstandNetz/4*3;
-			this.lowergc1.strokeLine(pixel, 0, pixel, this.lowerChart1.getHeight()-3);
-			
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 4 * 3;
+				this.lowergc1.strokeLine(pixel, 0, pixel,
+						this.lowerChart1.getHeight() - 3);
+
 			}
 		}
-		if(this.firstUppergrafikErstellt == true){	
-			
-			
-			
+		if (this.firstUppergrafikErstellt == true) {
+
 			this.uppergc1.setLineWidth(1);
 			this.uppergc1.setStroke(Color.LIGHTGREY);
-			
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-					
-			double pixel=((i)*abstandNetz)+abstandNetz/4;
-			this.uppergc1.strokeLine(pixel, 0, pixel, this.upperChart1.getHeight());			
-			
+
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 4;
+				this.uppergc1.strokeLine(pixel, 0, pixel,
+						this.upperChart1.getHeight());
+
 			}
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-					
-			double pixel=((i)*abstandNetz)+abstandNetz/2;
-			this.uppergc1.strokeLine(pixel, 0, pixel, this.upperChart1.getHeight());
-			
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 2;
+				this.uppergc1.strokeLine(pixel, 0, pixel,
+						this.upperChart1.getHeight());
+
 			}
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-					
-			double pixel=((i)*abstandNetz)+abstandNetz/4*3;
-			this.uppergc1.strokeLine(pixel, 0, pixel, this.upperChart1.getHeight());
-			
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 4 * 3;
+				this.uppergc1.strokeLine(pixel, 0, pixel,
+						this.upperChart1.getHeight());
+
 			}
 		}
-					
+
 	}
+
 	/**
 	 * Creates The Helplines in the graphic.
 	 */
 	private void createHelpLinesSecondTab() {
-		
-		
-		double abstandNetz = (this.upperChart2.getWidth()-30)/(this.endzeitVar-this.startzeitVar);	
+
+		double abstandNetz = (this.upperChart2.getWidth() - 30)
+				/ (this.endzeitVar - this.startzeitVar);
 		// Methoden zu Erstellung der dynamischen Hilfslinien
-			
-		if(lowergrafikErstellt == true){
-			
+
+		if (lowergrafikErstellt == true) {
+
 			this.lowergc2.setLineWidth(1);
 			this.lowergc2.setStroke(Color.LIGHTGREY);
-			
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {			
-				
-			double pixel=((i)*abstandNetz)+abstandNetz/4;
-			this.lowergc2.strokeLine(pixel, 0, pixel, this.lowerChart2.getHeight()-3);
-			
+
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 4;
+				this.lowergc2.strokeLine(pixel, 0, pixel,
+						this.lowerChart2.getHeight() - 3);
+
 			}
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-				
-			double pixel=((i)*abstandNetz)+abstandNetz/2;
-			this.lowergc2.strokeLine(pixel, 0, pixel, this.lowerChart2.getHeight()-3);
-			
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 2;
+				this.lowergc2.strokeLine(pixel, 0, pixel,
+						this.lowerChart2.getHeight() - 3);
+
 			}
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-				
-			double pixel=((i)*abstandNetz)+abstandNetz/4*3;
-			this.lowergc2.strokeLine(pixel, 0, pixel, this.lowerChart2.getHeight()-3);
-			
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 4 * 3;
+				this.lowergc2.strokeLine(pixel, 0, pixel,
+						this.lowerChart2.getHeight() - 3);
+
 			}
 		}
-		
-		if(this.secondUppergrafikErstellt == true){	
-					
+
+		if (this.secondUppergrafikErstellt == true) {
+
 			this.uppergc2.setLineWidth(1);
 			this.uppergc2.setStroke(Color.LIGHTGREY);
-			
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-					
-			double pixel=((i)*abstandNetz)+abstandNetz/4;
-			this.uppergc2.strokeLine(pixel, 0, pixel, this.upperChart1.getHeight());			
-			
+
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 4;
+				this.uppergc2.strokeLine(pixel, 0, pixel,
+						this.upperChart1.getHeight());
+
 			}
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-					
-			double pixel=((i)*abstandNetz)+abstandNetz/2;
-			this.uppergc2.strokeLine(pixel, 0, pixel, this.upperChart1.getHeight());
-			
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 2;
+				this.uppergc2.strokeLine(pixel, 0, pixel,
+						this.upperChart1.getHeight());
+
 			}
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-					
-			double pixel=((i)*abstandNetz)+abstandNetz/4*3;
-			this.uppergc2.strokeLine(pixel, 0, pixel, this.upperChart1.getHeight());
-			
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 4 * 3;
+				this.uppergc2.strokeLine(pixel, 0, pixel,
+						this.upperChart1.getHeight());
+
 			}
 		}
-					
+
 	}
+
 	/**
 	 * Creates The Helplines in the graphic.
 	 */
 	private void createHelpLinesThirdTab() {
-		
-		double abstandNetz = (this.upperChart3.getWidth()-30)/(this.endzeitVar-this.startzeitVar);	
+
+		double abstandNetz = (this.upperChart3.getWidth() - 30)
+				/ (this.endzeitVar - this.startzeitVar);
 		// Methoden zu Erstellung der dynamischen Hilfslinien
-			
-		if(lowergrafikErstellt == true){
-			
+
+		if (lowergrafikErstellt == true) {
+
 			this.lowergc3.setLineWidth(1);
 			this.lowergc3.setStroke(Color.LIGHTGREY);
-			
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {			
-				
-			double pixel=((i)*abstandNetz)+abstandNetz/4;
-			this.lowergc3.strokeLine(pixel, 0, pixel, this.lowerChart3.getHeight()-3);
-			
+
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 4;
+				this.lowergc3.strokeLine(pixel, 0, pixel,
+						this.lowerChart3.getHeight() - 3);
+
 			}
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-				
-			double pixel=((i)*abstandNetz)+abstandNetz/2;
-			this.lowergc3.strokeLine(pixel, 0, pixel, this.lowerChart3.getHeight()-3);
-			
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 2;
+				this.lowergc3.strokeLine(pixel, 0, pixel,
+						this.lowerChart3.getHeight() - 3);
+
 			}
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-				
-			double pixel=((i)*abstandNetz)+abstandNetz/4*3;
-			this.lowergc3.strokeLine(pixel, 0, pixel, this.lowerChart3.getHeight()-3);
-			
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 4 * 3;
+				this.lowergc3.strokeLine(pixel, 0, pixel,
+						this.lowerChart3.getHeight() - 3);
+
 			}
 		}
-		if(this.thirdUppergrafikErstellt == true){	
-			
-			
-			
+		if (this.thirdUppergrafikErstellt == true) {
+
 			this.uppergc3.setLineWidth(1);
 			this.uppergc3.setStroke(Color.LIGHTGREY);
-			
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-					
-			double pixel=((i)*abstandNetz)+abstandNetz/4;
-			this.uppergc3.strokeLine(pixel, 0, pixel, this.upperChart3.getHeight());			
-			
+
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 4;
+				this.uppergc3.strokeLine(pixel, 0, pixel,
+						this.upperChart3.getHeight());
+
 			}
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-					
-			double pixel=((i)*abstandNetz)+abstandNetz/2;
-			this.uppergc3.strokeLine(pixel, 0, pixel, this.upperChart3.getHeight());
-			
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 2;
+				this.uppergc3.strokeLine(pixel, 0, pixel,
+						this.upperChart3.getHeight());
+
 			}
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-					
-			double pixel=((i)*abstandNetz)+abstandNetz/4*3;
-			this.uppergc3.strokeLine(pixel, 0, pixel, this.upperChart3.getHeight());
-			
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 4 * 3;
+				this.uppergc3.strokeLine(pixel, 0, pixel,
+						this.upperChart3.getHeight());
+
 			}
 		}
-					
+
 	}
+
 	/**
 	 * Creates The Helplines in the graphic.
 	 */
 	private void createHelpLinesFourthTab() {
-		
-		double abstandNetz = (this.upperChart4.getWidth()-30)/(this.endzeitVar-this.startzeitVar);	
+
+		double abstandNetz = (this.upperChart4.getWidth() - 30)
+				/ (this.endzeitVar - this.startzeitVar);
 		// Methoden zu Erstellung der dynamischen Hilfslinien
-			
-		if(lowergrafikErstellt == true){
-			
+
+		if (lowergrafikErstellt == true) {
+
 			this.lowergc4.setLineWidth(1);
 			this.lowergc4.setStroke(Color.LIGHTGREY);
-			
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {			
-				
-			double pixel=((i)*abstandNetz)+abstandNetz/4;
-			this.lowergc4.strokeLine(pixel, 0, pixel, this.lowerChart4.getHeight()-3);
-			
+
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 4;
+				this.lowergc4.strokeLine(pixel, 0, pixel,
+						this.lowerChart4.getHeight() - 3);
+
 			}
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-				
-			double pixel=((i)*abstandNetz)+abstandNetz/2;
-			this.lowergc4.strokeLine(pixel, 0, pixel, this.lowerChart4.getHeight()-3);
-			
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 2;
+				this.lowergc4.strokeLine(pixel, 0, pixel,
+						this.lowerChart4.getHeight() - 3);
+
 			}
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-				
-			double pixel=((i)*abstandNetz)+abstandNetz/4*3;
-			this.lowergc4.strokeLine(pixel, 0, pixel, this.lowerChart4.getHeight()-3);
-			
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 4 * 3;
+				this.lowergc4.strokeLine(pixel, 0, pixel,
+						this.lowerChart4.getHeight() - 3);
+
 			}
 		}
-		if(this.fourthUppergrafikErstellt == true){	
-			
-			
-			
+		if (this.fourthUppergrafikErstellt == true) {
+
 			this.uppergc4.setLineWidth(1);
 			this.uppergc4.setStroke(Color.LIGHTGREY);
-			
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-					
-			double pixel=((i)*abstandNetz)+abstandNetz/4;
-			this.uppergc4.strokeLine(pixel, 0, pixel, this.upperChart4.getHeight());			
-			
+
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 4;
+				this.uppergc4.strokeLine(pixel, 0, pixel,
+						this.upperChart4.getHeight());
+
 			}
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-					
-			double pixel=((i)*abstandNetz)+abstandNetz/2;
-			this.uppergc4.strokeLine(pixel, 0, pixel, this.upperChart4.getHeight());
-			
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 2;
+				this.uppergc4.strokeLine(pixel, 0, pixel,
+						this.upperChart4.getHeight());
+
 			}
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-					
-			double pixel=((i)*abstandNetz)+abstandNetz/4*3;
-			this.uppergc4.strokeLine(pixel, 0, pixel, this.upperChart4.getHeight());
-			
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 4 * 3;
+				this.uppergc4.strokeLine(pixel, 0, pixel,
+						this.upperChart4.getHeight());
+
 			}
 		}
-					
+
 	}
+
 	/**
 	 * Creates The Helplines in the graphic.
 	 */
 	private void createHelpLinesFifthTab() {
-		
-		double abstandNetz = (this.upperChart5.getWidth()-30)/(this.endzeitVar-this.startzeitVar);	
+
+		double abstandNetz = (this.upperChart5.getWidth() - 30)
+				/ (this.endzeitVar - this.startzeitVar);
 		// Methoden zu Erstellung der dynamischen Hilfslinien
-			
-		if(lowergrafikErstellt == true){
-			
+
+		if (lowergrafikErstellt == true) {
+
 			this.lowergc5.setLineWidth(1);
 			this.lowergc5.setStroke(Color.LIGHTGREY);
-			
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {			
-				
-			double pixel=((i)*abstandNetz)+abstandNetz/4;
-			this.lowergc5.strokeLine(pixel, 0, pixel, this.lowerChart5.getHeight()-3);
-			
+
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 4;
+				this.lowergc5.strokeLine(pixel, 0, pixel,
+						this.lowerChart5.getHeight() - 3);
+
 			}
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-				
-			double pixel=((i)*abstandNetz)+abstandNetz/2;
-			this.lowergc5.strokeLine(pixel, 0, pixel, this.lowerChart5.getHeight()-3);
-			
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 2;
+				this.lowergc5.strokeLine(pixel, 0, pixel,
+						this.lowerChart5.getHeight() - 3);
+
 			}
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-				
-			double pixel=((i)*abstandNetz)+abstandNetz/4*3;
-			this.lowergc5.strokeLine(pixel, 0, pixel, this.lowerChart5.getHeight()-3);
-			
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 4 * 3;
+				this.lowergc5.strokeLine(pixel, 0, pixel,
+						this.lowerChart5.getHeight() - 3);
+
 			}
 		}
-		if(this.fifthUppergrafikErstellt == true){				
-			
-			
+		if (this.fifthUppergrafikErstellt == true) {
+
 			this.uppergc5.setLineWidth(1);
 			this.uppergc5.setStroke(Color.LIGHTGREY);
-			
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-					
-			double pixel=((i)*abstandNetz)+abstandNetz/4;
-			this.uppergc5.strokeLine(pixel, 0, pixel, this.upperChart5.getHeight());			
-			
+
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 4;
+				this.uppergc5.strokeLine(pixel, 0, pixel,
+						this.upperChart5.getHeight());
+
 			}
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-					
-			double pixel=((i)*abstandNetz)+abstandNetz/2;
-			this.uppergc5.strokeLine(pixel, 0, pixel, this.upperChart5.getHeight());
-			
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 2;
+				this.uppergc5.strokeLine(pixel, 0, pixel,
+						this.upperChart5.getHeight());
+
 			}
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-					
-			double pixel=((i)*abstandNetz)+abstandNetz/4*3;
-			this.uppergc5.strokeLine(pixel, 0, pixel, this.upperChart5.getHeight());
-			
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 4 * 3;
+				this.uppergc5.strokeLine(pixel, 0, pixel,
+						this.upperChart5.getHeight());
+
 			}
 		}
-					
+
 	}
+
 	/**
 	 * Creates The Helplines in the graphic.
 	 */
 	private void createHelpLinesSixthTab() {
-		
-		double abstandNetz = (this.upperChart6.getWidth()-30)/(this.endzeitVar-this.startzeitVar);	
+
+		double abstandNetz = (this.upperChart6.getWidth() - 30)
+				/ (this.endzeitVar - this.startzeitVar);
 		// Methoden zu Erstellung der dynamischen Hilfslinien
-			
-		if(lowergrafikErstellt == true){
-			
+
+		if (lowergrafikErstellt == true) {
+
 			this.lowergc6.setLineWidth(1);
 			this.lowergc6.setStroke(Color.LIGHTGREY);
-			
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {			
-				
-			double pixel=((i)*abstandNetz)+abstandNetz/4;
-			this.lowergc6.strokeLine(pixel, 0, pixel, this.lowerChart6.getHeight()-3);
-			
+
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 4;
+				this.lowergc6.strokeLine(pixel, 0, pixel,
+						this.lowerChart6.getHeight() - 3);
+
 			}
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-				
-			double pixel=((i)*abstandNetz)+abstandNetz/2;
-			this.lowergc6.strokeLine(pixel, 0, pixel, this.lowerChart6.getHeight()-3);
-			
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 2;
+				this.lowergc6.strokeLine(pixel, 0, pixel,
+						this.lowerChart6.getHeight() - 3);
+
 			}
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-				
-			double pixel=((i)*abstandNetz)+abstandNetz/4*3;
-			this.lowergc6.strokeLine(pixel, 0, pixel, this.lowerChart6.getHeight()-3);
-			
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 4 * 3;
+				this.lowergc6.strokeLine(pixel, 0, pixel,
+						this.lowerChart6.getHeight() - 3);
+
 			}
 		}
-		if(this.sixthUppergrafikErstellt == true){	
-			
-			
-			
+		if (this.sixthUppergrafikErstellt == true) {
+
 			this.uppergc6.setLineWidth(1);
 			this.uppergc6.setStroke(Color.LIGHTGREY);
-			
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-					
-			double pixel=((i)*abstandNetz)+abstandNetz/4;
-			this.uppergc6.strokeLine(pixel, 0, pixel, this.upperChart6.getHeight());			
-			
+
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 4;
+				this.uppergc6.strokeLine(pixel, 0, pixel,
+						this.upperChart6.getHeight());
+
 			}
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-					
-			double pixel=((i)*abstandNetz)+abstandNetz/2;
-			this.uppergc6.strokeLine(pixel, 0, pixel, this.upperChart6.getHeight());
-			
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 2;
+				this.uppergc6.strokeLine(pixel, 0, pixel,
+						this.upperChart6.getHeight());
+
 			}
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-					
-			double pixel=((i)*abstandNetz)+abstandNetz/4*3;
-			this.uppergc6.strokeLine(pixel, 0, pixel, this.upperChart6.getHeight());
-			
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 4 * 3;
+				this.uppergc6.strokeLine(pixel, 0, pixel,
+						this.upperChart6.getHeight());
+
 			}
 		}
-					
+
 	}
+
 	/**
 	 * Creates The Helplines in the graphic.
 	 */
 	private void createHelpLinesSeventhTab() {
-		
-		double abstandNetz = (this.upperChart7.getWidth()-30)/(this.endzeitVar-this.startzeitVar);	
+
+		double abstandNetz = (this.upperChart7.getWidth() - 30)
+				/ (this.endzeitVar - this.startzeitVar);
 		// Methoden zu Erstellung der dynamischen Hilfslinien
-			
-		if(lowergrafikErstellt == true){
-			
+
+		if (lowergrafikErstellt == true) {
+
 			this.lowergc7.setLineWidth(1);
 			this.lowergc7.setStroke(Color.LIGHTGREY);
-			
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {			
-				
-			double pixel=((i)*abstandNetz)+abstandNetz/4;
-			this.lowergc7.strokeLine(pixel, 0, pixel, this.lowerChart7.getHeight()-3);
-			
+
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 4;
+				this.lowergc7.strokeLine(pixel, 0, pixel,
+						this.lowerChart7.getHeight() - 3);
+
 			}
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-				
-			double pixel=((i)*abstandNetz)+abstandNetz/2;
-			this.lowergc7.strokeLine(pixel, 0, pixel, this.lowerChart7.getHeight()-3);
-			
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 2;
+				this.lowergc7.strokeLine(pixel, 0, pixel,
+						this.lowerChart7.getHeight() - 3);
+
 			}
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-				
-			double pixel=((i)*abstandNetz)+abstandNetz/4*3;
-			this.lowergc7.strokeLine(pixel, 0, pixel, this.lowerChart7.getHeight()-3);
-			
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 4 * 3;
+				this.lowergc7.strokeLine(pixel, 0, pixel,
+						this.lowerChart7.getHeight() - 3);
+
 			}
 		}
-		if(this.seventhUppergrafikErstellt == true){	
-			
-			
-			
+		if (this.seventhUppergrafikErstellt == true) {
+
 			this.uppergc7.setLineWidth(1);
 			this.uppergc7.setStroke(Color.LIGHTGREY);
-			
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-					
-			double pixel=((i)*abstandNetz)+abstandNetz/4;
-			this.uppergc7.strokeLine(pixel, 0, pixel, this.upperChart7.getHeight());			
-			
+
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 4;
+				this.uppergc7.strokeLine(pixel, 0, pixel,
+						this.upperChart7.getHeight());
+
 			}
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-					
-			double pixel=((i)*abstandNetz)+abstandNetz/2;
-			this.uppergc7.strokeLine(pixel, 0, pixel, this.upperChart7.getHeight());
-			
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 2;
+				this.uppergc7.strokeLine(pixel, 0, pixel,
+						this.upperChart7.getHeight());
+
 			}
-			for(int i=0; i<(this.endzeitVar-this.startzeitVar) ;i++) {
-					
-			double pixel=((i)*abstandNetz)+abstandNetz/4*3;
-			this.uppergc7.strokeLine(pixel, 0, pixel, this.upperChart7.getHeight());
-			
+			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+
+				double pixel = ((i) * abstandNetz) + abstandNetz / 4 * 3;
+				this.uppergc7.strokeLine(pixel, 0, pixel,
+						this.upperChart7.getHeight());
+
 			}
 		}
-					
+
 	}
+
 	/**
 	 * Deletes the latest U-Plan
 	 */
 	@FXML
-	public void deleteLastUPlan(){
-		
+	public void deleteLastUPlan() {
+
 		int pruefcounter = 0;
-		
+
 		// An dieser Stelle wird das richtige Objekt herausgefunden
-		
+
 		if (this.UPlan1.isVisible() == true) {
 			if (this.UPlan2.isVisible() == true) {
 				pruefcounter = 1;
@@ -2253,17 +2525,16 @@ public class MainLayoutController {
 								pruefcounter = 5;
 								if (this.UPlan7.isVisible() == true) {
 									pruefcounter = 6;
-								}								
-							}							
-						}						
-					}					
+								}
+							}
+						}
+					}
 				}
 			}
 		}
-				
-				
-		// Hier werden die Schritte für den Löschvorgang bestimmt	
-		
+
+		// Hier werden die Schritte für den Löschvorgang bestimmt
+
 		switch (pruefcounter) {
 		case 0:
 			this.UPlan1.setVisible(false);
@@ -2284,7 +2555,8 @@ public class MainLayoutController {
 			this.Plan2.setDisable(true);
 			this.secondUppergrafikErstellt = false;
 			this.umlaufplanZwei = null;
-			this.UPlanValue1.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+			this.UPlanValue1
+					.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
 			break;
 		case 2:
 			this.UPlan3.setVisible(false);
@@ -2294,8 +2566,10 @@ public class MainLayoutController {
 			this.yUp3.setContent(null);
 			this.Plan3.setDisable(true);
 			this.thirdUppergrafikErstellt = false;
-			this.umlaufplanDrei = null;;
-			this.UPlanValue2.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+			this.umlaufplanDrei = null;
+			;
+			this.UPlanValue2
+					.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
 			break;
 		case 3:
 			this.UPlan4.setVisible(false);
@@ -2305,8 +2579,10 @@ public class MainLayoutController {
 			this.yUp4.setContent(null);
 			this.Plan4.setDisable(true);
 			this.fourthUppergrafikErstellt = false;
-			this.umlaufplanVier = null;;
-			this.UPlanValue3.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+			this.umlaufplanVier = null;
+			;
+			this.UPlanValue3
+					.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
 			break;
 		case 4:
 			this.UPlan5.setVisible(false);
@@ -2316,8 +2592,10 @@ public class MainLayoutController {
 			this.yUp5.setContent(null);
 			this.Plan5.setDisable(true);
 			this.fifthUppergrafikErstellt = false;
-			this.umlaufplanFuenf = null;;
-			this.UPlanValue4.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+			this.umlaufplanFuenf = null;
+			;
+			this.UPlanValue4
+					.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
 			break;
 		case 5:
 			this.UPlan6.setVisible(false);
@@ -2327,8 +2605,10 @@ public class MainLayoutController {
 			this.yUp6.setContent(null);
 			this.Plan6.setDisable(true);
 			this.sixthUppergrafikErstellt = false;
-			this.umlaufplanSechs = null;;
-			this.UPlanValue5.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+			this.umlaufplanSechs = null;
+			;
+			this.UPlanValue5
+					.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
 			break;
 		case 6:
 			this.UPlan7.setVisible(false);
@@ -2338,99 +2618,92 @@ public class MainLayoutController {
 			this.yUp7.setContent(null);
 			this.Plan7.setDisable(true);
 			this.seventhUppergrafikErstellt = false;
-			this.umlaufplanSieben = null;;
-			this.UPlanValue6.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+			this.umlaufplanSieben = null;
+			;
+			this.UPlanValue6
+					.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
 			break;
-		default:	
+		default:
 			break;
 		}
-		
+
 	}
-	
+
 	/**
 	 * Deletes the latest D-Plan
 	 */
 	@FXML
-	public void deleteLastDPlan(){
-		
-		
+	public void deleteLastDPlan() {
+
 	}
-	
+
 	/**
 	 * Creates Filter Transitions.
 	 */
-	
-	public void graphicTransition(){
-		
-		//Fades in Filter Panel
-				FadeTransition fa = new FadeTransition(Duration.millis(500), this.filterPanel);
-				fa.setFromValue(0.0);
-				fa.setToValue(1.0);
-				fa.setAutoReverse(true);
-				fa.play();
-				
-				FadeTransition faa = new FadeTransition(Duration.millis(500), this.showFullscreen);
-				faa.setFromValue(0.0);
-				faa.setToValue(1.0);
-				faa.setAutoReverse(true);
-				faa.play();
-		
+
+	public void graphicTransition() {
+
+		// Fades in Filter Panel
+		FadeTransition fa = new FadeTransition(Duration.millis(500),
+				this.filterPanel);
+		fa.setFromValue(0.0);
+		fa.setToValue(1.0);
+		fa.setAutoReverse(true);
+		fa.play();
+
+		FadeTransition faa = new FadeTransition(Duration.millis(500),
+				this.showFullscreen);
+		faa.setFromValue(0.0);
+		faa.setToValue(1.0);
+		faa.setAutoReverse(true);
+		faa.play();
+
 	}
-	
-	
-	//Methoden zur Weitergabe der Werte an andere Klassen
-	
+
+	// Methoden zur Weitergabe der Werte an andere Klassen
+
 	public boolean isHilfslinienAktiv() {
 		return hilfslinienAktiv;
 	}
 
-
 	public void setHilfslinienAktiv(boolean hilfslinienAktiv) {
 		this.hilfslinienAktiv = hilfslinienAktiv;
 	}
-	
+
 	public int getStartzeitVar() {
 		return startzeitVar;
 	}
-
 
 	public void setStartzeitVar(int startzeitVar) {
 		this.startzeitVar = startzeitVar;
 	}
 
-
 	public int getEndzeitVar() {
 		return endzeitVar;
 	}
 
-
 	public void setEndzeitVar(int endzeitVar) {
 		this.endzeitVar = endzeitVar;
 	}
-	
-	//Methoden zur Festsetzung der Main
 
+	// Methoden zur Festsetzung der Main
 
 	public void openFullscreen() {
-		if(this.firstUppergrafikErstellt== true){
-		mainApp.showFullScreenGraphic(this);
-		}else{
+		if (this.firstUppergrafikErstellt == true) {
+			mainApp.showFullScreenGraphic(this);
+		} else {
 			mainApp.fehlerMeldungGrafikFehlt();
 		}
 	}
-	
-	//Methoden zur Festsetzung der Main	
-	
+
+	// Methoden zur Festsetzung der Main
 
 	public MainApplication getMainApp() {
 		return mainApp;
 	}
 
-
 	public void setMainApp(MainApplication mainApp) {
 		this.mainApp = mainApp;
 	}
-	
-	
 
 }

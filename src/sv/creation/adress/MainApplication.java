@@ -15,219 +15,279 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class MainApplication extends Application {
-	
+
 	private Stage primaryStage;
 	private BorderPane rootLayout;
-	
+
 	// Load Rootlayout and handle scenes
 
 	@Override
 	public void start(Stage primaryStage) {
-		
+
 		this.primaryStage = primaryStage;
-	    this.primaryStage.setTitle(" Schedule-Visualizer - "+System.getProperty("user.name"));
-	    this.primaryStage.getIcons().add(new Image("file:resources/images/IconFinal.png"));
-	    
-	      try {
-	          // Load the root layout from the fxml file
-	          FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("view/RootLayout.fxml"));
-	          rootLayout = (BorderPane) loader.load();
-	          Scene scene = new Scene(rootLayout);
-	          primaryStage.setScene(scene);
-	          
-	          	// Give the controller access to the main app
-				RootLayoutController controller = loader.getController();
-				controller.setMainApp(this);
-				
-	          primaryStage.show();
-	      } catch (IOException e) {
-	          // Exception gets thrown if the fxml file could not be loaded
-	          e.printStackTrace();
-	      }	      
-	      showMainScene();	      
+		this.primaryStage.setTitle(" Schedule-Visualizer - "
+				+ System.getProperty("user.name"));
+		this.primaryStage.getIcons().add(
+				new Image("file:resources/images/IconFinal.png"));
+
+		try {
+			// Load the root layout from the fxml file
+			FXMLLoader loader = new FXMLLoader(
+					MainApplication.class.getResource("view/RootLayout.fxml"));
+			rootLayout = (BorderPane) loader.load();
+			Scene scene = new Scene(rootLayout);
+			primaryStage.setScene(scene);
+
+			// Give the controller access to the main app
+			RootLayoutController controller = loader.getController();
+			controller.setMainApp(this);
+
+			primaryStage.show();
+		} catch (IOException e) {
+			// Exception gets thrown if the fxml file could not be loaded
+			e.printStackTrace();
+		}
+		showMainScene();
 	}
-		
+
 	// Initiate MainLayout fxml
-	
-	public void showMainScene(){
-		
+
+	public void showMainScene() {
+
 		try {
-	          // Load the fxml file and set into the center of the main layout
-	          FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("view/MainLayout.fxml"));
-	          AnchorPane overviewPage = (AnchorPane) loader.load();
-	          rootLayout.setCenter(overviewPage);
-	          
-	          // Give the controller access to the main app
-				MainLayoutController controller = loader.getController();
-				controller.setMainApp(this);
-	       	          
-	      } catch (IOException e) {
-	          // Exception gets thrown if the fxml file could not be loaded
-	          e.printStackTrace();
-	      }
-	}
-	
-	// Initiate Handbuch fxml
+			// Load the fxml file and set into the center of the main layout
+			FXMLLoader loader = new FXMLLoader(
+					MainApplication.class.getResource("view/MainLayout.fxml"));
+			AnchorPane overviewPage = (AnchorPane) loader.load();
+			rootLayout.setCenter(overviewPage);
 
-	public void showHandbuch(){
-		
-		try {
-			
-			// Load the fxml file and create a new stage for the popup
-		FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("view/HandbuchLayout.fxml"));		
-		AnchorPane page = (AnchorPane) loader.load();		
-	    Stage dialogStage = new Stage();	    
-	    dialogStage.setTitle("Handbuch");
-	    dialogStage.getIcons().add(new Image("file:resources/images/IconFinal.png"));
-	    dialogStage.initModality(Modality.WINDOW_MODAL);	    
-	    dialogStage.initOwner(primaryStage);	    
-	    Scene scene = new Scene(page);	    
-	    dialogStage.setScene(scene);	 
-	    
-	    // Set the controller
-	    HandbuchLayoutController controller = loader.getController();
-	    controller.setDialogStage(dialogStage);
-	
-	    dialogStage.show();	    
-
-	  } catch (IOException e) {
-	    // Exception gets thrown if the fxml file could not be loaded
-	    e.printStackTrace();
-	  }
-	}
-		
-		// Initiate DatenbankLayout fxml
-
-		public void showDatenbank(){
-			
-			try {
-				
-				// Load the fxml file and create a new stage for the popup
-			FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("view/DatenbankLayout.fxml"));		
-			AnchorPane page = (AnchorPane) loader.load();		
-		    Stage dialogStage = new Stage();	    
-		    dialogStage.setTitle("Datenbank");
-		    dialogStage.getIcons().add(new Image("file:resources/images/IconFinal.png"));
-		    dialogStage.setResizable(false);
-		    dialogStage.initModality(Modality.WINDOW_MODAL);	    
-		    dialogStage.initOwner(primaryStage);	    
-		    Scene scene = new Scene(page);	    
-		    dialogStage.setScene(scene);	 
-		    
-		    // Set the controller
-		    DatenbankLayoutController controller = loader.getController();
-		    controller.setDialogStage(dialogStage);
-		
-		    dialogStage.show();	    
-
-		  } catch (IOException e) {
-		    // Exception gets thrown if the fxml file could not be loaded
-		    e.printStackTrace();
-		  }
-
-
-	}
-		// Initiate Fullscreen fxml
-
-			public void showFullScreenGraphic(MainLayoutController mainlayoutcontroller){
-				
-				try {
-					
-			// Load the fxml file and create a new stage for the popup
-			FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("view/FullScreenGraphicLayout.fxml"));		
-			AnchorPane page = (AnchorPane) loader.load();		
-		    Stage dialogStage = new Stage();	    
-		    dialogStage.getIcons().add(new Image("file:resources/images/IconFinal.png"));
-		    dialogStage.setFullScreen(true);
-		    dialogStage.initModality(Modality.WINDOW_MODAL);	
-		    dialogStage.initStyle(StageStyle.UTILITY);
-		    dialogStage.initOwner(primaryStage);	    
-		    Scene scene = new Scene(page);	    
-		    dialogStage.setScene(scene);	 
-			    
-		    // Set the controller
-		    FullScreenLayoutController controller = loader.getController();
-		    controller.setDialogStage(dialogStage);
-		    controller.setController(mainlayoutcontroller);
-			
-		    dialogStage.show();	    
+			// Give the controller access to the main app
+			MainLayoutController controller = loader.getController();
+			controller.setMainApp(this);
 
 		} catch (IOException e) {
-		    // Exception gets thrown if the fxml file could not be loade
+			// Exception gets thrown if the fxml file could not be loaded
 			e.printStackTrace();
-				  }
-			}
-		
-		// Initiate KostenLayout fxml
+		}
+	}
 
-		public void showKosten(){
-				
+	// Initiate Handbuch fxml
+
+	public void showHandbuch() {
+
 		try {
-						
+
 			// Load the fxml file and create a new stage for the popup
-		FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("view/KostenLayout.fxml"));		
-		AnchorPane page = (AnchorPane) loader.load();		
-		Stage dialogStage = new Stage();	    
-		dialogStage.setTitle("Kostenkalkulation");
-		dialogStage.getIcons().add(new Image("file:resources/images/IconFinal.png"));
-		dialogStage.initModality(Modality.WINDOW_MODAL);	    
-		dialogStage.initOwner(primaryStage);	    
-		Scene scene = new Scene(page);	    
-		dialogStage.setScene(scene);	 
-		    
-		// Set the controller
-		KostenLayoutController controller = loader.getController();
-		controller.setDialogStage(dialogStage);
-				
-		  dialogStage.show();	    
-			} catch (IOException e) {
-			  // Exception gets thrown if the fxml file could not be loaded
-			   e.printStackTrace();
-			 }
-		}
-		
-		// Initiate Edit U-Plan fxml
+			FXMLLoader loader = new FXMLLoader(
+					MainApplication.class
+							.getResource("view/HandbuchLayout.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Handbuch");
+			dialogStage.getIcons().add(
+					new Image("file:resources/images/IconFinal.png"));
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
 
-		public void showEditUPlan(Umlaufplan umlaufplan){
-			
-			try {
-				
-				// Load the fxml file and create a new stage for the popup
-			FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("view/EditU_Plan.fxml"));		
-			AnchorPane page = (AnchorPane) loader.load();		
-		    Stage dialogStage = new Stage();	    
-		    dialogStage.setTitle("Umlaufplanbearbeitung");
-		    dialogStage.getIcons().add(new Image("file:resources/images/IconFinal.png"));
-		    dialogStage.initModality(Modality.WINDOW_MODAL);	    
-		    dialogStage.initOwner(primaryStage);	    
-		    Scene scene = new Scene(page);	    
-		    dialogStage.setScene(scene);	 
-		    
-		    // Set the controller with all data
-		    EditU_PlanController controller = loader.getController();		    
-		    controller.setUmlaufplan(umlaufplan);
-		    controller.setDialogStage(dialogStage);
-		    
-		    
-		
-		    dialogStage.show();	    
+			// Set the controller
+			HandbuchLayoutController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
 
-		  } catch (IOException e) {
-		    // Exception gets thrown if the fxml file could not be loaded
-		    e.printStackTrace();
-		  }
+			dialogStage.show();
+
+		} catch (IOException e) {
+			// Exception gets thrown if the fxml file could not be loaded
+			e.printStackTrace();
 		}
-				
-		// Fehlermeldung bei nicht erstellter Grafik
-				
-		public void fehlerMeldungGrafikFehlt(){	
-			
-			Dialogs.showErrorDialog(primaryStage, "Es wurde noch keine Grafik erzeugt", "Noch nicht", "Fehler");
-		}				
-			
-		// Main Method
-	
-		public static void main(String[] args) {
-			launch(args);			
+	}
+
+	// Initiate DatenbankLayout fxml
+
+	public void showDatenbank() {
+
+		try {
+
+			// Load the fxml file and create a new stage for the popup
+			FXMLLoader loader = new FXMLLoader(
+					MainApplication.class
+							.getResource("view/DatenbankLayout.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Datenbank");
+			dialogStage.getIcons().add(
+					new Image("file:resources/images/IconFinal.png"));
+			dialogStage.setResizable(false);
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+
+			// Set the controller
+			DatenbankLayoutController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+
+			dialogStage.show();
+
+		} catch (IOException e) {
+			// Exception gets thrown if the fxml file could not be loaded
+			e.printStackTrace();
 		}
+
+	}
+
+	// Initiate Fullscreen fxml
+
+	public void showFullScreenGraphic(MainLayoutController mainlayoutcontroller) {
+
+		try {
+
+			// Load the fxml file and create a new stage for the popup
+			FXMLLoader loader = new FXMLLoader(
+					MainApplication.class
+							.getResource("view/FullScreenGraphicLayout.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+			Stage dialogStage = new Stage();
+			dialogStage.getIcons().add(
+					new Image("file:resources/images/IconFinal.png"));
+			dialogStage.setFullScreen(true);
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initStyle(StageStyle.UTILITY);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+
+			// Set the controller
+			FullScreenLayoutController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			controller.setController(mainlayoutcontroller);
+
+			dialogStage.show();
+
+		} catch (IOException e) {
+			// Exception gets thrown if the fxml file could not be loade
+			e.printStackTrace();
+		}
+	}
+
+	// Initiate KostenLayout fxml
+
+	public void showKosten() {
+
+		try {
+
+			// Load the fxml file and create a new stage for the popup
+			FXMLLoader loader = new FXMLLoader(
+					MainApplication.class.getResource("view/KostenLayout.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Kostenkalkulation");
+			dialogStage.getIcons().add(
+					new Image("file:resources/images/IconFinal.png"));
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+
+			// Set the controller
+			KostenLayoutController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+
+			dialogStage.show();
+		} catch (IOException e) {
+			// Exception gets thrown if the fxml file could not be loaded
+			e.printStackTrace();
+		}
+	}
+
+	// Initiate Edit U-Plan fxml
+
+	public boolean showEditUPlan(Umlaufplan umlaufplan) {
+
+		try {
+
+			// Load the fxml file and create a new stage for the popup
+			FXMLLoader loader = new FXMLLoader(
+					MainApplication.class.getResource("view/EditU_Plan.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Umlaufplanbearbeitung");
+			dialogStage.getIcons().add(
+					new Image("file:resources/images/IconFinal.png"));
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+
+			// Set the controller with all data
+			EditU_PlanController controller = loader.getController();
+			controller.setUmlaufplan(umlaufplan);
+			controller.setMainApp(this);
+			controller.setDialogStage(dialogStage);
+
+			// Show the dialog and wait until the user closes it
+			dialogStage.showAndWait();
+
+			return controller.isOkClicked();
+
+		} catch (IOException e) {
+			// Exception gets thrown if the fxml file could not be loaded
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+
+	// Initiate Edit Time Details fxml
+
+	public boolean showEditTimeDetails() {
+
+		try {
+
+			// Load the fxml file and create a new stage for the popup
+			FXMLLoader loader = new FXMLLoader(
+					MainApplication.class
+							.getResource("view/EditTimeDetails.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Editor");
+			dialogStage.getIcons().add(
+					new Image("file:resources/images/IconFinal.png"));
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(primaryStage);
+			dialogStage.setResizable(false);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+
+			// Set the controller with all data
+			EditTimeDetailsLayoutController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+
+			// Show the dialog and wait until the user closes it
+			dialogStage.showAndWait();
+
+			return controller.isOkClicked();
+
+		} catch (IOException e) {
+			// Exception gets thrown if the fxml file could not be loaded
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+
+	// Fehlermeldung bei nicht erstellter Grafik
+
+	public void fehlerMeldungGrafikFehlt() {
+
+		Dialogs.showErrorDialog(primaryStage,
+				"Es wurde noch keine Grafik erzeugt", "Noch nicht", "Fehler");
+	}
+
+	// Main Method
+
+	public static void main(String[] args) {
+		launch(args);
+	}
 }

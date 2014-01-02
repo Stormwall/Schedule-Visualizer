@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="150.0" prefWidth="200.0" styleClass="background" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sv.creation.adress.EditTimeDetailsLayoutController">
+  <!-- TODO Add Nodes -->
+  <children>
+    <HBox id="HBox" alignment="CENTER" layoutX="14.0" layoutY="115.0" spacing="5.0">
+      <children>
+        <Button mnemonicParsing="false" styleClass="dark-blue" text="OK" />
+        <Button mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Abbrechen" />
+      </children>
+    </HBox>
+    <HBox id="HBox" alignment="CENTER" layoutX="14.0" layoutY="18.0" spacing="5.0">
+      <children>
+        <Label styleClass="label-white" text="Startzeit" />
+        <TextField prefWidth="53.0" />
+        <Label styleClass="label-white" text=":" />
+        <TextField prefWidth="53.0" text="" />
+      </children>
+    </HBox>
+    <HBox id="HBox" alignment="CENTER" layoutX="14.0" layoutY="52.0" spacing="5.0">
+      <children>
+        <Label styleClass="label-white" text="Endzeit">
+          <HBox.margin>
+            <Insets right="4.0" />
+          </HBox.margin>
+        </Label>
+        <TextField prefWidth="53.0" />
+        <Label styleClass="label-white" text=":" />
+        <TextField prefWidth="53.0" text="" />
+      </children>
+    </HBox>
+  </children>
+  <stylesheets>
+    <URL value="@MainLayout.css" />
+  </stylesheets>
+</AnchorPane>

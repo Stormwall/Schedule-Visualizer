@@ -11,13 +11,12 @@
 	-fx-border-radius: 10 10 10 10;
   	-fx-background-radius: 10 10 10 10;
 }
-.label-versTwo {
-	-fx-fill: #818181;
-    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
-    -fx-font-size: 12pt;
-    -fx-font-family: "Segoe UI Light";
-    -fx-text-fill: black;
-    -fx-opacity: 1;
+.label-white {
+	-fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-font-family: "Arial";
+    -fx-text-fill: linear-gradient(white, #d0d0d0);
+    -fx-font-size: 12px;
 }
 .label-header {
     -fx-fill: #818181;

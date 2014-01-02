@@ -38,12 +38,12 @@
                         </FXCollections>
                       </items>
                     </ChoiceBox>
-                    <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#fillTable" styleClass="dark-blue" text="auswählen" />
-                    <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" styleClass="dark-blue" text="bearbeiten" />
+                    <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#handleauswaehlen" styleClass="dark-blue" text="Auswählen" />
+                    <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#handlebearbeiten" styleClass="dark-blue" text="Bearbeiten" />
                   </children>
                 </HBox>
-                <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" styleClass="dark-blue" text="übernehmen" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="abbrechen" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#handleuebernehemen" styleClass="dark-blue" text="Übernehmen" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Abbrechen" GridPane.columnIndex="1" GridPane.rowIndex="2">
                   <GridPane.margin>
                     <Insets left="100.0" />
                   </GridPane.margin>
@@ -64,9 +64,9 @@
         </AnchorPane>
         <AnchorPane maxHeight="60.0" minHeight="60.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
           <children>
-            <GridPane prefHeight="60.0" prefWidth="598.0" styleClass="background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <GridPane id="window" prefHeight="60.0" prefWidth="598.0" styleClass="background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <children>
-                <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="background-paper" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <AnchorPane fx:id="canvas" prefHeight="200.0" prefWidth="200.0" styleClass="background-paper" GridPane.columnIndex="1" GridPane.rowIndex="1" />
               </children>
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="100.0" />
