@@ -12,7 +12,7 @@
   <children>
     <HBox id="HBox" alignment="CENTER" layoutX="14.0" layoutY="115.0" spacing="5.0">
       <children>
-        <Button mnemonicParsing="false" styleClass="dark-blue" text="OK" />
+        <Button mnemonicParsing="false" onAction="#handleOk" styleClass="dark-blue" text="OK" />
         <Button mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Abbrechen" />
       </children>
     </HBox>

@@ -52,7 +52,7 @@ public class EditU_PlanController {
 
 	private Umlaufplan umlaufplan;
 	private boolean okClicked = false;
-	
+
 	// Referenz zur MainApp
 
 	private MainApplication mainApp;
@@ -68,7 +68,7 @@ public class EditU_PlanController {
 		// Anordnung der Tabelle
 		this.elementsTable
 				.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-		
+
 		// Listen for Resizechanges (Graphic)
 		this.canvas.widthProperty().addListener(new ChangeListener<Number>() {
 			@Override
@@ -78,6 +78,7 @@ public class EditU_PlanController {
 				handleauswaehlen();
 			}
 		});
+
 	}
 
 	/**
@@ -85,10 +86,12 @@ public class EditU_PlanController {
 	 */
 	@FXML
 	private void handleauswaehlen() {
-		
+
 		int blockAuswahl = 0;
 
 		if (this.blockChoice.getSelectionModel().getSelectedItem() != null) {
+
+			this.elementsTable.getItems().clear();
 
 			blockAuswahl = this.umlaufplan
 					.getUmlauf()
@@ -100,14 +103,14 @@ public class EditU_PlanController {
 			ObservableList<Blockelement> data = FXCollections
 					.observableArrayList();
 
-			for (int i = 0; i < umlaufplan.getFahrtZuUmlauf().size(); i++) {
-				if (umlaufplan.getFahrtZuUmlauf().get(i).getBlockID() == blockAuswahl) {
-					data.add(umlaufplan.getFahrtZuUmlauf().get(i));
+			for (int i = 0; i < this.umlaufplan.getFahrtZuUmlauf().size(); i++) {
+				if (this.umlaufplan.getFahrtZuUmlauf().get(i).getBlockID() == blockAuswahl) {
+					data.add(this.umlaufplan.getFahrtZuUmlauf().get(i));
 				}
 
 			}
 			// Übergabe der Daten an Tabelle und Canvas
-			elementsTable.setItems(data);
+			this.elementsTable.setItems(data);
 			drawCanvas(blockAuswahl);
 		}
 	}
@@ -121,42 +124,60 @@ public class EditU_PlanController {
 		okClicked = true;
 		dialogStage.close();
 	}
-	
+
 	/**
 	 * Called when the user clicks bearbeiten.
 	 */
 	@FXML
 	private void handlebearbeiten() {
-		
+
 		// Fehlerbehebung bei keiner Auswahl
-		
-		if (this.elementsTable.getSelectionModel().getSelectedItem() != null) {		
-			
+
+		if (this.elementsTable.getSelectionModel().getSelectedItem() != null) {
+
 			// Ausgewähltes Element auslesen
-			
-			Blockelement blockelement = this.elementsTable.getSelectionModel().getSelectedItem();
-			
+
+			Blockelement blockelement = this.elementsTable.getSelectionModel()
+					.getSelectedItem();
+
 			// Variablen werden belegt
 			String startzeit = blockelement.getDepTime();
 			String endzeit = blockelement.getArrTime();
 			int id = blockelement.getId();
 
-			boolean okClicked = mainApp.showEditTimeDetails(startzeit,endzeit);
+			boolean okClicked = mainApp.showEditTimeDetails(startzeit, endzeit);
 			if (okClicked) {
-				// refreshPersonTable();
-				// showPersonDetails(selectedPerson);
+				for (int i = 0; i < this.umlaufplan.getFahrtZuUmlauf().size(); i++) {
+					if (this.umlaufplan.getFahrtZuUmlauf().get(i).getId() == id) {
+						this.umlaufplan.getFahrtZuUmlauf().get(i)
+								.setDepTime(this.mainApp.getStartzeit());
+						this.umlaufplan.getFahrtZuUmlauf().get(i)
+								.setArrTime(this.mainApp.getEndzeit());	
+					}					
+				}
+				handleauswaehlen();				
+				this.elementsTable.getColumns().get(0).setVisible(false);
+				this.elementsTable.getColumns().get(0).setVisible(true);
+				this.elementsTable.getColumns().get(1).setVisible(false);
+				this.elementsTable.getColumns().get(1).setVisible(true);
+				this.elementsTable.getColumns().get(2).setVisible(false);
+				this.elementsTable.getColumns().get(2).setVisible(true);
+				this.elementsTable.getColumns().get(3).setVisible(false);
+				this.elementsTable.getColumns().get(3).setVisible(true);
+				this.elementsTable.getColumns().get(4).setVisible(false);
+				this.elementsTable.getColumns().get(4).setVisible(true);
+				this.elementsTable.getColumns().get(5).setVisible(false);
+				this.elementsTable.getColumns().get(5).setVisible(true);
 			}
-			
+
 		} else {
 			String fehlerA = "Es wurde noch Element ausgewählt";
 			String fehlerB = "Was soll bearbeitet werden ?";
 			String fehlerC = "Fehler";
-			this.mainApp.fehlerMeldung(fehlerA,fehlerB,fehlerC);
+			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
 		}
-		
-		
+
 	}
-	
 
 	/**
 	 * Returns true if the user clicked OK, false otherwise.
@@ -176,8 +197,8 @@ public class EditU_PlanController {
 		// Initialize the Chart
 		Canvas Chart = new Canvas(this.canvas.getWidth() - 4,
 				this.canvas.getHeight());
-		
-		// An dieser Stelle wird die Breite an den Tableview gebunden 		
+
+		// An dieser Stelle wird die Breite an den Tableview gebunden
 		Chart.widthProperty().bind(this.elementsTable.widthProperty());
 
 		// Erstellen des HintergrundgrafikKontextes
@@ -381,7 +402,5 @@ public class EditU_PlanController {
 	public void setMainApp(MainApplication mainApp) {
 		this.mainApp = mainApp;
 	}
-	
-	
 
 }

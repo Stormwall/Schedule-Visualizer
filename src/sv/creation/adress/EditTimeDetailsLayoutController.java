@@ -26,6 +26,10 @@ public class EditTimeDetailsLayoutController {
 	private String endzeit;
 	private boolean okClicked = false;
 
+	// Referenz zur MainApp
+
+	private MainApplication mainApp;
+
 	/**
 	 * Initializes the controller class. This method is automatically called
 	 * after the fxml file has been loaded.
@@ -43,6 +47,93 @@ public class EditTimeDetailsLayoutController {
 	 */
 	public boolean isOkClicked() {
 		return okClicked;
+	}
+
+	/**
+	 * Called when the user clicks ok.
+	 */
+	@FXML
+	private void handleOk() {
+		// if (isInputValid()) {
+
+		// Methoden zur Fehlerbehebung und Formatierung
+
+		int startStunde = 0;
+		String sS = "";
+		try {
+			startStunde = Integer.parseInt(this.startzeitStunde.getText());
+
+			if (startStunde < 10) {
+				sS = ("0" + String.valueOf(startStunde));
+			} else {
+				sS = String.valueOf(startStunde);
+			}
+		} catch (NumberFormatException e) {
+			String fehlerA = "Das ist keine Stunde";
+			String fehlerB = "Falsche Eingabe ?";
+			String fehlerC = "Fehler";
+			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+		}
+		int startMinute = 0;
+		String sM = "";
+		try {
+			startMinute = Integer.parseInt(this.startzeitMinute.getText());
+
+			if (startMinute < 10) {
+				sM = ("0" + String.valueOf(startMinute));
+			} else {
+				sM = String.valueOf(startMinute);
+			}
+		} catch (NumberFormatException e) {
+			String fehlerA = "Das ist keine Minute";
+			String fehlerB = "Falsche Eingabe ?";
+			String fehlerC = "Fehler";
+			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+		}
+		int endStunde = 0;
+		String eS = "";
+		try {
+			endStunde = Integer.parseInt(this.endzeitStunde.getText());
+
+			if (endStunde < 10) {
+				eS = ("0" + String.valueOf(endStunde));
+			} else {
+				eS = String.valueOf(endStunde);
+			}
+		} catch (NumberFormatException e) {
+			String fehlerA = "Das ist keine Stunde";
+			String fehlerB = "Falsche Eingabe ?";
+			String fehlerC = "Fehler";
+			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+		}
+		int endMinute = 0;
+		String eM = "";
+		try {
+			endMinute = Integer.parseInt(this.endzeitMinute.getText());
+
+			if (endMinute < 10) {
+				eM = ("0" + String.valueOf(endMinute));
+			} else {
+				eM = String.valueOf(endMinute);
+			}
+		} catch (NumberFormatException e) {
+			String fehlerA = "Das ist keine Minute";
+			String fehlerB = "Falsche Eingabe ?";
+			String fehlerC = "Fehler";
+			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+		}
+
+		this.startzeit = (sS + ":" + sM);
+		this.endzeit = (eS + ":" + eM);
+
+		// Übergabe der Werte
+
+		this.mainApp.setStartzeit(this.startzeit);
+		this.mainApp.setEndzeit(this.endzeit);
+
+		okClicked = true;
+		dialogStage.close();
+		// }
 	}
 
 	// Methode zum Beenden des PopUp
@@ -95,6 +186,14 @@ public class EditTimeDetailsLayoutController {
 
 	public void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
+	}
+
+	public MainApplication getMainApp() {
+		return mainApp;
+	}
+
+	public void setMainApp(MainApplication mainApp) {
+		this.mainApp = mainApp;
 	}
 
 }

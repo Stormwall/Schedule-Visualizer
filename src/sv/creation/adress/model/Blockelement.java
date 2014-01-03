@@ -93,6 +93,16 @@ public class Blockelement {
 	}
 
 
+	public void setDepTime(String depTime) {
+		this.depTime = depTime;
+	}
+
+
+	public void setArrTime(String arrTime) {
+		this.arrTime = arrTime;
+	}
+	
+
 
 
 }

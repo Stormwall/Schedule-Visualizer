@@ -18,7 +18,13 @@ public class MainApplication extends Application {
 
 	private Stage primaryStage;
 	private BorderPane rootLayout;
-
+	
+	// Stageübergabeobjekte	
+	
+	private String startzeit;
+	private String endzeit;
+	
+	
 	// Load Rootlayout and handle scenes
 
 	@Override
@@ -265,6 +271,7 @@ public class MainApplication extends Application {
 			controller.setDialogStage(dialogStage);
 			controller.setStartzeit(startzeit);
 			controller.setEndzeit(endzeit);
+			controller.setMainApp(this);
 
 			// Show the dialog and wait until the user closes it
 			dialogStage.showAndWait();
@@ -286,10 +293,28 @@ public class MainApplication extends Application {
 		Dialogs.showErrorDialog(primaryStage,
 				fehlermeldungA, fehlermeldungB, fehlermeldungC);
 	}
+	
+	// Übergabemethoden der Stageobjekte
+	
+	public String getStartzeit() {
+		return startzeit;
+	}
+
+	public void setStartzeit(String startzeit) {
+		this.startzeit = startzeit;
+	}
+
+	public String getEndzeit() {
+		return endzeit;
+	}
+
+	public void setEndzeit(String endzeit) {
+		this.endzeit = endzeit;
+	}
 
 	// Main Method
 
 	public static void main(String[] args) {
 		launch(args);
-	}
+	}	
 }
