@@ -2,6 +2,7 @@ package sv.creation.adress;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import sv.creation.adress.database.DBConnection;
@@ -258,8 +259,7 @@ public class MainLayoutController {
 
 	// Bau der Zugriffslisten
 
-	private ObservableList<Umlaufplan> umlaufplanliste = FXCollections
-			.observableArrayList();
+	private ArrayList<Umlaufplan> umlaufplanliste = new ArrayList<Umlaufplan>();
 
 	// Zuordnung der Umlaufpläne
 
@@ -415,8 +415,7 @@ public class MainLayoutController {
 		// dbc.fillDienstplanIntoTable();
 		// dbc.fillDiensttypenIntoTables();
 
-		DBMatching dbm = new DBMatching();
-		dbm.createUmlaufplanObject();
+		// DBMatching dbm = new DBMatching();
 		// dbm.createDienstplanObject();
 
 		// dbc.closeConnection();
@@ -435,6 +434,9 @@ public class MainLayoutController {
 		ft.setToValue(1.0);
 		ft.setAutoReverse(true);
 		ft.play();
+
+		// Befüllung des Umlaufplanes
+		fillUmlaufplanliste();
 
 		// Sets the Standardelement condition of the Interface
 
@@ -544,16 +546,6 @@ public class MainLayoutController {
 
 			}
 		});
-
-		// Umlaufpläne -- Choicebox wird gefüllt
-
-		this.umlaufplanliste.add(dbm.getUmlaufplan());
-		this.umlaufplanliste.get(0).setName(" Umlaufplan 1 ");
-		this.UPlan.setItems(FXCollections.observableArrayList(umlaufplanliste
-				.get(0).getName()));
-		for (int i = 1; i < umlaufplanliste.size(); i++) {
-			this.UPlan.getItems().add(umlaufplanliste.get(i).getName());
-		}
 
 		// Dienstpläne
 
@@ -756,7 +748,7 @@ public class MainLayoutController {
 								String fehlerA = "Es wurde noch keine Grafik erzeugt";
 								String fehlerB = "Noch nicht";
 								String fehlerC = "Fehler";
-								mainApp.fehlerMeldung(fehlerA,fehlerB,fehlerC);
+								mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
 								hilfslinien.setSelected(false);
 							}
 						}
@@ -918,7 +910,6 @@ public class MainLayoutController {
 				fillDetailPaneUmlauf(this.umlaufplanEins);
 				createUmlaufElementGraphic(this.umlaufplanEins,
 						this.upperGraphicPane1, this.upperChart1, this.uppergc1);
-
 				// Fügt den Eventhändler hinzu
 				this.upperChart1.addEventHandler(MouseEvent.MOUSE_CLICKED,
 						new EventHandler<MouseEvent>() {
@@ -927,8 +918,8 @@ public class MainLayoutController {
 								boolean okClicked = mainApp
 										.showEditUPlan(umlaufplanEins);
 								if (okClicked) {
-									// refreshPersonTable();
-									// showPersonDetails(selectedPerson);
+									refreshBothGraphics();
+									fillUmlaufplanliste();
 								}
 							}
 						});
@@ -2629,6 +2620,9 @@ public class MainLayoutController {
 		default:
 			break;
 		}
+		if (this.umlaufTabCounter > 0) {
+			this.umlaufTabCounter = this.umlaufTabCounter - 1;
+		}
 
 	}
 
@@ -2698,8 +2692,32 @@ public class MainLayoutController {
 			String fehlerA = "Es wurde noch keine Grafik erzeugt";
 			String fehlerB = "Noch nicht";
 			String fehlerC = "Fehler";
-			mainApp.fehlerMeldung(fehlerA,fehlerB,fehlerC);
+			mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
 		}
+	}
+
+	// Methoden zur Befüllung der Umlaufplanliste
+
+	public void fillUmlaufplanliste() {
+
+		// Umlaufpläne -- Choicebox wird gefüllt
+
+		DBMatching dbm = new DBMatching();
+		dbm.createUmlaufplanObject();
+
+		this.umlaufplanliste.clear();
+
+		this.umlaufplanliste.add(dbm.getUmlaufplan());
+		this.umlaufplanliste.get(0).setName(" Umlaufplan 1 ");
+
+		if (this.firstUppergrafikErstellt == false) {
+			this.UPlan.setItems(FXCollections
+					.observableArrayList(umlaufplanliste.get(0).getName()));
+			for (int i = 1; i < umlaufplanliste.size(); i++) {
+				this.UPlan.getItems().add(umlaufplanliste.get(i).getName());
+			}
+		}
+
 	}
 
 	// Methoden zur Festsetzung der Main
@@ -2710,6 +2728,36 @@ public class MainLayoutController {
 
 	public void setMainApp(MainApplication mainApp) {
 		this.mainApp = mainApp;
+	}
+
+	// Belegung der Umlaufpläne
+
+	public void setUmlaufplanEins(Umlaufplan umlaufplanEins) {
+		this.umlaufplanEins = umlaufplanEins;
+	}
+
+	public void setUmlaufplanZwei(Umlaufplan umlaufplanZwei) {
+		this.umlaufplanZwei = umlaufplanZwei;
+	}
+
+	public void setUmlaufplanDrei(Umlaufplan umlaufplanDrei) {
+		this.umlaufplanDrei = umlaufplanDrei;
+	}
+
+	public void setUmlaufplanVier(Umlaufplan umlaufplanVier) {
+		this.umlaufplanVier = umlaufplanVier;
+	}
+
+	public void setUmlaufplanFuenf(Umlaufplan umlaufplanFuenf) {
+		this.umlaufplanFuenf = umlaufplanFuenf;
+	}
+
+	public void setUmlaufplanSechs(Umlaufplan umlaufplanSechs) {
+		this.umlaufplanSechs = umlaufplanSechs;
+	}
+
+	public void setUmlaufplanSieben(Umlaufplan umlaufplanSieben) {
+		this.umlaufplanSieben = umlaufplanSieben;
 	}
 
 }

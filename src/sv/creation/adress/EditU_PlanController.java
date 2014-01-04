@@ -152,10 +152,10 @@ public class EditU_PlanController {
 						this.umlaufplan.getFahrtZuUmlauf().get(i)
 								.setDepTime(this.mainApp.getStartzeit());
 						this.umlaufplan.getFahrtZuUmlauf().get(i)
-								.setArrTime(this.mainApp.getEndzeit());	
-					}					
+								.setArrTime(this.mainApp.getEndzeit());
+					}
 				}
-				handleauswaehlen();				
+				handleauswaehlen();
 				this.elementsTable.getColumns().get(0).setVisible(false);
 				this.elementsTable.getColumns().get(0).setVisible(true);
 				this.elementsTable.getColumns().get(1).setVisible(false);

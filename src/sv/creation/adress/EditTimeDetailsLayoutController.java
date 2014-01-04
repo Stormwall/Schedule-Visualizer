@@ -54,7 +54,8 @@ public class EditTimeDetailsLayoutController {
 	 */
 	@FXML
 	private void handleOk() {
-		// if (isInputValid()) {
+		
+		boolean fehler = false;
 
 		// Methoden zur Fehlerbehebung und Formatierung
 
@@ -62,65 +63,101 @@ public class EditTimeDetailsLayoutController {
 		String sS = "";
 		try {
 			startStunde = Integer.parseInt(this.startzeitStunde.getText());
-
-			if (startStunde < 10) {
-				sS = ("0" + String.valueOf(startStunde));
+			if (startStunde < 24) {
+				if (startStunde < 10) {
+					sS = ("0" + String.valueOf(startStunde));
+				} else {
+					sS = String.valueOf(startStunde);
+				}
 			} else {
-				sS = String.valueOf(startStunde);
+				String fehlerA = "Das ist keine Stunde";
+				String fehlerB = "Falsche Eingabe ?";
+				String fehlerC = "Fehler";
+				this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+				sS = "0";
+				fehler = true;
 			}
 		} catch (NumberFormatException e) {
 			String fehlerA = "Das ist keine Stunde";
 			String fehlerB = "Falsche Eingabe ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+			fehler = true;
 		}
 		int startMinute = 0;
 		String sM = "";
 		try {
 			startMinute = Integer.parseInt(this.startzeitMinute.getText());
-
-			if (startMinute < 10) {
-				sM = ("0" + String.valueOf(startMinute));
+			if (startMinute < 60) {
+				if (startMinute < 10) {
+					sM = ("0" + String.valueOf(startMinute));
+				} else {
+					sM = String.valueOf(startMinute);
+				}
 			} else {
-				sM = String.valueOf(startMinute);
+				String fehlerA = "Das ist keine Minute";
+				String fehlerB = "Falsche Eingabe ?";
+				String fehlerC = "Fehler";
+				this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+				sM = "0";
+				fehler = true;
 			}
 		} catch (NumberFormatException e) {
 			String fehlerA = "Das ist keine Minute";
 			String fehlerB = "Falsche Eingabe ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+			fehler = true;
 		}
 		int endStunde = 0;
 		String eS = "";
 		try {
 			endStunde = Integer.parseInt(this.endzeitStunde.getText());
-
-			if (endStunde < 10) {
-				eS = ("0" + String.valueOf(endStunde));
+			if (endStunde < 24) {
+				if (endStunde < 10) {
+					eS = ("0" + String.valueOf(endStunde));
+				} else {
+					eS = String.valueOf(endStunde);
+				}
 			} else {
-				eS = String.valueOf(endStunde);
+				String fehlerA = "Das ist keine Stunde";
+				String fehlerB = "Falsche Eingabe ?";
+				String fehlerC = "Fehler";
+				this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+				eS = "0";
+				fehler = true;
 			}
 		} catch (NumberFormatException e) {
 			String fehlerA = "Das ist keine Stunde";
 			String fehlerB = "Falsche Eingabe ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+			fehler = true;
 		}
 		int endMinute = 0;
 		String eM = "";
 		try {
 			endMinute = Integer.parseInt(this.endzeitMinute.getText());
-
-			if (endMinute < 10) {
-				eM = ("0" + String.valueOf(endMinute));
+			if (endMinute < 60) {
+				if (endMinute < 10) {
+					eM = ("0" + String.valueOf(endMinute));
+				} else {
+					eM = String.valueOf(endMinute);
+				}
 			} else {
-				eM = String.valueOf(endMinute);
+				String fehlerA = "Das ist keine Minute";
+				String fehlerB = "Falsche Eingabe ?";
+				String fehlerC = "Fehler";
+				this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+				eM = "0";
+				fehler = true;
 			}
 		} catch (NumberFormatException e) {
 			String fehlerA = "Das ist keine Minute";
 			String fehlerB = "Falsche Eingabe ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+			fehler = true;
 		}
 
 		this.startzeit = (sS + ":" + sM);
@@ -131,9 +168,10 @@ public class EditTimeDetailsLayoutController {
 		this.mainApp.setStartzeit(this.startzeit);
 		this.mainApp.setEndzeit(this.endzeit);
 
-		okClicked = true;
-		dialogStage.close();
-		// }
+		if (fehler == false) {
+			okClicked = true;
+			dialogStage.close();
+		}
 	}
 
 	// Methode zum Beenden des PopUp
