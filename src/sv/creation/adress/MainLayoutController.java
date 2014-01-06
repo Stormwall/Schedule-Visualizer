@@ -2709,7 +2709,7 @@ public class MainLayoutController {
 
 		this.umlaufplanliste = dbm.createUmlaufplanObject();		
 		for (int i = 0; i < this.umlaufplanliste.size(); i++) {
-			this.umlaufplanliste.get(i).setName(" Umlaufplan "+i);
+			this.umlaufplanliste.get(i).setName(" Umlaufplan "+(i+1));
 		}
 		
 		if (this.firstUppergrafikErstellt == false) {
