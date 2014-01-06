@@ -1,5 +1,4 @@
 package sv.creation.adress.model;
-
 public class Blockelement {
 	
 	private int id;
@@ -11,6 +10,7 @@ public class Blockelement {
 	private String arrTime;
 	private int elementType;
 	private String driveTime;
+	private int umlaufplanID;
 	
 	
 	/**
@@ -30,7 +30,7 @@ public class Blockelement {
 	 * @param code
 	 */
 	public Blockelement(int id, int blockID, String serviceJourneyID, int fromStopID, int toStopID,
-			String depTime, String arrTime, int elementType) {
+			String depTime, String arrTime, int elementType, int umlaufplanID) {
 		super();
 		this.id = id;
 		this.blockID = blockID;
@@ -40,69 +40,46 @@ public class Blockelement {
 		this.depTime = depTime;
 		this.arrTime = arrTime;
 		this.elementType = elementType;
+		this.umlaufplanID=umlaufplanID;
 	}
-
-
 	public int getId() {
 		return id;
 	}
-
-
 	public int getBlockID() {
 		return blockID;
 	}
-
-
 	public String getServiceJourneyID() {
 		return serviceJourneyID;
 	}
-
-
 	public int getFromStopID() {
 		return fromStopID;
 	}
-
-
 	public int getToStopID() {
 		return toStopID;
 	}
-
-
 	public String getDepTime() {
 		return depTime;
 	}
-
-
 	public String getArrTime() {
 		return arrTime;
 	}
-
-
 	public int getElementType() {
 		return elementType;
 	}
-
-
 	public String getDriveTime() {
 		return driveTime;
 	}
-
-
 	public void setDriveTime(String driveTime) {
 		this.driveTime = driveTime;
 	}
-
-
 	public void setDepTime(String depTime) {
 		this.depTime = depTime;
 	}
-
-
 	public void setArrTime(String arrTime) {
 		this.arrTime = arrTime;
 	}
+	public int getUmlaufplanID() {
+		return umlaufplanID;
+	}
 	
-
-
-
 }
