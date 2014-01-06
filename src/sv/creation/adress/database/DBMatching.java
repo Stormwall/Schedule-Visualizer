@@ -164,7 +164,7 @@ public class DBMatching {
 	// can be modified. ******* *******
 	// ***********************************************************************************************
 
-	public void createUmlaufplanObject() {
+	public ArrayList<Umlaufplan> createUmlaufplanObject() {
 
 		ArrayList<Umlaufplan> umlaufplanliste = new ArrayList<Umlaufplan>();
 
@@ -199,33 +199,25 @@ public class DBMatching {
 			}
 
 			for (int j2 = zaehlerUmlauf; j2 < this.umlauf.size() - 1; j2++) {
-				System.out.println(j2);
 				if (this.umlauf.get(j2).getId() < this.umlauf.get(j2 + 1)
 						.getId() ) {
 
 					blockList.add(this.umlauf.get(j2));
 					zaehlerUmlauf = zaehlerUmlauf + 1;
 				}
+				if (this.umlauf.get(j2).getId() > this.umlauf.get(j2 + 1)
+						.getId()) {
+					j2 = this.umlauf.size() - 1;
+				}
 				
-			}
-			if (i == anzahlPlan) {
-				blockList.add(this.umlauf.get(this.umlauf.size() - 1));
 			}
 			zaehlerUmlauf = zaehlerUmlauf + 1;
 			Umlaufplan umlaufplanAdd = new Umlaufplan(i, blockList,
 					blockelementList);
 			umlaufplanliste.add(umlaufplanAdd);
 		}
-		System.out.println(umlaufplanliste.size());
-		System.out.println(umlaufplanliste.get(0).getUmlauf().size());
-		System.out.println(umlaufplanliste.get(1).getUmlauf().size());
-		System.out.println(umlaufplanliste.get(2).getUmlauf().size());
-		System.out.println(umlaufplanliste.get(3).getUmlauf().size());
-		System.out.println(umlaufplanliste.get(0).getFahrtZuUmlauf().size());
-		System.out.println(umlaufplanliste.get(1).getFahrtZuUmlauf().size());
-		System.out.println(umlaufplanliste.get(2).getFahrtZuUmlauf().size());
-		System.out.println(umlaufplanliste.get(3).getFahrtZuUmlauf().size());
-
+		
+		return umlaufplanliste;
 	}
 
 	// **********************************************************************

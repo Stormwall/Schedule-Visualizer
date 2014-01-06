@@ -2703,13 +2703,14 @@ public class MainLayoutController {
 		// Umlaufpläne -- Choicebox wird gefüllt
 
 		DBMatching dbm = new DBMatching();
-		dbm.createUmlaufplanObject();
 
 		this.umlaufplanliste.clear();
 
-		this.umlaufplanliste.add(dbm.getUmlaufplan());
-		this.umlaufplanliste.get(0).setName(" Umlaufplan 1 ");
-
+		this.umlaufplanliste = dbm.createUmlaufplanObject();		
+		for (int i = 0; i < this.umlaufplanliste.size(); i++) {
+			this.umlaufplanliste.get(i).setName(" Umlaufplan "+i);
+		}
+		
 		if (this.firstUppergrafikErstellt == false) {
 			this.UPlan.setItems(FXCollections
 					.observableArrayList(umlaufplanliste.get(0).getName()));
