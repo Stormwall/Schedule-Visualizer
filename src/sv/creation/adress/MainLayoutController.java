@@ -872,12 +872,13 @@ public class MainLayoutController {
 							.size() * 40 + 10;
 					createUpperYScale(yUp1, upperYChart1, upperYgc1,
 							this.upperheightEins, this.umlaufplanEins);
+					this.UPlanValue1.setText(UPlan.getSelectionModel()
+							.getSelectedItem().toString());
 				}
 				// Labelbeschriftungen für Umlaufpläne
 				this.UPlan1.setVisible(true);
 				this.loeschenUmlaufplan.setVisible(true);
-				this.UPlanValue1.setText(UPlan.getSelectionModel()
-						.getSelectedItem().toString());
+
 				this.UPlanValue1.setVisible(true);
 				this.UPlanValue1
 						.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");

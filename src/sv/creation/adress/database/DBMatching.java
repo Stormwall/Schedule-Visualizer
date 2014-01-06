@@ -170,7 +170,6 @@ public class DBMatching {
 
 		createBlock();
 		createBlockelement();
-		System.out.println("Umlaufplan Objekt erstellt");
 		// Anzahl der Umlaufpläne wird ausgelesen
 
 		// Strukturvariablen
@@ -183,8 +182,6 @@ public class DBMatching {
 							.get(i - 1).getUmlaufplanID()) {
 				anzahlPlan++;
 			}
-
-			umlaufplan = new Umlaufplan(1, umlauf, blockelement);
 		}
 		// Umlaufplanliste wird erzeugt
 		for (int i = 1; i <= anzahlPlan; i++) {
