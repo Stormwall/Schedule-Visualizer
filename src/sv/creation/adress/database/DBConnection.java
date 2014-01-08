@@ -529,11 +529,8 @@ public class DBConnection {
 
 		
 		  try{ Statement stmnt=connection.createStatement(); //Fill values in
-		  //specific tables
-		  
-		  stmnt.executeUpdate("INSERT INTO Dienstplan (Bezeichnung) VALUES ('"+ss.getFilename()+"');");
-		  
-		 // stmnt.executeUpdate("INSERT INTO Dienstplan (Bezeichnung, FahrplanID) VALUES ('"+ss.getFilename()+"',(SELECT f.ID FROM Fahrplan AS f, ServiceJourney, Dutyelement WHERE f.ID=ServiceJourney.FahrplanID AND ServiceJourney.ServiceJourneyID=Dutyelement.ServiceJourneyID));");
+
+		  stmnt.executeUpdate("INSERT INTO Dienstplan (Bezeichnung, FahrplanID) VALUES ('"+ss.getFilename()+"',(SELECT f.ID FROM Fahrplan AS f, ServiceJourney, Dutyelement WHERE f.ID=ServiceJourney.FahrplanID AND ServiceJourney.ServiceJourneyID=Dutyelement.ServiceJourneyID));");
 		  
 		  //iterators for getting values from stringsplitter object
 		  Iterator<String> it = ss.getDutyDutyID().iterator(); 
@@ -573,9 +570,6 @@ public class DBConnection {
 		  dayID = ss.getDutyelementDayID().get(0);
 		  }
 		  		  
-		  //fill duty roster
-		  stmnt.executeUpdate("INSERT INTO Dienstplan(FahrplanID) VALUES((SELECT f.ID FROM Fahrplan AS f, ServiceJourney, Dutyelement, Dienstplan WHERE f.ID=ServiceJourney.FahrplanID AND ServiceJourney.ServiceJourneyID=Dutyelement.ServiceJourneyID AND Dienstplan.Bezeichnung='"+ss.getFilename()+"'));");
-		  
 		  //fill duty
 		  while((it.hasNext()&&it2.hasNext())){
 			 

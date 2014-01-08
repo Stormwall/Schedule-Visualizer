@@ -307,7 +307,11 @@ public class StringSplitter {
 				// storing the resulting values into array "zeilenelemente"
 				if (!zeile.startsWith("*") && !zeile.startsWith("$")) {
 					Collections.addAll(zeilenelemente, zeile.split(";"));
-
+					
+					if(zeilenelemente.size()==2){
+						dutyDutyID.add(zeilenelemente.get(0));
+						dutyDutyType.add(zeilenelemente.get(1));
+					}
 					// The data is split in seperate array lists
 					if (zeilenelemente.size() >= 8) {
 						dutyelementID++;

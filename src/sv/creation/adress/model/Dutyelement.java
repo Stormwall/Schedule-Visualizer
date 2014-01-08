@@ -11,6 +11,7 @@ public class Dutyelement {
 	private String depTime;
 	private String arrTime;
 	private int elementType;
+	private int dienstplanID;
 	
 	
 	/**
@@ -30,7 +31,7 @@ public class Dutyelement {
 	 * @param code
 	 */
 	public Dutyelement(int id, String dutyID, int blockID, String serviceJourneyID, int fromStopID, int toStopID,
-			String depTime, String arrTime, int elementType) {
+			String depTime, String arrTime, int elementType, int dienstplanID) {
 		super();
 		this.id = id;
 		this.dutyID = dutyID;
@@ -41,6 +42,7 @@ public class Dutyelement {
 		this.depTime = depTime;
 		this.arrTime = arrTime;
 		this.elementType = elementType;
+		this.dienstplanID = dienstplanID;
 	}
 
 
@@ -86,6 +88,11 @@ public class Dutyelement {
 
 	public String getDutyID() {
 		return dutyID;
+	}
+
+
+	public int getDienstplanID() {
+		return dienstplanID;
 	}
 	
 	

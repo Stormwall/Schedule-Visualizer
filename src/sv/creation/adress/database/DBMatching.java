@@ -191,14 +191,14 @@ public class DBMatching {
 
 			for (int j = 0; j < this.blockelement.size(); j++) {
 				if (this.blockelement.get(j).getUmlaufplanID() == i) {
-					blockelementList.add(blockelement.get(i));
+					
+					blockelementList.add(blockelement.get(j));
 				}
 			}
 
 			for (int j2 = zaehlerUmlauf; j2 < this.umlauf.size() - 1; j2++) {
 				if (this.umlauf.get(j2).getId() < this.umlauf.get(j2 + 1)
 						.getId() ) {
-
 					blockList.add(this.umlauf.get(j2));
 					zaehlerUmlauf = zaehlerUmlauf + 1;
 				}
@@ -278,7 +278,7 @@ public class DBMatching {
 				if (zahl == 1) {
 
 					rest2 = stmt2
-							.executeQuery("SELECT de.ID, de.DutyID, de.BlockID, de.ServiceJourneyID, sj.FromStopID, sj.ToStopID, sj.DepTime, sj.ArrTime, de.elementType FROM Dutyelement AS de, ServiceJourney AS sj WHERE sj.serviceJourneyID='"
+							.executeQuery("SELECT de.ID, de.DutyID, de.BlockID, de.ServiceJourneyID, sj.FromStopID, sj.ToStopID, sj.DepTime, sj.ArrTime, de.elementType, de.DienstplanID FROM Dutyelement AS de, ServiceJourney AS sj WHERE sj.serviceJourneyID='"
 									+ rest3.getString("ServiceJourneyID")
 									+ "'  AND de.ID='"
 									+ rest3.getString("ID")
@@ -290,7 +290,7 @@ public class DBMatching {
 					// the second sql query will be execute
 				} else {
 					rest2 = stmt3
-							.executeQuery("SELECT de.ID, de.DutyID, de.BlockID, de.ServiceJourneyID, ex.FromStopID, ex.ToStopID, ex.DepTime, ex.ArrTime, de.ElementType FROM Dutyelement AS de, ExceptionalDutyelement AS ex WHERE ex.ServiceJourneyID='"
+							.executeQuery("SELECT de.ID, de.DutyID, de.BlockID, de.ServiceJourneyID, ex.FromStopID, ex.ToStopID, ex.DepTime, ex.ArrTime, de.ElementType, de.DienstplanID FROM Dutyelement AS de, ExceptionalDutyelement AS ex WHERE ex.ServiceJourneyID='"
 									+ rest3.getString("ServiceJourneyID")
 									+ "' AND de.ID='"
 									+ rest3.getString("ID")
@@ -313,11 +313,12 @@ public class DBMatching {
 				String arrTime = rest2.getString("ArrTime");
 				int elementType = Integer.parseInt(rest2
 						.getString("ElementType"));
+				int dienstplanID = Integer.parseInt(rest2.getString("DienstplanID"));
 
 				// all variables will be sum up to an umlaufelement
 				dutyelement.add(new Dutyelement(id, dutyID, blockID,
 						serviceJourneyID, fromStopID, toStopID, depTime,
-						arrTime, elementType));
+						arrTime, elementType, dienstplanID));
 
 			}
 		} catch (SQLException e) {
@@ -334,19 +335,64 @@ public class DBMatching {
 	// can be modified. ******* *******
 	// ***********************************************************************************************
 
-	public void createDienstplanObject() {
+	public ArrayList<Dienstplan> createDienstplanObject() {
 
+		ArrayList<Dienstplan> dienstplanliste=new ArrayList<Dienstplan>();
+		
 		createDuty();
 		createDutyelement();
 
+		// Anzahl der Dienstpläne wird ausgelesen
+
+		// Strukturvariablen
+		int anzahlPlan = 1;
+		int zaehlerDienst = 0;
+
+		for (int i = 0; i < dutyelement.size(); i++) {
+			if (i >= 1
+					&& dutyelement.get(i).getDienstplanID() > dutyelement
+							.get(i - 1).getDienstplanID()) {
+				anzahlPlan++;
+			}
+		}
+		
+		// Umlaufplanliste wird erzeugt
+		for (int i = 1; i <= anzahlPlan; i++) {
+
+			ArrayList<Dutyelement> dutyelementList = new ArrayList<Dutyelement>();
+			ArrayList<Duty> dutyList = new ArrayList<Duty>();
+
+			for (int j = 0; j < this.dutyelement.size(); j++) {
+				if (this.dutyelement.get(j).getDienstplanID() == i) {
+					
+					dutyelementList.add(dutyelement.get(j));
+				}
+			}
+		for (int j2 = zaehlerDienst; j2 < this.duty.size() - 1; j2++) {
+			if (this.duty.get(j2).getId() < this.duty.get(j2 + 1)
+					.getId() ) {
+				dutyList.add(this.duty.get(j2));
+				zaehlerDienst = zaehlerDienst + 1;
+			}
+			if (this.duty.get(j2).getId() > this.duty.get(j2 + 1)
+					.getId()) {
+				j2 = this.duty.size() - 1;
+			}
+			
+		}
+		zaehlerDienst = zaehlerDienst + 1;
+		Dienstplan dienstplanAdd = new Dienstplan(1, dutyList, dutyelementList);
+		dienstplanliste.add(dienstplanAdd);
+		}
+	
 		/**
 		 * WICHTIG!!!! Es muss noch die FahrplanID ausgelesen werden. DB
 		 * Verknüpfung!!!!
 		 */
-		dienstplan = new Dienstplan(1, duty, dutyelement);
 
 		System.out.println("Dienstplan objekt erstellt");
-
+		
+		return dienstplanliste;
 	}
 
 	// *****************************
