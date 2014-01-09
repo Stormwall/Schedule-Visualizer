@@ -407,16 +407,16 @@ public class MainLayoutController {
 	private void initialize() {
 
 		// Erstellung der Datenbank
-//		 DBConnection dbc =new DBConnection();
-//		 dbc.initDBConnection();
-//		 dbc.createTables();
-//		 dbc.fillFahrplanIntoTables();
-//		 dbc.fillUmlaufplanIntoTables();
-//		 dbc.fillDienstplanIntoTable();
-//		 dbc.fillDiensttypenIntoTables();
+		// DBConnection dbc =new DBConnection();
+		// dbc.initDBConnection();
+		// dbc.createTables();
+		// dbc.fillFahrplanIntoTables();
+		// dbc.fillUmlaufplanIntoTables();
+		// dbc.fillDienstplanIntoTable();
+		// dbc.fillDiensttypenIntoTables();
 
-//		 DBMatching dbm = new DBMatching();
-//		 dbm.createDienstplanObject();
+		// DBMatching dbm = new DBMatching();
+		// dbm.createDienstplanObject();
 
 		// dbc.closeConnection();
 
@@ -771,6 +771,7 @@ public class MainLayoutController {
 		// Hier wird das Feld gecleared und gepr�ft ob es schon existiert
 
 		if (firstUppergrafikErstellt == true) {
+
 			this.xUp1.getChildren().clear();
 			if (secondUppergrafikErstellt == true) {
 				this.xUp2.getChildren().clear();
@@ -881,7 +882,13 @@ public class MainLayoutController {
 
 				this.UPlanValue1.setVisible(true);
 				this.UPlanValue1
-						.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+						.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+				this.UPlanValue1
+						.setOnMousePressed(new EventHandler<MouseEvent>() {
+							@Override
+							public void handle(MouseEvent e) {
+							}
+						});
 
 				// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
 				// nicht
@@ -907,8 +914,7 @@ public class MainLayoutController {
 					this.detailsUmlaufTable.getColumns().clear();
 					this.uDetailsTableErstellt = false;
 				}
-				createUDetailsTable(this.umlaufplanEins);
-				fillDetailPaneUmlauf(this.umlaufplanEins);
+				changeFocusUplan(this.umlaufplanEins);
 				createUmlaufElementGraphic(this.umlaufplanEins,
 						this.upperGraphicPane1, this.upperChart1, this.uppergc1);
 				// Fügt den Eventhändler hinzu
@@ -945,17 +951,17 @@ public class MainLayoutController {
 							.size() * 40 + 10;
 					createUpperYScale(yUp2, upperYChart2, upperYgc2,
 							this.upperheightZwei, this.umlaufplanZwei);
+					this.UPlanValue2.setText(UPlan.getSelectionModel()
+							.getSelectedItem().toString());
 				}
 				// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
 
 				this.Plan2.setDisable(false);
 				this.UPlan2.setVisible(true);
-				this.UPlanValue2.setText(UPlan.getSelectionModel()
-						.getSelectedItem().toString());
 				this.UPlanValue2.setVisible(true);
 				this.UPlanValue1.setStyle("-fx-background-color:white;");
 				this.UPlanValue2
-						.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+						.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
 
 				// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
 				// nicht
@@ -983,8 +989,7 @@ public class MainLayoutController {
 					this.detailsUmlaufTable.getColumns().clear();
 					this.uDetailsTableErstellt = false;
 				}
-				createUDetailsTable(this.umlaufplanZwei);
-				fillDetailPaneUmlauf(this.umlaufplanZwei);
+				changeFocusUplan(this.umlaufplanZwei);
 				createUmlaufElementGraphic(this.umlaufplanZwei,
 						this.upperGraphicPane2, this.upperChart2, this.uppergc2);
 
@@ -1008,18 +1013,18 @@ public class MainLayoutController {
 							.size() * 40 + 10;
 					createUpperYScale(yUp3, upperYChart3, upperYgc3,
 							this.upperheightDrei, this.umlaufplanDrei);
+					this.UPlanValue3.setText(UPlan.getSelectionModel()
+							.getSelectedItem().toString());
 				}
 				// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
 
 				this.Plan3.setDisable(false);
 				this.UPlan3.setVisible(true);
-				this.UPlanValue3.setText(UPlan.getSelectionModel()
-						.getSelectedItem().toString());
 				this.UPlanValue3.setVisible(true);
 				this.UPlanValue1.setStyle("-fx-background-color:white;");
 				this.UPlanValue2.setStyle("-fx-background-color:white;");
 				this.UPlanValue3
-						.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+						.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
 
 				// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
 				// nicht
@@ -1047,8 +1052,7 @@ public class MainLayoutController {
 					this.detailsUmlaufTable.getColumns().clear();
 					this.uDetailsTableErstellt = false;
 				}
-				createUDetailsTable(this.umlaufplanDrei);
-				fillDetailPaneUmlauf(this.umlaufplanDrei);
+				changeFocusUplan(this.umlaufplanDrei);
 				createUmlaufElementGraphic(this.umlaufplanDrei,
 						this.upperGraphicPane3, this.upperChart3, this.uppergc3);
 
@@ -1072,19 +1076,19 @@ public class MainLayoutController {
 							.size() * 40 + 10;
 					createUpperYScale(yUp4, upperYChart4, upperYgc4,
 							this.upperheightVier, this.umlaufplanVier);
+					this.UPlanValue4.setText(UPlan.getSelectionModel()
+							.getSelectedItem().toString());
 				}
 				// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
 
 				this.Plan4.setDisable(false);
 				this.UPlan4.setVisible(true);
-				this.UPlanValue4.setText(UPlan.getSelectionModel()
-						.getSelectedItem().toString());
 				this.UPlanValue4.setVisible(true);
 				this.UPlanValue1.setStyle("-fx-background-color:white;");
 				this.UPlanValue2.setStyle("-fx-background-color:white;");
 				this.UPlanValue3.setStyle("-fx-background-color:white;");
 				this.UPlanValue4
-						.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+						.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
 
 				// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
 				// nicht
@@ -1112,8 +1116,7 @@ public class MainLayoutController {
 					this.detailsUmlaufTable.getColumns().clear();
 					this.uDetailsTableErstellt = false;
 				}
-				createUDetailsTable(this.umlaufplanVier);
-				fillDetailPaneUmlauf(this.umlaufplanVier);
+				changeFocusUplan(this.umlaufplanVier);
 				createUmlaufElementGraphic(this.umlaufplanVier,
 						this.upperGraphicPane4, this.upperChart4, this.uppergc4);
 			}
@@ -1136,20 +1139,20 @@ public class MainLayoutController {
 							.size() * 40 + 10;
 					createUpperYScale(yUp5, upperYChart5, upperYgc5,
 							this.upperheightFuenf, this.umlaufplanFuenf);
+					this.UPlanValue5.setText(UPlan.getSelectionModel()
+							.getSelectedItem().toString());
 				}
 				// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
 
 				this.Plan5.setDisable(false);
 				this.UPlan5.setVisible(true);
-				this.UPlanValue5.setText(UPlan.getSelectionModel()
-						.getSelectedItem().toString());
 				this.UPlanValue5.setVisible(true);
 				this.UPlanValue1.setStyle("-fx-background-color:white;");
 				this.UPlanValue2.setStyle("-fx-background-color:white;");
 				this.UPlanValue3.setStyle("-fx-background-color:white;");
 				this.UPlanValue4.setStyle("-fx-background-color:white;");
 				this.UPlanValue5
-						.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+						.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
 
 				// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
 				// nicht
@@ -1177,8 +1180,7 @@ public class MainLayoutController {
 					this.detailsUmlaufTable.getColumns().clear();
 					this.uDetailsTableErstellt = false;
 				}
-				createUDetailsTable(this.umlaufplanFuenf);
-				fillDetailPaneUmlauf(this.umlaufplanFuenf);
+				changeFocusUplan(this.umlaufplanFuenf);
 				createUmlaufElementGraphic(this.umlaufplanFuenf,
 						this.upperGraphicPane5, this.upperChart5, this.uppergc5);
 			}
@@ -1201,13 +1203,13 @@ public class MainLayoutController {
 							.size() * 40 + 10;
 					createUpperYScale(yUp6, upperYChart6, upperYgc6,
 							this.upperheightSechs, this.umlaufplanSechs);
+					this.UPlanValue6.setText(UPlan.getSelectionModel()
+							.getSelectedItem().toString());
 				}
 				// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
 
 				this.Plan6.setDisable(false);
 				this.UPlan6.setVisible(true);
-				this.UPlanValue6.setText(UPlan.getSelectionModel()
-						.getSelectedItem().toString());
 				this.UPlanValue6.setVisible(true);
 				this.UPlanValue1.setStyle("-fx-background-color:white;");
 				this.UPlanValue2.setStyle("-fx-background-color:white;");
@@ -1215,7 +1217,7 @@ public class MainLayoutController {
 				this.UPlanValue4.setStyle("-fx-background-color:white;");
 				this.UPlanValue5.setStyle("-fx-background-color:white;");
 				this.UPlanValue6
-						.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+						.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
 
 				// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
 				// nicht
@@ -1243,8 +1245,7 @@ public class MainLayoutController {
 					this.detailsUmlaufTable.getColumns().clear();
 					this.uDetailsTableErstellt = false;
 				}
-				createUDetailsTable(this.umlaufplanSechs);
-				fillDetailPaneUmlauf(this.umlaufplanSechs);
+				changeFocusUplan(this.umlaufplanSechs);
 				createUmlaufElementGraphic(this.umlaufplanSechs,
 						this.upperGraphicPane6, this.upperChart6, this.uppergc6);
 			}
@@ -1267,13 +1268,13 @@ public class MainLayoutController {
 							.size() * 40 + 10;
 					createUpperYScale(yUp7, upperYChart7, upperYgc7,
 							this.upperheightSieben, this.umlaufplanSieben);
+					this.UPlanValue7.setText(UPlan.getSelectionModel()
+							.getSelectedItem().toString());
 				}
 				// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
 
 				this.Plan7.setDisable(false);
 				this.UPlan7.setVisible(true);
-				this.UPlanValue7.setText(UPlan.getSelectionModel()
-						.getSelectedItem().toString());
 				this.UPlanValue7.setVisible(true);
 				this.UPlanValue1.setStyle("-fx-background-color:white;");
 				this.UPlanValue2.setStyle("-fx-background-color:white;");
@@ -1282,7 +1283,7 @@ public class MainLayoutController {
 				this.UPlanValue5.setStyle("-fx-background-color:white;");
 				this.UPlanValue6.setStyle("-fx-background-color:white;");
 				this.UPlanValue7
-						.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+						.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
 
 				// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
 				// nicht
@@ -1310,8 +1311,7 @@ public class MainLayoutController {
 					this.detailsUmlaufTable.getColumns().clear();
 					this.uDetailsTableErstellt = false;
 				}
-				createUDetailsTable(this.umlaufplanSieben);
-				fillDetailPaneUmlauf(this.umlaufplanSieben);
+				changeFocusUplan(this.umlaufplanSieben);
 				createUmlaufElementGraphic(this.umlaufplanSieben,
 						this.upperGraphicPane7, this.upperChart7, this.uppergc7);
 			}
@@ -1546,7 +1546,7 @@ public class MainLayoutController {
 		this.uppergc6.fillRect(0, 0, this.upperChart6.getWidth(),
 				this.upperChart6.getHeight());
 
-		this.uppergc3.setLineWidth(3);
+		this.uppergc6.setLineWidth(3);
 		this.uppergc6.setStroke(Color.BLACK);
 		this.uppergc6.strokeLine(1, 0, 1, this.upperChart6.getHeight());
 
@@ -1727,10 +1727,20 @@ public class MainLayoutController {
 	}
 
 	/**
+	 * Changes the table and Detailpane to the Selection
+	 */
+	private void changeFocusUplan(Umlaufplan umlaufplan) {
+
+		createUDetailsTable(umlaufplan);
+		fillDetailPaneUmlauf(umlaufplan);
+
+	}
+
+	/**
 	 * Fills the DetailPane für die Umlaufpläne
 	 */
 	private void fillDetailPaneUmlauf(Umlaufplan umlaufplan) {
-
+		
 		this.anzahlFahrten.setVisible(true);
 		this.anzahlFahrten.setText(String.valueOf(umlaufplan.getFahrtZuUmlauf()
 				.size()));
@@ -2551,7 +2561,7 @@ public class MainLayoutController {
 			this.secondUppergrafikErstellt = false;
 			this.umlaufplanZwei = null;
 			this.UPlanValue1
-					.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
 			break;
 		case 2:
 			this.UPlan3.setVisible(false);
@@ -2564,7 +2574,7 @@ public class MainLayoutController {
 			this.umlaufplanDrei = null;
 			;
 			this.UPlanValue2
-					.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
 			break;
 		case 3:
 			this.UPlan4.setVisible(false);
@@ -2577,7 +2587,7 @@ public class MainLayoutController {
 			this.umlaufplanVier = null;
 			;
 			this.UPlanValue3
-					.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
 			break;
 		case 4:
 			this.UPlan5.setVisible(false);
@@ -2590,7 +2600,7 @@ public class MainLayoutController {
 			this.umlaufplanFuenf = null;
 			;
 			this.UPlanValue4
-					.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
 			break;
 		case 5:
 			this.UPlan6.setVisible(false);
@@ -2603,7 +2613,7 @@ public class MainLayoutController {
 			this.umlaufplanSechs = null;
 			;
 			this.UPlanValue5
-					.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
 			break;
 		case 6:
 			this.UPlan7.setVisible(false);
@@ -2616,7 +2626,7 @@ public class MainLayoutController {
 			this.umlaufplanSieben = null;
 			;
 			this.UPlanValue6
-					.setStyle("-fx-background-color:#F0E68C; -fx-font-weight: bold;");
+					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
 			break;
 		default:
 			break;
@@ -2707,11 +2717,11 @@ public class MainLayoutController {
 
 		this.umlaufplanliste.clear();
 
-		this.umlaufplanliste = dbm.createUmlaufplanObject();		
+		this.umlaufplanliste = dbm.createUmlaufplanObject();
 		for (int i = 0; i < this.umlaufplanliste.size(); i++) {
-			this.umlaufplanliste.get(i).setName(" Umlaufplan "+(i+1));
+			this.umlaufplanliste.get(i).setName(" Umlaufplan " + (i + 1));
 		}
-		
+
 		if (this.firstUppergrafikErstellt == false) {
 			this.UPlan.setItems(FXCollections
 					.observableArrayList(umlaufplanliste.get(0).getName()));
