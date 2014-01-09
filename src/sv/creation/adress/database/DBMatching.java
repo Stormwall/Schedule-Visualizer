@@ -216,7 +216,6 @@ public class DBMatching {
 			Umlaufplan umlaufplanAdd = new Umlaufplan(i, blockList,
 					blockelementList);
 			umlaufplanliste.add(umlaufplanAdd);
-			System.out.println(blockList.size());
 		}
 
 		return umlaufplanliste;
@@ -387,7 +386,6 @@ public class DBMatching {
 					dutyList.add(this.duty.get(j2 + 1));
 				}
 			}
-			System.out.println(dutyList.size());
 			zaehlerDienst = zaehlerDienst + 1;
 			Dienstplan dienstplanAdd = new Dienstplan(1, dutyList,
 					dutyelementList);

@@ -7,6 +7,7 @@ import java.util.Date;
 
 import sv.creation.adress.model.Blockelement;
 import sv.creation.adress.model.Umlaufplan;
+import sv.creation.adress.util.Export;
 import sv.creation.adress.util.StringSplitter;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -201,7 +202,7 @@ public class EditU_PlanController {
 
 		// Set extension filter
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
-				"XML files (*.txt)", "*.txt");
+				"TXT files (*.txt)", "*.txt");
 		fileChooser.getExtensionFilters().add(extFilter);
 
 		// Show save file dialog
@@ -212,7 +213,9 @@ public class EditU_PlanController {
 			if (!file.getPath().endsWith(".txt")) {
 				file = new File(file.getPath() + ".txt");
 			}
-			mainApp.savePersonDataToFile(file);
+				
+			Export export = new Export();
+			export.exportUmlaufplan(umlaufplan, file);
 		}
 	}
 

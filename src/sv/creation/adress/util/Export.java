@@ -63,16 +63,13 @@ public class Export {
 	}
 
 	// Creates the txt-file of a selected umlaufplan
-	public void exportUmlaufplan(Umlaufplan umlaufplan) {
+	public void exportUmlaufplan(Umlaufplan umlaufplan, File exportFile) {
 
-		File exportFile;
 		FileWriter writer;
 
 		String textOutput = new String();
 
 		try {
-			exportFile = new File(System.getProperty("user.home") + "/"
-					+ "Export2.txt");
 			writer = new FileWriter(exportFile);
 
 			textOutput = "*\n* Umlaeufe\n*\n$BLOCK:ID;VehTypeID;DepotID";

@@ -290,25 +290,7 @@ public class MainApplication extends Application {
 		}
 
 	}
-	
-	/**
-	 * Saves the current Umlauf data to the specified file.
-	 * 
-	 * @param file
-	 */
-	public void savePersonDataToFile(File file) {
-		XStream xstream = new XStream();
-		xstream.alias("umlaufplan", Umlaufplan.class);
 
-		String xml = xstream.toString();
-		try {
-
-		} catch (Exception e) { // catches ANY exception
-			Dialogs.showErrorDialog(primaryStage,
-					"Could not save data to file:\n" + file.getPath(),
-					"Could not save data", "Error", e);
-		}
-	}
 
 	// Fehlermeldung bei nicht erstellter Grafik
 
