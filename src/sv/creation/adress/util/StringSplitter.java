@@ -27,7 +27,7 @@ import sv.creation.adress.database.DBConnection;
 
 public class StringSplitter {
 
-	public static StringSplitter instance = null;
+	public static StringSplitter instance = null; 
 
 	// ***********************************************************
 	// ***********************************************************
@@ -191,6 +191,14 @@ public class StringSplitter {
 	private static ArrayList<Integer> dayFive = new ArrayList<Integer>();
 	private static ArrayList<Integer> daySix = new ArrayList<Integer>();
 	private static ArrayList<Integer> daySeven = new ArrayList<Integer>();
+	
+	// Array lists of Walkruntimes
+		private static ArrayList<Integer> walkruntimeFromStopID = new ArrayList<Integer>();
+		private static ArrayList<Integer> walkruntimeToStopID = new ArrayList<Integer>();
+		private static ArrayList<String> walkruntimeFromTime = new ArrayList<String>();
+		private static ArrayList<String> walkruntimeToTime = new ArrayList<String>();
+		private static ArrayList<Integer> walkruntimeRuntime = new ArrayList<Integer>();
+
 
 	// Array lists of duty type (rules) file
 	private static ArrayList<String> name = new ArrayList<String>();
@@ -245,7 +253,7 @@ public class StringSplitter {
 	public static ArrayList<String> convertStringToArraylist(String str) {
 
 		// "\\s*,\\s*" anstatt "," damit Leerzeichen vor und nach dem Komma im
-		// urspr��nglichen String ignoriert werden.
+		// ursprï¿½ï¿½nglichen String ignoriert werden.
 		Collections.addAll(stringList, str.split("\\s*,\\s*"));
 
 		System.out.println(stringList);
@@ -267,7 +275,7 @@ public class StringSplitter {
 			// All lines with relevant data will be read
 			// The data will be split in seperated array lists
 
-			File file = new File("resources/quellen/dienstplan4.txt");
+			File file = new File("resources/quellen/dienstplan1.txt");
 			BufferedReader dienstplan = new BufferedReader(new FileReader(file));
 			filename = file.getName();
 
@@ -421,7 +429,7 @@ public class StringSplitter {
 
 			// testumlauf.txt Data has to be in the project file in your
 			// workspace
-			File file = new File("resources/quellen/umlaufplan4.txt");
+			File file = new File("resources/quellen/umlaufplan1.txt");
 			BufferedReader umlaufplan = new BufferedReader(new FileReader(file));
 			filename = file.getName();
 			String zeile = null;
@@ -533,7 +541,7 @@ public class StringSplitter {
 
 			// testfahrplan.txt Data has to be in the project file in your
 			// workspace
-			File file = new File("resources/quellen/fahrplan2.txt");
+			File file = new File("resources/quellen/fahrplan1.txt");
 			BufferedReader fahrplan = new BufferedReader(new FileReader(file));
 			filename = file.getName();
 			String zeile = null;
@@ -548,6 +556,7 @@ public class StringSplitter {
 			boolean reliefpoint = false;
 			boolean days = false;
 			boolean deadruntime = false;
+			boolean walkruntime=false;
 
 			while ((zeile = fahrplan.readLine()) != null) {
 
@@ -615,6 +624,19 @@ public class StringSplitter {
 					reliefpoint = false;
 					deadruntime = false;
 					days = true;
+					continue;
+				}
+				
+				if(zeile.startsWith("$WALKRUNTIME:")){
+					stoppoint = false;
+					line = false;
+					vehicleTypeGroup = false;
+					vehTypeToVehTypeGroup = false;
+					vehicleCapToStop = false;
+					reliefpoint = false;
+					deadruntime = false;
+					days = false;
+					walkruntime=true;
 					continue;
 				}
 
@@ -818,6 +840,21 @@ public class StringSplitter {
 						reliefpointStoppointID
 								.add(reliefpointStoppointIDZiffer);
 						reliefpointStoptime.add(zeilenelemente.get(3));
+						zeilenelemente.clear();
+					}
+					
+					if (zeilenelemente.size() == 5 && walkruntime == true) {
+						int fromStopIDZiffer = Integer
+								.parseInt(zeilenelemente.get(0));
+						int toStopIDZiffer = Integer
+								.parseInt(zeilenelemente.get(1));
+
+						walkruntimeFromStopID.add(fromStopIDZiffer);
+						walkruntimeToStopID
+								.add(toStopIDZiffer);
+						walkruntimeFromTime.add(zeilenelemente.get(2));
+						walkruntimeToTime.add(zeilenelemente.get(3));
+						walkruntimeRuntime.add(Integer.parseInt(zeilenelemente.get(4)));
 						zeilenelemente.clear();
 					}
 
@@ -1656,6 +1693,28 @@ public class StringSplitter {
 
 	public ArrayList<Integer> getExceptionaldutyelementDutyelementID() {
 		return exceptionaldutyelementDutyelementID;
+	}
+	
+	
+
+	public ArrayList<Integer> getWalkruntimeFromStopID() {
+		return walkruntimeFromStopID;
+	}
+
+	public  ArrayList<Integer> getWalkruntimeToStopID() {
+		return walkruntimeToStopID;
+	}
+
+	public  ArrayList<String> getWalkruntimeFromTime() {
+		return walkruntimeFromTime;
+	}
+
+	public  ArrayList<String> getWalkruntimeToTime() {
+		return walkruntimeToTime;
+	}
+
+	public  ArrayList<Integer> getWalkruntimeRuntime() {
+		return walkruntimeRuntime;
 	}
 
 	public String changeDateFormat(String date) {

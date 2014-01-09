@@ -45,12 +45,12 @@
                 <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#handleuebernehemen" styleClass="dark-blue" text="Übernehmen" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                 <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Abbrechen" GridPane.columnIndex="1" GridPane.rowIndex="2">
                   <GridPane.margin>
-                    <Insets left="100.0" />
+                    <Insets left="192.0" />
                   </GridPane.margin>
                 </Button>
                 <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#handleExport" styleClass="dark-blue" text="Exportieren" GridPane.columnIndex="1" GridPane.rowIndex="2">
                   <GridPane.margin>
-                    <Insets left="250.0" />
+                    <Insets left="100.0" />
                   </GridPane.margin>
                 </Button>
               </children>

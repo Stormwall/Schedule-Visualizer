@@ -170,7 +170,7 @@ public class DBMatching {
 
 		createBlock();
 		createBlockelement();
-		// Anzahl der UmlaufplÃ¤ne wird ausgelesen
+		// Anzahl der UmlaufplÃƒÂ¤ne wird ausgelesen
 
 		// Strukturvariablen
 		int anzahlPlan = 1;
@@ -347,7 +347,7 @@ public class DBMatching {
 		createDuty();
 		createDutyelement();
 
-		// Anzahl der DienstplÃ¤ne wird ausgelesen
+		// Anzahl der DienstplÃƒÂ¤ne wird ausgelesen
 
 		// Strukturvariablen
 		int anzahlPlan = 1;
@@ -385,7 +385,7 @@ public class DBMatching {
 				if (j2 == this.duty.size() - 2) {
 					dutyList.add(this.duty.get(j2 + 1));
 				}
-			}
+			} 
 			zaehlerDienst = zaehlerDienst + 1;
 			Dienstplan dienstplanAdd = new Dienstplan(1, dutyList,
 					dutyelementList);
@@ -394,7 +394,7 @@ public class DBMatching {
 
 		/**
 		 * WICHTIG!!!! Es muss noch die FahrplanID ausgelesen werden. DB
-		 * VerknÃ¼pfung!!!!
+		 * VerknÃƒÂ¼pfung!!!!
 		 */
 
 		System.out.println("Dienstplan objekt erstellt");

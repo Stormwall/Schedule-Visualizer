@@ -11,7 +11,7 @@ package sv.creation.adress.database;
  * 3. filling tables with data from txt files using stringsplitter-class
  * 
  * TODO:
- * generell m�ssten import,  initale Erstellung der Relationen und  DB-Verbindung noch getrennt werden oder?
+ * generell mï¿½ssten import,  initale Erstellung der Relationen und  DB-Verbindung noch getrennt werden oder?
  * Zeile 36, 470, 516, 580, 630, 656
  */
 
@@ -345,6 +345,8 @@ public class DBConnection {
 
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS PrimeDelaySzenario (ID INTEGER PRIMARY KEY AUTOINCREMENT, DutyID INTEGER, VehicleID INTEGER, ServiceJourneyID VARCHAR(30) NOT NULL, DepTime VARCHAR(30) NOT NULL, Delay INTEGER NOT NULL); ");
 
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Walkruntime (ID INTEGER PRIMARY KEY AUTOINCREMENT, FromStopID INTEGER, ToStopID INTEGER, FromTime VARCHAR(30) NOT NULL, ToTime VARCHAR(30) NOT NULL, Runtime INTEGER NOT NULL); ");
+
 			//***************************
 			//tables get filled with data		
 			//***************************		
@@ -497,8 +499,8 @@ public class DBConnection {
 		  
 		  /**
 		   * TODO:
-		   * Dienstplanname aus textfile dateinamen in tabelle dienstplan einf�gen
-		   * DienstplanID in dutytype Relation einf�gen
+		   * Dienstplanname aus textfile dateinamen in tabelle dienstplan einfï¿½gen
+		   * DienstplanID in dutytype Relation einfï¿½gen
 		   * 
 		  */
 		  while((it.hasNext()&&it2.hasNext()&&it3.hasNext()&&it4.hasNext()&&it5.hasNext()&&it6.hasNext()&&it7.hasNext()&&it8.hasNext()&&it9.hasNext()&&it10.hasNext()&&it11.hasNext()&&it12.hasNext()&&it13.hasNext()&&it14.hasNext()&&it15.hasNext()&&it16.hasNext()&&it17.hasNext()&&it18.hasNext()&&it19.hasNext()&&it20.hasNext()&&it21.hasNext()&&it22.hasNext()&&it23.hasNext()&&it24.hasNext()&&it25.hasNext()&&it26.hasNext()&&it27.hasNext()&&it28.hasNext()&&it29.hasNext()&&it30.hasNext()&&it31.hasNext()&&it32.hasNext()&&it33.hasNext()&&it34.hasNext()&&it35.hasNext())){
@@ -540,7 +542,7 @@ public class DBConnection {
 		  Iterator<String> it5 =ss.getDutyelementServiceJourneyID().iterator();
 		  /**
 		   * TODO:
-		   * Stationen und Zeiten f�r die Dienste die Sonderfahrten bedienen m�ssen hier drin gespeichert werden
+		   * Stationen und Zeiten fï¿½r die Dienste die Sonderfahrten bedienen mï¿½ssen hier drin gespeichert werden
 		   * evtl. so trennen wie blockelemente?
 		   * ServiceJourneycode(Z512) muss wieder rein, wirft dann aber Fehler wegen static
 		  */
@@ -677,6 +679,12 @@ public class DBConnection {
 		  Iterator<String> it44 =ss.getReliefpointServiceJourneyID().iterator(); 
 		  Iterator<Integer> it45 =ss.getReliefpointStoppointID().iterator(); 
 		  Iterator<String> it46 =ss.getReliefpointStoptime().iterator(); 
+		  //Walkruntimes
+		  Iterator<Integer> it57 = ss.getWalkruntimeFromStopID().iterator(); 
+		  Iterator<Integer> it58 =ss.getWalkruntimeToStopID().iterator(); 
+		  Iterator<String> it59 =ss.getWalkruntimeFromTime().iterator(); 
+		  Iterator<String> it60 =ss.getWalkruntimeToTime().iterator(); 
+		  Iterator<Integer> it61 = ss.getWalkruntimeRuntime().iterator();  
 		  /**
 		   * TODO:
 		   * transfertime fehlt noch!
@@ -737,6 +745,10 @@ public class DBConnection {
 		  //fill Reliefpoint
 		  while((it43.hasNext()&&it44.hasNext()&&it45.hasNext()&&it46.hasNext())){
 			  stmnt.executeUpdate("INSERT INTO Reliefpoint (ReliefpointID, ServiceJourneyID) VALUES('"+it43.next()+"','"+it44.next()+"');"); 
+		  } 
+		  //fill Walkruntime
+		  while((it57.hasNext()&&it58.hasNext()&&it59.hasNext()&&it60.hasNext()&&it61.hasNext())){
+			  stmnt.executeUpdate("INSERT INTO Walkruntime (FromStopID, ToStopID,FromTime,ToTime,Runtime) VALUES('"+it57.next()+"','"+it58.next()+"','"+it59.next()+"','"+it60.next()+"','"+it61.next()+"');"); 
 		  }
 		  
 		  //fill days according to how much days are considered in the plan (min: 5, max: 7)
