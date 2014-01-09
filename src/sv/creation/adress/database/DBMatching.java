@@ -170,7 +170,7 @@ public class DBMatching {
 
 		createBlock();
 		createBlockelement();
-		// Anzahl der Umlaufpläne wird ausgelesen
+		// Anzahl der UmlaufplÃ¤ne wird ausgelesen
 
 		// Strukturvariablen
 		int anzahlPlan = 1;
@@ -191,29 +191,34 @@ public class DBMatching {
 
 			for (int j = 0; j < this.blockelement.size(); j++) {
 				if (this.blockelement.get(j).getUmlaufplanID() == i) {
-					
+
 					blockelementList.add(blockelement.get(j));
 				}
 			}
 
 			for (int j2 = zaehlerUmlauf; j2 < this.umlauf.size() - 1; j2++) {
 				if (this.umlauf.get(j2).getId() < this.umlauf.get(j2 + 1)
-						.getId() ) {
+						.getId()) {
 					blockList.add(this.umlauf.get(j2));
 					zaehlerUmlauf = zaehlerUmlauf + 1;
 				}
 				if (this.umlauf.get(j2).getId() > this.umlauf.get(j2 + 1)
 						.getId()) {
+					blockList.add(this.umlauf.get(j2));
 					j2 = this.umlauf.size() - 1;
 				}
-				
+				if (j2 == this.umlauf.size() - 2) {
+					blockList.add(this.umlauf.get(j2 + 1));
+				}
+
 			}
 			zaehlerUmlauf = zaehlerUmlauf + 1;
 			Umlaufplan umlaufplanAdd = new Umlaufplan(i, blockList,
 					blockelementList);
 			umlaufplanliste.add(umlaufplanAdd);
+			System.out.println(blockList.size());
 		}
-		
+
 		return umlaufplanliste;
 	}
 
@@ -313,7 +318,8 @@ public class DBMatching {
 				String arrTime = rest2.getString("ArrTime");
 				int elementType = Integer.parseInt(rest2
 						.getString("ElementType"));
-				int dienstplanID = Integer.parseInt(rest2.getString("DienstplanID"));
+				int dienstplanID = Integer.parseInt(rest2
+						.getString("DienstplanID"));
 
 				// all variables will be sum up to an umlaufelement
 				dutyelement.add(new Dutyelement(id, dutyID, blockID,
@@ -337,12 +343,12 @@ public class DBMatching {
 
 	public ArrayList<Dienstplan> createDienstplanObject() {
 
-		ArrayList<Dienstplan> dienstplanliste=new ArrayList<Dienstplan>();
-		
+		ArrayList<Dienstplan> dienstplanliste = new ArrayList<Dienstplan>();
+
 		createDuty();
 		createDutyelement();
 
-		// Anzahl der Dienstpläne wird ausgelesen
+		// Anzahl der DienstplÃ¤ne wird ausgelesen
 
 		// Strukturvariablen
 		int anzahlPlan = 1;
@@ -350,12 +356,12 @@ public class DBMatching {
 
 		for (int i = 0; i < dutyelement.size(); i++) {
 			if (i >= 1
-					&& dutyelement.get(i).getDienstplanID() > dutyelement
-							.get(i - 1).getDienstplanID()) {
+					&& dutyelement.get(i).getDienstplanID() > dutyelement.get(
+							i - 1).getDienstplanID()) {
 				anzahlPlan++;
 			}
 		}
-		
+
 		// Umlaufplanliste wird erzeugt
 		for (int i = 1; i <= anzahlPlan; i++) {
 
@@ -364,34 +370,37 @@ public class DBMatching {
 
 			for (int j = 0; j < this.dutyelement.size(); j++) {
 				if (this.dutyelement.get(j).getDienstplanID() == i) {
-					
+
 					dutyelementList.add(dutyelement.get(j));
 				}
 			}
-		for (int j2 = zaehlerDienst; j2 < this.duty.size() - 1; j2++) {
-			if (this.duty.get(j2).getId() < this.duty.get(j2 + 1)
-					.getId() ) {
-				dutyList.add(this.duty.get(j2));
-				zaehlerDienst = zaehlerDienst + 1;
+			for (int j2 = zaehlerDienst; j2 < this.duty.size() - 1; j2++) {
+				if (this.duty.get(j2).getId() < this.duty.get(j2 + 1).getId()) {
+					dutyList.add(this.duty.get(j2));
+					zaehlerDienst = zaehlerDienst + 1;
+				}
+				if (this.duty.get(j2).getId() > this.duty.get(j2 + 1).getId()) {
+					dutyList.add(this.duty.get(j2));
+					j2 = this.duty.size() - 1;
+				}
+				if (j2 == this.duty.size() - 2) {
+					dutyList.add(this.duty.get(j2 + 1));
+				}
 			}
-			if (this.duty.get(j2).getId() > this.duty.get(j2 + 1)
-					.getId()) {
-				j2 = this.duty.size() - 1;
-			}
-			
+			System.out.println(dutyList.size());
+			zaehlerDienst = zaehlerDienst + 1;
+			Dienstplan dienstplanAdd = new Dienstplan(1, dutyList,
+					dutyelementList);
+			dienstplanliste.add(dienstplanAdd);
 		}
-		zaehlerDienst = zaehlerDienst + 1;
-		Dienstplan dienstplanAdd = new Dienstplan(1, dutyList, dutyelementList);
-		dienstplanliste.add(dienstplanAdd);
-		}
-	
+
 		/**
 		 * WICHTIG!!!! Es muss noch die FahrplanID ausgelesen werden. DB
-		 * Verknüpfung!!!!
+		 * VerknÃ¼pfung!!!!
 		 */
 
 		System.out.println("Dienstplan objekt erstellt");
-		
+
 		return dienstplanliste;
 	}
 

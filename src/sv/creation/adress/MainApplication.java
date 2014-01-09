@@ -1,6 +1,10 @@
 package sv.creation.adress;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+
+import com.thoughtworks.xstream.XStream;
 
 import sv.creation.adress.model.Umlaufplan;
 import javafx.application.Application;
@@ -17,6 +21,7 @@ import javafx.stage.StageStyle;
 public class MainApplication extends Application {
 
 	private Stage primaryStage;
+
 	private BorderPane rootLayout;
 	
 	// Stageübergabeobjekte	
@@ -285,6 +290,25 @@ public class MainApplication extends Application {
 		}
 
 	}
+	
+	/**
+	 * Saves the current Umlauf data to the specified file.
+	 * 
+	 * @param file
+	 */
+	public void savePersonDataToFile(File file) {
+		XStream xstream = new XStream();
+		xstream.alias("umlaufplan", Umlaufplan.class);
+
+		String xml = xstream.toString();
+		try {
+
+		} catch (Exception e) { // catches ANY exception
+			Dialogs.showErrorDialog(primaryStage,
+					"Could not save data to file:\n" + file.getPath(),
+					"Could not save data", "Error", e);
+		}
+	}
 
 	// Fehlermeldung bei nicht erstellter Grafik
 
@@ -310,6 +334,14 @@ public class MainApplication extends Application {
 
 	public void setEndzeit(String endzeit) {
 		this.endzeit = endzeit;
+	}
+	
+	public Stage getPrimaryStage() {
+		return primaryStage;
+	}
+
+	public void setPrimaryStage(Stage primaryStage) {
+		this.primaryStage = primaryStage;
 	}
 
 	// Main Method

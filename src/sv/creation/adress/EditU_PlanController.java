@@ -1,5 +1,6 @@
 package sv.creation.adress;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,6 +22,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class EditU_PlanController {
@@ -186,6 +188,32 @@ public class EditU_PlanController {
 	 */
 	public boolean isOkClicked() {
 		return okClicked;
+	}
+
+	/**
+	 * Exports the UPlan
+	 * 
+	 * @return
+	 */
+	public void handleExport() {
+
+		FileChooser fileChooser = new FileChooser();
+
+		// Set extension filter
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+				"XML files (*.txt)", "*.txt");
+		fileChooser.getExtensionFilters().add(extFilter);
+
+		// Show save file dialog
+		File file = fileChooser.showSaveDialog(this.mainApp.getPrimaryStage());
+
+		if (file != null) {
+			// Make sure it has the correct extension
+			if (!file.getPath().endsWith(".txt")) {
+				file = new File(file.getPath() + ".txt");
+			}
+			mainApp.savePersonDataToFile(file);
+		}
 	}
 
 	// Draws the Canvas
