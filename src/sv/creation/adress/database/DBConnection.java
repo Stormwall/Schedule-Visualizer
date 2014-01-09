@@ -194,8 +194,8 @@ public class DBConnection {
 			//table for tours
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Block (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
 																+ "BlockID INTEGER NOT NULL, "
-																+ "Code INTEGER NOT NULL, "
-																+ "Name INTEGER NOT NULL);");
+																+ "VehTypeID INTEGER NOT NULL, "
+																+ "DepotID INTEGER NOT NULL);");
 			
 			//table for tour elements (journeys)
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Blockelement (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -413,7 +413,7 @@ public class DBConnection {
 		  //fill block
 		  while((it.hasNext()&&it2.hasNext()&&it3.hasNext())){
 		  			  
-			  stmnt.executeUpdate("INSERT INTO Block (BlockID, Code, Name)  VALUES('"+it.next()+"','"+it2.next()+"','"+it3.next()+"');"); }
+			  stmnt.executeUpdate("INSERT INTO Block (BlockID, VehTypeID, DepotID)  VALUES('"+it.next()+"','"+it2.next()+"','"+it3.next()+"');"); }
 		  
 		  //fill blockelement
 		  while(it4.hasNext()&&it5.hasNext()&&it10.hasNext()){ 

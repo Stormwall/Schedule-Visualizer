@@ -11,6 +11,7 @@ public class Dutyelement {
 	private String depTime;
 	private String arrTime;
 	private int elementType;
+//	private String servicejourneycode;
 	private int dienstplanID;
 	
 	
@@ -42,6 +43,7 @@ public class Dutyelement {
 		this.depTime = depTime;
 		this.arrTime = arrTime;
 		this.elementType = elementType;
+//		this.servicejourneycode = servicejourneycode;
 		this.dienstplanID = dienstplanID;
 	}
 
@@ -94,6 +96,11 @@ public class Dutyelement {
 	public int getDienstplanID() {
 		return dienstplanID;
 	}
+
+
+//	public String getServicejourneycode() {
+//		return servicejourneycode;
+//	}
 	
 	
 

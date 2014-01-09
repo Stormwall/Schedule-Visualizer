@@ -3,19 +3,20 @@ package sv.creation.adress.model;
 public class Block {
 	
 	private int id;
-	private int code;
-	private String name;
+	private int vehTypeID;
+	private int depotID;
+	
 	
 	/**
 	 * @param id
-	 * @param code
-	 * @param name
+	 * @param vehTypeID
+	 * @param depotID
 	 */
-	public Block(int id, int code, String name) {
+	public Block(int id, int vehTypeID, int depotID) {
 		super();
 		this.id = id;
-		this.code = code;
-		this.name = name;
+		this.vehTypeID = vehTypeID;
+		this.depotID = depotID;
 	}
 
 	public int getId() {
@@ -26,20 +27,20 @@ public class Block {
 		this.id = id;
 	}
 
-	public int getCode() {
-		return code;
+	public int getvehTypeID() {
+		return vehTypeID;
 	}
 
-	public void setCode(int code) {
-		this.code = code;
+	public void setvehTypeID(int vehTypeID) {
+		this.vehTypeID = vehTypeID;
 	}
 
-	public String getName() {
-		return name;
+	public int getdepotID() {
+		return depotID;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setdepotID(int depotID) {
+		this.depotID = depotID;
 	}
 	
 	

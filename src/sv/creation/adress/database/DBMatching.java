@@ -70,9 +70,9 @@ public class DBMatching {
 			// array list
 			while (rest1.next()) {
 				int id = Integer.parseInt(rest1.getString("BlockID"));
-				int code = Integer.parseInt(rest1.getString("Code"));
-				String name = rest1.getString("Name");
-				umlauf.add(new Block(id, code, name));
+				int vehTypeID = Integer.parseInt(rest1.getString("VehTypeID"));
+				int depotID = Integer.parseInt(rest1.getString("DepotID"));
+				umlauf.add(new Block(id, vehTypeID, depotID));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
