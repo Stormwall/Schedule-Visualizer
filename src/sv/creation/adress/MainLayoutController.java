@@ -816,7 +816,7 @@ public class MainLayoutController {
 		this.lowerDetailsPane.setMaxHeight(lowerDetailsPane.getHeight());
 		this.lowerDetailsPane.setMinHeight(lowerDetailsPane.getHeight());
 
-		SingleSelectionModel<Tab> selectionModel = Planpane.getSelectionModel();
+		final SingleSelectionModel<Tab> selectionModel = Planpane.getSelectionModel();
 
 		if (UPlan.getSelectionModel().getSelectedItem() != null) {
 
@@ -887,6 +887,7 @@ public class MainLayoutController {
 							public void handle(MouseEvent e) {
 								umlaufChoice = 1;
 								changeUplanDetails();
+								selectionModel.select(Plan1);
 							}
 						});
 
@@ -960,6 +961,7 @@ public class MainLayoutController {
 					public void handle(MouseEvent e) {
 						umlaufChoice = 2;
 						changeUplanDetails();
+						selectionModel.select(Plan2);
 					}
 				});
 
@@ -986,7 +988,19 @@ public class MainLayoutController {
 
 				createUmlaufElementGraphic(this.umlaufplanZwei,
 						this.upperGraphicPane2, this.upperChart2, this.uppergc2);
-
+				// Fügt den Eventhändler hinzu
+				this.upperChart2.addEventHandler(MouseEvent.MOUSE_CLICKED,
+						new EventHandler<MouseEvent>() {
+							@Override
+							public void handle(MouseEvent e) {
+								boolean okClicked = mainApp
+										.showEditUPlan(umlaufplanZwei);
+								if (okClicked) {
+									refreshBothGraphics();
+									fillUmlaufplanliste();
+								}
+							}
+						});
 			}
 
 			//
@@ -1022,6 +1036,7 @@ public class MainLayoutController {
 					public void handle(MouseEvent e) {
 						umlaufChoice = 3;
 						changeUplanDetails();
+						selectionModel.select(Plan3);
 					}
 				});
 				// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
@@ -1047,7 +1062,19 @@ public class MainLayoutController {
 
 				createUmlaufElementGraphic(this.umlaufplanDrei,
 						this.upperGraphicPane3, this.upperChart3, this.uppergc3);
-
+				// Fügt den Eventhändler hinzu
+				this.upperChart3.addEventHandler(MouseEvent.MOUSE_CLICKED,
+						new EventHandler<MouseEvent>() {
+							@Override
+							public void handle(MouseEvent e) {
+								boolean okClicked = mainApp
+										.showEditUPlan(umlaufplanDrei);
+								if (okClicked) {
+									refreshBothGraphics();
+									fillUmlaufplanliste();
+								}
+							}
+						});
 			}
 
 			//
@@ -1083,6 +1110,7 @@ public class MainLayoutController {
 					public void handle(MouseEvent e) {
 						umlaufChoice = 4;
 						changeUplanDetails();
+						selectionModel.select(Plan4);
 					}
 				});
 				// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
@@ -1108,6 +1136,19 @@ public class MainLayoutController {
 
 				createUmlaufElementGraphic(this.umlaufplanVier,
 						this.upperGraphicPane4, this.upperChart4, this.uppergc4);
+				// Fügt den Eventhändler hinzu
+				this.upperChart4.addEventHandler(MouseEvent.MOUSE_CLICKED,
+						new EventHandler<MouseEvent>() {
+							@Override
+							public void handle(MouseEvent e) {
+								boolean okClicked = mainApp
+										.showEditUPlan(umlaufplanVier);
+								if (okClicked) {
+									refreshBothGraphics();
+									fillUmlaufplanliste();
+								}
+							}
+						});
 			}
 
 			//
@@ -1143,6 +1184,7 @@ public class MainLayoutController {
 					public void handle(MouseEvent e) {
 						umlaufChoice = 5;
 						changeUplanDetails();
+						selectionModel.select(Plan5);
 					}
 				});
 				// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
@@ -1168,6 +1210,19 @@ public class MainLayoutController {
 
 				createUmlaufElementGraphic(this.umlaufplanFuenf,
 						this.upperGraphicPane5, this.upperChart5, this.uppergc5);
+				// Fügt den Eventhändler hinzu
+				this.upperChart5.addEventHandler(MouseEvent.MOUSE_CLICKED,
+						new EventHandler<MouseEvent>() {
+							@Override
+							public void handle(MouseEvent e) {
+								boolean okClicked = mainApp
+										.showEditUPlan(umlaufplanFuenf);
+								if (okClicked) {
+									refreshBothGraphics();
+									fillUmlaufplanliste();
+								}
+							}
+						});
 			}
 
 			//
@@ -1203,6 +1258,7 @@ public class MainLayoutController {
 					public void handle(MouseEvent e) {
 						umlaufChoice = 6;
 						changeUplanDetails();
+						selectionModel.select(Plan6);
 					}
 				});
 				// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
@@ -1227,6 +1283,19 @@ public class MainLayoutController {
 				createUpperXScalePane(this.xUp6, this.upperGraphicPane6);
 				createUmlaufElementGraphic(this.umlaufplanSechs,
 						this.upperGraphicPane6, this.upperChart6, this.uppergc6);
+				// Fügt den Eventhändler hinzu
+				this.upperChart6.addEventHandler(MouseEvent.MOUSE_CLICKED,
+						new EventHandler<MouseEvent>() {
+							@Override
+							public void handle(MouseEvent e) {
+								boolean okClicked = mainApp
+										.showEditUPlan(umlaufplanSechs);
+								if (okClicked) {
+									refreshBothGraphics();
+									fillUmlaufplanliste();
+								}
+							}
+						});
 			}
 
 			//
@@ -1262,6 +1331,7 @@ public class MainLayoutController {
 					public void handle(MouseEvent e) {
 						umlaufChoice = 7;
 						changeUplanDetails();
+						selectionModel.select(Plan7);
 					}
 				});
 				// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
@@ -1287,6 +1357,19 @@ public class MainLayoutController {
 
 				createUmlaufElementGraphic(this.umlaufplanSieben,
 						this.upperGraphicPane7, this.upperChart7, this.uppergc7);
+				// Fügt den Eventhändler hinzu
+				this.upperChart7.addEventHandler(MouseEvent.MOUSE_CLICKED,
+						new EventHandler<MouseEvent>() {
+							@Override
+							public void handle(MouseEvent e) {
+								boolean okClicked = mainApp
+										.showEditUPlan(umlaufplanSieben);
+								if (okClicked) {
+									refreshBothGraphics();
+									fillUmlaufplanliste();
+								}
+							}
+						});
 			}
 
 			this.addButtonPressed = true;
