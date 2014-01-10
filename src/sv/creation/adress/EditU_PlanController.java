@@ -42,7 +42,7 @@ public class EditU_PlanController {
 	@FXML
 	private TableColumn<Blockelement, String> endzeitCol;
 	@FXML
-	private TableColumn<Blockelement, Integer> eleTypeCol;
+	private TableColumn<Blockelement, String> eleTypeCol;
 	@FXML
 	private TableColumn<Blockelement, Integer> blockCol;
 	@FXML
@@ -399,8 +399,8 @@ public class EditU_PlanController {
 				.setCellValueFactory(new PropertyValueFactory<Blockelement, String>(
 						"arrTime"));
 		eleTypeCol
-				.setCellValueFactory(new PropertyValueFactory<Blockelement, Integer>(
-						"elementType"));
+				.setCellValueFactory(new PropertyValueFactory<Blockelement, String>(
+						"elementTypeName"));
 		blockCol.setCellValueFactory(new PropertyValueFactory<Blockelement, Integer>(
 				"blockID"));
 		dauerCol.setCellValueFactory(new PropertyValueFactory<Blockelement, String>(

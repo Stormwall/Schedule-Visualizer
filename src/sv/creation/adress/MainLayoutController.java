@@ -174,7 +174,7 @@ public class MainLayoutController {
 	@FXML
 	private Label anzahlLeerFahrten;
 	@FXML
-	private Label unknown;
+	private Label gehörtzuFahrplan;
 
 	// Zugriff auf die unterschiedlichen TabPanes (Gridpane)
 	@FXML
@@ -1965,7 +1965,7 @@ public class MainLayoutController {
 						"arrTime"));
 		eleTypeCol
 				.setCellValueFactory(new PropertyValueFactory<Blockelement, Integer>(
-						"elementType"));
+						"elementTypeName"));
 		blockCol.setCellValueFactory(new PropertyValueFactory<Blockelement, Integer>(
 				"blockID"));
 		dauerCol.setCellValueFactory(new PropertyValueFactory<Blockelement, String>(

@@ -9,6 +9,7 @@ public class Blockelement {
 	private String depTime;
 	private String arrTime;
 	private int elementType;
+	private String elementTypeName;
 	private String driveTime;
 	private int umlaufplanID;
 	
@@ -30,7 +31,7 @@ public class Blockelement {
 	 * @param code
 	 */
 	public Blockelement(int id, int blockID, String serviceJourneyID, int fromStopID, int toStopID,
-			String depTime, String arrTime, int elementType, int umlaufplanID) {
+			String depTime, String arrTime, int elementType, String elementTypeName, int umlaufplanID) {
 		super();
 		this.id = id;
 		this.blockID = blockID;
@@ -40,7 +41,10 @@ public class Blockelement {
 		this.depTime = depTime;
 		this.arrTime = arrTime;
 		this.elementType = elementType;
+		this.elementTypeName = elementTypeName;
 		this.umlaufplanID=umlaufplanID;
+		
+		
 	}
 	public int getId() {
 		return id;
@@ -66,8 +70,14 @@ public class Blockelement {
 	public int getElementType() {
 		return elementType;
 	}
+	public String getElementTypeName() {
+		return elementTypeName;
+	}
 	public String getDriveTime() {
 		return driveTime;
+	}
+	public void setElementTypeName (String elementTypeName){
+		this.elementTypeName = elementTypeName;
 	}
 	public void setDriveTime(String driveTime) {
 		this.driveTime = driveTime;

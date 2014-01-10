@@ -130,7 +130,7 @@ public class DBMatching {
 									+ rest3.getString("BlockID") + "';");
 				}
 
-				// the attributes will be read and save in variables
+				// the attributes will be read and saved in variables
 				int id = Integer.parseInt(rest2.getString("ID"));
 				int blockID = Integer.parseInt(rest2.getString("BlockID"));
 				String serviceJourneyID = rest3.getString("ServiceJourneyID");
@@ -143,11 +143,44 @@ public class DBMatching {
 						.getString("ElementType"));
 				int umlaufplanID = Integer.parseInt(rest2
 						.getString("UmlaufPlanID"));
-
-				// all variables will be sum up to an umlaufelement
+				//Bezeichnung für den Elementtyp wird entsprechend hinzugefügt
+				String elementTypeName = "";
+				switch(elementType){
+				case 1:
+					elementTypeName = "Servicefahrt";
+				break;
+				case 2:
+					elementTypeName = "Leerfahrt";
+				break;
+				case 3:
+					elementTypeName = "Einrückfahrt";
+				break;
+				case 4:
+					elementTypeName = "Ausrückfahrt";
+				break;
+				case 5:
+					elementTypeName = "Vorbereitung";
+				break;
+				case 6:
+					elementTypeName = "Nachbereitung";
+				break;
+				case 7:
+					elementTypeName = "Transfer";
+				break;
+				case 8:
+					elementTypeName = "Pause";
+				break;
+				case 9:
+					elementTypeName = "Warten";
+				break;
+				case 10:
+					elementTypeName = "Layover";
+				break;
+				}
+				// all variables will be summed up to an umlaufelement
 				blockelement.add(new Blockelement(id, blockID,
 						serviceJourneyID, fromStopID, toStopID, depTime,
-						arrTime, elementType, umlaufplanID));
+						arrTime, elementType, elementTypeName, umlaufplanID));
 
 			}
 		} catch (SQLException e) {
