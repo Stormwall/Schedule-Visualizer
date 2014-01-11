@@ -174,7 +174,7 @@ public class MainLayoutController {
 	@FXML
 	private Label anzahlLeerFahrten;
 	@FXML
-	private Label gehörtzuFahrplan;
+	private Label gehoertzuFahrplan;
 
 	// Zugriff auf die unterschiedlichen TabPanes (Gridpane)
 	@FXML
@@ -1926,11 +1926,30 @@ public class MainLayoutController {
 	 * Fills the DetailPane für die Umlaufpläne
 	 */
 	private void fillDetailPaneUmlauf(Umlaufplan umlaufplan) {
-
+		//Anzahl Blockelemente ermitteln und ausgeben
 		this.anzahlFahrten.setVisible(true);
 		this.anzahlFahrten.setText(String.valueOf(umlaufplan.getFahrtZuUmlauf()
 				.size()));
-
+		//Anzahl Service- und Leerfahrten ermitteln und ausgeben
+		int sj = 0;
+		int lf = 0;
+		for (int i = 0; i < umlaufplan.getFahrtZuUmlauf().size(); i++){
+			if (umlaufplan.getFahrtZuUmlauf().get(i).getElementType() == 1) {
+				sj++;
+			}
+			if (umlaufplan.getFahrtZuUmlauf().get(i).getElementType() == 2) {
+				lf++;
+			}
+		}
+		this.anzahlServiceFahrten.setVisible(true);
+		this.anzahlServiceFahrten.setText(String.valueOf(sj));
+		this.anzahlLeerFahrten.setVisible(true);
+		this.anzahlLeerFahrten.setText(String.valueOf(lf));
+		//Zugehörigkeit zu Fahrplan
+		int fpID;
+		fpID = umlaufplan.getFahrplanID();
+		this.gehoertzuFahrplan.setVisible(true);
+		this.gehoertzuFahrplan.setText(String.valueOf(fpID));
 	}
 
 	/**

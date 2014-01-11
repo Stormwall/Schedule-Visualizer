@@ -521,11 +521,11 @@
                                         <Label styleClass="label-versTwo" text="Anzahl der Fahrten" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                                         <Label styleClass="label-versTwo" text="Anzahl der Servicefahrten" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                         <Label styleClass="label-versTwo" text="Anzahl der Leerfahrten" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                        <Label styleClass="label-versTwo" text="Fahrplan" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                         <Label fx:id="anzahlFahrten" styleClass="label-header" text="Wert" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="0" />
                                         <Label fx:id="anzahlServiceFahrten" styleClass="label-detailsPane" text="Wert" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                         <Label fx:id="anzahlLeerFahrten" styleClass="label-detailsPane" text="Wert" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                        <Label styleClass="label-versTwo" text="Eigenschaft" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                        <Label fx:id="unknown" text="Wert" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                        <Label fx:id="gehoertzuFahrplan" styleClass="label-detailsPane" text="Wert" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                                       </children>
                                       <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="151.0" minWidth="6.0" prefWidth="6.0" />

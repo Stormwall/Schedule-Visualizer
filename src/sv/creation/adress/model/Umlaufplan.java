@@ -8,6 +8,7 @@ public class Umlaufplan {
 	private String name;
 	private ArrayList<Block> umlauf = new ArrayList<Block>();
 	private ArrayList<Blockelement> fahrtZuUmlauf = new ArrayList<Blockelement>();
+	private int fahrplanID;
 
 	/**
 	 * @param umlaufplan
@@ -37,6 +38,14 @@ public class Umlaufplan {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public int getFahrplanID() {
+		return fahrplanID;
+	}
+
+	public void setFahrplanID(int fahrplanID) {
+		this.fahrplanID = fahrplanID;
 	}
 	
 
