@@ -11,27 +11,27 @@ import sv.creation.adress.model.Umlaufplan;
 public class Export {
 
 	// Creates the txt-file of a selected dienstplan
-	public void exportDienstplan(Dienstplan dienstplan) {
+	public void exportDienstplan(Dienstplan dienstplan, File exportFile) {
 
-		File exportFile;
 		FileWriter writer;
 
 		String textOutput = new String();
+		
+		String lineSeparator = System.getProperty("line.separator");
 
 		try {
-			exportFile = new File(System.getProperty("user.home") + "/"
-					+ "Export.txt");
+			
 			writer = new FileWriter(exportFile);
 
-			textOutput = "*\n* Diensttypen\n*\n$DUTY:DutyID;DutyType";
-			writer.write(textOutput + "\n");
+			textOutput = "*"+lineSeparator+"* Diensttypen"+lineSeparator+"*"+lineSeparator+"$DUTY:DutyID;DutyType";
+			writer.write(textOutput + lineSeparator);
 			for (int i = 0; i < dienstplan.getDuty().size(); i++) {
 				textOutput = dienstplan.getDuty().get(i).getId() + ";"
 						+ dienstplan.getDuty().get(i).getType();
-				writer.write(textOutput + "\n");
+				writer.write(textOutput + lineSeparator);
 			}
-			textOutput = "*\n* Dienste\n* (mit ElementType: 1 = Servicefahrt, 2 = Leerfahrt Haltestellen, 3 = Fahrt ins Depot, 4 = Fahrt aus dem Depot, 5 = Vorbereitung, 6 = Nachbereitung, 7 = Transfer, 8 = Pause, 9 = Warten, 10 = LayoverTime)\n$DUTYELEMENT:DutyID;BlockID;ServiceJourneyID;FromStopID;ToStopID;DepTime;ArrTime;ElementType;ServiceJourneyCode";
-			writer.write(textOutput + "\n");
+			textOutput = "*"+lineSeparator+"* Dienste"+lineSeparator+"* (mit ElementType: 1 = Servicefahrt, 2 = Leerfahrt Haltestellen, 3 = Fahrt ins Depot, 4 = Fahrt aus dem Depot, 5 = Vorbereitung, 6 = Nachbereitung, 7 = Transfer, 8 = Pause, 9 = Warten, 10 = LayoverTime)\n$DUTYELEMENT:DutyID;BlockID;ServiceJourneyID;FromStopID;ToStopID;DepTime;ArrTime;ElementType;ServiceJourneyCode";
+			writer.write(textOutput + lineSeparator);
 			for (int i = 0; i < dienstplan.getDutyelement().size(); i++) {
 				textOutput = dienstplan.getDutyelement().get(i).getDutyID()
 						+ ";"
@@ -49,7 +49,7 @@ public class Export {
 						+ ":00;"
 						+ dienstplan.getDutyelement().get(i).getElementType()
 						+ ";";
-				writer.write(textOutput + "\n");
+				writer.write(textOutput + lineSeparator);
 			}
 
 			writer.close();
@@ -68,19 +68,23 @@ public class Export {
 		FileWriter writer;
 
 		String textOutput = new String();
+		
+		String lineSeparator = System.getProperty("line.separator");
 
 		try {
 			writer = new FileWriter(exportFile);
+			
+			
 
-			textOutput = "*\n* Umlaeufe\n*\n$BLOCK:ID;VehTypeID;DepotID";
-			writer.write(textOutput + "\n");
+			textOutput = "*"+lineSeparator+"* Umlaeufe"+lineSeparator+"*"+lineSeparator+"$BLOCK:ID;VehTypeID;DepotID";
+			writer.write(textOutput + lineSeparator);
 			for (int i = 0; i < umlaufplan.getUmlauf().size(); i++) {
 				textOutput = umlaufplan.getUmlauf().get(i).getId() + ";"
 						+ umlaufplan.getUmlauf().get(i).getvehTypeID() + ";"
 						+ umlaufplan.getUmlauf().get(i).getdepotID();
-				writer.write(textOutput + "\n");
+				writer.write(textOutput + lineSeparator);
 			}
-			textOutput = "*\n* FahrtZuUmlauf\n*\n$BLOCKELEMENT:BlockID;ServiceJourneyID;FromStopID;ToStopID;DepTime;ArrTime;ElementType;ServiceJourneyCode";
+			textOutput = "*"+lineSeparator+"* FahrtZuUmlauf"+lineSeparator+"*"+lineSeparator+"$BLOCKELEMENT:BlockID;ServiceJourneyID;FromStopID;ToStopID;DepTime;ArrTime;ElementType;ServiceJourneyCode";
 			writer.write(textOutput + "\n");
 			for (int i = 0; i < umlaufplan.getFahrtZuUmlauf().size(); i++) {
 				textOutput = umlaufplan.getFahrtZuUmlauf().get(i).getBlockID()
@@ -97,7 +101,7 @@ public class Export {
 						+ ":00;"
 						+ umlaufplan.getFahrtZuUmlauf().get(i).getElementType()
 						+ ";";
-				writer.write(textOutput + "\n");
+				writer.write(textOutput + lineSeparator);
 			}
 			writer.close();
 		} catch (FileNotFoundException e1) {
