@@ -430,8 +430,6 @@ public class DBMatching {
 		 * VerknÃƒÂ¼pfung!!!!
 		 */
 
-		System.out.println("Dienstplan objekt erstellt");
-
 		return dienstplanliste;
 	}
 

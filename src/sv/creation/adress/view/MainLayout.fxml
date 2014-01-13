@@ -121,7 +121,7 @@
                                 </FXCollections>
                               </items>
                             </ChoiceBox>
-                            <Button cancelButton="false" defaultButton="false" font="$x2" graphicTextGap="0.0" minWidth="16.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="23.0" styleClass="dark-blue-Choicebox" text="+" />
+                            <Button cancelButton="false" defaultButton="false" font="$x2" graphicTextGap="0.0" minWidth="16.0" mnemonicParsing="false" onAction="#createLowerGraphic" prefHeight="21.0" prefWidth="23.0" styleClass="dark-blue-Choicebox" text="+" />
                           </children>
                         </HBox>
                         <AnchorPane prefHeight="128.0" prefWidth="167.0" styleClass="background-paper" GridPane.columnIndex="0" GridPane.margin="$x3" GridPane.rowIndex="4">
@@ -523,9 +523,9 @@
                                         <Label styleClass="label-versTwo" text="Anzahl der Leerfahrten" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                         <Label styleClass="label-versTwo" text="Fahrplan" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                         <Label fx:id="anzahlFahrten" styleClass="label-header" text="Wert" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-                                        <Label fx:id="anzahlServiceFahrten" styleClass="label-detailsPane" text="Wert" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                        <Label fx:id="anzahlLeerFahrten" styleClass="label-detailsPane" text="Wert" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                        <Label fx:id="gehoertzuFahrplan" styleClass="label-detailsPane" text="Wert" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                        <Label fx:id="anzahlServiceFahrten" styleClass="label-header" text="Wert" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                        <Label fx:id="anzahlLeerFahrten" styleClass="label-header" text="Wert" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                        <Label fx:id="gehoertzuFahrplan" styleClass="label-header" text="Wert" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                                       </children>
                                       <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="151.0" minWidth="6.0" prefWidth="6.0" />

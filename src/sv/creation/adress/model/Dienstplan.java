@@ -6,6 +6,7 @@ public class Dienstplan {
 	
 	
 	private int id;
+	private String name;
 	private ArrayList<Duty> duty = new ArrayList<Duty>();
 	private ArrayList<Dutyelement> dutyelement = new ArrayList<Dutyelement>();
 
@@ -29,6 +30,13 @@ public class Dienstplan {
 
 	public ArrayList<Dutyelement> getDutyelement() {
 		return dutyelement;
+	}
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	

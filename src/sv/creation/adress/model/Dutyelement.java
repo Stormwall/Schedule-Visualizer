@@ -13,6 +13,7 @@ public class Dutyelement {
 	private int elementType;
 //	private String servicejourneycode;
 	private int dienstplanID;
+	private String driveTime;
 	
 	
 	/**
@@ -96,6 +97,17 @@ public class Dutyelement {
 	public int getDienstplanID() {
 		return dienstplanID;
 	}
+
+
+	public String getDriveTime() {
+		return driveTime;
+	}
+
+
+	public void setDriveTime(String driveTime) {
+		this.driveTime = driveTime;
+	}
+	
 
 
 //	public String getServicejourneycode() {

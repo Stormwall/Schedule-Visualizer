@@ -7,6 +7,8 @@ import java.util.Date;
 
 import sv.creation.adress.database.DBMatching;
 import sv.creation.adress.model.Blockelement;
+import sv.creation.adress.model.Dienstplan;
+import sv.creation.adress.model.Dutyelement;
 import sv.creation.adress.model.Umlaufplan;
 import sv.creation.adress.util.StringSplitter;
 import javafx.animation.FadeTransition;
@@ -164,6 +166,7 @@ public class MainLayoutController {
 	// Erstellung der Detailtableviews
 
 	private TableView<Blockelement> detailsUmlaufTable = new TableView<Blockelement>();
+	private TableView<Dutyelement> detailsDienstTable = new TableView<Dutyelement>();
 
 	// Zugriff auf die Labels des DetailPane
 
@@ -259,6 +262,7 @@ public class MainLayoutController {
 	// Bau der Zugriffslisten
 
 	private ArrayList<Umlaufplan> umlaufplanliste = new ArrayList<Umlaufplan>();
+	private ArrayList<Dienstplan> dienstplanliste = new ArrayList<Dienstplan>();
 
 	// Zuordnung der Umlaufpläne
 
@@ -269,6 +273,16 @@ public class MainLayoutController {
 	private Umlaufplan umlaufplanFuenf;
 	private Umlaufplan umlaufplanSechs;
 	private Umlaufplan umlaufplanSieben;
+
+	// Zuordnung der Dienstpläne
+
+	private Dienstplan dienstplanEins;
+	private Dienstplan dienstplanZwei;
+	private Dienstplan dienstplanDrei;
+	private Dienstplan dienstplanVier;
+	private Dienstplan dienstplanFuenf;
+	private Dienstplan dienstplanSechs;
+	private Dienstplan dienstplanSieben;
 
 	// Canvas Elemente
 
@@ -368,9 +382,15 @@ public class MainLayoutController {
 	private double upperheightFuenf = 1600;
 	private double upperheightSechs = 1600;
 	private double upperheightSieben = 1600;
-	private double lowerheight = 800;
+	private double lowerheightEins = 600;
+	private double lowerheightZwei = 800;
+	private double lowerheightDrei = 800;
+	private double lowerheightVier = 800;
+	private double lowerheightFuenf = 800;
+	private double lowerheightSechs = 800;
+	private double lowerheightSieben = 800;
 
-	// Pruefvariable
+	// Pruefvariable Upper Screen
 
 	private boolean firstUppergrafikErstellt = false;
 	private boolean secondUppergrafikErstellt = false;
@@ -379,18 +399,42 @@ public class MainLayoutController {
 	private boolean fifthUppergrafikErstellt = false;
 	private boolean sixthUppergrafikErstellt = false;
 	private boolean seventhUppergrafikErstellt = false;
+
+	private int umlaufChoice = 0;
+	private int umlaufTabCounter = 0;
+
+	private boolean uDetailsTableErstellt = false;
+
+	// Pruefvariable Lower Screen
+
+	private boolean firstLowergrafikErstellt = false;
+	private boolean secondLowergrafikErstellt = false;
+	private boolean thirdLowergrafikErstellt = false;
+	private boolean fourthLowergrafikErstellt = false;
+	private boolean fifthLowergrafikErstellt = false;
+	private boolean sixthLowergrafikErstellt = false;
+	private boolean seventhLowergrafikErstellt = false;
+
+	private int dienstChoice = 0;
+	private int dienstTabCounter = 0;
+
+	private boolean dDetailsTableErstellt = false;
+
+	// weitere Prüfvariablen
+
 	private boolean secondGrafikErstellt = false;
 	private boolean thirdGrafikErstellt = false;
 	private boolean fourthGrafikErstellt = false;
 	private boolean fifthGrafikErstellt = false;
 	private boolean sixthGrafikErstellt = false;
 	private boolean seventhGrafikErstellt = false;
-	private boolean uDetailsTableErstellt = false;
+
+	private boolean umlaufIsCurrent = false;
+	private boolean dienstIsCurrent = false;
+
 	private boolean lowergrafikErstellt = false;
 	private boolean hilfslinienAktiv = false;
 	private boolean addButtonPressed = true;
-	private int umlaufChoice = 0;
-	private int umlaufTabCounter = 0;
 
 	// Referenz zur MainApp
 
@@ -401,7 +445,6 @@ public class MainLayoutController {
 	 * after the fxml file has been loaded.
 	 */
 
-	@SuppressWarnings("unchecked")
 	@FXML
 	private void initialize() {
 
@@ -434,12 +477,17 @@ public class MainLayoutController {
 		ft.setAutoReverse(true);
 		ft.play();
 
-		// Befüllung des Umlaufplanes
+		// Befüllung der Dropdownmenues zur Auswahl der Pläne
+
 		fillUmlaufplanliste();
+		fillDienstplanliste();
 
 		// Sets the Standardelement condition of the Interface
 
 		detailsUmlaufTable
+				.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+		detailsDienstTable
 				.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
 		this.yUp1.setHbarPolicy(ScrollBarPolicy.NEVER);
@@ -546,10 +594,78 @@ public class MainLayoutController {
 			}
 		});
 
-		// Dienstpläne
+		DoubleProperty gPosition = new SimpleDoubleProperty();
+		gPosition.bind(this.lowerGraphicPane1.vvalueProperty());
+		gPosition.addListener(new ChangeListener<Object>() {
+			@Override
+			public void changed(ObservableValue<?> arg0, Object arg1,
+					Object arg2) {
+				yLow1.setVvalue((double) arg2);
 
-		this.DPlan.setItems(FXCollections.observableArrayList("Dienstplan  1a",
-				"Dienstplan 1b", "Dienstplan 1c"));
+			}
+		});
+
+		DoubleProperty hPosition = new SimpleDoubleProperty();
+		hPosition.bind(this.lowerGraphicPane2.vvalueProperty());
+		hPosition.addListener(new ChangeListener<Object>() {
+			@Override
+			public void changed(ObservableValue<?> arg0, Object arg1,
+					Object arg2) {
+				yLow2.setVvalue((double) arg2);
+
+			}
+		});
+		DoubleProperty iPosition = new SimpleDoubleProperty();
+		iPosition.bind(this.upperGraphicPane3.vvalueProperty());
+		iPosition.addListener(new ChangeListener<Object>() {
+			@Override
+			public void changed(ObservableValue<?> arg0, Object arg1,
+					Object arg2) {
+				yLow3.setVvalue((double) arg2);
+
+			}
+		});
+		DoubleProperty jPosition = new SimpleDoubleProperty();
+		jPosition.bind(this.lowerGraphicPane4.vvalueProperty());
+		jPosition.addListener(new ChangeListener<Object>() {
+			@Override
+			public void changed(ObservableValue<?> arg0, Object arg1,
+					Object arg2) {
+				yLow4.setVvalue((double) arg2);
+
+			}
+		});
+		DoubleProperty kPosition = new SimpleDoubleProperty();
+		kPosition.bind(this.lowerGraphicPane5.vvalueProperty());
+		kPosition.addListener(new ChangeListener<Object>() {
+			@Override
+			public void changed(ObservableValue<?> arg0, Object arg1,
+					Object arg2) {
+				yLow5.setVvalue((double) arg2);
+
+			}
+		});
+		DoubleProperty lPosition = new SimpleDoubleProperty();
+		lPosition.bind(this.lowerGraphicPane6.vvalueProperty());
+		lPosition.addListener(new ChangeListener<Object>() {
+			@Override
+			public void changed(ObservableValue<?> arg0, Object arg1,
+					Object arg2) {
+				yLow6.setVvalue((double) arg2);
+
+			}
+		});
+
+		DoubleProperty mPosition = new SimpleDoubleProperty();
+		mPosition.bind(this.lowerGraphicPane7.vvalueProperty());
+		mPosition.addListener(new ChangeListener<Object>() {
+			@Override
+			public void changed(ObservableValue<?> arg0, Object arg1,
+					Object arg2) {
+				yLow7.setVvalue((double) arg2);
+
+			}
+		});
 
 		// Listen for Resizechanges (Graphic)
 		this.upperGraphicPane1.widthProperty().addListener(
@@ -684,9 +800,7 @@ public class MainLayoutController {
 					public void changed(
 							ObservableValue<? extends Number> observableValue,
 							Number oldSceneWidth, Number newSceneWidth) {
-						if (lowergrafikErstellt == true) {
-							refreshBothGraphics();
-						}
+						refreshBothGraphics();
 					}
 				});
 		this.lowerGraphicPane1.heightProperty().addListener(
@@ -695,9 +809,115 @@ public class MainLayoutController {
 					public void changed(
 							ObservableValue<? extends Number> observableValue,
 							Number oldSceneWidth, Number newSceneWidth) {
-						if (lowergrafikErstellt == true) {
-							refreshBothGraphics();
-						}
+						refreshBothGraphics();
+					}
+				});
+		this.lowerGraphicPane2.widthProperty().addListener(
+				new ChangeListener<Number>() {
+					@Override
+					public void changed(
+							ObservableValue<? extends Number> observableValue,
+							Number oldSceneWidth, Number newSceneWidth) {
+						refreshBothGraphics();
+					}
+				});
+		this.lowerGraphicPane2.heightProperty().addListener(
+				new ChangeListener<Number>() {
+					@Override
+					public void changed(
+							ObservableValue<? extends Number> observableValue,
+							Number oldSceneWidth, Number newSceneWidth) {
+						refreshBothGraphics();
+					}
+				});
+		this.lowerGraphicPane3.widthProperty().addListener(
+				new ChangeListener<Number>() {
+					@Override
+					public void changed(
+							ObservableValue<? extends Number> observableValue,
+							Number oldSceneWidth, Number newSceneWidth) {
+						refreshBothGraphics();
+					}
+				});
+		this.lowerGraphicPane3.heightProperty().addListener(
+				new ChangeListener<Number>() {
+					@Override
+					public void changed(
+							ObservableValue<? extends Number> observableValue,
+							Number oldSceneWidth, Number newSceneWidth) {
+						refreshBothGraphics();
+					}
+				});
+		this.lowerGraphicPane4.widthProperty().addListener(
+				new ChangeListener<Number>() {
+					@Override
+					public void changed(
+							ObservableValue<? extends Number> observableValue,
+							Number oldSceneWidth, Number newSceneWidth) {
+						refreshBothGraphics();
+					}
+				});
+		this.lowerGraphicPane4.heightProperty().addListener(
+				new ChangeListener<Number>() {
+					@Override
+					public void changed(
+							ObservableValue<? extends Number> observableValue,
+							Number oldSceneWidth, Number newSceneWidth) {
+						refreshBothGraphics();
+					}
+				});
+		this.lowerGraphicPane5.widthProperty().addListener(
+				new ChangeListener<Number>() {
+					@Override
+					public void changed(
+							ObservableValue<? extends Number> observableValue,
+							Number oldSceneWidth, Number newSceneWidth) {
+						refreshBothGraphics();
+					}
+				});
+		this.lowerGraphicPane5.heightProperty().addListener(
+				new ChangeListener<Number>() {
+					@Override
+					public void changed(
+							ObservableValue<? extends Number> observableValue,
+							Number oldSceneWidth, Number newSceneWidth) {
+						refreshBothGraphics();
+					}
+				});
+		this.lowerGraphicPane6.widthProperty().addListener(
+				new ChangeListener<Number>() {
+					@Override
+					public void changed(
+							ObservableValue<? extends Number> observableValue,
+							Number oldSceneWidth, Number newSceneWidth) {
+						refreshBothGraphics();
+					}
+				});
+		this.lowerGraphicPane6.heightProperty().addListener(
+				new ChangeListener<Number>() {
+					@Override
+					public void changed(
+							ObservableValue<? extends Number> observableValue,
+							Number oldSceneWidth, Number newSceneWidth) {
+						refreshBothGraphics();
+					}
+				});
+		this.lowerGraphicPane7.widthProperty().addListener(
+				new ChangeListener<Number>() {
+					@Override
+					public void changed(
+							ObservableValue<? extends Number> observableValue,
+							Number oldSceneWidth, Number newSceneWidth) {
+						refreshBothGraphics();
+					}
+				});
+		this.lowerGraphicPane7.heightProperty().addListener(
+				new ChangeListener<Number>() {
+					@Override
+					public void changed(
+							ObservableValue<? extends Number> observableValue,
+							Number oldSceneWidth, Number newSceneWidth) {
+						refreshBothGraphics();
 					}
 				});
 
@@ -793,13 +1013,30 @@ public class MainLayoutController {
 			this.addButtonPressed = false;
 			createUpperGraphic();
 		}
-		if (lowergrafikErstellt == true) {
-			this.lowergc1.clearRect(0, 0, this.lowerChart1.getWidth(),
-					this.lowerChart1.getHeight());
-			this.lowerXgc1.clearRect(0, 0, this.lowerXChart1.getWidth(),
-					this.lowerXChart1.getHeight());
+
+		if (firstLowergrafikErstellt == true) {
+
+			this.xLow1.getChildren().clear();
+			// if (secondUppergrafikErstellt == true) {
+			// this.xLow2.getChildren().clear();
+			// }
+			// if (thirdUppergrafikErstellt == true) {
+			// this.xLow3.getChildren().clear();
+			// }
+			// if (fourthUppergrafikErstellt == true) {
+			// this.xLow4.getChildren().clear();
+			// }
+			// if (fifthUppergrafikErstellt == true) {
+			// this.xLow5.getChildren().clear();
+			// }
+			// if (sixthUppergrafikErstellt == true) {
+			// this.xLow6.getChildren().clear();
+			// }
+			// if (seventhUppergrafikErstellt == true) {
+			// this.xLow7.getChildren().clear();
+			// }
+			this.addButtonPressed = false;
 			createLowerGraphic();
-			createLowerXScale();
 		}
 
 		if (this.hilfslinienAktiv == true) {
@@ -816,7 +1053,8 @@ public class MainLayoutController {
 		this.lowerDetailsPane.setMaxHeight(lowerDetailsPane.getHeight());
 		this.lowerDetailsPane.setMinHeight(lowerDetailsPane.getHeight());
 
-		final SingleSelectionModel<Tab> selectionModel = Planpane.getSelectionModel();
+		final SingleSelectionModel<Tab> selectionModel = Planpane
+				.getSelectionModel();
 
 		if (UPlan.getSelectionModel().getSelectedItem() != null) {
 
@@ -826,44 +1064,6 @@ public class MainLayoutController {
 			// Löschen der bisherigen Elemente
 
 			if (this.umlaufTabCounter >= 0) {
-
-				if (this.firstUppergrafikErstellt == true) {
-					this.uppergc1.clearRect(0, 0, this.upperChart1.getWidth(),
-							this.upperChart1.getHeight());
-					this.upperXgc1.clearRect(0, 0,
-							this.upperXChart1.getWidth(),
-							this.upperXChart1.getHeight());
-					if (this.secondUppergrafikErstellt == true) {
-						this.uppergc2.clearRect(0, 0,
-								this.upperChart1.getWidth(),
-								this.upperChart1.getHeight());
-					}
-					if (this.thirdUppergrafikErstellt == true) {
-						this.uppergc3.clearRect(0, 0,
-								this.upperChart1.getWidth(),
-								this.upperChart1.getHeight());
-					}
-					if (this.fourthUppergrafikErstellt == true) {
-						this.uppergc4.clearRect(0, 0,
-								this.upperChart1.getWidth(),
-								this.upperChart1.getHeight());
-					}
-					if (this.fifthUppergrafikErstellt == true) {
-						this.uppergc5.clearRect(0, 0,
-								this.upperChart1.getWidth(),
-								this.upperChart1.getHeight());
-					}
-					if (this.sixthUppergrafikErstellt == true) {
-						this.uppergc6.clearRect(0, 0,
-								this.upperChart1.getWidth(),
-								this.upperChart1.getHeight());
-					}
-					if (this.seventhUppergrafikErstellt == true) {
-						this.uppergc7.clearRect(0, 0,
-								this.upperChart1.getWidth(),
-								this.upperChart1.getHeight());
-					}
-				}
 
 				if (this.UPlan1.isVisible() == false) {
 					this.umlaufplanEins = this.umlaufplanliste.get(this.UPlan
@@ -875,6 +1075,13 @@ public class MainLayoutController {
 					this.UPlanValue1.setText(UPlan.getSelectionModel()
 							.getSelectedItem().toString());
 					this.umlaufChoice = 1;
+
+					// Zuordnung der Auswahl
+
+					umlaufIsCurrent = true;
+					dienstIsCurrent = false;
+
+					graphicTransition();
 				}
 				// Labelbeschriftungen für Umlaufpläne
 				this.UPlan1.setVisible(true);
@@ -888,6 +1095,11 @@ public class MainLayoutController {
 								umlaufChoice = 1;
 								changeUplanDetails();
 								selectionModel.select(Plan1);
+
+								// Zuordnung der Auswahl
+
+								umlaufIsCurrent = true;
+								dienstIsCurrent = false;
 							}
 						});
 
@@ -908,8 +1120,6 @@ public class MainLayoutController {
 				// Hintergrunderstellung
 				createUpperBackgroundGraphicFirstPane();
 				createUpperXScalePane(this.xUp1, this.upperGraphicPane1);
-				graphicTransition();
-
 				createUmlaufElementGraphic(this.umlaufplanEins,
 						this.upperGraphicPane1, this.upperChart1, this.uppergc1);
 				// Fügt den Eventhändler hinzu
@@ -949,6 +1159,11 @@ public class MainLayoutController {
 					this.UPlanValue2.setText(UPlan.getSelectionModel()
 							.getSelectedItem().toString());
 					this.umlaufChoice = 2;
+
+					// Zuordnung der Auswahl
+
+					umlaufIsCurrent = true;
+					dienstIsCurrent = false;
 				}
 				// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
 
@@ -956,14 +1171,19 @@ public class MainLayoutController {
 				this.UPlan2.setVisible(true);
 				this.UPlanValue2.setVisible(true);
 				this.UPlanValue2
-				.setOnMousePressed(new EventHandler<MouseEvent>() {
-					@Override
-					public void handle(MouseEvent e) {
-						umlaufChoice = 2;
-						changeUplanDetails();
-						selectionModel.select(Plan2);
-					}
-				});
+						.setOnMousePressed(new EventHandler<MouseEvent>() {
+							@Override
+							public void handle(MouseEvent e) {
+								umlaufChoice = 2;
+								changeUplanDetails();
+								selectionModel.select(Plan2);
+
+								// Zuordnung der Auswahl
+
+								umlaufIsCurrent = true;
+								dienstIsCurrent = false;
+							}
+						});
 
 				// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
 				// nicht
@@ -1024,6 +1244,11 @@ public class MainLayoutController {
 					this.UPlanValue3.setText(UPlan.getSelectionModel()
 							.getSelectedItem().toString());
 					this.umlaufChoice = 3;
+
+					// Zuordnung der Auswahl
+
+					umlaufIsCurrent = true;
+					dienstIsCurrent = false;
 				}
 				// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
 
@@ -1031,14 +1256,19 @@ public class MainLayoutController {
 				this.UPlan3.setVisible(true);
 				this.UPlanValue3.setVisible(true);
 				this.UPlanValue3
-				.setOnMousePressed(new EventHandler<MouseEvent>() {
-					@Override
-					public void handle(MouseEvent e) {
-						umlaufChoice = 3;
-						changeUplanDetails();
-						selectionModel.select(Plan3);
-					}
-				});
+						.setOnMousePressed(new EventHandler<MouseEvent>() {
+							@Override
+							public void handle(MouseEvent e) {
+								umlaufChoice = 3;
+								changeUplanDetails();
+								selectionModel.select(Plan3);
+
+								// Zuordnung der Auswahl
+
+								umlaufIsCurrent = true;
+								dienstIsCurrent = false;
+							}
+						});
 				// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
 				// nicht
 
@@ -1098,6 +1328,11 @@ public class MainLayoutController {
 					this.UPlanValue4.setText(UPlan.getSelectionModel()
 							.getSelectedItem().toString());
 					this.umlaufChoice = 4;
+
+					// Zuordnung der Auswahl
+
+					umlaufIsCurrent = true;
+					dienstIsCurrent = false;
 				}
 				// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
 
@@ -1105,14 +1340,19 @@ public class MainLayoutController {
 				this.UPlan4.setVisible(true);
 				this.UPlanValue4.setVisible(true);
 				this.UPlanValue4
-				.setOnMousePressed(new EventHandler<MouseEvent>() {
-					@Override
-					public void handle(MouseEvent e) {
-						umlaufChoice = 4;
-						changeUplanDetails();
-						selectionModel.select(Plan4);
-					}
-				});
+						.setOnMousePressed(new EventHandler<MouseEvent>() {
+							@Override
+							public void handle(MouseEvent e) {
+								umlaufChoice = 4;
+								changeUplanDetails();
+								selectionModel.select(Plan4);
+
+								// Zuordnung der Auswahl
+
+								umlaufIsCurrent = true;
+								dienstIsCurrent = false;
+							}
+						});
 				// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
 				// nicht
 
@@ -1172,6 +1412,11 @@ public class MainLayoutController {
 					this.UPlanValue5.setText(UPlan.getSelectionModel()
 							.getSelectedItem().toString());
 					this.umlaufChoice = 5;
+
+					// Zuordnung der Auswahl
+
+					umlaufIsCurrent = true;
+					dienstIsCurrent = false;
 				}
 				// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
 
@@ -1179,14 +1424,19 @@ public class MainLayoutController {
 				this.UPlan5.setVisible(true);
 				this.UPlanValue5.setVisible(true);
 				this.UPlanValue5
-				.setOnMousePressed(new EventHandler<MouseEvent>() {
-					@Override
-					public void handle(MouseEvent e) {
-						umlaufChoice = 5;
-						changeUplanDetails();
-						selectionModel.select(Plan5);
-					}
-				});
+						.setOnMousePressed(new EventHandler<MouseEvent>() {
+							@Override
+							public void handle(MouseEvent e) {
+								umlaufChoice = 5;
+								changeUplanDetails();
+								selectionModel.select(Plan5);
+
+								// Zuordnung der Auswahl
+
+								umlaufIsCurrent = true;
+								dienstIsCurrent = false;
+							}
+						});
 				// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
 				// nicht
 
@@ -1246,6 +1496,11 @@ public class MainLayoutController {
 					this.UPlanValue6.setText(UPlan.getSelectionModel()
 							.getSelectedItem().toString());
 					this.umlaufChoice = 6;
+
+					// Zuordnung der Auswahl
+
+					umlaufIsCurrent = true;
+					dienstIsCurrent = false;
 				}
 				// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
 
@@ -1253,14 +1508,19 @@ public class MainLayoutController {
 				this.UPlan6.setVisible(true);
 				this.UPlanValue6.setVisible(true);
 				this.UPlanValue6
-				.setOnMousePressed(new EventHandler<MouseEvent>() {
-					@Override
-					public void handle(MouseEvent e) {
-						umlaufChoice = 6;
-						changeUplanDetails();
-						selectionModel.select(Plan6);
-					}
-				});
+						.setOnMousePressed(new EventHandler<MouseEvent>() {
+							@Override
+							public void handle(MouseEvent e) {
+								umlaufChoice = 6;
+								changeUplanDetails();
+								selectionModel.select(Plan6);
+
+								// Zuordnung der Auswahl
+
+								umlaufIsCurrent = true;
+								dienstIsCurrent = false;
+							}
+						});
 				// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
 				// nicht
 
@@ -1319,6 +1579,11 @@ public class MainLayoutController {
 					this.UPlanValue7.setText(UPlan.getSelectionModel()
 							.getSelectedItem().toString());
 					this.umlaufChoice = 7;
+
+					// Zuordnung der Auswahl
+
+					umlaufIsCurrent = true;
+					dienstIsCurrent = false;
 				}
 				// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
 
@@ -1326,14 +1591,19 @@ public class MainLayoutController {
 				this.UPlan7.setVisible(true);
 				this.UPlanValue7.setVisible(true);
 				this.UPlanValue7
-				.setOnMousePressed(new EventHandler<MouseEvent>() {
-					@Override
-					public void handle(MouseEvent e) {
-						umlaufChoice = 7;
-						changeUplanDetails();
-						selectionModel.select(Plan7);
-					}
-				});
+						.setOnMousePressed(new EventHandler<MouseEvent>() {
+							@Override
+							public void handle(MouseEvent e) {
+								umlaufChoice = 7;
+								changeUplanDetails();
+								selectionModel.select(Plan7);
+
+								// Zuordnung der Auswahl
+
+								umlaufIsCurrent = true;
+								dienstIsCurrent = false;
+							}
+						});
 				// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
 				// nicht
 
@@ -1373,7 +1643,552 @@ public class MainLayoutController {
 			}
 
 			this.addButtonPressed = true;
-			changeUplanDetails();
+			if (this.umlaufIsCurrent == true) {
+				changeUplanDetails();
+			}
+		}
+	}
+
+	/**
+	 * Creates The Lower Graphic.
+	 */
+	@FXML
+	private void createLowerGraphic() {
+
+		this.lowerDetailsPane.setMaxHeight(lowerDetailsPane.getHeight());
+		this.lowerDetailsPane.setMinHeight(lowerDetailsPane.getHeight());
+
+		final SingleSelectionModel<Tab> selectionModel = Planpane
+				.getSelectionModel();
+
+		if (DPlan.getSelectionModel().getSelectedItem() != null) {
+
+			// Erstellung der Umlaufplangrafik auf dem ersten Tab
+
+			if (this.dienstTabCounter >= 0) {
+
+				if (this.DPlan1.isVisible() == false) {
+					this.dienstplanEins = this.dienstplanliste.get(this.DPlan
+							.getSelectionModel().getSelectedIndex());
+					this.lowerheightEins = this.dienstplanEins.getDuty().size() * 40 + 10;
+					createLowerYScale(yLow1, lowerYChart1, lowerYgc1,
+							this.lowerheightEins, this.dienstplanEins);
+					this.DPlanValue1.setText(DPlan.getSelectionModel()
+							.getSelectedItem().toString());
+					this.dienstChoice = 1;
+
+					// Zuordnung der Auswahl
+
+					umlaufIsCurrent = false;
+					dienstIsCurrent = true;
+
+					graphicTransition();
+				}
+				// Labelbeschriftungen für Umlaufpläne
+				this.DPlan1.setVisible(true);
+				this.loeschenDienstplan.setVisible(true);
+
+				this.DPlanValue1.setVisible(true);
+				this.DPlanValue1
+						.setOnMousePressed(new EventHandler<MouseEvent>() {
+							@Override
+							public void handle(MouseEvent e) {
+								dienstChoice = 1;
+								changeDplanDetails();
+								selectionModel.select(Plan1);
+
+								// Zuordnung der Auswahl
+
+								umlaufIsCurrent = false;
+								dienstIsCurrent = true;
+							}
+						});
+
+				// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
+				// nicht
+
+				if (this.addButtonPressed == true) {
+					selectionModel.select(this.Plan1);
+					this.dienstTabCounter = this.dienstTabCounter + 1;
+				}
+
+				// Zur Verhinderung vom doppelten Erschaffen der Grafiken
+
+				if (this.firstLowergrafikErstellt == false) {
+					this.dienstTabCounter = 0;
+				}
+				this.firstLowergrafikErstellt = true;
+
+				// Hintergrunderstellung
+				createLowerBackgroundGraphicFirstPane();
+				createLowerXScalePane(this.xLow1, this.lowerGraphicPane1);
+				// createUmlaufElementGraphic(this.umlaufplanEins,
+				// this.upperGraphicPane1, this.upperChart1, this.uppergc1);
+
+				// // Fügt den Eventhändler hinzu
+				// this.upperChart1.addEventHandler(MouseEvent.MOUSE_CLICKED,
+				// new EventHandler<MouseEvent>() {
+				// @Override
+				// public void handle(MouseEvent e) {
+				// boolean okClicked = mainApp
+				// .showEditUPlan(umlaufplanEins);
+				// if (okClicked) {
+				// refreshBothGraphics();
+				// fillUmlaufplanliste();
+				// }
+				// }
+				// });
+
+			}
+
+			// //
+			// // Erstellung der Umlaufplangrafik auf dem zweiten Tab
+			// //
+			//
+			// if (this.umlaufTabCounter >= 1) {
+			//
+			// if (this.secondUppergrafikErstellt == true) {
+			// this.uppergc2.clearRect(0, 0, this.upperChart2.getWidth(),
+			// this.upperChart2.getHeight());
+			// }
+			// // Initiale Belegung der Grafik
+			// if (this.UPlan2.isVisible() == false) {
+			// this.umlaufplanZwei = this.umlaufplanliste.get(this.UPlan
+			// .getSelectionModel().getSelectedIndex());
+			// this.upperheightZwei = this.umlaufplanZwei.getUmlauf()
+			// .size() * 40 + 10;
+			// createUpperYScale(yUp2, upperYChart2, upperYgc2,
+			// this.upperheightZwei, this.umlaufplanZwei);
+			// this.UPlanValue2.setText(UPlan.getSelectionModel()
+			// .getSelectedItem().toString());
+			// this.umlaufChoice = 2;
+			// }
+			// // Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
+			//
+			// this.Plan2.setDisable(false);
+			// this.UPlan2.setVisible(true);
+			// this.UPlanValue2.setVisible(true);
+			// this.UPlanValue2
+			// .setOnMousePressed(new EventHandler<MouseEvent>() {
+			// @Override
+			// public void handle(MouseEvent e) {
+			// umlaufChoice = 2;
+			// changeUplanDetails();
+			// selectionModel.select(Plan2);
+			// }
+			// });
+			//
+			// // Zur Kontrolle ob es sich um einen Buttonklick handelt oder
+			// // nicht
+			//
+			// if (this.addButtonPressed == true) {
+			// selectionModel.select(this.Plan2);
+			// this.umlaufTabCounter = 2;
+			// }
+			//
+			// // Zur Verhinderung vom doppelten Erschaffen der Grafiken
+			//
+			// if (this.secondUppergrafikErstellt == false) {
+			// this.umlaufTabCounter = 1;
+			// }
+			//
+			// this.secondUppergrafikErstellt = true;
+			// this.secondGrafikErstellt = true;
+			//
+			// // Hintergrunderstellung
+			// createUpperBackgroundGraphicSecondPane();
+			// createUpperXScalePane(this.xUp2, this.upperGraphicPane2);
+			//
+			// createUmlaufElementGraphic(this.umlaufplanZwei,
+			// this.upperGraphicPane2, this.upperChart2, this.uppergc2);
+			// // Fügt den Eventhändler hinzu
+			// this.upperChart2.addEventHandler(MouseEvent.MOUSE_CLICKED,
+			// new EventHandler<MouseEvent>() {
+			// @Override
+			// public void handle(MouseEvent e) {
+			// boolean okClicked = mainApp
+			// .showEditUPlan(umlaufplanZwei);
+			// if (okClicked) {
+			// refreshBothGraphics();
+			// fillUmlaufplanliste();
+			// }
+			// }
+			// });
+			// }
+			//
+			// //
+			// // Erstellung der Umlaufplangrafik auf dem dritten Tab
+			// //
+			//
+			// if (this.umlaufTabCounter >= 2) {
+			//
+			// if (this.thirdUppergrafikErstellt == true) {
+			// this.uppergc3.clearRect(0, 0, this.upperChart3.getWidth(),
+			// this.upperChart3.getHeight());
+			// }
+			// // Initiale Belegung der Grafik
+			// if (this.UPlan3.isVisible() == false) {
+			// this.umlaufplanDrei = this.umlaufplanliste.get(this.UPlan
+			// .getSelectionModel().getSelectedIndex());
+			// this.upperheightDrei = this.umlaufplanDrei.getUmlauf()
+			// .size() * 40 + 10;
+			// createUpperYScale(yUp3, upperYChart3, upperYgc3,
+			// this.upperheightDrei, this.umlaufplanDrei);
+			// this.UPlanValue3.setText(UPlan.getSelectionModel()
+			// .getSelectedItem().toString());
+			// this.umlaufChoice = 3;
+			// }
+			// // Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
+			//
+			// this.Plan3.setDisable(false);
+			// this.UPlan3.setVisible(true);
+			// this.UPlanValue3.setVisible(true);
+			// this.UPlanValue3
+			// .setOnMousePressed(new EventHandler<MouseEvent>() {
+			// @Override
+			// public void handle(MouseEvent e) {
+			// umlaufChoice = 3;
+			// changeUplanDetails();
+			// selectionModel.select(Plan3);
+			// }
+			// });
+			// // Zur Kontrolle ob es sich um einen Buttonklick handelt oder
+			// // nicht
+			//
+			// if (this.addButtonPressed == true) {
+			// selectionModel.select(this.Plan3);
+			// this.umlaufTabCounter = 3;
+			// }
+			//
+			// // Zur Verhinderung vom doppelten Erschaffen der Grafiken
+			//
+			// if (this.thirdUppergrafikErstellt == false) {
+			// this.umlaufTabCounter = 2;
+			// }
+			//
+			// this.thirdUppergrafikErstellt = true;
+			// this.thirdGrafikErstellt = true;
+			//
+			// // Hintergrunderstellung
+			// createUpperBackgroundGraphicThirdPane();
+			// createUpperXScalePane(this.xUp3, this.upperGraphicPane3);
+			//
+			// createUmlaufElementGraphic(this.umlaufplanDrei,
+			// this.upperGraphicPane3, this.upperChart3, this.uppergc3);
+			// // Fügt den Eventhändler hinzu
+			// this.upperChart3.addEventHandler(MouseEvent.MOUSE_CLICKED,
+			// new EventHandler<MouseEvent>() {
+			// @Override
+			// public void handle(MouseEvent e) {
+			// boolean okClicked = mainApp
+			// .showEditUPlan(umlaufplanDrei);
+			// if (okClicked) {
+			// refreshBothGraphics();
+			// fillUmlaufplanliste();
+			// }
+			// }
+			// });
+			// }
+			//
+			// //
+			// // Erstellung der Umlaufplangrafik auf dem vierten Tab
+			// //
+			//
+			// if (this.umlaufTabCounter >= 3) {
+			//
+			// if (this.fourthUppergrafikErstellt == true) {
+			// this.uppergc4.clearRect(0, 0, this.upperChart4.getWidth(),
+			// this.upperChart4.getHeight());
+			// }
+			// // Initiale Belegung der Grafik
+			// if (this.UPlan4.isVisible() == false) {
+			// this.umlaufplanVier = this.umlaufplanliste.get(this.UPlan
+			// .getSelectionModel().getSelectedIndex());
+			// this.upperheightVier = this.umlaufplanVier.getUmlauf()
+			// .size() * 40 + 10;
+			// createUpperYScale(yUp4, upperYChart4, upperYgc4,
+			// this.upperheightVier, this.umlaufplanVier);
+			// this.UPlanValue4.setText(UPlan.getSelectionModel()
+			// .getSelectedItem().toString());
+			// this.umlaufChoice = 4;
+			// }
+			// // Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
+			//
+			// this.Plan4.setDisable(false);
+			// this.UPlan4.setVisible(true);
+			// this.UPlanValue4.setVisible(true);
+			// this.UPlanValue4
+			// .setOnMousePressed(new EventHandler<MouseEvent>() {
+			// @Override
+			// public void handle(MouseEvent e) {
+			// umlaufChoice = 4;
+			// changeUplanDetails();
+			// selectionModel.select(Plan4);
+			// }
+			// });
+			// // Zur Kontrolle ob es sich um einen Buttonklick handelt oder
+			// // nicht
+			//
+			// if (this.addButtonPressed == true) {
+			// selectionModel.select(this.Plan4);
+			// this.umlaufTabCounter = 4;
+			// }
+			//
+			// // Zur Verhinderung vom doppelten Erschaffen der Grafiken
+			//
+			// if (this.fourthUppergrafikErstellt == false) {
+			// this.umlaufTabCounter = 3;
+			// }
+			//
+			// this.fourthUppergrafikErstellt = true;
+			// this.fourthGrafikErstellt = true;
+			//
+			// // Hintergrunderstellung
+			// createUpperBackgroundGraphicFourthPane();
+			// createUpperXScalePane(this.xUp4, this.upperGraphicPane4);
+			//
+			// createUmlaufElementGraphic(this.umlaufplanVier,
+			// this.upperGraphicPane4, this.upperChart4, this.uppergc4);
+			// // Fügt den Eventhändler hinzu
+			// this.upperChart4.addEventHandler(MouseEvent.MOUSE_CLICKED,
+			// new EventHandler<MouseEvent>() {
+			// @Override
+			// public void handle(MouseEvent e) {
+			// boolean okClicked = mainApp
+			// .showEditUPlan(umlaufplanVier);
+			// if (okClicked) {
+			// refreshBothGraphics();
+			// fillUmlaufplanliste();
+			// }
+			// }
+			// });
+			// }
+			//
+			// //
+			// // Erstellung der Umlaufplangrafik auf dem fünften Tab
+			// //
+			//
+			// if (this.umlaufTabCounter >= 4) {
+			//
+			// if (this.fifthUppergrafikErstellt == true) {
+			// this.uppergc5.clearRect(0, 0, this.upperChart5.getWidth(),
+			// this.upperChart5.getHeight());
+			// }
+			// // Initiale Belegung der Grafik
+			// if (this.UPlan5.isVisible() == false) {
+			// this.umlaufplanFuenf = this.umlaufplanliste.get(this.UPlan
+			// .getSelectionModel().getSelectedIndex());
+			// this.upperheightFuenf = this.umlaufplanFuenf.getUmlauf()
+			// .size() * 40 + 10;
+			// createUpperYScale(yUp5, upperYChart5, upperYgc5,
+			// this.upperheightFuenf, this.umlaufplanFuenf);
+			// this.UPlanValue5.setText(UPlan.getSelectionModel()
+			// .getSelectedItem().toString());
+			// this.umlaufChoice = 5;
+			// }
+			// // Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
+			//
+			// this.Plan5.setDisable(false);
+			// this.UPlan5.setVisible(true);
+			// this.UPlanValue5.setVisible(true);
+			// this.UPlanValue5
+			// .setOnMousePressed(new EventHandler<MouseEvent>() {
+			// @Override
+			// public void handle(MouseEvent e) {
+			// umlaufChoice = 5;
+			// changeUplanDetails();
+			// selectionModel.select(Plan5);
+			// }
+			// });
+			// // Zur Kontrolle ob es sich um einen Buttonklick handelt oder
+			// // nicht
+			//
+			// if (this.addButtonPressed == true) {
+			// selectionModel.select(this.Plan5);
+			// this.umlaufTabCounter = 5;
+			// }
+			//
+			// // Zur Verhinderung vom doppelten Erschaffen der Grafiken
+			//
+			// if (this.fifthUppergrafikErstellt == false) {
+			// this.umlaufTabCounter = 4;
+			// }
+			//
+			// this.fifthUppergrafikErstellt = true;
+			// this.fifthGrafikErstellt = true;
+			//
+			// // Hintergrunderstellung
+			// createUpperBackgroundGraphicFifthPane();
+			// createUpperXScalePane(this.xUp5, this.upperGraphicPane5);
+			//
+			// createUmlaufElementGraphic(this.umlaufplanFuenf,
+			// this.upperGraphicPane5, this.upperChart5, this.uppergc5);
+			// // Fügt den Eventhändler hinzu
+			// this.upperChart5.addEventHandler(MouseEvent.MOUSE_CLICKED,
+			// new EventHandler<MouseEvent>() {
+			// @Override
+			// public void handle(MouseEvent e) {
+			// boolean okClicked = mainApp
+			// .showEditUPlan(umlaufplanFuenf);
+			// if (okClicked) {
+			// refreshBothGraphics();
+			// fillUmlaufplanliste();
+			// }
+			// }
+			// });
+			// }
+			//
+			// //
+			// // Erstellung der Umlaufplangrafik auf dem sechsten Tab
+			// //
+			//
+			// if (this.umlaufTabCounter >= 5) {
+			//
+			// if (this.sixthUppergrafikErstellt == true) {
+			// this.uppergc6.clearRect(0, 0, this.upperChart6.getWidth(),
+			// this.upperChart6.getHeight());
+			// }
+			// // Initiale Belegung der Grafik
+			// if (this.UPlan6.isVisible() == false) {
+			// this.umlaufplanSechs = this.umlaufplanliste.get(this.UPlan
+			// .getSelectionModel().getSelectedIndex());
+			// this.upperheightSechs = this.umlaufplanSechs.getUmlauf()
+			// .size() * 40 + 10;
+			// createUpperYScale(yUp6, upperYChart6, upperYgc6,
+			// this.upperheightSechs, this.umlaufplanSechs);
+			// this.UPlanValue6.setText(UPlan.getSelectionModel()
+			// .getSelectedItem().toString());
+			// this.umlaufChoice = 6;
+			// }
+			// // Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
+			//
+			// this.Plan6.setDisable(false);
+			// this.UPlan6.setVisible(true);
+			// this.UPlanValue6.setVisible(true);
+			// this.UPlanValue6
+			// .setOnMousePressed(new EventHandler<MouseEvent>() {
+			// @Override
+			// public void handle(MouseEvent e) {
+			// umlaufChoice = 6;
+			// changeUplanDetails();
+			// selectionModel.select(Plan6);
+			// }
+			// });
+			// // Zur Kontrolle ob es sich um einen Buttonklick handelt oder
+			// // nicht
+			//
+			// if (this.addButtonPressed == true) {
+			// selectionModel.select(this.Plan6);
+			// this.umlaufTabCounter = 6;
+			// }
+			//
+			// // Zur Verhinderung vom doppelten Erschaffen der Grafiken
+			//
+			// if (this.sixthUppergrafikErstellt == false) {
+			// this.umlaufTabCounter = 5;
+			// }
+			//
+			// this.sixthUppergrafikErstellt = true;
+			// this.sixthGrafikErstellt = true;
+			//
+			// // Hintergrunderstellung
+			// createUpperBackgroundGraphicSixthPane();
+			// createUpperXScalePane(this.xUp6, this.upperGraphicPane6);
+			// createUmlaufElementGraphic(this.umlaufplanSechs,
+			// this.upperGraphicPane6, this.upperChart6, this.uppergc6);
+			// // Fügt den Eventhändler hinzu
+			// this.upperChart6.addEventHandler(MouseEvent.MOUSE_CLICKED,
+			// new EventHandler<MouseEvent>() {
+			// @Override
+			// public void handle(MouseEvent e) {
+			// boolean okClicked = mainApp
+			// .showEditUPlan(umlaufplanSechs);
+			// if (okClicked) {
+			// refreshBothGraphics();
+			// fillUmlaufplanliste();
+			// }
+			// }
+			// });
+			// }
+			//
+			// //
+			// // Erstellung der Umlaufplangrafik auf dem siebten Tab
+			// //
+			//
+			// if (this.umlaufTabCounter >= 6) {
+			//
+			// if (this.seventhUppergrafikErstellt == true) {
+			// this.uppergc7.clearRect(0, 0, this.upperChart7.getWidth(),
+			// this.upperChart7.getHeight());
+			// }
+			// // Initiale Belegung der Grafik
+			// if (this.UPlan7.isVisible() == false) {
+			// this.umlaufplanSieben = this.umlaufplanliste.get(this.UPlan
+			// .getSelectionModel().getSelectedIndex());
+			// this.upperheightSieben = this.umlaufplanSieben.getUmlauf()
+			// .size() * 40 + 10;
+			// createUpperYScale(yUp7, upperYChart7, upperYgc7,
+			// this.upperheightSieben, this.umlaufplanSieben);
+			// this.UPlanValue7.setText(UPlan.getSelectionModel()
+			// .getSelectedItem().toString());
+			// this.umlaufChoice = 7;
+			// }
+			// // Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
+			//
+			// this.Plan7.setDisable(false);
+			// this.UPlan7.setVisible(true);
+			// this.UPlanValue7.setVisible(true);
+			// this.UPlanValue7
+			// .setOnMousePressed(new EventHandler<MouseEvent>() {
+			// @Override
+			// public void handle(MouseEvent e) {
+			// umlaufChoice = 7;
+			// changeUplanDetails();
+			// selectionModel.select(Plan7);
+			// }
+			// });
+			// // Zur Kontrolle ob es sich um einen Buttonklick handelt oder
+			// // nicht
+			//
+			// if (this.addButtonPressed == true) {
+			// selectionModel.select(this.Plan7);
+			// this.umlaufTabCounter = 7;
+			// }
+			//
+			// // Zur Verhinderung vom doppelten Erschaffen der Grafiken
+			//
+			// if (this.seventhUppergrafikErstellt == false) {
+			// this.umlaufTabCounter = 6;
+			// }
+			//
+			// this.seventhUppergrafikErstellt = true;
+			// this.seventhGrafikErstellt = true;
+			//
+			// // Hintergrunderstellung
+			// createUpperBackgroundGraphicSeventhPane();
+			// createUpperXScalePane(this.xUp7, this.upperGraphicPane7);
+			//
+			// createUmlaufElementGraphic(this.umlaufplanSieben,
+			// this.upperGraphicPane7, this.upperChart7, this.uppergc7);
+			// // Fügt den Eventhändler hinzu
+			// this.upperChart7.addEventHandler(MouseEvent.MOUSE_CLICKED,
+			// new EventHandler<MouseEvent>() {
+			// @Override
+			// public void handle(MouseEvent e) {
+			// boolean okClicked = mainApp
+			// .showEditUPlan(umlaufplanSieben);
+			// if (okClicked) {
+			// refreshBothGraphics();
+			// fillUmlaufplanliste();
+			// }
+			// }
+			// });
+			// }
+
+			this.addButtonPressed = true;
+			if (this.dienstIsCurrent == true) {
+				changeDplanDetails();
+			}
 
 		}
 	}
@@ -1666,6 +2481,293 @@ public class MainLayoutController {
 	}
 
 	/**
+	 * Creates The First Lower Background Graphic.
+	 */
+	@FXML
+	private void createLowerBackgroundGraphicFirstPane() {
+
+		// Initialize the Chart
+		this.lowerChart1 = new Canvas(this.lowerGraphicPane1.getWidth() - 4,
+				this.lowerheightEins);
+
+		// Erstellen des HintergrundgrafikKontextes
+		this.lowergc1 = this.lowerChart1.getGraphicsContext2D();
+		this.lowergc1.clearRect(0, 0, this.lowerChart1.getWidth(),
+				this.lowerChart1.getHeight());
+
+		// Erstellen des Hintergrundes
+		this.lowergc1.setFill(Color.ALICEBLUE);
+		this.lowergc1.fillRect(0, 0, this.lowerChart1.getWidth(),
+				this.lowerChart1.getHeight());
+
+		this.lowergc1.setLineWidth(3);
+		this.lowergc1.setStroke(Color.BLACK);
+		this.lowergc1.strokeLine(1, 0, 1, this.lowerChart1.getHeight());
+
+		double abstandNetz = (this.lowerChart1.getWidth() - 30)
+				/ (this.endzeitVar - this.startzeitVar);
+		this.lowergc1.setLineWidth(1);
+		this.lowergc1.setFont(Font.getDefault());
+		this.lowergc1.setFill(Color.BLACK);
+		this.lowergc1.setStroke(Color.BLACK);
+		// Variable zum Darstellen verschiedener Zeitpunkte
+		for (int i = 0; i <= (endzeitVar - startzeitVar); i++) {
+
+			double pixel = ((i) * abstandNetz);
+			this.lowergc1.strokeLine(pixel, 0, pixel,
+					this.lowerChart1.getHeight());
+		}
+
+		this.lowerGraphicPane1.setContent(this.lowerChart1);
+	}
+
+	/**
+	 * Creates the second Lower Background Graphic.
+	 */
+	@FXML
+	private void createLowerBackgroundGraphicSecondPane() {
+
+		// Initialize the Chart
+		this.upperChart2 = new Canvas(this.upperGraphicPane2.getWidth() - 4,
+				this.upperheightZwei);
+
+		// Erstellen des HintergrundgrafikKontextes
+		this.uppergc2 = this.upperChart2.getGraphicsContext2D();
+		this.uppergc2.clearRect(0, 0, this.upperChart2.getWidth(),
+				this.upperChart2.getHeight());
+
+		// Erstellen des Hintergrundes
+		this.uppergc2.setFill(Color.ALICEBLUE);
+		this.uppergc2.fillRect(0, 0, this.upperChart2.getWidth(),
+				this.upperChart2.getHeight());
+
+		this.uppergc2.setLineWidth(3);
+		this.uppergc2.setStroke(Color.BLACK);
+		this.uppergc2.strokeLine(1, 0, 1, this.upperChart2.getHeight());
+
+		double abstandNetz = (this.upperChart2.getWidth() - 30)
+				/ (this.endzeitVar - this.startzeitVar);
+		this.uppergc2.setLineWidth(1);
+		this.uppergc2.setFont(Font.getDefault());
+		this.uppergc2.setFill(Color.BLACK);
+		this.uppergc2.setStroke(Color.BLACK);
+		// Variable zum Darstellen verschiedener Zeitpunkte
+		for (int i = 0; i <= (endzeitVar - startzeitVar); i++) {
+
+			double pixel = ((i) * abstandNetz);
+			this.uppergc2.strokeLine(pixel, 0, pixel,
+					this.upperChart2.getHeight());
+		}
+
+		this.upperGraphicPane2.setContent(this.upperChart2);
+	}
+
+	/**
+	 * Creates the second Lower Background Graphic.
+	 */
+	@FXML
+	private void createLowerBackgroundGraphicThirdPane() {
+
+		// Initialize the Chart
+		this.upperChart3 = new Canvas(this.upperGraphicPane3.getWidth() - 4,
+				this.upperheightDrei);
+
+		// Erstellen des HintergrundgrafikKontextes
+		this.uppergc3 = this.upperChart3.getGraphicsContext2D();
+		this.uppergc3.clearRect(0, 0, this.upperChart3.getWidth(),
+				this.upperChart3.getHeight());
+
+		// Erstellen des Hintergrundes
+		this.uppergc3.setFill(Color.ALICEBLUE);
+		this.uppergc3.fillRect(0, 0, this.upperChart3.getWidth(),
+				this.upperChart3.getHeight());
+
+		this.uppergc3.setLineWidth(3);
+		this.uppergc3.setStroke(Color.BLACK);
+		this.uppergc3.strokeLine(1, 0, 1, this.upperChart3.getHeight());
+
+		double abstandNetz = (this.upperChart3.getWidth() - 30)
+				/ (this.endzeitVar - this.startzeitVar);
+		this.uppergc3.setLineWidth(1);
+		this.uppergc3.setFont(Font.getDefault());
+		this.uppergc3.setFill(Color.BLACK);
+		this.uppergc3.setStroke(Color.BLACK);
+		// Variable zum Darstellen verschiedener Zeitpunkte
+		for (int i = 0; i <= (endzeitVar - startzeitVar); i++) {
+
+			double pixel = ((i) * abstandNetz);
+			this.uppergc3.strokeLine(pixel, 0, pixel,
+					this.upperChart3.getHeight());
+		}
+
+		this.upperGraphicPane3.setContent(this.upperChart3);
+	}
+
+	/**
+	 * Creates the second Lower Background Graphic.
+	 */
+	@FXML
+	private void createLowerBackgroundGraphicFourthPane() {
+
+		// Initialize the Chart
+		this.upperChart4 = new Canvas(this.upperGraphicPane4.getWidth() - 4,
+				this.upperheightVier);
+
+		// Erstellen des HintergrundgrafikKontextes
+		this.uppergc4 = this.upperChart4.getGraphicsContext2D();
+		this.uppergc4.clearRect(0, 0, this.upperChart4.getWidth(),
+				this.upperChart4.getHeight());
+
+		// Erstellen des Hintergrundes
+		this.uppergc4.setFill(Color.ALICEBLUE);
+		this.uppergc4.fillRect(0, 0, this.upperChart4.getWidth(),
+				this.upperChart4.getHeight());
+
+		this.uppergc4.setLineWidth(3);
+		this.uppergc4.setStroke(Color.BLACK);
+		this.uppergc4.strokeLine(1, 0, 1, this.upperChart4.getHeight());
+
+		double abstandNetz = (this.upperChart4.getWidth() - 30)
+				/ (this.endzeitVar - this.startzeitVar);
+		this.uppergc4.setLineWidth(1);
+		this.uppergc4.setFont(Font.getDefault());
+		this.uppergc4.setFill(Color.BLACK);
+		this.uppergc4.setStroke(Color.BLACK);
+		// Variable zum Darstellen verschiedener Zeitpunkte
+		for (int i = 0; i <= (endzeitVar - startzeitVar); i++) {
+
+			double pixel = ((i) * abstandNetz);
+			this.uppergc4.strokeLine(pixel, 0, pixel,
+					this.upperChart4.getHeight());
+		}
+
+		this.upperGraphicPane4.setContent(this.upperChart4);
+	}
+
+	/**
+	 * Creates the second Lower Background Graphic.
+	 */
+	@FXML
+	private void createLowerBackgroundGraphicFifthPane() {
+
+		// Initialize the Chart
+		this.upperChart5 = new Canvas(this.upperGraphicPane5.getWidth() - 4,
+				this.upperheightFuenf);
+
+		// Erstellen des HintergrundgrafikKontextes
+		this.uppergc5 = this.upperChart5.getGraphicsContext2D();
+		this.uppergc5.clearRect(0, 0, this.upperChart5.getWidth(),
+				this.upperChart5.getHeight());
+
+		// Erstellen des Hintergrundes
+		this.uppergc5.setFill(Color.ALICEBLUE);
+		this.uppergc5.fillRect(0, 0, this.upperChart5.getWidth(),
+				this.upperChart5.getHeight());
+
+		this.uppergc5.setLineWidth(3);
+		this.uppergc5.setStroke(Color.BLACK);
+		this.uppergc5.strokeLine(1, 0, 1, this.upperChart5.getHeight());
+
+		double abstandNetz = (this.upperChart5.getWidth() - 30)
+				/ (this.endzeitVar - this.startzeitVar);
+		this.uppergc5.setLineWidth(1);
+		this.uppergc5.setFont(Font.getDefault());
+		this.uppergc5.setFill(Color.BLACK);
+		this.uppergc5.setStroke(Color.BLACK);
+		// Variable zum Darstellen verschiedener Zeitpunkte
+		for (int i = 0; i <= (endzeitVar - startzeitVar); i++) {
+
+			double pixel = ((i) * abstandNetz);
+			this.uppergc5.strokeLine(pixel, 0, pixel,
+					this.upperChart5.getHeight());
+		}
+
+		this.upperGraphicPane5.setContent(this.upperChart5);
+	}
+
+	/**
+	 * Creates the second Lower Background Graphic.
+	 */
+	@FXML
+	private void createLowerBackgroundGraphicSixthPane() {
+
+		// Initialize the Chart
+		this.upperChart6 = new Canvas(this.upperGraphicPane6.getWidth() - 4,
+				this.upperheightSechs);
+
+		// Erstellen des HintergrundgrafikKontextes
+		this.uppergc6 = this.upperChart6.getGraphicsContext2D();
+		this.uppergc6.clearRect(0, 0, this.upperChart6.getWidth(),
+				this.upperChart6.getHeight());
+
+		// Erstellen des Hintergrundes
+		this.uppergc6.setFill(Color.ALICEBLUE);
+		this.uppergc6.fillRect(0, 0, this.upperChart6.getWidth(),
+				this.upperChart6.getHeight());
+
+		this.uppergc6.setLineWidth(3);
+		this.uppergc6.setStroke(Color.BLACK);
+		this.uppergc6.strokeLine(1, 0, 1, this.upperChart6.getHeight());
+
+		double abstandNetz = (this.upperChart6.getWidth() - 30)
+				/ (this.endzeitVar - this.startzeitVar);
+		this.uppergc6.setLineWidth(1);
+		this.uppergc6.setFont(Font.getDefault());
+		this.uppergc6.setFill(Color.BLACK);
+		this.uppergc6.setStroke(Color.BLACK);
+		// Variable zum Darstellen verschiedener Zeitpunkte
+		for (int i = 0; i <= (endzeitVar - startzeitVar); i++) {
+
+			double pixel = ((i) * abstandNetz);
+			this.uppergc6.strokeLine(pixel, 0, pixel,
+					this.upperChart6.getHeight());
+		}
+
+		this.upperGraphicPane6.setContent(this.upperChart6);
+	}
+
+	/**
+	 * Creates the seventh Lower Background Graphic.
+	 */
+	@FXML
+	private void createLowerBackgroundGraphicSeventhPane() {
+
+		// Initialize the Chart
+		this.upperChart7 = new Canvas(this.upperGraphicPane7.getWidth() - 4,
+				this.upperheightSieben);
+
+		// Erstellen des HintergrundgrafikKontextes
+		this.uppergc7 = this.upperChart7.getGraphicsContext2D();
+		this.uppergc7.clearRect(0, 0, this.upperChart7.getWidth(),
+				this.upperChart7.getHeight());
+
+		// Erstellen des Hintergrundes
+		this.uppergc7.setFill(Color.ALICEBLUE);
+		this.uppergc7.fillRect(0, 0, this.upperChart7.getWidth(),
+				this.upperChart7.getHeight());
+
+		this.uppergc7.setLineWidth(3);
+		this.uppergc7.setStroke(Color.BLACK);
+		this.uppergc7.strokeLine(1, 0, 1, this.upperChart7.getHeight());
+
+		double abstandNetz = (this.upperChart7.getWidth() - 30)
+				/ (this.endzeitVar - this.startzeitVar);
+		this.uppergc7.setLineWidth(1);
+		this.uppergc7.setFont(Font.getDefault());
+		this.uppergc7.setFill(Color.BLACK);
+		this.uppergc7.setStroke(Color.BLACK);
+		// Variable zum Darstellen verschiedener Zeitpunkte
+		for (int i = 0; i <= (endzeitVar - startzeitVar); i++) {
+
+			double pixel = ((i) * abstandNetz);
+			this.uppergc7.strokeLine(pixel, 0, pixel,
+					this.upperChart7.getHeight());
+		}
+
+		this.upperGraphicPane7.setContent(this.upperChart7);
+	}
+
+	/**
 	 * Creates The Upper X - Scale for Tabs.
 	 */
 	private void createUpperXScalePane(AnchorPane xScale, ScrollPane xScrollPane) {
@@ -1711,7 +2813,7 @@ public class MainLayoutController {
 	}
 
 	/**
-	 * Creates The Lower Y - Scale.
+	 * Creates The Upper Y - Scale.
 	 */
 	private void createUpperYScale(ScrollPane scrollPane, Canvas canvas,
 			GraphicsContext gc, double height, Umlaufplan umlaufplan) {
@@ -1741,50 +2843,7 @@ public class MainLayoutController {
 	}
 
 	/**
-	 * Creates The Lower Graphic.
-	 */
-	@FXML
-	private void createLowerGraphic() {
-
-		// Initialize the Chart
-		this.lowerChart1 = new Canvas(this.lowerGraphicPane1.getWidth() - 4,
-				this.lowerheight);
-
-		// Erstellen des HintergrundgrafikKontextes
-		this.lowergc1 = this.lowerChart1.getGraphicsContext2D();
-		this.lowergc1.clearRect(0, 0, this.lowerChart1.getWidth(),
-				this.lowerChart1.getHeight());
-
-		// Erstellen des Hintergrundes
-		this.lowergc1.setFill(Color.BISQUE);
-		this.lowergc1.fillRect(0, 0, this.lowerChart1.getWidth(),
-				this.lowerChart1.getHeight());
-
-		this.lowergc1.setLineWidth(3);
-		this.lowergc1.setStroke(Color.BLACK);
-		this.lowergc1.strokeLine(1, 0, 1, this.lowerChart1.getHeight());
-		this.lowergc1.strokeLine(0, this.lowerChart1.getHeight() - 1,
-				this.lowerChart1.getWidth(), this.lowerChart1.getHeight() - 1);
-
-		double abstandNetz = (this.lowerChart1.getWidth() - 30)
-				/ (this.endzeitVar - this.startzeitVar);
-		this.lowergc1.setLineWidth(1);
-		this.lowergc1.setFont(Font.getDefault());
-		this.lowergc1.setFill(Color.BLACK);
-		this.lowergc1.setStroke(Color.BLACK);
-		// Variable zum Darstellen verschiedener Zeitpunkte
-		for (int i = 0; i <= (this.endzeitVar - this.startzeitVar); i++) {
-
-			double pixel = ((i) * abstandNetz);
-			this.lowergc1.strokeLine(pixel, 0, pixel,
-					this.lowerChart1.getHeight() - 1);
-		}
-
-		this.lowerGraphicPane1.setContent(this.lowerChart1);
-	}
-
-	/**
-	 * Changes the table and Detailpane to the Selection
+	 * Changes the table and Detailpane to the Selection (Umlaufplan)
 	 */
 	private void changeUplanDetails() {
 
@@ -1798,13 +2857,20 @@ public class MainLayoutController {
 			}
 			changeFocusUplan(this.umlaufplanEins);
 			this.UPlanValue1
-			.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
 			this.UPlanValue2.setStyle("-fx-background-color:white;");
 			this.UPlanValue3.setStyle("-fx-background-color:white;");
 			this.UPlanValue4.setStyle("-fx-background-color:white;");
 			this.UPlanValue5.setStyle("-fx-background-color:white;");
 			this.UPlanValue6.setStyle("-fx-background-color:white;");
 			this.UPlanValue7.setStyle("-fx-background-color:white;");
+			this.DPlanValue1.setStyle("-fx-background-color:white;");
+			this.DPlanValue2.setStyle("-fx-background-color:white;");
+			this.DPlanValue3.setStyle("-fx-background-color:white;");
+			this.DPlanValue4.setStyle("-fx-background-color:white;");
+			this.DPlanValue5.setStyle("-fx-background-color:white;");
+			this.DPlanValue6.setStyle("-fx-background-color:white;");
+			this.DPlanValue7.setStyle("-fx-background-color:white;");
 			break;
 		case 2:
 			// Erstellung/ Befüllen des Details Table-- Clearen des Alten
@@ -1821,6 +2887,13 @@ public class MainLayoutController {
 			this.UPlanValue5.setStyle("-fx-background-color:white;");
 			this.UPlanValue6.setStyle("-fx-background-color:white;");
 			this.UPlanValue7.setStyle("-fx-background-color:white;");
+			this.DPlanValue1.setStyle("-fx-background-color:white;");
+			this.DPlanValue2.setStyle("-fx-background-color:white;");
+			this.DPlanValue3.setStyle("-fx-background-color:white;");
+			this.DPlanValue4.setStyle("-fx-background-color:white;");
+			this.DPlanValue5.setStyle("-fx-background-color:white;");
+			this.DPlanValue6.setStyle("-fx-background-color:white;");
+			this.DPlanValue7.setStyle("-fx-background-color:white;");
 			break;
 		case 3:
 			// Erstellung/ Befüllen des Details Table-- Clearen des Alten
@@ -1837,6 +2910,13 @@ public class MainLayoutController {
 			this.UPlanValue5.setStyle("-fx-background-color:white;");
 			this.UPlanValue6.setStyle("-fx-background-color:white;");
 			this.UPlanValue7.setStyle("-fx-background-color:white;");
+			this.DPlanValue1.setStyle("-fx-background-color:white;");
+			this.DPlanValue2.setStyle("-fx-background-color:white;");
+			this.DPlanValue3.setStyle("-fx-background-color:white;");
+			this.DPlanValue4.setStyle("-fx-background-color:white;");
+			this.DPlanValue5.setStyle("-fx-background-color:white;");
+			this.DPlanValue6.setStyle("-fx-background-color:white;");
+			this.DPlanValue7.setStyle("-fx-background-color:white;");
 			break;
 		case 4:
 			// Erstellung/ Befüllen des Details Table-- Clearen des Alten
@@ -1853,6 +2933,13 @@ public class MainLayoutController {
 			this.UPlanValue5.setStyle("-fx-background-color:white;");
 			this.UPlanValue6.setStyle("-fx-background-color:white;");
 			this.UPlanValue7.setStyle("-fx-background-color:white;");
+			this.DPlanValue1.setStyle("-fx-background-color:white;");
+			this.DPlanValue2.setStyle("-fx-background-color:white;");
+			this.DPlanValue3.setStyle("-fx-background-color:white;");
+			this.DPlanValue4.setStyle("-fx-background-color:white;");
+			this.DPlanValue5.setStyle("-fx-background-color:white;");
+			this.DPlanValue6.setStyle("-fx-background-color:white;");
+			this.DPlanValue7.setStyle("-fx-background-color:white;");
 			break;
 		case 5:
 			// Erstellung/ Befüllen des Details Table-- Clearen des Alten
@@ -1869,6 +2956,13 @@ public class MainLayoutController {
 					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
 			this.UPlanValue6.setStyle("-fx-background-color:white;");
 			this.UPlanValue7.setStyle("-fx-background-color:white;");
+			this.DPlanValue1.setStyle("-fx-background-color:white;");
+			this.DPlanValue2.setStyle("-fx-background-color:white;");
+			this.DPlanValue3.setStyle("-fx-background-color:white;");
+			this.DPlanValue4.setStyle("-fx-background-color:white;");
+			this.DPlanValue5.setStyle("-fx-background-color:white;");
+			this.DPlanValue6.setStyle("-fx-background-color:white;");
+			this.DPlanValue7.setStyle("-fx-background-color:white;");
 			break;
 		case 6:
 			// Erstellung/ Befüllen des Details Table-- Clearen des Alten
@@ -1885,6 +2979,13 @@ public class MainLayoutController {
 			this.UPlanValue6
 					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
 			this.UPlanValue7.setStyle("-fx-background-color:white;");
+			this.DPlanValue1.setStyle("-fx-background-color:white;");
+			this.DPlanValue2.setStyle("-fx-background-color:white;");
+			this.DPlanValue3.setStyle("-fx-background-color:white;");
+			this.DPlanValue4.setStyle("-fx-background-color:white;");
+			this.DPlanValue5.setStyle("-fx-background-color:white;");
+			this.DPlanValue6.setStyle("-fx-background-color:white;");
+			this.DPlanValue7.setStyle("-fx-background-color:white;");
 			break;
 
 		case 7:
@@ -1903,6 +3004,13 @@ public class MainLayoutController {
 			this.UPlanValue6.setStyle("-fx-background-color:white;");
 			this.UPlanValue7
 					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+			this.DPlanValue1.setStyle("-fx-background-color:white;");
+			this.DPlanValue2.setStyle("-fx-background-color:white;");
+			this.DPlanValue3.setStyle("-fx-background-color:white;");
+			this.DPlanValue4.setStyle("-fx-background-color:white;");
+			this.DPlanValue5.setStyle("-fx-background-color:white;");
+			this.DPlanValue6.setStyle("-fx-background-color:white;");
+			this.DPlanValue7.setStyle("-fx-background-color:white;");
 			break;
 		case 666:
 
@@ -1914,7 +3022,187 @@ public class MainLayoutController {
 
 	}
 
-	// Calls both refresh methods
+	/**
+	 * Changes the table and Detailpane to the Selection (Dienstplan)
+	 */
+	private void changeDplanDetails() {
+
+		// Belegung der DetailsPanes
+		switch (this.dienstChoice) {
+		case 1:
+			// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+			if (dDetailsTableErstellt == true) {
+				this.detailsDienstTable.getColumns().clear();
+				this.dDetailsTableErstellt = false;
+			}
+			changeFocusDplan(this.dienstplanEins);
+			this.DPlanValue1
+					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+			this.DPlanValue2.setStyle("-fx-background-color:white;");
+			this.DPlanValue3.setStyle("-fx-background-color:white;");
+			this.DPlanValue4.setStyle("-fx-background-color:white;");
+			this.DPlanValue5.setStyle("-fx-background-color:white;");
+			this.DPlanValue6.setStyle("-fx-background-color:white;");
+			this.DPlanValue7.setStyle("-fx-background-color:white;");
+			this.UPlanValue1.setStyle("-fx-background-color:white;");
+			this.UPlanValue2.setStyle("-fx-background-color:white;");
+			this.UPlanValue3.setStyle("-fx-background-color:white;");
+			this.UPlanValue4.setStyle("-fx-background-color:white;");
+			this.UPlanValue5.setStyle("-fx-background-color:white;");
+			this.UPlanValue6.setStyle("-fx-background-color:white;");
+			this.UPlanValue7.setStyle("-fx-background-color:white;");
+			break;
+		case 2:
+			// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+			if (dDetailsTableErstellt == true) {
+				this.detailsDienstTable.getColumns().clear();
+				this.dDetailsTableErstellt = false;
+			}
+			changeFocusDplan(this.dienstplanZwei);
+			this.DPlanValue1.setStyle("-fx-background-color:white;");
+			this.DPlanValue2
+					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+			this.DPlanValue3.setStyle("-fx-background-color:white;");
+			this.DPlanValue4.setStyle("-fx-background-color:white;");
+			this.DPlanValue5.setStyle("-fx-background-color:white;");
+			this.DPlanValue6.setStyle("-fx-background-color:white;");
+			this.DPlanValue7.setStyle("-fx-background-color:white;");
+			this.UPlanValue1.setStyle("-fx-background-color:white;");
+			this.UPlanValue2.setStyle("-fx-background-color:white;");
+			this.UPlanValue3.setStyle("-fx-background-color:white;");
+			this.UPlanValue4.setStyle("-fx-background-color:white;");
+			this.UPlanValue5.setStyle("-fx-background-color:white;");
+			this.UPlanValue6.setStyle("-fx-background-color:white;");
+			this.UPlanValue7.setStyle("-fx-background-color:white;");
+			break;
+		case 3:
+			// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+			if (dDetailsTableErstellt == true) {
+				this.detailsDienstTable.getColumns().clear();
+				this.dDetailsTableErstellt = false;
+			}
+			changeFocusDplan(this.dienstplanDrei);
+			this.DPlanValue1.setStyle("-fx-background-color:white;");
+			this.DPlanValue2.setStyle("-fx-background-color:white;");
+			this.DPlanValue3
+					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+			this.DPlanValue4.setStyle("-fx-background-color:white;");
+			this.DPlanValue5.setStyle("-fx-background-color:white;");
+			this.DPlanValue6.setStyle("-fx-background-color:white;");
+			this.DPlanValue7.setStyle("-fx-background-color:white;");
+			this.UPlanValue1.setStyle("-fx-background-color:white;");
+			this.UPlanValue2.setStyle("-fx-background-color:white;");
+			this.UPlanValue3.setStyle("-fx-background-color:white;");
+			this.UPlanValue4.setStyle("-fx-background-color:white;");
+			this.UPlanValue5.setStyle("-fx-background-color:white;");
+			this.UPlanValue6.setStyle("-fx-background-color:white;");
+			this.UPlanValue7.setStyle("-fx-background-color:white;");
+			break;
+		case 4:
+			// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+			if (dDetailsTableErstellt == true) {
+				this.detailsDienstTable.getColumns().clear();
+				this.dDetailsTableErstellt = false;
+			}
+			changeFocusDplan(this.dienstplanVier);
+			this.DPlanValue1.setStyle("-fx-background-color:white;");
+			this.DPlanValue2.setStyle("-fx-background-color:white;");
+			this.DPlanValue3.setStyle("-fx-background-color:white;");
+			this.DPlanValue4
+					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+			this.UPlanValue5.setStyle("-fx-background-color:white;");
+			this.UPlanValue6.setStyle("-fx-background-color:white;");
+			this.UPlanValue7.setStyle("-fx-background-color:white;");
+			this.UPlanValue1.setStyle("-fx-background-color:white;");
+			this.UPlanValue2.setStyle("-fx-background-color:white;");
+			this.UPlanValue3.setStyle("-fx-background-color:white;");
+			this.UPlanValue4.setStyle("-fx-background-color:white;");
+			this.UPlanValue5.setStyle("-fx-background-color:white;");
+			this.UPlanValue6.setStyle("-fx-background-color:white;");
+			this.UPlanValue7.setStyle("-fx-background-color:white;");
+			break;
+		case 5:
+			// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+			if (dDetailsTableErstellt == true) {
+				this.detailsDienstTable.getColumns().clear();
+				this.dDetailsTableErstellt = false;
+			}
+			changeFocusDplan(this.dienstplanFuenf);
+			this.DPlanValue1.setStyle("-fx-background-color:white;");
+			this.DPlanValue2.setStyle("-fx-background-color:white;");
+			this.DPlanValue3.setStyle("-fx-background-color:white;");
+			this.DPlanValue4.setStyle("-fx-background-color:white;");
+			this.DPlanValue5
+					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+			this.DPlanValue6.setStyle("-fx-background-color:white;");
+			this.DPlanValue7.setStyle("-fx-background-color:white;");
+			this.UPlanValue1.setStyle("-fx-background-color:white;");
+			this.UPlanValue2.setStyle("-fx-background-color:white;");
+			this.UPlanValue3.setStyle("-fx-background-color:white;");
+			this.UPlanValue4.setStyle("-fx-background-color:white;");
+			this.UPlanValue5.setStyle("-fx-background-color:white;");
+			this.UPlanValue6.setStyle("-fx-background-color:white;");
+			this.UPlanValue7.setStyle("-fx-background-color:white;");
+			break;
+		case 6:
+			// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+			if (dDetailsTableErstellt == true) {
+				this.detailsDienstTable.getColumns().clear();
+				this.dDetailsTableErstellt = false;
+			}
+			changeFocusDplan(this.dienstplanSechs);
+			this.DPlanValue1.setStyle("-fx-background-color:white;");
+			this.DPlanValue2.setStyle("-fx-background-color:white;");
+			this.DPlanValue3.setStyle("-fx-background-color:white;");
+			this.DPlanValue4.setStyle("-fx-background-color:white;");
+			this.DPlanValue5.setStyle("-fx-background-color:white;");
+			this.DPlanValue6
+					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+			this.DPlanValue7.setStyle("-fx-background-color:white;");
+			this.UPlanValue1.setStyle("-fx-background-color:white;");
+			this.UPlanValue2.setStyle("-fx-background-color:white;");
+			this.UPlanValue3.setStyle("-fx-background-color:white;");
+			this.UPlanValue4.setStyle("-fx-background-color:white;");
+			this.UPlanValue5.setStyle("-fx-background-color:white;");
+			this.UPlanValue6.setStyle("-fx-background-color:white;");
+			this.UPlanValue7.setStyle("-fx-background-color:white;");
+			break;
+
+		case 7:
+			// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+			if (dDetailsTableErstellt == true) {
+				this.detailsDienstTable.getColumns().clear();
+				this.dDetailsTableErstellt = false;
+			}
+			changeFocusDplan(this.dienstplanSieben);
+
+			this.DPlanValue1.setStyle("-fx-background-color:white;");
+			this.DPlanValue2.setStyle("-fx-background-color:white;");
+			this.DPlanValue3.setStyle("-fx-background-color:white;");
+			this.DPlanValue4.setStyle("-fx-background-color:white;");
+			this.DPlanValue5.setStyle("-fx-background-color:white;");
+			this.DPlanValue6.setStyle("-fx-background-color:white;");
+			this.DPlanValue7
+					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+			this.UPlanValue1.setStyle("-fx-background-color:white;");
+			this.UPlanValue2.setStyle("-fx-background-color:white;");
+			this.UPlanValue3.setStyle("-fx-background-color:white;");
+			this.UPlanValue4.setStyle("-fx-background-color:white;");
+			this.UPlanValue5.setStyle("-fx-background-color:white;");
+			this.UPlanValue6.setStyle("-fx-background-color:white;");
+			this.UPlanValue7.setStyle("-fx-background-color:white;");
+			break;
+		case 666:
+
+			break;
+
+		default:
+			break;
+		}
+
+	}
+
+	// Calls both refresh methods for U-Plan
 	private void changeFocusUplan(Umlaufplan umlaufplan) {
 
 		createUDetailsTable(umlaufplan);
@@ -1922,18 +3210,26 @@ public class MainLayoutController {
 
 	}
 
+	// Calls both refresh methods for D-Plan
+	private void changeFocusDplan(Dienstplan dienstplan) {
+
+		createDDetailsTable(dienstplan);
+		fillDetailPaneDienst(dienstplan);
+
+	}
+
 	/**
 	 * Fills the DetailPane für die Umlaufpläne
 	 */
 	private void fillDetailPaneUmlauf(Umlaufplan umlaufplan) {
-		//Anzahl Blockelemente ermitteln und ausgeben
+		// Anzahl Blockelemente ermitteln und ausgeben
 		this.anzahlFahrten.setVisible(true);
 		this.anzahlFahrten.setText(String.valueOf(umlaufplan.getFahrtZuUmlauf()
 				.size()));
-		//Anzahl Service- und Leerfahrten ermitteln und ausgeben
+		// Anzahl Service- und Leerfahrten ermitteln und ausgeben
 		int sj = 0;
 		int lf = 0;
-		for (int i = 0; i < umlaufplan.getFahrtZuUmlauf().size(); i++){
+		for (int i = 0; i < umlaufplan.getFahrtZuUmlauf().size(); i++) {
 			if (umlaufplan.getFahrtZuUmlauf().get(i).getElementType() == 1) {
 				sj++;
 			}
@@ -1945,7 +3241,7 @@ public class MainLayoutController {
 		this.anzahlServiceFahrten.setText(String.valueOf(sj));
 		this.anzahlLeerFahrten.setVisible(true);
 		this.anzahlLeerFahrten.setText(String.valueOf(lf));
-		//Zugehörigkeit zu Fahrplan
+		// Zugehörigkeit zu Fahrplan
 		int fpID;
 		fpID = umlaufplan.getFahrplanID();
 		this.gehoertzuFahrplan.setVisible(true);
@@ -1953,7 +3249,7 @@ public class MainLayoutController {
 	}
 
 	/**
-	 * Creates DetailsTable.
+	 * Creates DetailsTable for U-Plan.
 	 */
 	@SuppressWarnings("unchecked")
 	private void createUDetailsTable(Umlaufplan umlaufplan) {
@@ -2043,6 +3339,124 @@ public class MainLayoutController {
 	}
 
 	/**
+	 * Fills the DetailPane für die Dienstpläne
+	 */
+	private void fillDetailPaneDienst(Dienstplan dienstplan) {
+		// Anzahl Blockelemente ermitteln und ausgeben
+		this.anzahlFahrten.setVisible(true);
+		this.anzahlFahrten.setText(String.valueOf(dienstplan.getDutyelement()
+				.size()));
+		// Anzahl Service- und Leerfahrten ermitteln und ausgeben
+		int sj = 0;
+		int lf = 0;
+		for (int i = 0; i < dienstplan.getDutyelement().size(); i++) {
+			if (dienstplan.getDutyelement().get(i).getElementType() == 1) {
+				sj++;
+			}
+			if (dienstplan.getDutyelement().get(i).getElementType() == 2) {
+				lf++;
+			}
+		}
+		this.anzahlServiceFahrten.setVisible(true);
+		this.anzahlServiceFahrten.setText(String.valueOf(sj));
+		this.anzahlLeerFahrten.setVisible(true);
+		this.anzahlLeerFahrten.setText(String.valueOf(lf));
+		// Zugehörigkeit zu Fahrplan
+
+		this.gehoertzuFahrplan.setVisible(true);
+
+	}
+
+	/**
+	 * Creates DetailsTable for U-Plan.
+	 */
+	@SuppressWarnings("unchecked")
+	private void createDDetailsTable(Dienstplan dienstplan) {
+
+		this.detailsDienstTable.setEditable(true);
+
+		TableColumn<Dutyelement, Integer> dutyEleCol = new TableColumn<Dutyelement, Integer>(
+				"Duty-Ele.");
+		TableColumn<Dutyelement, String> startzeitCol = new TableColumn<Dutyelement, String>(
+				"Startzeit");
+		TableColumn<Dutyelement, String> endzeitCol = new TableColumn<Dutyelement, String>(
+				"Endzeit");
+		TableColumn<Dutyelement, Integer> eleTypeCol = new TableColumn<Dutyelement, Integer>(
+				"Ele.-Type");
+		TableColumn<Dutyelement, Integer> dutyCol = new TableColumn<Dutyelement, Integer>(
+				"Dienst");
+		TableColumn<Dutyelement, String> dauerCol = new TableColumn<Dutyelement, String>(
+				"Dauer");
+
+		dutyEleCol
+				.setCellValueFactory(new PropertyValueFactory<Dutyelement, Integer>(
+						"id"));
+		startzeitCol
+				.setCellValueFactory(new PropertyValueFactory<Dutyelement, String>(
+						"depTime"));
+		endzeitCol
+				.setCellValueFactory(new PropertyValueFactory<Dutyelement, String>(
+						"arrTime"));
+		eleTypeCol
+				.setCellValueFactory(new PropertyValueFactory<Dutyelement, Integer>(
+						"elementType"));
+		dutyCol.setCellValueFactory(new PropertyValueFactory<Dutyelement, Integer>(
+				"dutyID"));
+		dauerCol.setCellValueFactory(new PropertyValueFactory<Dutyelement, String>(
+				"driveTime"));
+
+		dutyEleCol.prefWidthProperty().bind(dutyEleCol.widthProperty());
+		startzeitCol.prefWidthProperty().bind(startzeitCol.widthProperty());
+		endzeitCol.prefWidthProperty().bind(endzeitCol.widthProperty());
+		eleTypeCol.prefWidthProperty().bind(eleTypeCol.widthProperty());
+		dutyCol.prefWidthProperty().bind(dutyCol.widthProperty());
+		dauerCol.prefWidthProperty().bind(dauerCol.widthProperty());
+
+		// Hereinladen der Daten
+
+		ObservableList<Dutyelement> data = FXCollections.observableArrayList();
+
+		for (int i = 0; i < dienstplan.getDutyelement().size(); i++) {
+
+			// Berrechnen der Dauer zwischen der Abfahrt und der Ankunft
+
+			String depTime = dienstplan.getDutyelement().get(i).getDepTime();
+			String arrtime = dienstplan.getDutyelement().get(i).getArrTime();
+
+			SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+			Date date1 = null;
+			Date date2 = null;
+			try {
+				date1 = format.parse(depTime);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				date2 = format.parse(arrtime);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			long differenz = date2.getTime() - date1.getTime();
+			differenz = (differenz / 1000) / 60;
+			dienstplan.getDutyelement().get(i).setDriveTime(differenz + " min");
+
+			// Hinzufügen der Daten
+
+			data.add(dienstplan.getDutyelement().get(i));
+		}
+		;
+
+		this.detailsDienstTable.setItems(data);
+		this.detailsDienstTable.getColumns().addAll(dutyEleCol, startzeitCol,
+				endzeitCol, eleTypeCol, dutyCol, dauerCol);
+		this.tablePane.setContent(detailsDienstTable);
+
+		dDetailsTableErstellt = true;
+	}
+
+	/**
 	 * Creates Elements in the Graphic.
 	 */
 	private void createUmlaufElementGraphic(Umlaufplan umlaufplan,
@@ -2071,7 +3485,6 @@ public class MainLayoutController {
 					zeit = ss.intParse(umlaufplan.getFahrtZuUmlauf().get(i)
 							.getArrTime());
 					int endHour = zeit[0];
-					int endMin = zeit[1];
 
 					// Belegung der Pixelwerte
 					if (this.startzeitVar <= startHour
@@ -2168,13 +3581,12 @@ public class MainLayoutController {
 	}
 
 	/**
-	 * Creates The Lower X - Scale.
+	 * Creates The Lower X - Scale for Tabs.
 	 */
-	@FXML
-	private void createLowerXScale() {
+	private void createLowerXScalePane(AnchorPane xScale, ScrollPane xScrollPane) {
 
 		// Hier wird das Skala Canvas erzeugt
-		this.lowerXChart1 = new Canvas(this.lowerGraphicPane1.getWidth(),
+		this.lowerXChart1 = new Canvas(xScrollPane.getWidth(),
 				this.xLow1.getHeight());
 		// Hier der Graphic Context dazu erzeugt
 		this.lowerXgc1 = this.lowerXChart1.getGraphicsContext2D();
@@ -2186,7 +3598,6 @@ public class MainLayoutController {
 		this.lowerXgc1.setLineWidth(1);
 		this.lowerXgc1.setFont(Font.getDefault());
 		this.lowerXgc1.setFill(Color.BLACK);
-		this.lowerXgc1.setStroke(Color.BLACK);
 
 		// Variable zum Darstellen verschiedener Zeitpunkte
 		int chartCounter = startzeitVar;
@@ -2199,7 +3610,6 @@ public class MainLayoutController {
 				chartCounter = chartCounter + 1;
 			}
 			if (i != 0) {
-
 				double pixel = ((i) * abstandNetz);
 				this.lowerXgc1.fillText(String.valueOf(chartCounter),
 						pixel - 4, 15);
@@ -2210,16 +3620,36 @@ public class MainLayoutController {
 				}
 			}
 		}
-
-		this.xLow1.getChildren().add(lowerXChart1);
-
+		xScale.getChildren().add(lowerXChart1);
 	}
 
 	/**
 	 * Creates The Lower Y - Scale.
 	 */
-	@FXML
-	private void createLowerYScale() {
+	private void createLowerYScale(ScrollPane scrollPane, Canvas canvas,
+			GraphicsContext gc, double height, Dienstplan dienstplan) {
+
+		// Initialize the Chart
+		canvas = new Canvas(30, height);
+
+		// Erstellen des HintergrundgrafikKontextes
+		gc = canvas.getGraphicsContext2D();
+		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
+		// Eigenschaften der Beschriftung
+		gc.setLineWidth(1);
+		gc.setFont(Font.getDefault());
+		gc.setFill(Color.BLACK);
+		gc.setStroke(Color.BLACK);
+		// Auslesen der Werte
+		for (int j = 0; j < dienstplan.getDuty().size(); j++) {
+
+			gc.fillText("D " + dienstplan.getDuty().get(j).getId(), 4,
+					22 + (j * 40));
+
+		}
+
+		scrollPane.setContent(canvas);
 
 	}
 
@@ -2910,6 +4340,31 @@ public class MainLayoutController {
 			String fehlerC = "Fehler";
 			mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
 		}
+	}
+
+	// Methoden zur Befüllung der Dienstplanliste
+
+	public void fillDienstplanliste() {
+
+		// Dienstpläne -- Choicebox wird gefüllt
+
+		DBMatching dbm = new DBMatching();
+
+		this.dienstplanliste.clear();
+
+		this.dienstplanliste = dbm.createDienstplanObject();
+		for (int i = 0; i < this.dienstplanliste.size(); i++) {
+			this.dienstplanliste.get(i).setName(" Dienstplan " + (i + 1));
+		}
+
+		if (this.firstLowergrafikErstellt == false) {
+			this.DPlan.setItems(FXCollections
+					.observableArrayList(dienstplanliste.get(0).getName()));
+			for (int i = 1; i < dienstplanliste.size(); i++) {
+				this.DPlan.getItems().add(dienstplanliste.get(i).getName());
+			}
+		}
+
 	}
 
 	// Methoden zur Befüllung der Umlaufplanliste
