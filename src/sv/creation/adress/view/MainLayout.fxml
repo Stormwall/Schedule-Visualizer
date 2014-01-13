@@ -17,20 +17,20 @@
       <items>
         <AnchorPane maxHeight="47.0" maxWidth="-1.0" minHeight="47.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
           <children>
-            <HBox id="HBox" fx:id="filterPanel" alignment="CENTER" minWidth="-1.0" opacity="0.0" prefHeight="36.0" prefWidth="549.0" spacing="10.0" styleClass="background-paper" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="6.0" AnchorPane.topAnchor="6.0">
+            <HBox id="HBox" fx:id="filterPanel" alignment="CENTER" minWidth="-1.0" opacity="0.0" prefHeight="34.0" prefWidth="979.0" spacing="10.0" styleClass="background-paper" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="9.0" AnchorPane.topAnchor="6.0">
               <children>
                 <Label text="Startzeit">
                   <font>
                     <Font name="System Bold" size="12.0" fx:id="x4" />
                   </font>
                 </Label>
-                <Slider fx:id="startzeitSlider" majorTickUnit="1.0" max="24.0" minorTickCount="1" prefHeight="24.0" showTickLabels="true" showTickMarks="true" value="0.0" />
+                <Slider fx:id="startzeitSlider" majorTickUnit="1.0" max="24.0" minorTickCount="0" opacity="1.0" prefHeight="24.0" prefWidth="330.0" showTickLabels="true" showTickMarks="true" value="0.0" />
                 <Label font="$x4" text="Endzeit" wrapText="false">
                   <HBox.margin>
                     <Insets left="20.0" fx:id="x1" />
                   </HBox.margin>
                 </Label>
-                <Slider fx:id="endzeitSlider" majorTickUnit="1.0" max="24.0" minorTickCount="1" prefHeight="24.0" showTickLabels="true" showTickMarks="true" value="24.0">
+                <Slider fx:id="endzeitSlider" majorTickUnit="1.0" max="24.0" minorTickCount="0" prefHeight="24.0" prefWidth="330.0" showTickLabels="true" showTickMarks="true" value="24.0">
                   <HBox.margin>
                     <Insets right="20.0" />
                   </HBox.margin>
@@ -38,7 +38,6 @@
                 <Button id="apply" fx:id="applyFilter" mnemonicParsing="false" onAction="#refreshBothGraphics" styleClass="dark-blue" text="Anwenden" />
               </children>
             </HBox>
-            <Button fx:id="showFullscreen" mnemonicParsing="false" onAction="#openFullscreen" opacity="0.0" styleClass="dark-blue" text="Vollbild anzeigen" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="13.0" />
           </children>
         </AnchorPane>
         <AnchorPane fx:id="MainPane" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">

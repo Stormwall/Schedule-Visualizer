@@ -48,6 +48,10 @@ public class MainApplication extends Application {
 			// Give the controller access to the main app
 			RootLayoutController controller = loader.getController();
 			controller.setMainApp(this);
+			
+//			Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+//			primaryStage.setWidth(screenBounds.getWidth());
+//			primaryStage.setHeight(screenBounds.getHeight());
 
 			primaryStage.show();
 		} catch (IOException e) {
