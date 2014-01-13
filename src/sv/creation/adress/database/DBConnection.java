@@ -343,7 +343,7 @@ public class DBConnection {
 			//Tables for delay scenarios (primary delays)
 			//*******************************************			
 
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS PrimeDelaySzenario (ID INTEGER PRIMARY KEY AUTOINCREMENT, DutyID INTEGER, VehicleID INTEGER, ServiceJourneyID VARCHAR(30) NOT NULL, DepTime VARCHAR(30) NOT NULL, Delay INTEGER NOT NULL); ");
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS PrimeDelaySzenario (ID INTEGER PRIMARY KEY AUTOINCREMENT, DutyID VARCHAR(30), VehicleID VARCHAR(30), ServiceJourneyID VARCHAR(30) NOT NULL, DepTime VARCHAR(30) NOT NULL, Delay INTEGER NOT NULL, FahrplanID INTEGER); ");
 
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Walkruntime (ID INTEGER PRIMARY KEY AUTOINCREMENT, FromStopID INTEGER, ToStopID INTEGER, FromTime VARCHAR(30) NOT NULL, ToTime VARCHAR(30) NOT NULL, Runtime INTEGER NOT NULL); ");
 
@@ -388,7 +388,11 @@ public class DBConnection {
 		
 		  try{ Statement stmnt=connection.createStatement(); 
 		  //insert name of tour plan
-		  stmnt.executeUpdate("INSERT INTO Umlaufplan (Bezeichnung) VALUES ('"+ss.getFilename()+"');");
+		  String fileNameVergleich=ss.getFilename();
+		  String[] resultString=fileNameVergleich.split("_");
+		  String finalString=resultString[0]+"_"+resultString[1];	  
+		  stmnt.executeUpdate("INSERT INTO Umlaufplan (Bezeichnung, FahrplanID) VALUES ('"+ss.getFilename()+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('"+finalString+"%')));");
+		 
 		  
 		  //iterators for getting values from stringsplitter object
 		  //block (tour)
@@ -532,8 +536,10 @@ public class DBConnection {
 		
 		  try{ Statement stmnt=connection.createStatement(); //Fill values in
 
-		  stmnt.executeUpdate("INSERT INTO Dienstplan (Bezeichnung, FahrplanID) VALUES ('"+ss.getFilename()+"',(SELECT f.ID FROM Fahrplan AS f, ServiceJourney, Dutyelement WHERE f.ID=ServiceJourney.FahrplanID AND ServiceJourney.ServiceJourneyID=Dutyelement.ServiceJourneyID));");
-		  
+		  String fileNameVergleich=ss.getFilename();
+		  String[] resultString=fileNameVergleich.split("_");
+		  String finalString=resultString[0]+"_"+resultString[1];	  
+		  stmnt.executeUpdate("INSERT INTO Dienstplan (Bezeichnung, FahrplanID) VALUES ('"+ss.getFilename()+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('"+finalString+"%')));");
 		  //iterators for getting values from stringsplitter object
 		  Iterator<String> it = ss.getDutyDutyID().iterator(); 
 		  Iterator<String> it2 =ss.getDutyDutyType().iterator(); 
@@ -777,6 +783,34 @@ public class DBConnection {
 	}catch(SQLException e){
 		  System.out.println("Could not execute SQL-Query!");
 		  e.printStackTrace(); }
+	}
+	
+	public void fillSzenarioIntoTables(){
+		
+		Statement stmnt;
+		try {
+			stmnt = connection.createStatement();
+		
+		
+		//temporary stringsplitter object that contains the the data from text files in array lists
+		StringSplitter ss = StringSplitter.getInstance();
+		//invoke stringsplitter method for reading the data in  txt-files
+		ss.readTxtFromSzenario();
+		
+		  //Szenario
+		  Iterator<String> it1 = ss.getSzenarioDutyID().iterator();
+		  Iterator<String> it2 = ss.getSzenarioVehicleID().iterator(); 
+		  Iterator<String> it3 = ss.getSzenarioServiceJourneyID().iterator(); 
+		  Iterator<String> it4 = ss.getSzenarioDepTime().iterator();
+		  Iterator<Integer> it5 = ss.getSzenarioDelay().iterator();
+		  
+		  while((it1.hasNext()&&it2.hasNext()&&it3.hasNext()&&it4.hasNext()&&it5.hasNext())){
+			  stmnt.executeUpdate("INSERT INTO PrimeDelaySzenario (DutyID, VehicleID, ServiceJourneyID, DepTime, Delay) VALUES('"+it1.next()+"','"+it2.next()+"','"+it3.next()+"','"+it4.next()+"','"+it5.next()+"');");
+		  }} 
+		catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
 	}
 
 	//getter for DB connection
