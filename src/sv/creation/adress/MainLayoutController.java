@@ -304,29 +304,17 @@ public class MainLayoutController {
 	private Canvas upperYChart1;
 	private Canvas lowerXChart1;
 	private Canvas lowerYChart1;
-	private Canvas upperXChart2;
 	private Canvas upperYChart2;
-	private Canvas lowerXChart2;
 	private Canvas lowerYChart2;
-	private Canvas upperXChart3;
 	private Canvas upperYChart3;
-	private Canvas lowerXChart3;
 	private Canvas lowerYChart3;
-	private Canvas upperXChart4;
 	private Canvas upperYChart4;
-	private Canvas lowerXChart4;
 	private Canvas lowerYChart4;
-	private Canvas upperXChart5;
 	private Canvas upperYChart5;
-	private Canvas lowerXChart5;
 	private Canvas lowerYChart5;
-	private Canvas upperXChart6;
 	private Canvas upperYChart6;
-	private Canvas lowerXChart6;
 	private Canvas lowerYChart6;
-	private Canvas upperXChart7;
 	private Canvas upperYChart7;
-	private Canvas lowerXChart7;
 	private Canvas lowerYChart7;
 	private GraphicsContext uppergc1;
 	private GraphicsContext lowergc1;
@@ -346,29 +334,17 @@ public class MainLayoutController {
 	private GraphicsContext upperYgc1;
 	private GraphicsContext lowerXgc1;
 	private GraphicsContext lowerYgc1;
-	private GraphicsContext upperXgc2;
 	private GraphicsContext upperYgc2;
-	private GraphicsContext lowerXgc2;
 	private GraphicsContext lowerYgc2;
-	private GraphicsContext upperXgc3;
 	private GraphicsContext upperYgc3;
-	private GraphicsContext lowerXgc3;
 	private GraphicsContext lowerYgc3;
-	private GraphicsContext upperXgc4;
 	private GraphicsContext upperYgc4;
-	private GraphicsContext lowerXgc4;
 	private GraphicsContext lowerYgc4;
-	private GraphicsContext upperXgc5;
 	private GraphicsContext upperYgc5;
-	private GraphicsContext lowerXgc5;
 	private GraphicsContext lowerYgc5;
-	private GraphicsContext upperXgc6;
 	private GraphicsContext upperYgc6;
-	private GraphicsContext lowerXgc6;
 	private GraphicsContext lowerYgc6;
-	private GraphicsContext upperXgc7;
 	private GraphicsContext upperYgc7;
-	private GraphicsContext lowerXgc7;
 	private GraphicsContext lowerYgc7;
 
 	// Attribute der statistischen Darstellung
@@ -432,7 +408,6 @@ public class MainLayoutController {
 	private boolean umlaufIsCurrent = false;
 	private boolean dienstIsCurrent = false;
 
-	private boolean lowergrafikErstellt = false;
 	private boolean hilfslinienAktiv = false;
 	private boolean addButtonPressed = true;
 
@@ -960,7 +935,8 @@ public class MainLayoutController {
 							Boolean old_val, Boolean new_val) {
 						// Handhabung wenn die Checkbox angew�hlt wird
 						if (new_val == true) {
-							if (firstUppergrafikErstellt == true) {
+							if (firstUppergrafikErstellt == true
+									|| firstLowergrafikErstellt == true) {
 								createHelpLines();
 								hilfslinienAktiv = true;
 							} else {
@@ -1078,8 +1054,8 @@ public class MainLayoutController {
 
 					// Zuordnung der Auswahl
 
-					umlaufIsCurrent = true;
-					dienstIsCurrent = false;
+					this.umlaufIsCurrent = true;
+					this.dienstIsCurrent = false;
 
 					graphicTransition();
 				}
@@ -1704,8 +1680,8 @@ public class MainLayoutController {
 
 					// Zuordnung der Auswahl
 
-					umlaufIsCurrent = false;
-					dienstIsCurrent = true;
+					this.umlaufIsCurrent = false;
+					this.dienstIsCurrent = true;
 
 					graphicTransition();
 				}
@@ -1747,8 +1723,8 @@ public class MainLayoutController {
 				// Hintergrunderstellung
 				createLowerBackgroundGraphicFirstPane();
 				createLowerXScalePane(this.xLow1, this.lowerGraphicPane1);
-				// createUmlaufElementGraphic(this.umlaufplanEins,
-				// this.upperGraphicPane1, this.upperChart1, this.uppergc1);
+				createDienstElementGraphic(this.dienstplanEins,
+						this.lowerGraphicPane1, this.lowerChart1, this.lowergc1);
 
 				// // Fügt den Eventhändler hinzu
 				// this.upperChart1.addEventHandler(MouseEvent.MOUSE_CLICKED,
@@ -1786,6 +1762,9 @@ public class MainLayoutController {
 					this.DPlanValue2.setText(DPlan.getSelectionModel()
 							.getSelectedItem().toString());
 					this.dienstChoice = 2;
+					
+					this.umlaufIsCurrent = false;
+					this.dienstIsCurrent = true;
 				}
 				// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
 
@@ -1828,8 +1807,8 @@ public class MainLayoutController {
 				createLowerBackgroundGraphicSecondPane();
 				createLowerXScalePane(this.xLow2, this.lowerGraphicPane2);
 
-				// createUmlaufElementGraphic(this.umlaufplanZwei,
-				// this.upperGraphicPane2, this.upperChart2, this.uppergc2);
+				createDienstElementGraphic(this.dienstplanZwei,
+						this.lowerGraphicPane2, this.lowerChart2, this.lowergc2);
 				// // Fügt den Eventhändler hinzu
 				// this.upperChart2.addEventHandler(MouseEvent.MOUSE_CLICKED,
 				// new EventHandler<MouseEvent>() {
@@ -1863,6 +1842,9 @@ public class MainLayoutController {
 					this.DPlanValue3.setText(DPlan.getSelectionModel()
 							.getSelectedItem().toString());
 					this.dienstChoice = 3;
+					
+					this.umlaufIsCurrent = false;
+					this.dienstIsCurrent = true;
 				}
 				// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
 
@@ -1904,8 +1886,8 @@ public class MainLayoutController {
 				createLowerBackgroundGraphicThirdPane();
 				createLowerXScalePane(this.xLow3, this.lowerGraphicPane3);
 
-				// createUmlaufElementGraphic(this.umlaufplanDrei,
-				// this.upperGraphicPane3, this.upperChart3, this.uppergc3);
+				createDienstElementGraphic(this.dienstplanDrei,
+						this.lowerGraphicPane3, this.lowerChart3, this.lowergc3);
 				// // Fügt den Eventhändler hinzu
 				// this.upperChart3.addEventHandler(MouseEvent.MOUSE_CLICKED,
 				// new EventHandler<MouseEvent>() {
@@ -1939,6 +1921,9 @@ public class MainLayoutController {
 					this.DPlanValue4.setText(DPlan.getSelectionModel()
 							.getSelectedItem().toString());
 					this.dienstChoice = 4;
+					
+					this.umlaufIsCurrent = false;
+					this.dienstIsCurrent = true;
 				}
 				// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
 
@@ -1980,8 +1965,8 @@ public class MainLayoutController {
 				createLowerBackgroundGraphicFourthPane();
 				createLowerXScalePane(this.xLow4, this.lowerGraphicPane4);
 
-				// createUmlaufElementGraphic(this.umlaufplanVier,
-				// this.upperGraphicPane4, this.upperChart4, this.uppergc4);
+				createDienstElementGraphic(this.dienstplanVier,
+						this.lowerGraphicPane4, this.lowerChart4, this.lowergc4);
 				// // Fügt den Eventhändler hinzu
 				// this.upperChart4.addEventHandler(MouseEvent.MOUSE_CLICKED,
 				// new EventHandler<MouseEvent>() {
@@ -1996,242 +1981,251 @@ public class MainLayoutController {
 				// }
 				// });
 			}
-			
-			 //
-			 // Erstellung der Umlaufplangrafik auf dem fünften Tab
-			 //
-			
-			 if (this.dienstTabCounter >= 4) {
-			
-			 if (this.fifthLowergrafikErstellt == true) {
-			 this.lowergc5.clearRect(0, 0, this.lowerChart5.getWidth(),
-			 this.lowerChart5.getHeight());
-			 }
-			 // Initiale Belegung der Grafik
-			 if (this.DPlan5.isVisible() == false) {
-			 this.dienstplanFuenf = this.dienstplanliste.get(this.DPlan
-			 .getSelectionModel().getSelectedIndex());
-			 this.lowerheightFuenf = this.dienstplanFuenf.getDuty()
-			 .size() * 40 + 10;
-			 createLowerYScale(yLow5, lowerYChart5, lowerYgc5,
-			 this.lowerheightFuenf, this.dienstplanFuenf);
-			 this.DPlanValue5.setText(DPlan.getSelectionModel()
-			 .getSelectedItem().toString());
-			 this.dienstChoice = 5;
-			 }
-			 // Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
-			
-			 this.Plan5.setDisable(false);
-			 this.DPlan5.setVisible(true);
-			 this.DPlanValue5.setVisible(true);
-			 this.DPlanValue5
-				.setOnMousePressed(new EventHandler<MouseEvent>() {
-					@Override
-					public void handle(MouseEvent e) {
-						dienstChoice = 5;
-						changeDplanDetails();
-						selectionModel.select(Plan5);
 
-						// Zuordnung der Auswahl
+			//
+			// Erstellung der Umlaufplangrafik auf dem fünften Tab
+			//
 
-						umlaufIsCurrent = false;
-						dienstIsCurrent = true;
-					}
-				});
-			 // Zur Kontrolle ob es sich um einen Buttonklick handelt oder
-			 // nicht
-			
-			 if (this.addButtonPressed == true) {
-			 selectionModel.select(this.Plan5);
-			 this.dienstTabCounter = 5;
-			 }
-			
-			 // Zur Verhinderung vom doppelten Erschaffen der Grafiken
-			
-			 if (this.fifthLowergrafikErstellt == false) {
-			 this.dienstTabCounter = 4;
-			 }
-			
-			 this.fifthLowergrafikErstellt = true;
-			 this.fifthGrafikErstellt = true;
-			
-			 // Hintergrunderstellung
-			 createLowerBackgroundGraphicFifthPane();
-			 createLowerXScalePane(this.xLow5, this.lowerGraphicPane5);
-			
-			// createUmlaufElementGraphic(this.umlaufplanFuenf,
-			// this.upperGraphicPane5, this.upperChart5, this.uppergc5);
-			// // Fügt den Eventhändler hinzu
-			// this.upperChart5.addEventHandler(MouseEvent.MOUSE_CLICKED,
-			// new EventHandler<MouseEvent>() {
-			// @Override
-			// public void handle(MouseEvent e) {
-			// boolean okClicked = mainApp
-			// .showEditUPlan(umlaufplanFuenf);
-			// if (okClicked) {
-			// refreshBothGraphics();
-			// fillUmlaufplanliste();
-			// }
-			// }
-			// });
-			 }
-			
-			 //
-			 // Erstellung der Umlaufplangrafik auf dem sechsten Tab
-			 //
-			
-			 if (this.dienstTabCounter >= 5) {
-			
-			 if (this.sixthLowergrafikErstellt == true) {
-			 this.lowergc6.clearRect(0, 0, this.lowerChart6.getWidth(),
-			 this.lowerChart6.getHeight());
-			 }
-			 // Initiale Belegung der Grafik
-			 if (this.DPlan6.isVisible() == false) {
-			 this.dienstplanSechs = this.dienstplanliste.get(this.DPlan
-			 .getSelectionModel().getSelectedIndex());
-			 this.lowerheightSechs = this.dienstplanSechs.getDuty()
-			 .size() * 40 + 10;
-			 createLowerYScale(yLow6, lowerYChart6, lowerYgc6,
-			 this.lowerheightSechs, this.dienstplanSechs);
-			 this.DPlanValue6.setText(DPlan.getSelectionModel()
-			 .getSelectedItem().toString());
-			 this.dienstChoice = 6;
-			 }
-			 // Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
-			
-			 this.Plan6.setDisable(false);
-			 this.DPlan6.setVisible(true);
-			 this.DPlanValue6.setVisible(true);
-			 this.DPlanValue6
-				.setOnMousePressed(new EventHandler<MouseEvent>() {
-					@Override
-					public void handle(MouseEvent e) {
-						dienstChoice = 6;
-						changeDplanDetails();
-						selectionModel.select(Plan6);
+			if (this.dienstTabCounter >= 4) {
 
-						// Zuordnung der Auswahl
+				if (this.fifthLowergrafikErstellt == true) {
+					this.lowergc5.clearRect(0, 0, this.lowerChart5.getWidth(),
+							this.lowerChart5.getHeight());
+				}
+				// Initiale Belegung der Grafik
+				if (this.DPlan5.isVisible() == false) {
+					this.dienstplanFuenf = this.dienstplanliste.get(this.DPlan
+							.getSelectionModel().getSelectedIndex());
+					this.lowerheightFuenf = this.dienstplanFuenf.getDuty()
+							.size() * 40 + 10;
+					createLowerYScale(yLow5, lowerYChart5, lowerYgc5,
+							this.lowerheightFuenf, this.dienstplanFuenf);
+					this.DPlanValue5.setText(DPlan.getSelectionModel()
+							.getSelectedItem().toString());
+					this.dienstChoice = 5;
+					
+					this.umlaufIsCurrent = false;
+					this.dienstIsCurrent = true;
+				}
+				// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
 
-						umlaufIsCurrent = false;
-						dienstIsCurrent = true;
-					}
-				});
-			 // Zur Kontrolle ob es sich um einen Buttonklick handelt oder
-			 // nicht
-			
-			 if (this.addButtonPressed == true) {
-			 selectionModel.select(this.Plan6);
-			 this.dienstTabCounter = 6;
-			 }
-			
-			 // Zur Verhinderung vom doppelten Erschaffen der Grafiken
-			
-			 if (this.sixthLowergrafikErstellt == false) {
-			 this.dienstTabCounter = 5;
-			 }
-			
-			 this.sixthLowergrafikErstellt = true;
-			 this.sixthGrafikErstellt = true;
-			
-			 // Hintergrunderstellung
-			 createLowerBackgroundGraphicSixthPane();
-			 createLowerXScalePane(this.xLow6, this.lowerGraphicPane6);
-			// createUmlaufElementGraphic(this.umlaufplanSechs,
-			// this.upperGraphicPane6, this.upperChart6, this.uppergc6);
-			// // Fügt den Eventhändler hinzu
-			// this.upperChart6.addEventHandler(MouseEvent.MOUSE_CLICKED,
-			// new EventHandler<MouseEvent>() {
-			// @Override
-			// public void handle(MouseEvent e) {
-			// boolean okClicked = mainApp
-			// .showEditUPlan(umlaufplanSechs);
-			// if (okClicked) {
-			// refreshBothGraphics();
-			// fillUmlaufplanliste();
-			// }
-			// }
-			// });
-			 }
-			
-			 //
-			 // Erstellung der Umlaufplangrafik auf dem siebten Tab
-			 //
-			
-			 if (this.dienstTabCounter >= 6) {
-			
-			 if (this.seventhLowergrafikErstellt == true) {
-			 this.lowergc7.clearRect(0, 0, this.lowerChart7.getWidth(),
-			 this.lowerChart7.getHeight());
-			 }
-			 // Initiale Belegung der Grafik
-			 if (this.DPlan7.isVisible() == false) {
-			 this.dienstplanSieben = this.dienstplanliste.get(this.DPlan
-			 .getSelectionModel().getSelectedIndex());
-			 this.lowerheightSieben = this.dienstplanSieben.getDuty()
-			 .size() * 40 + 10;
-			 createLowerYScale(yLow7, lowerYChart7, lowerYgc7,
-			 this.lowerheightSieben, this.dienstplanSieben);
-			 this.DPlanValue7.setText(DPlan.getSelectionModel()
-			 .getSelectedItem().toString());
-			 this.dienstChoice = 7;
-			 }
-			 // Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
-			
-			 this.Plan7.setDisable(false);
-			 this.DPlan7.setVisible(true);
-			 this.DPlanValue7.setVisible(true);
-			 this.DPlanValue7
-				.setOnMousePressed(new EventHandler<MouseEvent>() {
-					@Override
-					public void handle(MouseEvent e) {
-						dienstChoice = 7;
-						changeDplanDetails();
-						selectionModel.select(Plan7);
+				this.Plan5.setDisable(false);
+				this.DPlan5.setVisible(true);
+				this.DPlanValue5.setVisible(true);
+				this.DPlanValue5
+						.setOnMousePressed(new EventHandler<MouseEvent>() {
+							@Override
+							public void handle(MouseEvent e) {
+								dienstChoice = 5;
+								changeDplanDetails();
+								selectionModel.select(Plan5);
 
-						// Zuordnung der Auswahl
+								// Zuordnung der Auswahl
 
-						umlaufIsCurrent = false;
-						dienstIsCurrent = true;
-					}
-				});
-			 // Zur Kontrolle ob es sich um einen Buttonklick handelt oder
-			 // nicht
-			
-			 if (this.addButtonPressed == true) {
-			 selectionModel.select(this.Plan7);
-			 this.dienstTabCounter = 7;
-			 }
-			
-			 // Zur Verhinderung vom doppelten Erschaffen der Grafiken
-			
-			 if (this.seventhLowergrafikErstellt == false) {
-			 this.dienstTabCounter = 6;
-			 }
-			
-			 this.seventhLowergrafikErstellt = true;
-			 this.seventhGrafikErstellt = true;
-			
-			 // Hintergrunderstellung
-			 createLowerBackgroundGraphicSeventhPane();
-			 createLowerXScalePane(this.xLow7, this.lowerGraphicPane7);
-			
-			// createUmlaufElementGraphic(this.umlaufplanSieben,
-			// this.upperGraphicPane7, this.upperChart7, this.uppergc7);
-			// // Fügt den Eventhändler hinzu
-			// this.upperChart7.addEventHandler(MouseEvent.MOUSE_CLICKED,
-			// new EventHandler<MouseEvent>() {
-			// @Override
-			// public void handle(MouseEvent e) {
-			// boolean okClicked = mainApp
-			// .showEditUPlan(umlaufplanSieben);
-			// if (okClicked) {
-			// refreshBothGraphics();
-			// fillUmlaufplanliste();
-			// }
-			// }
-			// });
-			 }
+								umlaufIsCurrent = false;
+								dienstIsCurrent = true;
+							}
+						});
+				// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
+				// nicht
+
+				if (this.addButtonPressed == true) {
+					selectionModel.select(this.Plan5);
+					this.dienstTabCounter = 5;
+				}
+
+				// Zur Verhinderung vom doppelten Erschaffen der Grafiken
+
+				if (this.fifthLowergrafikErstellt == false) {
+					this.dienstTabCounter = 4;
+				}
+
+				this.fifthLowergrafikErstellt = true;
+				this.fifthGrafikErstellt = true;
+
+				// Hintergrunderstellung
+				createLowerBackgroundGraphicFifthPane();
+				createLowerXScalePane(this.xLow5, this.lowerGraphicPane5);
+
+				createDienstElementGraphic(this.dienstplanFuenf,
+						this.lowerGraphicPane5, this.lowerChart5, this.lowergc5);
+				// // Fügt den Eventhändler hinzu
+				// this.upperChart5.addEventHandler(MouseEvent.MOUSE_CLICKED,
+				// new EventHandler<MouseEvent>() {
+				// @Override
+				// public void handle(MouseEvent e) {
+				// boolean okClicked = mainApp
+				// .showEditUPlan(umlaufplanFuenf);
+				// if (okClicked) {
+				// refreshBothGraphics();
+				// fillUmlaufplanliste();
+				// }
+				// }
+				// });
+			}
+
+			//
+			// Erstellung der Umlaufplangrafik auf dem sechsten Tab
+			//
+
+			if (this.dienstTabCounter >= 5) {
+
+				if (this.sixthLowergrafikErstellt == true) {
+					this.lowergc6.clearRect(0, 0, this.lowerChart6.getWidth(),
+							this.lowerChart6.getHeight());
+				}
+				// Initiale Belegung der Grafik
+				if (this.DPlan6.isVisible() == false) {
+					this.dienstplanSechs = this.dienstplanliste.get(this.DPlan
+							.getSelectionModel().getSelectedIndex());
+					this.lowerheightSechs = this.dienstplanSechs.getDuty()
+							.size() * 40 + 10;
+					createLowerYScale(yLow6, lowerYChart6, lowerYgc6,
+							this.lowerheightSechs, this.dienstplanSechs);
+					this.DPlanValue6.setText(DPlan.getSelectionModel()
+							.getSelectedItem().toString());
+					this.dienstChoice = 6;
+					
+					this.umlaufIsCurrent = false;
+					this.dienstIsCurrent = true;
+				}
+				// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
+
+				this.Plan6.setDisable(false);
+				this.DPlan6.setVisible(true);
+				this.DPlanValue6.setVisible(true);
+				this.DPlanValue6
+						.setOnMousePressed(new EventHandler<MouseEvent>() {
+							@Override
+							public void handle(MouseEvent e) {
+								dienstChoice = 6;
+								changeDplanDetails();
+								selectionModel.select(Plan6);
+
+								// Zuordnung der Auswahl
+
+								umlaufIsCurrent = false;
+								dienstIsCurrent = true;
+							}
+						});
+				// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
+				// nicht
+
+				if (this.addButtonPressed == true) {
+					selectionModel.select(this.Plan6);
+					this.dienstTabCounter = 6;
+				}
+
+				// Zur Verhinderung vom doppelten Erschaffen der Grafiken
+
+				if (this.sixthLowergrafikErstellt == false) {
+					this.dienstTabCounter = 5;
+				}
+
+				this.sixthLowergrafikErstellt = true;
+				this.sixthGrafikErstellt = true;
+
+				// Hintergrunderstellung
+				createLowerBackgroundGraphicSixthPane();
+				createLowerXScalePane(this.xLow6, this.lowerGraphicPane6);
+				createDienstElementGraphic(this.dienstplanSechs,
+						this.lowerGraphicPane6, this.lowerChart6, this.lowergc6);
+				// // Fügt den Eventhändler hinzu
+				// this.upperChart6.addEventHandler(MouseEvent.MOUSE_CLICKED,
+				// new EventHandler<MouseEvent>() {
+				// @Override
+				// public void handle(MouseEvent e) {
+				// boolean okClicked = mainApp
+				// .showEditUPlan(umlaufplanSechs);
+				// if (okClicked) {
+				// refreshBothGraphics();
+				// fillUmlaufplanliste();
+				// }
+				// }
+				// });
+			}
+
+			//
+			// Erstellung der Umlaufplangrafik auf dem siebten Tab
+			//
+
+			if (this.dienstTabCounter >= 6) {
+
+				if (this.seventhLowergrafikErstellt == true) {
+					this.lowergc7.clearRect(0, 0, this.lowerChart7.getWidth(),
+							this.lowerChart7.getHeight());
+				}
+				// Initiale Belegung der Grafik
+				if (this.DPlan7.isVisible() == false) {
+					this.dienstplanSieben = this.dienstplanliste.get(this.DPlan
+							.getSelectionModel().getSelectedIndex());
+					this.lowerheightSieben = this.dienstplanSieben.getDuty()
+							.size() * 40 + 10;
+					createLowerYScale(yLow7, lowerYChart7, lowerYgc7,
+							this.lowerheightSieben, this.dienstplanSieben);
+					this.DPlanValue7.setText(DPlan.getSelectionModel()
+							.getSelectedItem().toString());
+					this.dienstChoice = 7;
+					
+					this.umlaufIsCurrent = false;
+					this.dienstIsCurrent = true;
+				}
+				// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
+
+				this.Plan7.setDisable(false);
+				this.DPlan7.setVisible(true);
+				this.DPlanValue7.setVisible(true);
+				this.DPlanValue7
+						.setOnMousePressed(new EventHandler<MouseEvent>() {
+							@Override
+							public void handle(MouseEvent e) {
+								dienstChoice = 7;
+								changeDplanDetails();
+								selectionModel.select(Plan7);
+
+								// Zuordnung der Auswahl
+
+								umlaufIsCurrent = false;
+								dienstIsCurrent = true;
+							}
+						});
+				// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
+				// nicht
+
+				if (this.addButtonPressed == true) {
+					selectionModel.select(this.Plan7);
+					this.dienstTabCounter = 7;
+				}
+
+				// Zur Verhinderung vom doppelten Erschaffen der Grafiken
+
+				if (this.seventhLowergrafikErstellt == false) {
+					this.dienstTabCounter = 6;
+				}
+
+				this.seventhLowergrafikErstellt = true;
+				this.seventhGrafikErstellt = true;
+
+				// Hintergrunderstellung
+				createLowerBackgroundGraphicSeventhPane();
+				createLowerXScalePane(this.xLow7, this.lowerGraphicPane7);
+
+				 createDienstElementGraphic(this.dienstplanSieben,
+				 this.lowerGraphicPane7, this.lowerChart7, this.lowergc7);
+				// // Fügt den Eventhändler hinzu
+				// this.upperChart7.addEventHandler(MouseEvent.MOUSE_CLICKED,
+				// new EventHandler<MouseEvent>() {
+				// @Override
+				// public void handle(MouseEvent e) {
+				// boolean okClicked = mainApp
+				// .showEditUPlan(umlaufplanSieben);
+				// if (okClicked) {
+				// refreshBothGraphics();
+				// fillUmlaufplanliste();
+				// }
+				// }
+				// });
+			}
 
 			this.addButtonPressed = true;
 			if (this.dienstIsCurrent == true) {
@@ -2240,7 +2234,7 @@ public class MainLayoutController {
 
 		}
 	}
-	
+
 	/**
 	 * Creates The First Upper Background Graphic.
 	 */
@@ -3121,7 +3115,7 @@ public class MainLayoutController {
 			this.UPlanValue4.setStyle("-fx-background-color:white;");
 			this.UPlanValue5.setStyle("-fx-background-color:white;");
 			this.UPlanValue6.setStyle("-fx-background-color:white;");
-			this.UPlanValue7.setStyle("-fx-background-color:white;");
+			this.UPlanValue7.setStyle("-fx-background-color:white;");			
 			break;
 		case 3:
 			// Erstellung/ Befüllen des Details Table-- Clearen des Alten
@@ -3505,7 +3499,7 @@ public class MainLayoutController {
 	}
 
 	/**
-	 * Creates Elements in the Graphic.
+	 * Creates Umlauf Elements in the Graphic.
 	 */
 	private void createUmlaufElementGraphic(Umlaufplan umlaufplan,
 			ScrollPane scrollPane, Canvas canvas, GraphicsContext gc) {
@@ -3577,6 +3571,130 @@ public class MainLayoutController {
 						case 1:
 							// Servicefahrt
 							gc.setFill(Color.SEAGREEN);
+							break;
+						case 2:
+							// Leerfahrt Haltestellen
+							gc.setFill(Color.LIGHTCORAL);
+							break;
+						case 3:
+							// Fahrt ins Depot
+							gc.setFill(Color.ANTIQUEWHITE);
+							break;
+						case 4:
+							// Fahrt aus dem Depot
+							gc.setFill(Color.WHITESMOKE);
+							break;
+						case 5:
+							// Vorbereitung
+							gc.setFill(Color.GREEN);
+							break;
+						case 6:
+							// Nachbereitung
+							gc.setFill(Color.GREEN);
+							break;
+						case 7:
+							// Transfer
+							gc.setFill(Color.GREEN);
+							break;
+						case 8:
+							// Pause
+							gc.setFill(Color.ORANGE);
+							break;
+						case 9:
+							// Warten
+							gc.setFill(Color.LIGHTSKYBLUE);
+							break;
+						case 10:
+							// LayoverTime
+							gc.setFill(Color.GREEN);
+							break;
+						}
+
+						// Malen der Elemente
+
+						gc.fillRoundRect(startPixelX, startPixelY, fahrtDauer,
+								20, 20, 10);
+						gc.strokeRoundRect(startPixelX, startPixelY,
+								fahrtDauer, 20, 20, 10);
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Creates Duty Elements in the Graphic.
+	 */
+	private void createDienstElementGraphic(Dienstplan dienstplan,
+			ScrollPane scrollPane, Canvas canvas, GraphicsContext gc) {
+
+		double abstandNetz = (canvas.getWidth() - 30)
+				/ (this.endzeitVar - this.startzeitVar);
+
+		// Auslesen der Blockanzahl
+		for (int j = 0; j < dienstplan.getDuty().size(); j++) {
+
+			// Auslesen Blockelementanzahl
+			for (int i = 0; i < dienstplan.getDutyelement().size(); i++) {
+
+				// Abgleich mit den Werten
+				if (Integer.parseInt(dienstplan.getDutyelement().get(i)
+						.getDutyID()) == dienstplan.getDuty().get(j).getId()) {
+
+					// Auslesen der Zeit als Integer
+					StringSplitter ss = new StringSplitter();
+					int[] zeit = new int[2];
+					zeit = ss.intParse(dienstplan.getDutyelement().get(i)
+							.getDepTime());
+					int startHour = zeit[0];
+					int startMin = zeit[1];
+					zeit = ss.intParse(dienstplan.getDutyelement().get(i)
+							.getArrTime());
+					int endHour = zeit[0];
+
+					// Belegung der Pixelwerte
+					if (this.startzeitVar <= startHour
+							&& this.endzeitVar > endHour) {
+						int stundenDifferenz = startHour - this.startzeitVar;
+						int startPixelX = (int) ((stundenDifferenz * abstandNetz) + ((abstandNetz / 60) * startMin));
+						int startPixelY = 10 + (j * 40);
+						int fahrtDauer = 0;
+						// Berrechnen der Dauer zwischen der Abfahrt und der
+						// Ankunft
+
+						String depTime = dienstplan.getDutyelement().get(i)
+								.getDepTime();
+						String arrtime = dienstplan.getDutyelement().get(i)
+								.getArrTime();
+
+						SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+						Date date1 = null;
+						Date date2 = null;
+						try {
+							date1 = format.parse(depTime);
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						try {
+							date2 = format.parse(arrtime);
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						long differenz = date2.getTime() - date1.getTime();
+						differenz = (differenz / 1000) / 60;
+
+						fahrtDauer = (int) (differenz * (abstandNetz / 60));
+
+						// Färben der Elemente
+
+						switch (dienstplan.getDutyelement().get(i)
+								.getElementType()) {
+
+						case 1:
+							// Servicefahrt
+							gc.setFill(Color.CORNFLOWERBLUE);
 							break;
 						case 2:
 							// Leerfahrt Haltestellen
@@ -3732,11 +3850,12 @@ public class MainLayoutController {
 	 */
 	private void createHelpLinesFirstTab() {
 
-		double abstandNetz = (this.upperChart1.getWidth() - 30)
-				/ (this.endzeitVar - this.startzeitVar);
 		// Methoden zu Erstellung der dynamischen Hilfslinien
 
-		if (lowergrafikErstellt == true) {
+		if (this.firstLowergrafikErstellt == true) {
+
+			double abstandNetz = (this.lowerChart1.getWidth() - 30)
+					/ (this.endzeitVar - this.startzeitVar);
 
 			this.lowergc1.setLineWidth(1);
 			this.lowergc1.setStroke(Color.LIGHTGREY);
@@ -3764,6 +3883,9 @@ public class MainLayoutController {
 			}
 		}
 		if (this.firstUppergrafikErstellt == true) {
+
+			double abstandNetz = (this.upperChart1.getWidth() - 30)
+					/ (this.endzeitVar - this.startzeitVar);
 
 			this.uppergc1.setLineWidth(1);
 			this.uppergc1.setStroke(Color.LIGHTGREY);
@@ -3798,11 +3920,12 @@ public class MainLayoutController {
 	 */
 	private void createHelpLinesSecondTab() {
 
-		double abstandNetz = (this.upperChart2.getWidth() - 30)
-				/ (this.endzeitVar - this.startzeitVar);
 		// Methoden zu Erstellung der dynamischen Hilfslinien
 
-		if (lowergrafikErstellt == true) {
+		if (this.secondLowergrafikErstellt == true) {
+
+			double abstandNetz = (this.lowerChart2.getWidth() - 30)
+					/ (this.endzeitVar - this.startzeitVar);
 
 			this.lowergc2.setLineWidth(1);
 			this.lowergc2.setStroke(Color.LIGHTGREY);
@@ -3831,6 +3954,9 @@ public class MainLayoutController {
 		}
 
 		if (this.secondUppergrafikErstellt == true) {
+
+			double abstandNetz = (this.upperChart2.getWidth() - 30)
+					/ (this.endzeitVar - this.startzeitVar);
 
 			this.uppergc2.setLineWidth(1);
 			this.uppergc2.setStroke(Color.LIGHTGREY);
@@ -3865,11 +3991,12 @@ public class MainLayoutController {
 	 */
 	private void createHelpLinesThirdTab() {
 
-		double abstandNetz = (this.upperChart3.getWidth() - 30)
-				/ (this.endzeitVar - this.startzeitVar);
 		// Methoden zu Erstellung der dynamischen Hilfslinien
 
-		if (lowergrafikErstellt == true) {
+		if (this.thirdLowergrafikErstellt == true) {
+
+			double abstandNetz = (this.lowerChart3.getWidth() - 30)
+					/ (this.endzeitVar - this.startzeitVar);
 
 			this.lowergc3.setLineWidth(1);
 			this.lowergc3.setStroke(Color.LIGHTGREY);
@@ -3897,6 +4024,9 @@ public class MainLayoutController {
 			}
 		}
 		if (this.thirdUppergrafikErstellt == true) {
+
+			double abstandNetz = (this.upperChart3.getWidth() - 30)
+					/ (this.endzeitVar - this.startzeitVar);
 
 			this.uppergc3.setLineWidth(1);
 			this.uppergc3.setStroke(Color.LIGHTGREY);
@@ -3931,11 +4061,12 @@ public class MainLayoutController {
 	 */
 	private void createHelpLinesFourthTab() {
 
-		double abstandNetz = (this.upperChart4.getWidth() - 30)
-				/ (this.endzeitVar - this.startzeitVar);
 		// Methoden zu Erstellung der dynamischen Hilfslinien
 
-		if (lowergrafikErstellt == true) {
+		if (this.fourthLowergrafikErstellt == true) {
+
+			double abstandNetz = (this.lowerChart4.getWidth() - 30)
+					/ (this.endzeitVar - this.startzeitVar);
 
 			this.lowergc4.setLineWidth(1);
 			this.lowergc4.setStroke(Color.LIGHTGREY);
@@ -3963,6 +4094,9 @@ public class MainLayoutController {
 			}
 		}
 		if (this.fourthUppergrafikErstellt == true) {
+
+			double abstandNetz = (this.upperChart4.getWidth() - 30)
+					/ (this.endzeitVar - this.startzeitVar);
 
 			this.uppergc4.setLineWidth(1);
 			this.uppergc4.setStroke(Color.LIGHTGREY);
@@ -3997,11 +4131,12 @@ public class MainLayoutController {
 	 */
 	private void createHelpLinesFifthTab() {
 
-		double abstandNetz = (this.upperChart5.getWidth() - 30)
-				/ (this.endzeitVar - this.startzeitVar);
 		// Methoden zu Erstellung der dynamischen Hilfslinien
 
-		if (lowergrafikErstellt == true) {
+		if (this.fifthLowergrafikErstellt == true) {
+
+			double abstandNetz = (this.lowerChart5.getWidth() - 30)
+					/ (this.endzeitVar - this.startzeitVar);
 
 			this.lowergc5.setLineWidth(1);
 			this.lowergc5.setStroke(Color.LIGHTGREY);
@@ -4029,6 +4164,9 @@ public class MainLayoutController {
 			}
 		}
 		if (this.fifthUppergrafikErstellt == true) {
+
+			double abstandNetz = (this.upperChart5.getWidth() - 30)
+					/ (this.endzeitVar - this.startzeitVar);
 
 			this.uppergc5.setLineWidth(1);
 			this.uppergc5.setStroke(Color.LIGHTGREY);
@@ -4063,11 +4201,12 @@ public class MainLayoutController {
 	 */
 	private void createHelpLinesSixthTab() {
 
-		double abstandNetz = (this.upperChart6.getWidth() - 30)
-				/ (this.endzeitVar - this.startzeitVar);
 		// Methoden zu Erstellung der dynamischen Hilfslinien
 
-		if (lowergrafikErstellt == true) {
+		if (this.sixthLowergrafikErstellt == true) {
+
+			double abstandNetz = (this.lowerChart6.getWidth() - 30)
+					/ (this.endzeitVar - this.startzeitVar);
 
 			this.lowergc6.setLineWidth(1);
 			this.lowergc6.setStroke(Color.LIGHTGREY);
@@ -4095,6 +4234,9 @@ public class MainLayoutController {
 			}
 		}
 		if (this.sixthUppergrafikErstellt == true) {
+
+			double abstandNetz = (this.upperChart6.getWidth() - 30)
+					/ (this.endzeitVar - this.startzeitVar);
 
 			this.uppergc6.setLineWidth(1);
 			this.uppergc6.setStroke(Color.LIGHTGREY);
@@ -4129,11 +4271,12 @@ public class MainLayoutController {
 	 */
 	private void createHelpLinesSeventhTab() {
 
-		double abstandNetz = (this.upperChart7.getWidth() - 30)
-				/ (this.endzeitVar - this.startzeitVar);
 		// Methoden zu Erstellung der dynamischen Hilfslinien
 
-		if (lowergrafikErstellt == true) {
+		if (this.seventhLowergrafikErstellt == true) {
+
+			double abstandNetz = (this.lowerChart7.getWidth() - 30)
+					/ (this.endzeitVar - this.startzeitVar);
 
 			this.lowergc7.setLineWidth(1);
 			this.lowergc7.setStroke(Color.LIGHTGREY);
@@ -4161,6 +4304,9 @@ public class MainLayoutController {
 			}
 		}
 		if (this.seventhUppergrafikErstellt == true) {
+
+			double abstandNetz = (this.upperChart7.getWidth() - 30)
+					/ (this.endzeitVar - this.startzeitVar);
 
 			this.uppergc7.setLineWidth(1);
 			this.uppergc7.setStroke(Color.LIGHTGREY);
