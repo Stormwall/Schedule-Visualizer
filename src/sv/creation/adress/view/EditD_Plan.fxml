@@ -19,11 +19,11 @@
               <children>
                 <TableView fx:id="elementsTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                   <columns>
-                    <TableColumn prefWidth="75.0" text="Dienst - Element" fx:id="blockEleCol" />
+                    <TableColumn prefWidth="75.0" text="Dienst - Element" fx:id="dutyEleCol" />
                     <TableColumn prefWidth="75.0" text="Startzeit" fx:id="startzeitCol" />
                     <TableColumn prefWidth="75.0" text="Endzeit" fx:id="endzeitCol" />
                     <TableColumn prefWidth="75.0" text="Ele.-Type" fx:id="eleTypeCol" />
-                    <TableColumn prefWidth="75.0" text="Dienst" fx:id="blockCol" />
+                    <TableColumn prefWidth="75.0" text="Dienst" fx:id="dutyCol" />
                     <TableColumn prefWidth="75.0" text="Dauer" fx:id="dauerCol" />
                   </columns>
                 </TableView>
@@ -31,7 +31,7 @@
                   <children>
                     <HBox id="HBox" alignment="CENTER" prefHeight="40.0" prefWidth="578.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                       <children>
-                        <ChoiceBox fx:id="blockChoice" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefWidth="-1.0" styleClass="dark-blue-Choicebox, flowPane">
+                        <ChoiceBox id="blockChoice" fx:id="dutyChoice" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefWidth="-1.0" styleClass="dark-blue-Choicebox, flowPane">
                           <items>
                             <FXCollections fx:factory="observableArrayList">
                               <String fx:value="Item 1" />

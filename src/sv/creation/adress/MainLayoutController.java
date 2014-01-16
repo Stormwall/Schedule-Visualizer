@@ -1726,19 +1726,19 @@ public class MainLayoutController {
 				createDienstElementGraphic(this.dienstplanEins,
 						this.lowerGraphicPane1, this.lowerChart1, this.lowergc1);
 
-//				 // Fügt den EventhÃ¤ndler hinzu
-//				 this.upperChart1.addEventHandler(MouseEvent.MOUSE_CLICKED,
-//				 new EventHandler<MouseEvent>() {
-//				 @Override
-//				 public void handle(MouseEvent e) {
-//				 boolean okClicked = mainApp
-//				 .showEditUPlan(umlaufplanEins);
-//				 if (okClicked) {
-//				 refreshBothGraphics();
-//				 fillUmlaufplanliste();
-//				 }
-//				 }
-//				 });
+				// Fügt den EventhÃ¤ndler hinzu
+				this.lowerChart1.addEventHandler(MouseEvent.MOUSE_CLICKED,
+						new EventHandler<MouseEvent>() {
+							@Override
+							public void handle(MouseEvent e) {
+								boolean okClicked = mainApp
+										.showEditDPlan(dienstplanEins);
+								if (okClicked) {
+									refreshBothGraphics();
+									fillDienstplanliste();
+								}
+							}
+						});
 
 			}
 
@@ -3446,7 +3446,7 @@ public class MainLayoutController {
 				.setCellValueFactory(new PropertyValueFactory<Dutyelement, Integer>(
 						"elementType"));
 		dutyCol.setCellValueFactory(new PropertyValueFactory<Dutyelement, Integer>(
-				"dutyID"));
+				"dutyHilfsID"));
 		dauerCol.setCellValueFactory(new PropertyValueFactory<Dutyelement, String>(
 				"driveTime"));
 
@@ -3833,7 +3833,7 @@ public class MainLayoutController {
 		// Auslesen der Werte
 		for (int j = 0; j < dienstplan.getDuty().size(); j++) {
 
-			gc.fillText("D " + dienstplan.getDuty().get(j).getId(), 4,
+			gc.fillText("D " + dienstplan.getDuty().get(j).getHilfsID(), 4,
 					22 + (j * 40));
 
 		}

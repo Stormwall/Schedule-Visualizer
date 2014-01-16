@@ -42,7 +42,7 @@ public class EditD_PlanController {
 	@FXML
 	private TableColumn<Dutyelement, String> endzeitCol;
 	@FXML
-	private TableColumn<Dutyelement, String> eleTypeCol;
+	private TableColumn<Dutyelement, Integer> eleTypeCol;
 	@FXML
 	private TableColumn<Dutyelement, Integer> dutyCol;
 	@FXML
@@ -398,10 +398,10 @@ public class EditD_PlanController {
 				.setCellValueFactory(new PropertyValueFactory<Dutyelement, String>(
 						"arrTime"));
 		eleTypeCol
-				.setCellValueFactory(new PropertyValueFactory<Dutyelement, String>(
-						"elementTypeName"));
+				.setCellValueFactory(new PropertyValueFactory<Dutyelement, Integer>(
+						"elementType"));
 		dutyCol.setCellValueFactory(new PropertyValueFactory<Dutyelement, Integer>(
-				"dutyID"));
+				"dutyHilfsID"));
 		dauerCol.setCellValueFactory(new PropertyValueFactory<Dutyelement, String>(
 				"driveTime"));
 
@@ -421,7 +421,8 @@ public class EditD_PlanController {
 				.<String> observableArrayList();
 
 		for (int i = 0; i < dienstplan.getDuty().size(); i++) {
-			String input = ("Dienst " + dienstplan.getDuty().get(i).getHilfsID());
+			String input = ("Dienst " + dienstplan.getDuty().get(i)
+					.getHilfsID());
 			list.add(input);
 		}
 
