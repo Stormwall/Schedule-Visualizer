@@ -282,7 +282,7 @@ public class StringSplitter {
 			// All lines with relevant data will be read
 			// The data will be split in seperated array lists
 
-			File file = new File("resources/quellen/PLAN_B_BSP2_DIENST_cs_int6_20130823_232154_real_c_278_219-225_1_1.txt");
+			File file = new File("resources/quellen/cs_int4_20130527_151117_real_661_1_1_newTripIds.txt");
 			BufferedReader dienstplan = new BufferedReader(new FileReader(file));
 			filename = file.getName();
 
@@ -437,7 +437,7 @@ public class StringSplitter {
 
 			// testumlauf.txt Data has to be in the project file in your
 			// workspace
-			File file = new File("resources/quellen/PLAN_B_BSP2_UMLAUF_vs_int6_20130823_232154_real_c_278_219-225_1_1.txt");
+			File file = new File("resources/quellen/vs_int4_20130527_151117_real_661_1_1_newTripIds.txt");
 			BufferedReader umlaufplan = new BufferedReader(new FileReader(file));
 			filename = file.getName();
 			String zeile = null;
@@ -550,7 +550,7 @@ public class StringSplitter {
 
 			// testfahrplan.txt Data has to be in the project file in your
 			// workspace
-			File file = new File("resources/quellen/PLAN_B_FAHRPLAN_real_c_278_219-225_1_1.txt");
+			File file = new File("resources/quellen/real_661_1_1_newTripIds.txt");
 			BufferedReader fahrplan = new BufferedReader(new FileReader(file));
 			filename = file.getName();
 			String zeile = null;
@@ -636,7 +636,7 @@ public class StringSplitter {
 					continue;
 				}
 				
-				if(zeile.startsWith("$WALKRUNTIME:")){
+				if(zeile.startsWith("$WALKRUNTIME:")||zeile.startsWith("$TRANSFERTIME:")){
 					stoppoint = false;
 					line = false;
 					vehicleTypeGroup = false;
@@ -861,8 +861,18 @@ public class StringSplitter {
 						walkruntimeFromStopID.add(fromStopIDZiffer);
 						walkruntimeToStopID
 								.add(toStopIDZiffer);
-						walkruntimeFromTime.add(zeilenelemente.get(2));
-						walkruntimeToTime.add(zeilenelemente.get(3));
+						
+						//Wenn keine Angaben für den Gültigkeitszeitraum gesetzt sind, werden die Standardwerte gesetzt
+						if(!zeilenelemente.get(2).equals("")){
+							walkruntimeFromTime.add(zeilenelemente.get(2));	
+						}else{
+							walkruntimeFromTime.add("000:00:00:00");
+						}
+						if(!zeilenelemente.get(3).equals("")){
+							walkruntimeToTime.add(zeilenelemente.get(3));	
+						}else{
+							walkruntimeToTime.add("001:12:00:00");
+						}
 						walkruntimeRuntime.add(Integer.parseInt(zeilenelemente.get(4)));
 						zeilenelemente.clear();
 					}
@@ -973,7 +983,7 @@ public class StringSplitter {
 			// testfahrplan.txt Data has to be in the project file in your
 			// workspace
 			BufferedReader diensttypen = new BufferedReader(new FileReader(
-					"resources/quellen/PLAN_A_B_Aufschluesselung_Diensttypen.txt"));
+					"resources/quellen/Aufschluesselung_Diensttypen.txt"));
 			String zeile = null;
 			ArrayList<String> zeilenelemente = new ArrayList<String>();
 			while ((zeile = diensttypen.readLine()) != null) {
@@ -1078,7 +1088,6 @@ public class StringSplitter {
 					}
 				}
 			}
-			System.out.println("hat geklappt!");
 			szenario.close();
 			}catch (IOException e) {
 				e.printStackTrace();

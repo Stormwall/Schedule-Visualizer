@@ -13,11 +13,12 @@ public class Umlaufplan {
 	/**
 	 * @param umlaufplan
 	 */
-	public Umlaufplan(int id,ArrayList<Block> umlauf, ArrayList<Blockelement> fahrtZuUmlauf) {
+	public Umlaufplan(int id,ArrayList<Block> umlauf, ArrayList<Blockelement> fahrtZuUmlauf, int fahrplanID) {
 		// super();
 		this.id=id;
 		this.umlauf = umlauf;
 		this.fahrtZuUmlauf=fahrtZuUmlauf;
+		this.fahrplanID = fahrplanID;
 	}
 
 	public int getId() {

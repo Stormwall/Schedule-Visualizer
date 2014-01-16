@@ -197,6 +197,23 @@ public class DBMatching {
 	// can be modified. ******* *******
 	// ***********************************************************************************************
 
+	public int getFahrplanzugehoerigkeit(int umlaufplanID){
+		int fahrplanID=0;
+		
+		DBConnection db = new DBConnection();
+		db.initDBConnection();
+
+		// Creating a sql query
+		try {
+			stmt = db.getConnection().createStatement();
+			ResultSet rest1 = stmt.executeQuery("SELECT * FROM Umlaufplan WHERE ID="+umlaufplanID);
+			fahrplanID=rest1.getInt("FahrplanID");
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return fahrplanID;
+	}
 	public ArrayList<Umlaufplan> createUmlaufplanObject() {
 
 		ArrayList<Umlaufplan> umlaufplanliste = new ArrayList<Umlaufplan>();
@@ -247,7 +264,7 @@ public class DBMatching {
 			}
 			zaehlerUmlauf = zaehlerUmlauf + 1;
 			Umlaufplan umlaufplanAdd = new Umlaufplan(i, blockList,
-					blockelementList);
+					blockelementList,getFahrplanzugehoerigkeit(i));
 			umlaufplanliste.add(umlaufplanAdd);
 		}
 

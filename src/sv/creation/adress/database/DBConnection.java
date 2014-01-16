@@ -346,7 +346,7 @@ public class DBConnection {
 
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS PrimeDelaySzenario (ID INTEGER PRIMARY KEY AUTOINCREMENT, DutyID VARCHAR(30), VehicleID VARCHAR(30), ServiceJourneyID VARCHAR(30) NOT NULL, DepTime VARCHAR(30) NOT NULL, Delay INTEGER NOT NULL, FahrplanID INTEGER NOT NULL); ");
 
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Walkruntime (ID INTEGER PRIMARY KEY AUTOINCREMENT, FromStopID INTEGER, ToStopID INTEGER, FromTime VARCHAR(30) NOT NULL, ToTime VARCHAR(30) NOT NULL, Runtime INTEGER NOT NULL); ");
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Transfertime (ID INTEGER PRIMARY KEY AUTOINCREMENT, FromStopID INTEGER, ToStopID INTEGER, FromTime VARCHAR(30) NOT NULL, ToTime VARCHAR(30) NOT NULL, Runtime INTEGER NOT NULL); ");
 
 			//***************************
 			//tables get filled with data		
@@ -390,9 +390,16 @@ public class DBConnection {
 		  try{ Statement stmnt=connection.createStatement(); 
 		  //insert name of tour plan
 		  String fileNameVergleich=ss.getFilename();
+		  String umlaufplanBezeichnung=ss.getFilename();
 		  String[] resultString=fileNameVergleich.split("_");
-		  String finalString=resultString[0]+"_"+resultString[1];	  
-		  stmnt.executeUpdate("INSERT INTO Umlaufplan (Bezeichnung, FahrplanID) VALUES ('"+ss.getFilename()+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('"+finalString+"%')));");
+		  String finalString="";
+		  for (int i = 4; i < resultString.length; i++) {
+			  if(i!=resultString.length-1){
+			  finalString+=resultString[i]+"_";
+			  }else
+				  finalString+=resultString[i];
+		}
+		  stmnt.executeUpdate("INSERT INTO Umlaufplan (Bezeichnung, FahrplanID) VALUES ('"+umlaufplanBezeichnung+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('"+finalString+"%')));");
 		 
 		  
 		  //iterators for getting values from stringsplitter object
@@ -415,7 +422,11 @@ public class DBConnection {
 		  Iterator<String> it19 =ss.getExceptionalblockelementArrTime().iterator(); 
 //		  Iterator<Integer> it20 =ss.getExceptionalblockelementElementType().iterator();
 		  
-		  String dayID=ss.getBlockelementDayID().get(0);
+		  
+		  String dayID=null;
+		  if(ss.getBlockelementDayID()!=null){
+		  dayID = ss.getBlockelementDayID().get(0);
+		  }
 		  
 		  //fill block
 		  while((it.hasNext()&&it2.hasNext()&&it3.hasNext())){
@@ -459,12 +470,10 @@ public class DBConnection {
 		//invoke stringsplitter method for reading the data in  txt-files
 		ss.readTxtDiensttypen();
 		
-		String fileNameVergleich=ss.getFilename();
-		  String[] resultString=fileNameVergleich.split("_");
-		  String finalString=resultString[0]+"_"+resultString[1];
-		
+
 		 try{ Statement stmnt=connection.createStatement(); //Fill values in
 		  //specific tables
+		 
 		  
 		  //iterators for getting values from stringsplitter object
 		  Iterator<String> it = ss.getName().iterator(); 
@@ -515,8 +524,8 @@ public class DBConnection {
 		  while((it.hasNext()&&it2.hasNext()&&it3.hasNext()&&it4.hasNext()&&it5.hasNext()&&it6.hasNext()&&it7.hasNext()&&it8.hasNext()&&it9.hasNext()&&it10.hasNext()&&it11.hasNext()&&it12.hasNext()&&it13.hasNext()&&it14.hasNext()&&it15.hasNext()&&it16.hasNext()&&it17.hasNext()&&it18.hasNext()&&it19.hasNext()&&it20.hasNext()&&it21.hasNext()&&it22.hasNext()&&it23.hasNext()&&it24.hasNext()&&it25.hasNext()&&it26.hasNext()&&it27.hasNext()&&it28.hasNext()&&it29.hasNext()&&it30.hasNext()&&it31.hasNext()&&it32.hasNext()&&it33.hasNext()&&it34.hasNext()&&it35.hasNext())){
 			  
 			  stmnt.executeUpdate
-		  ("INSERT INTO Dutytype (Name, StartTimeMin, StartTimeMax, EndTimeMin, EndTimeMax, SignOnTime, SignOffTime, DurationMin, DurationMax, WorkingTimeTotalMin, WorkingTimeTotalMax, WorkingTimeBeforeBreakMin, WorkingTimeWithoutBreakMin, WorkingTimeAfterLastBreakMin, DrivingTimeTotalMin, DrivingTimeTotalMax, DrivingTimeWithoutBreakMin, DrivingTimeWithoutBreakMax, DrivingTimeWithoutBreakMinInterruptionTime, DrivingTimeBeforeFirstBreakMin, BreakType, BreakTimeTotalMin, BreakTimeTotalMax, BreakTimeMin, BreakTimeMax, PieceCountMin, PieceCountMax, AllowedCumulatedWorkingTimeMax, DutyFixCost, IsWorkRateConsidered, IsBreakRateConsidered, DutyCostPerMinute, IsVehicleChangeAllowedDuringBreak, BreakTimeAllowedStarts, BreakTimeAllowedEnds, FahrplanID) VALUES('"
-			  +it.next()+"','"+it2.next()+"','"+it3.next()+"','"+it4.next()+"','"+it5.next()+"','"+it6.next()+"','"+it7.next()+"','"+it8.next()+"','"+it9.next()+"','"+it10.next()+"','"+it11.next()+"','"+it12.next()+"','"+it13.next()+"','"+it14.next()+"','"+it15.next()+"','"+it16.next()+"','"+it17.next()+"','"+it18.next()+"','"+it19.next()+"','"+it20.next()+"','"+it21.next()+"','"+it22.next()+"','"+it23.next()+"','"+it24.next()+"','"+it25.next()+"','"+it26.next()+"','"+it27.next()+"','"+it28.next()+"','"+it29.next()+"','"+it30.next()+"','"+it31.next()+"','"+it32.next()+"','"+it33.next()+"','"+it34.next()+"','"+it35.next()+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('"+finalString+"%')));");}
+		  ("INSERT INTO Dutytype (Name, StartTimeMin, StartTimeMax, EndTimeMin, EndTimeMax, SignOnTime, SignOffTime, DurationMin, DurationMax, WorkingTimeTotalMin, WorkingTimeTotalMax, WorkingTimeBeforeBreakMin, WorkingTimeWithoutBreakMin, WorkingTimeAfterLastBreakMin, DrivingTimeTotalMin, DrivingTimeTotalMax, DrivingTimeWithoutBreakMin, DrivingTimeWithoutBreakMax, DrivingTimeWithoutBreakMinInterruptionTime, DrivingTimeBeforeFirstBreakMin, BreakType, BreakTimeTotalMin, BreakTimeTotalMax, BreakTimeMin, BreakTimeMax, PieceCountMin, PieceCountMax, AllowedCumulatedWorkingTimeMax, DutyFixCost, IsWorkRateConsidered, IsBreakRateConsidered, DutyCostPerMinute, IsVehicleChangeAllowedDuringBreak, BreakTimeAllowedStarts, BreakTimeAllowedEnds) VALUES('"
+			  +it.next()+"','"+it2.next()+"','"+it3.next()+"','"+it4.next()+"','"+it5.next()+"','"+it6.next()+"','"+it7.next()+"','"+it8.next()+"','"+it9.next()+"','"+it10.next()+"','"+it11.next()+"','"+it12.next()+"','"+it13.next()+"','"+it14.next()+"','"+it15.next()+"','"+it16.next()+"','"+it17.next()+"','"+it18.next()+"','"+it19.next()+"','"+it20.next()+"','"+it21.next()+"','"+it22.next()+"','"+it23.next()+"','"+it24.next()+"','"+it25.next()+"','"+it26.next()+"','"+it27.next()+"','"+it28.next()+"','"+it29.next()+"','"+it30.next()+"','"+it31.next()+"','"+it32.next()+"','"+it33.next()+"','"+it34.next()+"','"+it35.next()+"');");}
 		  
 		  System.out.println("Dienstplan importiert!");
 		  
@@ -541,9 +550,16 @@ public class DBConnection {
 		
 		  try{ Statement stmnt=connection.createStatement(); //Fill values in
 
-		  String fileNameVergleich=ss.getFilename();
-		  String[] resultString=fileNameVergleich.split("_");
-		  String finalString=resultString[0]+"_"+resultString[1];	  
+			String fileNameVergleich=ss.getFilename();
+			  String[] resultString=fileNameVergleich.split("_");
+			  String finalString="";
+			  for (int i = 4; i < resultString.length; i++) {
+				  if(i!=resultString.length-1){
+				  finalString+=resultString[i]+"_";
+				  }else
+					  finalString+=resultString[i];
+			}
+
 		  stmnt.executeUpdate("INSERT INTO Dienstplan (Bezeichnung, FahrplanID) VALUES ('"+ss.getFilename()+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('"+finalString+"%')));");
 		  //iterators for getting values from stringsplitter object
 		  Iterator<String> it = ss.getDutyDutyID().iterator(); 
@@ -759,7 +775,7 @@ public class DBConnection {
 		  } 
 		  //fill Walkruntime
 		  while((it57.hasNext()&&it58.hasNext()&&it59.hasNext()&&it60.hasNext()&&it61.hasNext())){
-			  stmnt.executeUpdate("INSERT INTO Walkruntime (FromStopID, ToStopID,FromTime,ToTime,Runtime) VALUES('"+it57.next()+"','"+it58.next()+"','"+it59.next()+"','"+it60.next()+"','"+it61.next()+"');"); 
+			  stmnt.executeUpdate("INSERT INTO Transfertime (FromStopID, ToStopID,FromTime,ToTime,Runtime) VALUES('"+it57.next()+"','"+it58.next()+"','"+it59.next()+"','"+it60.next()+"','"+it61.next()+"');"); 
 		  }
 		  
 		  //fill days according to how much days are considered in the plan (min: 5, max: 7)
@@ -805,16 +821,16 @@ public class DBConnection {
 		ss.readTxtFromSzenario();
 		
 		
-		int fahrplanID=0;
-		
-		ResultSet rest = stmnt.executeQuery("SELECT * FROM Fahrplan;");
-		while(rest.next()){
-			String[] resultString=rest.getString("Bezeichnung").split("_");
-			 String finalString=resultString[3]+"_"+resultString[4]+"_"+resultString[5]+"_"+resultString[6]+"_"+resultString[7];
-			 if(finalString.equals(ss.getFilename())){
-				fahrplanID=Integer.parseInt(rest.getString("ID")); 
-			 }
+		String fileNameVergleich=ss.getFilename();
+		  String[] resultString=fileNameVergleich.split("_");
+		  String finalString="";
+		  for (int i = 0; i < resultString.length-1; i++) {
+			  if(i!=resultString.length-2){
+			  finalString+=resultString[i]+"_";
+			  }else
+				  finalString+=resultString[i];
 		}
+
 
 		  //Szenario
 		  Iterator<String> it1 = ss.getSzenarioDutyID().iterator();
@@ -824,7 +840,7 @@ public class DBConnection {
 		  Iterator<Integer> it5 = ss.getSzenarioDelay().iterator();
 		  
 		  while((it1.hasNext()&&it2.hasNext()&&it3.hasNext()&&it4.hasNext()&&it5.hasNext())){
-			  stmnt.executeUpdate("INSERT INTO PrimeDelaySzenario (DutyID, VehicleID, ServiceJourneyID, DepTime, Delay, FahrplanID) VALUES('"+it1.next()+"','"+it2.next()+"','"+it3.next()+"','"+it4.next()+"','"+it5.next()+"','"+fahrplanID+"');");
+			  stmnt.executeUpdate("INSERT INTO PrimeDelaySzenario (DutyID, VehicleID, ServiceJourneyID, DepTime, Delay, FahrplanID) VALUES('"+it1.next()+"','"+it2.next()+"','"+it3.next()+"','"+it4.next()+"','"+it5.next()+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('"+finalString+"%')));");
 		  }} 
 		catch (SQLException e) {
 				// TODO Auto-generated catch block
