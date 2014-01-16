@@ -273,9 +273,10 @@ public class DBMatching {
 			// All resulted datasets of the sql query will be added to the block
 			// array list
 			while (rest1.next()) {
+				int hilfsID = Integer.parseInt(rest1.getString("ID"));
 				int id = Integer.parseInt(rest1.getString("DutyID"));
 				String type = rest1.getString("DutyType");
-				duty.add(new Duty(id, type));
+				duty.add(new Duty(hilfsID,id, type));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

@@ -181,7 +181,8 @@ public class DBConnection {
 																   + "DutyCostPerMinute FLOAT(6,2) NOT NULL, "
 																   + "IsVehicleChangeAllowedDuringBreak INTEGER NOT NULL, "
 																   + "BreakTimeAllowedStarts VARCHAR(30) NOT NULL, "
-																   + "BreakTimeAllowedEnds VARCHAR(30) NOT NULL "
+																   + "BreakTimeAllowedEnds VARCHAR(30) NOT NULL, "
+																   + "FahrplanID INTEGER NOT NULL "
 																   //+ "WorkingTimeWithoutBreakMax VARCHAR(30)"
 																   + ");");
 			//******************************
@@ -343,7 +344,7 @@ public class DBConnection {
 			//Tables for delay scenarios (primary delays)
 			//*******************************************			
 
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS PrimeDelaySzenario (ID INTEGER PRIMARY KEY AUTOINCREMENT, DutyID VARCHAR(30), VehicleID VARCHAR(30), ServiceJourneyID VARCHAR(30) NOT NULL, DepTime VARCHAR(30) NOT NULL, Delay INTEGER NOT NULL, FahrplanID INTEGER); ");
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS PrimeDelaySzenario (ID INTEGER PRIMARY KEY AUTOINCREMENT, DutyID VARCHAR(30), VehicleID VARCHAR(30), ServiceJourneyID VARCHAR(30) NOT NULL, DepTime VARCHAR(30) NOT NULL, Delay INTEGER NOT NULL, FahrplanID INTEGER NOT NULL); ");
 
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Walkruntime (ID INTEGER PRIMARY KEY AUTOINCREMENT, FromStopID INTEGER, ToStopID INTEGER, FromTime VARCHAR(30) NOT NULL, ToTime VARCHAR(30) NOT NULL, Runtime INTEGER NOT NULL); ");
 
@@ -458,6 +459,10 @@ public class DBConnection {
 		//invoke stringsplitter method for reading the data in  txt-files
 		ss.readTxtDiensttypen();
 		
+		String fileNameVergleich=ss.getFilename();
+		  String[] resultString=fileNameVergleich.split("_");
+		  String finalString=resultString[0]+"_"+resultString[1];
+		
 		 try{ Statement stmnt=connection.createStatement(); //Fill values in
 		  //specific tables
 		  
@@ -510,8 +515,8 @@ public class DBConnection {
 		  while((it.hasNext()&&it2.hasNext()&&it3.hasNext()&&it4.hasNext()&&it5.hasNext()&&it6.hasNext()&&it7.hasNext()&&it8.hasNext()&&it9.hasNext()&&it10.hasNext()&&it11.hasNext()&&it12.hasNext()&&it13.hasNext()&&it14.hasNext()&&it15.hasNext()&&it16.hasNext()&&it17.hasNext()&&it18.hasNext()&&it19.hasNext()&&it20.hasNext()&&it21.hasNext()&&it22.hasNext()&&it23.hasNext()&&it24.hasNext()&&it25.hasNext()&&it26.hasNext()&&it27.hasNext()&&it28.hasNext()&&it29.hasNext()&&it30.hasNext()&&it31.hasNext()&&it32.hasNext()&&it33.hasNext()&&it34.hasNext()&&it35.hasNext())){
 			  
 			  stmnt.executeUpdate
-		  ("INSERT INTO Dutytype (Name, StartTimeMin, StartTimeMax, EndTimeMin, EndTimeMax, SignOnTime, SignOffTime, DurationMin, DurationMax, WorkingTimeTotalMin, WorkingTimeTotalMax, WorkingTimeBeforeBreakMin, WorkingTimeWithoutBreakMin, WorkingTimeAfterLastBreakMin, DrivingTimeTotalMin, DrivingTimeTotalMax, DrivingTimeWithoutBreakMin, DrivingTimeWithoutBreakMax, DrivingTimeWithoutBreakMinInterruptionTime, DrivingTimeBeforeFirstBreakMin, BreakType, BreakTimeTotalMin, BreakTimeTotalMax, BreakTimeMin, BreakTimeMax, PieceCountMin, PieceCountMax, AllowedCumulatedWorkingTimeMax, DutyFixCost, IsWorkRateConsidered, IsBreakRateConsidered, DutyCostPerMinute, IsVehicleChangeAllowedDuringBreak, BreakTimeAllowedStarts, BreakTimeAllowedEnds) VALUES('"
-			  +it.next()+"','"+it2.next()+"','"+it3.next()+"','"+it4.next()+"','"+it5.next()+"','"+it6.next()+"','"+it7.next()+"','"+it8.next()+"','"+it9.next()+"','"+it10.next()+"','"+it11.next()+"','"+it12.next()+"','"+it13.next()+"','"+it14.next()+"','"+it15.next()+"','"+it16.next()+"','"+it17.next()+"','"+it18.next()+"','"+it19.next()+"','"+it20.next()+"','"+it21.next()+"','"+it22.next()+"','"+it23.next()+"','"+it24.next()+"','"+it25.next()+"','"+it26.next()+"','"+it27.next()+"','"+it28.next()+"','"+it29.next()+"','"+it30.next()+"','"+it31.next()+"','"+it32.next()+"','"+it33.next()+"','"+it34.next()+"','"+it35.next()+"');"); }
+		  ("INSERT INTO Dutytype (Name, StartTimeMin, StartTimeMax, EndTimeMin, EndTimeMax, SignOnTime, SignOffTime, DurationMin, DurationMax, WorkingTimeTotalMin, WorkingTimeTotalMax, WorkingTimeBeforeBreakMin, WorkingTimeWithoutBreakMin, WorkingTimeAfterLastBreakMin, DrivingTimeTotalMin, DrivingTimeTotalMax, DrivingTimeWithoutBreakMin, DrivingTimeWithoutBreakMax, DrivingTimeWithoutBreakMinInterruptionTime, DrivingTimeBeforeFirstBreakMin, BreakType, BreakTimeTotalMin, BreakTimeTotalMax, BreakTimeMin, BreakTimeMax, PieceCountMin, PieceCountMax, AllowedCumulatedWorkingTimeMax, DutyFixCost, IsWorkRateConsidered, IsBreakRateConsidered, DutyCostPerMinute, IsVehicleChangeAllowedDuringBreak, BreakTimeAllowedStarts, BreakTimeAllowedEnds, FahrplanID) VALUES('"
+			  +it.next()+"','"+it2.next()+"','"+it3.next()+"','"+it4.next()+"','"+it5.next()+"','"+it6.next()+"','"+it7.next()+"','"+it8.next()+"','"+it9.next()+"','"+it10.next()+"','"+it11.next()+"','"+it12.next()+"','"+it13.next()+"','"+it14.next()+"','"+it15.next()+"','"+it16.next()+"','"+it17.next()+"','"+it18.next()+"','"+it19.next()+"','"+it20.next()+"','"+it21.next()+"','"+it22.next()+"','"+it23.next()+"','"+it24.next()+"','"+it25.next()+"','"+it26.next()+"','"+it27.next()+"','"+it28.next()+"','"+it29.next()+"','"+it30.next()+"','"+it31.next()+"','"+it32.next()+"','"+it33.next()+"','"+it34.next()+"','"+it35.next()+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('"+finalString+"%')));");}
 		  
 		  System.out.println("Dienstplan importiert!");
 		  
@@ -788,15 +793,29 @@ public class DBConnection {
 	public void fillSzenarioIntoTables(){
 		
 		Statement stmnt;
+		StringSplitter ss = StringSplitter.getInstance();
+		
 		try {
 			stmnt = connection.createStatement();
 		
 		
 		//temporary stringsplitter object that contains the the data from text files in array lists
-		StringSplitter ss = StringSplitter.getInstance();
+		
 		//invoke stringsplitter method for reading the data in  txt-files
 		ss.readTxtFromSzenario();
 		
+		
+		int fahrplanID=0;
+		
+		ResultSet rest = stmnt.executeQuery("SELECT * FROM Fahrplan;");
+		while(rest.next()){
+			String[] resultString=rest.getString("Bezeichnung").split("_");
+			 String finalString=resultString[3]+"_"+resultString[4]+"_"+resultString[5]+"_"+resultString[6]+"_"+resultString[7];
+			 if(finalString.equals(ss.getFilename())){
+				fahrplanID=Integer.parseInt(rest.getString("ID")); 
+			 }
+		}
+
 		  //Szenario
 		  Iterator<String> it1 = ss.getSzenarioDutyID().iterator();
 		  Iterator<String> it2 = ss.getSzenarioVehicleID().iterator(); 
@@ -805,7 +824,7 @@ public class DBConnection {
 		  Iterator<Integer> it5 = ss.getSzenarioDelay().iterator();
 		  
 		  while((it1.hasNext()&&it2.hasNext()&&it3.hasNext()&&it4.hasNext()&&it5.hasNext())){
-			  stmnt.executeUpdate("INSERT INTO PrimeDelaySzenario (DutyID, VehicleID, ServiceJourneyID, DepTime, Delay) VALUES('"+it1.next()+"','"+it2.next()+"','"+it3.next()+"','"+it4.next()+"','"+it5.next()+"');");
+			  stmnt.executeUpdate("INSERT INTO PrimeDelaySzenario (DutyID, VehicleID, ServiceJourneyID, DepTime, Delay, FahrplanID) VALUES('"+it1.next()+"','"+it2.next()+"','"+it3.next()+"','"+it4.next()+"','"+it5.next()+"','"+fahrplanID+"');");
 		  }} 
 		catch (SQLException e) {
 				// TODO Auto-generated catch block

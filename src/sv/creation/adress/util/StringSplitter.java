@@ -282,7 +282,7 @@ public class StringSplitter {
 			// All lines with relevant data will be read
 			// The data will be split in seperated array lists
 
-			File file = new File("resources/quellen/PLAN_A_BSP1_DIENST_cs_int4_20130527_151117_real_661_1_1_newTripIds.txt");
+			File file = new File("resources/quellen/PLAN_B_BSP2_DIENST_cs_int6_20130823_232154_real_c_278_219-225_1_1.txt");
 			BufferedReader dienstplan = new BufferedReader(new FileReader(file));
 			filename = file.getName();
 
@@ -326,6 +326,7 @@ public class StringSplitter {
 					if(zeilenelemente.size()==2){
 						dutyDutyID.add(zeilenelemente.get(0));
 						dutyDutyType.add(zeilenelemente.get(1));
+						
 					}
 					// The data is split in seperate array lists
 					if (zeilenelemente.size() >= 8) {
@@ -436,7 +437,7 @@ public class StringSplitter {
 
 			// testumlauf.txt Data has to be in the project file in your
 			// workspace
-			File file = new File("resources/quellen/PLAN_A_BSP1_UMLAUF_vs_int4_20130527_151117_real_661_1_1_newTripIds.txt");
+			File file = new File("resources/quellen/PLAN_B_BSP2_UMLAUF_vs_int6_20130823_232154_real_c_278_219-225_1_1.txt");
 			BufferedReader umlaufplan = new BufferedReader(new FileReader(file));
 			filename = file.getName();
 			String zeile = null;
@@ -537,6 +538,7 @@ public class StringSplitter {
 		}
 	}
 
+	
 	// ***********************************************
 	// ****** Method to read the Fahrplan data *******
 	// ****** *******
@@ -548,7 +550,7 @@ public class StringSplitter {
 
 			// testfahrplan.txt Data has to be in the project file in your
 			// workspace
-			File file = new File("resources/quellen/PLAN_A_FAHRPLAN_real_661_1_1_newTripIds.txt");
+			File file = new File("resources/quellen/PLAN_B_FAHRPLAN_real_c_278_219-225_1_1.txt");
 			BufferedReader fahrplan = new BufferedReader(new FileReader(file));
 			filename = file.getName();
 			String zeile = null;
@@ -1055,8 +1057,11 @@ public class StringSplitter {
 
 			// szenario Data has to be in the project file in your
 			// workspace
-			BufferedReader szenario = new BufferedReader(new FileReader(
-					"resources/quellen/real_661_1_1_newTripIds_01.txt"));
+			File file = new File("resources/quellen/real_661_1_1_newTripIds_01.txt");
+			BufferedReader szenario = new BufferedReader(new FileReader(file));
+			filename = file.getName();
+			
+			
 			String zeile = null;
 			ArrayList<String> zeilenelemente = new ArrayList<String>();
 			while ((zeile = szenario.readLine()) != null) {
@@ -1072,7 +1077,8 @@ public class StringSplitter {
 						
 					}
 				}
-			}	
+			}
+			System.out.println("hat geklappt!");
 			szenario.close();
 			}catch (IOException e) {
 				e.printStackTrace();
