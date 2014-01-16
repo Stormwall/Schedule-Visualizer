@@ -19,7 +19,7 @@
               <children>
                 <TableView fx:id="elementsTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                   <columns>
-                    <TableColumn prefWidth="75.0" text="Block-Ele." fx:id="blockEleCol" />
+                    <TableColumn prefWidth="75.0" text="Block - Element" fx:id="blockEleCol" />
                     <TableColumn prefWidth="75.0" text="Startzeit" fx:id="startzeitCol" />
                     <TableColumn prefWidth="75.0" text="Endzeit" fx:id="endzeitCol" />
                     <TableColumn prefWidth="75.0" text="Ele.-Type" fx:id="eleTypeCol" />
@@ -27,32 +27,43 @@
                     <TableColumn prefWidth="75.0" text="Dauer" fx:id="dauerCol" />
                   </columns>
                 </TableView>
-                <HBox id="HBox" alignment="CENTER" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
                   <children>
-                    <ChoiceBox fx:id="blockChoice" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefWidth="-1.0" styleClass="dark-blue-Choicebox, flowPane">
-                      <items>
-                        <FXCollections fx:factory="observableArrayList">
-                          <String fx:value="Item 1" />
-                          <String fx:value="Item 2" />
-                          <String fx:value="Item 3" />
-                        </FXCollections>
-                      </items>
-                    </ChoiceBox>
-                    <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#handleauswaehlen" styleClass="dark-blue" text="Auswählen" />
-                    <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#handlebearbeiten" styleClass="dark-blue" text="Bearbeiten" />
+                    <HBox id="HBox" alignment="CENTER" prefHeight="40.0" prefWidth="578.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                      <children>
+                        <ChoiceBox fx:id="blockChoice" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefWidth="-1.0" styleClass="dark-blue-Choicebox, flowPane">
+                          <items>
+                            <FXCollections fx:factory="observableArrayList">
+                              <String fx:value="Item 1" />
+                              <String fx:value="Item 2" />
+                              <String fx:value="Item 3" />
+                            </FXCollections>
+                          </items>
+                        </ChoiceBox>
+                        <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#handleauswaehlen" styleClass="dark-blue" text="Auswählen" />
+                        <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#handlebearbeiten" styleClass="dark-blue" text="Bearbeiten" />
+                        <Button mnemonicParsing="false" styleClass="dark-blue" text="Gruppen Bearbeiten" />
+                      </children>
+                    </HBox>
                   </children>
-                </HBox>
-                <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#handleuebernehemen" styleClass="dark-blue" text="Übernehmen" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Abbrechen" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                  <GridPane.margin>
-                    <Insets left="192.0" />
-                  </GridPane.margin>
-                </Button>
-                <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#handleExport" styleClass="dark-blue" text="Exportieren" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                  <GridPane.margin>
-                    <Insets left="100.0" />
-                  </GridPane.margin>
-                </Button>
+                </AnchorPane>
+                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <children>
+                    <HBox id="HBox" alignment="CENTER" prefHeight="50.0" prefWidth="289.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                      <children>
+                        <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#handleuebernehemen" styleClass="dark-blue" text="Übernehmen" />
+                        <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#handleExport" styleClass="dark-blue" text="Exportieren" />
+                        <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Abbrechen" />
+                      </children>
+                    </HBox>
+                    <HBox id="HBox" alignment="CENTER" prefHeight="50.0" prefWidth="179.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                      <children>
+                        <Button mnemonicParsing="false" styleClass="dark-blue" text="Kennzahlen" />
+                        <Button mnemonicParsing="false" styleClass="dark-blue" text="Vollbild" />
+                      </children>
+                    </HBox>
+                  </children>
+                </AnchorPane>
               </children>
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="100.0" />

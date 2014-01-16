@@ -264,7 +264,7 @@ public class MainLayoutController {
 	private ArrayList<Umlaufplan> umlaufplanliste = new ArrayList<Umlaufplan>();
 	private ArrayList<Dienstplan> dienstplanliste = new ArrayList<Dienstplan>();
 
-	// Zuordnung der Umlaufpläne
+	// Zuordnung der UmlaufplÃ¤ne
 
 	private Umlaufplan umlaufplanEins;
 	private Umlaufplan umlaufplanZwei;
@@ -274,7 +274,7 @@ public class MainLayoutController {
 	private Umlaufplan umlaufplanSechs;
 	private Umlaufplan umlaufplanSieben;
 
-	// Zuordnung der Dienstpläne
+	// Zuordnung der DienstplÃ¤ne
 
 	private Dienstplan dienstplanEins;
 	private Dienstplan dienstplanZwei;
@@ -396,7 +396,7 @@ public class MainLayoutController {
 
 	private boolean dDetailsTableErstellt = false;
 
-	// weitere Prüfvariablen
+	// weitere PrÃ¼fvariablen
 
 	private boolean secondGrafikErstellt = false;
 	private boolean thirdGrafikErstellt = false;
@@ -452,7 +452,7 @@ public class MainLayoutController {
 		ft.setAutoReverse(true);
 		ft.play();
 
-		// Befüllung der Dropdownmenues zur Auswahl der Pläne
+		// BefÃ¼llung der Dropdownmenues zur Auswahl der PlÃ¤ne
 
 		fillUmlaufplanliste();
 		fillDienstplanliste();
@@ -902,7 +902,7 @@ public class MainLayoutController {
 				new ChangeListener<Number>() {
 					public void changed(ObservableValue<? extends Number> ov,
 							Number old_val, Number new_val) {
-						// Handhabung wenn die Checkbox angew�hlt wird
+						// Handhabung wenn die Checkbox angewï¿½hlt wird
 						startzeitVar = new_val.intValue();
 						if (startzeitVar > endzeitVar) {
 							endzeitVar = endzeitVar + 24;
@@ -916,7 +916,7 @@ public class MainLayoutController {
 				new ChangeListener<Number>() {
 					public void changed(ObservableValue<? extends Number> ov,
 							Number old_val, Number new_val) {
-						// Handhabung wenn die Checkbox angew�hlt wird
+						// Handhabung wenn die Checkbox angewï¿½hlt wird
 						endzeitVar = new_val.intValue();
 						if (startzeitVar > endzeitVar) {
 							endzeitVar = new_val.intValue() + 24;
@@ -933,7 +933,7 @@ public class MainLayoutController {
 				new ChangeListener<Boolean>() {
 					public void changed(ObservableValue<? extends Boolean> ov,
 							Boolean old_val, Boolean new_val) {
-						// Handhabung wenn die Checkbox angew�hlt wird
+						// Handhabung wenn die Checkbox angewï¿½hlt wird
 						if (new_val == true) {
 							if (firstUppergrafikErstellt == true
 									|| firstLowergrafikErstellt == true) {
@@ -963,7 +963,7 @@ public class MainLayoutController {
 	@FXML
 	private void refreshBothGraphics() {
 
-		// Hier wird das Feld gecleared und gepr�ft ob es schon existiert
+		// Hier wird das Feld gecleared und geprï¿½ft ob es schon existiert
 
 		if (firstUppergrafikErstellt == true) {
 
@@ -1037,7 +1037,7 @@ public class MainLayoutController {
 			//
 			// Erstellung der Umlaufplangrafik auf dem ersten Tab
 			//
-			// Löschen der bisherigen Elemente
+			// LÃ¶schen der bisherigen Elemente
 
 			if (this.umlaufTabCounter >= 0) {
 
@@ -1059,7 +1059,7 @@ public class MainLayoutController {
 
 					graphicTransition();
 				}
-				// Labelbeschriftungen für Umlaufpläne
+				// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne
 				this.UPlan1.setVisible(true);
 				this.loeschenUmlaufplan.setVisible(true);
 
@@ -1098,7 +1098,7 @@ public class MainLayoutController {
 				createUpperXScalePane(this.xUp1, this.upperGraphicPane1);
 				createUmlaufElementGraphic(this.umlaufplanEins,
 						this.upperGraphicPane1, this.upperChart1, this.uppergc1);
-				// Fügt den Eventhändler hinzu
+				// FÃ¼gt den EventhÃ¤ndler hinzu
 				this.upperChart1.addEventHandler(MouseEvent.MOUSE_CLICKED,
 						new EventHandler<MouseEvent>() {
 							@Override
@@ -1141,7 +1141,7 @@ public class MainLayoutController {
 					umlaufIsCurrent = true;
 					dienstIsCurrent = false;
 				}
-				// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
+				// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne und Enabling des Tabs
 
 				this.Plan2.setDisable(false);
 				this.UPlan2.setVisible(true);
@@ -1184,7 +1184,7 @@ public class MainLayoutController {
 
 				createUmlaufElementGraphic(this.umlaufplanZwei,
 						this.upperGraphicPane2, this.upperChart2, this.uppergc2);
-				// Fügt den Eventhändler hinzu
+				// FÃ¼gt den EventhÃ¤ndler hinzu
 				this.upperChart2.addEventHandler(MouseEvent.MOUSE_CLICKED,
 						new EventHandler<MouseEvent>() {
 							@Override
@@ -1226,7 +1226,7 @@ public class MainLayoutController {
 					umlaufIsCurrent = true;
 					dienstIsCurrent = false;
 				}
-				// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
+				// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne und Enabling des Tabs
 
 				this.Plan3.setDisable(false);
 				this.UPlan3.setVisible(true);
@@ -1268,7 +1268,7 @@ public class MainLayoutController {
 
 				createUmlaufElementGraphic(this.umlaufplanDrei,
 						this.upperGraphicPane3, this.upperChart3, this.uppergc3);
-				// Fügt den Eventhändler hinzu
+				// FÃ¼gt den EventhÃ¤ndler hinzu
 				this.upperChart3.addEventHandler(MouseEvent.MOUSE_CLICKED,
 						new EventHandler<MouseEvent>() {
 							@Override
@@ -1310,7 +1310,7 @@ public class MainLayoutController {
 					umlaufIsCurrent = true;
 					dienstIsCurrent = false;
 				}
-				// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
+				// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne und Enabling des Tabs
 
 				this.Plan4.setDisable(false);
 				this.UPlan4.setVisible(true);
@@ -1352,7 +1352,7 @@ public class MainLayoutController {
 
 				createUmlaufElementGraphic(this.umlaufplanVier,
 						this.upperGraphicPane4, this.upperChart4, this.uppergc4);
-				// Fügt den Eventhändler hinzu
+				// FÃ¼gt den EventhÃ¤ndler hinzu
 				this.upperChart4.addEventHandler(MouseEvent.MOUSE_CLICKED,
 						new EventHandler<MouseEvent>() {
 							@Override
@@ -1368,7 +1368,7 @@ public class MainLayoutController {
 			}
 
 			//
-			// Erstellung der Umlaufplangrafik auf dem fünften Tab
+			// Erstellung der Umlaufplangrafik auf dem fÃ¼nften Tab
 			//
 
 			if (this.umlaufTabCounter >= 4) {
@@ -1394,7 +1394,7 @@ public class MainLayoutController {
 					umlaufIsCurrent = true;
 					dienstIsCurrent = false;
 				}
-				// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
+				// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne und Enabling des Tabs
 
 				this.Plan5.setDisable(false);
 				this.UPlan5.setVisible(true);
@@ -1436,7 +1436,7 @@ public class MainLayoutController {
 
 				createUmlaufElementGraphic(this.umlaufplanFuenf,
 						this.upperGraphicPane5, this.upperChart5, this.uppergc5);
-				// Fügt den Eventhändler hinzu
+				// FÃ¼gt den EventhÃ¤ndler hinzu
 				this.upperChart5.addEventHandler(MouseEvent.MOUSE_CLICKED,
 						new EventHandler<MouseEvent>() {
 							@Override
@@ -1478,7 +1478,7 @@ public class MainLayoutController {
 					umlaufIsCurrent = true;
 					dienstIsCurrent = false;
 				}
-				// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
+				// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne und Enabling des Tabs
 
 				this.Plan6.setDisable(false);
 				this.UPlan6.setVisible(true);
@@ -1519,7 +1519,7 @@ public class MainLayoutController {
 				createUpperXScalePane(this.xUp6, this.upperGraphicPane6);
 				createUmlaufElementGraphic(this.umlaufplanSechs,
 						this.upperGraphicPane6, this.upperChart6, this.uppergc6);
-				// Fügt den Eventhändler hinzu
+				// FÃ¼gt den EventhÃ¤ndler hinzu
 				this.upperChart6.addEventHandler(MouseEvent.MOUSE_CLICKED,
 						new EventHandler<MouseEvent>() {
 							@Override
@@ -1561,7 +1561,7 @@ public class MainLayoutController {
 					umlaufIsCurrent = true;
 					dienstIsCurrent = false;
 				}
-				// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
+				// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne und Enabling des Tabs
 
 				this.Plan7.setDisable(false);
 				this.UPlan7.setVisible(true);
@@ -1603,7 +1603,7 @@ public class MainLayoutController {
 
 				createUmlaufElementGraphic(this.umlaufplanSieben,
 						this.upperGraphicPane7, this.upperChart7, this.uppergc7);
-				// Fügt den Eventhändler hinzu
+				// FÃ¼gt den EventhÃ¤ndler hinzu
 				this.upperChart7.addEventHandler(MouseEvent.MOUSE_CLICKED,
 						new EventHandler<MouseEvent>() {
 							@Override
@@ -1685,7 +1685,7 @@ public class MainLayoutController {
 
 					graphicTransition();
 				}
-				// Labelbeschriftungen für Umlaufpläne
+				// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne
 				this.DPlan1.setVisible(true);
 				this.loeschenDienstplan.setVisible(true);
 
@@ -1726,7 +1726,7 @@ public class MainLayoutController {
 				createDienstElementGraphic(this.dienstplanEins,
 						this.lowerGraphicPane1, this.lowerChart1, this.lowergc1);
 
-				// // Fügt den Eventhändler hinzu
+				// // FÃ¼gt den EventhÃ¤ndler hinzu
 				// this.upperChart1.addEventHandler(MouseEvent.MOUSE_CLICKED,
 				// new EventHandler<MouseEvent>() {
 				// @Override
@@ -1766,7 +1766,7 @@ public class MainLayoutController {
 					this.umlaufIsCurrent = false;
 					this.dienstIsCurrent = true;
 				}
-				// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
+				// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne und Enabling des Tabs
 
 				this.Plan2.setDisable(false);
 				this.DPlan2.setVisible(true);
@@ -1809,7 +1809,7 @@ public class MainLayoutController {
 
 				createDienstElementGraphic(this.dienstplanZwei,
 						this.lowerGraphicPane2, this.lowerChart2, this.lowergc2);
-				// // Fügt den Eventhändler hinzu
+				// // FÃ¼gt den EventhÃ¤ndler hinzu
 				// this.upperChart2.addEventHandler(MouseEvent.MOUSE_CLICKED,
 				// new EventHandler<MouseEvent>() {
 				// @Override
@@ -1846,7 +1846,7 @@ public class MainLayoutController {
 					this.umlaufIsCurrent = false;
 					this.dienstIsCurrent = true;
 				}
-				// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
+				// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne und Enabling des Tabs
 
 				this.Plan3.setDisable(false);
 				this.DPlan3.setVisible(true);
@@ -1888,7 +1888,7 @@ public class MainLayoutController {
 
 				createDienstElementGraphic(this.dienstplanDrei,
 						this.lowerGraphicPane3, this.lowerChart3, this.lowergc3);
-				// // Fügt den Eventhändler hinzu
+				// // FÃ¼gt den EventhÃ¤ndler hinzu
 				// this.upperChart3.addEventHandler(MouseEvent.MOUSE_CLICKED,
 				// new EventHandler<MouseEvent>() {
 				// @Override
@@ -1925,7 +1925,7 @@ public class MainLayoutController {
 					this.umlaufIsCurrent = false;
 					this.dienstIsCurrent = true;
 				}
-				// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
+				// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne und Enabling des Tabs
 
 				this.Plan4.setDisable(false);
 				this.DPlan4.setVisible(true);
@@ -1967,7 +1967,7 @@ public class MainLayoutController {
 
 				createDienstElementGraphic(this.dienstplanVier,
 						this.lowerGraphicPane4, this.lowerChart4, this.lowergc4);
-				// // Fügt den Eventhändler hinzu
+				// // FÃ¼gt den EventhÃ¤ndler hinzu
 				// this.upperChart4.addEventHandler(MouseEvent.MOUSE_CLICKED,
 				// new EventHandler<MouseEvent>() {
 				// @Override
@@ -1983,7 +1983,7 @@ public class MainLayoutController {
 			}
 
 			//
-			// Erstellung der Umlaufplangrafik auf dem fünften Tab
+			// Erstellung der Umlaufplangrafik auf dem fÃ¼nften Tab
 			//
 
 			if (this.dienstTabCounter >= 4) {
@@ -2007,7 +2007,7 @@ public class MainLayoutController {
 					this.umlaufIsCurrent = false;
 					this.dienstIsCurrent = true;
 				}
-				// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
+				// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne und Enabling des Tabs
 
 				this.Plan5.setDisable(false);
 				this.DPlan5.setVisible(true);
@@ -2049,7 +2049,7 @@ public class MainLayoutController {
 
 				createDienstElementGraphic(this.dienstplanFuenf,
 						this.lowerGraphicPane5, this.lowerChart5, this.lowergc5);
-				// // Fügt den Eventhändler hinzu
+				// // FÃ¼gt den EventhÃ¤ndler hinzu
 				// this.upperChart5.addEventHandler(MouseEvent.MOUSE_CLICKED,
 				// new EventHandler<MouseEvent>() {
 				// @Override
@@ -2089,7 +2089,7 @@ public class MainLayoutController {
 					this.umlaufIsCurrent = false;
 					this.dienstIsCurrent = true;
 				}
-				// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
+				// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne und Enabling des Tabs
 
 				this.Plan6.setDisable(false);
 				this.DPlan6.setVisible(true);
@@ -2130,7 +2130,7 @@ public class MainLayoutController {
 				createLowerXScalePane(this.xLow6, this.lowerGraphicPane6);
 				createDienstElementGraphic(this.dienstplanSechs,
 						this.lowerGraphicPane6, this.lowerChart6, this.lowergc6);
-				// // Fügt den Eventhändler hinzu
+				// // FÃ¼gt den EventhÃ¤ndler hinzu
 				// this.upperChart6.addEventHandler(MouseEvent.MOUSE_CLICKED,
 				// new EventHandler<MouseEvent>() {
 				// @Override
@@ -2170,7 +2170,7 @@ public class MainLayoutController {
 					this.umlaufIsCurrent = false;
 					this.dienstIsCurrent = true;
 				}
-				// Labelbeschriftungen für Umlaufpläne und Enabling des Tabs
+				// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne und Enabling des Tabs
 
 				this.Plan7.setDisable(false);
 				this.DPlan7.setVisible(true);
@@ -2212,7 +2212,7 @@ public class MainLayoutController {
 
 				createDienstElementGraphic(this.dienstplanSieben,
 						this.lowerGraphicPane7, this.lowerChart7, this.lowergc7);
-				// // Fügt den Eventhändler hinzu
+				// // FÃ¼gt den EventhÃ¤ndler hinzu
 				// this.upperChart7.addEventHandler(MouseEvent.MOUSE_CLICKED,
 				// new EventHandler<MouseEvent>() {
 				// @Override
@@ -2892,7 +2892,7 @@ public class MainLayoutController {
 		// Belegung der DetailsPanes
 		switch (this.umlaufChoice) {
 		case 1:
-			// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+			// Erstellung/ BefÃ¼llen des Details Table-- Clearen des Alten
 			if (uDetailsTableErstellt == true) {
 				this.detailsUmlaufTable.getColumns().clear();
 				this.uDetailsTableErstellt = false;
@@ -2915,7 +2915,7 @@ public class MainLayoutController {
 			this.DPlanValue7.setStyle("-fx-background-color:white;");
 			break;
 		case 2:
-			// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+			// Erstellung/ BefÃ¼llen des Details Table-- Clearen des Alten
 			if (uDetailsTableErstellt == true) {
 				this.detailsUmlaufTable.getColumns().clear();
 				this.uDetailsTableErstellt = false;
@@ -2938,7 +2938,7 @@ public class MainLayoutController {
 			this.DPlanValue7.setStyle("-fx-background-color:white;");
 			break;
 		case 3:
-			// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+			// Erstellung/ BefÃ¼llen des Details Table-- Clearen des Alten
 			if (uDetailsTableErstellt == true) {
 				this.detailsUmlaufTable.getColumns().clear();
 				this.uDetailsTableErstellt = false;
@@ -2961,7 +2961,7 @@ public class MainLayoutController {
 			this.DPlanValue7.setStyle("-fx-background-color:white;");
 			break;
 		case 4:
-			// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+			// Erstellung/ BefÃ¼llen des Details Table-- Clearen des Alten
 			if (uDetailsTableErstellt == true) {
 				this.detailsUmlaufTable.getColumns().clear();
 				this.uDetailsTableErstellt = false;
@@ -2984,7 +2984,7 @@ public class MainLayoutController {
 			this.DPlanValue7.setStyle("-fx-background-color:white;");
 			break;
 		case 5:
-			// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+			// Erstellung/ BefÃ¼llen des Details Table-- Clearen des Alten
 			if (uDetailsTableErstellt == true) {
 				this.detailsUmlaufTable.getColumns().clear();
 				this.uDetailsTableErstellt = false;
@@ -3007,7 +3007,7 @@ public class MainLayoutController {
 			this.DPlanValue7.setStyle("-fx-background-color:white;");
 			break;
 		case 6:
-			// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+			// Erstellung/ BefÃ¼llen des Details Table-- Clearen des Alten
 			if (uDetailsTableErstellt == true) {
 				this.detailsUmlaufTable.getColumns().clear();
 				this.uDetailsTableErstellt = false;
@@ -3031,7 +3031,7 @@ public class MainLayoutController {
 			break;
 
 		case 7:
-			// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+			// Erstellung/ BefÃ¼llen des Details Table-- Clearen des Alten
 			if (uDetailsTableErstellt == true) {
 				this.detailsUmlaufTable.getColumns().clear();
 				this.uDetailsTableErstellt = false;
@@ -3072,7 +3072,7 @@ public class MainLayoutController {
 		// Belegung der DetailsPanes
 		switch (this.dienstChoice) {
 		case 1:
-			// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+			// Erstellung/ BefÃ¼llen des Details Table-- Clearen des Alten
 			if (dDetailsTableErstellt == true) {
 				this.detailsDienstTable.getColumns().clear();
 				this.dDetailsTableErstellt = false;
@@ -3095,7 +3095,7 @@ public class MainLayoutController {
 			this.UPlanValue7.setStyle("-fx-background-color:white;");
 			break;
 		case 2:
-			// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+			// Erstellung/ BefÃ¼llen des Details Table-- Clearen des Alten
 			if (dDetailsTableErstellt == true) {
 				this.detailsDienstTable.getColumns().clear();
 				this.dDetailsTableErstellt = false;
@@ -3118,7 +3118,7 @@ public class MainLayoutController {
 			this.UPlanValue7.setStyle("-fx-background-color:white;");
 			break;
 		case 3:
-			// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+			// Erstellung/ BefÃ¼llen des Details Table-- Clearen des Alten
 			if (dDetailsTableErstellt == true) {
 				this.detailsDienstTable.getColumns().clear();
 				this.dDetailsTableErstellt = false;
@@ -3141,7 +3141,7 @@ public class MainLayoutController {
 			this.UPlanValue7.setStyle("-fx-background-color:white;");
 			break;
 		case 4:
-			// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+			// Erstellung/ BefÃ¼llen des Details Table-- Clearen des Alten
 			if (dDetailsTableErstellt == true) {
 				this.detailsDienstTable.getColumns().clear();
 				this.dDetailsTableErstellt = false;
@@ -3164,7 +3164,7 @@ public class MainLayoutController {
 			this.UPlanValue7.setStyle("-fx-background-color:white;");
 			break;
 		case 5:
-			// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+			// Erstellung/ BefÃ¼llen des Details Table-- Clearen des Alten
 			if (dDetailsTableErstellt == true) {
 				this.detailsDienstTable.getColumns().clear();
 				this.dDetailsTableErstellt = false;
@@ -3187,7 +3187,7 @@ public class MainLayoutController {
 			this.UPlanValue7.setStyle("-fx-background-color:white;");
 			break;
 		case 6:
-			// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+			// Erstellung/ BefÃ¼llen des Details Table-- Clearen des Alten
 			if (dDetailsTableErstellt == true) {
 				this.detailsDienstTable.getColumns().clear();
 				this.dDetailsTableErstellt = false;
@@ -3211,7 +3211,7 @@ public class MainLayoutController {
 			break;
 
 		case 7:
-			// Erstellung/ Befüllen des Details Table-- Clearen des Alten
+			// Erstellung/ BefÃ¼llen des Details Table-- Clearen des Alten
 			if (dDetailsTableErstellt == true) {
 				this.detailsDienstTable.getColumns().clear();
 				this.dDetailsTableErstellt = false;
@@ -3261,7 +3261,7 @@ public class MainLayoutController {
 	}
 
 	/**
-	 * Fills the DetailPane für die Umlaufpläne
+	 * Fills the DetailPane fÃ¼r die UmlaufplÃ¤ne
 	 */
 	private void fillDetailPaneUmlauf(Umlaufplan umlaufplan) {
 		// Anzahl Blockelemente ermitteln und ausgeben
@@ -3283,7 +3283,7 @@ public class MainLayoutController {
 		this.anzahlServiceFahrten.setText(String.valueOf(sj));
 		this.anzahlLeerFahrten.setVisible(true);
 		this.anzahlLeerFahrten.setText(String.valueOf(lf));
-		// Zugehörigkeit zu Fahrplan
+		// ZugehÃ¶rigkeit zu Fahrplan
 		int fpID;
 		fpID = umlaufplan.getFahrplanID();
 		this.gehoertzuFahrplan.setVisible(true);
@@ -3366,7 +3366,7 @@ public class MainLayoutController {
 			umlaufplan.getFahrtZuUmlauf().get(i)
 					.setDriveTime(differenz + " min");
 
-			// Hinzufügen der Daten
+			// HinzufÃ¼gen der Daten
 
 			data.add(umlaufplan.getFahrtZuUmlauf().get(i));
 		}
@@ -3381,7 +3381,7 @@ public class MainLayoutController {
 	}
 
 	/**
-	 * Fills the DetailPane für die Dienstpläne
+	 * Fills the DetailPane fÃ¼r die DienstplÃ¤ne
 	 */
 	private void fillDetailPaneDienst(Dienstplan dienstplan) {
 		// Anzahl Blockelemente ermitteln und ausgeben
@@ -3403,7 +3403,7 @@ public class MainLayoutController {
 		this.anzahlServiceFahrten.setText(String.valueOf(sj));
 		this.anzahlLeerFahrten.setVisible(true);
 		this.anzahlLeerFahrten.setText(String.valueOf(lf));
-		// Zugehörigkeit zu Fahrplan
+		// ZugehÃ¶rigkeit zu Fahrplan
 
 		this.gehoertzuFahrplan.setVisible(true);
 
@@ -3484,7 +3484,7 @@ public class MainLayoutController {
 			differenz = (differenz / 1000) / 60;
 			dienstplan.getDutyelement().get(i).setDriveTime(differenz + " min");
 
-			// Hinzufügen der Daten
+			// HinzufÃ¼gen der Daten
 
 			data.add(dienstplan.getDutyelement().get(i));
 		}
@@ -3561,7 +3561,7 @@ public class MainLayoutController {
 
 						fahrtDauer = (int) (differenz * (abstandNetz / 60));
 
-						// Färben der Elemente
+						// FÃ¤rben der Elemente
 
 						switch (umlaufplan.getFahrtZuUmlauf().get(i)
 								.getElementType()) {
@@ -3683,7 +3683,7 @@ public class MainLayoutController {
 
 						fahrtDauer = (int) (differenz * (abstandNetz / 60));
 
-						// Färben der Elemente
+						// FÃ¤rben der Elemente
 
 						switch (dienstplan.getDutyelement().get(i)
 								.getElementType()) {
@@ -4363,7 +4363,7 @@ public class MainLayoutController {
 			}
 		}
 
-		// Hier werden die Schritte für den Löschvorgang bestimmt
+		// Hier werden die Schritte fÃ¼r den LÃ¶schvorgang bestimmt
 
 		switch (pruefcounter) {
 		case 0:
@@ -4532,11 +4532,11 @@ public class MainLayoutController {
 		}
 	}
 
-	// Methoden zur Befüllung der Dienstplanliste
+	// Methoden zur BefÃ¼llung der Dienstplanliste
 
 	public void fillDienstplanliste() {
 
-		// Dienstpläne -- Choicebox wird gefüllt
+		// DienstplÃ¤ne -- Choicebox wird gefÃ¼llt
 
 		DBMatching dbm = new DBMatching();
 
@@ -4557,11 +4557,11 @@ public class MainLayoutController {
 
 	}
 
-	// Methoden zur Befüllung der Umlaufplanliste
+	// Methoden zur BefÃ¼llung der Umlaufplanliste
 
 	public void fillUmlaufplanliste() {
 
-		// Umlaufpläne -- Choicebox wird gefüllt
+		// UmlaufplÃ¤ne -- Choicebox wird gefÃ¼llt
 
 		DBMatching dbm = new DBMatching();
 
