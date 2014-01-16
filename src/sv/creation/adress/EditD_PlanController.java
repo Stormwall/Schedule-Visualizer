@@ -107,7 +107,7 @@ public class EditD_PlanController {
 					.observableArrayList();
 
 			for (int i = 0; i < this.dienstplan.getDutyelement().size(); i++) {
-				if (this.dienstplan.getDutyelement().get(i).getBlockID() == dutyAuswahl) {
+				if (Integer.parseInt(this.dienstplan.getDutyelement().get(i).getDutyID())== dutyAuswahl) {
 					data.add(this.dienstplan.getDutyelement().get(i));
 				}
 
@@ -256,7 +256,7 @@ public class EditD_PlanController {
 		for (int i = 0; i < dienstplan.getDutyelement().size(); i++) {
 
 			// Abgleich mit den Werten
-			if (dienstplan.getDutyelement().get(i).getBlockID() == auswahl) {
+			if (Integer.parseInt(dienstplan.getDutyelement().get(i).getDutyID()) == auswahl) {
 
 				// Auslesen der Zeit als Integer
 				StringSplitter ss = new StringSplitter();
