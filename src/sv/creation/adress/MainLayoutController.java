@@ -1762,7 +1762,7 @@ public class MainLayoutController {
 					this.DPlanValue2.setText(DPlan.getSelectionModel()
 							.getSelectedItem().toString());
 					this.dienstChoice = 2;
-					
+
 					this.umlaufIsCurrent = false;
 					this.dienstIsCurrent = true;
 				}
@@ -1842,7 +1842,7 @@ public class MainLayoutController {
 					this.DPlanValue3.setText(DPlan.getSelectionModel()
 							.getSelectedItem().toString());
 					this.dienstChoice = 3;
-					
+
 					this.umlaufIsCurrent = false;
 					this.dienstIsCurrent = true;
 				}
@@ -1921,7 +1921,7 @@ public class MainLayoutController {
 					this.DPlanValue4.setText(DPlan.getSelectionModel()
 							.getSelectedItem().toString());
 					this.dienstChoice = 4;
-					
+
 					this.umlaufIsCurrent = false;
 					this.dienstIsCurrent = true;
 				}
@@ -2003,7 +2003,7 @@ public class MainLayoutController {
 					this.DPlanValue5.setText(DPlan.getSelectionModel()
 							.getSelectedItem().toString());
 					this.dienstChoice = 5;
-					
+
 					this.umlaufIsCurrent = false;
 					this.dienstIsCurrent = true;
 				}
@@ -2085,7 +2085,7 @@ public class MainLayoutController {
 					this.DPlanValue6.setText(DPlan.getSelectionModel()
 							.getSelectedItem().toString());
 					this.dienstChoice = 6;
-					
+
 					this.umlaufIsCurrent = false;
 					this.dienstIsCurrent = true;
 				}
@@ -2166,7 +2166,7 @@ public class MainLayoutController {
 					this.DPlanValue7.setText(DPlan.getSelectionModel()
 							.getSelectedItem().toString());
 					this.dienstChoice = 7;
-					
+
 					this.umlaufIsCurrent = false;
 					this.dienstIsCurrent = true;
 				}
@@ -2210,8 +2210,8 @@ public class MainLayoutController {
 				createLowerBackgroundGraphicSeventhPane();
 				createLowerXScalePane(this.xLow7, this.lowerGraphicPane7);
 
-				 createDienstElementGraphic(this.dienstplanSieben,
-				 this.lowerGraphicPane7, this.lowerChart7, this.lowergc7);
+				createDienstElementGraphic(this.dienstplanSieben,
+						this.lowerGraphicPane7, this.lowerChart7, this.lowergc7);
 				// // Fügt den Eventhändler hinzu
 				// this.upperChart7.addEventHandler(MouseEvent.MOUSE_CLICKED,
 				// new EventHandler<MouseEvent>() {
@@ -3115,7 +3115,7 @@ public class MainLayoutController {
 			this.UPlanValue4.setStyle("-fx-background-color:white;");
 			this.UPlanValue5.setStyle("-fx-background-color:white;");
 			this.UPlanValue6.setStyle("-fx-background-color:white;");
-			this.UPlanValue7.setStyle("-fx-background-color:white;");			
+			this.UPlanValue7.setStyle("-fx-background-color:white;");
 			break;
 		case 3:
 			// Erstellung/ Befüllen des Details Table-- Clearen des Alten
@@ -3526,11 +3526,9 @@ public class MainLayoutController {
 					int startMin = zeit[1];
 					zeit = ss.intParse(umlaufplan.getFahrtZuUmlauf().get(i)
 							.getArrTime());
-					int endHour = zeit[0];
 
 					// Belegung der Pixelwerte
-					if (this.startzeitVar <= startHour
-							&& this.endzeitVar > endHour) {
+					if (this.startzeitVar <= startHour) {
 						int stundenDifferenz = startHour - this.startzeitVar;
 						int startPixelX = (int) ((stundenDifferenz * abstandNetz) + ((abstandNetz / 60) * startMin));
 						int startPixelY = 10 + (j * 40);
@@ -3650,11 +3648,9 @@ public class MainLayoutController {
 					int startMin = zeit[1];
 					zeit = ss.intParse(dienstplan.getDutyelement().get(i)
 							.getArrTime());
-					int endHour = zeit[0];
 
 					// Belegung der Pixelwerte
-					if (this.startzeitVar <= startHour
-							&& this.endzeitVar > endHour) {
+					if (this.startzeitVar <= startHour) {
 						int stundenDifferenz = startHour - this.startzeitVar;
 						int startPixelX = (int) ((stundenDifferenz * abstandNetz) + ((abstandNetz / 60) * startMin));
 						int startPixelY = 10 + (j * 40);
@@ -4594,36 +4590,6 @@ public class MainLayoutController {
 
 	public void setMainApp(MainApplication mainApp) {
 		this.mainApp = mainApp;
-	}
-
-	// Belegung der Umlaufpläne
-
-	public void setUmlaufplanEins(Umlaufplan umlaufplanEins) {
-		this.umlaufplanEins = umlaufplanEins;
-	}
-
-	public void setUmlaufplanZwei(Umlaufplan umlaufplanZwei) {
-		this.umlaufplanZwei = umlaufplanZwei;
-	}
-
-	public void setUmlaufplanDrei(Umlaufplan umlaufplanDrei) {
-		this.umlaufplanDrei = umlaufplanDrei;
-	}
-
-	public void setUmlaufplanVier(Umlaufplan umlaufplanVier) {
-		this.umlaufplanVier = umlaufplanVier;
-	}
-
-	public void setUmlaufplanFuenf(Umlaufplan umlaufplanFuenf) {
-		this.umlaufplanFuenf = umlaufplanFuenf;
-	}
-
-	public void setUmlaufplanSechs(Umlaufplan umlaufplanSechs) {
-		this.umlaufplanSechs = umlaufplanSechs;
-	}
-
-	public void setUmlaufplanSieben(Umlaufplan umlaufplanSieben) {
-		this.umlaufplanSieben = umlaufplanSieben;
 	}
 
 }
