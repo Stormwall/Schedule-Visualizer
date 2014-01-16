@@ -2,6 +2,7 @@ package sv.creation.adress;
 
 import java.io.IOException;
 
+import sv.creation.adress.model.Dienstplan;
 import sv.creation.adress.model.Umlaufplan;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -249,6 +250,44 @@ public class MainApplication extends Application {
 		}
 
 	}
+	
+	// Initiate Edit U-Plan fxml
+
+		public boolean showEditDPlan(Dienstplan dienstplan) {
+
+			try {
+
+				// Load the fxml file and create a new stage for the popup
+				FXMLLoader loader = new FXMLLoader(
+						MainApplication.class.getResource("view/EditD_Plan.fxml"));
+				AnchorPane page = (AnchorPane) loader.load();
+				Stage dialogStage = new Stage();
+				dialogStage.setTitle("Umlaufplanbearbeitung");
+				dialogStage.getIcons().add(
+						new Image("file:resources/images/IconFinal.png"));
+				dialogStage.initModality(Modality.WINDOW_MODAL);
+				dialogStage.initOwner(primaryStage);
+				Scene scene = new Scene(page);
+				dialogStage.setScene(scene);
+
+				// Set the controller with all data
+				EditD_PlanController controller = loader.getController();
+				controller.setDienstplan(dienstplan);
+				controller.setMainApp(this);
+				controller.setDialogStage(dialogStage);
+
+				// Show the dialog and wait until the user closes it
+				dialogStage.showAndWait();
+
+				return controller.isOkClicked();
+
+			} catch (IOException e) {
+				// Exception gets thrown if the fxml file could not be loaded
+				e.printStackTrace();
+				return false;
+			}
+
+		}
 
 	// Initiate Edit Time Details fxml
 
