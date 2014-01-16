@@ -1,7 +1,6 @@
 package sv.creation.adress.model;
 
 public class Dutyelement {
-
 	private int id;
 	private String dutyID;
 	private int blockID;
@@ -11,11 +10,11 @@ public class Dutyelement {
 	private String depTime;
 	private String arrTime;
 	private int elementType;
-//	private String servicejourneycode;
+	// private String servicejourneycode;
 	private int dienstplanID;
 	private String driveTime;
-	
-	
+	private int dutyHilfsID;
+
 	/**
 	 * @param id
 	 * @param linienID
@@ -32,99 +31,87 @@ public class Dutyelement {
 	 * @param toStopBreakFacility
 	 * @param code
 	 */
-	public Dutyelement(int id, String dutyID, int blockID, String serviceJourneyID, int fromStopID, int toStopID,
-			String depTime, String arrTime, int elementType, int dienstplanID) {
+	public Dutyelement(int id, String dutyID, int blockID,
+			String serviceJourneyID, int fromStopID, int toStopID,
+			String depTime, String arrTime, int elementType, int dienstplanID,
+			int dutyHilfsID) {
 		super();
 		this.id = id;
 		this.dutyID = dutyID;
 		this.blockID = blockID;
-		this.serviceJourneyID=serviceJourneyID;
+		this.serviceJourneyID = serviceJourneyID;
 		this.fromStopID = fromStopID;
 		this.toStopID = toStopID;
 		this.depTime = depTime;
 		this.arrTime = arrTime;
 		this.elementType = elementType;
-//		this.servicejourneycode = servicejourneycode;
+		// this.servicejourneycode = servicejourneycode;
 		this.dienstplanID = dienstplanID;
+		this.dutyHilfsID = dutyHilfsID;
 	}
-
 
 	public int getId() {
 		return id;
 	}
 
-
 	public int getBlockID() {
 		return blockID;
 	}
-
 
 	public String getServiceJourneyID() {
 		return serviceJourneyID;
 	}
 
-
 	public int getFromStopID() {
 		return fromStopID;
 	}
-
 
 	public int getToStopID() {
 		return toStopID;
 	}
 
-
 	public String getDepTime() {
 		return depTime;
 	}
-
 
 	public String getArrTime() {
 		return arrTime;
 	}
 
-
 	public int getElementType() {
 		return elementType;
 	}
-
 
 	public String getDutyID() {
 		return dutyID;
 	}
 
-
 	public int getDienstplanID() {
 		return dienstplanID;
 	}
-
 
 	public String getDriveTime() {
 		return driveTime;
 	}
 
-
 	public void setDriveTime(String driveTime) {
 		this.driveTime = driveTime;
 	}
 
+	public int getDutyHilfsID() {
+		return dutyHilfsID;
+	}
 
 	public void setDepTime(String depTime) {
 		this.depTime = depTime;
 	}
 
-
 	public void setArrTime(String arrTime) {
 		this.arrTime = arrTime;
 	}
-	
 
-
-//	public String getServicejourneycode() {
-//		return servicejourneycode;
-//	}
-	
-	
-
+	// public String getServicejourneycode() {
+	// return servicejourneycode;
+	// }
 
 }
