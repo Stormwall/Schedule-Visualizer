@@ -1726,19 +1726,19 @@ public class MainLayoutController {
 				createDienstElementGraphic(this.dienstplanEins,
 						this.lowerGraphicPane1, this.lowerChart1, this.lowergc1);
 
-				// // FÃ¼gt den EventhÃ¤ndler hinzu
-				// this.upperChart1.addEventHandler(MouseEvent.MOUSE_CLICKED,
-				// new EventHandler<MouseEvent>() {
-				// @Override
-				// public void handle(MouseEvent e) {
-				// boolean okClicked = mainApp
-				// .showEditUPlan(umlaufplanEins);
-				// if (okClicked) {
-				// refreshBothGraphics();
-				// fillUmlaufplanliste();
-				// }
-				// }
-				// });
+//				 // Fügt den EventhÃ¤ndler hinzu
+//				 this.upperChart1.addEventHandler(MouseEvent.MOUSE_CLICKED,
+//				 new EventHandler<MouseEvent>() {
+//				 @Override
+//				 public void handle(MouseEvent e) {
+//				 boolean okClicked = mainApp
+//				 .showEditUPlan(umlaufplanEins);
+//				 if (okClicked) {
+//				 refreshBothGraphics();
+//				 fillUmlaufplanliste();
+//				 }
+//				 }
+//				 });
 
 			}
 
