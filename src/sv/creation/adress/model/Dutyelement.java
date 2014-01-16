@@ -107,6 +107,16 @@ public class Dutyelement {
 	public void setDriveTime(String driveTime) {
 		this.driveTime = driveTime;
 	}
+
+
+	public void setDepTime(String depTime) {
+		this.depTime = depTime;
+	}
+
+
+	public void setArrTime(String arrTime) {
+		this.arrTime = arrTime;
+	}
 	
 
 

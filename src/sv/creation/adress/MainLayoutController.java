@@ -3614,6 +3614,14 @@ public class MainLayoutController {
 								20, 20, 10);
 						gc.strokeRoundRect(startPixelX, startPixelY,
 								fahrtDauer, 20, 20, 10);
+						
+						// Beschriftet die Elemente
+						
+						if (fahrtDauer > 30) {
+							gc.setFill(Color.BLACK);
+							gc.setFont(new Font("Arial", 12));
+							gc.fillText(String.valueOf(umlaufplan.getFahrtZuUmlauf().get(i).getId()),startPixelX-3+(fahrtDauer/5),startPixelY +14);
+						}
 					}
 				}
 			}
@@ -3736,6 +3744,14 @@ public class MainLayoutController {
 								20, 20, 10);
 						gc.strokeRoundRect(startPixelX, startPixelY,
 								fahrtDauer, 20, 20, 10);
+						
+						// Beschriftet die Elemente
+						
+						if (fahrtDauer > 30) {
+							gc.setFill(Color.BLACK);
+							gc.setFont(new Font("Arial", 12));
+							gc.fillText(String.valueOf(dienstplan.getDutyelement().get(i).getId()),startPixelX-3+(fahrtDauer/5),startPixelY +14);
+						}
 					}
 				}
 			}
