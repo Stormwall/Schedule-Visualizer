@@ -6,12 +6,14 @@ import sv.creation.adress.model.Dienstplan;
 import sv.creation.adress.model.Umlaufplan;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Dialogs;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -50,9 +52,11 @@ public class MainApplication extends Application {
 			RootLayoutController controller = loader.getController();
 			controller.setMainApp(this);
 			
-//			Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-//			primaryStage.setWidth(screenBounds.getWidth());
-//			primaryStage.setHeight(screenBounds.getHeight());
+			Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
+			primaryStage.setX(bounds.getMinX());
+			primaryStage.setY(bounds.getMinY());
+			primaryStage.setWidth(bounds.getWidth());
+			primaryStage.setHeight(bounds.getHeight());
 
 			primaryStage.show();
 		} catch (IOException e) {
@@ -151,14 +155,14 @@ public class MainApplication extends Application {
 
 	// Initiate Fullscreen fxml
 
-	public void showFullScreenGraphic(MainLayoutController mainlayoutcontroller) {
+	public void showFullScreenGraphicUmlaufplan(Umlaufplan umlaufplan) {
 
 		try {
 
 			// Load the fxml file and create a new stage for the popup
 			FXMLLoader loader = new FXMLLoader(
 					MainApplication.class
-							.getResource("view/FullScreenGraphicLayout.fxml"));
+							.getResource("view/FullScreenLayoutUmlaufplan.fxml"));
 			AnchorPane page = (AnchorPane) loader.load();
 			Stage dialogStage = new Stage();
 			dialogStage.getIcons().add(
@@ -171,9 +175,9 @@ public class MainApplication extends Application {
 			dialogStage.setScene(scene);
 
 			// Set the controller
-			FullScreenLayoutController controller = loader.getController();
+			FullScreenLayoutControllerUmlaufplan controller = loader.getController();
 			controller.setDialogStage(dialogStage);
-			controller.setController(mainlayoutcontroller);
+			controller.setUmlaufplan(umlaufplan);
 
 			dialogStage.show();
 

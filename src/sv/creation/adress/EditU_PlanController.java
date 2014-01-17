@@ -363,6 +363,14 @@ public class EditU_PlanController {
 
 		this.canvas.getChildren().add(Chart);
 	}
+	
+	/**
+	 * Called when the user clicks Vollbild.
+	 */
+	@FXML
+	private void handleFullsreen() {
+		mainApp.showFullScreenGraphicUmlaufplan(this.umlaufplan);
+	}
 
 	// Methode zum Beenden des PopUp
 	@FXML

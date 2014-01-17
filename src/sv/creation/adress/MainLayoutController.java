@@ -4546,19 +4546,6 @@ public class MainLayoutController {
 		this.endzeitVar = endzeitVar;
 	}
 
-	// Methoden zur Festsetzung der Main
-
-	public void openFullscreen() {
-		if (this.firstUppergrafikErstellt == true) {
-			mainApp.showFullScreenGraphic(this);
-		} else {
-			String fehlerA = "Es wurde noch keine Grafik erzeugt";
-			String fehlerB = "Noch nicht";
-			String fehlerC = "Fehler";
-			mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
-		}
-	}
-
 	// Methoden zur BefÃ¼llung der Dienstplanliste
 
 	public void fillDienstplanliste() {
