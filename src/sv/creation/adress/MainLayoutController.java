@@ -3536,6 +3536,7 @@ public class MainLayoutController {
 						int startPixelX = (int) ((stundenDifferenz * abstandNetz) + ((abstandNetz / 60) * startMin));
 						int startPixelY = 10 + (j * 40);
 						int fahrtDauer = 0;
+						
 						// Berrechnen der Dauer zwischen der Abfahrt und der
 						// Ankunft
 
