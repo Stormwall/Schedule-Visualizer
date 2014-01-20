@@ -3513,6 +3513,10 @@ public class MainLayoutController {
 		// Auslesen der Blockanzahl
 		for (int j = 0; j < umlaufplan.getUmlauf().size(); j++) {
 
+			// Variablen zur Prüfung der ersten Stunde
+			int changeHour = 100;
+			int changeMin = 100;
+			Boolean anfangUmlauf = true;
 			// Auslesen Blockelementanzahl
 			for (int i = 0; i < umlaufplan.getFahrtZuUmlauf().size(); i++) {
 
@@ -3530,13 +3534,27 @@ public class MainLayoutController {
 					zeit = ss.intParse(umlaufplan.getFahrtZuUmlauf().get(i)
 							.getArrTime());
 
+					// Prüfung der ersten Stunde
+					if (anfangUmlauf == true && startHour < changeHour) {
+						changeHour = startHour;
+						changeMin = startMin;
+						anfangUmlauf = false;
+					}
+					if (startHour < changeHour) {
+						startHour = startHour + 24;
+					}
+					if (startHour == changeHour && startMin < changeMin) {
+						startHour = startHour + 24;
+					}
+					
+
 					// Belegung der Pixelwerte
 					if (this.startzeitVar <= startHour) {
 						int stundenDifferenz = startHour - this.startzeitVar;
 						int startPixelX = (int) ((stundenDifferenz * abstandNetz) + ((abstandNetz / 60) * startMin));
 						int startPixelY = 10 + (j * 40);
 						int fahrtDauer = 0;
-						
+
 						// Berrechnen der Dauer zwischen der Abfahrt und der
 						// Ankunft
 
@@ -3561,6 +3579,10 @@ public class MainLayoutController {
 							e.printStackTrace();
 						}
 						long differenz = date2.getTime() - date1.getTime();
+						//Über 0 Uhr
+						if (date2.getTime()< date1.getTime()) {
+							differenz = date2.getTime() - date1.getTime()+86400000;
+						}
 						differenz = (differenz / 1000) / 60;
 
 						fahrtDauer = (int) (differenz * (abstandNetz / 60));

@@ -117,28 +117,28 @@ public class FullScreenLayoutControllerUmlaufplan {
 				createYScale();
 			}
 		});
-		
+
 		// Listen for selection changes (Checkbox... Beschriftung)
 
-				this.beschriftung.selectedProperty().addListener(
-						new ChangeListener<Boolean>() {
-							public void changed(ObservableValue<? extends Boolean> ov,
-									Boolean old_val, Boolean new_val) {
-								// Handhabung wenn die Checkbox angewï¿½hlt wird
-								if (new_val == true) {
-									GraphicPane.getChildren().clear();
-									beschriftungCheck = true;
-									drawGraphic();
-								
-								}
-								// Handhabung wenn die Checkbox ausgeschaltet wird
-								if (new_val == false) {
-									GraphicPane.getChildren().clear();
-									beschriftungCheck = false;
-									drawGraphic();
-								}
-							}
-						});
+		this.beschriftung.selectedProperty().addListener(
+				new ChangeListener<Boolean>() {
+					public void changed(ObservableValue<? extends Boolean> ov,
+							Boolean old_val, Boolean new_val) {
+						// Handhabung wenn die Checkbox angewï¿½hlt wird
+						if (new_val == true) {
+							GraphicPane.getChildren().clear();
+							beschriftungCheck = true;
+							drawGraphic();
+
+						}
+						// Handhabung wenn die Checkbox ausgeschaltet wird
+						if (new_val == false) {
+							GraphicPane.getChildren().clear();
+							beschriftungCheck = false;
+							drawGraphic();
+						}
+					}
+				});
 	}
 
 	public void drawGraphic() {
@@ -227,8 +227,7 @@ public class FullScreenLayoutControllerUmlaufplan {
 	/**
 	 * Creates The Y - Scale.
 	 */
-	private void createYScale() {	
-		
+	private void createYScale() {
 
 		// Hier wird das Skala Canvas erzeugt
 		this.yCanvas = new Canvas(this.yPane.getWidth(), this.yPane.getHeight());
@@ -265,6 +264,11 @@ public class FullScreenLayoutControllerUmlaufplan {
 		// Auslesen der Blockanzahl
 		for (int j = 0; j < this.umlaufplan.getUmlauf().size(); j++) {
 
+			// Variablen zur Prüfung der ersten Stunde
+			int changeHour = 100;
+			int changeMin = 100;
+			Boolean anfangUmlauf = true;
+
 			// Auslesen Blockelementanzahl
 			for (int i = 0; i < this.umlaufplan.getFahrtZuUmlauf().size(); i++) {
 
@@ -281,6 +285,19 @@ public class FullScreenLayoutControllerUmlaufplan {
 					int startMin = zeit[1];
 					zeit = ss.intParse(this.umlaufplan.getFahrtZuUmlauf()
 							.get(i).getArrTime());
+
+					// Prüfung der ersten Stunde
+					if (anfangUmlauf == true && startHour < changeHour) {
+						changeHour = startHour;
+						changeMin = startMin;
+						anfangUmlauf = false;
+					}
+					if (startHour < changeHour) {
+						startHour = startHour + 24;
+					}
+					if (startHour == changeHour && startMin < changeMin) {
+						startHour = startHour + 24;
+					}
 
 					// Belegung der Pixelwerte
 					if (this.startzeitVar <= startHour) {
@@ -314,6 +331,13 @@ public class FullScreenLayoutControllerUmlaufplan {
 							e.printStackTrace();
 						}
 						long differenz = date2.getTime() - date1.getTime();
+
+						// Über 0 Uhr
+						if (date2.getTime() < date1.getTime()) {
+							differenz = date2.getTime() - date1.getTime()
+									+ 86400000;
+						}
+
 						differenz = (differenz / 1000) / 60;
 
 						fahrtDauer = (int) (differenz * (abstandNetz / 60));
@@ -372,28 +396,24 @@ public class FullScreenLayoutControllerUmlaufplan {
 						this.gc.strokeRoundRect(startPixelX, startPixelY,
 								fahrtDauer, breite / 2, 20, 10);
 
-						 // Beschriftet die Elemente
+						// Beschriftet die Elemente
 						if (beschriftungCheck) {
-							 if (fahrtDauer > 30) {
-								 this.gc.setFill(Color.BLACK);
-								 this.gc.setFont(new Font("Arial", 12));
-								 this.gc.fillText(
-								 String.valueOf(umlaufplan
-								 .getFahrtZuUmlauf().get(i).getId()),
-								 startPixelX - 3 + (fahrtDauer / 5),
-								 startPixelY + breite/3);
-								 }
+							if (fahrtDauer > 30) {
+								this.gc.setFill(Color.BLACK);
+								this.gc.setFont(new Font("Arial", 12));
+								this.gc.fillText(
+										String.valueOf(umlaufplan
+												.getFahrtZuUmlauf().get(i)
+												.getId()), startPixelX - 3
+												+ (fahrtDauer / 5), startPixelY
+												+ 1 + breite / 3);
+							}
 						}
-						
+
 					}
 				}
 			}
 		}
-	}
-	
-	public void beschriftungHinzufuegen(){
-		
-		
 	}
 
 	// Methode zum Beenden des PopUp
