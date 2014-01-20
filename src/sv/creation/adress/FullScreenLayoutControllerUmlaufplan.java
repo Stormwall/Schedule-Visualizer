@@ -12,6 +12,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.CheckBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -29,24 +30,21 @@ public class FullScreenLayoutControllerUmlaufplan {
 	private AnchorPane xPane;
 	@FXML
 	private AnchorPane yPane;
+	@FXML
+	private CheckBox beschriftung;
 
 	// Zeichenvariablen
-	@FXML
+
 	private Canvas canvas;
-	@FXML
 	private Canvas xCanvas;
-	@FXML
 	private Canvas yCanvas;
-	@FXML
 	private GraphicsContext gc;
-	@FXML
 	private GraphicsContext xgc;
-	@FXML
 	private GraphicsContext ygc;
-	@FXML
 	private int startzeitVar = 0;
-	@FXML
 	private int endzeitVar = 24;
+	private int breite = 0;
+	private boolean beschriftungCheck = false;
 
 	/**
 	 * Initializes the controller class. This method is automatically called
@@ -65,7 +63,8 @@ public class FullScreenLayoutControllerUmlaufplan {
 					public void changed(
 							ObservableValue<? extends Number> observableValue,
 							Number oldSceneWidth, Number newSceneWidth) {
-
+						GraphicPane.getChildren().clear();
+						drawGraphic();
 					}
 				});
 
@@ -75,6 +74,7 @@ public class FullScreenLayoutControllerUmlaufplan {
 					public void changed(
 							ObservableValue<? extends Number> observableValue,
 							Number oldSceneWidth, Number newSceneWidth) {
+						GraphicPane.getChildren().clear();
 						drawGraphic();
 					}
 				});
@@ -83,7 +83,8 @@ public class FullScreenLayoutControllerUmlaufplan {
 			public void changed(
 					ObservableValue<? extends Number> observableValue,
 					Number oldSceneWidth, Number newSceneWidth) {
-				createUpperXScalePane();
+				xPane.getChildren().clear();
+				createXScale();
 			}
 		});
 
@@ -92,8 +93,52 @@ public class FullScreenLayoutControllerUmlaufplan {
 			public void changed(
 					ObservableValue<? extends Number> observableValue,
 					Number oldSceneWidth, Number newSceneWidth) {
+				xPane.getChildren().clear();
+				createXScale();
 			}
 		});
+
+		this.yPane.widthProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(
+					ObservableValue<? extends Number> observableValue,
+					Number oldSceneWidth, Number newSceneWidth) {
+				yPane.getChildren().clear();
+				createYScale();
+			}
+		});
+
+		this.yPane.heightProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(
+					ObservableValue<? extends Number> observableValue,
+					Number oldSceneWidth, Number newSceneWidth) {
+				yPane.getChildren().clear();
+				createYScale();
+			}
+		});
+		
+		// Listen for selection changes (Checkbox... Beschriftung)
+
+				this.beschriftung.selectedProperty().addListener(
+						new ChangeListener<Boolean>() {
+							public void changed(ObservableValue<? extends Boolean> ov,
+									Boolean old_val, Boolean new_val) {
+								// Handhabung wenn die Checkbox angew�hlt wird
+								if (new_val == true) {
+									GraphicPane.getChildren().clear();
+									beschriftungCheck = true;
+									drawGraphic();
+								
+								}
+								// Handhabung wenn die Checkbox ausgeschaltet wird
+								if (new_val == false) {
+									GraphicPane.getChildren().clear();
+									beschriftungCheck = false;
+									drawGraphic();
+								}
+							}
+						});
 	}
 
 	public void drawGraphic() {
@@ -128,6 +173,11 @@ public class FullScreenLayoutControllerUmlaufplan {
 			this.gc.strokeLine(pixel, 0, pixel, this.canvas.getHeight());
 		}
 
+		// Berrechnung der Breite der Elemente
+		double b = this.GraphicPane.getHeight()
+				/ this.umlaufplan.getUmlauf().size();
+		this.breite = (int) b;
+
 		this.GraphicPane.getChildren().add(this.canvas);
 		createUmlaufElementGraphic();
 	}
@@ -135,7 +185,7 @@ public class FullScreenLayoutControllerUmlaufplan {
 	/**
 	 * Creates The X - Scale.
 	 */
-	private void createUpperXScalePane() {
+	private void createXScale() {
 
 		// Hier wird das Skala Canvas erzeugt
 		this.xCanvas = new Canvas(this.xPane.getWidth(), this.xPane.getHeight());
@@ -175,6 +225,36 @@ public class FullScreenLayoutControllerUmlaufplan {
 	}
 
 	/**
+	 * Creates The Y - Scale.
+	 */
+	private void createYScale() {	
+		
+
+		// Hier wird das Skala Canvas erzeugt
+		this.yCanvas = new Canvas(this.yPane.getWidth(), this.yPane.getHeight());
+
+		// Hier der Graphic Context dazu erzeugt
+		this.ygc = this.yCanvas.getGraphicsContext2D();
+		this.ygc.clearRect(0, 0, this.yCanvas.getWidth(),
+				this.yCanvas.getHeight());
+
+		// Eigenschaften der Beschriftung
+		this.ygc.setLineWidth(1);
+		this.ygc.setFont(new Font("Arial", 12));
+		this.ygc.setFill(Color.WHITE);
+		this.ygc.setStroke(Color.BLACK);
+		// Auslesen der Werte
+		for (int j = 0; j < umlaufplan.getUmlauf().size(); j++) {
+
+			ygc.fillText("B" + umlaufplan.getUmlauf().get(j).getId(), 4,
+					22 + (j * this.breite));
+
+		}
+
+		yPane.getChildren().add(this.yCanvas);
+	}
+
+	/**
 	 * Creates Umlauf Elements in the Graphic.
 	 */
 	private void createUmlaufElementGraphic() {
@@ -195,29 +275,28 @@ public class FullScreenLayoutControllerUmlaufplan {
 					// Auslesen der Zeit als Integer
 					StringSplitter ss = new StringSplitter();
 					int[] zeit = new int[2];
-					zeit = ss.intParse(this.umlaufplan.getFahrtZuUmlauf().get(i)
-							.getDepTime());
+					zeit = ss.intParse(this.umlaufplan.getFahrtZuUmlauf()
+							.get(i).getDepTime());
 					int startHour = zeit[0];
 					int startMin = zeit[1];
-					zeit = ss.intParse(this.umlaufplan.getFahrtZuUmlauf().get(i)
-							.getArrTime());
+					zeit = ss.intParse(this.umlaufplan.getFahrtZuUmlauf()
+							.get(i).getArrTime());
 
 					// Belegung der Pixelwerte
 					if (this.startzeitVar <= startHour) {
 						int stundenDifferenz = startHour - this.startzeitVar;
 						int startPixelX = (int) ((stundenDifferenz * abstandNetz) + ((abstandNetz / 60) * startMin));
-						double b = this.GraphicPane.getHeight()/this.umlaufplan.getUmlauf().size();
-						Integer breite = (int) b;
-						int startPixelY = 10 + (j * breite);
+
+						int startPixelY = 10 + (j * this.breite);
 						int fahrtDauer = 0;
 
 						// Berrechnen der Dauer zwischen der Abfahrt und der
 						// Ankunft
 
-						String depTime = this.umlaufplan.getFahrtZuUmlauf().get(i)
-								.getDepTime();
-						String arrtime = this.umlaufplan.getFahrtZuUmlauf().get(i)
-								.getArrTime();
+						String depTime = this.umlaufplan.getFahrtZuUmlauf()
+								.get(i).getDepTime();
+						String arrtime = this.umlaufplan.getFahrtZuUmlauf()
+								.get(i).getArrTime();
 
 						SimpleDateFormat format = new SimpleDateFormat("HH:mm");
 						Date date1 = null;
@@ -288,26 +367,33 @@ public class FullScreenLayoutControllerUmlaufplan {
 
 						// Malen der Elemente
 
-						this.gc.fillRoundRect(startPixelX, startPixelY, fahrtDauer,
-								breite/2, 20, 10);
+						this.gc.fillRoundRect(startPixelX, startPixelY,
+								fahrtDauer, breite / 2, 20, 10);
 						this.gc.strokeRoundRect(startPixelX, startPixelY,
-								fahrtDauer, breite/2, 20, 10);
+								fahrtDauer, breite / 2, 20, 10);
 
-//						// Beschriftet die Elemente
-//
-//						if (fahrtDauer > 30) {
-//							this.gc.setFill(Color.BLACK);
-//							this.gc.setFont(new Font("Arial", 12));
-//							this.gc.fillText(
-//									String.valueOf(umlaufplan
-//											.getFahrtZuUmlauf().get(i).getId()),
-//									startPixelX - 3 + (fahrtDauer / 5),
-//									startPixelY + 14);
-//						}
+						 // Beschriftet die Elemente
+						if (beschriftungCheck) {
+							 if (fahrtDauer > 30) {
+								 this.gc.setFill(Color.BLACK);
+								 this.gc.setFont(new Font("Arial", 12));
+								 this.gc.fillText(
+								 String.valueOf(umlaufplan
+								 .getFahrtZuUmlauf().get(i).getId()),
+								 startPixelX - 3 + (fahrtDauer / 5),
+								 startPixelY + breite/3);
+								 }
+						}
+						
 					}
 				}
 			}
 		}
+	}
+	
+	public void beschriftungHinzufuegen(){
+		
+		
 	}
 
 	// Methode zum Beenden des PopUp
