@@ -117,9 +117,10 @@ public class StringSplitter {
 	private static ArrayList<String> lineCode = new ArrayList<String>();
 	private static ArrayList<String> lineName = new ArrayList<String>();
 
-	/**
-	 * Array lists of linebundles
-	 */
+	
+	//Array lists of linebundles
+	private static ArrayList<Integer> linebundleID = new ArrayList<Integer>();
+	private static ArrayList<Integer> linebundleline = new ArrayList<Integer>();
 
 	// Array lists of vehicle type
 	private static ArrayList<Integer> vehicleTypeID = new ArrayList<Integer>();
@@ -245,7 +246,7 @@ public class StringSplitter {
 	private ArrayList<String> szenarioDepTime=new ArrayList<String>();
 	private ArrayList<Integer> szenarioDelay=new ArrayList<Integer>();
 
-	// dutyrule name
+	// file name
 	private String filename = null;
 
 	// Singleton
@@ -266,291 +267,16 @@ public class StringSplitter {
 		System.out.println(stringList);
 		return stringList;
 	}
-
-	// *************************************************
-	// ****** Method to read the duty roster data ******
-	// ****** *******
-	// *************************************************
-
-	public void readTxtDienstplan() {
-
-		try {
-
-			// *************************************************************
-			// test.txt Data has to be in the project file in your workspace
-			// path and filename will have to be changed dynamically
-			// All lines with relevant data will be read
-			// The data will be split in seperated array lists
-
-			File file = new File("resources/quellen/cs_int4_20130527_151117_real_661_1_1_newTripIds.txt");
-			BufferedReader dienstplan = new BufferedReader(new FileReader(file));
-			filename = file.getName();
-
-			DBConnection db = new DBConnection();
-			db.initDBConnection();
-			Statement stmnt;
-			int anzahl = 0;
-			try {
-				stmnt = db.getConnection().createStatement();
-				ResultSet rest1 = stmnt
-						.executeQuery("SELECT COUNT(*) AS anzahl FROM Dutyelement;");
-				anzahl = rest1.getInt("anzahl");
-				db.closeConnection();
-
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-
-			int dutyelementID = anzahl;
-
-			String zeile = null;
-			ArrayList<String> zeilenelemente = new ArrayList<String>();
-			boolean day = false;
-
-			// loop for all data lines in txt-file
-			while ((zeile = dienstplan.readLine()) != null) {
-
-				// checking if day relation exists in the txt-file
-				if (zeile.startsWith("$DAY")) {
-					day = true;
-					continue;
-				}
-
-				// ****************************************************************************************************************
-				// reading data from day relation by splitting "zeile" and
-				// storing the resulting values into array "zeilenelemente"
-				if (!zeile.startsWith("*") && !zeile.startsWith("$")) {
-					Collections.addAll(zeilenelemente, zeile.split(";"));
-					
-					if(zeilenelemente.size()==2){
-						dutyDutyID.add(zeilenelemente.get(0));
-						dutyDutyType.add(zeilenelemente.get(1));
-						
-					}
-					// The data is split in seperate array lists
-					if (zeilenelemente.size() >= 8) {
-						dutyelementID++;
-						int blockIDZiffer = Integer.parseInt(zeilenelemente
-								.get(1));
-						int fromStopIDZiffer = Integer.parseInt(zeilenelemente
-								.get(3));
-						int toStopIDZiffer = Integer.parseInt(zeilenelemente
-								.get(4));
-						int elementTypeZiffer = Integer.parseInt(zeilenelemente
-								.get(7));
-
-						// distinction between regular journeys and exceptional
-						// journeys
-						try {
-
-							String elementType = null;
-							elementType = zeilenelemente.get(7);
-
-							if (elementType.equals("1")) {
-								dutyelementServiceJourneyID.add(zeilenelemente
-										.get(2));
-								dutyelementDutyID.add(zeilenelemente.get(0));
-								dutyelementBlockID.add(blockIDZiffer);
-								dutyelementElementType.add(elementTypeZiffer);
-							} else {
-								dutyelementServiceJourneyID.add(zeilenelemente
-										.get(2));
-								dutyelementDutyID.add(zeilenelemente.get(0));
-								dutyelementBlockID.add(blockIDZiffer);
-								dutyelementElementType.add(elementTypeZiffer);
-
-								exceptionaldutyelementServiceJourneyID
-										.add(zeilenelemente.get(2));
-								exceptionaldutyelementBlockID
-										.add(blockIDZiffer);
-								exceptionaldutyelementDutyID.add(zeilenelemente
-										.get(0));
-								exceptionaldutyelementFromStopID.add(Integer
-										.parseInt(zeilenelemente.get(3)));
-								exceptionaldutyelementToStopID.add(Integer
-										.parseInt(zeilenelemente.get(4)));
-								exceptionaldutyelementDepTime
-										.add(changeDateFormat(zeilenelemente
-												.get(5)));
-								exceptionaldutyelementArrTime
-										.add(changeDateFormat(zeilenelemente
-												.get(6)));
-								exceptionaldutyelementElementType.add(Integer
-										.parseInt(zeilenelemente.get(7)));
-								exceptionaldutyelementDutyelementID
-										.add(dutyelementID);
-							}
-						} catch (NumberFormatException e) {
-							e.printStackTrace();
-						}
-					}
-					/**
-					 * // ATTENTION: The data can contain 9 elements including
-					 * ServiceJourneyCode if (zeilenelemente.size() == 9) { int
-					 * blockIDZiffer=Integer.parseInt(zeilenelemente.get(1));
-					 * int
-					 * fromStopIDZiffer=Integer.parseInt(zeilenelemente.get(3));
-					 * int
-					 * toStopIDZiffer=Integer.parseInt(zeilenelemente.get(4));
-					 * int
-					 * elementTypeZiffer=Integer.parseInt(zeilenelemente.get(
-					 * 7)); dutyelementDutyID.add(zeilenelemente.get(0));
-					 * dutyelementBlockID.add(blockIDZiffer);
-					 * dutyelementServiceJourneyID.add(zeilenelemente.get(2));
-					 * dutyelementElementType.add(elementTypeZiffer);
-					 * dutyelementServiceJourneyCode
-					 * .add(zeilenelemente.get(8)); }
-					 */
-					// day for which the schedule is valid***********
-					if (zeilenelemente.size() == 1) {
-						dutyelementDayID.add(zeilenelemente.get(0));
-						zeilenelemente.clear();
-					}
-					if (day == false) {
-						String dayId = "NULL";
-						dutyelementDayID.add(dayId);
-						zeilenelemente.clear();
-					}
-
-					// Size of the zeilenelemente array list will be reset
-					else
-						zeilenelemente.clear();
-				}
-
-			}
-			dienstplan.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	// *************************************************
-	// ****** Method to read the tour plan data ********
-	// ****** ********
-	// *************************************************
-
-	public void readTxtUmlaufplan() {
-
-		try {
-
-			// testumlauf.txt Data has to be in the project file in your
-			// workspace
-			File file = new File("resources/quellen/vs_int4_20130527_151117_real_661_1_1_newTripIds.txt");
-			BufferedReader umlaufplan = new BufferedReader(new FileReader(file));
-			filename = file.getName();
-			String zeile = null;
-			ArrayList<String> zeilenelemente = new ArrayList<String>();
-			boolean day = false;
-			while ((zeile = umlaufplan.readLine()) != null) {
-
-				// All lines with relevant data will be read
-				if (!zeile.startsWith("*") && !zeile.startsWith("$")) {
-					Collections.addAll(zeilenelemente, zeile.split(";"));
-
-					if (zeile.startsWith("$DAY")) {
-						day = true;
-						continue;
-					}
-
-					// The block data will be split in separated array
-					// lists
-					if (zeilenelemente.size() == 3) {
-						int idZahl = Integer.parseInt(zeilenelemente.get(0));
-						int vehTypeIDZahl = Integer.parseInt(zeilenelemente
-								.get(1));
-						int depotIDZahl = Integer.parseInt(zeilenelemente
-								.get(2));
-						id.add(idZahl);
-						vehTypeID.add(vehTypeIDZahl);
-						depotID.add(depotIDZahl);
-						zeilenelemente.clear();
-					}
-
-					// The block element data will be split, parsed and saved in
-					// separated array lists
-					if (zeilenelemente.size() >= 7) {
-						String zahl = null;
-						zahl = zeilenelemente.get(1);
-
-						// if-clause checks the ServiceJourneyID. If the
-						// serviceJourneyID contains letters the dataset will be
-						// added to the exceptionalBlockelement table.
-						if (zahl.matches("[0-9]+")) {
-							int blockID = Integer.parseInt(zeilenelemente
-									.get(0));
-							int elementType = Integer.parseInt(zeilenelemente
-									.get(6));
-
-							blockelementBlockID.add(blockID);
-							blockelementServiceJourneyID.add(zeilenelemente
-									.get(1));
-							blockelementElementType.add(elementType);
-
-						} else {
-							int blockID = Integer.parseInt(zeilenelemente
-									.get(0));
-							int fromStopID = Integer.parseInt(zeilenelemente
-									.get(2));
-							int toStopID = Integer.parseInt(zeilenelemente
-									.get(3));
-							int elementType = Integer.parseInt(zeilenelemente
-									.get(6));
-
-							blockelementBlockID.add(blockID);
-							blockelementServiceJourneyID.add(zeilenelemente
-									.get(1));
-							blockelementElementType.add(elementType);
-
-							exceptionalblockelementBlockID.add(blockID);
-							exceptionalblockelementServiceJourneyID.add(zahl);
-							exceptionalblockelementFromStopID.add(fromStopID);
-							exceptionalblockelementToStopID.add(toStopID);
-							exceptionalblockelementDepTime
-									.add(changeDateFormat(zeilenelemente.get(4)));
-							exceptionalblockelementArrTime
-									.add(changeDateFormat(zeilenelemente.get(5)));
-
-							zeilenelemente.clear();
-						}
-					}
-
-					if (zeilenelemente.size() == 1 && day == true) {
-						blockelementDayID.add(zeilenelemente.get(0));
-						zeilenelemente.clear();
-					}
-					if (day == false) {
-						String dayId = "NULL";
-						blockelementDayID.add(dayId);
-						zeilenelemente.clear();
-					}
-
-					// Size of the zeilenelemente array list will be reset
-					else
-						zeilenelemente.clear();
-				}
-			}
-			umlaufplan.close();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
 	
-	// ***********************************************
-	// ****** Method to read the Fahrplan data *******
-	// ****** *******
-	// ***********************************************
-
+	// ***************************************************************************************************************************
+	// ****** Method to read the Fahrplan data ***********************************************************************************
+	// ***************************************************************************************************************************
+	
 	public void readTxtFahrplan() {
 
 		try {
 
-			// testfahrplan.txt Data has to be in the project file in your
-			// workspace
-			File file = new File("resources/quellen/real_661_1_1_newTripIds.txt");
+			File file = new File("resources/quellen/real_abcde_494_421-436_1_1_DEPOT.txt");
 			BufferedReader fahrplan = new BufferedReader(new FileReader(file));
 			filename = file.getName();
 			String zeile = null;
@@ -560,6 +286,7 @@ public class StringSplitter {
 			boolean stoppoint = false;
 			boolean vehicleTypeGroup = false;
 			boolean line = false;
+			boolean linebundle = false;
 			boolean vehicleCapToStop = false;
 			boolean vehTypeToVehTypeGroup = false;
 			boolean reliefpoint = false;
@@ -580,9 +307,17 @@ public class StringSplitter {
 					line = true;
 					continue;
 				}
+				if (zeile.startsWith("$LINEBUNDLE")) {
+					stoppoint = false;
+					line = true;
+					linebundle = true;
+					continue;
+					
+				}
 				if (zeile.startsWith("$VEHICLETYPEGROUP")) {
 					stoppoint = false;
 					line = false;
+					linebundle = false;
 					vehicleTypeGroup = true;
 					continue;
 				}
@@ -590,6 +325,7 @@ public class StringSplitter {
 				if (zeile.startsWith("$VEHTYPETOVEHTYPEGROUP")) {
 					stoppoint = false;
 					line = false;
+					linebundle = false;
 					vehicleTypeGroup = false;
 					vehTypeToVehTypeGroup = true;
 					continue;
@@ -598,6 +334,7 @@ public class StringSplitter {
 				if (zeile.startsWith("$VEHTYPECAPTOSTOPPOINT")) {
 					stoppoint = false;
 					line = false;
+					linebundle = false;
 					vehicleTypeGroup = false;
 					vehTypeToVehTypeGroup = false;
 					vehicleCapToStop = true;
@@ -606,6 +343,7 @@ public class StringSplitter {
 				if (zeile.startsWith("$RELIEFPOINT")) {
 					stoppoint = false;
 					line = false;
+					linebundle = false;
 					vehicleTypeGroup = false;
 					vehTypeToVehTypeGroup = false;
 					vehicleCapToStop = false;
@@ -616,6 +354,7 @@ public class StringSplitter {
 				if (zeile.startsWith("$DEADRUNTIME")) {
 					stoppoint = false;
 					line = false;
+					linebundle = false;
 					vehicleTypeGroup = false;
 					vehTypeToVehTypeGroup = false;
 					vehicleCapToStop = false;
@@ -627,6 +366,7 @@ public class StringSplitter {
 				if (zeile.startsWith("$DAYS")) {
 					stoppoint = false;
 					line = false;
+					linebundle = false;
 					vehicleTypeGroup = false;
 					vehTypeToVehTypeGroup = false;
 					vehicleCapToStop = false;
@@ -639,6 +379,7 @@ public class StringSplitter {
 				if(zeile.startsWith("$WALKRUNTIME:")||zeile.startsWith("$TRANSFERTIME:")){
 					stoppoint = false;
 					line = false;
+					linebundle = false;
 					vehicleTypeGroup = false;
 					vehTypeToVehTypeGroup = false;
 					vehicleCapToStop = false;
@@ -672,6 +413,17 @@ public class StringSplitter {
 						lineID.add(lineIDZiffer);
 						lineCode.add(zeilenelemente.get(1));
 						lineName.add(zeilenelemente.get(2));
+						zeilenelemente.clear();
+					}
+					// The linebundle data will be split in separated array
+					// lists
+					if (zeilenelemente.size() == 2 && linebundle == true) {
+						int linebundleIDZiffer = Integer.parseInt(zeilenelemente
+								.get(0));
+						int lineZiffer = Integer.parseInt(zeilenelemente
+								.get(1));
+						linebundleID.add(linebundleIDZiffer);
+						linebundleline.add(lineZiffer);
 						zeilenelemente.clear();
 					}
 
@@ -842,7 +594,7 @@ public class StringSplitter {
 						int reliefpointIDZiffer = Integer
 								.parseInt(zeilenelemente.get(0));
 						int reliefpointStoppointIDZiffer = Integer
-								.parseInt(zeilenelemente.get(0));
+								.parseInt(zeilenelemente.get(2));
 
 						reliefpointID.add(reliefpointIDZiffer);
 						reliefpointServiceJourneyID.add(zeilenelemente.get(1));
@@ -970,97 +722,435 @@ public class StringSplitter {
 			e.printStackTrace();
 		}
 	}
+		
+		// **************************************************************************************************************************
+		// ****** Method to read the vehicle schedule data **************************************************************************
+		// **************************************************************************************************************************
 
-	// ***********************************************
-	// ****** Method to read the duty type data *******
-	// ****** *******
-	// ***********************************************
 
-	public void readTxtDiensttypen() {
+		public void readTxtUmlaufplan() {
+
+			try {
+
+				// testumlauf.txt Data has to be in the project file in your
+				// workspace
+				File file = new File("resources/quellen/vs_adp_day0_20130621_214124_real_abcde_494_421-436_1_1_DEPOT.txt");
+				BufferedReader umlaufplan = new BufferedReader(new FileReader(file));
+				filename = file.getName();
+				String zeile = null;
+				ArrayList<String> zeilenelemente = new ArrayList<String>();
+				boolean block = false;
+				boolean day = false;
+				while ((zeile = umlaufplan.readLine()) != null) {
+
+					// All lines with relevant data will be read
+					if (!zeile.startsWith("*") && !zeile.startsWith("$")) {
+						Collections.addAll(zeilenelemente, zeile.split(";"));
+
+						if (zeile.startsWith("$BLOCK")) {
+							block = true;
+							continue;
+						}
+
+						// The block data will be split in separated array
+						// lists
+						if (zeilenelemente.size() == 3) {
+							int idZahl = Integer.parseInt(zeilenelemente.get(0));
+							int vehTypeIDZahl = Integer.parseInt(zeilenelemente
+									.get(1));
+							int depotIDZahl = Integer.parseInt(zeilenelemente
+									.get(2));
+							id.add(idZahl);
+							vehTypeID.add(vehTypeIDZahl);
+							depotID.add(depotIDZahl);
+							zeilenelemente.clear();
+						}
+
+						// The block element data will be split, parsed and saved in
+						// separated array lists
+						if (zeilenelemente.size() >= 7) {
+							String zahl = null;
+							zahl = zeilenelemente.get(1);
+
+							// if-clause checks the ServiceJourneyID. If the
+							// serviceJourneyID contains letters the dataset will be
+							// added to the exceptionalBlockelement table.
+							if (zahl.matches("[0-9]+")) {
+								int blockID = Integer.parseInt(zeilenelemente
+										.get(0));
+								int elementType = Integer.parseInt(zeilenelemente
+										.get(6));
+
+								blockelementBlockID.add(blockID);
+								blockelementServiceJourneyID.add(zeilenelemente
+										.get(1));
+								blockelementElementType.add(elementType);
+
+							} else {
+								int blockID = Integer.parseInt(zeilenelemente
+										.get(0));
+								int fromStopID = Integer.parseInt(zeilenelemente
+										.get(2));
+								int toStopID = Integer.parseInt(zeilenelemente
+										.get(3));
+								int elementType = Integer.parseInt(zeilenelemente
+										.get(6));
+
+								blockelementBlockID.add(blockID);
+								blockelementServiceJourneyID.add(zeilenelemente
+										.get(1));
+								blockelementElementType.add(elementType);
+
+								exceptionalblockelementBlockID.add(blockID);
+								exceptionalblockelementServiceJourneyID.add(zahl);
+								exceptionalblockelementFromStopID.add(fromStopID);
+								exceptionalblockelementToStopID.add(toStopID);
+								exceptionalblockelementDepTime
+										.add(changeDateFormat(zeilenelemente.get(4)));
+								exceptionalblockelementArrTime
+										.add(changeDateFormat(zeilenelemente.get(5)));
+
+								zeilenelemente.clear();
+							}
+						}
+						if (zeile.startsWith("$DAY")) {
+							day = true;
+							continue;
+						}
+						if (zeilenelemente.size() == 1 && day == true) {
+							blockelementDayID.add(zeilenelemente.get(0));
+							zeilenelemente.clear();
+						}
+						if (day == false) {
+							String dayId = "NULL";
+							blockelementDayID.add(dayId);
+							zeilenelemente.clear();
+						}
+
+						// Size of the zeilenelemente array list will be reset
+						else
+							zeilenelemente.clear();
+					}
+				}
+				umlaufplan.close();
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		// ****************************************************************************************************************************
+		// ****** Method to read the duty type data ***********************************************************************************
+		// ****************************************************************************************************************************
+
+		public void readTxtDiensttypen() {
+
+			try {
+
+				// testfahrplan.txt Data has to be in the project file in your
+				// workspace
+
+				File file = new File("resources/Quellen/dt_real_abcde_494_421-436_1_1_DEPOT.txt");
+				BufferedReader diensttypen = new BufferedReader(new FileReader(file));
+				filename = file.getName();
+
+				String zeile = null;
+				ArrayList<String> zeilenelemente = new ArrayList<String>();
+				while ((zeile = diensttypen.readLine()) != null) {
+					// All lines with relevant data will be read
+					if (!zeile.startsWith("*") && !zeile.startsWith("$")) {
+						Collections.addAll(zeilenelemente, zeile.split(";"));
+
+						if (zeilenelemente.size() == 35) {
+
+							int pieceCountMinZiffer = Integer
+									.parseInt(zeilenelemente.get(25));
+							int pieceCountMaxZiffer = Integer
+									.parseInt(zeilenelemente.get(26));
+							int isWorkRateConsideredZiffer = Integer
+									.parseInt(zeilenelemente.get(29));
+							int isBreakRateConsideredZiffer = Integer
+									.parseInt(zeilenelemente.get(30));
+							int isVehicleChangeAllowedDuringBreakZiffer = Integer
+									.parseInt(zeilenelemente.get(32));
+
+							float dutyFixCostZiffer = Float
+									.parseFloat(zeilenelemente.get(28));
+							float dutyCostPerMinuteZiffer = Float
+									.parseFloat(zeilenelemente.get(31));
+
+							name.add(zeilenelemente.get(0));
+							startTimeMin.add(zeilenelemente.get(1));
+							startTimeMax.add(zeilenelemente.get(2));
+							endTimeMin.add(zeilenelemente.get(3));
+							endTimeMax.add(zeilenelemente.get(4));
+							signOnTime.add(zeilenelemente.get(5));
+							signOffTime.add(zeilenelemente.get(6));
+							durationMin.add(zeilenelemente.get(7));
+							durationMax.add(zeilenelemente.get(8));
+							workingTimeTotalMin.add(zeilenelemente.get(9));
+							workingTimeTotalMax.add(zeilenelemente.get(10));
+							workingTimeBeforeBreakMin.add(zeilenelemente.get(11));
+							workingTimeWithoutBreakMin.add(zeilenelemente.get(12));
+							workingTimeAfterLastBreakMin
+									.add(zeilenelemente.get(13));
+							drivingTimeTotalMin.add(zeilenelemente.get(14));
+							drivingTimeTotalMax.add(zeilenelemente.get(15));
+							drivingTimeWithoutBreakMin.add(zeilenelemente.get(16));
+							drivingTimeWithoutBreakMax.add(zeilenelemente.get(17));
+							drivingTimeWithoutBreakMinInterruptionTime
+									.add(zeilenelemente.get(18));
+							drivingTimeBeforeFirstBreakMin.add(zeilenelemente
+									.get(19));
+							breakType.add(zeilenelemente.get(20));
+							breakTimeTotalMin.add(zeilenelemente.get(21));
+							breakTimeTotalMax.add(zeilenelemente.get(22));
+							breakTimeMin.add(zeilenelemente.get(23));
+							breakTimeMax.add(zeilenelemente.get(24));
+							pieceCountMin.add(pieceCountMinZiffer);
+							pieceCountMax.add(pieceCountMaxZiffer);
+							allowedCumulatedWorkingTimeMax.add(zeilenelemente
+									.get(27));
+							dutyFixCost.add(dutyFixCostZiffer);
+							isWorkRateConsidered.add(isWorkRateConsideredZiffer);
+							isBreakRateConsidered.add(isBreakRateConsideredZiffer);
+							dutyCostPerMinute.add(dutyCostPerMinuteZiffer);
+							isVehicleChangeAllowedDuringBreak
+									.add(isVehicleChangeAllowedDuringBreakZiffer);
+							breakTimeAllowsStarts.add(zeilenelemente.get(33));
+							breakTimeAllowsEnds.add(zeilenelemente.get(34));
+							workingtimeWithoutBreakMax.add("nicht angegeben");
+							zeilenelemente.clear();
+						}
+						if (zeilenelemente.size() == 36) {
+
+							int pieceCountMinZiffer = Integer
+									.parseInt(zeilenelemente.get(25));
+							int pieceCountMaxZiffer = Integer
+									.parseInt(zeilenelemente.get(26));
+							int isWorkRateConsideredZiffer = Integer
+									.parseInt(zeilenelemente.get(29));
+							int isBreakRateConsideredZiffer = Integer
+									.parseInt(zeilenelemente.get(30));
+							int isVehicleChangeAllowedDuringBreakZiffer = Integer
+									.parseInt(zeilenelemente.get(32));
+
+							float dutyFixCostZiffer = Float
+									.parseFloat(zeilenelemente.get(28));
+							float dutyCostPerMinuteZiffer = Float
+									.parseFloat(zeilenelemente.get(31));
+
+							name.add(zeilenelemente.get(0));
+							startTimeMin.add(zeilenelemente.get(1));
+							startTimeMax.add(zeilenelemente.get(2));
+							endTimeMin.add(zeilenelemente.get(3));
+							endTimeMax.add(zeilenelemente.get(4));
+							signOnTime.add(zeilenelemente.get(5));
+							signOffTime.add(zeilenelemente.get(6));
+							durationMin.add(zeilenelemente.get(7));
+							durationMax.add(zeilenelemente.get(8));
+							workingTimeTotalMin.add(zeilenelemente.get(9));
+							workingTimeTotalMax.add(zeilenelemente.get(10));
+							workingTimeBeforeBreakMin.add(zeilenelemente.get(11));
+							workingTimeWithoutBreakMin.add(zeilenelemente.get(12));
+							workingTimeAfterLastBreakMin
+									.add(zeilenelemente.get(13));
+							drivingTimeTotalMin.add(zeilenelemente.get(14));
+							drivingTimeTotalMax.add(zeilenelemente.get(15));
+							drivingTimeWithoutBreakMin.add(zeilenelemente.get(16));
+							drivingTimeWithoutBreakMax.add(zeilenelemente.get(17));
+							drivingTimeWithoutBreakMinInterruptionTime
+									.add(zeilenelemente.get(18));
+							drivingTimeBeforeFirstBreakMin.add(zeilenelemente
+									.get(19));
+							breakType.add(zeilenelemente.get(20));
+							breakTimeTotalMin.add(zeilenelemente.get(21));
+							breakTimeTotalMax.add(zeilenelemente.get(22));
+							breakTimeMin.add(zeilenelemente.get(23));
+							breakTimeMax.add(zeilenelemente.get(24));
+							pieceCountMin.add(pieceCountMinZiffer);
+							pieceCountMax.add(pieceCountMaxZiffer);
+							allowedCumulatedWorkingTimeMax.add(zeilenelemente
+									.get(27));
+							dutyFixCost.add(dutyFixCostZiffer);
+							isWorkRateConsidered.add(isWorkRateConsideredZiffer);
+							isBreakRateConsidered.add(isBreakRateConsideredZiffer);
+							dutyCostPerMinute.add(dutyCostPerMinuteZiffer);
+							isVehicleChangeAllowedDuringBreak
+									.add(isVehicleChangeAllowedDuringBreakZiffer);
+							breakTimeAllowsStarts.add(zeilenelemente.get(33));
+							breakTimeAllowsEnds.add(zeilenelemente.get(34));
+							workingtimeWithoutBreakMax.add(zeilenelemente.get(35));
+							zeilenelemente.clear();
+						}
+					}
+				}
+				diensttypen.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+		}
+
+	// **************************************************************************************************************************
+	// ****** Method to read the duty roster data *******************************************************************************
+	// **************************************************************************************************************************
+
+	public void readTxtDienstplan() {
 
 		try {
 
-			// testfahrplan.txt Data has to be in the project file in your
-			// workspace
-			BufferedReader diensttypen = new BufferedReader(new FileReader(
-					"resources/quellen/Aufschluesselung_Diensttypen.txt"));
+			// *************************************************************
+			// test.txt Data has to be in the project file in your workspace
+			// path and filename will have to be changed dynamically
+			// All lines with relevant data will be read
+			// The data will be split in seperated array lists
+
+			File file = new File("resources/Quellen/cs_adp_day0_20130621_214124_real_abcde_494_421-436_1_1_DEPOT.txt");
+			BufferedReader dienstplan = new BufferedReader(new FileReader(file));
+			filename = file.getName();
+
+			DBConnection db = new DBConnection();
+			db.initDBConnection();
+			Statement stmnt;
+			int anzahl = 0;
+			try {
+				stmnt = db.getConnection().createStatement();
+				ResultSet rest1 = stmnt
+						.executeQuery("SELECT COUNT(*) AS anzahl FROM Dutyelement;");
+				anzahl = rest1.getInt("anzahl");
+				db.closeConnection();
+
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+			int dutyelementID = anzahl;
+
 			String zeile = null;
 			ArrayList<String> zeilenelemente = new ArrayList<String>();
-			while ((zeile = diensttypen.readLine()) != null) {
-				// All lines with relevant data will be read
+			boolean day = false;
+
+			// loop for all data lines in txt-file
+			while ((zeile = dienstplan.readLine()) != null) {
+
+				// checking if day relation exists in the txt-file
+				if (zeile.startsWith("$DAY")) {
+					day = true;
+					continue;
+				}
+
+				// ****************************************************************************************************************
+				// reading data from day relation by splitting "zeile" and
+				// storing the resulting values into array "zeilenelemente"
 				if (!zeile.startsWith("*") && !zeile.startsWith("$")) {
 					Collections.addAll(zeilenelemente, zeile.split(";"));
+					
+					if(zeilenelemente.size()==2){
+						dutyDutyID.add(zeilenelemente.get(0));
+						dutyDutyType.add(zeilenelemente.get(1));
+						
+					}
+					// The data is split in seperate array lists
+					if (zeilenelemente.size() >= 8) {
+						dutyelementID++;
+						int blockIDZiffer = Integer.parseInt(zeilenelemente
+								.get(1));
+						int fromStopIDZiffer = Integer.parseInt(zeilenelemente
+								.get(3));
+						int toStopIDZiffer = Integer.parseInt(zeilenelemente
+								.get(4));
+						int elementTypeZiffer = Integer.parseInt(zeilenelemente
+								.get(7));
 
-					if (zeilenelemente.size() == 35) {
+						// distinction between regular journeys and exceptional
+						// journeys
+						try {
 
-						int pieceCountMinZiffer = Integer
-								.parseInt(zeilenelemente.get(25));
-						int pieceCountMaxZiffer = Integer
-								.parseInt(zeilenelemente.get(26));
-						int isWorkRateConsideredZiffer = Integer
-								.parseInt(zeilenelemente.get(29));
-						int isBreakRateConsideredZiffer = Integer
-								.parseInt(zeilenelemente.get(30));
-						int isVehicleChangeAllowedDuringBreakZiffer = Integer
-								.parseInt(zeilenelemente.get(32));
+							String elementType = null;
+							elementType = zeilenelemente.get(7);
 
-						float dutyFixCostZiffer = Float
-								.parseFloat(zeilenelemente.get(28));
-						float dutyCostPerMinuteZiffer = Float
-								.parseFloat(zeilenelemente.get(31));
+							if (elementType.equals("1")) {
+								dutyelementServiceJourneyID.add(zeilenelemente
+										.get(2));
+								dutyelementDutyID.add(zeilenelemente.get(0));
+								dutyelementBlockID.add(blockIDZiffer);
+								dutyelementElementType.add(elementTypeZiffer);
+							} else {
+								dutyelementServiceJourneyID.add(zeilenelemente
+										.get(2));
+								dutyelementDutyID.add(zeilenelemente.get(0));
+								dutyelementBlockID.add(blockIDZiffer);
+								dutyelementElementType.add(elementTypeZiffer);
 
-						name.add(zeilenelemente.get(0));
-						startTimeMin.add(zeilenelemente.get(1));
-						startTimeMax.add(zeilenelemente.get(2));
-						endTimeMin.add(zeilenelemente.get(3));
-						endTimeMax.add(zeilenelemente.get(4));
-						signOnTime.add(zeilenelemente.get(5));
-						signOffTime.add(zeilenelemente.get(6));
-						durationMin.add(zeilenelemente.get(7));
-						durationMax.add(zeilenelemente.get(8));
-						workingTimeTotalMin.add(zeilenelemente.get(9));
-						workingTimeTotalMax.add(zeilenelemente.get(10));
-						workingTimeBeforeBreakMin.add(zeilenelemente.get(11));
-						workingTimeWithoutBreakMin.add(zeilenelemente.get(12));
-						workingTimeAfterLastBreakMin
-								.add(zeilenelemente.get(13));
-						drivingTimeTotalMin.add(zeilenelemente.get(14));
-						drivingTimeTotalMax.add(zeilenelemente.get(15));
-						drivingTimeWithoutBreakMin.add(zeilenelemente.get(16));
-						drivingTimeWithoutBreakMax.add(zeilenelemente.get(17));
-						drivingTimeWithoutBreakMinInterruptionTime
-								.add(zeilenelemente.get(18));
-						drivingTimeBeforeFirstBreakMin.add(zeilenelemente
-								.get(19));
-						breakType.add(zeilenelemente.get(20));
-						breakTimeTotalMin.add(zeilenelemente.get(21));
-						breakTimeTotalMax.add(zeilenelemente.get(22));
-						breakTimeMin.add(zeilenelemente.get(23));
-						breakTimeMax.add(zeilenelemente.get(24));
-						pieceCountMin.add(pieceCountMinZiffer);
-						pieceCountMax.add(pieceCountMaxZiffer);
-						allowedCumulatedWorkingTimeMax.add(zeilenelemente
-								.get(27));
-						dutyFixCost.add(dutyFixCostZiffer);
-						isWorkRateConsidered.add(isWorkRateConsideredZiffer);
-						isBreakRateConsidered.add(isBreakRateConsideredZiffer);
-						dutyCostPerMinute.add(dutyCostPerMinuteZiffer);
-						isVehicleChangeAllowedDuringBreak
-								.add(isVehicleChangeAllowedDuringBreakZiffer);
-						breakTimeAllowsStarts.add(zeilenelemente.get(33));
-						breakTimeAllowsEnds.add(zeilenelemente.get(34));
-						// workingtimeWithoutBreakMax.add(zeilenelemente.get(35));
+								exceptionaldutyelementServiceJourneyID
+										.add(zeilenelemente.get(2));
+								exceptionaldutyelementBlockID
+										.add(blockIDZiffer);
+								exceptionaldutyelementDutyID.add(zeilenelemente
+										.get(0));
+								exceptionaldutyelementFromStopID.add(Integer
+										.parseInt(zeilenelemente.get(3)));
+								exceptionaldutyelementToStopID.add(Integer
+										.parseInt(zeilenelemente.get(4)));
+								exceptionaldutyelementDepTime
+										.add(changeDateFormat(zeilenelemente
+												.get(5)));
+								exceptionaldutyelementArrTime
+										.add(changeDateFormat(zeilenelemente
+												.get(6)));
+								exceptionaldutyelementElementType.add(Integer
+										.parseInt(zeilenelemente.get(7)));
+								exceptionaldutyelementDutyelementID
+										.add(dutyelementID);
+							}
+						} catch (NumberFormatException e) {
+							e.printStackTrace();
+						}
+					}
+					/**
+					 * // ATTENTION: The data can contain 9 elements including
+					 * ServiceJourneyCode if (zeilenelemente.size() == 9) { int
+					 * blockIDZiffer=Integer.parseInt(zeilenelemente.get(1));
+					 * int
+					 * fromStopIDZiffer=Integer.parseInt(zeilenelemente.get(3));
+					 * int
+					 * toStopIDZiffer=Integer.parseInt(zeilenelemente.get(4));
+					 * int
+					 * elementTypeZiffer=Integer.parseInt(zeilenelemente.get(
+					 * 7)); dutyelementDutyID.add(zeilenelemente.get(0));
+					 * dutyelementBlockID.add(blockIDZiffer);
+					 * dutyelementServiceJourneyID.add(zeilenelemente.get(2));
+					 * dutyelementElementType.add(elementTypeZiffer);
+					 * dutyelementServiceJourneyCode
+					 * .add(zeilenelemente.get(8)); }
+					 */
+					// day for which the schedule is valid***********
+					if (zeilenelemente.size() == 1) {
+						dutyelementDayID.add(zeilenelemente.get(0));
 						zeilenelemente.clear();
 					}
+					if (day == false) {
+						String dayId = "NULL";
+						dutyelementDayID.add(dayId);
+						zeilenelemente.clear();
+					}
+
+					// Size of the zeilenelemente array list will be reset
+					else
+						zeilenelemente.clear();
 				}
+
 			}
-			diensttypen.close();
+			dienstplan.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 	}
-	
+
+		
 	public void readTxtFromSzenario(){
 		
 		try {
@@ -1321,6 +1411,13 @@ public class StringSplitter {
 
 	public ArrayList<String> getLineName() {
 		return lineName;
+	}
+	public ArrayList<Integer> getLinebundleID() {
+		return linebundleID;
+	}
+
+	public ArrayList<Integer> getLinebundleline() {
+		return linebundleline;
 	}
 
 	public ArrayList<Integer> getVehicleTypeID() {
@@ -1711,7 +1808,7 @@ public class StringSplitter {
 		return exceptionalblockelementServiceJourneyCode;
 	}
 
-	public static ArrayList<String> getDutyelementDutyID() {
+	public ArrayList<String> getDutyelementDutyID() {
 		return dutyelementDutyID;
 	}
 

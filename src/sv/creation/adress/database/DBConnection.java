@@ -2,7 +2,7 @@ package sv.creation.adress.database;
 
 /**
  * DESCRIPTION:
- * This class creates the database, manages the databaseconnection and fills the DB-tables in the process of importing new plans 
+ * This class creates the database, manages the database connection and fills the DB-tables in the process of importing new plans 
  * from txt-files into the DB.
  * 
  * CONTENTS:
@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.util.Iterator;
 
 import sv.creation.adress.util.StringSplitter;
+import sv.creation.adress.util.Import;
 
 public class DBConnection {
 
@@ -30,7 +31,7 @@ public class DBConnection {
 	private static Connection connection;
 	// Path where a empty database file is created
 	public static final String DB_PATH = System.getProperty("user.home") + "/"
-			+ "testdb.db";
+			+ "PlanB_DB.db";
 	//loading database drivers
 	static {
 		try {
@@ -40,13 +41,7 @@ public class DBConnection {
 			e.printStackTrace();
 		}
 	}
-/**
- * TODO: brauchen wir das noch? getter steht ganz unten
- 
-	public DBConnection() {
 
-	}
-*/
 	// Singleton
 	public static DBConnection getInstance() {
 		if (instance == null) {
@@ -92,59 +87,234 @@ public class DBConnection {
 		});
 	}
 
-//**********************************************
-//Create initial tables for schedule in database 
-//**********************************************
+//*****************************************************************************************************************************************
+//Create initial tables for schedules in database******************************************************************************************
+//*****************************************************************************************************************************************
 	
 	public void createTables() {
 
 		try {
-			//create db cpnnection
+			//create db connection
 			Statement stmnt = connection.createStatement();
 			//******************************
 			//Checks if table exists or not
-			//Tables duty roster
 			//******************************
+			//*********************************************************************************************************************************************
+			//Tables for schedules (stoppoints, lines, vehicles etc.)**************************************************************************************
+			//*********************************************************************************************************************************************
 			
-			//table for duty roster
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Dienstplan (ID INTEGER PRIMARY KEY AUTOINCREMENT, Bezeichnung VARCHAR(255), FahrplanID INTEGER);");
+			//table for schedule
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Fahrplan (ID INTEGER PRIMARY KEY AUTOINCREMENT, Bezeichnung VARCHAR(255), VersNr VARCHAR(30), FileType VARCHAR(30));");
 			
-			//table for duty
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Duty (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
-															   + "DutyID VARCHAR(30) NOT NULL, "
-															   + "DutyType VARCHAR(50) NOT NULL);");
-			//table for duty elements
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Dutyelement (ID INTEGER PRIMARY KEY AUTOINCREMENT,"
-																	  //+ "DutyelementID INTEGER NOT NULL, "
-																	  + "DutyID INTEGER NOT NULL, "
-																	  + "BlockID INTEGER NOT NULL, "
-																	  + "ServiceJourneyID VARCHAR(30) NOT NULL, "
-																	  + "ElementType INTEGER NOT NULL, "
-																	  + "DayID INTEGER,"
-																	  + "DienstplanID INTEGER NOT NULL);");
-//																	  + "FOREIGN KEY (DutyID) REFERENCES Duty(ID), "
-//																	  + "FOREIGN KEY (BlockID) REFERENCES Block(BlockID), "
-//																	  + "FOREIGN KEY (ServiceJourneyID) REFERENCES ServiceJourney(ID), "
-//																	  + "FOREIGN KEY(DayID) REFERENCES Day(dayID));");
+			//table for stoppoints
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Stoppoint (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
+																	+ "StoppointID_txt INTEGER NOT NULL, "
+																	+ "Code INTEGER NOT NULL, "
+																	+ "Name INTEGER NOT NULL, "
+																	+ "FahrplanID INTEGER NOT NULL, "
+																	+ "FOREIGN KEY (FahrplanID) REFERENCES Fahrplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);");
+			
+			//table for lines
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Line (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
+															   + "LineID_txt INTEGER NOT NULL, "
+															   + "Code INTEGER NOT NULL, "
+															   + "Name INTEGER NOT NULL, "
+															   + "FahrplanID INTEGER NOT NULL, "
+															   + "FOREIGN KEY (FahrplanID) REFERENCES Fahrplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);");
+			
+			//table for line bundles
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Linebundle (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
+																	+ "LinebundleID_txt INTEGER NOT NULL, "   													
+																	+ "LineID INTEGER NOT NULL, "
+																	+ "LineID_txt INTEGER NOT NULL, "
+																	+ "FahrplanID INTEGER NOT NULL, "
+																	+ "FOREIGN KEY (FahrplanID) REFERENCES Fahrplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);");
+			
+			//table for different vehicle types
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS VehicleType (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
+																	  + "VehicleTypeID_txt INTEGER NOT NULL, "
+																	  + "Code INTEGER NOT NULL, "
+																	  + "Name INTEGER NOT NULL, "
+																	  + "VehCost INTEGER NOT NULL, "
+																	  + "KmCost INTEGER NOT NULL, "
+																	  + "HourCost INTEGER NOT NULL, "
+																	  + "Capacity INTEGER NOT NULL, "
+																	  + "FahrplanID INTEGER NOT NULL, "
+																	  + "FOREIGN KEY (FahrplanID) REFERENCES Fahrplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);");
+			
+			//table for vehicle type groups
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS VehicleTypeGroup (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
+																		   + "VehicleTypeGroupID_txt INTEGER NOT NULL, "
+																		   + "Code INTEGER NOT NULL, "
+																		   + "Name INTEGER NOT NULL, "
+																		   + "FahrplanID INTEGER NOT NULL, "
+																		   + "FOREIGN KEY (FahrplanID) REFERENCES Fahrplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);");
+			
+			//matching of vehicle types to vehicle type groups
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS VehicleTypeToVehicleTypeGroup (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
+																						+ "VehTypeID INTEGER NOT NULL, "
+																						+ "VehTypeID_txt INTEGER NOT NULL, "
+																						+ "VehTypeGroupID INTEGER NOT NULL, "
+																						+ "VehTypeGroupID_txt INTEGER NOT NULL, "
+																						+ "FahrplanID INTEGER NOT NULL, "
+																						+ "FOREIGN KEY (VehTypeID) REFERENCES VehicleType(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
+																						+ "FOREIGN KEY (VehTypeGroupID) REFERENCES VehicleTypeGroup(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
+																						+ "FOREIGN KEY (FahrplanID) REFERENCES Fahrplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);");
+			
+			//tables for capacities of depots according to vehicle type
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS VehicleCapToStoppoint (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
+																				+ "VehTypeID INTEGER NOT NULL, "
+																				+ "VehTypeID_txt INTEGER NOT NULL, "
+																				+ "StoppointID INTEGER NOT NULL, "
+																				+ "StoppointID_txt INTEGER NOT NULL, "
+																				+ "Min INTEGER NOT NULL, "
+																				+ "Max INTEGER NOT NULL, "
+																				+ "FahrplanID INTEGER NOT NULL, "
+																				+ "FOREIGN KEY (VehTypeID) REFERENCES VehicleType(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
+																				+ "FOREIGN KEY (FahrplanID) REFERENCES Fahrplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);");
+			
+			//table for service journeys
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS ServiceJourney (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
+																		 + "ServiceJourneyID_txt INTEGER NOT NULL, "
+																		 + "LineID INTEGER NOT NULL, "
+																		 + "LineID_txt INTEGER NOT NULL, "
+																		 + "FromStopID INTEGER NOT NULL, "
+																		 + "FromStopID_txt INTEGER NOT NULL, "
+																		 + "ToStopID INTEGER NOT NULL, "
+																		 + "ToStopID_txt INTEGER NOT NULL, "
+																		 + "DepTime VARCHAR(10) NOT NULL, "
+																		 + "ArrTime VARCHAR(10) NOT NULL, "
+																		 + "MinAheadTime INTEGER NOT NULL, "
+																		 + "MinLayoverTime INTEGER NOT NULL, "
+																		 + "VehTypeGroupID INTEGER NOT NULL, "
+																		 + "VehTypeGroupID_txt INTEGER NOT NULL, "
+																		 + "MaxShiftBackwardSeconds INTEGER NOT NULL, "
+																		 + "MaxShiftForwardSeconds INTEGER NOT NULL, "
+																		 + "FromStopBreakFacility INTEGER NOT NULL, "
+																		 + "ToStopBreakFacility INTEGER NOT NULL, "
+																		 + "Code INTEGER,"
+																		 + "FahrplanID INTEGER NOT NULL, "
+																		 + "FOREIGN KEY (LineID) REFERENCES Line(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
+																		 + "FOREIGN KEY (FromStopID) REFERENCES Stoppoint(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
+																		 + "FOREIGN KEY (ToStopID) REFERENCES Stoppoint(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
+																		 + "FOREIGN KEY (VehTypeGroupID) REFERENCES VehicleTypeGroup(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
+																		 + "FOREIGN KEY (FahrplanID) REFERENCES Fahrplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);");
+			
+			//table for deadheading journeys depending on the day time
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Deadruntime (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
+																	  + "FromStopID INTEGER NOT NULL, "
+																	  + "FromStopID_txt INTEGER NOT NULL, "
+																	  + "ToStopID INTEGER NOT NULL, "
+																	  + "ToStopID_txt INTEGER NOT NULL, "
+																	  + "FromTime VARCHAR(10) NOT NULL, "
+																	  + "ToTime VARCHAR(10) NOT NULL, "
+																	  + "Distance INTEGER NOT NULL, "
+																	  + "RunTime INTEGER NOT NULL, "
+																	  + "FahrplanID INTEGER NOT NULL, "
+																	  + "FOREIGN KEY (FromStopID) REFERENCES Stoppoint(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
+																	  + "FOREIGN KEY (ToStopID) REFERENCES Stoppoint(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
+																	  + "FOREIGN KEY (FahrplanID) REFERENCES Fahrplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);");
+
+			//table for stoppoints and respective times which allow for a change of ressources
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Reliefpoint (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
+																	  + "ReliefpointID_txt INTEGER NOT NULL, "
+																	  + "ServiceJourneyID INTEGER NOT NULL, "
+																	  + "ServiceJourneyID_txt INTEGER NOT NULL, "
+																	  + "StoppointID INTEGER NOT NULL, "
+																	  + "StoppointID_txt INTEGER NOT NULL, "
+																	  + "StopTime VARCHAR(10), "
+																	  + "FahrplanID INTEGER NOT NULL, "
+																 	  + "FOREIGN KEY(ServiceJourneyID) REFERENCES ServiceJourney(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
+																	  + "FOREIGN KEY (StoppointID) REFERENCES Stoppoint(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
+																	  + "FOREIGN KEY (FahrplanID) REFERENCES Fahrplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);");			
+			
+			//table for days in which the respective service journey is valid
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Days (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
+															   + "TRIPID INTEGER NOT NULL, "
+															   + "TRIPID_txt INTEGER NOT NULL, "
+															   + "d1 INTEGER NOT NULL, "
+															   + "d2 INTEGER NOT NULL, "
+															   + "d3 INTEGER NOT NULL, "
+															   + "d4 INTEGER NOT NULL, "
+															   + "d5 INTEGER NOT NULL, "
+															   + "d6 INTEGER, "
+															   + "d7 INTEGER, "
+															   + "FahrplanID INTEGER NOT NULL, "
+															   + "FOREIGN KEY(TRIPID) REFERENCES ServiceJourney(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
+															   + "FOREIGN KEY (FahrplanID) REFERENCES Fahrplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);");
+			//weekdays
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Day (dayID INTEGER NOT NULL PRIMARY KEY, "
+														      + "Name VARCHAR(10));");
+			//Transfertime
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Transfertime (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
+																			+ "FromStopID INTEGER, "
+																			+ "FromStopID_txt INTEGER, "
+																			+ "ToStopID INTEGER, "
+																			+ "ToStopID_txt INTEGER, "
+																			+ "FromTime VARCHAR(30) NOT NULL, "
+																			+ "ToTime VARCHAR(30) NOT NULL, "
+																			+ "Runtime INTEGER NOT NULL, "
+																			+ "FahrplanID INTEGER NOT NULL, "
+																			+ "FOREIGN KEY (FromStopID) REFERENCES Stoppoint(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
+																			+ "FOREIGN KEY (ToStopID) REFERENCES Stoppoint(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
+																			+ "FOREIGN KEY (FahrplanID) REFERENCES Fahrplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);");
+			
+			//****************************************************************************************************************************
+			//*****Tables for vehicle schedules*******************************************************************************************
+			//****************************************************************************************************************************	
+			
+			//table for tour roster
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Umlaufplan (ID INTEGER PRIMARY KEY AUTOINCREMENT, Bezeichnung VARCHAR(255), FahrplanID INTEGER, "
+																		+ "FOREIGN KEY (FahrplanID) REFERENCES Fahrplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);");
+			
+			//table for tours
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Block (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
+																+ "BlockID_txt INTEGER NOT NULL, "
+																+ "VehTypeID INTEGER NOT NULL, "
+																+ "VehTypeID_txt INTEGER NOT NULL, "
+																+ "DepotID INTEGER NOT NULL, "
+																+ "DepotID_txt INTEGER NOT NULL, "
+																+ "UmlaufplanID INTEGER NOT NULL, "
+																+ "FOREIGN KEY (VehTypeID) REFERENCES VehicleType(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
+																+ "FOREIGN KEY (DepotID) REFERENCES Stoppoint(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
+																+ "FOREIGN KEY (UmlaufplanID) REFERENCES Umlaufplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);");
+			
+			//table for tour elements (journeys)
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Blockelement (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
+																	   + "BlockID INTEGER NOT NULL, "
+																	   + "BlockID_txt INTEGER NOT NULL, "
+																	   + "ServiceJourneyID INTEGER NOT NULL, "
+																	   + "ServiceJourneyID_txt VARCHAR(30) NOT NULL, "
+																	   + "ElementType INTEGER NOT NULL, "
+																	   + "DayID INTEGER,"
+																	   + "UmlaufplanID INTEGER NOT NULL, "
+																	   + "FOREIGN KEY (BlockID) REFERENCES Block(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
+																	   + "FOREIGN KEY (ServiceJourneyID) REFERENCES ServiceJourney(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
+																	   + "FOREIGN KEY(DayID) REFERENCES Day(dayID) ON UPDATE CASCADE ON DELETE CASCADE, "
+																	   + "FOREIGN KEY (UmlaufplanID) REFERENCES Umlaufplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);");
 			
 			//table for specific tour elements (left over from initial solution for the tour planning problem)
 			//e.g. journeys from or to depots, waiting times etc.
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS ExceptionalDutyelement (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
-																					+ "DutyID VARCHAR(30) NOT NULL, "
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS ExceptionalBlockelement (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
 																					+ "BlockID VARCHAR(30) NOT NULL, "
-																					+ "ServiceJourneyID VARCHAR(30) NOT NULL, "
+																					+ "BlockID_txt VARCHAR(30) NOT NULL, "
+																					+ "ServiceJourneyID_txt VARCHAR(30) NOT NULL, "
+																					+ "FromStopID_txt INTEGER NOT NULL,"
 																					+ "FromStopID INTEGER NOT NULL,"
+																					+ "ToStopID_txt INTEGER NOT NULL,"
 																					+ "ToStopID INTEGER NOT NULL,"
 																					+ "DepTime VARCHAR(30) NOT NULL,"
 																					+ "ArrTime VARCHAR(30) NOT NULL,"
-																					+ "DienstplanID INTEGER NOT NULL,"
-																					+ "DutyelementID VARCHAR(30) NOT NULL);");
-//					   																+ "FOREIGN KEY (ServiceJourneyID) REFERENCES ServiceJourney(ID), "
-//					   																+ "FOREIGN KEY (FromStopID) REFERENCES ServiceJourney(FromStopID), "
-//					   																+ "FOREIGN KEY (ToStopID) REFERENCES ServiceJourney(ToStopID), "
-//					   																+ "FOREIGN KEY (ArrTime) REFERENCES ServiceJourney(ArrTime), "
-//					   																+ "FOREIGN KEY (DepTime) REFERENCES ServiceJourney(DepTime), "
-
+																					+ "ElementType INTEGER NOT NULL, "
+																					+ "UmlaufplanID INTEGER NOT NULL, "
+			   																		+ "FOREIGN KEY (BlockID) REFERENCES Block(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
+			   																		+ "FOREIGN KEY (FromStopID) REFERENCES Stoppoint(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
+			   																		+ "FOREIGN KEY (ToStopID) REFERENCES Stoppoint(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
+			   																		+ "FOREIGN KEY (UmlaufplanID) REFERENCES Umlaufplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);");
+			
+			//*********************************************************************************************************************************************
+			//Tables for Dutytypes*************************************************************************************************************************
+			//*********************************************************************************************************************************************
 			//duty types (work time rules)
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Dutytype (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
 																   + "Name VARCHAR(30) NOT NULL, "
@@ -182,171 +352,75 @@ public class DBConnection {
 																   + "IsVehicleChangeAllowedDuringBreak INTEGER NOT NULL, "
 																   + "BreakTimeAllowedStarts VARCHAR(30) NOT NULL, "
 																   + "BreakTimeAllowedEnds VARCHAR(30) NOT NULL, "
-																   + "FahrplanID INTEGER NOT NULL "
-																   //+ "WorkingTimeWithoutBreakMax VARCHAR(30)"
-																   + ");");
-			//******************************
-			//*****Tables for tour plan*****
-			//******************************			
+																   + "FahrplanID INTEGER NOT NULL, "
+																   + "WorkingTimeWithoutBreakMax VARCHAR(30) NOT NULL, "
+																   + "FOREIGN KEY (FahrplanID) REFERENCES Fahrplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);");
+
+			//*********************************************************************************************************************************************
+			//Tables for crew schedules********************************************************************************************************************
+			//*********************************************************************************************************************************************
 			
-			//table for tour roster
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Umlaufplan (ID INTEGER PRIMARY KEY AUTOINCREMENT, Bezeichnung VARCHAR(255), FahrplanID INTEGER);");			
+			//table for duty roster
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Dienstplan (ID INTEGER PRIMARY KEY AUTOINCREMENT, Bezeichnung VARCHAR(255), FahrplanID INTEGER, "
+																		+ "FOREIGN KEY (FahrplanID) REFERENCES Fahrplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);");
 			
-			//table for tours
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Block (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
-																+ "BlockID INTEGER NOT NULL, "
-																+ "VehTypeID INTEGER NOT NULL, "
-																+ "DepotID INTEGER NOT NULL);");
+			//table for duty
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Duty (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
+															   + "DutyID_txt VARCHAR(30) NOT NULL, "
+															   + "DutyTypeID VARCHAR(50) NOT NULL, "
+															   + "DutyTypeID_txt VARCHAR(50) NOT NULL, "
+															   + "DienstplanID INTERGER NOT NULL, "
+															   + "FOREIGN KEY (DutyTypeID) REFERENCES Dutytype(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
+															   + "FOREIGN KEY (DienstplanID) REFERENCES Dienstplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);");
 			
-			//table for tour elements (journeys)
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Blockelement (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
-																	   + "BlockID INTEGER NOT NULL, "
-																	   + "ServiceJourneyID VARCHAR(30) NOT NULL, "
-																	   + "ElementType INTEGER NOT NULL, "
-																	   + "DayID INTEGER,"
-																	   + "UmlaufplanID INTEGER NOT NULL);");
-//																	   + "FOREIGN KEY (BlockID) REFERENCES Block(BlockID), "
-//																	   + "FOREIGN KEY (ServiceJourneyID) REFERENCES ServiceJourney(ID), "
-//																	   + "FOREIGN KEY (FromStopID) REFERENCES ServiceJourney(FromStopID), "
-//																	   + "FOREIGN KEY (ToStopID) REFERENCES ServiceJourney(ToStopID), "
-//																	   + "FOREIGN KEY (ArrTime) REFERENCES ServiceJourney(ArrTime), "
-//																	   + "FOREIGN KEY (DepTime) REFERENCES ServiceJourney(DepTime), "
-//																	   + "FOREIGN KEY(DayID) REFERENCES Day(dayID));");
-			
-			//table for specific tour elements (left over from initial solution for the tour planning problem)
+			//table for specific tour elements which are NOT SERVICE JOURNEYS! so time and stop point infos can not come from the servicejourney relation
 			//e.g. journeys from or to depots, waiting times etc.
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS ExceptionalBlockelement (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
-																					+ "BlockID VARCHAR(30) NOT NULL, "
-																					+ "ServiceJourneyID VARCHAR(30) NOT NULL, "
-																					+ "FromStopID INTEGER NOT NULL,"
-																					+ "ToStopID INTEGER NOT NULL,"
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS ExceptionalDutyelement (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
+																					+ "DutyID VARCHAR(30) NOT NULL, "
+																					+ "DutyID_txt INTEGER NOT NULL, "
+																					+ "BlockID_txt INTEGER NOT NULL, "
+																					+ "ServiceJourneyID_txt VARCHAR(30) NOT NULL, "
+																					+ "FromStopID_txt INTEGER NOT NULL,"
+																					+ "ToStopID_txt INTEGER NOT NULL,"
 																					+ "DepTime VARCHAR(30) NOT NULL,"
 																					+ "ArrTime VARCHAR(30) NOT NULL,"
-																					+ "UmlaufplanID INTEGER NOT NULL);");
-//					   																+ "FOREIGN KEY (ServiceJourneyID) REFERENCES ServiceJourney(ID), "
-//					   																+ "FOREIGN KEY (FromStopID) REFERENCES ServiceJourney(FromStopID), "
-//					   																+ "FOREIGN KEY (ToStopID) REFERENCES ServiceJourney(ToStopID), "
-//					   																+ "FOREIGN KEY (ArrTime) REFERENCES ServiceJourney(ArrTime), "
-//					   																+ "FOREIGN KEY (DepTime) REFERENCES ServiceJourney(DepTime), "
+																					+ "ElementType INTEGER NOT NULL, "
+																					+ "DayID INTERGER,"
+																					+ "DienstplanID INTEGER NOT NULL,"
+																					+ "FOREIGN KEY (DutyID) REFERENCES Duty(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
+					   																+ "FOREIGN KEY (DienstplanID) REFERENCES Dienstplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);");
 			
-			//*******************************************************
-			//Tables for schedules (stoppoints, lines, vehicles etc.)
-			//*******************************************************
+			//table for duty elements
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Dutyelement (ID INTEGER PRIMARY KEY AUTOINCREMENT,"
+																	  + "DutyID INTEGER NOT NULL, "
+																	  + "DutyID_txt INTEGER NOT NULL, "
+																	  + "BlockID INTEGER NOT NULL, "
+																	  + "BlockID_txt INTEGER NOT NULL, "
+																	  + "ServiceJourneyID VARCHAR(30) NOT NULL, "
+																	  + "ServiceJourneyID_txt VARCHAR(30) NOT NULL, "
+																	  + "ElementType INTEGER NOT NULL, "
+																	  + "DayID INTEGER,"
+																	  + "DienstplanID INTEGER NOT NULL, "
+																	  + "FOREIGN KEY (DutyID) REFERENCES Duty(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
+																	  + "FOREIGN KEY (BlockID) REFERENCES Block(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
+																	  + "FOREIGN KEY (ServiceJourneyID) REFERENCES ServiceJourney(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
+																	  + "FOREIGN KEY (DienstplanID) REFERENCES Dienstplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);");
 			
-			//table for schedule
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Fahrplan (ID INTEGER PRIMARY KEY AUTOINCREMENT, Bezeichnung VARCHAR(255), VersNr VARCHAR(30), FileType VARCHAR(30));");
-			
-			//table for stoppoints
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Stoppoint (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
-																	+ "StoppointID INTEGER NOT NULL, "
-																	+ "Code INTEGER NOT NULL, "
-																	+ "Name INTEGER NOT NULL);");
-			
-			//table for lines
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Line (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
-															   + "LineID INTEGER NOT NULL, "
-															   + "Code INTEGER NOT NULL, "
-															   + "Name INTEGER NOT NULL);");
-			
-			//table for line bundles
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Linebundle (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
-					   													+ "LineID INTEGER NOT NULL);");
-			
-			//table for different vehicle types
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS VehicleType (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
-																	  + "VehicleTypeID INTEGER NOT NULL, "
-																	  + "Code INTEGER NOT NULL, "
-																	  + "Name INTEGER NOT NULL, "
-																	  + "VehCost INTEGER NOT NULL, "
-																	  + "KmCost INTEGER NOT NULL, "
-																	  + "HourCost INTEGER NOT NULL, "
-																	  + "Capacity INTEGER NOT NULL);");
-			
-			//table for vehicle type groups
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS VehicleTypeGroup (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
-																		   + "VehicleTypeGroupID INTEGER NOT NULL, "
-																		   + "Code INTEGER NOT NULL, "
-																		   + "Name INTEGER NOT NULL);");
-			
-			//matching of vehicle types to vehicle type groups
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS VehicleTypeToVehicleTypeGroup (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
-																						+ "VehTypeID INTEGER NOT NULL, "
-																						+ "VehTypeGroupID INTEGER NOT NULL); ");
-//																						+ "FOREIGN KEY (VehTypeID) REFERENCES VehicleType(ID), "
-//																						+ "FOREIGN KEY (VehTypeGroupID) REFERENCES VehicleTypeGroup(ID));");
-			
-			//tables for capacities of depots according to vehicle type
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS VehicleCapToStoppoint (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
-																				+ "VehTypeID INTEGER NOT NULL, "
-																				+ "StoppointID INTEGER NOT NULL, "
-																				+ "Min INTEGER NOT NULL, "
-																				+ "Max INTEGER NOT NULL); ");
-//																				+ "FOREIGN KEY (VehTypeID) REFERENCES VehicleType(ID), "
-//																				+ "FOREIGN KEY (StoppointID) REFERENCES Stoppoint(ID));");
-			
-			//table for service journeys
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS ServiceJourney (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
-																		 + "ServiceJourneyID INTEGER NOT NULL, "
-																		 + "LineID INTEGER NOT NULL, "
-																		 + "FromStopID INTEGER NOT NULL, "
-																		 + "ToStopID INTEGER NOT NULL, "
-																		 + "DepTime VARCHAR(10) NOT NULL, "
-																		 + "ArrTime VARCHAR(10) NOT NULL, "
-																		 + "MinAheadTime INTEGER NOT NULL, "
-																		 + "MinLayoverTime INTEGER NOT NULL, "
-																		 + "VehTypeGroupID INTEGER NOT NULL, "
-																		 + "MaxShiftBackwardSeconds INTEGER NOT NULL, "
-																		 + "MaxShiftForwardSeconds INTEGER NOT NULL, "
-																		 + "FromStopBreakFacility INTEGER NOT NULL, "
-																		 + "ToStopBreakFacility INTEGER NOT NULL, "
-																		 + "Code INTEGER,"
-																		 + "FahrplanID INTEGER NOT NULL);");
-//																		 + "FOREIGN KEY (LineID) REFERENCES Line(ID), "
-//																		 + "FOREIGN KEY (VehTypeGroupID) REFERENCES VehicleTypeGroup(ID), "
-//																		 + "FOREIGN KEY(FromStopID) REFERENCES Stoppoint(ID), "
-//																		 + "FOREIGN KEY(ToStopID) REFERENCES Stoppoint(ID));");
-			
-			//table for deadheading journeys depending on the day time
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Deadruntime (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
-																	  + "FromStopID INTEGER NOT NULL, "
-																	  + "ToStopID INTEGER NOT NULL, "
-																	  + "FromTime VARCHAR(10) NOT NULL, "
-																	  + "ToTime VARCHAR(10) NOT NULL, "
-																	  + "Distance INTEGER NOT NULL, "
-																	  + "RunTime INTEGER NOT NULL); ");
-//																	  + "FOREIGN KEY (FromStopID) REFERENCES Stoppoint(ID), "
-//																	  + "FOREIGN KEY (ToStopID) REFERENCES Stoppoint(ID), "
-//																	  + "FOREIGN KEY(FromTime) REFERENCES ServiceJourney(DepTime), "
-//																	  + "FOREIGN KEY(ToTime) REFERENCES ServiceJoruney(ArrTime));");
-			
-			//table for stoppoints and respective times which allow for a change of ressouurces
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Reliefpoint (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
-																	  + "ReliefpointID INTEGER NOT NULL, "
-																	  + "ServiceJourneyID INTEGER NOT NULL);");
-//																 	  + "FOREIGN KEY(ServiceJourneyID) REFERENCES ServiceJourney(ID), "
-//																	  + "FOREIGN KEY (StoppointID) REFERENCES Stoppoint(ID));");
-			//table for days in which the respective service journey is valid
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Days (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
-															   + "TRIPID INTEGER NOT NULL, "
-															   + "d1 INTEGER NOT NULL, "
-															   + "d2 INTEGER NOT NULL, "
-															   + "d3 INTEGER NOT NULL, "
-															   + "d4 INTEGER NOT NULL, "
-															   + "d5 INTEGER NOT NULL, "
-															   + "d6 INTEGER, "
-															   + "d7 INTEGER); ");
-//															   + "FOREIGN KEY (TRIPID) REFERENCES ServiceJourney(ID));");
-			//weekdays
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Day (dayID INTEGER NOT NULL PRIMARY KEY, "
-														      + "Name VARCHAR(10));");
-			
-			//*******************************************
-			//Tables for delay scenarios (primary delays)
-			//*******************************************			
+			//*********************************************************************************************************************************
+			//Tables for delay scenarios (primary delays)**************************************************************************************
+			//*********************************************************************************************************************************			
 
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS PrimeDelaySzenario (ID INTEGER PRIMARY KEY AUTOINCREMENT, DutyID VARCHAR(30), VehicleID VARCHAR(30), ServiceJourneyID VARCHAR(30) NOT NULL, DepTime VARCHAR(30) NOT NULL, Delay INTEGER NOT NULL, FahrplanID INTEGER NOT NULL); ");
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS PrimeDelaySzenario (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
+																				+ "DutyID VARCHAR(30), "
+																				+ "DutyID_txt VARCHAR(30), "
+																				+ "VehicleID VARCHAR(30), "
+																				+ "ServiceJourneyID VARCHAR(30) NOT NULL, "
+																				+ "ServiceJourneyID_txt VARCHAR(30) NOT NULL, "
+																				+ "DepTime VARCHAR(30) NOT NULL, "
+																				+ "Delay INTEGER NOT NULL, "
+																				+ "FahrplanID INTEGER NOT NULL); ");
 
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Transfertime (ID INTEGER PRIMARY KEY AUTOINCREMENT, FromStopID INTEGER, ToStopID INTEGER, FromTime VARCHAR(30) NOT NULL, ToTime VARCHAR(30) NOT NULL, Runtime INTEGER NOT NULL); ");
+			
 
 			//***************************
 			//tables get filled with data		
@@ -374,10 +448,235 @@ public class DBConnection {
 			e.printStackTrace();
 		}
 	}
+	
+	//******************************************************************************************************************************************
+	//filling the schedule data into the respective tables**************************************************************************************
+	//******************************************************************************************************************************************
+	
+	public void fillFahrplanIntoTables(){
+		
+		//temporary stringsplitter object that contains the the data from text files in array lists
+		StringSplitter ss = StringSplitter.getInstance();
+		//invoke stringsplitter method for reading the data in  txt-files
+		ss.readTxtFahrplan();
 
-	//*******************************************************
-	//filling the tour plan data into the respective tables
-	//*******************************************************
+		
+		  try{ Statement stmnt=connection.createStatement(); 
+		  //Fill values in specific tables
+		  
+		  //schedule name
+		  stmnt.executeUpdate("INSERT INTO Fahrplan (Bezeichnung) VALUES ('"+ss.getFilename()+"');");
+		  /**
+		   * TODO: VersNr. + File Type
+		   **/
+		  //iterators for getting values from stringsplitter object
+		  //stoppoint
+		  Iterator<Integer> it = ss.getStopID().iterator(); 
+		  Iterator<String> it2 =ss.getStopCode().iterator(); 
+		  Iterator<String> it3 =ss.getStopName().iterator();
+		  //line
+		  Iterator<Integer> it4 =ss.getLineID().iterator(); 
+		  Iterator<String> it5 =ss.getLineCode().iterator(); 
+		  Iterator<String> it6 = ss.getLineName().iterator();
+		  
+		  //linebundle
+		  Iterator<Integer> it62 = ss.getLinebundleID().iterator();
+		  Iterator<Integer> it63 = ss.getLinebundleline().iterator();
+		  
+		  Iterator<Integer> it64 = ss.getLinebundleline().iterator();
+		  
+		  //Vehicletype
+		  Iterator<Integer> it7 = ss.getVehicleTypeID().iterator(); 
+		  Iterator<String> it8 = ss.getVehicleTypeCode().iterator(); 
+		  Iterator<String> it9 = ss.getVehicleTypeName().iterator(); 
+		  Iterator<Float> it10 = ss.getVehicleTypeVehCost().iterator();
+		  Iterator<Float> it11 = ss.getVehicleTypeKmCost().iterator(); 
+		  Iterator<Float> it12 =ss.getVehicleTypeHourCost().iterator(); 
+		  Iterator<Integer> it13 =ss.getVehicleTypeCapacity().iterator();
+		  //Vehicletypegroup
+		  Iterator<Integer> it14 =ss.getVehicleTypeGroupID().iterator(); 
+		  Iterator<String> it15 =ss.getVehicleTypeGroupCode().iterator(); 
+		  Iterator<String> it16 = ss.getVehicleTypeGroupName().iterator();
+		  //Vehicletype to Vehicletypegroup
+		  Iterator<Integer> it17 = ss.getVehicleToVehicleTypeGroupVehTypeID().iterator(); 
+		  Iterator<Integer> it18 = ss.getVehicleToVehicleTypeGroupVehTypeGroupID().iterator();
+		  Iterator<Integer> it171 = ss.getVehicleToVehicleTypeGroupVehTypeID().iterator(); 
+		  Iterator<Integer> it181 = ss.getVehicleToVehicleTypeGroupVehTypeGroupID().iterator();
+		  //Vehiclecap to Stoppoint
+		  Iterator<Integer> it19 = ss.getVehicleCapToStopVehTypeID().iterator(); 
+		  Iterator<Integer> it20 = ss.getVehicleCapToStopStoppointID().iterator();
+		  Iterator<Integer> it21= ss.getVehicleCapToStopMin().iterator(); 
+		  Iterator<Integer> it22 =ss.getVehicleCapToStopMax().iterator();
+		  Iterator<Integer> it191 = ss.getVehicleCapToStopVehTypeID().iterator();
+		  Iterator<Integer> it201 = ss.getVehicleCapToStopStoppointID().iterator();
+		  //Servicejourney
+		  Iterator<Integer> it23 =ss.getServiceJourneyID().iterator(); 
+		  Iterator<Integer> it24 =ss.getServiceJourneyLineID().iterator(); 
+		  Iterator<Integer> it25 =ss.getServiceJourneyFromStopID().iterator(); 
+		  Iterator<Integer> it26 = ss.getServiceJourneyToStopID().iterator(); 
+		  Iterator<String> it27 = ss.getServiceJourneyDepTime().iterator(); 
+		  Iterator<String> it28 = ss.getServiceJourneyArrTime().iterator(); 
+		  Iterator<Integer> it29 = ss.getServiceJourneyMinAheadTime().iterator(); 
+		  Iterator<Integer> it30 = ss.getServiceJourneyMinLayoverTime().iterator(); 
+		  Iterator<Integer> it31 = ss.getServiceJourneyVehTypeGroupID().iterator();
+		  Iterator<Integer> it32 = ss.getServiceJourneyMaxShiftBackwardSeconds().iterator(); 
+		  Iterator<Integer> it33 =ss.getServiceJourneyMaxShiftForwardSeconds().iterator(); 
+		  Iterator<Integer> it34 =ss.getServiceJourneyFromStopBreakFacility().iterator(); 
+		  Iterator<Integer> it35 =ss.getServiceJourneyToStopBreakFacility().iterator(); 
+		  Iterator<String> it36 =ss.getServiceJourneyCode().iterator();
+		  
+		  Iterator<Integer> it241 =ss.getServiceJourneyLineID().iterator();
+		  Iterator<Integer> it251 =ss.getServiceJourneyFromStopID().iterator();
+		  Iterator<Integer> it261 = ss.getServiceJourneyToStopID().iterator();
+		  Iterator<Integer> it311 = ss.getServiceJourneyVehTypeGroupID().iterator();
+		  //Deadruntime
+		  Iterator<Integer> it37 = ss.getDeadruntimeFromStopID().iterator();
+		  Iterator<Integer> it38 = ss.getDeadruntimeToStopID().iterator(); 
+		  Iterator<String> it39 = ss.getDeadruntimeFromTime().iterator(); 
+		  Iterator<String> it40 = ss.getDeadruntimeToTime().iterator(); 
+		  Iterator<Integer> it41 = ss.getDeadruntimeDistance().iterator(); 
+		  Iterator<Integer> it42 = ss.getDeadruntimeRuntime().iterator();
+		  
+		  Iterator<Integer> it371 = ss.getDeadruntimeFromStopID().iterator();
+		  Iterator<Integer> it381 = ss.getDeadruntimeToStopID().iterator();
+		  //Reliefpoints
+		  Iterator<Integer> it43 = ss.getReliefpointID().iterator(); 
+		  Iterator<String> it44 =ss.getReliefpointServiceJourneyID().iterator(); 
+		  Iterator<Integer> it45 =ss.getReliefpointStoppointID().iterator(); 
+		  Iterator<String> it46 =ss.getReliefpointStoptime().iterator(); 
+		  
+		  Iterator<String> it441 =ss.getReliefpointServiceJourneyID().iterator(); 
+		  Iterator<Integer> it451 =ss.getReliefpointStoppointID().iterator(); 
+		  //Transfertimes
+		  Iterator<Integer> it57 = ss.getWalkruntimeFromStopID().iterator(); 
+		  Iterator<Integer> it58 =ss.getWalkruntimeToStopID().iterator(); 
+		  Iterator<String> it59 =ss.getWalkruntimeFromTime().iterator(); 
+		  Iterator<String> it60 =ss.getWalkruntimeToTime().iterator(); 
+		  Iterator<Integer> it61 = ss.getWalkruntimeRuntime().iterator();  
+		  
+		  Iterator<Integer> it571 = ss.getWalkruntimeFromStopID().iterator(); 
+		  Iterator<Integer> it581 =ss.getWalkruntimeToStopID().iterator(); 
+ 
+		  //days
+		  Iterator<Integer> it49 = ss.getTripID().iterator(); 
+		  Iterator<Integer> it50 = ss.getDayOne().iterator();
+		  Iterator<Integer> it51 = ss.getDayTwo().iterator(); 
+		  Iterator<Integer> it52 =ss.getDayThree().iterator(); 
+		  Iterator<Integer> it53 =ss.getDayFour().iterator(); 
+		  Iterator<Integer> it54 =ss.getDayFive().iterator(); 
+		  Iterator<Integer> it55 =ss.getDaySix().iterator(); 
+		  Iterator<Integer> it56 =ss.getDaySeven().iterator();
+		  
+		  Iterator<Integer> it491 = ss.getTripID().iterator();
+
+		  //fill Stoppoint
+		  while((it.hasNext()&&it2.hasNext()&&it3.hasNext())){
+				 
+			  stmnt.executeUpdate("INSERT INTO Stoppoint (StoppointID_txt, Code, Name, FahrplanID) VALUES('"+it.next()+"','"+it2.next()+"','"+it3.next()+"',(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%'));");
+			  }
+		  //fill line
+		  while((it4.hasNext()&&it5.hasNext()&&it6.hasNext())){
+			  stmnt.executeUpdate("INSERT INTO Line (LineID_txt, Code, Name, FahrplanID) VALUES('"+it4.next()+"','"+it5.next()+"','"+it6.next()+"',(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%'));"); 
+		  }
+		  //fill linebundle
+		  while((it62.hasNext()&&it63.hasNext())){
+			  stmnt.executeUpdate("INSERT INTO Linebundle (LinebundleID_txt, line_txt, line, Fahrplan) VALUES ('"+it62.next()+"', '"+it63.next()+"', "
+					  + "(SELECT ID FROM Line WHERE LineID_txt ='"+it64.next()+"'), "
+					  + "(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%'), "
+					  + ");");
+		  }
+		  //fill Vehicletype
+		  while((it7.hasNext()&&it8.hasNext()&&it9.hasNext()&&it10.hasNext()&&it11.hasNext()&&it12.hasNext()&&it13.hasNext())){
+			  
+			  stmnt.executeUpdate("INSERT INTO VehicleType (VehicleTypeID_txt, Code, Name, VehCost, KmCost, HourCost, Capacity, FahrplanID) VALUES('"+it7.next()+"','"+it8.next()+"','"+it9.next()+"','"+it10.next()+"','"+it11.next()+"','"+it12.next()+"','"+it13.next()+"',(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%'));"); 
+		  }
+		  //fill vehicletypegroup
+		  while((it14.hasNext()&&it15.hasNext()&&it16.hasNext())){
+			  stmnt.executeUpdate("INSERT INTO VehicleTypeGroup (VehicleTypeGroupID_txt, Code, Name, FahrplanID) VALUES('"+it14.next()+"','"+it15.next()+"','"+it16.next()+"',(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%'));"); 
+		  }
+		  //fill vehicletype to vehicletypegroup
+		  while((it17.hasNext()&&it18.hasNext())){
+			  stmnt.executeUpdate("INSERT INTO VehicleTypeToVehicleTypeGroup (VehTypeID_txt,VehTypeGroupID_txt, FahrplanID, VehTypeID, VehTypeGroupID) VALUES('"+it17.next()+"','"+it18.next()+"',(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%'), "
+					  																																											+ " (SELECT vt.ID FROM VehicleType AS vt WHERE vt.VehicleTypeID_txt='"+it171.next()+"' AND vt.FahrplanID= (SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%')), "
+					  																																											+ " (SELECT vtg.ID FROM VehicleTypeGroup AS vtg WHERE vtg.VehicleTypeGroupID_txt='"+it181.next()+"' AND vtg.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%')));"); 
+		  }
+		  //vehiclecap to stoppoint
+		  while((it19.hasNext()&&it20.hasNext()&&it21.hasNext()&&it22.hasNext())){
+			  stmnt.executeUpdate("INSERT INTO VehicleCapToStoppoint (VehTypeID_txt,StoppointID_txt, Min, Max, FahrplanID, VehTypeID, StoppointID) VALUES('"+it19.next()+"','"+it20.next()+"','"+it21.next()+"','"+it22.next()+"',(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%'), "
+					  																																																			+ " (SELECT vt.ID FROM VehicleType AS vt WHERE vt.VehicleTypeID_txt='"+it191.next()+"' AND vt.FahrplanID= (SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%')), "
+					  																																																			+ "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.StoppointID_txt='"+it201.next()+"' AND sp.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%')));"); 
+		  }
+		  //fill Servicejourney
+		  while((it23.hasNext()&&it24.hasNext()&&it25.hasNext()&&it26.hasNext()&&it27.hasNext()&&it28.hasNext()&&it29.hasNext()&&it30.hasNext()&&it31.hasNext()&&it32.hasNext()&&it33.hasNext()&&it34.hasNext()&&it35.hasNext()&&it36.hasNext())){
+			  
+			  stmnt.executeUpdate("INSERT INTO ServiceJourney (ServiceJourneyID_txt, LineID_txt, FromStopID_txt, ToStopID_txt, DepTime, ArrTime, MinAheadTime, MinLayoverTime, VehTypeGroupID_txt, MaxShiftBackwardSeconds, MaxShiftForwardSeconds, FromStopBreakFacility, ToStopBreakFacility, Code, FahrplanID, LineID, FromStopID, ToStopID, VehTypeGroupID) VALUES('"+it23.next()+"','"+it24.next()+"','"+it25.next()+"','"+it26.next()+"','"+it27.next()+"','"+it28.next()+"','"+it29.next()+"','"+it30.next()+"','"+it31.next()+"','"+it32.next()+"','"+it33.next()+"','"+it34.next()+"','"+it35.next()+"','"+it36.next()+"', "
+					  																																																													+ "(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%'), "
+			  																																																															+ "(SELECT l.ID FROM Line AS l WHERE l.LineID_txt='"+it241.next()+"' AND l.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%')), "
+			  																																																															+ "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.StoppointID_txt='"+it251.next()+"' AND sp.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%')), "
+			  																																																															+ "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.StoppointID_txt='"+it261.next()+"' AND sp.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%')), "
+			  																																																															+ "(SELECT vt.ID FROM VehicleType AS vt WHERE vt.VehicleTypeID_txt='"+it311.next()+"' AND vt.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%')));"); 
+		  }
+		  //fill deadruntime
+		  while((it37.hasNext()&&it38.hasNext()&&it39.hasNext()&&it40.hasNext()&&it41.hasNext()&&it42.hasNext())){
+			  
+			  stmnt.executeUpdate("INSERT INTO Deadruntime (FromStopID_txt, ToStopID_txt, FromTime, ToTime, Distance, Runtime, FahrplanID, FromStopID, ToStopID) VALUES('"+it37.next()+"','"+it38.next()+"','"+it39.next()+"','"+it40.next()+"','"+it41.next()+"','"+it42.next()+"', "
+					  																																					+ "(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%'), "
+					  																																					+ "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.StoppointID_txt='"+it371.next()+"' AND sp.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%')), "
+			  																																							+ "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.StoppointID_txt='"+it381.next()+"' AND sp.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%')));"); 
+		  }
+		  //fill Reliefpoint
+		  while((it43.hasNext()&&it44.hasNext()&&it45.hasNext()&&it46.hasNext())){
+			  stmnt.executeUpdate("INSERT INTO Reliefpoint (ReliefpointID_txt, ServiceJourneyID_txt, StoppointID_txt, StopTime, FahrplanID, ServiceJourneyID, StoppointID) VALUES('"+it43.next()+"','"+it44.next()+"','"+it45.next()+"','"+it46.next()+"', "
+					  																																										+ "(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%'), "
+					  																																										+ "(SELECT sj.ID FROM ServiceJourney AS sj WHERE sj.ServiceJourneyID_txt='"+it441.next()+"' AND sj.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%')), "
+					  																																										+ "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.StoppointID_txt='"+it451.next()+"' AND sp.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%')));");
+		  }
+		  //fill Transfertime
+		  while((it57.hasNext()&&it58.hasNext()&&it59.hasNext()&&it60.hasNext()&&it61.hasNext())){
+			  stmnt.executeUpdate("INSERT INTO Transfertime (FromStopID_txt, ToStopID_txt, FromTime, ToTime, Runtime, FahrplanID, FromStopID, ToStopID) VALUES('"+it57.next()+"','"+it58.next()+"','"+it59.next()+"','"+it60.next()+"','"+it61.next()+"', "
+					  																																	+ "(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%'), "
+																																						+ "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.StoppointID_txt='"+it571.next()+"' AND sp.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%')), "
+					  																																	+ "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.StoppointID_txt='"+it581.next()+"' AND sp.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%')));"); 
+		  }
+		  
+		  //fill days according to how much days are considered in the plan (min: 5, max: 7)
+		  //5 days
+		  while((it49.hasNext()&&it50.hasNext()&&it51.hasNext()&&it52.hasNext()&&it53.hasNext()&&it54.hasNext())){
+			  
+			  stmnt.executeUpdate("INSERT INTO Days (TRIPID_txt, d1, d2, d3, d4, d5, FahrplanID, TRIPID) VALUES('"+it49.next()+"','"+it50.next()+"','"+it51.next()+"','"+it52.next()+"','"+it53.next()+"','"+it54.next()+"', "
+					  																						+ "(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%'), "
+					  																						+ "(SELECT sj.ID FROM ServiceJourney AS sj WHERE sj.ServiceJourneyID_txt='"+it491.next()+"' AND sj.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%')));");
+		  }
+		  //6 days
+		  while((it49.hasNext()&&it50.hasNext()&&it51.hasNext()&&it52.hasNext()&&it53.hasNext()&&it54.hasNext()&&it55.hasNext())){
+			  
+			  stmnt.executeUpdate("INSERT INTO Days (TRIPID_txt, d1, d2, d3, d4, d5, d6, FahrplanID, TRIPID) VALUES('"+it49.next()+"','"+it50.next()+"','"+it51.next()+"','"+it52.next()+"','"+it53.next()+"','"+it54.next()+"','"+it55.next()+"',"
+					  																							+ "(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%'), "
+					  																							+ "(SELECT sj.ID FROM ServiceJourney AS sj WHERE sj.ServiceJourneyID_txt='"+it491.next()+"' AND sj.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%')));");
+
+		  }
+		  //7 days
+		  while((it49.hasNext()&&it50.hasNext()&&it51.hasNext()&&it52.hasNext()&&it53.hasNext()&&it54.hasNext()&&it55.hasNext()&&it56.hasNext())){
+	  
+			  stmnt.executeUpdate("INSERT INTO Days (TRIPID_txt, d1, d2, d3, d4, d5, d6, d7, FahrplanID, TRIPID) VALUES('"+it49.next()+"','"+it50.next()+"','"+it51.next()+"','"+it52.next()+"','"+it53.next()+"','"+it54.next()+"','"+it55.next()+"','"+it56.next()+"', "
+					  																								+ "(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%'), "
+					  																								+ "(SELECT sj.ID FROM ServiceJourney AS sj WHERE sj.ServiceJourneyID_txt='"+it491.next()+"' AND sj.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%')));");
+		  }
+		  
+		  //All Fahrplan array lists will be cleared
+		  ss.clearFahrplanArraylists();
+		  
+		  System.out.println("Fahrplan importiert!");
+		  
+	//catch for filling schedule data into tables
+	}catch(SQLException e){
+		  System.out.println("Could not execute SQL-Query!");
+		  e.printStackTrace(); }
+	}
+	
+	//*********************************************************************************************************************************************
+	//filling the vehicle schedule data into the respective tables*********************************************************************************
+	//*********************************************************************************************************************************************
 	
 	public void fillUmlaufplanIntoTables() {
 		
@@ -385,20 +684,14 @@ public class DBConnection {
 		StringSplitter ss = StringSplitter.getInstance();
 		//invoke stringsplitter method for reading the data in  txt-files
 		ss.readTxtUmlaufplan();
-
+		//get naming of tour plan
+		String fileNameVergleich=ss.getFilename();
+		String finalString= getVehicleScheduleName(fileNameVergleich);
 		
 		  try{ Statement stmnt=connection.createStatement(); 
-		  //insert name of tour plan
-		  String fileNameVergleich=ss.getFilename();
+		  //get name of vehicle schedule file
 		  String umlaufplanBezeichnung=ss.getFilename();
-		  String[] resultString=fileNameVergleich.split("_");
-		  String finalString="";
-		  for (int i = 4; i < resultString.length; i++) {
-			  if(i!=resultString.length-1){
-			  finalString+=resultString[i]+"_";
-			  }else
-				  finalString+=resultString[i];
-		}
+
 		  stmnt.executeUpdate("INSERT INTO Umlaufplan (Bezeichnung, FahrplanID) VALUES ('"+umlaufplanBezeichnung+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('"+finalString+"%')));");
 		 
 		  
@@ -414,15 +707,11 @@ public class DBConnection {
 		  Iterator<Integer> it10 =ss.getBlockelementElementType().iterator();
 		  
 		  //exceptional journeys
-		  Iterator<Integer> it14 =ss.getExceptionalblockelementBlockID().iterator(); 
-		  Iterator<String> it15 =ss.getExceptionalblockelementServiceJourneyID().iterator();
 		  Iterator<Integer>it16 = ss.getExceptionalblockelementFromStopID().iterator(); 
 		  Iterator<Integer>it17 = ss.getExceptionalblockelementToStopID().iterator(); 
 		  Iterator<String> it18 =ss.getExceptionalblockelementDepTime().iterator(); 
 		  Iterator<String> it19 =ss.getExceptionalblockelementArrTime().iterator(); 
-//		  Iterator<Integer> it20 =ss.getExceptionalblockelementElementType().iterator();
-		  
-		  
+
 		  String dayID=null;
 		  if(ss.getBlockelementDayID()!=null){
 		  dayID = ss.getBlockelementDayID().get(0);
@@ -430,22 +719,38 @@ public class DBConnection {
 		  
 		  //fill block
 		  while((it.hasNext()&&it2.hasNext()&&it3.hasNext())){
-		  			  
-			  stmnt.executeUpdate("INSERT INTO Block (BlockID, VehTypeID, DepotID)  VALUES('"+it.next()+"','"+it2.next()+"','"+it3.next()+"');"); }
+			  int BlockID = it.next();
+			  int vehType = it2.next();
+			  int DepotID = it3.next();
+			  stmnt.executeUpdate("INSERT INTO Block (BlockID_txt, VehTypeID_txt, DepotID_txt, UmlaufplanID, VehTypeID, DepotID)  VALUES('"+BlockID+"','"+vehType+"','"+DepotID+"', "
+			  + "(SELECT up.ID FROM Umlaufplan AS up WHERE Bezeichnung LIKE '"+umlaufplanBezeichnung+"'), "
+			  + "(SELECT vt.ID FROM VehicleType AS vt WHERE vt.VehicleTypeID_txt='"+vehType+"' AND vt.FahrplanID= (SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('"+finalString+"%'))), "
+			  + "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.StoppointID_txt='"+DepotID+"' AND sp.FahrplanID=(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('"+finalString+"%'))));");
+				}
 		  
-		  //fill blockelement
-		  while(it4.hasNext()&&it5.hasNext()&&it10.hasNext()){ 
-			 
-			  stmnt.executeUpdate(
-		  "INSERT INTO Blockelement (BlockID, ServiceJourneyID, ElementType, DayID, UmlaufplanID) VALUES('"
-		  +it4.next()+"','"+it5.next()+"','"+it10.next()+"','"+dayID+"', (SELECT ID FROM Umlaufplan WHERE Bezeichnung='"+ss.getFilename()+"'));");}
-		
-		  //fill special journey
-		  while(it14.hasNext()&&it15.hasNext()&&it16.hasNext()&&it17.hasNext()&&it18.hasNext()&&it19.hasNext()){ 
-
-			 stmnt.executeUpdate(
-		  "INSERT INTO ExceptionalBlockelement (BlockID, ServiceJourneyID, FromStopID, ToStopID, DepTime, ArrTime, UmlaufplanID) VALUES('"
-				  +it14.next()+"','"+it15.next()+"','"+it16.next()+"','"+it17.next()+"','"+it18.next()+"','"+it19.next()+"', (SELECT ID FROM Umlaufplan WHERE Bezeichnung='"+ss.getFilename()+"'));");}
+		//fill special journey
+		while(it4.hasNext()&&it5.hasNext()&&it10.hasNext()&&it16.hasNext()&&it17.hasNext()&&it18.hasNext()&&it19.hasNext()){ 
+			int blockID = it4.next();
+			String sjID = it5.next();
+			int EleType = it10.next();
+			
+			int fromstop = it16.next();
+			int tostop = it17.next();
+			String deptime = it18.next();
+			String arrtime = it19.next();
+			if (EleType == 1){
+				stmnt.executeUpdate("INSERT INTO Blockelement (BlockID_txt, ServiceJourneyID_txt, ElementType, DayID, BlockID, ServiceJourneyID, UmlaufplanID) VALUES('"+blockID+"','"+sjID+"','"+EleType+"','"+dayID+"', "
+						  + "(SELECT b.ID FROM Block AS b WHERE b.BlockID_txt='"+blockID+"' AND b.UmlaufplanID=(SELECT up.ID FROM Umlaufplan AS up WHERE Bezeichnung LIKE '%"+finalString+"%')), "
+						  + "(SELECT sj.ID FROM ServiceJourney AS sj WHERE sj.ServiceJourneyID_txt='"+sjID+"' AND sj.FahrplanID=(SELECT fp.ID FROM Fahrplan AS fp WHERE Bezeichnung LIKE '%"+finalString+"%')), "
+						  + "(SELECT up.ID FROM Umlaufplan AS up WHERE Bezeichnung LIKE '"+umlaufplanBezeichnung+"'));");
+			}else{
+				stmnt.executeUpdate("INSERT INTO ExceptionalBlockelement (BlockID_txt, ServiceJourneyID_txt, FromStopID_txt, ToStopID_txt, DepTime, ArrTime, ElementType, BlockID, FromStopID, ToStopID, UmlaufplanID) VALUES('"+blockID+"','"+sjID+"','"+fromstop+"','"+tostop+"','"+deptime+"','"+arrtime+"','"+EleType+"', "
+						  + "(SELECT b.ID FROM Block AS b WHERE b.BlockID_txt='"+blockID+"' AND b.UmlaufplanID= (SELECT up.ID FROM Umlaufplan AS up WHERE Bezeichnung LIKE '"+ss.getFilename()+"')), "
+						  + "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.StoppointID_txt='"+fromstop+"' AND sp.FahrplanID=(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%'))), "
+						  + "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.StoppointID_txt='"+tostop+"' AND sp.FahrplanID=(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%'))), "
+						  + "(SELECT up.ID FROM Umlaufplan AS up WHERE Bezeichnung LIKE '"+umlaufplanBezeichnung+"'));");
+			}	 
+		 }
 		  
 		  System.out.println("Umlaufplan importiert!");
 		  
@@ -458,9 +763,9 @@ public class DBConnection {
 		  e.printStackTrace(); }
 	}
 	
-	//*****************************************************
-	//filling the duty type data into the respective tables
-	//*****************************************************
+	//*******************************************************************************************************************************************
+	//filling the duty type data into the respective tables**************************************************************************************
+	//*******************************************************************************************************************************************
 	
 	//duty types
 	public void fillDiensttypenIntoTables(){
@@ -471,8 +776,8 @@ public class DBConnection {
 		ss.readTxtDiensttypen();
 		
 
-		 try{ Statement stmnt=connection.createStatement(); //Fill values in
-		  //specific tables
+		 try{ Statement stmnt=connection.createStatement(); 
+		 //Fill values in specific tables
 		 
 		  
 		  //iterators for getting values from stringsplitter object
@@ -513,21 +818,30 @@ public class DBConnection {
 		  Iterator<String> it35 =ss.getBreakTimeAllowsEnds().iterator();
 		  
 		  //WorkingtimeWithoutBreakMax not included in current plans, but left because future plans may contain values 
+
 		  Iterator<String> it36 = ss.getWorkingtimeWithoutBreakMax().iterator();
+	
 		  
-		  /**
-		   * TODO:
-		   * Dienstplanname aus textfile dateinamen in tabelle dienstplan einfï¿½gen
-		   * DienstplanID in dutytype Relation einfï¿½gen
-		   * 
-		  */
-		  while((it.hasNext()&&it2.hasNext()&&it3.hasNext()&&it4.hasNext()&&it5.hasNext()&&it6.hasNext()&&it7.hasNext()&&it8.hasNext()&&it9.hasNext()&&it10.hasNext()&&it11.hasNext()&&it12.hasNext()&&it13.hasNext()&&it14.hasNext()&&it15.hasNext()&&it16.hasNext()&&it17.hasNext()&&it18.hasNext()&&it19.hasNext()&&it20.hasNext()&&it21.hasNext()&&it22.hasNext()&&it23.hasNext()&&it24.hasNext()&&it25.hasNext()&&it26.hasNext()&&it27.hasNext()&&it28.hasNext()&&it29.hasNext()&&it30.hasNext()&&it31.hasNext()&&it32.hasNext()&&it33.hasNext()&&it34.hasNext()&&it35.hasNext())){
+		  //Get schedule name
+		  String fileNameVergleich=ss.getFilename();
+		  
+		  String[] resultString=fileNameVergleich.split("(_|-)");
+		  String finalString="";
+		  for (int i = 1; i < resultString.length-5; i++) {
+			  if(i!=resultString.length-1){
+			  finalString+=resultString[i]+"_";
+			  }else
+				  finalString+=resultString[i];
+		  }
+
+		  while((it.hasNext()&&it2.hasNext()&&it3.hasNext()&&it4.hasNext()&&it5.hasNext()&&it6.hasNext()&&it7.hasNext()&&it8.hasNext()&&it9.hasNext()&&it10.hasNext()&&it11.hasNext()&&it12.hasNext()&&it13.hasNext()&&it14.hasNext()&&it15.hasNext()&&it16.hasNext()&&it17.hasNext()&&it18.hasNext()&&it19.hasNext()&&it20.hasNext()&&it21.hasNext()&&it22.hasNext()&&it23.hasNext()&&it24.hasNext()&&it25.hasNext()&&it26.hasNext()&&it27.hasNext()&&it28.hasNext()&&it29.hasNext()&&it30.hasNext()&&it31.hasNext()&&it32.hasNext()&&it33.hasNext()&&it34.hasNext()&&it35.hasNext()&&it36.hasNext())){
 			  
-			  stmnt.executeUpdate
-		  ("INSERT INTO Dutytype (Name, StartTimeMin, StartTimeMax, EndTimeMin, EndTimeMax, SignOnTime, SignOffTime, DurationMin, DurationMax, WorkingTimeTotalMin, WorkingTimeTotalMax, WorkingTimeBeforeBreakMin, WorkingTimeWithoutBreakMin, WorkingTimeAfterLastBreakMin, DrivingTimeTotalMin, DrivingTimeTotalMax, DrivingTimeWithoutBreakMin, DrivingTimeWithoutBreakMax, DrivingTimeWithoutBreakMinInterruptionTime, DrivingTimeBeforeFirstBreakMin, BreakType, BreakTimeTotalMin, BreakTimeTotalMax, BreakTimeMin, BreakTimeMax, PieceCountMin, PieceCountMax, AllowedCumulatedWorkingTimeMax, DutyFixCost, IsWorkRateConsidered, IsBreakRateConsidered, DutyCostPerMinute, IsVehicleChangeAllowedDuringBreak, BreakTimeAllowedStarts, BreakTimeAllowedEnds) VALUES('"
-			  +it.next()+"','"+it2.next()+"','"+it3.next()+"','"+it4.next()+"','"+it5.next()+"','"+it6.next()+"','"+it7.next()+"','"+it8.next()+"','"+it9.next()+"','"+it10.next()+"','"+it11.next()+"','"+it12.next()+"','"+it13.next()+"','"+it14.next()+"','"+it15.next()+"','"+it16.next()+"','"+it17.next()+"','"+it18.next()+"','"+it19.next()+"','"+it20.next()+"','"+it21.next()+"','"+it22.next()+"','"+it23.next()+"','"+it24.next()+"','"+it25.next()+"','"+it26.next()+"','"+it27.next()+"','"+it28.next()+"','"+it29.next()+"','"+it30.next()+"','"+it31.next()+"','"+it32.next()+"','"+it33.next()+"','"+it34.next()+"','"+it35.next()+"');");}
+			  stmnt.executeUpdate("INSERT INTO Dutytype (Name, StartTimeMin, StartTimeMax, EndTimeMin, EndTimeMax, SignOnTime, SignOffTime, DurationMin, DurationMax, WorkingTimeTotalMin, WorkingTimeTotalMax, WorkingTimeBeforeBreakMin, WorkingTimeWithoutBreakMin, WorkingTimeAfterLastBreakMin, DrivingTimeTotalMin, DrivingTimeTotalMax, DrivingTimeWithoutBreakMin, DrivingTimeWithoutBreakMax, DrivingTimeWithoutBreakMinInterruptionTime, DrivingTimeBeforeFirstBreakMin, BreakType, BreakTimeTotalMin, BreakTimeTotalMax, BreakTimeMin, BreakTimeMax, PieceCountMin, PieceCountMax, AllowedCumulatedWorkingTimeMax, DutyFixCost, IsWorkRateConsidered, IsBreakRateConsidered, DutyCostPerMinute, IsVehicleChangeAllowedDuringBreak, BreakTimeAllowedStarts, BreakTimeAllowedEnds, WorkingTimeWithoutBreakMax, FahrplanID) "
+					+ " VALUES ('"+it.next()+"','"+it2.next()+"','"+it3.next()+"','"+it4.next()+"','"+it5.next()+"','"+it6.next()+"','"+it7.next()+"','"+it8.next()+"','"+it9.next()+"','"+it10.next()+"','"+it11.next()+"','"+it12.next()+"','"+it13.next()+"','"+it14.next()+"','"+it15.next()+"','"+it16.next()+"','"+it17.next()+"','"+it18.next()+"','"+it19.next()+"','"+it20.next()+"','"+it21.next()+"','"+it22.next()+"','"+it23.next()+"','"+it24.next()+"','"+it25.next()+"','"+it26.next()+"','"+it27.next()+"','"+it28.next()+"','"+it29.next()+"','"+it30.next()+"','"+it31.next()+"','"+it32.next()+"','"+it33.next()+"','"+it34.next()+"','"+it35.next()+"','"+it36.next()+"', "
+			  		+ "(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('"+finalString+"%')));");
+		  }
 		  
-		  System.out.println("Dienstplan importiert!");
+		  System.out.println("Diensttypen importiert!");
 		  
 		  //catch for filling duty type
 		  }catch(SQLException e){
@@ -536,9 +850,9 @@ public class DBConnection {
 		 		
 	}
 	
-	//*******************************************************
-	//filling the duty roster data into the respective tables
-	//*******************************************************
+	//*********************************************************************************************************************************************
+	//filling the crew schedule data into the respective tables************************************************************************************
+	//*********************************************************************************************************************************************
 	
 	public void fillDienstplanIntoTable(){
 		
@@ -549,38 +863,52 @@ public class DBConnection {
 
 		
 		  try{ Statement stmnt=connection.createStatement(); //Fill values in
-
-			String fileNameVergleich=ss.getFilename();
+		  	//get schedule name
+			  String fileNameVergleich=ss.getFilename();
 			  String[] resultString=fileNameVergleich.split("_");
 			  String finalString="";
-			  for (int i = 4; i < resultString.length; i++) {
+			  for (int i = 5; i < resultString.length; i++) {
 				  if(i!=resultString.length-1){
 				  finalString+=resultString[i]+"_";
 				  }else
 					  finalString+=resultString[i];
-			}
-
-		  stmnt.executeUpdate("INSERT INTO Dienstplan (Bezeichnung, FahrplanID) VALUES ('"+ss.getFilename()+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('"+finalString+"%')));");
+			  }
+			//get crew schedule name
+			  String dienstplanBezeichnung=ss.getFilename();
+			  String[] dplanresultString=dienstplanBezeichnung.split("_");
+			  String dplanString="";
+			  for (int i = 5; i < dplanresultString.length-2; i++) {
+				  if(i!=dplanresultString.length-1){
+					  dplanString+=dplanresultString[i]+"_";
+				  }else
+					  dplanString+=dplanresultString[i];
+			  }
+			  
+			  //filling Dienstplan Table
+		  stmnt.executeUpdate("INSERT INTO Dienstplan (Bezeichnung, FahrplanID) VALUES ('"
+				  			+ss.getFilename()+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('"+finalString+"%')));");
+		  
 		  //iterators for getting values from stringsplitter object
-		  Iterator<String> it = ss.getDutyDutyID().iterator(); 
-		  Iterator<String> it2 =ss.getDutyDutyType().iterator(); 
-		  Iterator<String> it3 =ss.getDutyelementDutyType().iterator(); 
-		  Iterator<Integer> it4 =ss.getDutyelementBlockID().iterator(); 
+		  Iterator<Integer> it11 = ss.getDutyelementElementType().iterator();
+		  
+		  //duty
+		  Iterator<String> it1 = ss.getDutyDutyID().iterator(); 
+		  Iterator<String> it2 =ss.getDutyDutyType().iterator();
+		  
+		  //dutyelements
+		  Iterator<String> it3 =ss.getDutyelementDutyID().iterator();
+		  Iterator<Integer> it4 =ss.getDutyelementBlockID().iterator();
 		  Iterator<String> it5 =ss.getDutyelementServiceJourneyID().iterator();
+		  Iterator<Integer> it10 = ss.getDutyelementElementType().iterator();
+
 		  /**
 		   * TODO:
 		   * Stationen und Zeiten fï¿½r die Dienste die Sonderfahrten bedienen mï¿½ssen hier drin gespeichert werden
 		   * evtl. so trennen wie blockelemente?
 		   * ServiceJourneycode(Z512) muss wieder rein, wirft dann aber Fehler wegen static
 		  */
-//		  Iterator<Integer> it6 = StringSplitter.getDutyelementFromStopID().iterator(); 
-//		  Iterator<Integer> it7 = StringSplitter.getDutyelementToStopID().iterator(); 
-//		  Iterator<String> it8 = StringSplitter.getDutyelementDepTime().iterator(); 
-//		  Iterator<String> it9 = StringSplitter.getDutyelementArrTime().iterator(); 
-		  Iterator<Integer> it10 = ss.getDutyelementElementType().iterator();
-		  
 		  //exceptional journeys
-		  Iterator<String> it13 =ss.getExceptionaldutyelementDutyID().iterator(); 
+		  Iterator<String> it13 =ss.getExceptionaldutyelementDutyID().iterator();
 		  Iterator<Integer> it14 =ss.getExceptionaldutyelementBlockID().iterator(); 
 		  Iterator<String> it15 =ss.getExceptionaldutyelementServiceJourneyID().iterator();
 		  Iterator<Integer>it16 = ss.getExceptionaldutyelementFromStopID().iterator(); 
@@ -588,40 +916,60 @@ public class DBConnection {
 		  Iterator<String> it18 =ss.getExceptionaldutyelementDepTime().iterator(); 
 		  Iterator<String> it19 =ss.getExceptionaldutyelementArrTime().iterator(); 
 		  
-		  
-		  Iterator<Integer> it24 = ss.getExceptionaldutyelementDutyelementID().iterator();
-		  
-		  
-		  //DutyelementServiceJourneyCode not included in current plans, but left because future plans may contain values 
-		  //Iterator<String> it11 = StringSplitter.getDutyelementServiceJourneyCode().iterator();
+		  /*ATTENTION!!!******************************************************************************************************************************
+		  Feb.28th2014:
+		  BlockID, ServiceJourneyID, From- and ToStopID currently can not be imported into the exceptional Dutyelement Table as Foreign keys 
+		  referenceing the respective primary keys in their parent relation. This is due to artificial values (negative IDs with other values) which
+		  are generated for no-service-journeys in the crew schedules at the moment.
+		  DutyelementServiceJourneyCode not included in current plans, but left because future plans may contain values 
+		  Iterator<String> it11 = StringSplitter.getDutyelementServiceJourneyCode().iterator();*/
+		  //******************************************************************************************************************************************
+		  //Get Day on which the crew schedule is valid
 		  String dayID=null;
 		  if(ss.getDutyelementDayID()!=null){
 		  dayID = ss.getDutyelementDayID().get(0);
 		  }
 		  		  
 		  //fill duty
-		  while((it.hasNext()&&it2.hasNext())){
-			 
-		  stmnt.executeUpdate("INSERT INTO Duty (DutyID, DutyType) VALUES('"+it.next()+"','"+it2.next()+"');"); }
-		  
-		  //fill duty element
-		  while(it3.hasNext()&&it4.hasNext()&&it5.hasNext()&&it10.hasNext()) {
-		  stmnt.executeUpdate(		  
-		  "INSERT INTO Dutyelement (DutyId, BlockID, ServiceJourneyID, ElementType, DayID, DienstplanID) VALUES('"
-		  +it3.next()+"','"+it4.next()+"','"+it5.next()+"','"+it10.next()+"','"+dayID+"', (SELECT ID FROM Dienstplan WHERE Bezeichnung='"+ss.getFilename()+"'));");}
-		  
-		  
-		  //fill special journey
-		  while(it13.hasNext()&&it14.hasNext()&&it15.hasNext()&&it16.hasNext()&&it17.hasNext()&&it18.hasNext()&&it19.hasNext()&&it24.hasNext()){ 
 
-			 stmnt.executeUpdate(
-		  "INSERT INTO ExceptionalDutyelement (DutyID, BlockID, ServiceJourneyID, FromStopID, ToStopID, DepTime, ArrTime, DienstplanID, DutyelementID) VALUES('"
-				  +it13.next()+"','"+it14.next()+"','"+it15.next()+"','"+it16.next()+"','"+it17.next()+"','"+it18.next()+"','"+it19.next()+"', (SELECT ID FROM Dienstplan WHERE Bezeichnung='"+ss.getFilename()+"'), '"+it24.next()+"');");}
+		  while((it1.hasNext()&&it2.hasNext())){
+			  String dutyID = it1.next();
+			  String dutytype = it2.next();			 
+		  stmnt.executeUpdate("INSERT INTO Duty (DutyID_txt, DutyTypeID_txt, DutyTypeID, DienstplanID) VALUES('"+dutyID+"','"+dutytype+"', "
+				  + "(SELECT ID FROM Dutytype WHERE Name='"+dutytype+"'), "
+				  + "(SELECT ID FROM Dienstplan WHERE Bezeichnung LIKE '%"+dplanString+"%'));"); }
+		  
+		//fill duty element
+			  while(it3.hasNext()&&it4.hasNext()&&it5.hasNext()&&it11.hasNext()&&it16.hasNext()&&it17.hasNext()&&it18.hasNext()&&it19.hasNext()){
+				  int de_elementtype = it11.next();
+				  String dutyelementdutyID = it3.next();
+				  int dutyelementblockID = it4.next();
+				  String dutyelementservicejourneyID = it5.next();
+				  //exceptional dutyelements
+				  Integer exdutyelementfromstopID = it16.next(); 
+				  Integer exdutyelementtostopID = it17.next();
+				  String exdutyelemmentdeptime = it18.next();
+				  String exdutyelementarrtime = it19.next();
+				   
+				  if (de_elementtype==1){
+					   	  stmnt.executeUpdate("INSERT INTO Dutyelement (DutyID_txt, BlockID_txt, ServiceJourneyID_txt, ElementType, DayID, DutyID, BlockID, ServiceJourneyID, DienstplanID) VALUES('"
+					  			  +dutyelementdutyID+"','"+dutyelementblockID+"','"+dutyelementservicejourneyID+"','"+de_elementtype+"','"+dayID+"', "
+								  + "(SELECT d.ID from Duty AS d WHERE d.DutyID_txt = '"+dutyelementdutyID+"' AND d.DienstplanID=(SELECT dp.ID FROM Dienstplan AS dp WHERE Bezeichnung LIKE ('%"+finalString+"%'))), "
+								  + "(SELECT b.ID FROM Block AS b WHERE b.BlockID_txt='"+dutyelementblockID+"' AND b.UmlaufplanID=(SELECT up.ID FROM Umlaufplan AS up WHERE Bezeichnung LIKE ('%"+finalString+"%'))), "
+								  + "(SELECT sj.ID FROM ServiceJourney AS sj WHERE sj.ServiceJourneyID_txt='"+dutyelementservicejourneyID+"' AND sj.FahrplanID=(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%'))), "
+								  + "(SELECT ID FROM Dienstplan WHERE Bezeichnung='"+ss.getFilename()+"'));");
 
-	
+				  }else{
+					    stmnt.executeUpdate("INSERT INTO ExceptionalDutyelement (DutyID_txt, BlockID_txt, ServiceJourneyID_txt, FromStopID_txt, ToStopID_txt, DepTime, ArrTime, Elementtype, DayID, DutyID,  DienstplanID ) VALUES('"
+								  +dutyelementdutyID+"','"+dutyelementblockID+"','"+dutyelementservicejourneyID+"','"+exdutyelementfromstopID+"','"+exdutyelementtostopID+"','"+exdutyelemmentdeptime+"','"+exdutyelementarrtime+"','"+de_elementtype+"','"+dayID+"', "
+								  + "(SELECT ID from Duty WHERE DutyID_txt ='"+dutyelementdutyID+"'),"
+								  + "(SELECT ID FROM Dienstplan WHERE Bezeichnung='"+ss.getFilename()+"'));");
+				  }
+		  }
+		  
 		  //All Dienstplan array lists will be cleared
 		  ss.clearDienstplanArraylists();
-		  
+		  System.out.println("Dienstplan importiert!");
 		  //catch for filling duty roster tables
 		  }catch(SQLException e){
 		  System.out.println("Could not execute SQL-Query!");
@@ -629,183 +977,11 @@ public class DBConnection {
 		  		
 	}
 	
-	//****************************************************
-	//filling the schedule data into the respective tables
-	//****************************************************
-	
-	public void fillFahrplanIntoTables(){
-		
-		//temporary stringsplitter object that contains the the data from text files in array lists
-		StringSplitter ss = StringSplitter.getInstance();
-		//invoke stringsplitter method for reading the data in  txt-files
-		ss.readTxtFahrplan();
 
-		
-		  try{ Statement stmnt=connection.createStatement(); //Fill values in
-		  //specific tables
-		  
-		  //schedule name
-		  stmnt.executeUpdate("INSERT INTO Fahrplan (Bezeichnung) VALUES ('"+ss.getFilename()+"');");
-		  
-		  //iterators for getting values from stringsplitter object
-		  //stoppoint
-		  Iterator<Integer> it = ss.getStopID().iterator(); 
-		  Iterator<String> it2 =ss.getStopCode().iterator(); 
-		  Iterator<String> it3 =ss.getStopName().iterator();
-		  //line
-		  Iterator<Integer> it4 =ss.getLineID().iterator(); 
-		  Iterator<String> it5 =ss.getLineCode().iterator(); 
-		  Iterator<String> it6 = ss.getLineName().iterator();
-		  /**
-		   * TODO: linebundle fehlt noch!
-		   * **/
-		  //Vehicletype
-		  Iterator<Integer> it7 = ss.getVehicleTypeID().iterator(); 
-		  Iterator<String> it8 = ss.getVehicleTypeCode().iterator(); 
-		  Iterator<String> it9 = ss.getVehicleTypeName().iterator(); 
-		  Iterator<Float> it10 = ss.getVehicleTypeVehCost().iterator();
-		  Iterator<Float> it11 = ss.getVehicleTypeKmCost().iterator(); 
-		  Iterator<Float> it12 =ss.getVehicleTypeHourCost().iterator(); 
-		  Iterator<Integer> it13 =ss.getVehicleTypeCapacity().iterator();
-		  //Vehicletypegroup
-		  Iterator<Integer> it14 =ss.getVehicleTypeGroupID().iterator(); 
-		  Iterator<String> it15 =ss.getVehicleTypeGroupCode().iterator(); 
-		  Iterator<String> it16 = ss.getVehicleTypeGroupName().iterator();
-		  //Vehicletype to Vehicletypegroup
-		  Iterator<Integer> it17 = ss.getVehicleToVehicleTypeGroupVehTypeID().iterator(); 
-		  Iterator<Integer> it18 = ss.getVehicleToVehicleTypeGroupVehTypeGroupID().iterator();
-		  //Vehiclecap to Stoppoint
-		  Iterator<Integer> it19 = ss.getVehicleCapToStopVehTypeID().iterator(); 
-		  Iterator<Integer> it20 = ss.getVehicleCapToStopStoppointID().iterator();
-		  Iterator<Integer> it21= ss.getVehicleCapToStopMin().iterator(); 
-		  Iterator<Integer> it22 =ss.getVehicleCapToStopMax().iterator();
-		  //Servicejourney
-		  Iterator<Integer> it23 =ss.getServiceJourneyID().iterator(); 
-		  Iterator<Integer> it24 =ss.getServiceJourneyLineID().iterator(); 
-		  Iterator<Integer> it25 =ss.getServiceJourneyFromStopID().iterator(); 
-		  Iterator<Integer> it26 = ss.getServiceJourneyToStopID().iterator(); 
-		  Iterator<String> it27 = ss.getServiceJourneyDepTime().iterator(); 
-		  Iterator<String> it28 = ss.getServiceJourneyArrTime().iterator(); 
-		  Iterator<Integer> it29 = ss.getServiceJourneyMinAheadTime().iterator(); 
-		  Iterator<Integer> it30 = ss.getServiceJourneyMinLayoverTime().iterator(); 
-		  Iterator<Integer> it31 = ss.getServiceJourneyVehTypeGroupID().iterator();
-		  Iterator<Integer> it32 = ss.getServiceJourneyMaxShiftBackwardSeconds().iterator(); 
-		  Iterator<Integer> it33 =ss.getServiceJourneyMaxShiftForwardSeconds().iterator(); 
-		  Iterator<Integer> it34 =ss.getServiceJourneyFromStopBreakFacility().iterator(); 
-		  Iterator<Integer> it35 =ss.getServiceJourneyToStopBreakFacility().iterator(); 
-		  Iterator<String> it36 =ss.getServiceJourneyCode().iterator();
-		  //Deadruntime
-		  Iterator<Integer> it37 = ss.getDeadruntimeFromStopID().iterator();
-		  Iterator<Integer> it38 = ss.getDeadruntimeToStopID().iterator(); 
-		  Iterator<String> it39 = ss.getDeadruntimeFromTime().iterator(); 
-		  Iterator<String> it40 = ss.getDeadruntimeToTime().iterator(); 
-		  Iterator<Integer> it41 = ss.getDeadruntimeDistance().iterator(); 
-		  Iterator<Integer> it42 = ss.getDeadruntimeRuntime().iterator();
-		  //Reliefpoints
-		  Iterator<Integer> it43 = ss.getReliefpointID().iterator(); 
-		  Iterator<String> it44 =ss.getReliefpointServiceJourneyID().iterator(); 
-		  Iterator<Integer> it45 =ss.getReliefpointStoppointID().iterator(); 
-		  Iterator<String> it46 =ss.getReliefpointStoptime().iterator(); 
-		  //Walkruntimes
-		  Iterator<Integer> it57 = ss.getWalkruntimeFromStopID().iterator(); 
-		  Iterator<Integer> it58 =ss.getWalkruntimeToStopID().iterator(); 
-		  Iterator<String> it59 =ss.getWalkruntimeFromTime().iterator(); 
-		  Iterator<String> it60 =ss.getWalkruntimeToTime().iterator(); 
-		  Iterator<Integer> it61 = ss.getWalkruntimeRuntime().iterator();  
-		  /**
-		   * TODO:
-		   * transfertime fehlt noch!
-		   * day kann eig. raus, da hardcoded weiter oben drin
-		   */
-		  //Iterator<Integer> it47 = ss.getDayID().iterator(); 
-		  //Iterator<String> it48 = ss.getDayName().iterator(); 
-		  //days
-		  Iterator<Integer> it49 = ss.getTripID().iterator(); 
-		  Iterator<Integer> it50 = ss.getDayOne().iterator();
-		  Iterator<Integer> it51 = ss.getDayTwo().iterator(); 
-		  Iterator<Integer> it52 =ss.getDayThree().iterator(); 
-		  Iterator<Integer> it53 =ss.getDayFour().iterator(); 
-		  Iterator<Integer> it54 =ss.getDayFive().iterator(); 
-		  Iterator<Integer> it55 =ss.getDaySix().iterator(); 
-		  Iterator<Integer> it56 =ss.getDaySeven().iterator();
-
-		  //fill Stoppoint
-		  while((it.hasNext()&&it2.hasNext()&&it3.hasNext())){
-				 
-			  stmnt.executeUpdate("INSERT INTO Stoppoint (StoppointID, Code, Name) VALUES('"+it.next()+"','"+it2.next()+"','"+it3.next()+"');");
-			  }
-		  //fill line
-		  while((it4.hasNext()&&it5.hasNext()&&it6.hasNext())){
-			  stmnt.executeUpdate("INSERT INTO Line (LineID, Code,Name) VALUES('"+it4.next()+"','"+it5.next()+"','"+it6.next()+"');"); 
-		  }
-		  /**
-		   * TODO: fill linebundle
-		   */
-		  //fill Vehicletype
-		  while((it7.hasNext()&&it8.hasNext()&&it9.hasNext()&&it10.hasNext()&&it11.hasNext()&&it12.hasNext()&&it13.hasNext())){
-			  
-			  stmnt.executeUpdate("INSERT INTO VehicleType (VehicleTypeID, Code, Name, VehCost, KmCost, HourCost, Capacity) VALUES('"+it7.next()+"','"+it8.next()+"','"+it9.next()+"','"+it10.next()+"','"+it11.next()+"','"+it12.next()+"','"+it13.next()+"');"); 
-		  }
-		  //fill vehicletypegroup
-		  while((it14.hasNext()&&it15.hasNext()&&it16.hasNext())){
-			  stmnt.executeUpdate("INSERT INTO VehicleTypeGroup (VehicleTypeGroupID, Code, Name) VALUES('"+it14.next()+"','"+it15.next()+"','"+it16.next()+"');"); 
-		  }
-		  //fill vehicletype to vehicletypegroup
-		  while((it17.hasNext()&&it18.hasNext())){
-			  stmnt.executeUpdate("INSERT INTO VehicleTypeToVehicleTypeGroup (VehTypeID,VehTypeGroupID) VALUES('"+it17.next()+"','"+it18.next()+"');"); 
-		  }
-		  //vehiclecap to stoppoint
-		  while((it19.hasNext()&&it20.hasNext()&&it21.hasNext()&&it22.hasNext())){
-			  stmnt.executeUpdate("INSERT INTO VehicleCapToStoppoint (VehTypeID,StoppointID, Min, Max) VALUES('"+it19.next()+"','"+it20.next()+"','"+it21.next()+"','"+it22.next()+"');"); 
-		  }
-		  //fill Servicejourney
-		  while((it23.hasNext()&&it24.hasNext()&&it25.hasNext()&&it26.hasNext()&&it27.hasNext()&&it28.hasNext()&&it29.hasNext()&&it30.hasNext()&&it31.hasNext()&&it32.hasNext()&&it33.hasNext()&&it34.hasNext()&&it35.hasNext()&&it36.hasNext())){
-			  
-			  stmnt.executeUpdate("INSERT INTO ServiceJourney (ServiceJourneyID, LineID, FromStopID, ToStopID, DepTime, ArrTime, MinAheadTime, MinLayoverTime, VehTypeGroupID, MaxShiftBackwardSeconds, MaxShiftForwardSeconds, FromStopBreakFacility, ToStopBreakFacility, Code, FahrplanID) VALUES('"
-			  +it23.next()+"','"+it24.next()+"','"+it25.next()+"','"+it26.next()+"','"+it27.next()+"','"+it28.next()+"','"+it29.next()+"','"+it30.next()+"','"+it31.next()+"','"+it32.next()+"','"+it33.next()+"','"+it34.next()+"','"+it35.next()+"','"+it36.next()+"', (SELECT ID FROM Fahrplan WHERE Bezeichnung='"+ss.getFilename()+"'));"); 
-		  }
-		  //fill deadruntime
-		  while((it37.hasNext()&&it38.hasNext()&&it39.hasNext()&&it40.hasNext()&&it41.hasNext()&&it42.hasNext())){
-			  
-			  stmnt.executeUpdate("INSERT INTO Deadruntime (FromStopID, ToStopID, FromTime, ToTime, Distance, Runtime) VALUES('"+it37.next()+"','"+it38.next()+"','"+it39.next()+"','"+it40.next()+"','"+it41.next()+"','"+it42.next()+"');"); 
-		  }
-		  //fill Reliefpoint
-		  while((it43.hasNext()&&it44.hasNext()&&it45.hasNext()&&it46.hasNext())){
-			  stmnt.executeUpdate("INSERT INTO Reliefpoint (ReliefpointID, ServiceJourneyID) VALUES('"+it43.next()+"','"+it44.next()+"');"); 
-		  } 
-		  //fill Walkruntime
-		  while((it57.hasNext()&&it58.hasNext()&&it59.hasNext()&&it60.hasNext()&&it61.hasNext())){
-			  stmnt.executeUpdate("INSERT INTO Transfertime (FromStopID, ToStopID,FromTime,ToTime,Runtime) VALUES('"+it57.next()+"','"+it58.next()+"','"+it59.next()+"','"+it60.next()+"','"+it61.next()+"');"); 
-		  }
-		  
-		  //fill days according to how much days are considered in the plan (min: 5, max: 7)
-		  //5 days
-		  while((it49.hasNext()&&it50.hasNext()&&it51.hasNext()&&it52.hasNext()&&it53.hasNext()&&it54.hasNext())){
-			  
-			  stmnt.executeUpdate("INSERT INTO Days (TRIPID, d1, d2, d3, d4, d5) VALUES('"+it49.next()+"','"+it50.next()+"','"+it51.next()+"','"+it52.next()+"','"+it53.next()+"','"+it54.next()+"');");
-		  }
-		  //6 days
-		  while((it49.hasNext()&&it50.hasNext()&&it51.hasNext()&&it52.hasNext()&&it53.hasNext()&&it54.hasNext()&&it55.hasNext())){
-			  
-			  stmnt.executeUpdate("INSERT INTO Days (TRIPID, d1, d2, d3, d4, d5, d6) VALUES('"+it49.next()+"','"+it50.next()+"','"+it51.next()+"','"+it52.next()+"','"+it53.next()+"','"+it54.next()+"','"+it55.next()+"');");
-		  }
-		  //7 days
-		  while((it49.hasNext()&&it50.hasNext()&&it51.hasNext()&&it52.hasNext()&&it53.hasNext()&&it54.hasNext()&&it55.hasNext()&&it56.hasNext())){
-	  
-			  stmnt.executeUpdate("INSERT INTO Days (TRIPID, d1, d2, d3, d4, d5, d6, d7) VALUES('"+it49.next()+"','"+it50.next()+"','"+it51.next()+"','"+it52.next()+"','"+it53.next()+"','"+it54.next()+"','"+it55.next()+"','"+it56.next()+"');");
-		  }
-		  
-		  //All Fahrplan array lists will be cleared
-		  ss.clearFahrplanArraylists();
-		  
-		  System.out.println("Fahrplan importiert!");
-		  
-	//catch for filling schedule data into tables
-	}catch(SQLException e){
-		  System.out.println("Could not execute SQL-Query!");
-		  e.printStackTrace(); }
-	}
 	
+	//******************************************************************************************************************************************
+	//filling the scenario data into the respective tables**************************************************************************************
+	//******************************************************************************************************************************************
 	public void fillSzenarioIntoTables(){
 		
 		Statement stmnt;
@@ -846,6 +1022,103 @@ public class DBConnection {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} 
+	}
+	
+	//method for getting schedule naming to compare for getting the correct foreign keys
+	public String getScheduleName(String filename){
+		String schedulename ="";
+		String[] resultString=filename.split("_|-|.");
+		int Stringlength=resultString.length;
+			for (int i = 0; i < Stringlength; i++) {
+				if(i!=resultString.length-1){
+					schedulename+=resultString[i]+"_";
+				}else{
+					schedulename+=resultString[i];
+				}
+			}
+
+		return schedulename;
+	}
+	public String getVehicleScheduleName(String filename){
+		String vehicleschedulename ="";
+		String[] resultString=filename.split("_|-|.");
+		int Stringlength=resultString.length;
+		//distinguish between different kinds of file names and getting the actual naming 
+		switch (Stringlength){
+		//standard schedules
+		case 9:
+			for (int i = 3; i < Stringlength; i++) {
+				if(i!=resultString.length-1){
+					vehicleschedulename+=resultString[i]+"_";
+				}else{
+					vehicleschedulename+=resultString[i];
+				}
+			}
+		break;
+		//comparable schedules
+		case 13:
+			for (int i = 4; i < Stringlength; i++) {
+				if(i!=resultString.length-1){
+					vehicleschedulename+=resultString[i]+"_";
+				}else{
+					vehicleschedulename+=resultString[i];
+				}
+			}
+		
+		break;
+		//retiming schedules
+		case 18:
+			for (int i = 3; i < Stringlength; i++) {
+				if(i!=resultString.length-1){
+					vehicleschedulename+=resultString[i]+"_";
+				}else{
+					vehicleschedulename+=resultString[i];
+				}
+			}
+		break;
+		}
+		
+		return vehicleschedulename;
+	}
+	public String getCrewScheduleName(String filename){
+		String crewschedulename ="";
+		String[] resultString=filename.split("_|-|.");
+		int Stringlength=resultString.length;
+		//distinguish between different kinds of file names and getting the actual naming 
+		switch (Stringlength){
+		//standard schedules
+		case 9:
+			for (int i = 3; i < Stringlength; i++) {
+				if(i!=resultString.length-1){
+					crewschedulename+=resultString[i]+"_";
+				}else{
+					crewschedulename+=resultString[i];
+				}
+			}
+		break;
+		//comparable schedules
+		case 13:
+			for (int i = 4; i < Stringlength; i++) {
+				if(i!=resultString.length-1){
+					crewschedulename+=resultString[i]+"_";
+				}else{
+					crewschedulename+=resultString[i];
+				}
+			}
+		
+		break;
+		//retiming schedules
+		case 18:
+			for (int i = 3; i < Stringlength; i++) {
+				if(i!=resultString.length-1){
+					crewschedulename+=resultString[i]+"_";
+				}else{
+					crewschedulename+=resultString[i];					
+				}
+			}
+		break;
+		}		
+		return  crewschedulename;
 	}
 
 	//getter for DB connection
