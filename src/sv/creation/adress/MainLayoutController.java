@@ -26,6 +26,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.SingleSelectionModel;
@@ -4529,6 +4530,20 @@ public class MainLayoutController {
 	@FXML
 	public void deleteLastDPlan() {
 
+	}
+	
+	/**
+	 * Shows all Fahrplaene
+	 */
+	@FXML
+	public void showFahrplan() {
+		
+		ListView<String> fahrplanlist = new ListView<String>();
+		ObservableList<String> items =FXCollections.observableArrayList (
+		    "Single", "Double", "Suite", "Family App");
+		fahrplanlist.setItems(items);
+		
+		this.tablePane.setContent(fahrplanlist);
 	}
 
 	/**
