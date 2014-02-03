@@ -521,15 +521,15 @@
                               <items>
                                 <AnchorPane maxHeight="105.0" maxWidth="200.0" minHeight="0.0" minWidth="200.0" prefHeight="160.0" prefWidth="100.0" styleClass="background">
                                   <children>
-                                    <GridPane layoutX="14.0" layoutY="7.0" prefHeight="90.0" prefWidth="187.0" styleClass="background-paper">
+                                    <GridPane prefHeight="87.0" prefWidth="191.0" styleClass="background-paper" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="6.0">
                                       <children>
                                         <Label styleClass="label-versTwo" text="Anzahl der Fahrten" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                                         <Label styleClass="label-versTwo" text="Anzahl der Servicefahrten" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                         <Label styleClass="label-versTwo" text="Anzahl der Leerfahrten" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                        <HBox id="HBox" alignment="CENTER" spacing="50.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                        <HBox id="HBox" alignment="CENTER" spacing="40.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                           <children>
-                                            <Label styleClass="label-versTwo" text="Fahrplan" />
-                                            <Button cancelButton="false" defaultButton="false" font="$x2" graphicTextGap="0.0" minWidth="16.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="23.0" styleClass="dark-blue-Choicebox" text="+">
+                                            <Label prefWidth="63.0" styleClass="label-versTwo" text="Fahrplan" />
+                                            <Button cancelButton="false" defaultButton="false" font="$x2" graphicTextGap="0.0" minWidth="25.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="25.0" styleClass="dark-blue-Choicebox" text="+">
                                               <HBox.margin>
                                                 <Insets left="10.0" />
                                               </HBox.margin>
@@ -545,9 +545,9 @@
                                         <Label fx:id="gehoertzuFahrplan" styleClass="label-header" text="Wert" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                                       </children>
                                       <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="171.0" minWidth="2.0" prefWidth="5.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="171.0" minWidth="10.0" prefWidth="138.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="93.0" minWidth="10.0" prefWidth="44.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="171.0" minWidth="2.0" prefWidth="7.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="171.0" minWidth="10.0" prefWidth="143.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="93.0" minWidth="10.0" prefWidth="41.0" />
                                       </columnConstraints>
                                       <rowConstraints>
                                         <RowConstraints maxHeight="22.0" minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
