@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
+<?import java.net.*?>
 <?import javafx.collections.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -10,79 +11,130 @@
 <AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sv.creation.adress.DatenbankLayoutController">
   <!-- TODO Add Nodes -->
   <children>
-    <SplitPane dividerPositions="0.3473895582329317" focusTraversable="true" orientation="VERTICAL" prefHeight="500.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <SplitPane dividerPositions="" focusTraversable="true" orientation="VERTICAL" prefHeight="500.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <items>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
           <children>
             <SplitPane dividerPositions="0.2471264367816092" focusTraversable="true" prefHeight="246.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <items>
-                <AnchorPane maxWidth="169.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                <AnchorPane maxWidth="169.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="background">
                   <children>
-                    <Label text="Datenbankverwaltung" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="6.0" />
-                    <Button mnemonicParsing="false" onAction="#endStage" text="Abbrechen" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="6.0" />
+                    <Label styleClass="label-white" text="Datenbankverwaltung" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="6.0" />
+                    <Button mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Abbrechen" AnchorPane.bottomAnchor="11.0" AnchorPane.rightAnchor="45.0" />
                     <HBox id="HBox" alignment="CENTER" prefWidth="169.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="51.0">
                       <children>
-                        <Button mnemonicParsing="false" prefWidth="77.99990844726562" text="Export">
-                          <HBox.margin>
-                            <Insets left="5.0" />
-                          </HBox.margin>
-                        </Button>
-                        <Button mnemonicParsing="false" onAction="#handleImport" prefWidth="78.0" text="Import">
+                        <Button mnemonicParsing="false" onAction="#handleImport" prefWidth="78.0" styleClass="dark-blue" text="Import">
                           <HBox.margin>
                             <Insets right="10.0" />
                           </HBox.margin>
                         </Button>
                       </children>
                     </HBox>
-                    <ProgressBar layoutX="16.0" layoutY="113.0" prefWidth="102.0" progress="0.0" visible="false" />
-                    <Label layoutX="14.0" layoutY="91.0" text="Fortschirtt:" visible="false" />
                   </children>
                 </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                   <children>
-                    <TableView disable="false" editable="true" maxWidth="-1.0" minWidth="-1.0" mouseTransparent="false" prefHeight="168.0" prefWidth="521.0" tableMenuButtonVisible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                      <columns>
-                        <TableColumn editable="true" maxWidth="5000.0" minWidth="1.0" prefWidth="80.0" resizable="false" text="PLAN_ID" />
-                        <TableColumn maxWidth="5000.0" minWidth="1.0" prefWidth="124.0" text="DATUM_VON" />
-                        <TableColumn maxWidth="5000.0" minWidth="1.0" prefWidth="131.0" text="DATUM_BIS" />
-                        <TableColumn maxWidth="5000.0" minWidth="1.0" prefWidth="104.0" text="GELADEN_AM" />
-                        <TableColumn maxWidth="5000.0" minWidth="80.0" prefWidth="80.0" text="KÜRZEL" />
-                      </columns>
-                    </TableView>
+                    <TabPane prefHeight="496.0" prefWidth="521.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                      <tabs>
+                        <Tab text="Umlaufpläne">
+                          <content>
+                            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                              <children>
+                                <SplitPane dividerPositions="0.91792656587473" focusTraversable="true" orientation="VERTICAL" prefHeight="465.0" prefWidth="521.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                  <items>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                      <children>
+                                        <TableView prefHeight="422.0" prefWidth="519.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <columns>
+                                            <TableColumn prefWidth="75.0" text="ID" />
+                                            <TableColumn prefWidth="75.0" text="Bezeichnung" />
+                                            <TableColumn prefWidth="75.0" text="FahrplanID" />
+                                            <TableColumn prefWidth="75.0" text="Upload Datum" />
+                                          </columns>
+                                        </TableView>
+                                      </children>
+                                    </AnchorPane>
+                                    <AnchorPane maxHeight="35.0" minHeight="35.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="background">
+                                      <children>
+                                        <Button layoutX="426.0" layoutY="5.0" mnemonicParsing="false" styleClass="dark-blue" text="Umbennen" />
+                                      </children>
+                                    </AnchorPane>
+                                  </items>
+                                </SplitPane>
+                              </children>
+                            </AnchorPane>
+                          </content>
+                        </Tab>
+                        <Tab text="Dienstpläne">
+                          <content>
+                            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                              <children>
+                                <SplitPane dividerPositions="0.91792656587473" focusTraversable="true" orientation="VERTICAL" prefHeight="465.0" prefWidth="521.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                  <items>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                      <children>
+                                        <TableView prefHeight="422.0" prefWidth="519.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <columns>
+                                            <TableColumn prefWidth="75.0" text="ID" />
+                                            <TableColumn prefWidth="75.0" text="Bezeichnung" />
+                                            <TableColumn prefWidth="75.0" text="FahrplanID" />
+                                            <TableColumn prefWidth="75.0" text="Upload Datum" />
+                                          </columns>
+                                        </TableView>
+                                      </children>
+                                    </AnchorPane>
+                                    <AnchorPane maxHeight="35.0" minHeight="35.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="background">
+                                      <children>
+                                        <Button layoutX="426.0" layoutY="5.0" mnemonicParsing="false" styleClass="dark-blue" text="Umbennen" />
+                                      </children>
+                                    </AnchorPane>
+                                  </items>
+                                </SplitPane>
+                              </children>
+                            </AnchorPane>
+                          </content>
+                        </Tab>
+                        <Tab text="Fahrpläne">
+                          <content>
+                            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                              <children>
+                                <SplitPane dividerPositions="0.91792656587473" focusTraversable="true" orientation="VERTICAL" prefHeight="465.0" prefWidth="521.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                  <items>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                      <children>
+                                        <TableView prefHeight="422.0" prefWidth="519.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <columns>
+                                            <TableColumn prefWidth="75.0" text="ID" />
+                                            <TableColumn prefWidth="75.0" text="Bezeichnung" />
+                                            <TableColumn prefWidth="75.0" text="FahrplanID" />
+                                            <TableColumn prefWidth="75.0" text="Upload Datum" />
+                                          </columns>
+                                        </TableView>
+                                      </children>
+                                    </AnchorPane>
+                                    <AnchorPane maxHeight="35.0" minHeight="35.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="background">
+                                      <children>
+                                        <Button layoutX="426.0" layoutY="5.0" mnemonicParsing="false" styleClass="dark-blue" text="Umbennen" />
+                                      </children>
+                                    </AnchorPane>
+                                  </items>
+                                </SplitPane>
+                              </children>
+                            </AnchorPane>
+                          </content>
+                        </Tab>
+                      </tabs>
+                    </TabPane>
                   </children>
                 </AnchorPane>
               </items>
             </SplitPane>
           </children>
         </AnchorPane>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-          <children>
-            <TableView prefHeight="214.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="32.0">
-              <columns>
-                <TableColumn prefWidth="75.0" text="Column X" />
-                <TableColumn prefWidth="75.0" text="Column X" />
-                <TableColumn prefWidth="75.0" text="Column X" />
-                <TableColumn prefWidth="75.0" text="Column X" />
-                <TableColumn prefWidth="75.0" text="Column X" />
-                <TableColumn prefWidth="75.0" text="Column X" />
-                <TableColumn prefWidth="75.0" text="Column X" />
-                <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="71.0" text="Column X" />
-                <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="100.0" text="Column X" />
-              </columns>
-            </TableView>
-            <ChoiceBox layoutX="14.0" layoutY="4.0" prefWidth="140.0">
-              <items>
-                <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="Item 1" />
-                  <String fx:value="Item 2" />
-                  <String fx:value="Item 3" />
-                </FXCollections>
-              </items>
-            </ChoiceBox>
-            <Button layoutX="164.0" layoutY="5.0" mnemonicParsing="false" text="Auswählen" />
-          </children>
-        </AnchorPane>
       </items>
     </SplitPane>
   </children>
+  <stylesheets>
+    <URL value="@MainLayout.css" />
+  </stylesheets>
 </AnchorPane>
