@@ -4566,6 +4566,13 @@ public class MainLayoutController {
 		faa.setToValue(1.0);
 		faa.setAutoReverse(true);
 		faa.play();
+		
+		FadeTransition faaa = new FadeTransition(Duration.millis(500),
+				this.hilfslinien);
+		faaa.setFromValue(0.0);
+		faaa.setToValue(1.0);
+		faaa.setAutoReverse(true);
+		faaa.play();
 
 	}
 

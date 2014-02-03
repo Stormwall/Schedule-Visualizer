@@ -46,7 +46,7 @@
               <items>
                 <AnchorPane fx:id="leftinnerPane" maxHeight="-1.0" maxWidth="167.0" minHeight="0.0" minWidth="167.0" prefHeight="160.0" prefWidth="100.0" styleClass="background">
                   <children>
-                    <GridPane prefHeight="443.0" prefWidth="167.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <GridPane opacity="1.0" prefHeight="443.0" prefWidth="167.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                       <children>
                         <HBox id="HBox" alignment="CENTER" prefHeight="41.0" prefWidth="167.0" spacing="5.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
                           <children>
@@ -172,12 +172,9 @@
                           </GridPane.margin>
                         </Button>
                         <Button fx:id="loeschenDienstplan" mnemonicParsing="false" styleClass="dark-blue" text="Löschen" visible="false" GridPane.columnIndex="0" GridPane.margin="$x5" GridPane.rowIndex="6" />
-                        <CheckBox fx:id="hilfslinien" mnemonicParsing="false" opacity="0.0" text="Hilfslinien Anzeigen" textFill="WHITE" GridPane.columnIndex="0" GridPane.rowIndex="7">
-                          <font>
-                            <Font name="Segoe UI Light" size="12.0" />
-                          </font>
+                        <CheckBox fx:id="hilfslinien" mnemonicParsing="false" opacity="0.0" styleClass="label-white" text="Hilfslinien" GridPane.columnIndex="0" GridPane.rowIndex="7">
                           <GridPane.margin>
-                            <Insets left="20.0" fx:id="x1" />
+                            <Insets left="40.0" />
                           </GridPane.margin>
                         </CheckBox>
                       </children>
