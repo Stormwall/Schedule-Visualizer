@@ -4,12 +4,17 @@ import java.util.ArrayList;
 
 public class Fahrplan {
 	
-	private ArrayList <Haltestellen> haltestellen = new ArrayList<Haltestellen>();
-	private ArrayList <Block> Blockn = new ArrayList<Block>();
-	private ArrayList <Fahrzeugtyp> fahrzeugtypen = new ArrayList<Fahrzeugtyp>();
-	private ArrayList <Fahrzeugtypgruppen> fahrzeugtypgruppen = new ArrayList<Fahrzeugtypgruppen>();
-	private ArrayList <Blockelement> Linienfahrten = new ArrayList<Blockelement>();
-	private ArrayList <Verbindung> verbindungen = new ArrayList<Verbindung>();
+	private ArrayList <Stoppoint> haltestellen = new ArrayList<Stoppoint>();
+	private ArrayList<Line> line = new ArrayList<Line>();
+	private ArrayList <VehicleType> fahrzeugtypen = new ArrayList<VehicleType>();
+	private ArrayList <VehicleTypeGroup> fahrzeugtypgruppen = new ArrayList<VehicleTypeGroup>();
+	private ArrayList <VehicleTypeToVehicleTypeGroup> fahrzeugtypzufahrzeugtypgruppen = new ArrayList<VehicleTypeToVehicleTypeGroup>();
+	private ArrayList <VehicleCapToStoppoint> fahrzeugKapazitaeZuHaltestellen = new ArrayList<VehicleCapToStoppoint>();
+	private ArrayList <ServiceJourney> servicejourney = new ArrayList<ServiceJourney>();
+	private ArrayList <Deadruntime> verbindungen = new ArrayList<Deadruntime>();
+	private ArrayList <Reliefpoint> reliefpoint = new ArrayList<Reliefpoint>();
+	private ArrayList <Transfertime> transfertime = new ArrayList<Transfertime>();
+	
 	
 	/**
 	 * @param haltestellen
@@ -18,70 +23,137 @@ public class Fahrplan {
 	 * @param fahrzeugtypgruppen
 	 * @param Linienfahrten
 	 * @param verbindungen
-	 */
-	public Fahrplan(ArrayList<Haltestellen> haltestellen,
-			ArrayList<Block> Blockn, ArrayList<Fahrzeugtyp> fahrzeugtypen,
-			ArrayList<Fahrzeugtypgruppen> fahrzeugtypgruppen,
-			ArrayList<Blockelement> Linienfahrten,
-			ArrayList<Verbindung> verbindungen) {
+	 */ 
+
+	public Fahrplan(
+			ArrayList<Stoppoint> haltestellen,
+			ArrayList<Line> line,
+			ArrayList<VehicleType> fahrzeugtypen,
+			ArrayList<VehicleTypeGroup> fahrzeugtypgruppen,
+			ArrayList<VehicleTypeToVehicleTypeGroup> fahrzeugtypzufahrzeugtypgruppen,
+			ArrayList<VehicleCapToStoppoint> fahrzeugKapazitaeZuHaltestellen,
+			ArrayList<ServiceJourney> servicejourney,
+			ArrayList<Deadruntime> verbindungen,
+			ArrayList<Reliefpoint> reliefpoint,
+			ArrayList<Transfertime> transfertime) {
 		super();
 		this.haltestellen = haltestellen;
-		this.Blockn = Blockn;
+		this.line = line;
 		this.fahrzeugtypen = fahrzeugtypen;
 		this.fahrzeugtypgruppen = fahrzeugtypgruppen;
-		this.Linienfahrten = Linienfahrten;
+		this.fahrzeugtypzufahrzeugtypgruppen = fahrzeugtypzufahrzeugtypgruppen;
+		this.fahrzeugKapazitaeZuHaltestellen = fahrzeugKapazitaeZuHaltestellen;
+		this.servicejourney = servicejourney;
 		this.verbindungen = verbindungen;
+		this.reliefpoint = reliefpoint;
+		this.transfertime = transfertime;
 	}
 
-	public ArrayList<Haltestellen> getHaltestellen() {
+
+	//Getter an setter methods
+	
+	public ArrayList<Stoppoint> getHaltestellen() {
 		return haltestellen;
 	}
 
-	public void setHaltestellen(ArrayList<Haltestellen> haltestellen) {
+
+	public void setHaltestellen(ArrayList<Stoppoint> haltestellen) {
 		this.haltestellen = haltestellen;
 	}
 
-	public ArrayList<Block> getBlockn() {
-		return Blockn;
+
+	public ArrayList<Line> getLine() {
+		return line;
 	}
 
-	public void setBlockn(ArrayList<Block> Blockn) {
-		this.Blockn = Blockn;
+
+	public void setLine(ArrayList<Line> line) {
+		this.line = line;
 	}
 
-	public ArrayList<Fahrzeugtyp> getFahrzeugtypen() {
+
+	public ArrayList<VehicleType> getFahrzeugtypen() {
 		return fahrzeugtypen;
 	}
 
-	public void setFahrzeugtypen(ArrayList<Fahrzeugtyp> fahrzeugtypen) {
+
+	public void setFahrzeugtypen(ArrayList<VehicleType> fahrzeugtypen) {
 		this.fahrzeugtypen = fahrzeugtypen;
 	}
 
-	public ArrayList<Fahrzeugtypgruppen> getFahrzeugtypgruppen() {
+
+	public ArrayList<VehicleTypeGroup> getFahrzeugtypgruppen() {
 		return fahrzeugtypgruppen;
 	}
 
-	public void setFahrzeugtypgruppen(
-			ArrayList<Fahrzeugtypgruppen> fahrzeugtypgruppen) {
+
+	public void setFahrzeugtypgruppen(ArrayList<VehicleTypeGroup> fahrzeugtypgruppen) {
 		this.fahrzeugtypgruppen = fahrzeugtypgruppen;
 	}
 
-	public ArrayList<Blockelement> getLinienfahrten() {
-		return Linienfahrten;
+
+	public ArrayList<VehicleTypeToVehicleTypeGroup> getFahrzeugtypzufahrzeugtypgruppen() {
+		return fahrzeugtypzufahrzeugtypgruppen;
 	}
 
-	public void setLinienfahrten(ArrayList<Blockelement> Linienfahrten) {
-		this.Linienfahrten = Linienfahrten;
+
+	public void setFahrzeugtypzufahrzeugtypgruppen(
+			ArrayList<VehicleTypeToVehicleTypeGroup> fahrzeugtypzufahrzeugtypgruppen) {
+		this.fahrzeugtypzufahrzeugtypgruppen = fahrzeugtypzufahrzeugtypgruppen;
 	}
 
-	public ArrayList<Verbindung> getVerbindungen() {
+
+	public ArrayList<VehicleCapToStoppoint> getFahrzeugKapazitaeZuHaltestellen() {
+		return fahrzeugKapazitaeZuHaltestellen;
+	}
+
+
+	public void setFahrzeugKapazitaeZuHaltestellen(
+			ArrayList<VehicleCapToStoppoint> fahrzeugKapazitaeZuHaltestellen) {
+		this.fahrzeugKapazitaeZuHaltestellen = fahrzeugKapazitaeZuHaltestellen;
+	}
+
+
+	public ArrayList<ServiceJourney> getServicejourney() {
+		return servicejourney;
+	}
+
+
+	public void setServicejourney(ArrayList<ServiceJourney> servicejourney) {
+		this.servicejourney = servicejourney;
+	}
+
+
+	public ArrayList<Deadruntime> getVerbindungen() {
 		return verbindungen;
 	}
 
-	public void setVerbindungen(ArrayList<Verbindung> verbindungen) {
+
+	public void setVerbindungen(ArrayList<Deadruntime> verbindungen) {
 		this.verbindungen = verbindungen;
 	}
-	
+
+
+	public ArrayList<Reliefpoint> getReliefpoint() {
+		return reliefpoint;
+	}
+
+
+	public void setReliefpoint(ArrayList<Reliefpoint> reliefpoint) {
+		this.reliefpoint = reliefpoint;
+	}
+
+
+	public ArrayList<Transfertime> getTransfertime() {
+		return transfertime;
+	}
+
+
+	public void setTransfertime(ArrayList<Transfertime> transfertime) {
+		this.transfertime = transfertime;
+	}
+
+
 	
 	
 	

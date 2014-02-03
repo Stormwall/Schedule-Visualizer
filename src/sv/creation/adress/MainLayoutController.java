@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import sv.creation.adress.database.DBConnection;
 import sv.creation.adress.database.DBMatching;
 import sv.creation.adress.model.Blockelement;
 import sv.creation.adress.model.Dienstplan;
@@ -426,6 +427,12 @@ public class MainLayoutController {
 
 	@FXML
 	private void initialize() {
+		
+		DBConnection dbc=new DBConnection();
+		dbc.createTables();
+		
+		DBMatching dbm=new DBMatching();
+		dbm.createFahrplanObject();
 
 		// Fades in Filter Panel
 		FadeTransition fa = new FadeTransition(Duration.millis(3000),
@@ -4613,6 +4620,12 @@ public class MainLayoutController {
 
 		DBMatching dbm = new DBMatching();
 
+		this.umlaufplanliste.clear();
+		
+		if(dbm.databaseIsEmpty()||dbm.dienstplanIsEmpty()){
+			
+		}else{
+
 		this.dienstplanliste.clear();
 
 		this.dienstplanliste = dbm.createDienstplanObject();
@@ -4627,6 +4640,7 @@ public class MainLayoutController {
 				this.DPlan.getItems().add(dienstplanliste.get(i).getName());
 			}
 		}
+		}
 
 	}
 
@@ -4637,6 +4651,12 @@ public class MainLayoutController {
 		// UmlaufplÃ¤ne -- Choicebox wird gefÃ¼llt
 
 		DBMatching dbm = new DBMatching();
+
+		this.umlaufplanliste.clear();
+		
+		if(dbm.databaseIsEmpty()||dbm.umlaufplanIsEmpty()){
+			
+		}else{
 
 		this.umlaufplanliste.clear();
 
@@ -4651,6 +4671,7 @@ public class MainLayoutController {
 			for (int i = 1; i < umlaufplanliste.size(); i++) {
 				this.UPlan.getItems().add(umlaufplanliste.get(i).getName());
 			}
+		}
 		}
 
 	}

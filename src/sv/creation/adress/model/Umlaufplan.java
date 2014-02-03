@@ -20,7 +20,7 @@ public class Umlaufplan {
 		this.fahrtZuUmlauf=fahrtZuUmlauf;
 		this.fahrplanID = fahrplanID;
 	}
-
+ 
 	public int getId() {
 		return id;
 	}

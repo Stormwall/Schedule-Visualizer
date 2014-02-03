@@ -15,6 +15,7 @@ package sv.creation.adress.database;
  * Zeile 36, 470, 516, 580, 630, 656
  */
 
+import java.io.File;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Connection;
@@ -32,6 +33,7 @@ public class DBConnection {
 	// Path where a empty database file is created
 	public static final String DB_PATH = System.getProperty("user.home") + "/"
 			+ "PlanB_DB.db";
+	File file=new File(DB_PATH);
 	//loading database drivers
 	static {
 		try {
@@ -41,7 +43,8 @@ public class DBConnection {
 			e.printStackTrace();
 		}
 	}
-
+ 
+	
 	// Singleton
 	public static DBConnection getInstance() {
 		if (instance == null) {
@@ -58,7 +61,7 @@ public class DBConnection {
 			if (connection != null)
 				return;
 			System.out.println("Creating DB Connection...");
-			connection = DriverManager.getConnection("jdbc:sqlite:" + DB_PATH);
+			connection = DriverManager.getConnection("jdbc:sqlite:" + file);
 			if (!connection.isClosed())
 				System.out.println("...Connection established!");
 		} catch (SQLException e) {
@@ -92,8 +95,10 @@ public class DBConnection {
 //*****************************************************************************************************************************************
 	
 	public void createTables() {
-
+		
+		if(!file.exists()){
 		try {
+			initDBConnection();
 			//create db connection
 			Statement stmnt = connection.createStatement();
 			//******************************
@@ -104,7 +109,7 @@ public class DBConnection {
 			//*********************************************************************************************************************************************
 			
 			//table for schedule
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Fahrplan (ID INTEGER PRIMARY KEY AUTOINCREMENT, Bezeichnung VARCHAR(255), VersNr VARCHAR(30), FileType VARCHAR(30));");
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Fahrplan (ID INTEGER PRIMARY KEY AUTOINCREMENT, Bezeichnung VARCHAR(255), VersNr VARCHAR(30), FileType VARCHAR(30), Datum DATE);");
 			
 			//table for stoppoints
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Stoppoint (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -264,7 +269,7 @@ public class DBConnection {
 			//****************************************************************************************************************************	
 			
 			//table for tour roster
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Umlaufplan (ID INTEGER PRIMARY KEY AUTOINCREMENT, Bezeichnung VARCHAR(255), FahrplanID INTEGER, "
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Umlaufplan (ID INTEGER PRIMARY KEY AUTOINCREMENT, Bezeichnung VARCHAR(255), FahrplanID INTEGER, Datum DATE, "
 																		+ "FOREIGN KEY (FahrplanID) REFERENCES Fahrplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);");
 			
 			//table for tours
@@ -366,7 +371,7 @@ public class DBConnection {
 			//*********************************************************************************************************************************************
 			
 			//table for duty roster
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Dienstplan (ID INTEGER PRIMARY KEY AUTOINCREMENT, Bezeichnung VARCHAR(255), FahrplanID INTEGER, "
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Dienstplan (ID INTEGER PRIMARY KEY AUTOINCREMENT, Bezeichnung VARCHAR(255), FahrplanID INTEGER, Datum DATE, "
 																		+ "FOREIGN KEY (FahrplanID) REFERENCES Fahrplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);");
 			
 			//table for duty
@@ -457,6 +462,7 @@ public class DBConnection {
 			System.out.println("Could not execute SQL-Query!");
 			e.printStackTrace();
 		}
+		}
 	}
 	
 	//******************************************************************************************************************************************
@@ -476,7 +482,7 @@ public class DBConnection {
 		  //Fill values in specific tables
 		  
 		  //schedule name
-		  stmnt.executeUpdate("INSERT INTO Fahrplan (Bezeichnung) VALUES ('"+ss.getFilename()+"');");
+		  stmnt.executeUpdate("INSERT INTO Fahrplan (Bezeichnung, Datum) VALUES ('"+ss.getFilename()+"', CURRENT_DATE);");
 		  /**
 		   * TODO: VersNr. + File Type
 		   **/
@@ -722,7 +728,7 @@ public class DBConnection {
 		  //get name of vehicle schedule file
 		  String umlaufplanBezeichnung=ss.getFilename();
 
-		  stmnt.executeUpdate("INSERT INTO Umlaufplan (Bezeichnung, FahrplanID) VALUES ('"+umlaufplanBezeichnung+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('"+finalString+"%')));");
+		  stmnt.executeUpdate("INSERT INTO Umlaufplan (Bezeichnung, FahrplanID, Datum) VALUES ('"+umlaufplanBezeichnung+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('"+finalString+"%')), CURRENT_DATE);");
 		 
 		  
 		  //iterators for getting values from stringsplitter object
@@ -896,8 +902,8 @@ public class DBConnection {
 	
 			  
 			  //filling Dienstplan Table
-		  stmnt.executeUpdate("INSERT INTO Dienstplan (Bezeichnung, FahrplanID) VALUES ('"
-				  			+ss.getFilename()+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('"+finalString+"%')));");
+		  stmnt.executeUpdate("INSERT INTO Dienstplan (Bezeichnung, FahrplanID, Datum) VALUES ('"
+				  			+ss.getFilename()+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('"+finalString+"%')), CURRENT_DATE);");
 		  
 		  //iterators for getting values from stringsplitter object
 		  Iterator<Integer> it11 = ss.getDutyelementElementType().iterator();
