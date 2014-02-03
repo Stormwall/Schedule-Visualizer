@@ -483,7 +483,6 @@ public class FullScreenLayoutControllerDienstplan {
 			StringSplitter ss = new StringSplitter();
 			int[] zeit = new int[2];
 			zeit = ss.intParse(endzeiten.get(j));
-			System.out.println(zeit[0]);
 			int endHour = zeit[0];
 			if (endHour < 7) {
 				endHour = endHour + 24;

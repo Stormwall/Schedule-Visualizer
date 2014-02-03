@@ -3656,6 +3656,11 @@ public class MainLayoutController {
 		// Auslesen der Blockanzahl
 		for (int j = 0; j < dienstplan.getDuty().size(); j++) {
 
+			// Variablen zur Prüfung der ersten Stunde
+			int changeHour = 100;
+			int changeMin = 100;
+			Boolean anfangDienst = true;
+
 			// Auslesen Blockelementanzahl
 			for (int i = 0; i < dienstplan.getDutyelement().size(); i++) {
 
@@ -3672,6 +3677,19 @@ public class MainLayoutController {
 					int startMin = zeit[1];
 					zeit = ss.intParse(dienstplan.getDutyelement().get(i)
 							.getArrTime());
+
+					// Prüfung der ersten Stunde
+					if (anfangDienst == true && startHour < changeHour) {
+						changeHour = startHour;
+						changeMin = startMin;
+						anfangDienst = false;
+					}
+					if (startHour < changeHour) {
+						startHour = startHour + 24;
+					}
+					if (startHour == changeHour && startMin < changeMin) {
+						startHour = startHour + 24;
+					}
 
 					// Belegung der Pixelwerte
 					if (this.startzeitVar <= startHour) {
@@ -3703,6 +3721,13 @@ public class MainLayoutController {
 							e.printStackTrace();
 						}
 						long differenz = date2.getTime() - date1.getTime();
+
+						// Über 0 Uhr
+						if (date2.getTime() < date1.getTime()) {
+							differenz = date2.getTime() - date1.getTime()
+									+ 86400000;
+						}
+
 						differenz = (differenz / 1000) / 60;
 
 						fahrtDauer = (int) (differenz * (abstandNetz / 60));
