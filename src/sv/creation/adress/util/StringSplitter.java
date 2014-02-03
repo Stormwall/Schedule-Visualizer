@@ -272,11 +272,11 @@ public class StringSplitter {
 	// ****** Method to read the Fahrplan data ***********************************************************************************
 	// ***************************************************************************************************************************
 	
-	public void readTxtFahrplan() {
+	public void readTxtFahrplan(String path) {
 
 		try {
 
-			File file = new File("resources/quellen/real_abcde_494_421-436_1_1_DEPOT.txt");
+			File file = new File(path);
 			BufferedReader fahrplan = new BufferedReader(new FileReader(file));
 			filename = file.getName();
 			String zeile = null;
@@ -659,60 +659,60 @@ public class StringSplitter {
 						zeilenelemente.clear();
 					}
 
-					if (zeilenelemente.size() == 7 && days == true) {
-						int tripIDZiffer = Integer.parseInt(zeilenelemente
-								.get(0));
-						int dayOneZiffer = Integer.parseInt(zeilenelemente
-								.get(1));
-						int dayTwoZiffer = Integer.parseInt(zeilenelemente
-								.get(2));
-						int dayThreeZiffer = Integer.parseInt(zeilenelemente
-								.get(3));
-						int dayFourZiffer = Integer.parseInt(zeilenelemente
-								.get(4));
-						int dayFiveZiffer = Integer.parseInt(zeilenelemente
-								.get(5));
-						int daySixZiffer = Integer.parseInt(zeilenelemente
-								.get(6));
-
-						tripID.add(tripIDZiffer);
-						dayOne.add(dayOneZiffer);
-						dayTwo.add(dayTwoZiffer);
-						dayThree.add(dayThreeZiffer);
-						dayFour.add(dayFourZiffer);
-						dayFive.add(dayFiveZiffer);
-						daySix.add(daySixZiffer);
-						zeilenelemente.clear();
-					}
-
-					if (zeilenelemente.size() == 8 && days == true) {
-						int tripIDZiffer = Integer.parseInt(zeilenelemente
-								.get(0));
-						int dayOneZiffer = Integer.parseInt(zeilenelemente
-								.get(1));
-						int dayTwoZiffer = Integer.parseInt(zeilenelemente
-								.get(2));
-						int dayThreeZiffer = Integer.parseInt(zeilenelemente
-								.get(3));
-						int dayFourZiffer = Integer.parseInt(zeilenelemente
-								.get(4));
-						int dayFiveZiffer = Integer.parseInt(zeilenelemente
-								.get(5));
-						int daySixZiffer = Integer.parseInt(zeilenelemente
-								.get(6));
-						int daySevenZiffer = Integer.parseInt(zeilenelemente
-								.get(7));
-
-						tripID.add(tripIDZiffer);
-						dayOne.add(dayOneZiffer);
-						dayTwo.add(dayTwoZiffer);
-						dayThree.add(dayThreeZiffer);
-						dayFour.add(dayFourZiffer);
-						dayFive.add(dayFiveZiffer);
-						daySix.add(daySixZiffer);
-						daySeven.add(daySevenZiffer);
-						zeilenelemente.clear();
-					}
+//					if (zeilenelemente.size() == 7 && days == true) {
+//						int tripIDZiffer = Integer.parseInt(zeilenelemente
+//								.get(0));
+//						int dayOneZiffer = Integer.parseInt(zeilenelemente
+//								.get(1));
+//						int dayTwoZiffer = Integer.parseInt(zeilenelemente
+//								.get(2));
+//						int dayThreeZiffer = Integer.parseInt(zeilenelemente
+//								.get(3));
+//						int dayFourZiffer = Integer.parseInt(zeilenelemente
+//								.get(4));
+//						int dayFiveZiffer = Integer.parseInt(zeilenelemente
+//								.get(5));
+//						int daySixZiffer = Integer.parseInt(zeilenelemente
+//								.get(6));
+//
+//						tripID.add(tripIDZiffer);
+//						dayOne.add(dayOneZiffer);
+//						dayTwo.add(dayTwoZiffer);
+//						dayThree.add(dayThreeZiffer);
+//						dayFour.add(dayFourZiffer);
+//						dayFive.add(dayFiveZiffer);
+//						daySix.add(daySixZiffer);
+//						zeilenelemente.clear();
+//					}
+//
+//					if (zeilenelemente.size() == 8 && days == true) {
+//						int tripIDZiffer = Integer.parseInt(zeilenelemente
+//								.get(0));
+//						int dayOneZiffer = Integer.parseInt(zeilenelemente
+//								.get(1));
+//						int dayTwoZiffer = Integer.parseInt(zeilenelemente
+//								.get(2));
+//						int dayThreeZiffer = Integer.parseInt(zeilenelemente
+//								.get(3));
+//						int dayFourZiffer = Integer.parseInt(zeilenelemente
+//								.get(4));
+//						int dayFiveZiffer = Integer.parseInt(zeilenelemente
+//								.get(5));
+//						int daySixZiffer = Integer.parseInt(zeilenelemente
+//								.get(6));
+//						int daySevenZiffer = Integer.parseInt(zeilenelemente
+//								.get(7));
+//
+//						tripID.add(tripIDZiffer);
+//						dayOne.add(dayOneZiffer);
+//						dayTwo.add(dayTwoZiffer);
+//						dayThree.add(dayThreeZiffer);
+//						dayFour.add(dayFourZiffer);
+//						dayFive.add(dayFiveZiffer);
+//						daySix.add(daySixZiffer);
+//						daySeven.add(daySevenZiffer);
+//						zeilenelemente.clear();
+//					}
 
 				}
 
@@ -728,13 +728,13 @@ public class StringSplitter {
 		// **************************************************************************************************************************
 
 
-		public void readTxtUmlaufplan() {
+		public void readTxtUmlaufplan(String path) {
 
 			try {
 
 				// testumlauf.txt Data has to be in the project file in your
 				// workspace
-				File file = new File("resources/quellen/vs_adp_day0_20130621_214124_real_abcde_494_421-436_1_1_DEPOT.txt");
+				File file = new File(path);
 				BufferedReader umlaufplan = new BufferedReader(new FileReader(file));
 				filename = file.getName();
 				String zeile = null;
@@ -843,14 +843,14 @@ public class StringSplitter {
 		// ****** Method to read the duty type data ***********************************************************************************
 		// ****************************************************************************************************************************
 
-		public void readTxtDiensttypen() {
+		public void readTxtDiensttypen(String path) {
 
 			try {
 
 				// testfahrplan.txt Data has to be in the project file in your
 				// workspace
 
-				File file = new File("resources/Quellen/dt_real_abcde_494_421-436_1_1_DEPOT.txt");
+				File file = new File(path);
 				BufferedReader diensttypen = new BufferedReader(new FileReader(file));
 				filename = file.getName();
 
@@ -996,7 +996,7 @@ public class StringSplitter {
 	// ****** Method to read the duty roster data *******************************************************************************
 	// **************************************************************************************************************************
 
-	public void readTxtDienstplan() {
+	public void readTxtDienstplan(String path) {
 
 		try {
 
@@ -1006,7 +1006,7 @@ public class StringSplitter {
 			// All lines with relevant data will be read
 			// The data will be split in seperated array lists
 
-			File file = new File("resources/Quellen/cs_adp_day0_20130621_214124_real_abcde_494_421-436_1_1_DEPOT.txt");
+			File file = new File(path);
 			BufferedReader dienstplan = new BufferedReader(new FileReader(file));
 			filename = file.getName();
 
@@ -1151,13 +1151,13 @@ public class StringSplitter {
 	}
 
 		
-	public void readTxtFromSzenario(){
+	public void readTxtFromSzenario(String path){
 		
 		try {
 
 			// szenario Data has to be in the project file in your
 			// workspace
-			File file = new File("resources/quellen/real_661_1_1_newTripIds_01.txt");
+			File file = new File(path);
 			BufferedReader szenario = new BufferedReader(new FileReader(file));
 			filename = file.getName();
 			

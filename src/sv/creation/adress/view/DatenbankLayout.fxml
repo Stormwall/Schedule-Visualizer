@@ -27,13 +27,15 @@
                             <Insets left="5.0" />
                           </HBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" prefWidth="78.0" text="Import">
+                        <Button mnemonicParsing="false" onAction="#handleImport" prefWidth="78.0" text="Import">
                           <HBox.margin>
                             <Insets right="10.0" />
                           </HBox.margin>
                         </Button>
                       </children>
                     </HBox>
+                    <ProgressBar layoutX="16.0" layoutY="113.0" prefWidth="102.0" progress="0.0" visible="false" />
+                    <Label layoutX="14.0" layoutY="91.0" text="Fortschirtt:" visible="false" />
                   </children>
                 </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">

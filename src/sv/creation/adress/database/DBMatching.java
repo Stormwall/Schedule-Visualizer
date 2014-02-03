@@ -3,6 +3,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
+
 import sv.creation.adress.model.Block;
 import sv.creation.adress.model.Blockelement;
 import sv.creation.adress.model.Dienstplan;
@@ -76,7 +78,7 @@ public class DBMatching {
 			stmt2 = db.getConnection().createStatement();
 			stmt3 = db.getConnection().createStatement();
 			// Two different datasets will be created
-			ResultSet rest3 = stmt.executeQuery("SELECT * FROM Blockelement;");
+			ResultSet rest3 = stmt.executeQuery("SELECT ID, BlockID, ServiceJourneyID, ElementType, MatchingPos FROM Blockelement UNION SELECT ID, BlockID,ServiceJourneyID, ElementType, MatchingPos FROM ExceptionalBlockelement ORDER BY MatchingPos ASC;");
 			ResultSet rest2;
 			// All resulted datasets of the sql query will be added to the
 			// blockelement array list
@@ -86,39 +88,38 @@ public class DBMatching {
 				// will be execute
 				if (zahl == 1) {
 					rest2 = stmt2
-							.executeQuery("SELECT be.ID,be.BlockID, be.ServiceJourneyID, sj.FromStopID, sj.ToStopID, sj.DepTime, sj.ArrTime,be.ElementType, be.UmlaufplanID FROM Blockelement AS be, ServiceJourney AS sj WHERE sj.serviceJourneyID='"
+							.executeQuery("SELECT be.ID,b.BlockID, be.ServiceJourneyID, sj.FromStopID, sj.ToStopID, sj.DepTime, sj.ArrTime,be.ElementType, be.UmlaufplanID, be.MatchingPos FROM Blockelement AS be, ServiceJourney AS sj, Block AS b WHERE sj.ID='"
 									+ rest3.getString("ServiceJourneyID")
 									+ "' AND be.ID='"
 									+ rest3.getString("ID")
-									+ "' AND be.BlockID='"
+									+ "' AND b.ID='"
 									+ rest3.getString("BlockID") + "';");
-					// if the read blockelement is a exceptional servie journey
+					// if the read blockelement is a exceptional service journey
 					// the second sql query will be execute
 				} else {
 					rest2 = stmt3
-							.executeQuery("SELECT be.ID, be.BlockID, be.ServiceJourneyID, ex.FromStopID, ex.ToStopID, ex.DepTime, ex.ArrTime, be.ElementType, be.UmlaufplanID FROM Blockelement AS be, ExceptionalBlockelement AS ex WHERE ex.ServiceJourneyID='"
+							.executeQuery("SELECT ex.ID, b.BlockID, ex.ServiceJourneyID, ex.FromStopID, ex.ToStopID, ex.DepTime, ex.ArrTime, ex.ElementType, ex.UmlaufplanID, ex.MatchingPos FROM ExceptionalBlockelement AS ex, Block AS b WHERE ex.ServiceJourneyID='"
 									+ rest3.getString("ServiceJourneyID")
-									+ "' AND be.ID='"
+									+ "' AND ex.ID='"
 									+ rest3.getString("ID")
-									+ "' AND be.BlockID='"
+									+ "' AND b.ID='"
 									+ rest3.getString("BlockID") + "';");
 				}
 				// the attributes will be read and saved in variables
-				int id = Integer.parseInt(rest2.getString("ID"));
+				int id = Integer.parseInt(rest2.getString("MatchingPos"));
 				int blockID = Integer.parseInt(rest2.getString("BlockID"));
-				String serviceJourneyID = rest3.getString("ServiceJourneyID");
+				String serviceJourneyID = rest2.getString("ServiceJourneyID");
 				int fromStopID = Integer
 						.parseInt(rest2.getString("FromStopID"));
 				int toStopID = Integer.parseInt(rest2.getString("ToStopID"));
 				String depTime = rest2.getString("DepTime");
 				String arrTime = rest2.getString("ArrTime");
-				int elementType = Integer.parseInt(rest2
-						.getString("ElementType"));
+				int elementType = zahl;
 				int umlaufplanID = Integer.parseInt(rest2
 						.getString("UmlaufPlanID"));
 				//Bezeichnung für den Elementtyp wird entsprechend hinzugefügt
 				String elementTypeName = "";
-				switch(elementType){
+				switch(zahl){
 				case 1:
 					elementTypeName = "Servicefahrt";
 				break;
@@ -229,8 +230,8 @@ public class DBMatching {
 			// array list
 			while (rest1.next()) {
 				int hilfsID = Integer.parseInt(rest1.getString("ID"));
-				int id = Integer.parseInt(rest1.getString("DutyID"));
-				String type = rest1.getString("DutyType");
+				String id = rest1.getString("DutyID");
+				String type = rest1.getString("DutyTypeID");
 				duty.add(new Duty(hilfsID,id, type));
 			}
 		} catch (SQLException e) {
@@ -252,7 +253,7 @@ public class DBMatching {
 			stmt3 = db.getConnection().createStatement();
 			stmt4 = db.getConnection().createStatement();
 			// Two different datasets will be created
-			ResultSet rest3 = stmt.executeQuery("SELECT * FROM Dutyelement;");
+			ResultSet rest3 = stmt.executeQuery("SELECT ID, DutyID, BlockID, ServiceJourneyID, ElementType, MatchingPos FROM Dutyelement UNION SELECT ID, DutyID, BlockID,ServiceJourneyID, ElementType, MatchingPos FROM ExceptionalDutyelement ORDER BY MatchingPos ASC;");
 			ResultSet rest2;
 			ResultSet rest4;
 			// All resulted datasets of the sql query will be added to the
@@ -263,34 +264,32 @@ public class DBMatching {
 				// will be execute
 				if (zahl == 1) {
 					rest2 = stmt2
-							.executeQuery("SELECT de.ID, de.DutyID, de.BlockID, de.ServiceJourneyID, sj.FromStopID, sj.ToStopID, sj.DepTime, sj.ArrTime, de.elementType, de.DienstplanID FROM Dutyelement AS de, ServiceJourney AS sj WHERE sj.serviceJourneyID='"
+							.executeQuery("SELECT de.ID, d.DutyID, b.BlockID, de.ServiceJourneyID, sj.FromStopID, sj.ToStopID, sj.DepTime, sj.ArrTime, de.elementType, de.DienstplanID, de.MatchingPos FROM Dutyelement AS de, ServiceJourney AS sj, Block AS b, Duty AS d WHERE sj.ID='"
 									+ rest3.getString("ServiceJourneyID")
 									+ "'  AND de.ID='"
 									+ rest3.getString("ID")
-									+ "' AND de.BlockID='"
+									+ "' AND b.ID='"
 									+ rest3.getString("BlockID")
-									+ "' AND de.DutyID='"
+									+ "' AND d.ID='"
 									+ rest3.getString("DutyID") + "';");
 					// if the read blockelement is a exceptional servie journey
 					// the second sql query will be execute
 				} else {
 					rest2 = stmt3
-							.executeQuery("SELECT de.ID, de.DutyID, de.BlockID, de.ServiceJourneyID, ex.FromStopID, ex.ToStopID, ex.DepTime, ex.ArrTime, de.ElementType, de.DienstplanID FROM Dutyelement AS de, ExceptionalDutyelement AS ex WHERE ex.ServiceJourneyID='"
+							.executeQuery("SELECT ex.ID, d.DutyID, ex.BlockID, ex.ServiceJourneyID, ex.FromStopID, ex.ToStopID, ex.DepTime, ex.ArrTime, ex.ElementType, ex.DienstplanID, ex.MatchingPos FROM Duty AS d, ExceptionalDutyelement AS ex WHERE ex.ServiceJourneyID='"
 									+ rest3.getString("ServiceJourneyID")
-									+ "' AND de.ID='"
+									+ "' AND ex.ID='"
 									+ rest3.getString("ID")
-									+ "' AND de.BlockID='"
-									+ rest3.getString("BlockID")
-									+ "' AND de.DutyID='"
-									+ rest3.getString("DutyID")
-									+ "' AND ex.DutyelementID='"
-									+ rest3.getString("ID") + "';");
+//									+ "' AND b.BlockID='"
+//									+ rest3.getString("BlockID")
+									+ "' AND d.ID='"
+									+ rest3.getString("DutyID")+ "';");
 				}
 				// the attributes will be read and save in variables
-				int id = Integer.parseInt(rest2.getString("ID"));
+				int id = Integer.parseInt(rest2.getString("MatchingPos"));
 				String dutyID = rest2.getString("DutyID");
 				int blockID = Integer.parseInt(rest2.getString("BlockID"));
-				String serviceJourneyID = rest3.getString("ServiceJourneyID");
+				String serviceJourneyID = rest2.getString("ServiceJourneyID");
 				int fromStopID = Integer
 						.parseInt(rest2.getString("FromStopID"));
 				int toStopID = Integer.parseInt(rest2.getString("ToStopID"));
@@ -300,8 +299,8 @@ public class DBMatching {
 						.getString("ElementType"));
 				int dienstplanID = Integer.parseInt(rest2
 						.getString("DienstplanID"));
-				rest4=stmt4.executeQuery("SELECT ID FROM Duty WHERE DutyID ="+dutyID);
-				int dutyHilfsID=rest4.getInt("ID");
+//				rest4=stmt4.executeQuery("SELECT ID FROM Duty WHERE DutyID ="+rest3.getString("DutyID"));
+				int dutyHilfsID=Integer.parseInt(rest3.getString("DutyID"));
 				
 				// all variables will be sum up to an umlaufelement
 				dutyelement.add(new Dutyelement(id, dutyID, blockID,
@@ -335,7 +334,7 @@ public class DBMatching {
 				anzahlPlan++;
 			}
 		}
-		// Umlaufplanliste wird erzeugt
+		// Dienstplanliste wird erzeugt
 		for (int i = 1; i <= anzahlPlan; i++) {
 			ArrayList<Dutyelement> dutyelementList = new ArrayList<Dutyelement>();
 			ArrayList<Duty> dutyList = new ArrayList<Duty>();
@@ -345,14 +344,63 @@ public class DBMatching {
 				}
 			}
 			for (int j2 = zaehlerDienst; j2 < this.duty.size() - 1; j2++) {
-				if (this.duty.get(j2).getId() < this.duty.get(j2 + 1).getId()) {
+
+				if(this.duty.get(j2).getId().endsWith("p")&&this.duty.get(j2+1).getId().endsWith("p")){
+					
+					String[] string=this.duty.get(j2).getId().split("p");
+					String[] string2=this.duty.get(j2+1).getId().split("p");
+					int id1=Integer.parseInt(string[0]);
+					int id2=Integer.parseInt(string2[0]);
+					
+					if (id1 < id2) {
+						dutyList.add(this.duty.get(j2));
+						zaehlerDienst = zaehlerDienst + 1;
+					}
+					if (id1 > id2) {
+						dutyList.add(this.duty.get(j2));
+						j2 = this.duty.size() - 1;
+					}
+					
+				}
+				else if(this.duty.get(j2).getId().endsWith("p")&&!this.duty.get(j2+1).getId().endsWith("p")){
+					
+					String[] string=this.duty.get(j2).getId().split("p");
+					int id1=Integer.parseInt(string[0]);
+					
+					if (id1 < Integer.parseInt(this.duty.get(j2 + 1).getId())) {
+						dutyList.add(this.duty.get(j2));
+						zaehlerDienst = zaehlerDienst + 1;
+					}
+					if (id1 > Integer.parseInt(this.duty.get(j2 + 1).getId())) {
+						dutyList.add(this.duty.get(j2));
+						j2 = this.duty.size() - 1;
+					}
+					
+				}	else if(!this.duty.get(j2).getId().endsWith("p")&&this.duty.get(j2+1).getId().endsWith("p")){
+					
+					String[] string=this.duty.get(j2+1).getId().split("p");
+					int id2=Integer.parseInt(string[0]);
+					
+					if (Integer.parseInt(this.duty.get(j2).getId()) < id2) {
+						dutyList.add(this.duty.get(j2));
+						zaehlerDienst = zaehlerDienst + 1;
+					}
+					if (Integer.parseInt(this.duty.get(j2).getId()) > id2) {
+						dutyList.add(this.duty.get(j2));
+						j2 = this.duty.size() - 1;
+					}
+					
+				}else{
+
+
+				if (Integer.parseInt(this.duty.get(j2).getId()) < Integer.parseInt(this.duty.get(j2 + 1).getId())) {
 					dutyList.add(this.duty.get(j2));
 					zaehlerDienst = zaehlerDienst + 1;
 				}
-				if (this.duty.get(j2).getId() > this.duty.get(j2 + 1).getId()) {
+				if (Integer.parseInt(this.duty.get(j2).getId()) > Integer.parseInt(this.duty.get(j2 + 1).getId())) {
 					dutyList.add(this.duty.get(j2));
 					j2 = this.duty.size() - 1;
-				}
+				}}
 				if (j2 == this.duty.size() - 2) {
 					dutyList.add(this.duty.get(j2 + 1));
 				}

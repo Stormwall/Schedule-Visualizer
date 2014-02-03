@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import sv.creation.adress.database.DBConnection;
 import sv.creation.adress.database.DBMatching;
 import sv.creation.adress.model.Blockelement;
 import sv.creation.adress.model.Dienstplan;
@@ -424,13 +425,14 @@ public class MainLayoutController {
 	private void initialize() {
 
 		// Erstellung der Datenbank
-		// DBConnection dbc =new DBConnection();
-		// dbc.initDBConnection();
-		// dbc.createTables();
-		// dbc.fillFahrplanIntoTables();
-		// dbc.fillUmlaufplanIntoTables();
-		// dbc.fillDienstplanIntoTable();
-		// dbc.fillDiensttypenIntoTables();
+//		 DBConnection dbc =new DBConnection();
+//		 dbc.initDBConnection();
+//		 dbc.createTables();
+//		 dbc.fillFahrplanIntoTables();
+//		 dbc.fillUmlaufplanIntoTables();
+//		 dbc.fillDiensttypenIntoTables();
+//		 dbc.fillDienstplanIntoTable();
+		 
 
 		// DBMatching dbm = new DBMatching();
 		// dbm.createDienstplanObject();
@@ -3460,6 +3462,7 @@ public class MainLayoutController {
 		// Hereinladen der Daten
 
 		ObservableList<Dutyelement> data = FXCollections.observableArrayList();
+		
 
 		for (int i = 0; i < dienstplan.getDutyelement().size(); i++) {
 
@@ -3674,8 +3677,8 @@ public class MainLayoutController {
 			for (int i = 0; i < dienstplan.getDutyelement().size(); i++) {
 
 				// Abgleich mit den Werten
-				if (Integer.parseInt(dienstplan.getDutyelement().get(i)
-						.getDutyID()) == dienstplan.getDuty().get(j).getId()) {
+				if (dienstplan.getDutyelement().get(i)
+						.getDutyID().equals(dienstplan.getDuty().get(j).getId())) {
 
 					// Auslesen der Zeit als Integer
 					StringSplitter ss = new StringSplitter();

@@ -2,7 +2,7 @@ package sv.creation.adress.model;
 
 public class Duty {
 	
-	private int id;
+	private String id;
 	private int hilfsID;
 	private String type;
 	
@@ -11,18 +11,18 @@ public class Duty {
 	 * @param code
 	 * @param name
 	 */
-	public Duty(int hilfsID,int id, String type) {
+	public Duty(int hilfsID,String id, String type) {
 		super();
 		this.hilfsID = hilfsID;
 		this.id = id;
 		this.type = type;
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

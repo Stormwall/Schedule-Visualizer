@@ -85,7 +85,7 @@ public class EditD_PlanController {
 	}
 
 	/**
-	 * Called when the user clicks auswählen.
+	 * Called when the user clicks auswï¿½hlen.
 	 */
 	@FXML
 	private void handleauswaehlen() {
@@ -96,10 +96,10 @@ public class EditD_PlanController {
 
 			this.elementsTable.getItems().clear();
 
-			dutyAuswahl = this.dienstplan
+			dutyAuswahl = Integer.parseInt(this.dienstplan
 					.getDuty()
 					.get(this.dutyChoice.getSelectionModel().getSelectedIndex())
-					.getId();
+					.getId());
 
 			// Hereinladen der Daten
 
@@ -112,14 +112,14 @@ public class EditD_PlanController {
 				}
 
 			}
-			// Übergabe der Daten an Tabelle und Canvas
+			// ï¿½bergabe der Daten an Tabelle und Canvas
 			this.elementsTable.setItems(data);
 			drawCanvas(dutyAuswahl);
 		}
 	}
 
 	/**
-	 * Called when the user clicks übernehmen.
+	 * Called when the user clicks ï¿½bernehmen.
 	 */
 	@FXML
 	private void handleuebernehemen() {
@@ -138,7 +138,7 @@ public class EditD_PlanController {
 
 		if (this.elementsTable.getSelectionModel().getSelectedItem() != null) {
 
-			// Ausgewähltes Element auslesen
+			// Ausgewï¿½hltes Element auslesen
 
 			Dutyelement dutyelement = this.elementsTable.getSelectionModel()
 					.getSelectedItem();
@@ -174,7 +174,7 @@ public class EditD_PlanController {
 			}
 
 		} else {
-			String fehlerA = "Es wurde noch Element ausgewählt";
+			String fehlerA = "Es wurde noch Element ausgewï¿½hlt";
 			String fehlerB = "Was soll bearbeitet werden ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
@@ -215,7 +215,7 @@ public class EditD_PlanController {
 			}
 
 			Export export = new Export();
-			// export.exportUmlaufplan(dienstplan, file);
+//			export.exportDienstplan(dienstplan, file);
 		}
 	}
 
@@ -251,7 +251,6 @@ public class EditD_PlanController {
 		}
 
 		// Zeichnen der Elemente
-
 		// Auslesen Blockelementanzahl
 		for (int i = 0; i < dienstplan.getDutyelement().size(); i++) {
 
@@ -303,7 +302,7 @@ public class EditD_PlanController {
 
 					fahrtDauer = (int) (differenz * (abstandNetz / 60));
 
-					// Färben der Elemente
+					// Fï¿½rben der Elemente
 
 					switch (dienstplan.getDutyelement().get(i).getElementType()) {
 
