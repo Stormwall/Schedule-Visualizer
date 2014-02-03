@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import sv.creation.adress.model.Umlaufplan;
+import sv.creation.adress.model.Dienstplan;
 import sv.creation.adress.util.StringSplitter;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -18,10 +18,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class FullScreenLayoutControllerUmlaufplan {
+public class FullScreenLayoutControllerDienstplan {
 
 	private Stage dialogStage;
-	private Umlaufplan umlaufplan;
+	private Dienstplan dienstplan;
 
 	// Strukturvariablen
 	@FXML
@@ -152,7 +152,7 @@ public class FullScreenLayoutControllerUmlaufplan {
 		this.gc.clearRect(0, 0, this.canvas.getWidth(), this.canvas.getHeight());
 
 		// Erstellen des Hintergrundes
-		this.gc.setFill(Color.BEIGE);
+		this.gc.setFill(Color.ALICEBLUE);
 		this.gc.fillRect(0, 0, this.canvas.getWidth(), this.canvas.getHeight());
 
 		this.gc.setLineWidth(3);
@@ -175,7 +175,7 @@ public class FullScreenLayoutControllerUmlaufplan {
 
 		// Berrechnung der Breite der Elemente
 		double b = this.GraphicPane.getHeight()
-				/ this.umlaufplan.getUmlauf().size();
+				/ this.dienstplan.getDuty().size();
 		this.breite = (int) b;
 
 		this.GraphicPane.getChildren().add(this.canvas);
@@ -243,9 +243,9 @@ public class FullScreenLayoutControllerUmlaufplan {
 		this.ygc.setFill(Color.WHITE);
 		this.ygc.setStroke(Color.BLACK);
 		// Auslesen der Werte
-		for (int j = 0; j < umlaufplan.getUmlauf().size(); j++) {
+		for (int j = 0; j < dienstplan.getDuty().size(); j++) {
 
-			ygc.fillText("B" + umlaufplan.getUmlauf().get(j).getId(), 4,
+			ygc.fillText("D " + dienstplan.getDuty().get(j).getHilfsID(), 4,
 					22 + (j * this.breite));
 
 		}
@@ -262,35 +262,35 @@ public class FullScreenLayoutControllerUmlaufplan {
 				/ (this.endzeitVar - this.startzeitVar);
 
 		// Auslesen der Blockanzahl
-		for (int j = 0; j < this.umlaufplan.getUmlauf().size(); j++) {
+		for (int j = 0; j < this.dienstplan.getDuty().size(); j++) {
 
 			// Variablen zur Prüfung der ersten Stunde
 			int changeHour = 100;
 			int changeMin = 100;
-			Boolean anfangUmlauf = true;
+			Boolean anfangDienst = true;
 
 			// Auslesen Blockelementanzahl
-			for (int i = 0; i < this.umlaufplan.getFahrtZuUmlauf().size(); i++) {
+			for (int i = 0; i < this.dienstplan.getDutyelement().size(); i++) {
 
 				// Abgleich mit den Werten
-				if (this.umlaufplan.getFahrtZuUmlauf().get(i).getBlockID() == this.umlaufplan
-						.getUmlauf().get(j).getId()) {
+				if (dienstplan.getDutyelement().get(i).getDutyID()
+						.equals(dienstplan.getDuty().get(j).getId())) {
 
 					// Auslesen der Zeit als Integer
 					StringSplitter ss = new StringSplitter();
 					int[] zeit = new int[2];
-					zeit = ss.intParse(this.umlaufplan.getFahrtZuUmlauf()
-							.get(i).getDepTime());
+					zeit = ss.intParse(this.dienstplan.getDutyelement().get(i)
+							.getDepTime());
 					int startHour = zeit[0];
 					int startMin = zeit[1];
-					zeit = ss.intParse(this.umlaufplan.getFahrtZuUmlauf()
-							.get(i).getArrTime());
+					zeit = ss.intParse(this.dienstplan.getDutyelement().get(i)
+							.getArrTime());
 
 					// Prüfung der ersten Stunde
-					if (anfangUmlauf == true && startHour < changeHour) {
+					if (anfangDienst == true && startHour < changeHour) {
 						changeHour = startHour;
 						changeMin = startMin;
-						anfangUmlauf = false;
+						anfangDienst = false;
 					}
 					if (startHour < changeHour) {
 						startHour = startHour + 24;
@@ -310,9 +310,9 @@ public class FullScreenLayoutControllerUmlaufplan {
 						// Berrechnen der Dauer zwischen der Abfahrt und der
 						// Ankunft
 
-						String depTime = this.umlaufplan.getFahrtZuUmlauf()
+						String depTime = this.dienstplan.getDutyelement()
 								.get(i).getDepTime();
-						String arrtime = this.umlaufplan.getFahrtZuUmlauf()
+						String arrtime = this.dienstplan.getDutyelement()
 								.get(i).getArrTime();
 
 						SimpleDateFormat format = new SimpleDateFormat("HH:mm");
@@ -344,51 +344,50 @@ public class FullScreenLayoutControllerUmlaufplan {
 
 						// FÃ¤rben der Elemente
 
-						switch (this.umlaufplan.getFahrtZuUmlauf().get(i)
+						switch (this.dienstplan.getDutyelement().get(i)
 								.getElementType()) {
 
 						case 1:
 							// Servicefahrt
-							this.gc.setFill(Color.SEAGREEN);
+							gc.setFill(Color.CORNFLOWERBLUE);
 							break;
 						case 2:
 							// Leerfahrt Haltestellen
-							this.gc.setFill(Color.LIGHTCORAL);
+							gc.setFill(Color.LIGHTCORAL);
 							break;
 						case 3:
 							// Fahrt ins Depot
-							this.gc.setFill(Color.ANTIQUEWHITE);
+							gc.setFill(Color.ANTIQUEWHITE);
 							break;
 						case 4:
 							// Fahrt aus dem Depot
-							this.gc.setFill(Color.WHITESMOKE);
+							gc.setFill(Color.WHITESMOKE);
 							break;
 						case 5:
 							// Vorbereitung
-							this.gc.setFill(Color.GREEN);
+							gc.setFill(Color.GREEN);
 							break;
 						case 6:
 							// Nachbereitung
-							this.gc.setFill(Color.GREEN);
+							gc.setFill(Color.GREEN);
 							break;
 						case 7:
 							// Transfer
-							this.gc.setFill(Color.GREEN);
+							gc.setFill(Color.GREEN);
 							break;
 						case 8:
 							// Pause
-							this.gc.setFill(Color.ORANGE);
+							gc.setFill(Color.ORANGE);
 							break;
 						case 9:
 							// Warten
-							this.gc.setFill(Color.LIGHTSKYBLUE);
+							gc.setFill(Color.LIGHTSKYBLUE);
 							break;
 						case 10:
 							// LayoverTime
-							this.gc.setFill(Color.GREEN);
+							gc.setFill(Color.GREEN);
 							break;
 						}
-
 						// Malen der Elemente
 
 						this.gc.fillRoundRect(startPixelX, startPixelY,
@@ -402,8 +401,8 @@ public class FullScreenLayoutControllerUmlaufplan {
 								this.gc.setFill(Color.BLACK);
 								this.gc.setFont(new Font("Arial", 12));
 								this.gc.fillText(
-										String.valueOf(umlaufplan
-												.getFahrtZuUmlauf().get(i)
+										String.valueOf(dienstplan
+												.getDutyelement().get(i)
 												.getId()), startPixelX - 3
 												+ (fahrtDauer / 5), startPixelY
 												+ 1 + breite / 3);
@@ -431,31 +430,31 @@ public class FullScreenLayoutControllerUmlaufplan {
 		this.dialogStage = dialogStage;
 	}
 
-	public Umlaufplan getUmlaufplan() {
-		return umlaufplan;
+	public Dienstplan getDienstplan() {
+		return dienstplan;
 	}
 
-	public void setUmlaufplan(Umlaufplan umlaufplan) {
-		this.umlaufplan = umlaufplan;
+	public void setDienstplan(Dienstplan dienstplan) {
+		this.dienstplan = dienstplan;
 
 		// Auslesen der Startzeit
 
 		ArrayList<String> startzeiten = new ArrayList<String>();
 		ArrayList<String> endzeiten = new ArrayList<String>();
 
-		for (int i = 0; i < this.umlaufplan.getUmlauf().size(); i++) {
+		for (int i = 0; i < this.dienstplan.getDuty().size(); i++) {
 			boolean anfang = true;
 
-			for (int j = 0; j < this.umlaufplan.getFahrtZuUmlauf().size(); j++) {
+			for (int j = 0; j < this.dienstplan.getDutyelement().size(); j++) {
 
-				if (this.umlaufplan.getUmlauf().get(i).getId() == this.umlaufplan
-						.getFahrtZuUmlauf().get(j).getBlockID()
+				if (this.dienstplan.getDuty().get(i).getId().equals(this.dienstplan
+						.getDutyelement().get(j).getDutyID())
 						&& anfang == true) {
-					startzeiten.add(this.umlaufplan.getFahrtZuUmlauf().get(j)
+					startzeiten.add(this.dienstplan.getDutyelement().get(j)
 							.getDepTime());
 					anfang = false;
 					if (1 < startzeiten.size()) {
-						endzeiten.add(this.umlaufplan.getFahrtZuUmlauf()
+						endzeiten.add(this.dienstplan.getDutyelement()
 								.get(j - 1).getArrTime());
 					}
 				}
@@ -464,9 +463,8 @@ public class FullScreenLayoutControllerUmlaufplan {
 			anfang = true;
 		}
 
-		endzeiten.add(this.umlaufplan.getFahrtZuUmlauf()
-				.get(this.umlaufplan.getFahrtZuUmlauf().size() - 1)
-				.getArrTime());
+		endzeiten.add(this.dienstplan.getDutyelement()
+				.get(this.dienstplan.getDutyelement().size() - 1).getArrTime());
 
 		for (int j = 0; j < startzeiten.size(); j++) {
 
@@ -485,6 +483,7 @@ public class FullScreenLayoutControllerUmlaufplan {
 			StringSplitter ss = new StringSplitter();
 			int[] zeit = new int[2];
 			zeit = ss.intParse(endzeiten.get(j));
+			System.out.println(zeit[0]);
 			int endHour = zeit[0];
 			if (endHour < 7) {
 				endHour = endHour + 24;

@@ -107,7 +107,8 @@ public class EditD_PlanController {
 					.observableArrayList();
 
 			for (int i = 0; i < this.dienstplan.getDutyelement().size(); i++) {
-				if (this.dienstplan.getDutyelement().get(i).getDutyID().equals(dutyAuswahl)) {
+				if (this.dienstplan.getDutyelement().get(i).getDutyID()
+						.equals(dutyAuswahl)) {
 					data.add(this.dienstplan.getDutyelement().get(i));
 				}
 
@@ -308,7 +309,7 @@ public class EditD_PlanController {
 
 					case 1:
 						// Servicefahrt
-						gc.setFill(Color.SEAGREEN);
+						gc.setFill(Color.CORNFLOWERBLUE);
 						break;
 					case 2:
 						// Leerfahrt Haltestellen
@@ -366,6 +367,14 @@ public class EditD_PlanController {
 	@FXML
 	public void endStage() {
 		dialogStage.close();
+	}
+
+	/**
+	 * Called when the user clicks Vollbild.
+	 */
+	@FXML
+	private void handleFullsreen() {
+		mainApp.showFullScreenGraphicDienstplan(this.dienstplan);
 	}
 
 	// Zuordnungsmethoden

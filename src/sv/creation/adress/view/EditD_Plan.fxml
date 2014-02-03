@@ -59,7 +59,7 @@
                     <HBox id="HBox" alignment="CENTER" prefHeight="50.0" prefWidth="179.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                       <children>
                         <Button mnemonicParsing="false" styleClass="dark-blue" text="Kennzahlen" />
-                        <Button mnemonicParsing="false" styleClass="dark-blue" text="Vollbild" />
+                        <Button mnemonicParsing="false" onAction="#handleFullsreen" styleClass="dark-blue" text="Vollbild" />
                       </children>
                     </HBox>
                   </children>

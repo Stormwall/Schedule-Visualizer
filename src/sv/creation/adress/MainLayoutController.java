@@ -1795,19 +1795,19 @@ public class MainLayoutController {
 
 				createDienstElementGraphic(this.dienstplanZwei,
 						this.lowerGraphicPane2, this.lowerChart2, this.lowergc2);
-				// // FÃ¼gt den EventhÃ¤ndler hinzu
-				// this.upperChart2.addEventHandler(MouseEvent.MOUSE_CLICKED,
-				// new EventHandler<MouseEvent>() {
-				// @Override
-				// public void handle(MouseEvent e) {
-				// boolean okClicked = mainApp
-				// .showEditUPlan(umlaufplanZwei);
-				// if (okClicked) {
-				// refreshBothGraphics();
-				// fillUmlaufplanliste();
-				// }
-				// }
-				// });
+				// FÃ¼gt den EventhÃ¤ndler hinzu
+				this.lowerChart2.addEventHandler(MouseEvent.MOUSE_CLICKED,
+						new EventHandler<MouseEvent>() {
+							@Override
+							public void handle(MouseEvent e) {
+								boolean okClicked = mainApp
+										.showEditDPlan(dienstplanZwei);
+								if (okClicked) {
+									refreshBothGraphics();
+									fillDienstplanliste();
+								}
+							}
+						});
 			}
 
 			// Erstellung der Umlaufplangrafik auf dem dritten Tab
@@ -1874,19 +1874,19 @@ public class MainLayoutController {
 
 				createDienstElementGraphic(this.dienstplanDrei,
 						this.lowerGraphicPane3, this.lowerChart3, this.lowergc3);
-				// // FÃ¼gt den EventhÃ¤ndler hinzu
-				// this.upperChart3.addEventHandler(MouseEvent.MOUSE_CLICKED,
-				// new EventHandler<MouseEvent>() {
-				// @Override
-				// public void handle(MouseEvent e) {
-				// boolean okClicked = mainApp
-				// .showEditUPlan(umlaufplanDrei);
-				// if (okClicked) {
-				// refreshBothGraphics();
-				// fillUmlaufplanliste();
-				// }
-				// }
-				// });
+				// FÃ¼gt den EventhÃ¤ndler hinzu
+				this.lowerChart3.addEventHandler(MouseEvent.MOUSE_CLICKED,
+						new EventHandler<MouseEvent>() {
+							@Override
+							public void handle(MouseEvent e) {
+								boolean okClicked = mainApp
+										.showEditDPlan(dienstplanDrei);
+								if (okClicked) {
+									refreshBothGraphics();
+									fillDienstplanliste();
+								}
+							}
+						});
 			}
 
 			// // Erstellung der Umlaufplangrafik auf dem vierten Tab
@@ -1953,19 +1953,19 @@ public class MainLayoutController {
 
 				createDienstElementGraphic(this.dienstplanVier,
 						this.lowerGraphicPane4, this.lowerChart4, this.lowergc4);
-				// // FÃ¼gt den EventhÃ¤ndler hinzu
-				// this.upperChart4.addEventHandler(MouseEvent.MOUSE_CLICKED,
-				// new EventHandler<MouseEvent>() {
-				// @Override
-				// public void handle(MouseEvent e) {
-				// boolean okClicked = mainApp
-				// .showEditUPlan(umlaufplanVier);
-				// if (okClicked) {
-				// refreshBothGraphics();
-				// fillUmlaufplanliste();
-				// }
-				// }
-				// });
+				// FÃ¼gt den EventhÃ¤ndler hinzu
+				this.lowerChart4.addEventHandler(MouseEvent.MOUSE_CLICKED,
+						new EventHandler<MouseEvent>() {
+							@Override
+							public void handle(MouseEvent e) {
+								boolean okClicked = mainApp
+										.showEditDPlan(dienstplanVier);
+								if (okClicked) {
+									refreshBothGraphics();
+									fillDienstplanliste();
+								}
+							}
+						});
 			}
 
 			//
@@ -2035,19 +2035,19 @@ public class MainLayoutController {
 
 				createDienstElementGraphic(this.dienstplanFuenf,
 						this.lowerGraphicPane5, this.lowerChart5, this.lowergc5);
-				// // FÃ¼gt den EventhÃ¤ndler hinzu
-				// this.upperChart5.addEventHandler(MouseEvent.MOUSE_CLICKED,
-				// new EventHandler<MouseEvent>() {
-				// @Override
-				// public void handle(MouseEvent e) {
-				// boolean okClicked = mainApp
-				// .showEditUPlan(umlaufplanFuenf);
-				// if (okClicked) {
-				// refreshBothGraphics();
-				// fillUmlaufplanliste();
-				// }
-				// }
-				// });
+				// FÃ¼gt den EventhÃ¤ndler hinzu
+				this.lowerChart5.addEventHandler(MouseEvent.MOUSE_CLICKED,
+						new EventHandler<MouseEvent>() {
+							@Override
+							public void handle(MouseEvent e) {
+								boolean okClicked = mainApp
+										.showEditDPlan(dienstplanFuenf);
+								if (okClicked) {
+									refreshBothGraphics();
+									fillDienstplanliste();
+								}
+							}
+						});
 			}
 
 			//
@@ -2116,19 +2116,19 @@ public class MainLayoutController {
 				createLowerXScalePane(this.xLow6, this.lowerGraphicPane6);
 				createDienstElementGraphic(this.dienstplanSechs,
 						this.lowerGraphicPane6, this.lowerChart6, this.lowergc6);
-				// // FÃ¼gt den EventhÃ¤ndler hinzu
-				// this.upperChart6.addEventHandler(MouseEvent.MOUSE_CLICKED,
-				// new EventHandler<MouseEvent>() {
-				// @Override
-				// public void handle(MouseEvent e) {
-				// boolean okClicked = mainApp
-				// .showEditUPlan(umlaufplanSechs);
-				// if (okClicked) {
-				// refreshBothGraphics();
-				// fillUmlaufplanliste();
-				// }
-				// }
-				// });
+				// FÃ¼gt den EventhÃ¤ndler hinzu
+				this.lowerChart6.addEventHandler(MouseEvent.MOUSE_CLICKED,
+						new EventHandler<MouseEvent>() {
+							@Override
+							public void handle(MouseEvent e) {
+								boolean okClicked = mainApp
+										.showEditDPlan(dienstplanSechs);
+								if (okClicked) {
+									refreshBothGraphics();
+									fillDienstplanliste();
+								}
+							}
+						});
 			}
 
 			//
@@ -2198,19 +2198,19 @@ public class MainLayoutController {
 
 				createDienstElementGraphic(this.dienstplanSieben,
 						this.lowerGraphicPane7, this.lowerChart7, this.lowergc7);
-				// // FÃ¼gt den EventhÃ¤ndler hinzu
-				// this.upperChart7.addEventHandler(MouseEvent.MOUSE_CLICKED,
-				// new EventHandler<MouseEvent>() {
-				// @Override
-				// public void handle(MouseEvent e) {
-				// boolean okClicked = mainApp
-				// .showEditUPlan(umlaufplanSieben);
-				// if (okClicked) {
-				// refreshBothGraphics();
-				// fillUmlaufplanliste();
-				// }
-				// }
-				// });
+				// FÃ¼gt den EventhÃ¤ndler hinzu
+				this.lowerChart7.addEventHandler(MouseEvent.MOUSE_CLICKED,
+						new EventHandler<MouseEvent>() {
+							@Override
+							public void handle(MouseEvent e) {
+								boolean okClicked = mainApp
+										.showEditDPlan(dienstplanSieben);
+								if (okClicked) {
+									refreshBothGraphics();
+									fillDienstplanliste();
+								}
+							}
+						});
 			}
 
 			this.addButtonPressed = true;
@@ -3138,8 +3138,8 @@ public class MainLayoutController {
 			this.DPlanValue3.setStyle("-fx-background-color:white;");
 			this.DPlanValue4
 					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
-			this.UPlanValue5.setStyle("-fx-background-color:white;");
-			this.UPlanValue6.setStyle("-fx-background-color:white;");
+			this.DPlanValue5.setStyle("-fx-background-color:white;");
+			this.DPlanValue6.setStyle("-fx-background-color:white;");
 			this.UPlanValue7.setStyle("-fx-background-color:white;");
 			this.UPlanValue1.setStyle("-fx-background-color:white;");
 			this.UPlanValue2.setStyle("-fx-background-color:white;");

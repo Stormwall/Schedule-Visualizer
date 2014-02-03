@@ -49,10 +49,6 @@ public class DatenbankLayoutController {
 		// Show open file dialog
 		File file = fileChooser.showOpenDialog(dialogStage);
 
-		Dialogs.showInformationDialog(dialogStage,
-				"I have a great message for you!", "Information Dialog",
-				"title");
-
 		Import im = new Import();
 		im.importFile(file);
 
