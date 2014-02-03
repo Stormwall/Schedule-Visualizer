@@ -20,17 +20,20 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Orientation;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Slider;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
@@ -4540,9 +4543,9 @@ public class MainLayoutController {
 		
 		ListView<String> fahrplanlist = new ListView<String>();
 		ObservableList<String> items =FXCollections.observableArrayList (
-		    "Single", "Double", "Suite", "Family App");
-		fahrplanlist.setItems(items);
-		
+		    "Single", "Double", "Suite", "Family App", "Family App", "Family App");
+		fahrplanlist.setItems(items);	
+
 		this.tablePane.setContent(fahrplanlist);
 	}
 
