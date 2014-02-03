@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import sv.creation.adress.database.DBConnection;
 import sv.creation.adress.database.DBMatching;
 import sv.creation.adress.model.Blockelement;
 import sv.creation.adress.model.Dienstplan;
@@ -423,21 +422,6 @@ public class MainLayoutController {
 
 	@FXML
 	private void initialize() {
-
-		// Erstellung der Datenbank
-//		 DBConnection dbc =new DBConnection();
-//		 dbc.initDBConnection();
-//		 dbc.createTables();
-//		 dbc.fillFahrplanIntoTables();
-//		 dbc.fillUmlaufplanIntoTables();
-//		 dbc.fillDiensttypenIntoTables();
-//		 dbc.fillDienstplanIntoTable();
-		 
-
-		// DBMatching dbm = new DBMatching();
-		// dbm.createDienstplanObject();
-
-		// dbc.closeConnection();
 
 		// Fades in Filter Panel
 		FadeTransition fa = new FadeTransition(Duration.millis(3000),
@@ -3462,7 +3446,6 @@ public class MainLayoutController {
 		// Hereinladen der Daten
 
 		ObservableList<Dutyelement> data = FXCollections.observableArrayList();
-		
 
 		for (int i = 0; i < dienstplan.getDutyelement().size(); i++) {
 
@@ -3549,7 +3532,6 @@ public class MainLayoutController {
 					if (startHour == changeHour && startMin < changeMin) {
 						startHour = startHour + 24;
 					}
-					
 
 					// Belegung der Pixelwerte
 					if (this.startzeitVar <= startHour) {
@@ -3582,9 +3564,10 @@ public class MainLayoutController {
 							e.printStackTrace();
 						}
 						long differenz = date2.getTime() - date1.getTime();
-						//Über 0 Uhr
-						if (date2.getTime()< date1.getTime()) {
-							differenz = date2.getTime() - date1.getTime()+86400000;
+						// Über 0 Uhr
+						if (date2.getTime() < date1.getTime()) {
+							differenz = date2.getTime() - date1.getTime()
+									+ 86400000;
 						}
 						differenz = (differenz / 1000) / 60;
 
@@ -3677,8 +3660,8 @@ public class MainLayoutController {
 			for (int i = 0; i < dienstplan.getDutyelement().size(); i++) {
 
 				// Abgleich mit den Werten
-				if (dienstplan.getDutyelement().get(i)
-						.getDutyID().equals(dienstplan.getDuty().get(j).getId())) {
+				if (dienstplan.getDutyelement().get(i).getDutyID()
+						.equals(dienstplan.getDuty().get(j).getId())) {
 
 					// Auslesen der Zeit als Integer
 					StringSplitter ss = new StringSplitter();

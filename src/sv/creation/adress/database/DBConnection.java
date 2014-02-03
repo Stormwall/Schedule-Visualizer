@@ -23,7 +23,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import sv.creation.adress.exception.WrongTxtFileException;
 import sv.creation.adress.util.StringSplitter;
 
 public class DBConnection {
@@ -1056,12 +1055,12 @@ public class DBConnection {
 					fahrplanVorhanden=true;
 					break;
 				}else if(!fahrplaene.get(fahrplaene.size()-1).endsWith(filename)){
-					try {
-						throw new WrongTxtFileException("Kein passender Fahrplan vorhanden!");
-					} catch (WrongTxtFileException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+//					try {
+//						throw new WrongTxtFileException("Kein passender Fahrplan vorhanden!");
+//					} catch (WrongTxtFileException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
 				}
 			}
 		}catch (SQLException e){

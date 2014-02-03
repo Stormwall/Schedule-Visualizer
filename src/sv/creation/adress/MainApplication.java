@@ -9,7 +9,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Dialogs;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -138,7 +137,6 @@ public class MainApplication extends Application {
 			dialogStage.setResizable(false);
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.initOwner(primaryStage);
-			final ProgressBar progressBar = new ProgressBar(0);
 			Scene scene = new Scene(page);
 			dialogStage.setScene(scene);
 

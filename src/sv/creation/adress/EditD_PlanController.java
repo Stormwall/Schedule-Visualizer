@@ -90,16 +90,16 @@ public class EditD_PlanController {
 	@FXML
 	private void handleauswaehlen() {
 
-		int dutyAuswahl = 0;
+		String dutyAuswahl = null;
 
 		if (this.dutyChoice.getSelectionModel().getSelectedItem() != null) {
 
 			this.elementsTable.getItems().clear();
 
-			dutyAuswahl = Integer.parseInt(this.dienstplan
+			dutyAuswahl = this.dienstplan
 					.getDuty()
 					.get(this.dutyChoice.getSelectionModel().getSelectedIndex())
-					.getId());
+					.getId();
 
 			// Hereinladen der Daten
 
@@ -107,7 +107,7 @@ public class EditD_PlanController {
 					.observableArrayList();
 
 			for (int i = 0; i < this.dienstplan.getDutyelement().size(); i++) {
-				if (Integer.parseInt(this.dienstplan.getDutyelement().get(i).getDutyID())== dutyAuswahl) {
+				if (this.dienstplan.getDutyelement().get(i).getDutyID().equals(dutyAuswahl)) {
 					data.add(this.dienstplan.getDutyelement().get(i));
 				}
 
@@ -215,13 +215,13 @@ public class EditD_PlanController {
 			}
 
 			Export export = new Export();
-//			export.exportDienstplan(dienstplan, file);
+			export.exportDienstplan(dienstplan, file);
 		}
 	}
 
 	// Draws the Canvas
 
-	public void drawCanvas(int auswahl) {
+	public void drawCanvas(String auswahl) {
 
 		this.canvas.getChildren().clear();
 
@@ -255,7 +255,7 @@ public class EditD_PlanController {
 		for (int i = 0; i < dienstplan.getDutyelement().size(); i++) {
 
 			// Abgleich mit den Werten
-			if (Integer.parseInt(dienstplan.getDutyelement().get(i).getDutyID()) == auswahl) {
+			if (dienstplan.getDutyelement().get(i).getDutyID().equals(auswahl)) {
 
 				// Auslesen der Zeit als Integer
 				StringSplitter ss = new StringSplitter();
