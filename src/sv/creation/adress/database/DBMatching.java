@@ -863,7 +863,7 @@ public class DBMatching {
 		// Creating a sql query
 		try {
 			stmt = db.getConnection().createStatement();
-			ResultSet rest1 = stmt.executeQuery("SELECT * FROM Umlaufplan WHERE ID="+dienstplanID);
+			ResultSet rest1 = stmt.executeQuery("SELECT * FROM Dienstplan WHERE ID="+dienstplanID);
 			fahrplanID=rest1.getInt("FahrplanID");
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block

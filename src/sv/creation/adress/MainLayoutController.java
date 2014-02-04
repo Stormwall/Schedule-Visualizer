@@ -4620,7 +4620,7 @@ public class MainLayoutController {
 
 		DBMatching dbm = new DBMatching();
 
-		this.umlaufplanliste.clear();
+		this.dienstplanliste.clear();
 		
 		if(dbm.databaseIsEmpty()||dbm.dienstplanIsEmpty()){
 			
@@ -4649,16 +4649,16 @@ public class MainLayoutController {
 	public void fillUmlaufplanliste() {
 
 		// UmlaufplÃ¤ne -- Choicebox wird gefÃ¼llt
+		
 
 		DBMatching dbm = new DBMatching();
-
+		
 		this.umlaufplanliste.clear();
 		
 		if(dbm.databaseIsEmpty()||dbm.umlaufplanIsEmpty()){
 			
 		}else{
 
-		this.umlaufplanliste.clear();
 
 		this.umlaufplanliste = dbm.createUmlaufplanObject();
 		for (int i = 0; i < this.umlaufplanliste.size(); i++) {

@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import sv.creation.adress.database.DBConnection;
+import sv.creation.adress.database.DBMatching;
 
 public class StringSplitter {
 
@@ -837,6 +838,9 @@ public class StringSplitter {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			
+			DBConnection dbc=new DBConnection();
+			dbc.fillUmlaufplanIntoTables(getFilename());
 		}
 
 		// ****************************************************************************************************************************
@@ -990,6 +994,8 @@ public class StringSplitter {
 				e.printStackTrace();
 			}
 
+			DBConnection dbc = new DBConnection();
+			dbc.fillDiensttypenIntoTables(getFilename());
 		}
 
 	// **************************************************************************************************************************
@@ -1147,6 +1153,9 @@ public class StringSplitter {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		DBConnection dbc = new DBConnection();
+		dbc.fillDienstplanIntoTable(getFilename());
 
 	}
 

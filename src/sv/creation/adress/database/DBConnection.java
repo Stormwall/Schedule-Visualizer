@@ -712,13 +712,14 @@ public class DBConnection {
 	//filling the vehicle schedule data into the respective tables*********************************************************************************
 	//*********************************************************************************************************************************************
 	
-	public void fillUmlaufplanIntoTables(StringSplitter ss) {
+	public void fillUmlaufplanIntoTables(String filename) {
 		
 		//temporary stringsplitter object that contains the the data from text files in array lists
-		 ss = StringSplitter.getInstance();
+		 StringSplitter ss = StringSplitter.getInstance();
 		//invoke stringsplitter method for reading the data in  txt-files
 		//get naming of tour plan
-		String fileNameVergleich=ss.getFilename();
+		String fileNameVergleich=filename;
+		
 //		checkFahrplan(fileNameVergleich);
 		String finalString= getVehicleScheduleName(fileNameVergleich);
 		
@@ -726,9 +727,9 @@ public class DBConnection {
 		
 		  try{ Statement stmnt=connection.createStatement(); 
 		  //get name of vehicle schedule file
-		  String umlaufplanBezeichnung=ss.getFilename();
+		  //String umlaufplanBezeichnung=fileNameVergleich;
 
-		  stmnt.executeUpdate("INSERT INTO Umlaufplan (Bezeichnung, FahrplanID, Datum) VALUES ('"+umlaufplanBezeichnung+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('"+finalString+"%')), CURRENT_DATE);");
+		  stmnt.executeUpdate("INSERT INTO Umlaufplan (Bezeichnung, FahrplanID, Datum) VALUES ('"+fileNameVergleich+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%')), CURRENT_DATE);");
 		 
 		  
 		  //iterators for getting values from stringsplitter object
@@ -759,10 +760,11 @@ public class DBConnection {
 			  int BlockID = it.next();
 			  int vehType = it2.next();
 			  int DepotID = it3.next();
+
 			  stmnt.executeUpdate("INSERT INTO Block (BlockID, UmlaufplanID, VehTypeID, DepotID)  VALUES('"+BlockID+"', "
-			  + "(SELECT up.ID FROM Umlaufplan AS up WHERE Bezeichnung LIKE '"+umlaufplanBezeichnung+"'), "
-			  + "(SELECT vt.ID FROM VehicleType AS vt WHERE vt.VehicleTypeID='"+vehType+"' AND vt.FahrplanID= (SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('"+finalString+"%'))), "
-			  + "(SELECT sp.StoppointID FROM Stoppoint AS sp WHERE sp.StoppointID='"+DepotID+"' AND sp.FahrplanID=(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('"+finalString+"%'))));");
+			  + "(SELECT up.ID FROM Umlaufplan AS up WHERE Bezeichnung LIKE '"+fileNameVergleich+"'), "
+			  + "(SELECT vt.ID FROM VehicleType AS vt WHERE vt.VehicleTypeID='"+vehType+"' AND vt.FahrplanID= (SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%'))), "
+			  + "(SELECT sp.StoppointID FROM Stoppoint AS sp WHERE sp.StoppointID='"+DepotID+"' AND sp.FahrplanID=(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%'))));");
 				}
 		  
 		//fill special journey
@@ -777,7 +779,7 @@ public class DBConnection {
 				stmnt.executeUpdate("INSERT INTO Blockelement (ElementType, DayID, BlockID, ServiceJourneyID, UmlaufplanID, MatchingPos) VALUES('"+EleType+"','"+dayID+"', "
 						  + "(SELECT b.ID FROM Block AS b WHERE b.BlockID='"+blockID+"' AND b.UmlaufplanID=(SELECT up.ID FROM Umlaufplan AS up WHERE Bezeichnung LIKE '%"+finalString+"%')), "
 						  + "(SELECT sj.ID FROM ServiceJourney AS sj WHERE sj.ServiceJourneyID='"+sjID+"' AND sj.FahrplanID=(SELECT fp.ID FROM Fahrplan AS fp WHERE Bezeichnung LIKE '%"+finalString+"%')), "
-						  + "(SELECT up.ID FROM Umlaufplan AS up WHERE Bezeichnung LIKE '"+umlaufplanBezeichnung+"'),'"+pos+"');");
+						  + "(SELECT up.ID FROM Umlaufplan AS up WHERE Bezeichnung LIKE '"+fileNameVergleich+"'),'"+pos+"');");
 			}else{
 				int fromstop = it16.next();
 				int tostop = it17.next();
@@ -785,10 +787,10 @@ public class DBConnection {
 				String arrtime = it19.next();
 				
 				stmnt.executeUpdate("INSERT INTO ExceptionalBlockelement ( DepTime, ArrTime, ServiceJourneyID, ElementType, BlockID, FromStopID, ToStopID, UmlaufplanID, MatchingPos) VALUES('"+deptime+"','"+arrtime+"','"+it15.next()+"','"+EleType+"', "
-						  + "(SELECT b.ID FROM Block AS b WHERE b.BlockID='"+blockID+"' AND b.UmlaufplanID= (SELECT up.ID FROM Umlaufplan AS up WHERE Bezeichnung LIKE '"+ss.getFilename()+"')), "
+						  + "(SELECT b.ID FROM Block AS b WHERE b.BlockID='"+blockID+"' AND b.UmlaufplanID= (SELECT up.ID FROM Umlaufplan AS up WHERE Bezeichnung LIKE '"+fileNameVergleich+"')), "
 						  + "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.StoppointID='"+fromstop+"' AND sp.FahrplanID=(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"'))), "
 						  + "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.StoppointID='"+tostop+"' AND sp.FahrplanID=(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"'))), "
-						  + "(SELECT up.ID FROM Umlaufplan AS up WHERE Bezeichnung LIKE '"+umlaufplanBezeichnung+"'),'"+pos+"');");
+						  + "(SELECT up.ID FROM Umlaufplan AS up WHERE Bezeichnung LIKE '"+fileNameVergleich+"'),'"+pos+"');");
 			}	 
 		 }
 		  
@@ -809,7 +811,7 @@ public class DBConnection {
 	//*******************************************************************************************************************************************
 	
 	//duty types
-	public void fillDiensttypenIntoTables(){
+	public void fillDiensttypenIntoTables(String filename){
 		
 		//temporary stringsplitter object that contains the the data from text files in array lists
 		StringSplitter ss = StringSplitter.getInstance();
@@ -863,14 +865,14 @@ public class DBConnection {
 	
 		  
 		  //Get schedule name
-		  String fileNameVergleich=ss.getFilename();
+		  String fileNameVergleich=filename;
 			String finalString= getVehicleScheduleName(fileNameVergleich);
 
 		  while((it.hasNext()&&it2.hasNext()&&it3.hasNext()&&it4.hasNext()&&it5.hasNext()&&it6.hasNext()&&it7.hasNext()&&it8.hasNext()&&it9.hasNext()&&it10.hasNext()&&it11.hasNext()&&it12.hasNext()&&it13.hasNext()&&it14.hasNext()&&it15.hasNext()&&it16.hasNext()&&it17.hasNext()&&it18.hasNext()&&it19.hasNext()&&it20.hasNext()&&it21.hasNext()&&it22.hasNext()&&it23.hasNext()&&it24.hasNext()&&it25.hasNext()&&it26.hasNext()&&it27.hasNext()&&it28.hasNext()&&it29.hasNext()&&it30.hasNext()&&it31.hasNext()&&it32.hasNext()&&it33.hasNext()&&it34.hasNext()&&it35.hasNext()&&it36.hasNext())){
 
 			  stmnt.executeUpdate("INSERT INTO Dutytype (Name, StartTimeMin, StartTimeMax, EndTimeMin, EndTimeMax, SignOnTime, SignOffTime, DurationMin, DurationMax, WorkingTimeTotalMin, WorkingTimeTotalMax, WorkingTimeBeforeBreakMin, WorkingTimeWithoutBreakMin, WorkingTimeAfterLastBreakMin, DrivingTimeTotalMin, DrivingTimeTotalMax, DrivingTimeWithoutBreakMin, DrivingTimeWithoutBreakMax, DrivingTimeWithoutBreakMinInterruptionTime, DrivingTimeBeforeFirstBreakMin, BreakType, BreakTimeTotalMin, BreakTimeTotalMax, BreakTimeMin, BreakTimeMax, PieceCountMin, PieceCountMax, AllowedCumulatedWorkingTimeMax, DutyFixCost, IsWorkRateConsidered, IsBreakRateConsidered, DutyCostPerMinute, IsVehicleChangeAllowedDuringBreak, BreakTimeAllowedStarts, BreakTimeAllowedEnds, WorkingTimeWithoutBreakMax, FahrplanID) "
 					+ " VALUES ('"+it.next()+"','"+it2.next()+"','"+it3.next()+"','"+it4.next()+"','"+it5.next()+"','"+it6.next()+"','"+it7.next()+"','"+it8.next()+"','"+it9.next()+"','"+it10.next()+"','"+it11.next()+"','"+it12.next()+"','"+it13.next()+"','"+it14.next()+"','"+it15.next()+"','"+it16.next()+"','"+it17.next()+"','"+it18.next()+"','"+it19.next()+"','"+it20.next()+"','"+it21.next()+"','"+it22.next()+"','"+it23.next()+"','"+it24.next()+"','"+it25.next()+"','"+it26.next()+"','"+it27.next()+"','"+it28.next()+"','"+it29.next()+"','"+it30.next()+"','"+it31.next()+"','"+it32.next()+"','"+it33.next()+"','"+it34.next()+"','"+it35.next()+"','"+it36.next()+"', "
-			  		+ "(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('"+finalString+"%')));");
+			  		+ "(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%')));");
 		  }
 		  
 		  System.out.println("Diensttypen importiert!");
@@ -887,7 +889,7 @@ public class DBConnection {
 	//filling the crew schedule data into the respective tables************************************************************************************
 	//*********************************************************************************************************************************************
 	
-	public void fillDienstplanIntoTable(){
+	public void fillDienstplanIntoTable(String filename){
 		
 		//temporary stringsplitter object that contains the the data from text files in array lists
 		StringSplitter ss = StringSplitter.getInstance();
@@ -897,13 +899,13 @@ public class DBConnection {
 		
 		  try{ Statement stmnt=connection.createStatement(); //Fill values in
 		  	//get schedule name
-			  String fileNameVergleich=ss.getFilename();
+			  String fileNameVergleich=filename;
 			  String finalString=getVehicleScheduleName(fileNameVergleich);
 	
 			  
 			  //filling Dienstplan Table
 		  stmnt.executeUpdate("INSERT INTO Dienstplan (Bezeichnung, FahrplanID, Datum) VALUES ('"
-				  			+ss.getFilename()+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('"+finalString+"%')), CURRENT_DATE);");
+				  			+fileNameVergleich+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"')), CURRENT_DATE);");
 		  
 		  //iterators for getting values from stringsplitter object
 		  Iterator<Integer> it11 = ss.getDutyelementElementType().iterator();
@@ -952,10 +954,10 @@ public class DBConnection {
 		  while((it1.hasNext()&&it2.hasNext())){
 			  String dutyID = it1.next();
 			  String dutytype = it2.next();	
-
+			  
 		  stmnt.executeUpdate("INSERT INTO Duty (DutyID, DutyTypeID, DienstplanID) VALUES('"+dutyID+"', "
-				  + "(SELECT ID FROM Dutytype WHERE Name='"+dutytype+"' AND Dutytype.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung='"+finalString+"')), "
-				  + "(SELECT ID FROM Dienstplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"'));"); }
+				  + "(SELECT ID FROM Dutytype WHERE Name='"+dutytype+"' AND Dutytype.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '%"+finalString+"%')), "
+				  + "(SELECT ID FROM Dienstplan WHERE Bezeichnung = '"+fileNameVergleich+"'));"); }
 		  
 		//fill duty element
 			  while(it3.hasNext()&&it4.hasNext()&&it5.hasNext()&&it11.hasNext()&&it15.hasNext()&&it16.hasNext()&&it17.hasNext()&&it18.hasNext()&&it19.hasNext()){
@@ -968,11 +970,11 @@ public class DBConnection {
 				 
 				   
 				  if (de_elementtype==1){
-					   	  stmnt.executeUpdate("INSERT INTO Dutyelement (ElementType, DayID, DutyID, BlockID, ServiceJourneyID, DienstplanID, MatchingPos) VALUES('"+de_elementtype+"','"+dayID+"', "
-								  + "(SELECT d.ID from Duty AS d WHERE d.DutyID = '"+dutyelementdutyID+"' AND d.DienstplanID=(SELECT dp.ID FROM Dienstplan AS dp WHERE Bezeichnung LIKE ('%"+finalString+"%'))), "
-								  + "(SELECT b.ID FROM Block AS b WHERE b.BlockID='"+dutyelementblockID+"' AND b.UmlaufplanID=(SELECT up.ID FROM Umlaufplan AS up WHERE Bezeichnung LIKE ('%"+finalString+"%'))), "
+					 stmnt.executeUpdate("INSERT INTO Dutyelement (ElementType, DayID, DutyID, BlockID, ServiceJourneyID, DienstplanID, MatchingPos) VALUES('"+de_elementtype+"','"+dayID+"', "
+								  + "(SELECT d.ID from Duty AS d WHERE d.DutyID = '"+dutyelementdutyID+"' AND d.DienstplanID=(SELECT dp.ID FROM Dienstplan AS dp WHERE Bezeichnung LIKE ('%"+fileNameVergleich+"%'))), "
+								  + "(SELECT b.ID FROM Block AS b WHERE b.BlockID='"+dutyelementblockID+"' AND b.UmlaufplanID=(SELECT dp.ID FROM Dienstplan AS dp WHERE Bezeichnung LIKE ('%"+fileNameVergleich+"%'))), "
 								  + "(SELECT sj.ID FROM ServiceJourney AS sj WHERE sj.ServiceJourneyID='"+dutyelementservicejourneyID+"' AND sj.FahrplanID=(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%'))), "
-								  + "(SELECT ID FROM Dienstplan WHERE Bezeichnung='"+ss.getFilename()+"'),'"+pos+"');");
+								  + "(SELECT ID FROM Dienstplan WHERE Bezeichnung='"+fileNameVergleich+"'),'"+pos+"');");
 
 				  }else{
 					  
@@ -983,7 +985,7 @@ public class DBConnection {
 
 					    stmnt.executeUpdate("INSERT INTO ExceptionalDutyelement (DepTime, ArrTime,FromStopID, ToStopID, ServiceJourneyID, Elementtype, DayID, DutyID, BlockID, DienstplanID, MatchingPos ) VALUES('"+exdutyelemmentdeptime+"','"+exdutyelementarrtime+"','"+exdutyelementfromstopID+"','"+exdutyelementtostopID+"','"+dutyelementservicejourneyID+"','"+de_elementtype+"','"+dayID+"', "
 								  + "(SELECT ID from Duty WHERE DutyID ='"+dutyelementdutyID+"'),'"+dutyelementblockID+"',"
-								  + "(SELECT ID FROM Dienstplan WHERE Bezeichnung='"+ss.getFilename()+"'),'"+pos+"');");
+								  + "(SELECT ID FROM Dienstplan WHERE Bezeichnung='"+fileNameVergleich+"'),'"+pos+"');");
 				  }			  
 		  }
 		  
@@ -1078,57 +1080,57 @@ public class DBConnection {
 	//method for getting schedule naming to compare for getting the correct foreign keys
 
 	public String getVehicleScheduleName(String filename){
-		String vehicleschedulename ="";
+		String vehicleschedulename =filename;
 		String[] resultString=filename.split("_real");
-		System.out.println(resultString);
+		vehicleschedulename=resultString[1];
 		
-		int Stringlength=resultString.length;
+//		int Stringlength=resultString.length;
 		//distinguish between different kinds of file names and getting the actual naming 
-		switch (Stringlength){
-		//standard schedules
-		case 8:
-			
-			if(filename.startsWith("dt")){
-				for (int i = 1; i < Stringlength; i++) {
-					if(i!=resultString.length-1){
-						vehicleschedulename+=resultString[i]+"_";
-					}else{
-						vehicleschedulename+=resultString[i];
-					}
-				}
-			}else{
-			for (int i = 4; i < Stringlength; i++) {
-				if(i!=resultString.length-1){
-					vehicleschedulename+=resultString[i]+"_";
-				}else{
-					vehicleschedulename+=resultString[i];
-				}
-			}
-		
-			}
-			break;
-		//comparable schedules
-		case 12:
-			for (int i = 5; i < Stringlength; i++) {
-				if(i!=resultString.length-1){
-					vehicleschedulename+=resultString[i]+"_";
-				}else{
-					vehicleschedulename+=resultString[i];
-				}
-			}
-		
-		break;
-		//retiming schedules
-		case 18:
-			for (int i = 3; i < Stringlength; i++) {
-				if(i!=resultString.length-1){
-					vehicleschedulename+=resultString[i]+"_";
-				}else{
-					vehicleschedulename+=resultString[i];
-				}
-			}
-		break;
-		}
+//		switch (Stringlength){
+//		//standard schedules
+//		case 8:
+//			
+//			if(filename.startsWith("dt")){
+//				for (int i = 1; i < Stringlength; i++) {
+//					if(i!=resultString.length-1){
+//						vehicleschedulename+=resultString[i]+"_";
+//					}else{
+//						vehicleschedulename+=resultString[i];
+//					}
+//				}
+//			}else{
+//			for (int i = 4; i < Stringlength; i++) {
+//				if(i!=resultString.length-1){
+//					vehicleschedulename+=resultString[i]+"_";
+//				}else{
+//					vehicleschedulename+=resultString[i];
+//				}
+//			}
+//		
+//			}
+//			break;
+//		//comparable schedules
+//		case 12:
+//			for (int i = 5; i < Stringlength; i++) {
+//				if(i!=resultString.length-1){
+//					vehicleschedulename+=resultString[i]+"_";
+//				}else{
+//					vehicleschedulename+=resultString[i];
+//				}
+//			}
+//		
+//		break;
+//		//retiming schedules
+//		case 18:
+//			for (int i = 3; i < Stringlength; i++) {
+//				if(i!=resultString.length-1){
+//					vehicleschedulename+=resultString[i]+"_";
+//				}else{
+//					vehicleschedulename+=resultString[i];
+//				}
+//			}
+//		break;
+//		}
 		
 		return vehicleschedulename;
 	}
