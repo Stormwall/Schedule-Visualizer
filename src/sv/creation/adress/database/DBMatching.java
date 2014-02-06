@@ -1,4 +1,5 @@
 package sv.creation.adress.database;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -23,6 +24,7 @@ import sv.creation.adress.model.VehicleCapToStoppoint;
 import sv.creation.adress.model.VehicleType;
 import sv.creation.adress.model.VehicleTypeGroup;
 import sv.creation.adress.model.VehicleTypeToVehicleTypeGroup;
+
 /**
  * 
  * This class implements the sql queries which will sent to the database
@@ -48,7 +50,7 @@ public class DBMatching {
 	ArrayList<Reliefpoint> reliefpoint = new ArrayList<Reliefpoint>();
 	ArrayList<Days> days = new ArrayList<Days>();
 	ArrayList<Transfertime> transfertime = new ArrayList<Transfertime>();
-	ArrayList<Integer> fahrplanIDList  =new ArrayList<Integer>();
+	ArrayList<Integer> fahrplanIDList = new ArrayList<Integer>();
 	ArrayList<String> fahrplanBezeichnungList = new ArrayList<String>();
 	ArrayList<String> fahrplanDateList = new ArrayList<String>();
 	ArrayList<String> umlaufplanDateList = new ArrayList<String>();
@@ -70,6 +72,7 @@ public class DBMatching {
 	Statement stmt2;
 	Statement stmt3;
 	Statement stmt4;
+
 	// **********************************************************************
 	// ****** In this method an block object will be created *******
 	// ****** *******
@@ -95,6 +98,7 @@ public class DBMatching {
 			e.printStackTrace();
 		}
 	}
+
 	// **********************************************************************
 	// ****** In this method an blockelement object will be created *******
 	// ****** *******
@@ -108,7 +112,8 @@ public class DBMatching {
 			stmt2 = db.getConnection().createStatement();
 			stmt3 = db.getConnection().createStatement();
 			// Two different datasets will be created
-			ResultSet rest3 = stmt.executeQuery("SELECT ID, BlockID, ServiceJourneyID, ElementType, MatchingPos FROM Blockelement UNION SELECT ID, BlockID,ServiceJourneyID, ElementType, MatchingPos FROM ExceptionalBlockelement ORDER BY MatchingPos ASC;");
+			ResultSet rest3 = stmt
+					.executeQuery("SELECT ID, BlockID, ServiceJourneyID, ElementType, MatchingPos FROM Blockelement UNION SELECT ID, BlockID,ServiceJourneyID, ElementType, MatchingPos FROM ExceptionalBlockelement ORDER BY MatchingPos ASC;");
 			ResultSet rest2;
 			// All resulted datasets of the sql query will be added to the
 			// blockelement array list
@@ -147,39 +152,39 @@ public class DBMatching {
 				int elementType = zahl;
 				int umlaufplanID = Integer.parseInt(rest2
 						.getString("UmlaufPlanID"));
-				//Bezeichnung für den Elementtyp wird entsprechend hinzugefügt
+				// Bezeichnung für den Elementtyp wird entsprechend hinzugefügt
 				String elementTypeName = "";
-				switch(zahl){
+				switch (zahl) {
 				case 1:
 					elementTypeName = "Servicefahrt";
-				break;
+					break;
 				case 2:
 					elementTypeName = "Leerfahrt";
-				break;
+					break;
 				case 3:
 					elementTypeName = "Einrückfahrt";
-				break;
+					break;
 				case 4:
 					elementTypeName = "Ausrückfahrt";
-				break;
+					break;
 				case 5:
 					elementTypeName = "Vorbereitung";
-				break;
+					break;
 				case 6:
 					elementTypeName = "Nachbereitung";
-				break;
+					break;
 				case 7:
 					elementTypeName = "Transfer";
-				break;
+					break;
 				case 8:
 					elementTypeName = "Pause";
-				break;
+					break;
 				case 9:
 					elementTypeName = "Warten";
-				break;
+					break;
 				case 10:
 					elementTypeName = "Layover";
-				break;
+					break;
 				}
 				// all variables will be summed up to an umlaufelement
 				blockelement.add(new Blockelement(id, blockID,
@@ -191,14 +196,14 @@ public class DBMatching {
 			e.printStackTrace();
 		}
 	}
+
 	// ***********************************************************************************************
 	// ****** In this method both array lists will be integrated in an
 	// umlaufplan object. *******
 	// ****** This method returns an completely object of a umlaufplan, which
 	// can be modified. ******* *******
 	// ***********************************************************************************************
-	
-	
+
 	public ArrayList<Umlaufplan> createUmlaufplanObject() {
 		createBlock();
 		createBlockelement();
@@ -240,13 +245,15 @@ public class DBMatching {
 			}
 			zaehlerUmlauf = zaehlerUmlauf + 1;
 			Umlaufplan umlaufplanAdd = new Umlaufplan(i, blockList,
-					blockelementList,getFahrplanzugehoerigkeitUmlaufplan(i),changeDateFormat(umlaufplanDateList.get(i-1)));
+					blockelementList, getFahrplanzugehoerigkeitUmlaufplan(i),
+					changeDateFormat(umlaufplanDateList.get(i - 1)));
 			umlaufplanliste.add(umlaufplanAdd);
 		}
 		return umlaufplanliste;
 	}
+
 	private void createUmlaufplanDate() {
-		
+
 		DBConnection db = new DBConnection();
 		db.initDBConnection();
 		// Creating a sql query
@@ -263,8 +270,9 @@ public class DBMatching {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
+
 	// **********************************************************************
 	// ****** In this method an duty object will be created *******
 	// ****** *******
@@ -282,13 +290,14 @@ public class DBMatching {
 				int hilfsID = Integer.parseInt(rest1.getString("ID"));
 				String id = rest1.getString("DutyID");
 				String type = rest1.getString("DutyTypeID");
-				duty.add(new Duty(hilfsID,id, type));
+				duty.add(new Duty(hilfsID, id, type));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+
 	// **********************************************************************
 	// ****** In this method an dutyelement object will be created *******
 	// ****** *******
@@ -303,7 +312,8 @@ public class DBMatching {
 			stmt3 = db.getConnection().createStatement();
 			stmt4 = db.getConnection().createStatement();
 			// Two different datasets will be created
-			ResultSet rest3 = stmt.executeQuery("SELECT ID, DutyID, BlockID, ServiceJourneyID, ElementType, MatchingPos FROM Dutyelement UNION SELECT ID, DutyID, BlockID,ServiceJourneyID, ElementType, MatchingPos FROM ExceptionalDutyelement ORDER BY MatchingPos ASC;");
+			ResultSet rest3 = stmt
+					.executeQuery("SELECT ID, DutyID, BlockID, ServiceJourneyID, ElementType, MatchingPos FROM Dutyelement UNION SELECT ID, DutyID, BlockID,ServiceJourneyID, ElementType, MatchingPos FROM ExceptionalDutyelement ORDER BY MatchingPos ASC;");
 			ResultSet rest2;
 			ResultSet rest4;
 			// All resulted datasets of the sql query will be added to the
@@ -330,10 +340,10 @@ public class DBMatching {
 									+ rest3.getString("ServiceJourneyID")
 									+ "' AND ex.ID='"
 									+ rest3.getString("ID")
-//									+ "' AND b.BlockID='"
-//									+ rest3.getString("BlockID")
+									// + "' AND b.BlockID='"
+									// + rest3.getString("BlockID")
 									+ "' AND d.ID='"
-									+ rest3.getString("DutyID")+ "';");
+									+ rest3.getString("DutyID") + "';");
 				}
 				// the attributes will be read and save in variables
 				int id = Integer.parseInt(rest2.getString("MatchingPos"));
@@ -349,9 +359,9 @@ public class DBMatching {
 						.getString("ElementType"));
 				int dienstplanID = Integer.parseInt(rest2
 						.getString("DienstplanID"));
-//				rest4=stmt4.executeQuery("SELECT ID FROM Duty WHERE DutyID ="+rest3.getString("DutyID"));
-				int dutyHilfsID=Integer.parseInt(rest3.getString("DutyID"));
-				
+				// rest4=stmt4.executeQuery("SELECT ID FROM Duty WHERE DutyID ="+rest3.getString("DutyID"));
+				int dutyHilfsID = Integer.parseInt(rest3.getString("DutyID"));
+
 				// all variables will be sum up to an umlaufelement
 				dutyelement.add(new Dutyelement(id, dutyID, blockID,
 						serviceJourneyID, fromStopID, toStopID, depTime,
@@ -361,8 +371,9 @@ public class DBMatching {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
+
 	// ***********************************************************************************************
 	// ****** In this method both array lists will be integrated in an
 	// umlaufplan object. *******
@@ -395,13 +406,14 @@ public class DBMatching {
 			}
 			for (int j2 = zaehlerDienst; j2 < this.duty.size() - 1; j2++) {
 
-				if(this.duty.get(j2).getId().endsWith("p")&&this.duty.get(j2+1).getId().endsWith("p")){
-					
-					String[] string=this.duty.get(j2).getId().split("p");
-					String[] string2=this.duty.get(j2+1).getId().split("p");
-					int id1=Integer.parseInt(string[0]);
-					int id2=Integer.parseInt(string2[0]);
-					
+				if (this.duty.get(j2).getId().endsWith("p")
+						&& this.duty.get(j2 + 1).getId().endsWith("p")) {
+
+					String[] string = this.duty.get(j2).getId().split("p");
+					String[] string2 = this.duty.get(j2 + 1).getId().split("p");
+					int id1 = Integer.parseInt(string[0]);
+					int id2 = Integer.parseInt(string2[0]);
+
 					if (id1 < id2) {
 						dutyList.add(this.duty.get(j2));
 						zaehlerDienst = zaehlerDienst + 1;
@@ -410,13 +422,13 @@ public class DBMatching {
 						dutyList.add(this.duty.get(j2));
 						j2 = this.duty.size() - 1;
 					}
-					
-				}
-				else if(this.duty.get(j2).getId().endsWith("p")&&!this.duty.get(j2+1).getId().endsWith("p")){
-					
-					String[] string=this.duty.get(j2).getId().split("p");
-					int id1=Integer.parseInt(string[0]);
-					
+
+				} else if (this.duty.get(j2).getId().endsWith("p")
+						&& !this.duty.get(j2 + 1).getId().endsWith("p")) {
+
+					String[] string = this.duty.get(j2).getId().split("p");
+					int id1 = Integer.parseInt(string[0]);
+
 					if (id1 < Integer.parseInt(this.duty.get(j2 + 1).getId())) {
 						dutyList.add(this.duty.get(j2));
 						zaehlerDienst = zaehlerDienst + 1;
@@ -425,12 +437,13 @@ public class DBMatching {
 						dutyList.add(this.duty.get(j2));
 						j2 = this.duty.size() - 1;
 					}
-					
-				}	else if(!this.duty.get(j2).getId().endsWith("p")&&this.duty.get(j2+1).getId().endsWith("p")){
-					
-					String[] string=this.duty.get(j2+1).getId().split("p");
-					int id2=Integer.parseInt(string[0]);
-					
+
+				} else if (!this.duty.get(j2).getId().endsWith("p")
+						&& this.duty.get(j2 + 1).getId().endsWith("p")) {
+
+					String[] string = this.duty.get(j2 + 1).getId().split("p");
+					int id2 = Integer.parseInt(string[0]);
+
 					if (Integer.parseInt(this.duty.get(j2).getId()) < id2) {
 						dutyList.add(this.duty.get(j2));
 						zaehlerDienst = zaehlerDienst + 1;
@@ -439,36 +452,36 @@ public class DBMatching {
 						dutyList.add(this.duty.get(j2));
 						j2 = this.duty.size() - 1;
 					}
-					
-				}else{
 
+				} else {
 
-				if (Integer.parseInt(this.duty.get(j2).getId()) < Integer.parseInt(this.duty.get(j2 + 1).getId())) {
-					dutyList.add(this.duty.get(j2));
-					zaehlerDienst = zaehlerDienst + 1;
+					if (Integer.parseInt(this.duty.get(j2).getId()) < Integer
+							.parseInt(this.duty.get(j2 + 1).getId())) {
+						dutyList.add(this.duty.get(j2));
+						zaehlerDienst = zaehlerDienst + 1;
+					}
+					if (Integer.parseInt(this.duty.get(j2).getId()) > Integer
+							.parseInt(this.duty.get(j2 + 1).getId())) {
+						dutyList.add(this.duty.get(j2));
+						j2 = this.duty.size() - 1;
+					}
 				}
-				if (Integer.parseInt(this.duty.get(j2).getId()) > Integer.parseInt(this.duty.get(j2 + 1).getId())) {
-					dutyList.add(this.duty.get(j2));
-					j2 = this.duty.size() - 1;
-				}}
 				if (j2 == this.duty.size() - 2) {
 					dutyList.add(this.duty.get(j2 + 1));
 				}
-			} 
+			}
 			zaehlerDienst = zaehlerDienst + 1;
 			Dienstplan dienstplanAdd = new Dienstplan(1, dutyList,
-					dutyelementList, getFahrplanzugehoerigkeitDienstPlan(i),changeDateFormat(dienstplanDateList.get(i-1)));
+					dutyelementList, getFahrplanzugehoerigkeitDienstPlan(i),
+					changeDateFormat(dienstplanDateList.get(i - 1)));
 			dienstplanliste.add(dienstplanAdd);
 		}
-		/**
-		 * WICHTIG!!!! Es muss noch die FahrplanID ausgelesen werden. DB
-		 * VerknÃƒÂ¼pfung!!!!
-		 */
+
 		return dienstplanliste;
 	}
-	
+
 	private void createDienstplanDate() {
-		
+
 		DBConnection db = new DBConnection();
 		db.initDBConnection();
 		// Creating a sql query
@@ -485,26 +498,29 @@ public class DBMatching {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
-	public int getFahrplanzugehoerigkeitUmlaufplan(int umlaufplanID){
-		int fahrplanID=0;
-		
+
+	public int getFahrplanzugehoerigkeitUmlaufplan(int umlaufplanID) {
+		int fahrplanID = 0;
+
 		DBConnection db = new DBConnection();
 		db.initDBConnection();
 		// Creating a sql query
 		try {
 			stmt = db.getConnection().createStatement();
-			ResultSet rest1 = stmt.executeQuery("SELECT * FROM Umlaufplan WHERE ID="+umlaufplanID);
-			fahrplanID=rest1.getInt("FahrplanID");
-			
-		}catch (SQLException e) {
+			ResultSet rest1 = stmt
+					.executeQuery("SELECT * FROM Umlaufplan WHERE ID="
+							+ umlaufplanID);
+			fahrplanID = rest1.getInt("FahrplanID");
+
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return fahrplanID;
 	}
-	
+
 	// ***********************************************************************************************
 	// ****** In this method both array lists will be integrated in an
 	// fahrplan object. *******
@@ -532,8 +548,8 @@ public class DBMatching {
 		int zaehlerFahrt = 0;
 		for (int i = 0; i < serviceJourney.size(); i++) {
 			if (i >= 1
-					&& serviceJourney.get(i).getFahrplanID() > serviceJourney.get(
-							i - 1).getFahrplanID()) {
+					&& serviceJourney.get(i).getFahrplanID() > serviceJourney
+							.get(i - 1).getFahrplanID()) {
 				anzahlPlan++;
 			}
 		}
@@ -549,71 +565,76 @@ public class DBMatching {
 			ArrayList<Deadruntime> deadruntimeList = new ArrayList<Deadruntime>();
 			ArrayList<Reliefpoint> reliefpointList = new ArrayList<Reliefpoint>();
 			ArrayList<Transfertime> transfertimeList = new ArrayList<Transfertime>();
-			
+
 			for (int j = 0; j < serviceJourney.size(); j++) {
 				if (this.serviceJourney.get(j).getFahrplanID() == i) {
 					serviceJourneyList.add(serviceJourney.get(j));
 				}
 			}
 			for (int j = 0; j < stoppoint.size(); j++) {
-				if(this.stoppoint.get(j).getFahrplanID() == i){
+				if (this.stoppoint.get(j).getFahrplanID() == i) {
 					stoppointList.add(stoppoint.get(j));
 				}
 			}
 			for (int j = 0; j < line.size(); j++) {
-				if(this.line.get(j).getFahrplanID() == i){
+				if (this.line.get(j).getFahrplanID() == i) {
 					lineList.add(line.get(j));
-				}		
+				}
 			}
 			for (int j = 0; j < vehType.size(); j++) {
-				if(this.vehType.get(j).getFahrplanID() == i){
+				if (this.vehType.get(j).getFahrplanID() == i) {
 					vehTypeList.add(vehType.get(j));
 				}
-			} 
+			}
 			for (int j = 0; j < vehTypeGroup.size(); j++) {
-				if(this.vehTypeGroup.get(j).getFahrplanID() == i){
+				if (this.vehTypeGroup.get(j).getFahrplanID() == i) {
 					vehTypeGroupList.add(vehTypeGroup.get(j));
 				}
 			}
 			for (int j = 0; j < vehTypeToVehTypeGroup.size(); j++) {
-				if(this.vehTypeToVehTypeGroup.get(j).getFahrplanID() == i){
+				if (this.vehTypeToVehTypeGroup.get(j).getFahrplanID() == i) {
 					vehTypeToVehTypeGroupList.add(vehTypeToVehTypeGroup.get(j));
 				}
 			}
 			for (int j = 0; j < vehCapToStoppoint.size(); j++) {
-				if(vehCapToStoppoint.get(j).getFahrplanID() == i){
+				if (vehCapToStoppoint.get(j).getFahrplanID() == i) {
 					vehCapToStoppointList.add(vehCapToStoppoint.get(j));
 				}
 			}
 			for (int j = 0; j < deadruntime.size(); j++) {
-				if(deadruntime.get(j).getFahrplanID() == i){
+				if (deadruntime.get(j).getFahrplanID() == i) {
 					deadruntimeList.add(deadruntime.get(j));
 				}
 			}
 			for (int j = 0; j < reliefpoint.size(); j++) {
-				if(reliefpoint.get(j).getFahrplanID() == i){
+				if (reliefpoint.get(j).getFahrplanID() == i) {
 					reliefpointList.add(reliefpoint.get(j));
 				}
 			}
 			for (int j = 0; j < transfertime.size(); j++) {
-				if(transfertime.get(j).getFahrplanID() == i){
+				if (transfertime.get(j).getFahrplanID() == i) {
 					transfertimeList.add(transfertime.get(j));
 				}
 			}
-			
-			Fahrplan fahrplanAdd = new Fahrplan(fahrplanIDList.get(i-1),stoppointList ,lineList,vehTypeList,vehTypeGroupList,vehTypeToVehTypeGroupList,vehCapToStoppointList,serviceJourneyList,deadruntimeList,reliefpointList,transfertimeList,fahrplanBezeichnungList.get(i-1),changeDateFormat(fahrplanDateList.get(i-1)));
+
+			Fahrplan fahrplanAdd = new Fahrplan(fahrplanIDList.get(i - 1),
+					stoppointList, lineList, vehTypeList, vehTypeGroupList,
+					vehTypeToVehTypeGroupList, vehCapToStoppointList,
+					serviceJourneyList, deadruntimeList, reliefpointList,
+					transfertimeList, fahrplanBezeichnungList.get(i - 1),
+					changeDateFormat(fahrplanDateList.get(i - 1)));
 			fahrplanliste.add(fahrplanAdd);
 		}
-		
+
 		/**
 		 * WICHTIG!!!! Es muss noch die FahrplanID ausgelesen werden. DB
 		 * VerknÃƒÂ¼pfung!!!!
 		 */
 		return fahrplanliste;
 	}
-	 
+
 	private void createFahrplanDate() {
-		
+
 		DBConnection db = new DBConnection();
 		db.initDBConnection();
 		// Creating a sql query
@@ -630,16 +651,18 @@ public class DBMatching {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
+
 	private void createFahrplanBezeichnugn() {
-		
+
 		DBConnection db = new DBConnection();
 		db.initDBConnection();
 		// Creating a sql query
 		try {
 			stmt = db.getConnection().createStatement();
-			ResultSet rest1 = stmt.executeQuery("SELECT Bezeichnung FROM Fahrplan");
+			ResultSet rest1 = stmt
+					.executeQuery("SELECT Bezeichnung FROM Fahrplan");
 			// All resulted datasets of the sql query will be added to the block
 			// array list
 			while (rest1.next()) {
@@ -650,10 +673,11 @@ public class DBMatching {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
+
 	private void createFahrplanID() {
-		
+
 		DBConnection db = new DBConnection();
 		db.initDBConnection();
 		// Creating a sql query
@@ -670,34 +694,39 @@ public class DBMatching {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
+
 	private void createTransfertime() {
-		
+
 		DBConnection db = new DBConnection();
 		db.initDBConnection();
 		// Creating a sql query
 		try {
 			stmt = db.getConnection().createStatement();
-			ResultSet rest1 = stmt.executeQuery("SELECT  DISTINCT * FROM Transfertime");
+			ResultSet rest1 = stmt
+					.executeQuery("SELECT  DISTINCT * FROM Transfertime");
 			// All resulted datasets of the sql query will be added to the block
 			// array list
 			while (rest1.next()) {
-				int fromStopID = Integer.parseInt(rest1.getString("FromStopID"));
+				int fromStopID = Integer
+						.parseInt(rest1.getString("FromStopID"));
 				int toStopID = Integer.parseInt(rest1.getString("ToStopID"));
 				String fromTime = rest1.getString("FromTime");
 				String toTime = rest1.getString("ToTime");
 				int runtime = Integer.parseInt(rest1.getString("Runtime"));
-				int fahrplanID = Integer.parseInt(rest1.getString("FahrplanID"));
-				transfertime.add(new Transfertime(fromStopID,toStopID,fromTime,toTime,runtime, fahrplanID));
+				int fahrplanID = Integer
+						.parseInt(rest1.getString("FahrplanID"));
+				transfertime.add(new Transfertime(fromStopID, toStopID,
+						fromTime, toTime, runtime, fahrplanID));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	private void createDays() {
 
 		DBConnection db = new DBConnection();
@@ -716,211 +745,253 @@ public class DBMatching {
 				int d4 = Integer.parseInt(rest1.getString("d4"));
 				int d5 = Integer.parseInt(rest1.getString("d5"));
 				int d6 = 0;
-				if(rest1.getString("d6")!=null){
-				d6 = Integer.parseInt(rest1.getString("d6"));
+				if (rest1.getString("d6") != null) {
+					d6 = Integer.parseInt(rest1.getString("d6"));
 				}
-				int d7=0;
-				if(rest1.getString("d7")!=null){
+				int d7 = 0;
+				if (rest1.getString("d7") != null) {
 					d7 = Integer.parseInt(rest1.getString("d7"));
-					};
-				days.add(new Days(tripID,d1,d2,d3,d4,d5,d6,d7));
+				}
+				;
+				days.add(new Days(tripID, d1, d2, d3, d4, d5, d6, d7));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	private void createReliefpoint() {
-		
+
 		DBConnection db = new DBConnection();
 		db.initDBConnection();
 		// Creating a sql query
 		try {
 			stmt = db.getConnection().createStatement();
-			ResultSet rest1 = stmt.executeQuery("SELECT  rp.ReliefpointID, sj.ServiceJourneyID, st.StoppointID, rp.StopTime, rp.FahrplanID FROM Reliefpoint AS rp, ServiceJourney AS sj, Stoppoint AS st WHERE rp.ServiceJourneyID=sj.ID AND rp.StoppointID=st.ID");
+			ResultSet rest1 = stmt
+					.executeQuery("SELECT  rp.ReliefpointID, sj.ServiceJourneyID, st.StoppointID, rp.StopTime, rp.FahrplanID FROM Reliefpoint AS rp, ServiceJourney AS sj, Stoppoint AS st WHERE rp.ServiceJourneyID=sj.ID AND rp.StoppointID=st.ID");
 			// All resulted datasets of the sql query will be added to the block
 			// array list
 			while (rest1.next()) {
-				int reliefpointID = Integer.parseInt(rest1.getString("ReliefpointID"));
-				int serviceJourneyID = Integer.parseInt(rest1.getString("ServiceJourneyID"));
-				int stoppointID = Integer.parseInt(rest1.getString("StoppointID"));
+				int reliefpointID = Integer.parseInt(rest1
+						.getString("ReliefpointID"));
+				int serviceJourneyID = Integer.parseInt(rest1
+						.getString("ServiceJourneyID"));
+				int stoppointID = Integer.parseInt(rest1
+						.getString("StoppointID"));
 				String stopTime = rest1.getString("StopTime");
-				int fahrplanID = Integer.parseInt(rest1.getString("FahrplanID"));
-				reliefpoint.add(new Reliefpoint(reliefpointID,serviceJourneyID,stoppointID,stopTime, fahrplanID));
+				int fahrplanID = Integer
+						.parseInt(rest1.getString("FahrplanID"));
+				reliefpoint.add(new Reliefpoint(reliefpointID,
+						serviceJourneyID, stoppointID, stopTime, fahrplanID));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	private void createDeadruntime() {
-		
+
 		DBConnection db = new DBConnection();
 		db.initDBConnection();
 		// Creating a sql query
 		try {
 			stmt = db.getConnection().createStatement();
-			ResultSet rest1 = stmt.executeQuery("SELECT  DISTINCT * FROM Deadruntime");
+			ResultSet rest1 = stmt
+					.executeQuery("SELECT  DISTINCT * FROM Deadruntime");
 			// All resulted datasets of the sql query will be added to the block
 			// array list
 			while (rest1.next()) {
-				int fromStopID = Integer.parseInt(rest1.getString("FromStopID"));
+				int fromStopID = Integer
+						.parseInt(rest1.getString("FromStopID"));
 				int toStopID = Integer.parseInt(rest1.getString("ToStopID"));
 				String fromTime = rest1.getString("FromTime");
 				String toTime = rest1.getString("ToTime");
 				int distance = Integer.parseInt(rest1.getString("Distance"));
 				int runtime = Integer.parseInt(rest1.getString("Runtime"));
-				int fahrplanID = Integer.parseInt(rest1.getString("FahrplanID"));
-				deadruntime.add(new Deadruntime(fromStopID,toStopID,fromTime,toTime,distance,runtime,fahrplanID));
+				int fahrplanID = Integer
+						.parseInt(rest1.getString("FahrplanID"));
+				deadruntime.add(new Deadruntime(fromStopID, toStopID, fromTime,
+						toTime, distance, runtime, fahrplanID));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	private void createServiceJourney() {
-		
+
 		DBConnection db = new DBConnection();
 		db.initDBConnection();
 		// Creating a sql query
 		try {
 			stmt = db.getConnection().createStatement();
-			ResultSet rest1 = stmt.executeQuery("SELECT  DISTINCT * FROM ServiceJourney");
+			ResultSet rest1 = stmt
+					.executeQuery("SELECT sj.ServiceJourneyID,l.LineID,st.StoppointID AS FromStopID,st.StoppointID AS ToStopID, sj.DepTime, sj.ArrTime, sj.MinAheadTime, sj.MinLayoverTime, vtg.VehicleTypeGroupID, sj.MaxShiftBackwardSeconds, sj.MaxShiftForwardSeconds, sj.FromStopBreakFacility, sj.ToStopBreakFacility, sj.Code FROM ServiceJourney AS sj, VehicleTypeGroup AS vtg, Line AS l, Stoppoint AS st WHERE sj.LineID=l.ID AND sj.FromStopID=st.ID AND sj.ToStopID=st.ID AND sj.VehTypeGroupID=vtg.ID");
 			// All resulted datasets of the sql query will be added to the block
 			// array list
 			while (rest1.next()) {
-				int serviceJourneyID = Integer.parseInt(rest1.getString("ServiceJourneyID"));
+				int serviceJourneyID = Integer.parseInt(rest1
+						.getString("ServiceJourneyID"));
 				int lineID = Integer.parseInt(rest1.getString("LineID"));
-				int fromStopID = Integer.parseInt(rest1.getString("FromStopID"));
+				int fromStopID = Integer
+						.parseInt(rest1.getString("FromStopID"));
 				int toStopID = Integer.parseInt(rest1.getString("ToStopID"));
 				String depTime = rest1.getString("DepTime");
 				String arrTime = rest1.getString("ArrTime");
-				int minAheadTime = Integer.parseInt(rest1.getString("MinAheadTime"));
-				int minLayoverTime = Integer.parseInt(rest1.getString("MinLayoverTime"));
-				int vehTypeGroupID = Integer.parseInt(rest1.getString("VehTypeGroupID"));
-				int maxShiftBackwardSeconds = Integer.parseInt(rest1.getString("MaxShiftBackwardSeconds"));
-				int maxShiftForwardSeconds = Integer.parseInt(rest1.getString("MaxShiftForwardSeconds"));
-				int fromStopBreakFacility = Integer.parseInt(rest1.getString("FromStopBreakFacility"));
-				int toStopBreakFacility = Integer.parseInt(rest1.getString("ToStopBreakFacility"));
+				int minAheadTime = Integer.parseInt(rest1
+						.getString("MinAheadTime"));
+				int minLayoverTime = Integer.parseInt(rest1
+						.getString("MinLayoverTime"));
+				int vehTypeGroupID = Integer.parseInt(rest1
+						.getString("VehTypeGroupID"));
+				int maxShiftBackwardSeconds = Integer.parseInt(rest1
+						.getString("MaxShiftBackwardSeconds"));
+				int maxShiftForwardSeconds = Integer.parseInt(rest1
+						.getString("MaxShiftForwardSeconds"));
+				int fromStopBreakFacility = Integer.parseInt(rest1
+						.getString("FromStopBreakFacility"));
+				int toStopBreakFacility = Integer.parseInt(rest1
+						.getString("ToStopBreakFacility"));
 				String code = rest1.getString("Code");
-				int fahrplanID=Integer.parseInt(rest1.getString("FahrplanID"));
-				serviceJourney.add(new ServiceJourney(serviceJourneyID,lineID,fromStopID,toStopID,depTime,arrTime,minAheadTime,minLayoverTime,vehTypeGroupID,maxShiftBackwardSeconds,maxShiftForwardSeconds,fromStopBreakFacility,toStopBreakFacility,code, fahrplanID));
+				int fahrplanID = Integer
+						.parseInt(rest1.getString("FahrplanID"));
+				serviceJourney.add(new ServiceJourney(serviceJourneyID, lineID,
+						fromStopID, toStopID, depTime, arrTime, minAheadTime,
+						minLayoverTime, vehTypeGroupID,
+						maxShiftBackwardSeconds, maxShiftForwardSeconds,
+						fromStopBreakFacility, toStopBreakFacility, code,
+						fahrplanID));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-	}
-	
-	private void createVehCapToStoppoint() {
-		
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
-		// Creating a sql query
-		try {
-			stmt = db.getConnection().createStatement();
-			ResultSet rest1 = stmt.executeQuery("SELECT  DISTINCT * FROM VehicleCapToStoppoint");
-			// All resulted datasets of the sql query will be added to the block
-			// array list
-			while (rest1.next()) {
-				int vehTypeID = Integer.parseInt(rest1.getString("VehTypeID"));
-				int stoppointID = Integer.parseInt(rest1.getString("StoppointID"));
-				int min = Integer.parseInt(rest1.getString("Min"));
-				int max = Integer.parseInt(rest1.getString("Max"));
-				int fahrplanID = Integer.parseInt(rest1.getString("FahrplanID"));
-				vehCapToStoppoint.add(new VehicleCapToStoppoint(vehTypeID,stoppointID,min,max, fahrplanID));
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
-	
-	private void createVehTypeToVehTypeGroup() {
-	
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
-		// Creating a sql query
-		try {
-			stmt = db.getConnection().createStatement();
-			ResultSet rest1 = stmt.executeQuery("SELECT  DISTINCT * FROM VehicleTypeToVehicleTypeGroup");
-			// All resulted datasets of the sql query will be added to the block
-			// array list
-			while (rest1.next()) {
-				int vehTypeGroupID = Integer.parseInt(rest1.getString("VehTypeGroupID"));
-				int vehTypeID = Integer.parseInt(rest1.getString("VehTypeID"));
-				int fahrplanID = Integer.parseInt(rest1.getString("FahrplanID"));
-				vehTypeToVehTypeGroup.add(new VehicleTypeToVehicleTypeGroup(vehTypeID,vehTypeGroupID, fahrplanID));
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
-	
-	private void createVehTypeGroup() {
-		
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
-		// Creating a sql query
-		try {
-			stmt = db.getConnection().createStatement();
-			ResultSet rest1 = stmt.executeQuery("SELECT  DISTINCT * FROM VehicleTypeGroup");
-			// All resulted datasets of the sql query will be added to the block
-			// array list
-			while (rest1.next()) {
-				int vehTypeGroupID = Integer.parseInt(rest1.getString("VehicleTypeGroupID"));
-				int code = Integer.parseInt(rest1.getString("Code"));
-				String name = rest1.getString("Name");
-				int fahrplanID = Integer.parseInt(rest1.getString("FahrplanID"));
-				vehTypeGroup.add(new VehicleTypeGroup(vehTypeGroupID,code, name, fahrplanID));
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-		
 
-	private void createVehType() {
-	
+	}
+
+	private void createVehCapToStoppoint() {
+
 		DBConnection db = new DBConnection();
 		db.initDBConnection();
 		// Creating a sql query
 		try {
 			stmt = db.getConnection().createStatement();
-			ResultSet rest1 = stmt.executeQuery("SELECT  DISTINCT * FROM VehicleType");
+			ResultSet rest1 = stmt
+					.executeQuery("SELECT  vt.VehicleTypeID, st.StoppointID, vcts.Min, vcts.Max,vcts.FahrplanID FROM VehicleCapToStoppoint AS vcts, VehicleType AS vt, Stoppoint AS st WHERE vcts.VehTypeID=vt.ID AND vcts.StoppointID=st.ID");
 			// All resulted datasets of the sql query will be added to the block
 			// array list
 			while (rest1.next()) {
 				int vehTypeID = Integer.parseInt(rest1.getString("VehicleTypeID"));
+				int stoppointID = Integer.parseInt(rest1
+						.getString("StoppointID"));
+				int min = Integer.parseInt(rest1.getString("Min"));
+				int max = Integer.parseInt(rest1.getString("Max"));
+				int fahrplanID = Integer
+						.parseInt(rest1.getString("FahrplanID"));
+				vehCapToStoppoint.add(new VehicleCapToStoppoint(vehTypeID,
+						stoppointID, min, max, fahrplanID));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	private void createVehTypeToVehTypeGroup() {
+
+		DBConnection db = new DBConnection();
+		db.initDBConnection();
+		// Creating a sql query
+		try {
+			stmt = db.getConnection().createStatement();
+			ResultSet rest1 = stmt
+					.executeQuery("SELECT  vtg.VehicleTypeGroupID, vt.VehicleTypeID, v.FahrplanID FROM VehicleTypeToVehicleTypeGroup AS v, VehicleTypeGroup AS vtg, VehicleType AS vt WHERE v.VehTypeID=vt.ID AND v.VehTypeGroupID=vtg.ID");
+			// All resulted datasets of the sql query will be added to the block
+			// array list
+			while (rest1.next()) {
+				int vehTypeGroupID = Integer.parseInt(rest1
+						.getString("VehicleTypeGroupID"));
+				int vehTypeID = Integer.parseInt(rest1.getString("VehicleTypeID"));
+				int fahrplanID = Integer
+						.parseInt(rest1.getString("FahrplanID"));
+				vehTypeToVehTypeGroup.add(new VehicleTypeToVehicleTypeGroup(
+						vehTypeID, vehTypeGroupID, fahrplanID));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	private void createVehTypeGroup() {
+
+		DBConnection db = new DBConnection();
+		db.initDBConnection();
+		// Creating a sql query
+		try {
+			stmt = db.getConnection().createStatement();
+			ResultSet rest1 = stmt
+					.executeQuery("SELECT  DISTINCT * FROM VehicleTypeGroup");
+			// All resulted datasets of the sql query will be added to the block
+			// array list
+			while (rest1.next()) {
+				int vehTypeGroupID = Integer.parseInt(rest1
+						.getString("VehicleTypeGroupID"));
+				int code = Integer.parseInt(rest1.getString("Code"));
+				String name = rest1.getString("Name");
+				int fahrplanID = Integer
+						.parseInt(rest1.getString("FahrplanID"));
+				vehTypeGroup.add(new VehicleTypeGroup(vehTypeGroupID, code,
+						name, fahrplanID));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private void createVehType() {
+
+		DBConnection db = new DBConnection();
+		db.initDBConnection();
+		// Creating a sql query
+		try {
+			stmt = db.getConnection().createStatement();
+			ResultSet rest1 = stmt
+					.executeQuery("SELECT  DISTINCT * FROM VehicleType");
+			// All resulted datasets of the sql query will be added to the block
+			// array list
+			while (rest1.next()) {
+				int vehTypeID = Integer.parseInt(rest1
+						.getString("VehicleTypeID"));
 				int code = Integer.parseInt(rest1.getString("Code"));
 				int name = Integer.parseInt(rest1.getString("Name"));
 				int vehCost = Integer.parseInt(rest1.getString("VehCost"));
 				int kmCost = Integer.parseInt(rest1.getString("KmCost"));
 				int hourCost = Integer.parseInt(rest1.getString("HourCost"));
 				int capacity = Integer.parseInt(rest1.getString("Capacity"));
-				int fahrplanID = Integer.parseInt(rest1.getString("FahrplanID"));
-				vehType.add(new VehicleType(vehTypeID,code, name,vehCost,kmCost,hourCost,capacity, fahrplanID));
+				int fahrplanID = Integer
+						.parseInt(rest1.getString("FahrplanID"));
+				vehType.add(new VehicleType(vehTypeID, code, name, vehCost,
+						kmCost, hourCost, capacity, fahrplanID));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	private void createLine() {
-		
+
 		DBConnection db = new DBConnection();
 		db.initDBConnection();
 		// Creating a sql query
@@ -933,157 +1004,162 @@ public class DBMatching {
 				int lineID = Integer.parseInt(rest1.getString("LineID"));
 				int code = Integer.parseInt(rest1.getString("Code"));
 				String name = rest1.getString("Name");
-				int fahrplanID = Integer.parseInt(rest1.getString("FahrplanID"));
-				line.add(new Line(lineID,code, name, fahrplanID));
+				int fahrplanID = Integer
+						.parseInt(rest1.getString("FahrplanID"));
+				line.add(new Line(lineID, code, name, fahrplanID));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void createStoppoint() {
-		
+
 		DBConnection db = new DBConnection();
 		db.initDBConnection();
 		// Creating a sql query
 		try {
 			stmt = db.getConnection().createStatement();
-			ResultSet rest1 = stmt.executeQuery("SELECT  DISTINCT * FROM Stoppoint");
+			ResultSet rest1 = stmt
+					.executeQuery("SELECT  DISTINCT * FROM Stoppoint");
 			// All resulted datasets of the sql query will be added to the block
 			// array list
 			while (rest1.next()) {
-				int stoppointID = Integer.parseInt(rest1.getString("StoppointID"));
+				int stoppointID = Integer.parseInt(rest1
+						.getString("StoppointID"));
 				int code = Integer.parseInt(rest1.getString("Code"));
 				String name = rest1.getString("Name");
-				int fahrplanID = Integer.parseInt(rest1.getString("FahrplanID"));
-				stoppoint.add(new Stoppoint(stoppointID,code, name, fahrplanID));
+				int fahrplanID = Integer
+						.parseInt(rest1.getString("FahrplanID"));
+				stoppoint
+						.add(new Stoppoint(stoppointID, code, name, fahrplanID));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
-	
-	public int getFahrplanzugehoerigkeitDienstPlan(int dienstplanID){
-		int fahrplanID=0;
-		
+
+	public int getFahrplanzugehoerigkeitDienstPlan(int dienstplanID) {
+		int fahrplanID = 0;
+
 		DBConnection db = new DBConnection();
 		db.initDBConnection();
 		// Creating a sql query
 		try {
 			stmt = db.getConnection().createStatement();
-			ResultSet rest1 = stmt.executeQuery("SELECT * FROM Dienstplan WHERE ID="+dienstplanID);
-			fahrplanID=rest1.getInt("FahrplanID");
-		}catch (SQLException e) {
+			ResultSet rest1 = stmt
+					.executeQuery("SELECT * FROM Dienstplan WHERE ID="
+							+ dienstplanID);
+			fahrplanID = rest1.getInt("FahrplanID");
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return fahrplanID;
 	}
-	
 
-	public boolean databaseIsEmpty(){
-		
-		boolean isEmpty=false;
-		
+	public boolean databaseIsEmpty() {
+
+		boolean isEmpty = false;
+
 		DBConnection db = new DBConnection();
 		db.initDBConnection();
-		
-		ArrayList <Integer> id=new ArrayList<Integer>();
-		
+
+		ArrayList<Integer> id = new ArrayList<Integer>();
+
 		// Creating a sql query
 		try {
 			stmt = db.getConnection().createStatement();
 			ResultSet rest1 = stmt.executeQuery("SELECT * FROM Fahrplan;");
-			while(rest1.next()){
-				id.add(Integer.parseInt(rest1.getString("ID")));	
+			while (rest1.next()) {
+				id.add(Integer.parseInt(rest1.getString("ID")));
 			}
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(id.isEmpty()){
-			isEmpty=true;
+		if (id.isEmpty()) {
+			isEmpty = true;
 		}
 		return isEmpty;
 	}
-	
+
 	public boolean umlaufplanIsEmpty() {
-		boolean isEmpty=false;
-		
+		boolean isEmpty = false;
+
 		DBConnection db = new DBConnection();
 		db.initDBConnection();
-		
-		ArrayList <Integer> id=new ArrayList<Integer>();
-		
+
+		ArrayList<Integer> id = new ArrayList<Integer>();
+
 		// Creating a sql query
 		try {
 			stmt = db.getConnection().createStatement();
 			ResultSet rest1 = stmt.executeQuery("SELECT * FROM Umlaufplan;");
-			while(rest1.next()){
-				id.add(Integer.parseInt(rest1.getString("ID")));	
+			while (rest1.next()) {
+				id.add(Integer.parseInt(rest1.getString("ID")));
 			}
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(id.isEmpty()){
-			isEmpty=true;
+		if (id.isEmpty()) {
+			isEmpty = true;
 		}
 		return isEmpty;
 	}
-	
+
 	public boolean dienstplanIsEmpty() {
-		boolean isEmpty=false;
-		
+		boolean isEmpty = false;
+
 		DBConnection db = new DBConnection();
 		db.initDBConnection();
-		
-		ArrayList <Integer> dienstplan=new ArrayList<Integer>();
-		
+
+		ArrayList<Integer> dienstplan = new ArrayList<Integer>();
+
 		// Creating a sql query
 		try {
-			
+
 			stmt = db.getConnection().createStatement();
 			ResultSet rest1 = stmt.executeQuery("SELECT * FROM Dienstplan;");
-			while(rest1.next()){
-				dienstplan.add(Integer.parseInt(rest1.getString("ID")));	
+			while (rest1.next()) {
+				dienstplan.add(Integer.parseInt(rest1.getString("ID")));
 			}
-			
-		}catch (SQLException e) {
+
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(dienstplan.isEmpty()){
-			isEmpty=true;
+		if (dienstplan.isEmpty()) {
+			isEmpty = true;
 		}
 		return isEmpty;
 	}
-	
-	public String changeDateFormat(String date){
-		
-		String newDate="";
-		String[]dateSplit=date.split("-");
-		newDate=dateSplit[2]+"."+dateSplit[1]+"."+dateSplit[0];
-		
+
+	public String changeDateFormat(String date) {
+
+		String newDate = "";
+		String[] dateSplit = date.split("-");
+		newDate = dateSplit[2] + "." + dateSplit[1] + "." + dateSplit[0];
+
 		return newDate;
 	}
-	
+
 	// *****************************
 	// ****** Getter methods *******
 	// *****************************
 	public Umlaufplan getUmlaufplan() {
 		return umlaufplan;
 	}
+
 	public Dienstplan getDienstplan() {
 		return dienstplan;
 	}
+
 	public Fahrplan getFahrplan() {
 		return fahrplan;
 	}
-	
-	
-	
+
 }
