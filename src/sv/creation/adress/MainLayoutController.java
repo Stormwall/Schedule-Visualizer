@@ -10,6 +10,7 @@ import sv.creation.adress.database.DBMatching;
 import sv.creation.adress.model.Blockelement;
 import sv.creation.adress.model.Dienstplan;
 import sv.creation.adress.model.Dutyelement;
+import sv.creation.adress.model.Fahrplan;
 import sv.creation.adress.model.Umlaufplan;
 import sv.creation.adress.util.StringSplitter;
 import javafx.animation.FadeTransition;
@@ -189,6 +190,8 @@ public class MainLayoutController {
 	@FXML
 	private ChoiceBox<String> DPlan;
 	@FXML
+	private ChoiceBox<String> FPlan;
+	@FXML
 	private Label UPlan1;
 	@FXML
 	private Label UPlan2;
@@ -267,6 +270,7 @@ public class MainLayoutController {
 
 	private ArrayList<Umlaufplan> umlaufplanliste = new ArrayList<Umlaufplan>();
 	private ArrayList<Dienstplan> dienstplanliste = new ArrayList<Dienstplan>();
+	private ArrayList<Fahrplan> fahrplanliste = new ArrayList<Fahrplan>();
 
 	// Zuordnung der UmlaufplÃ¤ne
 
@@ -430,9 +434,6 @@ public class MainLayoutController {
 		DBConnection dbc = new DBConnection();
 		dbc.createTables();
 
-		DBMatching dbm = new DBMatching();
-		dbm.createFahrplanObject();
-
 		// Fades in Filter Panel
 		FadeTransition fa = new FadeTransition(Duration.millis(3000),
 				this.leftinnerPane);
@@ -452,6 +453,7 @@ public class MainLayoutController {
 
 		fillUmlaufplanliste();
 		fillDienstplanliste();
+		fillFahrplanliste();
 
 		// Sets the Standardelement condition of the Interface
 
@@ -4672,6 +4674,35 @@ public class MainLayoutController {
 	public void setEndzeitVar(int endzeitVar) {
 		this.endzeitVar = endzeitVar;
 	}
+	
+	// Methoden zur Befuellung der Fahrplanliste
+	
+		public void fillFahrplanliste() {
+
+			// Fahrplaene -- Choicebox wird gefaellt
+
+			DBMatching dbm = new DBMatching();
+
+			this.fahrplanliste.clear();
+
+			if (dbm.databaseIsEmpty() || dbm.dienstplanIsEmpty()) {
+
+			} else {
+
+				this.fahrplanliste.clear();
+				this.fahrplanliste = dbm.createFahrplanObject();
+				for (int i = 0; i < this.fahrplanliste.size(); i++) {
+					this.fahrplanliste.get(i).setBezeichnung(" Fahrplan " + (i + 1));
+				}
+				
+				this.FPlan.setItems(FXCollections
+						.observableArrayList(fahrplanliste.get(0).getBezeichnung()));
+				for (int i = 1; i < fahrplanliste.size(); i++) {
+					this.FPlan.getItems().add(fahrplanliste.get(i).getBezeichnung());
+				}
+
+			}
+		}
 
 	// Methoden zur BefÃ¼llung der Dienstplanliste
 

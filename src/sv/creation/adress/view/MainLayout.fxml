@@ -581,7 +581,7 @@
                                             </VBox>
                                             <HBox id="HBox" alignment="CENTER" prefHeight="24.0" prefWidth="147.0" spacing="5.0" AnchorPane.bottomAnchor="73.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="4.0">
                                               <children>
-                                                <ChoiceBox id="UPlan" prefWidth="100.0" styleClass="flowPane, dark-blue-Choicebox">
+                                                <ChoiceBox id="UPlan" fx:id="FPlan" prefWidth="100.0" styleClass="flowPane, dark-blue-Choicebox">
                                                   <items>
                                                     <FXCollections fx:factory="observableArrayList">
                                                       <String fx:value="Item 1" />

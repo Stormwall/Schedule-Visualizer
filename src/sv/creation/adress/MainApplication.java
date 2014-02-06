@@ -134,7 +134,7 @@ public class MainApplication extends Application {
 			dialogStage.setTitle("Datenbank");
 			dialogStage.getIcons().add(
 					new Image("file:resources/images/IconFinal.png"));
-			dialogStage.setResizable(false);
+//			dialogStage.setResizable(false);
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.initOwner(primaryStage);
 			Scene scene = new Scene(page);

@@ -12,7 +12,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class DatenbankLayoutController {
@@ -60,6 +59,7 @@ public class DatenbankLayoutController {
 
 	private ArrayList<Umlaufplan> umlaufplanliste = new ArrayList<Umlaufplan>();
 	private ArrayList<Dienstplan> dienstplanliste = new ArrayList<Dienstplan>();
+	private ArrayList<Fahrplan> fahrplanliste = new ArrayList<Fahrplan>();
 
 	private Stage dialogStage;
 	private MainApplication mainApp;
@@ -80,8 +80,11 @@ public class DatenbankLayoutController {
 		this.fahrtable
 				.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
+		// Belegung der Übersicht mit den Daten 
+		
 		refreshUmlaufplan();
 		refreshDienstplan();
+		refreshFahrplan();
 
 	}
 
@@ -144,6 +147,58 @@ public class DatenbankLayoutController {
 		this.diensttable.setItems(data);
 
 	}
+	
+	public void refreshFahrplan() {
+
+		fillFahrplanliste();
+
+		// Belegung der Tabelle mit Daten
+
+		this.fBezeichnung
+				.setCellValueFactory(new PropertyValueFactory<Fahrplan, String>(
+						"bezeichnung"));
+		this.fID.setCellValueFactory(new PropertyValueFactory<Fahrplan, Integer>(
+				"id"));
+		this.fUploadDate
+				.setCellValueFactory(new PropertyValueFactory<Fahrplan, String>(
+						"date"));
+
+		// Hereinladen der Daten
+
+		ObservableList<Fahrplan> data = FXCollections.observableArrayList();
+
+		for (int i = 0; i < this.fahrplanliste.size(); i++) {
+			data.add(this.fahrplanliste.get(i));
+		}
+
+		this.fahrtable.setItems(data);
+
+	}
+	
+	// Methoden zur Befuellung der Fahrplanliste
+	
+	public void fillFahrplanliste() {
+
+		// Fahrplaene -- Choicebox wird gefaellt
+
+		DBMatching dbm = new DBMatching();
+
+		this.fahrplanliste.clear();
+
+		if (dbm.databaseIsEmpty() || dbm.dienstplanIsEmpty()) {
+
+		} else {
+
+			this.fahrplanliste.clear();
+			this.fahrplanliste = dbm.createFahrplanObject();
+			for (int i = 0; i < this.fahrplanliste.size(); i++) {
+				this.fahrplanliste.get(i).setBezeichnung(" Fahrplan " + (i + 1));
+			}
+
+		}
+	}
+	
+	// Methoden zur Befuellung der Dienstplanliste
 
 	public void fillDienstplanliste() {
 
@@ -202,7 +257,7 @@ public class DatenbankLayoutController {
 	 */
 	public void handleImport() {
 
-		FileChooser fileChooser = new FileChooser();
+//		FileChooser fileChooser = new FileChooser();
 
 		// // Set extension filter
 		// FileChooser.ExtensionFilter extFilter = new
