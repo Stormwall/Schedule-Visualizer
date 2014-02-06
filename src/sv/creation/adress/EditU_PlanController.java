@@ -224,6 +224,43 @@ public class EditU_PlanController {
 	public void drawCanvas(int auswahl) {
 
 		this.canvas.getChildren().clear();
+		
+		// Start und Endzeit
+		
+		int startzeitVar = 0;
+		int endzeitVar = 20;
+		boolean start = true;
+		
+		// Auslesen Blockelementanzahl
+		for (int i = 0; i < umlaufplan.getFahrtZuUmlauf().size(); i++) {
+
+			// Abgleich mit den Werten
+			if (umlaufplan.getFahrtZuUmlauf().get(i).getBlockID() == auswahl) {
+			
+				// Auslesen der Zeit als Integer
+				StringSplitter ss = new StringSplitter();
+				int[] zeit = new int[2];
+				zeit = ss.intParse(umlaufplan.getFahrtZuUmlauf().get(i)
+						.getDepTime());
+				int startHour = zeit[0];
+				zeit = ss.intParse(umlaufplan.getFahrtZuUmlauf().get(i)
+						.getArrTime());
+				int endHour = zeit[0];
+				
+				if (start == true) {
+					startzeitVar = startHour;
+					start = false;
+				}
+				if (umlaufplan.getFahrtZuUmlauf().get(i+1).getBlockID() != auswahl) {
+					endzeitVar = endHour+1;
+					if (endzeitVar<startzeitVar) {
+						endzeitVar = endzeitVar +24;
+					}
+				}
+			}
+		}
+		
+		
 
 		// Initialize the Chart
 		Canvas Chart = new Canvas(this.canvas.getWidth() - 4,
@@ -238,15 +275,17 @@ public class EditU_PlanController {
 
 		// Erstellen des Hintergrundes
 
-		double abstandNetz = (Chart.getWidth() - 30) / (24 - 0);
+		double abstandNetz = (Chart.getWidth() - 30)
+				/ (endzeitVar - startzeitVar);
 		gc.setLineWidth(1);
 		gc.setFont(Font.getDefault());
 		gc.setFill(Color.BLACK);
 		gc.setStroke(Color.BLACK);
+		
 		// Variable zum Darstellen verschiedener Zeitpunkte
-		for (int i = 0; i <= (24 - 0); i++) {
+		for (int i = 0; i <= (endzeitVar - startzeitVar); i++) {
 
-			double pixel = ((i) * abstandNetz) + 17;
+			double pixel = ((i) * abstandNetz)+17;
 			gc.strokeLine(pixel, 0, pixel, Chart.getHeight());
 		}
 
@@ -271,8 +310,8 @@ public class EditU_PlanController {
 
 				// Belegung der Pixelwerte
 				if (0 <= startHour && 24 > endHour) {
-					int stundenDifferenz = startHour - 0;
-					int startPixelX = (int) ((stundenDifferenz * abstandNetz) + ((abstandNetz / 60) * startMin)) + 17;
+					int stundenDifferenz = startHour - startzeitVar;
+					int startPixelX = (int) ((stundenDifferenz * abstandNetz) + ((abstandNetz / 60) * startMin))+17;
 					int startPixelY = 10;
 					int fahrtDauer = 0;
 					// Berrechnen der Dauer zwischen der Abfahrt und der
@@ -356,6 +395,19 @@ public class EditU_PlanController {
 							20, 10);
 					gc.strokeRoundRect(startPixelX, startPixelY, fahrtDauer,
 							20, 20, 10);
+					
+					// Beschriftet die Elemente
+						if (fahrtDauer > 30) {
+							gc.setFill(Color.BLACK);
+							gc.setFont(new Font("Arial", 12));
+							gc.fillText(
+									String.valueOf(umlaufplan
+											.getFahrtZuUmlauf().get(i)
+											.getId()), startPixelX - 3
+											+ (fahrtDauer / 5), startPixelY
+											+ 14);
+						
+					}
 				}
 
 			}
