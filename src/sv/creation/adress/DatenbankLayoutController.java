@@ -1,14 +1,11 @@
 package sv.creation.adress;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import sv.creation.adress.database.DBMatching;
-import sv.creation.adress.model.Blockelement;
 import sv.creation.adress.model.Dienstplan;
 import sv.creation.adress.model.Fahrplan;
 import sv.creation.adress.model.Umlaufplan;
-import sv.creation.adress.util.Import;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -82,13 +79,14 @@ public class DatenbankLayoutController {
 				.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		this.fahrtable
 				.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-		
+
 		refreshUmlaufplan();
+		refreshDienstplan();
 
 	}
 
 	public void refreshUmlaufplan() {
-		
+
 		fillUmlaufplanliste();
 
 		// Belegung der Tabelle mit Daten
@@ -117,6 +115,36 @@ public class DatenbankLayoutController {
 
 	}
 
+	public void refreshDienstplan() {
+
+		fillDienstplanliste();
+
+		// Belegung der Tabelle mit Daten
+
+		this.dBezeichnung
+				.setCellValueFactory(new PropertyValueFactory<Dienstplan, String>(
+						"name"));
+		this.dID.setCellValueFactory(new PropertyValueFactory<Dienstplan, Integer>(
+				"id"));
+		this.dfahrplanID
+				.setCellValueFactory(new PropertyValueFactory<Dienstplan, Integer>(
+						"fahrplanID"));
+		this.dUploadDate
+				.setCellValueFactory(new PropertyValueFactory<Dienstplan, String>(
+						"date"));
+
+		// Hereinladen der Daten
+
+		ObservableList<Dienstplan> data = FXCollections.observableArrayList();
+
+		for (int i = 0; i < this.dienstplanliste.size(); i++) {
+			data.add(this.dienstplanliste.get(i));
+		}
+
+		this.diensttable.setItems(data);
+
+	}
+
 	public void fillDienstplanliste() {
 
 		// Dienstpläne -- Choicebox wird gefüllt
@@ -131,6 +159,9 @@ public class DatenbankLayoutController {
 
 			this.dienstplanliste.clear();
 			this.dienstplanliste = dbm.createDienstplanObject();
+			for (int i = 0; i < this.umlaufplanliste.size(); i++) {
+				this.dienstplanliste.get(i).setName(" Dienstplan " + (i + 1));
+			}
 
 		}
 	}
