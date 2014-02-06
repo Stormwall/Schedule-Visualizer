@@ -226,6 +226,40 @@ public class EditD_PlanController {
 
 		this.canvas.getChildren().clear();
 
+		// Start und Endzeit
+
+		int startzeitVar = 0;
+		int endzeitVar = 24;
+		boolean start = true;
+
+		// Auslesen Blockelementanzahl
+		for (int i = 0; i < dienstplan.getDutyelement().size(); i++) {
+
+			// Abgleich mit den Werten
+			if (dienstplan.getDutyelement().get(i).getDutyID().equals(auswahl)) {
+
+				// Auslesen der Zeit als Integer
+				StringSplitter ss = new StringSplitter();
+				int[] zeit = new int[2];
+				zeit = ss.intParse(dienstplan.getDutyelement().get(i)
+						.getDepTime());
+				int startHour = zeit[0];
+				zeit = ss.intParse(dienstplan.getDutyelement().get(i)
+						.getArrTime());
+				int endHour = zeit[0];
+
+				if (start == true) {
+					startzeitVar = startHour;
+					start = false;
+				}
+				if (!dienstplan.getDutyelement().get(i + 1).getDutyID().equals(auswahl)) {
+					endzeitVar = endHour + 1;
+					if (endzeitVar < startzeitVar) {
+						endzeitVar = endzeitVar + 24;
+					}
+				}
+			}
+		}
 		// Initialize the Chart
 		Canvas Chart = new Canvas(this.canvas.getWidth() - 4,
 				this.canvas.getHeight());
@@ -239,11 +273,13 @@ public class EditD_PlanController {
 
 		// Erstellen des Hintergrundes
 
-		double abstandNetz = (Chart.getWidth() - 30) / (24 - 0);
+		double abstandNetz = (Chart.getWidth() - 30)
+				/ (endzeitVar - startzeitVar);
 		gc.setLineWidth(1);
 		gc.setFont(Font.getDefault());
 		gc.setFill(Color.BLACK);
 		gc.setStroke(Color.BLACK);
+		
 		// Variable zum Darstellen verschiedener Zeitpunkte
 		for (int i = 0; i <= (24 - 0); i++) {
 
@@ -271,8 +307,8 @@ public class EditD_PlanController {
 
 				// Belegung der Pixelwerte
 				if (0 <= startHour && 24 > endHour) {
-					int stundenDifferenz = startHour - 0;
-					int startPixelX = (int) ((stundenDifferenz * abstandNetz) + ((abstandNetz / 60) * startMin)) + 17;
+					int stundenDifferenz = startHour - startzeitVar;
+					int startPixelX = (int) ((stundenDifferenz * abstandNetz) + ((abstandNetz / 60) * startMin))+17;
 					int startPixelY = 10;
 					int fahrtDauer = 0;
 					// Berrechnen der Dauer zwischen der Abfahrt und der
@@ -355,6 +391,16 @@ public class EditD_PlanController {
 							20, 10);
 					gc.strokeRoundRect(startPixelX, startPixelY, fahrtDauer,
 							20, 20, 10);
+					// Beschriftet die Elemente
+					if (fahrtDauer > 30) {
+						gc.setFill(Color.BLACK);
+						gc.setFont(new Font("Arial", 12));
+						gc.fillText(
+								String.valueOf(dienstplan.getDutyelement()
+										.get(i).getId()), startPixelX - 3
+										+ (fahrtDauer / 5), startPixelY + 14);
+
+					}
 				}
 
 			}

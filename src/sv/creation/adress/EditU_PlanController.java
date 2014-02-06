@@ -226,9 +226,9 @@ public class EditU_PlanController {
 		this.canvas.getChildren().clear();
 		
 		// Start und Endzeit
-		
+
 		int startzeitVar = 0;
-		int endzeitVar = 20;
+		int endzeitVar = 24;
 		boolean start = true;
 		
 		// Auslesen Blockelementanzahl
