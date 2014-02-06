@@ -34,6 +34,7 @@ public class DBConnection {
 	public static final String DB_PATH = System.getProperty("user.home") + "/"
 			+ "PlanB_DB.db";
 	File file=new File(DB_PATH);
+	private boolean fahrplanVorhanden=false;
 	//loading database drivers
 	static {
 		try {
@@ -719,8 +720,6 @@ public class DBConnection {
 		//invoke stringsplitter method for reading the data in  txt-files
 		//get naming of tour plan
 		String fileNameVergleich=filename;
-		
-//		checkFahrplan(fileNameVergleich);
 		String finalString= getVehicleScheduleName(fileNameVergleich);
 		
 		int pos=0;
@@ -1049,8 +1048,6 @@ public class DBConnection {
 	
 	public boolean checkFahrplan(String filename){
 		
-		
-		boolean fahrplanVorhanden=false;
 		ArrayList <String> fahrplaene=new ArrayList<String>();
 		try{
 			Statement stmnt=getConnection().createStatement();
@@ -1140,6 +1137,12 @@ public class DBConnection {
 	public Connection getConnection() {
 		return connection;
 	}
+
+	public boolean isFahrplanVorhanden() {
+		return fahrplanVorhanden;
+	}
+	
+	
 	
 	
 }

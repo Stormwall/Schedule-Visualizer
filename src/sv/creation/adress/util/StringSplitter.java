@@ -731,13 +731,24 @@ public class StringSplitter {
 
 		public void readTxtUmlaufplan(String path) {
 
+			DBConnection dbc=new DBConnection();
+			// testumlauf.txt Data has to be in the project file in your
+			// workspace
+			File file = new File(path);
+		
+			
 			try {
-
-				// testumlauf.txt Data has to be in the project file in your
-				// workspace
-				File file = new File(path);
+		
 				BufferedReader umlaufplan = new BufferedReader(new FileReader(file));
 				filename = file.getName();
+				
+				
+				String test=dbc.getVehicleScheduleName(getFilename());
+				dbc.checkFahrplan(test);
+				if(dbc.isFahrplanVorhanden()){
+				
+
+			
 				String zeile = null;
 				ArrayList<String> zeilenelemente = new ArrayList<String>();
 				boolean block = false;
@@ -834,13 +845,16 @@ public class StringSplitter {
 					}
 				}
 				umlaufplan.close();
-
+				dbc.fillUmlaufplanIntoTables(getFilename());}
+				
+				else {
+					System.out.println("Es ist kein passender Fahrplan vorhanden!");
+				}
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			
-			DBConnection dbc=new DBConnection();
-			dbc.fillUmlaufplanIntoTables(getFilename());
 		}
 
 		// ****************************************************************************************************************************
@@ -994,8 +1008,8 @@ public class StringSplitter {
 				e.printStackTrace();
 			}
 
-			DBConnection dbc = new DBConnection();
-			dbc.fillDiensttypenIntoTables(getFilename());
+			DBConnection dbcc = new DBConnection();
+			dbcc.fillDiensttypenIntoTables(getFilename());
 		}
 
 	// **************************************************************************************************************************
@@ -1004,28 +1018,30 @@ public class StringSplitter {
 
 	public void readTxtDienstplan(String path) {
 
+		DBConnection dbc=new DBConnection();
+		// testumlauf.txt Data has to be in the project file in your
+		// workspace
+		File file = new File(path);
+	
+		
 		try {
-
-			// *************************************************************
-			// test.txt Data has to be in the project file in your workspace
-			// path and filename will have to be changed dynamically
-			// All lines with relevant data will be read
-			// The data will be split in seperated array lists
-
-			File file = new File(path);
+	
 			BufferedReader dienstplan = new BufferedReader(new FileReader(file));
 			filename = file.getName();
+			
+			
+			String test=dbc.getVehicleScheduleName(getFilename());
+			dbc.checkFahrplan(test);
+			if(dbc.isFahrplanVorhanden()){
 
-			DBConnection db = new DBConnection();
-			db.initDBConnection();
 			Statement stmnt;
 			int anzahl = 0;
 			try {
-				stmnt = db.getConnection().createStatement();
+				stmnt = dbc.getConnection().createStatement();
 				ResultSet rest1 = stmnt
 						.executeQuery("SELECT COUNT(*) AS anzahl FROM Dutyelement;");
 				anzahl = rest1.getInt("anzahl");
-				db.closeConnection();
+				dbc.closeConnection();
 
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
@@ -1150,12 +1166,13 @@ public class StringSplitter {
 
 			}
 			dienstplan.close();
+			dbc.fillDienstplanIntoTable(getFilename());}
+			else {
+				System.out.println("Es ist kein passender Fahrplan vorhanden!");
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		DBConnection dbc = new DBConnection();
-		dbc.fillDienstplanIntoTable(getFilename());
 
 	}
 

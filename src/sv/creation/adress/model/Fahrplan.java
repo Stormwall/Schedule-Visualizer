@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Fahrplan {
 	
+	private int id;
 	private ArrayList <Stoppoint> haltestellen = new ArrayList<Stoppoint>();
 	private ArrayList<Line> line = new ArrayList<Line>();
 	private ArrayList <VehicleType> fahrzeugtypen = new ArrayList<VehicleType>();
@@ -14,6 +15,7 @@ public class Fahrplan {
 	private ArrayList <Deadruntime> verbindungen = new ArrayList<Deadruntime>();
 	private ArrayList <Reliefpoint> reliefpoint = new ArrayList<Reliefpoint>();
 	private ArrayList <Transfertime> transfertime = new ArrayList<Transfertime>();
+	private String bezeichnung;
 	
 	
 	/**
@@ -25,7 +27,7 @@ public class Fahrplan {
 	 * @param verbindungen
 	 */ 
 
-	public Fahrplan(
+	public Fahrplan(int id,
 			ArrayList<Stoppoint> haltestellen,
 			ArrayList<Line> line,
 			ArrayList<VehicleType> fahrzeugtypen,
@@ -35,8 +37,10 @@ public class Fahrplan {
 			ArrayList<ServiceJourney> servicejourney,
 			ArrayList<Deadruntime> verbindungen,
 			ArrayList<Reliefpoint> reliefpoint,
-			ArrayList<Transfertime> transfertime) {
+			ArrayList<Transfertime> transfertime,
+			String bezeichnung) {
 		super();
+		this.id = id;
 		this.haltestellen = haltestellen;
 		this.line = line;
 		this.fahrzeugtypen = fahrzeugtypen;
@@ -47,6 +51,8 @@ public class Fahrplan {
 		this.verbindungen = verbindungen;
 		this.reliefpoint = reliefpoint;
 		this.transfertime = transfertime;
+		this.bezeichnung = bezeichnung;
+		
 	}
 
 

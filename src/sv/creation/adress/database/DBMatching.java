@@ -48,6 +48,8 @@ public class DBMatching {
 	ArrayList<Reliefpoint> reliefpoint = new ArrayList<Reliefpoint>();
 	ArrayList<Days> days = new ArrayList<Days>();
 	ArrayList<Transfertime> transfertime = new ArrayList<Transfertime>();
+	ArrayList<Integer> fahrplanIDList  =new ArrayList<Integer>();
+	ArrayList<String> fahrplanBezeichnungList = new ArrayList<String>();
 	// ********************************
 	// ****** Plan objects *******
 	// ********************************
@@ -465,6 +467,7 @@ public class DBMatching {
 	// can be modified. ******* *******
 	// ***********************************************************************************************
 	public ArrayList<Fahrplan> createFahrplanObject() {
+		createFahrplanID();
 		createStoppoint();
 		createLine();
 		createVehType();
@@ -476,6 +479,7 @@ public class DBMatching {
 		createReliefpoint();
 		createDays();
 		createTransfertime();
+		createFahrplanBezeichnugn();
 		// Anzahl der Fahrplaene wird ausgelesen
 		// Strukturvariablen
 		int anzahlPlan = 1;
@@ -550,7 +554,8 @@ public class DBMatching {
 					transfertimeList.add(transfertime.get(j));
 				}
 			}
-			Fahrplan fahrplanAdd = new Fahrplan(stoppointList ,lineList,vehTypeList,vehTypeGroupList,vehTypeToVehTypeGroupList,vehCapToStoppointList,serviceJourneyList,deadruntimeList,reliefpointList,transfertimeList);
+			
+			Fahrplan fahrplanAdd = new Fahrplan(fahrplanIDList.get(i-1),stoppointList ,lineList,vehTypeList,vehTypeGroupList,vehTypeToVehTypeGroupList,vehCapToStoppointList,serviceJourneyList,deadruntimeList,reliefpointList,transfertimeList,fahrplanBezeichnungList.get(i-1));
 			fahrplanliste.add(fahrplanAdd);
 		}
 		
@@ -561,6 +566,46 @@ public class DBMatching {
 		return fahrplanliste;
 	}
 	 
+	private void createFahrplanBezeichnugn() {
+		
+		DBConnection db = new DBConnection();
+		db.initDBConnection();
+		// Creating a sql query
+		try {
+			stmt = db.getConnection().createStatement();
+			ResultSet rest1 = stmt.executeQuery("SELECT Bezeichnung FROM Fahrplan");
+			// All resulted datasets of the sql query will be added to the block
+			// array list
+			while (rest1.next()) {
+				String bezeichnung = rest1.getString("Bezeichnung");
+				fahrplanBezeichnungList.add(bezeichnung);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	private void createFahrplanID() {
+		
+		DBConnection db = new DBConnection();
+		db.initDBConnection();
+		// Creating a sql query
+		try {
+			stmt = db.getConnection().createStatement();
+			ResultSet rest1 = stmt.executeQuery("SELECT ID FROM Fahrplan");
+			// All resulted datasets of the sql query will be added to the block
+			// array list
+			while (rest1.next()) {
+				int id = Integer.parseInt(rest1.getString("ID"));
+				fahrplanIDList.add(id);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	private void createTransfertime() {
 		
 		DBConnection db = new DBConnection();
