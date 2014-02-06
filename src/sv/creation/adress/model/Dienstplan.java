@@ -9,17 +9,19 @@ public class Dienstplan {
 	private ArrayList<Duty> duty = new ArrayList<Duty>();
 	private ArrayList<Dutyelement> dutyelement = new ArrayList<Dutyelement>();
 	private int fahrplanID;
+	private String date;
 
 	/**
 	 * @param dienstplan
 	 */
 	public Dienstplan(int id, ArrayList<Duty> duty,
-			ArrayList<Dutyelement> dutyelement, int fahrplanID) {
+			ArrayList<Dutyelement> dutyelement, int fahrplanID, String date) {
 		// super();
 		this.id = id;
 		this.duty = duty;
 		this.dutyelement = dutyelement;
 		this.fahrplanID = fahrplanID;
+		this.date = date;
 	}
 
 	public int getId() {
@@ -49,5 +51,15 @@ public class Dienstplan {
 	public void setFahrplanID(int fahrplanID) {
 		this.fahrplanID = fahrplanID;
 	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+	
+	
 
 }

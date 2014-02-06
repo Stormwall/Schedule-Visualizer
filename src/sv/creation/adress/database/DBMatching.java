@@ -50,6 +50,9 @@ public class DBMatching {
 	ArrayList<Transfertime> transfertime = new ArrayList<Transfertime>();
 	ArrayList<Integer> fahrplanIDList  =new ArrayList<Integer>();
 	ArrayList<String> fahrplanBezeichnungList = new ArrayList<String>();
+	ArrayList<String> fahrplanDateList = new ArrayList<String>();
+	ArrayList<String> umlaufplanDateList = new ArrayList<String>();
+	ArrayList<String> dienstplanDateList = new ArrayList<String>();
 	// ********************************
 	// ****** Plan objects *******
 	// ********************************
@@ -199,6 +202,7 @@ public class DBMatching {
 	public ArrayList<Umlaufplan> createUmlaufplanObject() {
 		createBlock();
 		createBlockelement();
+		createUmlaufplanDate();
 		// Anzahl der UmlaufplÃƒÂ¤ne wird ausgelesen
 		// Strukturvariablen
 		int anzahlPlan = 1;
@@ -236,10 +240,30 @@ public class DBMatching {
 			}
 			zaehlerUmlauf = zaehlerUmlauf + 1;
 			Umlaufplan umlaufplanAdd = new Umlaufplan(i, blockList,
-					blockelementList,getFahrplanzugehoerigkeitUmlaufplan(i));
+					blockelementList,getFahrplanzugehoerigkeitUmlaufplan(i),changeDateFormat(umlaufplanDateList.get(i-1)));
 			umlaufplanliste.add(umlaufplanAdd);
 		}
 		return umlaufplanliste;
+	}
+	private void createUmlaufplanDate() {
+		
+		DBConnection db = new DBConnection();
+		db.initDBConnection();
+		// Creating a sql query
+		try {
+			stmt = db.getConnection().createStatement();
+			ResultSet rest1 = stmt.executeQuery("SELECT Datum FROM Umlaufplan");
+			// All resulted datasets of the sql query will be added to the block
+			// array list
+			while (rest1.next()) {
+				String datum = rest1.getString("Datum").toString();
+				umlaufplanDateList.add(datum);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	// **********************************************************************
 	// ****** In this method an duty object will be created *******
@@ -348,6 +372,7 @@ public class DBMatching {
 	public ArrayList<Dienstplan> createDienstplanObject() {
 		createDuty();
 		createDutyelement();
+		createDienstplanDate();
 		// Anzahl der DienstplÃƒÂ¤ne wird ausgelesen
 		// Strukturvariablen
 		int anzahlPlan = 1;
@@ -432,7 +457,7 @@ public class DBMatching {
 			} 
 			zaehlerDienst = zaehlerDienst + 1;
 			Dienstplan dienstplanAdd = new Dienstplan(1, dutyList,
-					dutyelementList, getFahrplanzugehoerigkeitDienstPlan(i));
+					dutyelementList, getFahrplanzugehoerigkeitDienstPlan(i),changeDateFormat(dienstplanDateList.get(i-1)));
 			dienstplanliste.add(dienstplanAdd);
 		}
 		/**
@@ -442,6 +467,26 @@ public class DBMatching {
 		return dienstplanliste;
 	}
 	
+	private void createDienstplanDate() {
+		
+		DBConnection db = new DBConnection();
+		db.initDBConnection();
+		// Creating a sql query
+		try {
+			stmt = db.getConnection().createStatement();
+			ResultSet rest1 = stmt.executeQuery("SELECT Datum FROM Dienstplan");
+			// All resulted datasets of the sql query will be added to the block
+			// array list
+			while (rest1.next()) {
+				String datum = rest1.getString("Datum").toString();
+				dienstplanDateList.add(datum);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	public int getFahrplanzugehoerigkeitUmlaufplan(int umlaufplanID){
 		int fahrplanID=0;
 		
@@ -480,6 +525,7 @@ public class DBMatching {
 		createDays();
 		createTransfertime();
 		createFahrplanBezeichnugn();
+		createFahrplanDate();
 		// Anzahl der Fahrplaene wird ausgelesen
 		// Strukturvariablen
 		int anzahlPlan = 1;
@@ -555,7 +601,7 @@ public class DBMatching {
 				}
 			}
 			
-			Fahrplan fahrplanAdd = new Fahrplan(fahrplanIDList.get(i-1),stoppointList ,lineList,vehTypeList,vehTypeGroupList,vehTypeToVehTypeGroupList,vehCapToStoppointList,serviceJourneyList,deadruntimeList,reliefpointList,transfertimeList,fahrplanBezeichnungList.get(i-1));
+			Fahrplan fahrplanAdd = new Fahrplan(fahrplanIDList.get(i-1),stoppointList ,lineList,vehTypeList,vehTypeGroupList,vehTypeToVehTypeGroupList,vehCapToStoppointList,serviceJourneyList,deadruntimeList,reliefpointList,transfertimeList,fahrplanBezeichnungList.get(i-1),changeDateFormat(fahrplanDateList.get(i-1)));
 			fahrplanliste.add(fahrplanAdd);
 		}
 		
@@ -566,6 +612,26 @@ public class DBMatching {
 		return fahrplanliste;
 	}
 	 
+	private void createFahrplanDate() {
+		
+		DBConnection db = new DBConnection();
+		db.initDBConnection();
+		// Creating a sql query
+		try {
+			stmt = db.getConnection().createStatement();
+			ResultSet rest1 = stmt.executeQuery("SELECT Datum FROM Fahrplan");
+			// All resulted datasets of the sql query will be added to the block
+			// array list
+			while (rest1.next()) {
+				String datum = rest1.getString("Datum").toString();
+				fahrplanDateList.add(datum);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	private void createFahrplanBezeichnugn() {
 		
 		DBConnection db = new DBConnection();
@@ -673,7 +739,7 @@ public class DBMatching {
 		// Creating a sql query
 		try {
 			stmt = db.getConnection().createStatement();
-			ResultSet rest1 = stmt.executeQuery("SELECT  DISTINCT * FROM Reliefpoint");
+			ResultSet rest1 = stmt.executeQuery("SELECT  rp.ReliefpointID, sj.ServiceJourneyID, st.StoppointID, rp.StopTime, rp.FahrplanID FROM Reliefpoint AS rp, ServiceJourney AS sj, Stoppoint AS st WHERE rp.ServiceJourneyID=sj.ID AND rp.StoppointID=st.ID");
 			// All resulted datasets of the sql query will be added to the block
 			// array list
 			while (rest1.next()) {
@@ -996,6 +1062,15 @@ public class DBMatching {
 		return isEmpty;
 	}
 	
+	public String changeDateFormat(String date){
+		
+		String newDate="";
+		String[]dateSplit=date.split("-");
+		newDate=dateSplit[2]+"."+dateSplit[1]+"."+dateSplit[0];
+		
+		return newDate;
+	}
+	
 	// *****************************
 	// ****** Getter methods *******
 	// *****************************
@@ -1008,6 +1083,7 @@ public class DBMatching {
 	public Fahrplan getFahrplan() {
 		return fahrplan;
 	}
+	
 	
 	
 }
