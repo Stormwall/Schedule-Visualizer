@@ -21,20 +21,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Orientation;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Slider;
-import javafx.scene.control.SplitPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
@@ -153,6 +150,8 @@ public class MainLayoutController {
 	private Button refreshGraphic;
 	@FXML
 	private Button showFullscreen;
+	@FXML
+	private Button addFahrplanVonPlan;
 	@FXML
 	private Button applyFilter;
 	@FXML
@@ -427,11 +426,11 @@ public class MainLayoutController {
 
 	@FXML
 	private void initialize() {
-		
-		DBConnection dbc=new DBConnection();
+
+		DBConnection dbc = new DBConnection();
 		dbc.createTables();
-		
-		DBMatching dbm=new DBMatching();
+
+		DBMatching dbm = new DBMatching();
 		dbm.createFahrplanObject();
 
 		// Fades in Filter Panel
@@ -4435,7 +4434,7 @@ public class MainLayoutController {
 			}
 		}
 
-		// Hier werden die Schritte fÃ¼r den LÃ¶schvorgang bestimmt
+		// Hier werden die Schritte für den Loeschvorgang bestimmt
 
 		switch (pruefcounter) {
 		case 0:
@@ -4540,18 +4539,73 @@ public class MainLayoutController {
 	@FXML
 	public void deleteLastDPlan() {
 
+		int pruefcounter = 0;
+
+		// An dieser Stelle wird das richtige Objekt herausgefunden
+
+		if (this.DPlan1.isVisible() == true) {
+			if (this.DPlan2.isVisible() == true) {
+				pruefcounter = 1;
+				if (this.DPlan3.isVisible() == true) {
+					pruefcounter = 2;
+					if (this.DPlan4.isVisible() == true) {
+						pruefcounter = 3;
+						if (this.DPlan5.isVisible() == true) {
+							pruefcounter = 4;
+							if (this.DPlan6.isVisible() == true) {
+								pruefcounter = 5;
+								if (this.DPlan7.isVisible() == true) {
+									pruefcounter = 6;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		// Hier werden die Schritte für den Loeschvorgang bestimmt
+
+		switch (pruefcounter) {
+		case 1:
+
+			break;
+		case 2:
+
+			break;
+		case 3:
+
+			break;
+		case 4:
+
+			break;
+		case 5:
+
+			break;
+		case 6:
+
+			break;
+		case 0:
+
+			break;
+
+		default:
+			break;
+		}
+
 	}
-	
+
 	/**
 	 * Shows all Fahrplaene
 	 */
 	@FXML
 	public void showFahrplan() {
-		
+
 		ListView<String> fahrplanlist = new ListView<String>();
-		ObservableList<String> items =FXCollections.observableArrayList (
-		    "Single", "Double", "Suite", "Family App", "Family App", "Family App");
-		fahrplanlist.setItems(items);	
+		ObservableList<String> items = FXCollections.observableArrayList(
+				"Single", "Double", "Suite", "Family App", "Family App",
+				"Family App");
+		fahrplanlist.setItems(items);
 
 		this.tablePane.setContent(fahrplanlist);
 	}
@@ -4576,13 +4630,20 @@ public class MainLayoutController {
 		faa.setToValue(1.0);
 		faa.setAutoReverse(true);
 		faa.play();
-		
+
 		FadeTransition faaa = new FadeTransition(Duration.millis(500),
 				this.hilfslinien);
 		faaa.setFromValue(0.0);
 		faaa.setToValue(1.0);
 		faaa.setAutoReverse(true);
 		faaa.play();
+
+		FadeTransition faaaa = new FadeTransition(Duration.millis(500),
+				this.addFahrplanVonPlan);
+		faaaa.setFromValue(0.0);
+		faaaa.setToValue(1.0);
+		faaaa.setAutoReverse(true);
+		faaaa.play();
 
 	}
 
@@ -4621,25 +4682,25 @@ public class MainLayoutController {
 		DBMatching dbm = new DBMatching();
 
 		this.dienstplanliste.clear();
-		
-		if(dbm.databaseIsEmpty()||dbm.dienstplanIsEmpty()){
-			
-		}else{
 
-		this.dienstplanliste.clear();
+		if (dbm.databaseIsEmpty() || dbm.dienstplanIsEmpty()) {
 
-		this.dienstplanliste = dbm.createDienstplanObject();
-		for (int i = 0; i < this.dienstplanliste.size(); i++) {
-			this.dienstplanliste.get(i).setName(" Dienstplan " + (i + 1));
-		}
+		} else {
 
-		if (this.firstLowergrafikErstellt == false) {
-			this.DPlan.setItems(FXCollections
-					.observableArrayList(dienstplanliste.get(0).getName()));
-			for (int i = 1; i < dienstplanliste.size(); i++) {
-				this.DPlan.getItems().add(dienstplanliste.get(i).getName());
+			this.dienstplanliste.clear();
+
+			this.dienstplanliste = dbm.createDienstplanObject();
+			for (int i = 0; i < this.dienstplanliste.size(); i++) {
+				this.dienstplanliste.get(i).setName(" Dienstplan " + (i + 1));
 			}
-		}
+
+			if (this.firstLowergrafikErstellt == false) {
+				this.DPlan.setItems(FXCollections
+						.observableArrayList(dienstplanliste.get(0).getName()));
+				for (int i = 1; i < dienstplanliste.size(); i++) {
+					this.DPlan.getItems().add(dienstplanliste.get(i).getName());
+				}
+			}
 		}
 
 	}
@@ -4649,29 +4710,27 @@ public class MainLayoutController {
 	public void fillUmlaufplanliste() {
 
 		// UmlaufplÃ¤ne -- Choicebox wird gefÃ¼llt
-		
 
 		DBMatching dbm = new DBMatching();
-		
+
 		this.umlaufplanliste.clear();
-		
-		if(dbm.databaseIsEmpty()||dbm.umlaufplanIsEmpty()){
-			
-		}else{
 
+		if (dbm.databaseIsEmpty() || dbm.umlaufplanIsEmpty()) {
 
-		this.umlaufplanliste = dbm.createUmlaufplanObject();
-		for (int i = 0; i < this.umlaufplanliste.size(); i++) {
-			this.umlaufplanliste.get(i).setName(" Umlaufplan " + (i + 1));
-		}
+		} else {
 
-		if (this.firstUppergrafikErstellt == false) {
-			this.UPlan.setItems(FXCollections
-					.observableArrayList(umlaufplanliste.get(0).getName()));
-			for (int i = 1; i < umlaufplanliste.size(); i++) {
-				this.UPlan.getItems().add(umlaufplanliste.get(i).getName());
+			this.umlaufplanliste = dbm.createUmlaufplanObject();
+			for (int i = 0; i < this.umlaufplanliste.size(); i++) {
+				this.umlaufplanliste.get(i).setName(" Umlaufplan " + (i + 1));
 			}
-		}
+
+			if (this.firstUppergrafikErstellt == false) {
+				this.UPlan.setItems(FXCollections
+						.observableArrayList(umlaufplanliste.get(0).getName()));
+				for (int i = 1; i < umlaufplanliste.size(); i++) {
+					this.UPlan.getItems().add(umlaufplanliste.get(i).getName());
+				}
+			}
 		}
 
 	}

@@ -44,12 +44,12 @@
                                   <items>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                       <children>
-                                        <TableView prefHeight="422.0" prefWidth="519.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                        <TableView fx:id="umlauftable" prefHeight="422.0" prefWidth="519.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                           <columns>
-                                            <TableColumn prefWidth="75.0" text="ID" />
-                                            <TableColumn prefWidth="75.0" text="Bezeichnung" />
-                                            <TableColumn prefWidth="75.0" text="FahrplanID" />
-                                            <TableColumn prefWidth="75.0" text="Upload Datum" />
+                                            <TableColumn prefWidth="75.0" text="Bezeichnung" fx:id="uBezeichnung" />
+                                            <TableColumn prefWidth="75.0" text="ID" fx:id="uID" />
+                                            <TableColumn prefWidth="75.0" text="FahrplanID" fx:id="ufahrplanID" />
+                                            <TableColumn prefWidth="75.0" text="Upload Datum" fx:id="uUploadDate" />
                                           </columns>
                                         </TableView>
                                       </children>
@@ -73,12 +73,12 @@
                                   <items>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                       <children>
-                                        <TableView prefHeight="422.0" prefWidth="519.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                        <TableView fx:id="diensttable" prefHeight="422.0" prefWidth="519.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                           <columns>
-                                            <TableColumn prefWidth="75.0" text="ID" />
-                                            <TableColumn prefWidth="75.0" text="Bezeichnung" />
-                                            <TableColumn prefWidth="75.0" text="FahrplanID" />
-                                            <TableColumn prefWidth="75.0" text="Upload Datum" />
+                                            <TableColumn prefWidth="75.0" text="Bezeichnung" fx:id="dBezeichnung" />
+                                            <TableColumn prefWidth="75.0" text="ID" fx:id="dID" />
+                                            <TableColumn prefWidth="75.0" text="FahrplanID" fx:id="dfahrplanID" />
+                                            <TableColumn prefWidth="75.0" text="Upload Datum" fx:id="dUploadDate" />
                                           </columns>
                                         </TableView>
                                       </children>
@@ -102,12 +102,11 @@
                                   <items>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                       <children>
-                                        <TableView prefHeight="422.0" prefWidth="519.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                        <TableView fx:id="fahrtable" prefHeight="422.0" prefWidth="519.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                           <columns>
-                                            <TableColumn prefWidth="75.0" text="ID" />
-                                            <TableColumn prefWidth="75.0" text="Bezeichnung" />
-                                            <TableColumn prefWidth="75.0" text="FahrplanID" />
-                                            <TableColumn prefWidth="75.0" text="Upload Datum" />
+                                            <TableColumn prefWidth="75.0" text="Bezeichnung" fx:id="fBezeichnung" />
+                                            <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="75.0" text="ID" fx:id="fID" />
+                                            <TableColumn prefWidth="75.0" text="Upload Datum" fx:id="fUploadDate" />
                                           </columns>
                                         </TableView>
                                       </children>

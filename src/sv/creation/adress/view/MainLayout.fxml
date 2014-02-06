@@ -529,7 +529,7 @@
                                         <HBox id="HBox" alignment="CENTER" spacing="40.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                           <children>
                                             <Label prefWidth="63.0" styleClass="label-versTwo" text="Fahrplan" />
-                                            <Button cancelButton="false" defaultButton="false" font="$x2" graphicTextGap="0.0" minWidth="25.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="25.0" styleClass="dark-blue-Choicebox" text="+">
+                                            <Button fx:id="addFahrplanVonPlan" cancelButton="false" defaultButton="false" font="$x2" graphicTextGap="0.0" minWidth="25.0" mnemonicParsing="false" opacity="0.0" prefHeight="21.0" prefWidth="25.0" styleClass="dark-blue-Choicebox" text="+">
                                               <HBox.margin>
                                                 <Insets left="10.0" />
                                               </HBox.margin>
