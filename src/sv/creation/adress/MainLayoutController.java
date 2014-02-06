@@ -172,6 +172,7 @@ public class MainLayoutController {
 
 	private TableView<Blockelement> detailsUmlaufTable = new TableView<Blockelement>();
 	private TableView<Dutyelement> detailsDienstTable = new TableView<Dutyelement>();
+	private TableView<Fahrplan> detailsFahrplanTable = new TableView<Fahrplan>();
 
 	// Zugriff auf die Labels des DetailPane
 
@@ -272,7 +273,7 @@ public class MainLayoutController {
 	private ArrayList<Dienstplan> dienstplanliste = new ArrayList<Dienstplan>();
 	private ArrayList<Fahrplan> fahrplanliste = new ArrayList<Fahrplan>();
 
-	// Zuordnung der UmlaufplÃ¤ne
+	// Zuordnung der Umlaufplaene
 
 	private Umlaufplan umlaufplanEins;
 	private Umlaufplan umlaufplanZwei;
@@ -282,7 +283,7 @@ public class MainLayoutController {
 	private Umlaufplan umlaufplanSechs;
 	private Umlaufplan umlaufplanSieben;
 
-	// Zuordnung der DienstplÃ¤ne
+	// Zuordnung der Dienstplaene
 
 	private Dienstplan dienstplanEins;
 	private Dienstplan dienstplanZwei;
@@ -373,6 +374,7 @@ public class MainLayoutController {
 	private double lowerheightFuenf = 800;
 	private double lowerheightSechs = 800;
 	private double lowerheightSieben = 800;
+	private ArrayList<Fahrplan> fahrplanAuswahl = new ArrayList<Fahrplan>();
 
 	// Pruefvariable Upper Screen
 
@@ -461,6 +463,9 @@ public class MainLayoutController {
 				.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
 		detailsDienstTable
+				.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+		detailsFahrplanTable
 				.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
 		this.yUp1.setHbarPolicy(ScrollBarPolicy.NEVER);
@@ -4565,7 +4570,7 @@ public class MainLayoutController {
 				}
 			}
 		}
-		
+
 		// Hier werden die Schritte für den Loeschvorgang bestimmt
 
 		switch (pruefcounter) {
@@ -4600,16 +4605,70 @@ public class MainLayoutController {
 	/**
 	 * Shows all Fahrplaene
 	 */
+	@SuppressWarnings("unchecked")
 	@FXML
-	public void showFahrplan() {
+	public void showFahrplanOverview() {
 
-		ListView<String> fahrplanlist = new ListView<String>();
-		ObservableList<String> items = FXCollections.observableArrayList(
-				"Single", "Double", "Suite", "Family App", "Family App",
-				"Family App");
-		fahrplanlist.setItems(items);
+		this.detailsFahrplanTable.setEditable(true);
+		this.detailsFahrplanTable.getColumns().clear();
 
-		this.tablePane.setContent(fahrplanlist);
+		TableColumn<Fahrplan, String> fBezeichnung = new TableColumn<Fahrplan, String>(
+				"Bezeichnung");
+		TableColumn<Fahrplan, Integer> fID = new TableColumn<Fahrplan, Integer>(
+				"ID");
+		TableColumn<Fahrplan, String> fUploadDate = new TableColumn<Fahrplan, String>(
+				"Uploadzeitpunkt");
+
+		fBezeichnung
+				.setCellValueFactory(new PropertyValueFactory<Fahrplan, String>(
+						"bezeichnung"));
+		fID.setCellValueFactory(new PropertyValueFactory<Fahrplan, Integer>(
+				"id"));
+		fUploadDate
+				.setCellValueFactory(new PropertyValueFactory<Fahrplan, String>(
+						"date"));
+
+		fBezeichnung.prefWidthProperty().bind(fBezeichnung.widthProperty());
+		fID.prefWidthProperty().bind(fID.widthProperty());
+		fUploadDate.prefWidthProperty().bind(fUploadDate.widthProperty());
+
+		// Hereinladen der Daten
+		
+		ObservableList<Fahrplan> data = FXCollections.observableArrayList();
+
+		for (int i = 0; i < this.fahrplanAuswahl.size(); i++) {
+			data.add(this.fahrplanAuswahl.get(i));
+		}
+
+		this.detailsFahrplanTable.setItems(data);
+		this.detailsFahrplanTable.getColumns().addAll(fBezeichnung, fID,
+				fUploadDate);
+		this.tablePane.setContent(detailsFahrplanTable);
+		
+
+		this.dDetailsTableErstellt = true;
+
+	}
+	
+	/**
+	 * Shows all Fahrplaene
+	 */
+	@FXML
+	public void AddFahrplanFromSelection() {
+
+		if (this.FPlan.getSelectionModel().getSelectedItem() != null) {
+			this.fahrplanAuswahl.add(this.fahrplanliste.get(this.FPlan.getSelectionModel().getSelectedIndex()));
+			showFahrplanOverview();
+		}
+	}
+	
+	/**
+	 * Shows all Fahrplaene
+	 */
+	@FXML
+	public void AddFahrplan() {
+
+		
 	}
 
 	/**
@@ -4674,35 +4733,37 @@ public class MainLayoutController {
 	public void setEndzeitVar(int endzeitVar) {
 		this.endzeitVar = endzeitVar;
 	}
-	
+
 	// Methoden zur Befuellung der Fahrplanliste
-	
-		public void fillFahrplanliste() {
 
-			// Fahrplaene -- Choicebox wird gefaellt
+	public void fillFahrplanliste() {
 
-			DBMatching dbm = new DBMatching();
+		// Fahrplaene -- Choicebox wird gefaellt
+
+		DBMatching dbm = new DBMatching();
+
+		this.fahrplanliste.clear();
+
+		if (dbm.databaseIsEmpty() || dbm.dienstplanIsEmpty()) {
+
+		} else {
 
 			this.fahrplanliste.clear();
-
-			if (dbm.databaseIsEmpty() || dbm.dienstplanIsEmpty()) {
-
-			} else {
-
-				this.fahrplanliste.clear();
-				this.fahrplanliste = dbm.createFahrplanObject();
-				for (int i = 0; i < this.fahrplanliste.size(); i++) {
-					this.fahrplanliste.get(i).setBezeichnung(" Fahrplan " + (i + 1));
-				}
-				
-				this.FPlan.setItems(FXCollections
-						.observableArrayList(fahrplanliste.get(0).getBezeichnung()));
-				for (int i = 1; i < fahrplanliste.size(); i++) {
-					this.FPlan.getItems().add(fahrplanliste.get(i).getBezeichnung());
-				}
-
+			this.fahrplanliste = dbm.createFahrplanObject();
+			for (int i = 0; i < this.fahrplanliste.size(); i++) {
+				this.fahrplanliste.get(i)
+						.setBezeichnung(" Fahrplan " + (i + 1));
 			}
+
+			this.FPlan.setItems(FXCollections.observableArrayList(fahrplanliste
+					.get(0).getBezeichnung()));
+			for (int i = 1; i < fahrplanliste.size(); i++) {
+				this.FPlan.getItems()
+						.add(fahrplanliste.get(i).getBezeichnung());
+			}
+
 		}
+	}
 
 	// Methoden zur BefÃ¼llung der Dienstplanliste
 
