@@ -863,15 +863,21 @@ public class StringSplitter {
 
 		public void readTxtDiensttypen(String path) {
 
+			DBConnection dbc=new DBConnection();
+			// testumlauf.txt Data has to be in the project file in your
+			// workspace
+			File file = new File(path);
+		
+			
 			try {
-
-				// testfahrplan.txt Data has to be in the project file in your
-				// workspace
-
-				File file = new File(path);
+		
 				BufferedReader diensttypen = new BufferedReader(new FileReader(file));
 				filename = file.getName();
-
+				
+				
+//				String test=dbc.getVehicleScheduleName(getFilename());
+				dbc.checkDiensttypen(filename);
+				if(dbc.isDiensttypenVorhanden()){
 				String zeile = null;
 				ArrayList<String> zeilenelemente = new ArrayList<String>();
 				while ((zeile = diensttypen.readLine()) != null) {
@@ -1004,12 +1010,14 @@ public class StringSplitter {
 					}
 				}
 				diensttypen.close();
+				dbc.fillDiensttypenIntoTables(getFilename());}
+				else {
+					System.out.println("Es ist kein passender Fahrplan vorhanden!");
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 
-			DBConnection dbcc = new DBConnection();
-			dbcc.fillDiensttypenIntoTables(getFilename());
 		}
 
 	// **************************************************************************************************************************

@@ -35,6 +35,7 @@ public class DBConnection {
 			+ "PlanB_DB.db";
 	File file=new File(DB_PATH);
 	private boolean fahrplanVorhanden=false;
+	private boolean diensttypenVorhanden=false;
 	//loading database drivers
 	static {
 		try {
@@ -1059,13 +1060,6 @@ public class DBConnection {
 				if(fahrplaene.get(i).endsWith(filename)){
 					fahrplanVorhanden=true;
 					break;
-				}else if(!fahrplaene.get(fahrplaene.size()-1).endsWith(filename)){
-//					try {
-//						throw new WrongTxtFileException("Kein passender Fahrplan vorhanden!");
-//					} catch (WrongTxtFileException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
 				}
 			}
 		}catch (SQLException e){
@@ -1074,61 +1068,32 @@ public class DBConnection {
 		return fahrplanVorhanden;
 	}
 	
+	public boolean checkDiensttypen(String filename){
+		
+		ArrayList <Integer> diensttypenListe=new ArrayList<Integer>();
+		try{
+			Statement stmnt=getConnection().createStatement();
+			ResultSet rest1=stmnt.executeQuery("SELECT dt.FahrplanID, f.Bezeichnung FROM Diensttypen AS dt, Fahrplan AS f WHERE dt.FahrplanID=f.ID;");
+			while(rest1.next()){
+			diensttypenListe.add(Integer.parseInt(rest1.getString("FahrplanID")));
+			}
+				if(!diensttypenListe.isEmpty()){
+					diensttypenVorhanden=true;
+				}
+			
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
+		return diensttypenVorhanden;
+		
+	}
+	
 	//method for getting schedule naming to compare for getting the correct foreign keys
 
 	public String getVehicleScheduleName(String filename){
 		String vehicleschedulename =filename;
 		String[] resultString=filename.split("_real");
 		vehicleschedulename=resultString[1];
-		
-//		int Stringlength=resultString.length;
-		//distinguish between different kinds of file names and getting the actual naming 
-//		switch (Stringlength){
-//		//standard schedules
-//		case 8:
-//			
-//			if(filename.startsWith("dt")){
-//				for (int i = 1; i < Stringlength; i++) {
-//					if(i!=resultString.length-1){
-//						vehicleschedulename+=resultString[i]+"_";
-//					}else{
-//						vehicleschedulename+=resultString[i];
-//					}
-//				}
-//			}else{
-//			for (int i = 4; i < Stringlength; i++) {
-//				if(i!=resultString.length-1){
-//					vehicleschedulename+=resultString[i]+"_";
-//				}else{
-//					vehicleschedulename+=resultString[i];
-//				}
-//			}
-//		
-//			}
-//			break;
-//		//comparable schedules
-//		case 12:
-//			for (int i = 5; i < Stringlength; i++) {
-//				if(i!=resultString.length-1){
-//					vehicleschedulename+=resultString[i]+"_";
-//				}else{
-//					vehicleschedulename+=resultString[i];
-//				}
-//			}
-//		
-//		break;
-//		//retiming schedules
-//		case 18:
-//			for (int i = 3; i < Stringlength; i++) {
-//				if(i!=resultString.length-1){
-//					vehicleschedulename+=resultString[i]+"_";
-//				}else{
-//					vehicleschedulename+=resultString[i];
-//				}
-//			}
-//		break;
-//		}
-		
 		return vehicleschedulename;
 	}
 
@@ -1140,6 +1105,10 @@ public class DBConnection {
 
 	public boolean isFahrplanVorhanden() {
 		return fahrplanVorhanden;
+	}
+
+	public boolean isDiensttypenVorhanden() {
+		return diensttypenVorhanden;
 	}
 	
 	
