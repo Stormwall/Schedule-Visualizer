@@ -163,11 +163,6 @@
 	
 }
 
-
-/* ------------------------------------------------------------------------------------- */
-/** EVENT CSS **/
-/* ------------------------------------------------------------------------------------- */
-
 /* The main scrollbar **track** CSS class on event of "hover" and "pressed" */
 
 .mylistview .scroll-bar:horizontal:hover .track ,
@@ -249,3 +244,61 @@
         linear-gradient(#20262b, #191d22),
         radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
 }
+
+/* Area Chart */
+
+.chart {
+	-fx-background-color:
+		#090a0c,
+        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
+        linear-gradient(#20262b, #191d22),
+        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+    -fx-padding: 15 25 15 15;    
+    -fx-border-color: black;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.8) , 10, 0.0 , 0 , 2 );
+}
+.chart-title {
+  	-fx-font-family: "Arial";
+    -fx-text-fill: linear-gradient(white, #d0d0d0);
+    -fx-font-size: 16px;
+}
+.chart-plot-background {
+-fx-background-color:
+		#090a0c,
+        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
+        linear-gradient(#20262b, #191d22),
+        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+    -fx-background-size: cover, auto;
+    -fx-background-repeat: no-repeat, repeat;
+    -fx-background-position: 0% 0%, 0% 100%;
+    -fx-border-color: black black transparent transparent;
+}
+.chart-series-area-line { 
+    -fx-stroke: white; 
+    -fx-stroke-width: 1px; 
+}
+.chart-area-symbol{
+	-fx-stroke-width: 1px; 
+	-fx-background-radius: 0;
+}
+.axis-fahrplan {
+    -fx-tick-length: 3;
+    -fx-border-color: transparent;
+}
+.axis:bottom-fahrplan {
+    -fx-border-color: white transparent transparent transparent;
+}
+.axis:left-fahrplan {
+    -fx-border-color: transparent white transparent transparent;
+}
+.axis Text-fahrplan{
+    -fx-fill: white;
+}
+.tick-mark-fahrplan {
+    -fx-font-size: 10px;
+    -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.8) , 0, 0.0 , 0 , 1 );
+}
+
+		
+ 
+    

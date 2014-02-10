@@ -3,6 +3,7 @@ package sv.creation.adress;
 import java.io.IOException;
 
 import sv.creation.adress.model.Dienstplan;
+import sv.creation.adress.model.Fahrplan;
 import sv.creation.adress.model.Umlaufplan;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +13,7 @@ import javafx.scene.control.Dialogs;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -22,13 +24,12 @@ public class MainApplication extends Application {
 	private Stage primaryStage;
 
 	private BorderPane rootLayout;
-	
-	// Stageübergabeobjekte	
-	
+
+	// Stageübergabeobjekte
+
 	private String startzeit;
 	private String endzeit;
-	
-	
+
 	// Load Rootlayout and handle scenes
 
 	@Override
@@ -51,7 +52,7 @@ public class MainApplication extends Application {
 			// Give the controller access to the main app
 			RootLayoutController controller = loader.getController();
 			controller.setMainApp(this);
-			
+
 			Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
 			primaryStage.setX(bounds.getMinX());
 			primaryStage.setY(bounds.getMinY());
@@ -134,7 +135,7 @@ public class MainApplication extends Application {
 			dialogStage.setTitle("Datenbank");
 			dialogStage.getIcons().add(
 					new Image("file:resources/images/IconFinal.png"));
-//			dialogStage.setResizable(false);
+			// dialogStage.setResizable(false);
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.initOwner(primaryStage);
 			Scene scene = new Scene(page);
@@ -175,7 +176,8 @@ public class MainApplication extends Application {
 			dialogStage.setScene(scene);
 
 			// Set the controller
-			FullScreenLayoutControllerUmlaufplan controller = loader.getController();
+			FullScreenLayoutControllerUmlaufplan controller = loader
+					.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setUmlaufplan(umlaufplan);
 
@@ -186,40 +188,77 @@ public class MainApplication extends Application {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// Initiate Fullscreen fxml
 
-		public void showFullScreenGraphicDienstplan(Dienstplan dienstplan) {
+	public void showFullScreenGraphicDienstplan(Dienstplan dienstplan) {
 
-			try {
+		try {
 
-				// Load the fxml file and create a new stage for the popup
-				FXMLLoader loader = new FXMLLoader(
-						MainApplication.class
-								.getResource("view/FullScreenLayoutDienstplan.fxml"));
-				AnchorPane page = (AnchorPane) loader.load();
-				Stage dialogStage = new Stage();
-				dialogStage.getIcons().add(
-						new Image("file:resources/images/IconFinal.png"));
-				dialogStage.setFullScreen(true);
-				dialogStage.initModality(Modality.WINDOW_MODAL);
-				dialogStage.initStyle(StageStyle.UTILITY);
-				dialogStage.initOwner(primaryStage);
-				Scene scene = new Scene(page);
-				dialogStage.setScene(scene);
+			// Load the fxml file and create a new stage for the popup
+			FXMLLoader loader = new FXMLLoader(
+					MainApplication.class
+							.getResource("view/FullScreenLayoutDienstplan.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+			Stage dialogStage = new Stage();
+			dialogStage.getIcons().add(
+					new Image("file:resources/images/IconFinal.png"));
+			dialogStage.setFullScreen(true);
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initStyle(StageStyle.UTILITY);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
 
-				// Set the controller
-				FullScreenLayoutControllerDienstplan controller = loader.getController();
-				controller.setDialogStage(dialogStage);
-				controller.setDienstplan(dienstplan);
+			// Set the controller
+			FullScreenLayoutControllerDienstplan controller = loader
+					.getController();
+			controller.setDialogStage(dialogStage);
+			controller.setDienstplan(dienstplan);
 
-				dialogStage.show();
+			dialogStage.show();
 
-			} catch (IOException e) {
-				// Exception gets thrown if the fxml file could not be loade
-				e.printStackTrace();
-			}
+		} catch (IOException e) {
+			// Exception gets thrown if the fxml file could not be loade
+			e.printStackTrace();
 		}
+	}
+
+	// Initiate Fullscreen fxml
+
+	public void showFullScreenFahrplan(Fahrplan fahrplan, int auswahl) {
+
+		try {
+
+			// Load the fxml file and create a new stage for the popup
+			FXMLLoader loader = new FXMLLoader(
+					MainApplication.class
+							.getResource("view/FahrplanGraphicLayout.fxml"));
+			GridPane page = (GridPane) loader.load();
+			Stage dialogStage = new Stage();
+			dialogStage.getIcons().add(
+					new Image("file:resources/images/IconFinal.png"));
+			dialogStage.setFullScreen(true);
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initStyle(StageStyle.UTILITY);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+
+			// Set the controller
+			FahrplanGraphicLayoutController controller = loader
+					.getController();
+			controller.setDialogStage(dialogStage);
+			controller.setFahrplan(fahrplan);
+			controller.setErstauswahl(auswahl);
+
+			dialogStage.show();
+
+		} catch (IOException e) {
+			// Exception gets thrown if the fxml file could not be loade
+			e.printStackTrace();
+		}
+	}
 
 	// Initiate KostenLayout fxml
 
@@ -288,44 +327,44 @@ public class MainApplication extends Application {
 		}
 
 	}
-	
+
 	// Initiate Edit U-Plan fxml
 
-		public boolean showEditDPlan(Dienstplan dienstplan) {
+	public boolean showEditDPlan(Dienstplan dienstplan) {
 
-			try {
+		try {
 
-				// Load the fxml file and create a new stage for the popup
-				FXMLLoader loader = new FXMLLoader(
-						MainApplication.class.getResource("view/EditD_Plan.fxml"));
-				AnchorPane page = (AnchorPane) loader.load();
-				Stage dialogStage = new Stage();
-				dialogStage.setTitle("Umlaufplanbearbeitung");
-				dialogStage.getIcons().add(
-						new Image("file:resources/images/IconFinal.png"));
-				dialogStage.initModality(Modality.WINDOW_MODAL);
-				dialogStage.initOwner(primaryStage);
-				Scene scene = new Scene(page);
-				dialogStage.setScene(scene);
+			// Load the fxml file and create a new stage for the popup
+			FXMLLoader loader = new FXMLLoader(
+					MainApplication.class.getResource("view/EditD_Plan.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Umlaufplanbearbeitung");
+			dialogStage.getIcons().add(
+					new Image("file:resources/images/IconFinal.png"));
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
 
-				// Set the controller with all data
-				EditD_PlanController controller = loader.getController();
-				controller.setDienstplan(dienstplan);
-				controller.setMainApp(this);
-				controller.setDialogStage(dialogStage);
+			// Set the controller with all data
+			EditD_PlanController controller = loader.getController();
+			controller.setDienstplan(dienstplan);
+			controller.setMainApp(this);
+			controller.setDialogStage(dialogStage);
 
-				// Show the dialog and wait until the user closes it
-				dialogStage.showAndWait();
+			// Show the dialog and wait until the user closes it
+			dialogStage.showAndWait();
 
-				return controller.isOkClicked();
+			return controller.isOkClicked();
 
-			} catch (IOException e) {
-				// Exception gets thrown if the fxml file could not be loaded
-				e.printStackTrace();
-				return false;
-			}
-
+		} catch (IOException e) {
+			// Exception gets thrown if the fxml file could not be loaded
+			e.printStackTrace();
+			return false;
 		}
+
+	}
 
 	// Initiate Edit Time Details fxml
 
@@ -368,17 +407,17 @@ public class MainApplication extends Application {
 
 	}
 
-
 	// Fehlermeldung bei nicht erstellter Grafik
 
-	public void fehlerMeldung(String fehlermeldungA,String fehlermeldungB, String fehlermeldungC) {
+	public void fehlerMeldung(String fehlermeldungA, String fehlermeldungB,
+			String fehlermeldungC) {
 
-		Dialogs.showErrorDialog(primaryStage,
-				fehlermeldungA, fehlermeldungB, fehlermeldungC);
+		Dialogs.showErrorDialog(primaryStage, fehlermeldungA, fehlermeldungB,
+				fehlermeldungC);
 	}
-	
+
 	// Übergabemethoden der Stageobjekte
-	
+
 	public String getStartzeit() {
 		return startzeit;
 	}
@@ -394,7 +433,7 @@ public class MainApplication extends Application {
 	public void setEndzeit(String endzeit) {
 		this.endzeit = endzeit;
 	}
-	
+
 	public Stage getPrimaryStage() {
 		return primaryStage;
 	}
@@ -404,9 +443,8 @@ public class MainApplication extends Application {
 	}
 
 	// Main Method
-	
 
 	public static void main(String[] args) {
 		launch(args);
-	}	
+	}
 }

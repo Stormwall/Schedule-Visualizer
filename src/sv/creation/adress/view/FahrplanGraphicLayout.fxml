@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.text.*?>
+
+<GridPane prefHeight="600.0" prefWidth="600.0" styleClass="background" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sv.creation.adress.FahrplanGraphicLayoutController">
+  <!-- TODO Add Nodes -->
+  <children>
+    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
+      <children>
+        <StackedAreaChart fx:id="fahrplanvergleich" alternativeColumnFillVisible="false" alternativeRowFillVisible="true" animated="true" horizontalGridLinesVisible="true" legendVisible="true" prefHeight="565.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+          <xAxis>
+            <NumberAxis fx:id="xAxis" autoRanging="false" minorTickCount="4" side="BOTTOM" tickLabelFill="WHITE">
+              <tickLabelFont>
+                <Font name="Arial" size="10.0" fx:id="x1" />
+              </tickLabelFont>
+            </NumberAxis>
+          </xAxis>
+          <yAxis>
+            <NumberAxis fx:id="yAxis" side="LEFT" styleClass="axis-fahrplan" tickLabelFill="WHITE" tickLabelFont="$x1" />
+          </yAxis>
+        </StackedAreaChart>
+      </children>
+    </AnchorPane>
+    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
+      <children>
+        <Button layoutY="5.0" mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Abbrechen" AnchorPane.rightAnchor="13.0" />
+        <HBox id="HBox" alignment="CENTER" layoutY="5.0" prefWidth="377.0" spacing="5.0" AnchorPane.leftAnchor="3.0">
+          <children>
+            <Label styleClass="label-white" text="von" />
+            <ChoiceBox fx:id="startTag" prefWidth="108.0" styleClass="dark-blue-Choicebox, flowPane">
+              <items>
+                <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Item 1" />
+                  <String fx:value="Item 2" />
+                  <String fx:value="Item 3" />
+                </FXCollections>
+              </items>
+            </ChoiceBox>
+            <Label styleClass="label-white" text="bis" />
+            <ChoiceBox fx:id="endTag" prefWidth="108.0" styleClass="dark-blue-Choicebox, flowPane">
+              <items>
+                <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Item 1" />
+                  <String fx:value="Item 2" />
+                  <String fx:value="Item 3" />
+                </FXCollections>
+              </items>
+            </ChoiceBox>
+            <Button mnemonicParsing="false" styleClass="dark-blue" text="Anwenden">
+              <HBox.margin>
+                <Insets left="20.0" />
+              </HBox.margin>
+            </Button>
+          </children>
+        </HBox>
+      </children>
+    </AnchorPane>
+  </children>
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="-1.0" minHeight="10.0" prefHeight="564.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="35.0" minHeight="35.0" prefHeight="36.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+  <stylesheets>
+    <URL value="@MainLayout.css" />
+  </stylesheets>
+</GridPane>

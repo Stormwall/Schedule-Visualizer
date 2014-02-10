@@ -28,7 +28,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.SingleSelectionModel;
@@ -148,12 +147,6 @@ public class MainLayoutController {
 	@FXML
 	private GridPane graphicPane;
 	@FXML
-	private Button refreshGraphic;
-	@FXML
-	private Button showFullscreen;
-	@FXML
-	private Button addFahrplanVonPlan;
-	@FXML
 	private Button applyFilter;
 	@FXML
 	private Button loeschenUmlaufplan;
@@ -165,6 +158,8 @@ public class MainLayoutController {
 	private Slider endzeitSlider;
 	@FXML
 	private CheckBox hilfslinien;
+	@FXML
+	private CheckBox fehlerAnzeigen;
 	@FXML
 	private HBox filterPanel;
 
@@ -192,6 +187,8 @@ public class MainLayoutController {
 	private ChoiceBox<String> DPlan;
 	@FXML
 	private ChoiceBox<String> FPlan;
+	@FXML
+	private ChoiceBox<String> ATage;
 	@FXML
 	private Label UPlan1;
 	@FXML
@@ -374,7 +371,6 @@ public class MainLayoutController {
 	private double lowerheightFuenf = 800;
 	private double lowerheightSechs = 800;
 	private double lowerheightSieben = 800;
-	private ArrayList<Fahrplan> fahrplanAuswahl = new ArrayList<Fahrplan>();
 
 	// Pruefvariable Upper Screen
 
@@ -4603,71 +4599,23 @@ public class MainLayoutController {
 	}
 
 	/**
-	 * Shows all Fahrplaene
-	 */
-	@SuppressWarnings("unchecked")
-	@FXML
-	public void showFahrplanOverview() {
-
-		this.detailsFahrplanTable.setEditable(true);
-		this.detailsFahrplanTable.getColumns().clear();
-
-		TableColumn<Fahrplan, String> fBezeichnung = new TableColumn<Fahrplan, String>(
-				"Bezeichnung");
-		TableColumn<Fahrplan, Integer> fID = new TableColumn<Fahrplan, Integer>(
-				"ID");
-		TableColumn<Fahrplan, String> fUploadDate = new TableColumn<Fahrplan, String>(
-				"Uploadzeitpunkt");
-
-		fBezeichnung
-				.setCellValueFactory(new PropertyValueFactory<Fahrplan, String>(
-						"bezeichnung"));
-		fID.setCellValueFactory(new PropertyValueFactory<Fahrplan, Integer>(
-				"id"));
-		fUploadDate
-				.setCellValueFactory(new PropertyValueFactory<Fahrplan, String>(
-						"date"));
-
-		fBezeichnung.prefWidthProperty().bind(fBezeichnung.widthProperty());
-		fID.prefWidthProperty().bind(fID.widthProperty());
-		fUploadDate.prefWidthProperty().bind(fUploadDate.widthProperty());
-
-		// Hereinladen der Daten
-		
-		ObservableList<Fahrplan> data = FXCollections.observableArrayList();
-
-		for (int i = 0; i < this.fahrplanAuswahl.size(); i++) {
-			data.add(this.fahrplanAuswahl.get(i));
-		}
-
-		this.detailsFahrplanTable.setItems(data);
-		this.detailsFahrplanTable.getColumns().addAll(fBezeichnung, fID,
-				fUploadDate);
-		this.tablePane.setContent(detailsFahrplanTable);
-		
-
-		this.dDetailsTableErstellt = true;
-
-	}
-	
-	/**
-	 * Shows all Fahrplaene
+	 * Opens up the Fahrplanvergleich
 	 */
 	@FXML
 	public void AddFahrplanFromSelection() {
 
-		if (this.FPlan.getSelectionModel().getSelectedItem() != null) {
-			this.fahrplanAuswahl.add(this.fahrplanliste.get(this.FPlan.getSelectionModel().getSelectedIndex()));
-			showFahrplanOverview();
+		// Kontrolliert ob Fahrplan vorhanden ist
+		if (this.ATage.getSelectionModel().getSelectedItem() != null) {
+			int auswahl = 0;
+			auswahl = this.ATage.getSelectionModel().getSelectedIndex();
+			if (this.FPlan.getSelectionModel().getSelectedItem() != null) {
+				mainApp.showFullScreenFahrplan(
+						this.fahrplanliste.get(this.FPlan.getSelectionModel()
+								.getSelectedIndex()), auswahl);
+			} else {
+				System.out.println("Fehlende Daten oder Auswahl");
+			}
 		}
-	}
-	
-	/**
-	 * Shows all Fahrplaene
-	 */
-	@FXML
-	public void AddFahrplan() {
-
 		
 	}
 
@@ -4678,33 +4626,26 @@ public class MainLayoutController {
 	public void graphicTransition() {
 
 		// Fades in Filter Panel
-		FadeTransition fa = new FadeTransition(Duration.millis(500),
+		FadeTransition fa = new FadeTransition(Duration.millis(1500),
 				this.filterPanel);
 		fa.setFromValue(0.0);
 		fa.setToValue(1.0);
 		fa.setAutoReverse(true);
 		fa.play();
 
-		FadeTransition faa = new FadeTransition(Duration.millis(500),
-				this.showFullscreen);
+		FadeTransition faa = new FadeTransition(Duration.millis(1500),
+				this.fehlerAnzeigen);
 		faa.setFromValue(0.0);
 		faa.setToValue(1.0);
 		faa.setAutoReverse(true);
 		faa.play();
 
-		FadeTransition faaa = new FadeTransition(Duration.millis(500),
+		FadeTransition faaa = new FadeTransition(Duration.millis(1500),
 				this.hilfslinien);
 		faaa.setFromValue(0.0);
 		faaa.setToValue(1.0);
 		faaa.setAutoReverse(true);
 		faaa.play();
-
-		FadeTransition faaaa = new FadeTransition(Duration.millis(500),
-				this.addFahrplanVonPlan);
-		faaaa.setFromValue(0.0);
-		faaaa.setToValue(1.0);
-		faaaa.setAutoReverse(true);
-		faaaa.play();
 
 	}
 
@@ -4763,6 +4704,9 @@ public class MainLayoutController {
 			}
 
 		}
+		this.ATage.setItems(FXCollections.observableArrayList("1 Tag",
+				"2 Tage", "3 Tage", "4 Tage", "5 Tage", "6 Tage", "7 Tage"));
+
 	}
 
 	// Methoden zur BefÃ¼llung der Dienstplanliste
