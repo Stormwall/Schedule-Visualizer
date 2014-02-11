@@ -7,8 +7,8 @@ import sv.creation.adress.util.Vergleich;
 import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.StackedAreaChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.ChoiceBox;
@@ -26,7 +26,7 @@ public class FahrplanGraphicLayoutController {
 	@FXML
 	private ChoiceBox<String> endTag;
 	@FXML
-	private StackedAreaChart<Number, Number> fahrplanvergleich;
+	private AreaChart<Number, Number> fahrplanvergleich;
 	@FXML
 	private NumberAxis xAxis;
 	@FXML
@@ -227,6 +227,52 @@ public class FahrplanGraphicLayoutController {
 		changeInfoColors();
 
 	}
+	
+	/**
+	 * Changes parameters of the graphic
+	 */
+	@FXML
+	public void changeTimewindow() {
+		
+		if (this.tagStart <= this.tagEnde) {		
+		
+		// Clearen des Planes
+		
+		this.fahrplanvergleich.getData().clear();
+		
+		// Clearen der Legende
+		
+		ArrayList<Label> labelListe = new ArrayList<Label>();
+		labelListe.add(this.monday);
+		labelListe.add(this.tuesday);
+		labelListe.add(this.wednsday);
+		labelListe.add(this.thursday);
+		labelListe.add(this.friday);
+		labelListe.add(this.saturday);
+		labelListe.add(this.sunday);
+		
+		ArrayList<Pane> paneListe = new ArrayList<Pane>();
+		paneListe.add(this.mondayP);
+		paneListe.add(this.tuesdayP);
+		paneListe.add(this.wednsdayP);
+		paneListe.add(this.thursdayP);
+		paneListe.add(this.fridayP);
+		paneListe.add(this.saturdayP);
+		paneListe.add(this.sundayP);
+		
+		for (int i = 0; i < labelListe.size(); i++) {
+			labelListe.get(i).setOpacity(0);
+			paneListe.get(i).setOpacity(0);
+		}
+		
+		// Auslesen der Dropdownmenues
+		
+		this.tagStart = this.startTag.getSelectionModel().getSelectedIndex();
+		this.tagEnde = this.endTag.getSelectionModel().getSelectedIndex();
+		
+		drawFahrplanvergleich();
+		}
+	}
 
 	// Methode zur Bestimmung der Farbe
 
@@ -249,27 +295,144 @@ public class FahrplanGraphicLayoutController {
 		paneListe.add(this.fridayP);
 		paneListe.add(this.saturdayP);
 		paneListe.add(this.sundayP);
+		
+		String[] colors = new String[7];
+		colors[0]="-fx-background-color: #ffd65e;";
+		colors[1]="-fx-background-color: #d2ff52;";
+		colors[2]="-fx-background-color: #b3dced";
+		colors[3]="-fx-background-color: #00b7ea;";
+		colors[4]="-fx-background-color: #1e5799;";
+		colors[5]="-fx-background-color: #fceabb;";
+		colors[6]="-fx-background-color: #fceabb;";
 
 		switch (this.tagStart) {
 		case 0:
 			switch (this.tagEnde) {
 			case 0:
-				
+				for (int i = 0; i < labelListe.size()-6; i++) {					
+					// Fades in Filter Panel
+					FadeTransition fa = new FadeTransition(Duration.millis(1500),
+							labelListe.get(i));
+					fa.setFromValue(0.0);
+					fa.setToValue(1.0);
+					fa.setAutoReverse(true);
+					fa.play();
+					
+					FadeTransition faa = new FadeTransition(Duration.millis(1500),
+							paneListe.get(i));
+					faa.setFromValue(0.0);
+					faa.setToValue(1.0);
+					faa.setAutoReverse(true);
+					faa.play();
+					
+					//Change Color
+					paneListe.get(i).setStyle(colors[i]);
+				}				
 				break;
 			case 1:
-				
+				for (int i = 0; i < labelListe.size()-5; i++) {					
+					// Fades in Filter Panel
+					FadeTransition fa = new FadeTransition(Duration.millis(1500),
+							labelListe.get(i));
+					fa.setFromValue(0.0);
+					fa.setToValue(1.0);
+					fa.setAutoReverse(true);
+					fa.play();
+					
+					FadeTransition faa = new FadeTransition(Duration.millis(1500),
+							paneListe.get(i));
+					faa.setFromValue(0.0);
+					faa.setToValue(1.0);
+					faa.setAutoReverse(true);
+					faa.play();
+					
+					//Change Color
+					paneListe.get(i).setStyle(colors[i]);
+				}				
 				break;
 			case 2:
-				
+				for (int i = 0; i < labelListe.size()-4; i++) {					
+					// Fades in Filter Panel
+					FadeTransition fa = new FadeTransition(Duration.millis(1500),
+							labelListe.get(i));
+					fa.setFromValue(0.0);
+					fa.setToValue(1.0);
+					fa.setAutoReverse(true);
+					fa.play();
+					
+					FadeTransition faa = new FadeTransition(Duration.millis(1500),
+							paneListe.get(i));
+					faa.setFromValue(0.0);
+					faa.setToValue(1.0);
+					faa.setAutoReverse(true);
+					faa.play();
+					
+					//Change Color
+					paneListe.get(i).setStyle(colors[i]);
+				}				
 				break;
 			case 3:
-				
+				for (int i = 0; i < labelListe.size()-3; i++) {					
+					// Fades in Filter Panel
+					FadeTransition fa = new FadeTransition(Duration.millis(1500),
+							labelListe.get(i));
+					fa.setFromValue(0.0);
+					fa.setToValue(1.0);
+					fa.setAutoReverse(true);
+					fa.play();
+					
+					FadeTransition faa = new FadeTransition(Duration.millis(1500),
+							paneListe.get(i));
+					faa.setFromValue(0.0);
+					faa.setToValue(1.0);
+					faa.setAutoReverse(true);
+					faa.play();
+					
+					//Change Color
+					paneListe.get(i).setStyle(colors[i]);
+				}				
 				break;
 			case 4:
-				
+				for (int i = 0; i < labelListe.size()-2; i++) {					
+					// Fades in Filter Panel
+					FadeTransition fa = new FadeTransition(Duration.millis(1500),
+							labelListe.get(i));
+					fa.setFromValue(0.0);
+					fa.setToValue(1.0);
+					fa.setAutoReverse(true);
+					fa.play();
+					
+					FadeTransition faa = new FadeTransition(Duration.millis(1500),
+							paneListe.get(i));
+					faa.setFromValue(0.0);
+					faa.setToValue(1.0);
+					faa.setAutoReverse(true);
+					faa.play();
+					
+					//Change Color
+					paneListe.get(i).setStyle(colors[i]);
+				}				
 				break;
 			case 5:
-				
+				for (int i = 0; i < labelListe.size()-1; i++) {					
+					// Fades in Filter Panel
+					FadeTransition fa = new FadeTransition(Duration.millis(1500),
+							labelListe.get(i));
+					fa.setFromValue(0.0);
+					fa.setToValue(1.0);
+					fa.setAutoReverse(true);
+					fa.play();
+					
+					FadeTransition faa = new FadeTransition(Duration.millis(1500),
+							paneListe.get(i));
+					faa.setFromValue(0.0);
+					faa.setToValue(1.0);
+					faa.setAutoReverse(true);
+					faa.play();
+					
+					//Change Color
+					paneListe.get(i).setStyle(colors[i]);
+				}				
 				break;
 			case 6:
 				for (int i = 0; i < labelListe.size(); i++) {					
@@ -289,7 +452,7 @@ public class FahrplanGraphicLayoutController {
 					faa.play();
 					
 					//Change Color
-					paneListe.get(i).setStyle("-fx-background-color:  white;");
+					paneListe.get(i).setStyle(colors[i]);
 				}				
 				break;
 
@@ -301,22 +464,130 @@ public class FahrplanGraphicLayoutController {
 		case 1:
 			switch (this.tagEnde) {
 			case 1:
-				
+				for (int i = 1; i < labelListe.size()-5; i++) {					
+					// Fades in Filter Panel
+					FadeTransition fa = new FadeTransition(Duration.millis(1500),
+							labelListe.get(i));
+					fa.setFromValue(0.0);
+					fa.setToValue(1.0);
+					fa.setAutoReverse(true);
+					fa.play();
+					
+					FadeTransition faa = new FadeTransition(Duration.millis(1500),
+							paneListe.get(i));
+					faa.setFromValue(0.0);
+					faa.setToValue(1.0);
+					faa.setAutoReverse(true);
+					faa.play();
+					
+					//Change Color
+					paneListe.get(i).setStyle(colors[i-1]);
+				}				
 				break;
 			case 2:
-				
+				for (int i = 1; i < labelListe.size()-4; i++) {					
+					// Fades in Filter Panel
+					FadeTransition fa = new FadeTransition(Duration.millis(1500),
+							labelListe.get(i));
+					fa.setFromValue(0.0);
+					fa.setToValue(1.0);
+					fa.setAutoReverse(true);
+					fa.play();
+					
+					FadeTransition faa = new FadeTransition(Duration.millis(1500),
+							paneListe.get(i));
+					faa.setFromValue(0.0);
+					faa.setToValue(1.0);
+					faa.setAutoReverse(true);
+					faa.play();
+					
+					//Change Color
+					paneListe.get(i).setStyle(colors[i-1]);
+				}				
 				break;
 			case 3:
-				
+				for (int i = 1; i < labelListe.size()-3; i++) {					
+					// Fades in Filter Panel
+					FadeTransition fa = new FadeTransition(Duration.millis(1500),
+							labelListe.get(i));
+					fa.setFromValue(0.0);
+					fa.setToValue(1.0);
+					fa.setAutoReverse(true);
+					fa.play();
+					
+					FadeTransition faa = new FadeTransition(Duration.millis(1500),
+							paneListe.get(i));
+					faa.setFromValue(0.0);
+					faa.setToValue(1.0);
+					faa.setAutoReverse(true);
+					faa.play();
+					
+					//Change Color
+					paneListe.get(i).setStyle(colors[i-1]);
+				}				
 				break;
 			case 4:
-				
+				for (int i = 1; i < labelListe.size()-2; i++) {					
+					// Fades in Filter Panel
+					FadeTransition fa = new FadeTransition(Duration.millis(1500),
+							labelListe.get(i));
+					fa.setFromValue(0.0);
+					fa.setToValue(1.0);
+					fa.setAutoReverse(true);
+					fa.play();
+					
+					FadeTransition faa = new FadeTransition(Duration.millis(1500),
+							paneListe.get(i));
+					faa.setFromValue(0.0);
+					faa.setToValue(1.0);
+					faa.setAutoReverse(true);
+					faa.play();
+					
+					//Change Color
+					paneListe.get(i).setStyle(colors[i-1]);
+				}				
 				break;
 			case 5:
-				
+				for (int i = 1; i < labelListe.size()-1; i++) {					
+					// Fades in Filter Panel
+					FadeTransition fa = new FadeTransition(Duration.millis(1500),
+							labelListe.get(i));
+					fa.setFromValue(0.0);
+					fa.setToValue(1.0);
+					fa.setAutoReverse(true);
+					fa.play();
+					
+					FadeTransition faa = new FadeTransition(Duration.millis(1500),
+							paneListe.get(i));
+					faa.setFromValue(0.0);
+					faa.setToValue(1.0);
+					faa.setAutoReverse(true);
+					faa.play();
+					
+					//Change Color
+					paneListe.get(i).setStyle(colors[i-1]);
+				}				
 				break;
 			case 6:
-				
+				for (int i = 1; i < labelListe.size(); i++) {					
+					// Fades in Filter Panel
+					FadeTransition fa = new FadeTransition(Duration.millis(1500),
+							labelListe.get(i));
+					fa.setFromValue(0.0);
+					fa.setToValue(1.0);
+					fa.setAutoReverse(true);
+					fa.play();
+					
+					FadeTransition faa = new FadeTransition(Duration.millis(1500),
+							paneListe.get(i));
+					faa.setFromValue(0.0);
+					faa.setToValue(1.0);
+					faa.setAutoReverse(true);
+					faa.play();
+					
+					//Change Color
+					paneListe.get(i).setStyle(colors[i-1]);
+				}				
 				break;
 
 			default:
@@ -327,19 +598,109 @@ public class FahrplanGraphicLayoutController {
 		case 2:
 			switch (this.tagEnde) {
 			case 2:
-				
+				for (int i = 2; i < labelListe.size()-4; i++) {					
+					// Fades in Filter Panel
+					FadeTransition fa = new FadeTransition(Duration.millis(1500),
+							labelListe.get(i));
+					fa.setFromValue(0.0);
+					fa.setToValue(1.0);
+					fa.setAutoReverse(true);
+					fa.play();
+					
+					FadeTransition faa = new FadeTransition(Duration.millis(1500),
+							paneListe.get(i));
+					faa.setFromValue(0.0);
+					faa.setToValue(1.0);
+					faa.setAutoReverse(true);
+					faa.play();
+					
+					//Change Color
+					paneListe.get(i).setStyle(colors[i-2]);
+				}				
 				break;
 			case 3:
-				
+				for (int i = 2; i < labelListe.size()-3; i++) {					
+					// Fades in Filter Panel
+					FadeTransition fa = new FadeTransition(Duration.millis(1500),
+							labelListe.get(i));
+					fa.setFromValue(0.0);
+					fa.setToValue(1.0);
+					fa.setAutoReverse(true);
+					fa.play();
+					
+					FadeTransition faa = new FadeTransition(Duration.millis(1500),
+							paneListe.get(i));
+					faa.setFromValue(0.0);
+					faa.setToValue(1.0);
+					faa.setAutoReverse(true);
+					faa.play();
+					
+					//Change Color
+					paneListe.get(i).setStyle(colors[i-2]);
+				}				
 				break;
 			case 4:
-				
+				for (int i = 2; i < labelListe.size()-2; i++) {					
+					// Fades in Filter Panel
+					FadeTransition fa = new FadeTransition(Duration.millis(1500),
+							labelListe.get(i));
+					fa.setFromValue(0.0);
+					fa.setToValue(1.0);
+					fa.setAutoReverse(true);
+					fa.play();
+					
+					FadeTransition faa = new FadeTransition(Duration.millis(1500),
+							paneListe.get(i));
+					faa.setFromValue(0.0);
+					faa.setToValue(1.0);
+					faa.setAutoReverse(true);
+					faa.play();
+					
+					//Change Color
+					paneListe.get(i).setStyle(colors[i-2]);
+				}				
 				break;
 			case 5:
-				
+				for (int i = 2; i < labelListe.size()-1; i++) {					
+					// Fades in Filter Panel
+					FadeTransition fa = new FadeTransition(Duration.millis(1500),
+							labelListe.get(i));
+					fa.setFromValue(0.0);
+					fa.setToValue(1.0);
+					fa.setAutoReverse(true);
+					fa.play();
+					
+					FadeTransition faa = new FadeTransition(Duration.millis(1500),
+							paneListe.get(i));
+					faa.setFromValue(0.0);
+					faa.setToValue(1.0);
+					faa.setAutoReverse(true);
+					faa.play();
+					
+					//Change Color
+					paneListe.get(i).setStyle(colors[i-2]);
+				}				
 				break;
 			case 6:
-				
+				for (int i = 2; i < labelListe.size(); i++) {					
+					// Fades in Filter Panel
+					FadeTransition fa = new FadeTransition(Duration.millis(1500),
+							labelListe.get(i));
+					fa.setFromValue(0.0);
+					fa.setToValue(1.0);
+					fa.setAutoReverse(true);
+					fa.play();
+					
+					FadeTransition faa = new FadeTransition(Duration.millis(1500),
+							paneListe.get(i));
+					faa.setFromValue(0.0);
+					faa.setToValue(1.0);
+					faa.setAutoReverse(true);
+					faa.play();
+					
+					//Change Color
+					paneListe.get(i).setStyle(colors[i-2]);
+				}				
 				break;
 
 			default:
@@ -350,19 +711,88 @@ public class FahrplanGraphicLayoutController {
 		case 3:
 			switch (this.tagEnde) {
 			case 3:
-				
+				for (int i = 3; i < labelListe.size()-3; i++) {					
+					// Fades in Filter Panel
+					FadeTransition fa = new FadeTransition(Duration.millis(1500),
+							labelListe.get(i));
+					fa.setFromValue(0.0);
+					fa.setToValue(1.0);
+					fa.setAutoReverse(true);
+					fa.play();
+					
+					FadeTransition faa = new FadeTransition(Duration.millis(1500),
+							paneListe.get(i));
+					faa.setFromValue(0.0);
+					faa.setToValue(1.0);
+					faa.setAutoReverse(true);
+					faa.play();
+					
+					//Change Color
+					paneListe.get(i).setStyle(colors[i-3]);
+				}				
 				break;
 			case 4:
-				
+				for (int i = 3; i < labelListe.size()-2; i++) {					
+					// Fades in Filter Panel
+					FadeTransition fa = new FadeTransition(Duration.millis(1500),
+							labelListe.get(i));
+					fa.setFromValue(0.0);
+					fa.setToValue(1.0);
+					fa.setAutoReverse(true);
+					fa.play();
+					
+					FadeTransition faa = new FadeTransition(Duration.millis(1500),
+							paneListe.get(i));
+					faa.setFromValue(0.0);
+					faa.setToValue(1.0);
+					faa.setAutoReverse(true);
+					faa.play();
+					
+					//Change Color
+					paneListe.get(i).setStyle(colors[i-3]);
+				}				
 				break;
 			case 5:
-				
+				for (int i = 3; i < labelListe.size()-1; i++) {					
+					// Fades in Filter Panel
+					FadeTransition fa = new FadeTransition(Duration.millis(1500),
+							labelListe.get(i));
+					fa.setFromValue(0.0);
+					fa.setToValue(1.0);
+					fa.setAutoReverse(true);
+					fa.play();
+					
+					FadeTransition faa = new FadeTransition(Duration.millis(1500),
+							paneListe.get(i));
+					faa.setFromValue(0.0);
+					faa.setToValue(1.0);
+					faa.setAutoReverse(true);
+					faa.play();
+					
+					//Change Color
+					paneListe.get(i).setStyle(colors[i-3]);
+				}				
 				break;
 			case 6:
-				
-				break;
-
-			default:
+				for (int i = 3; i < labelListe.size(); i++) {					
+					// Fades in Filter Panel
+					FadeTransition fa = new FadeTransition(Duration.millis(1500),
+							labelListe.get(i));
+					fa.setFromValue(0.0);
+					fa.setToValue(1.0);
+					fa.setAutoReverse(true);
+					fa.play();
+					
+					FadeTransition faa = new FadeTransition(Duration.millis(1500),
+							paneListe.get(i));
+					faa.setFromValue(0.0);
+					faa.setToValue(1.0);
+					faa.setAutoReverse(true);
+					faa.play();
+					
+					//Change Color
+					paneListe.get(i).setStyle(colors[i-3]);
+				}				
 				break;
 			}
 
@@ -370,15 +800,68 @@ public class FahrplanGraphicLayoutController {
 		case 4:
 			switch (this.tagEnde) {
 			case 4:
-				
+				for (int i = 4; i < labelListe.size()-2; i++) {					
+					// Fades in Filter Panel
+					FadeTransition fa = new FadeTransition(Duration.millis(1500),
+							labelListe.get(i));
+					fa.setFromValue(0.0);
+					fa.setToValue(1.0);
+					fa.setAutoReverse(true);
+					fa.play();
+					
+					FadeTransition faa = new FadeTransition(Duration.millis(1500),
+							paneListe.get(i));
+					faa.setFromValue(0.0);
+					faa.setToValue(1.0);
+					faa.setAutoReverse(true);
+					faa.play();
+					
+					//Change Color
+					paneListe.get(i).setStyle(colors[i-4]);
+				}				
 				break;
 			case 5:
-				
+				for (int i = 4; i < labelListe.size()-1; i++) {					
+					// Fades in Filter Panel
+					FadeTransition fa = new FadeTransition(Duration.millis(1500),
+							labelListe.get(i));
+					fa.setFromValue(0.0);
+					fa.setToValue(1.0);
+					fa.setAutoReverse(true);
+					fa.play();
+					
+					FadeTransition faa = new FadeTransition(Duration.millis(1500),
+							paneListe.get(i));
+					faa.setFromValue(0.0);
+					faa.setToValue(1.0);
+					faa.setAutoReverse(true);
+					faa.play();
+					
+					//Change Color
+					paneListe.get(i).setStyle(colors[i-4]);
+				}				
 				break;
 			case 6:
-				
+				for (int i = 4; i < labelListe.size(); i++) {					
+					// Fades in Filter Panel
+					FadeTransition fa = new FadeTransition(Duration.millis(1500),
+							labelListe.get(i));
+					fa.setFromValue(0.0);
+					fa.setToValue(1.0);
+					fa.setAutoReverse(true);
+					fa.play();
+					
+					FadeTransition faa = new FadeTransition(Duration.millis(1500),
+							paneListe.get(i));
+					faa.setFromValue(0.0);
+					faa.setToValue(1.0);
+					faa.setAutoReverse(true);
+					faa.play();
+					
+					//Change Color
+					paneListe.get(i).setStyle(colors[i-4]);
+				}				
 				break;
-
 			default:
 				break;
 			}
@@ -387,12 +870,47 @@ public class FahrplanGraphicLayoutController {
 		case 5:
 			switch (this.tagEnde) {
 			case 5:
-				
+				for (int i = 5; i < labelListe.size()-1; i++) {					
+					// Fades in Filter Panel
+					FadeTransition fa = new FadeTransition(Duration.millis(1500),
+							labelListe.get(i));
+					fa.setFromValue(0.0);
+					fa.setToValue(1.0);
+					fa.setAutoReverse(true);
+					fa.play();
+					
+					FadeTransition faa = new FadeTransition(Duration.millis(1500),
+							paneListe.get(i));
+					faa.setFromValue(0.0);
+					faa.setToValue(1.0);
+					faa.setAutoReverse(true);
+					faa.play();
+					
+					//Change Color
+					paneListe.get(i).setStyle(colors[i-5]);
+				}				
 				break;
 			case 6:
-				
+				for (int i = 5; i < labelListe.size(); i++) {					
+					// Fades in Filter Panel
+					FadeTransition fa = new FadeTransition(Duration.millis(1500),
+							labelListe.get(i));
+					fa.setFromValue(0.0);
+					fa.setToValue(1.0);
+					fa.setAutoReverse(true);
+					fa.play();
+					
+					FadeTransition faa = new FadeTransition(Duration.millis(1500),
+							paneListe.get(i));
+					faa.setFromValue(0.0);
+					faa.setToValue(1.0);
+					faa.setAutoReverse(true);
+					faa.play();
+					
+					//Change Color
+					paneListe.get(i).setStyle(colors[i-5]);
+				}				
 				break;
-
 			default:
 				break;
 			}
@@ -400,8 +918,27 @@ public class FahrplanGraphicLayoutController {
 			break;
 		case 6:
 			switch (this.tagEnde) {
+			
 			case 6:
-				
+				for (int i = 6; i < labelListe.size(); i++) {					
+					// Fades in Filter Panel
+					FadeTransition fa = new FadeTransition(Duration.millis(1500),
+							labelListe.get(i));
+					fa.setFromValue(0.0);
+					fa.setToValue(1.0);
+					fa.setAutoReverse(true);
+					fa.play();
+					
+					FadeTransition faa = new FadeTransition(Duration.millis(1500),
+							paneListe.get(i));
+					faa.setFromValue(0.0);
+					faa.setToValue(1.0);
+					faa.setAutoReverse(true);
+					faa.play();
+					
+					//Change Color
+					paneListe.get(i).setStyle(colors[i-6]);
+				}				
 				break;
 
 			default:

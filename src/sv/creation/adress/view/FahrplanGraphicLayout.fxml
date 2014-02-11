@@ -15,18 +15,18 @@
   <children>
     <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="0">
       <children>
-        <StackedAreaChart fx:id="fahrplanvergleich" alternativeColumnFillVisible="false" alternativeRowFillVisible="false" animated="true" horizontalGridLinesVisible="true" legendVisible="false" prefHeight="565.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <AreaChart id="AreaChartNxN" fx:id="fahrplanvergleich" alternativeRowFillVisible="false" legendVisible="false" prefHeight="735.0" prefWidth="760.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
           <xAxis>
-            <NumberAxis fx:id="xAxis" autoRanging="false" label="" minorTickCount="4" side="BOTTOM" tickLabelFill="WHITE">
+            <NumberAxis fx:id="xAxis" autoRanging="false" minorTickCount="4" side="BOTTOM" tickLabelFill="WHITE">
               <tickLabelFont>
                 <Font name="Arial" size="10.0" fx:id="x1" />
               </tickLabelFont>
             </NumberAxis>
           </xAxis>
           <yAxis>
-            <NumberAxis fx:id="yAxis" side="LEFT" styleClass="axis-fahrplan, label-white" tickLabelFill="WHITE" tickLabelFont="$x1" />
+            <NumberAxis fx:id="yAxis" side="LEFT" styleClass="axis-fahrplan" tickLabelFill="WHITE" tickLabelFont="$x1" />
           </yAxis>
-        </StackedAreaChart>
+        </AreaChart>
       </children>
     </AnchorPane>
     <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
@@ -54,7 +54,7 @@
                 </FXCollections>
               </items>
             </ChoiceBox>
-            <Button mnemonicParsing="false" styleClass="dark-blue" text="Anwenden">
+            <Button mnemonicParsing="false" onAction="#changeTimewindow" styleClass="dark-blue" text="Anwenden">
               <HBox.margin>
                 <Insets left="20.0" />
               </HBox.margin>
