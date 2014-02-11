@@ -1136,6 +1136,33 @@ public class DBMatching {
 		}
 		return isEmpty;
 	}
+	
+	public boolean fahrplanIsEmpty() {
+		boolean isEmpty = false;
+
+		DBConnection db = new DBConnection();
+		db.initDBConnection();
+
+		ArrayList<Integer> fahrplan = new ArrayList<Integer>();
+
+		// Creating a sql query
+		try {
+
+			stmt = db.getConnection().createStatement();
+			ResultSet rest1 = stmt.executeQuery("SELECT * FROM Fahrplan;");
+			while (rest1.next()) {
+				fahrplan.add(Integer.parseInt(rest1.getString("ID")));
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (fahrplan.isEmpty()) {
+			isEmpty = true;
+		}
+		return isEmpty;
+	}
 
 	public String changeDateFormat(String date) {
 

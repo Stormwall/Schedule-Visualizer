@@ -10,26 +10,26 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.text.*?>
 
-<GridPane prefHeight="600.0" prefWidth="600.0" styleClass="background" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sv.creation.adress.FahrplanGraphicLayoutController">
+<GridPane gridLinesVisible="false" prefHeight="800.0" prefWidth="800.0" styleClass="background" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sv.creation.adress.FahrplanGraphicLayoutController">
   <!-- TODO Add Nodes -->
   <children>
-    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
+    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="0">
       <children>
-        <StackedAreaChart fx:id="fahrplanvergleich" alternativeColumnFillVisible="false" alternativeRowFillVisible="true" animated="true" horizontalGridLinesVisible="true" legendVisible="true" prefHeight="565.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <StackedAreaChart fx:id="fahrplanvergleich" alternativeColumnFillVisible="false" alternativeRowFillVisible="false" animated="true" horizontalGridLinesVisible="true" legendVisible="false" prefHeight="565.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
           <xAxis>
-            <NumberAxis fx:id="xAxis" autoRanging="false" minorTickCount="4" side="BOTTOM" tickLabelFill="WHITE">
+            <NumberAxis fx:id="xAxis" autoRanging="false" label="" minorTickCount="4" side="BOTTOM" tickLabelFill="WHITE">
               <tickLabelFont>
                 <Font name="Arial" size="10.0" fx:id="x1" />
               </tickLabelFont>
             </NumberAxis>
           </xAxis>
           <yAxis>
-            <NumberAxis fx:id="yAxis" side="LEFT" styleClass="axis-fahrplan" tickLabelFill="WHITE" tickLabelFont="$x1" />
+            <NumberAxis fx:id="yAxis" side="LEFT" styleClass="axis-fahrplan, label-white" tickLabelFill="WHITE" tickLabelFont="$x1" />
           </yAxis>
         </StackedAreaChart>
       </children>
     </AnchorPane>
-    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
+    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
       <children>
         <Button layoutY="5.0" mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Abbrechen" AnchorPane.rightAnchor="13.0" />
         <HBox id="HBox" alignment="CENTER" layoutY="5.0" prefWidth="377.0" spacing="5.0" AnchorPane.leftAnchor="3.0">
@@ -63,13 +63,104 @@
         </HBox>
       </children>
     </AnchorPane>
+    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+      <children>
+        <Label layoutX="-62.0" rotate="270.0" text="Anzahl Servicefahrten" textFill="WHITE" AnchorPane.bottomAnchor="265.0" AnchorPane.topAnchor="266.0">
+          <font>
+            <Font name="Arial" size="16.0" fx:id="x2" />
+          </font>
+        </Label>
+      </children>
+    </AnchorPane>
+    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+      <children>
+        <Label font="$x2" layoutY="6.0" text="Uhrzeit" textFill="WHITE" AnchorPane.rightAnchor="30.0" />
+        <GridPane prefWidth="760.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+          <children>
+            <Label fx:id="monday" opacity="0.0" text="Montag" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="0">
+              <font>
+                <Font name="Arial" size="12.0" fx:id="x3" />
+              </font>
+            </Label>
+            <Label id="thursday" fx:id="tuesday" font="$x3" opacity="0.0" text="Dienstag" textFill="WHITE" GridPane.columnIndex="4" GridPane.rowIndex="0" />
+            <Label fx:id="wednsday" font="$x3" opacity="0.0" text="Mittwoch" textFill="WHITE" GridPane.columnIndex="6" GridPane.rowIndex="0" />
+            <Label fx:id="thursday" font="$x3" opacity="0.0" text="Donnerstag" textFill="WHITE" GridPane.columnIndex="8" GridPane.rowIndex="0" />
+            <Label id="fridayP" fx:id="friday" font="$x3" opacity="0.0" text="Freitag" textFill="WHITE" GridPane.columnIndex="10" GridPane.rowIndex="0" />
+            <Label fx:id="saturday" font="$x3" opacity="0.0" text="Samstag" textFill="WHITE" GridPane.columnIndex="12" GridPane.rowIndex="0" />
+            <Label fx:id="sunday" font="$x3" opacity="0.0" text="Sonntag" textFill="WHITE" GridPane.columnIndex="14" GridPane.rowIndex="0" />
+            <Pane fx:id="mondayP" maxHeight="10.0" maxWidth="10.0" minHeight="10.0" minWidth="10.0" opacity="0.0" prefHeight="23.0" prefWidth="14.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+              <padding>
+                <Insets />
+              </padding>
+              <GridPane.margin>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" fx:id="x4" />
+              </GridPane.margin>
+            </Pane>
+            <Pane fx:id="tuesdayP" maxHeight="10.0" maxWidth="10.0" minHeight="10.0" minWidth="10.0" opacity="0.0" prefHeight="23.0" prefWidth="14.0" GridPane.columnIndex="3" GridPane.margin="$x4" GridPane.rowIndex="0">
+              <padding>
+                <Insets />
+              </padding>
+            </Pane>
+            <Pane fx:id="wednsdayP" maxHeight="10.0" maxWidth="10.0" minHeight="10.0" minWidth="10.0" opacity="0.0" prefHeight="23.0" prefWidth="14.0" GridPane.columnIndex="5" GridPane.margin="$x4" GridPane.rowIndex="0">
+              <padding>
+                <Insets />
+              </padding>
+            </Pane>
+            <Pane fx:id="thursdayP" maxHeight="10.0" maxWidth="10.0" minHeight="10.0" minWidth="10.0" opacity="0.0" prefHeight="23.0" prefWidth="14.0" GridPane.columnIndex="7" GridPane.margin="$x4" GridPane.rowIndex="0">
+              <padding>
+                <Insets />
+              </padding>
+            </Pane>
+            <Pane fx:id="fridayP" maxHeight="10.0" maxWidth="10.0" minHeight="10.0" minWidth="10.0" opacity="0.0" prefHeight="23.0" prefWidth="14.0" GridPane.columnIndex="9" GridPane.margin="$x4" GridPane.rowIndex="0">
+              <padding>
+                <Insets />
+              </padding>
+            </Pane>
+            <Pane fx:id="saturdayP" maxHeight="10.0" maxWidth="10.0" minHeight="10.0" minWidth="10.0" opacity="0.0" prefHeight="23.0" prefWidth="14.0" GridPane.columnIndex="11" GridPane.margin="$x4" GridPane.rowIndex="0">
+              <padding>
+                <Insets />
+              </padding>
+            </Pane>
+            <Pane fx:id="sundayP" maxHeight="10.0" maxWidth="10.0" minHeight="10.0" minWidth="10.0" opacity="0.0" prefHeight="23.0" prefWidth="14.0" GridPane.columnIndex="13" GridPane.margin="$x4" GridPane.rowIndex="0">
+              <padding>
+                <Insets />
+              </padding>
+            </Pane>
+          </children>
+          <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-1.0" minWidth="10.0" prefWidth="17.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="14.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="50.0" prefWidth="49.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="28.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="50.0" prefWidth="28.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="28.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="50.0" prefWidth="28.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="28.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="70.0" minWidth="70.0" prefWidth="28.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="28.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="50.0" prefWidth="28.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="28.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="50.0" prefWidth="28.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="28.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="50.0" prefWidth="28.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-1.0" minWidth="10.0" prefWidth="15.0" />
+          </columnConstraints>
+          <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          </rowConstraints>
+        </GridPane>
+      </children>
+    </AnchorPane>
   </children>
   <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="28.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-1.0" minWidth="10.0" prefWidth="562.0" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints maxHeight="-1.0" minHeight="10.0" prefHeight="564.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="35.0" minHeight="35.0" prefHeight="36.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="-1.0" minHeight="10.0" prefHeight="546.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="19.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="35.0" minHeight="35.0" prefHeight="35.0" vgrow="SOMETIMES" />
   </rowConstraints>
   <stylesheets>
     <URL value="@MainLayout.css" />

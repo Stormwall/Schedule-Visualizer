@@ -4685,7 +4685,7 @@ public class MainLayoutController {
 
 		this.fahrplanliste.clear();
 
-		if (dbm.databaseIsEmpty() || dbm.dienstplanIsEmpty()) {
+		if (dbm.databaseIsEmpty() || dbm.fahrplanIsEmpty()) {
 
 		} else {
 
