@@ -875,9 +875,9 @@ public class StringSplitter {
 				filename = file.getName();
 				
 				
-//				String test=dbc.getVehicleScheduleName(getFilename());
-				dbc.checkDiensttypen(filename);
-				if(dbc.isDiensttypenVorhanden()){
+				String test=dbc.getVehicleScheduleName(getFilename());
+				dbc.checkFahrplan(test);
+				if(dbc.isFahrplanVorhanden()){
 				String zeile = null;
 				ArrayList<String> zeilenelemente = new ArrayList<String>();
 				while ((zeile = diensttypen.readLine()) != null) {

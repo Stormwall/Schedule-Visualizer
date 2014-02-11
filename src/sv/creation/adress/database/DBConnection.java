@@ -64,6 +64,8 @@ public class DBConnection {
 				return;
 			System.out.println("Creating DB Connection...");
 			connection = DriverManager.getConnection("jdbc:sqlite:" + file);
+			Statement stmt=connection.createStatement();
+			stmt.executeUpdate("PRAGMA foreign_keys = ON;");
 			if (!connection.isClosed())
 				System.out.println("...Connection established!");
 		} catch (SQLException e) {
@@ -284,13 +286,13 @@ public class DBConnection {
 																+ "UmlaufplanID INTEGER NOT NULL, "
 																+ "FOREIGN KEY (VehTypeID) REFERENCES VehicleType(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
 																+ "FOREIGN KEY (DepotID) REFERENCES Stoppoint(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
-																+ "FOREIGN KEY (UmlaufplanID) REFERENCES Umlaufplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);");
+																+ "FOREIGN KEY (UmlaufplanID) REFERENCES Umlaufplan(ID) ON DELETE CASCADE);");
 			
 			//table for tour elements (journeys)
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Blockelement (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
 																	   + "BlockID INTEGER NOT NULL, "
 //																	   + "BlockID_txt INTEGER NOT NULL, "
-																	   + "ServiceJourneyID INTEGER NOT NULL, "
+																	   + "ServiceJourneyID VARCHAR(30) NOT NULL, "
 //																	   + "ServiceJourneyID_txt VARCHAR(30) NOT NULL, "
 																	   + "ElementType INTEGER NOT NULL, "
 																	   + "DayID INTEGER,"
@@ -298,9 +300,8 @@ public class DBConnection {
 																	   + "MatchingPos INTEGER NOT NULL, "
 																	   + "FOREIGN KEY (BlockID) REFERENCES Block(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
 																	   + "FOREIGN KEY (ServiceJourneyID) REFERENCES ServiceJourney(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
-																	   + "FOREIGN KEY(DayID) REFERENCES Day(dayID) ON UPDATE CASCADE ON DELETE CASCADE, "
-																	   + "FOREIGN KEY (UmlaufplanID) REFERENCES Umlaufplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);");
-			
+																	   + "FOREIGN KEY (UmlaufplanID) REFERENCES Umlaufplan(ID) ON DELETE CASCADE);");
+					
 			//table for specific tour elements (left over from initial solution for the tour planning problem)
 			//e.g. journeys from or to depots, waiting times etc.
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS ExceptionalBlockelement (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -319,7 +320,7 @@ public class DBConnection {
 			   																		+ "FOREIGN KEY (BlockID) REFERENCES Block(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
 			   																		+ "FOREIGN KEY (FromStopID) REFERENCES Stoppoint(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
 			   																		+ "FOREIGN KEY (ToStopID) REFERENCES Stoppoint(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
-			   																		+ "FOREIGN KEY (UmlaufplanID) REFERENCES Umlaufplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);");
+			   																		+ "FOREIGN KEY (UmlaufplanID) REFERENCES Umlaufplan(ID) ON DELETE CASCADE ON UPDATE CASCADE);");
 			
 			
 		
@@ -676,15 +677,15 @@ public class DBConnection {
 		  while((it49.hasNext()&&it50.hasNext()&&it51.hasNext()&&it52.hasNext()&&it53.hasNext()&&it54.hasNext())){
 			  int id=it49.next();
 			  
-			  stmnt.executeUpdate("INSERT INTO Days (TRIPID, d1, d2, d3, d4, d5, FahrplanID, TRIPID) VALUES('"+id+"','"+it50.next()+"','"+it51.next()+"','"+it52.next()+"','"+it53.next()+"','"+it54.next()+"', "
-					  																						+ "(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%'), "
-					  																						+ "(SELECT sj.ID FROM ServiceJourney AS sj WHERE sj.ServiceJourneyID='"+id+"' AND sj.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%')));");
+			  stmnt.executeUpdate("INSERT INTO Days (d1, d2, d3, d4, d5, FahrplanID, TRIPID) VALUES('"+it50.next()+"','"+it51.next()+"','"+it52.next()+"','"+it53.next()+"','"+it54.next()+"', "
+					  																						+ "(SELECT ID FROM Fahrplan WHERE Bezeichnung = '"+ss.getFilename()+"'), "
+					  																						+ "(SELECT sj.ID FROM ServiceJourney AS sj WHERE sj.ServiceJourneyID='"+id+"' AND sj.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung = '"+ss.getFilename()+"')));");
 		  }
 		  //6 days
 		  while((it49.hasNext()&&it50.hasNext()&&it51.hasNext()&&it52.hasNext()&&it53.hasNext()&&it54.hasNext()&&it55.hasNext())){
 			  int id=it49.next();
 			  
-			  stmnt.executeUpdate("INSERT INTO Days (TRIPID, d1, d2, d3, d4, d5, d6, FahrplanID, TRIPID) VALUES('"+id+"','"+it50.next()+"','"+it51.next()+"','"+it52.next()+"','"+it53.next()+"','"+it54.next()+"','"+it55.next()+"',"
+			  stmnt.executeUpdate("INSERT INTO Days (d1, d2, d3, d4, d5, d6, FahrplanID, TRIPID) VALUES('"+it50.next()+"','"+it51.next()+"','"+it52.next()+"','"+it53.next()+"','"+it54.next()+"','"+it55.next()+"',"
 					  																							+ "(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%'), "
 					  																							+ "(SELECT sj.ID FROM ServiceJourney AS sj WHERE sj.ServiceJourneyID='"+id+"' AND sj.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%')));");
 
@@ -693,7 +694,7 @@ public class DBConnection {
 		  while((it49.hasNext()&&it50.hasNext()&&it51.hasNext()&&it52.hasNext()&&it53.hasNext()&&it54.hasNext()&&it55.hasNext()&&it56.hasNext())){
 			  int id=it49.next();
 			  
-			  stmnt.executeUpdate("INSERT INTO Days (TRIPID, d1, d2, d3, d4, d5, d6, d7, FahrplanID, TRIPID) VALUES('"+id+"','"+it50.next()+"','"+it51.next()+"','"+it52.next()+"','"+it53.next()+"','"+it54.next()+"','"+it55.next()+"','"+it56.next()+"', "
+			  stmnt.executeUpdate("INSERT INTO Days (d1, d2, d3, d4, d5, d6, d7, FahrplanID, TRIPID) VALUES('"+it50.next()+"','"+it51.next()+"','"+it52.next()+"','"+it53.next()+"','"+it54.next()+"','"+it55.next()+"','"+it56.next()+"', "
 					  																								+ "(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%'), "
 					  																								+ "(SELECT sj.ID FROM ServiceJourney AS sj WHERE sj.ServiceJourneyID='"+id+"' AND sj.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%')));");
 		  }
@@ -760,11 +761,11 @@ public class DBConnection {
 			  int BlockID = it.next();
 			  int vehType = it2.next();
 			  int DepotID = it3.next();
-
-			  stmnt.executeUpdate("INSERT INTO Block (BlockID, UmlaufplanID, VehTypeID, DepotID)  VALUES('"+BlockID+"', "
-			  + "(SELECT up.ID FROM Umlaufplan AS up WHERE Bezeichnung LIKE '"+fileNameVergleich+"'), "
+			  
+			  stmnt.executeUpdate("INSERT INTO Block (BlockID, VehTypeID, DepotID, UmlaufplanID)  VALUES('"+BlockID+"', "
 			  + "(SELECT vt.ID FROM VehicleType AS vt WHERE vt.VehicleTypeID='"+vehType+"' AND vt.FahrplanID= (SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%'))), "
-			  + "(SELECT sp.StoppointID FROM Stoppoint AS sp WHERE sp.StoppointID='"+DepotID+"' AND sp.FahrplanID=(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%'))));");
+			  + "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.StoppointID='"+DepotID+"' AND sp.FahrplanID=(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%'))), "
+			  + "(SELECT up.ID FROM Umlaufplan AS up WHERE Bezeichnung = '"+fileNameVergleich+"'));");
 				}
 		  
 		//fill special journey
@@ -776,10 +777,12 @@ public class DBConnection {
 			
 		
 			if (EleType == 1){
+				
 				stmnt.executeUpdate("INSERT INTO Blockelement (ElementType, DayID, BlockID, ServiceJourneyID, UmlaufplanID, MatchingPos) VALUES('"+EleType+"','"+dayID+"', "
-						  + "(SELECT b.ID FROM Block AS b WHERE b.BlockID='"+blockID+"' AND b.UmlaufplanID=(SELECT up.ID FROM Umlaufplan AS up WHERE Bezeichnung LIKE '%"+finalString+"%')), "
-						  + "(SELECT sj.ID FROM ServiceJourney AS sj WHERE sj.ServiceJourneyID='"+sjID+"' AND sj.FahrplanID=(SELECT fp.ID FROM Fahrplan AS fp WHERE Bezeichnung LIKE '%"+finalString+"%')), "
-						  + "(SELECT up.ID FROM Umlaufplan AS up WHERE Bezeichnung LIKE '"+fileNameVergleich+"'),'"+pos+"');");
+						  + "(SELECT b.ID FROM Block AS b WHERE b.BlockID='"+blockID+"' AND b.UmlaufplanID=(SELECT up.ID FROM Umlaufplan AS up WHERE up.Bezeichnung LIKE ('%"+finalString+"%'))), "
+						  + "(SELECT sj.ID FROM ServiceJourney AS sj WHERE sj.ServiceJourneyID='"+sjID+"' AND sj.FahrplanID=(SELECT fp.ID FROM Fahrplan AS fp WHERE fp.Bezeichnung LIKE ('%"+finalString+"%'))), "
+						  + "(SELECT ID FROM Umlaufplan WHERE Bezeichnung = '"+fileNameVergleich+"'),'"+pos+"');");
+				
 			}else{
 				int fromstop = it16.next();
 				int tostop = it17.next();
@@ -1073,7 +1076,7 @@ public class DBConnection {
 		ArrayList <Integer> diensttypenListe=new ArrayList<Integer>();
 		try{
 			Statement stmnt=getConnection().createStatement();
-			ResultSet rest1=stmnt.executeQuery("SELECT dt.FahrplanID, f.Bezeichnung FROM Diensttypen AS dt, Fahrplan AS f WHERE dt.FahrplanID=f.ID;");
+			ResultSet rest1=stmnt.executeQuery("SELECT dt.FahrplanID, f.Bezeichnung FROM Dutytype AS dt, Fahrplan AS f WHERE dt.FahrplanID=f.ID;");
 			while(rest1.next()){
 			diensttypenListe.add(Integer.parseInt(rest1.getString("FahrplanID")));
 			}

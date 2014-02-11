@@ -1172,6 +1172,44 @@ public class DBMatching {
 
 		return newDate;
 	}
+	
+	public void deleteFahrplan(Fahrplan fahrplan){
+		
+		DBConnection db = new DBConnection();
+		db.initDBConnection();
+
+		// Creating a sql query
+		try {
+
+			stmt = db.getConnection().createStatement();
+			stmt.executeUpdate("DELETE FROM Fahrplan WHERE ID='"+fahrplan.getId()+"';");
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void deleteUmlaufplan(Umlaufplan umlaufplan){
+		
+		DBConnection db = new DBConnection();
+		db.initDBConnection();
+
+		// Creating a sql query
+		try {
+
+			stmt = db.getConnection().createStatement();
+			stmt.executeUpdate("DELETE FROM Umlaufplan WHERE ID='"+umlaufplan.getId()+"';");
+//			stmt.executeUpdate("DELETE FROM Block WHERE UmlaufplanID='"+umlaufplan.getId()+"';");
+//			stmt.executeUpdate("DELETE FROM Blockelement WHERE UmlaufplanID='"+umlaufplan.getId()+"';");
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 
 	// *****************************
 	// ****** Getter methods *******

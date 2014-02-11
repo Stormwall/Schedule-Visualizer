@@ -25,7 +25,7 @@ public class Vergleich {
 				String time = timeFormat(i);
 				stmt = db.getConnection().createStatement();
 				ResultSet rest1 = stmt
-						.executeQuery("SELECT COUNT(sj.ServiceJourneyID) AS AnzahlFahrten FROM ServiceJourney AS sj, Days AS d WHERE sj.ServiceJourneyID=d.TRIPID AND d."
+						.executeQuery("SELECT COUNT(sj.ServiceJourneyID) AS AnzahlFahrten FROM ServiceJourney AS sj, Days AS d WHERE sj.ID=d.TRIPID AND d."
 								+ dayString
 								+ "='1' AND d.FahrplanID= '"
 								+ id

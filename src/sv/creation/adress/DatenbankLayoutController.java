@@ -1,17 +1,20 @@
 package sv.creation.adress;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import sv.creation.adress.database.DBMatching;
 import sv.creation.adress.model.Dienstplan;
 import sv.creation.adress.model.Fahrplan;
 import sv.creation.adress.model.Umlaufplan;
+import sv.creation.adress.util.Import;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class DatenbankLayoutController {
@@ -80,7 +83,7 @@ public class DatenbankLayoutController {
 		this.fahrtable
 				.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-		// Belegung der �bersicht mit den Daten 
+		// Belegung der �bersicht mit den Daten 
 		
 		refreshUmlaufplan();
 		refreshDienstplan();
@@ -202,7 +205,7 @@ public class DatenbankLayoutController {
 
 	public void fillDienstplanliste() {
 
-		// Dienstpläne -- Choicebox wird gefüllt
+		// Dienstpl��ne -- Choicebox wird gef��llt
 
 		DBMatching dbm = new DBMatching();
 
@@ -221,11 +224,11 @@ public class DatenbankLayoutController {
 		}
 	}
 
-	// Methoden zur Befüllung der Umlaufplanliste
+	// Methoden zur Bef��llung der Umlaufplanliste
 
 	public void fillUmlaufplanliste() {
 
-		// Umlaufpläne -- Choicebox wird gefüllt
+		// Umlaufpl��ne -- Choicebox wird gef��llt
 
 		DBMatching dbm = new DBMatching();
 
@@ -258,18 +261,21 @@ public class DatenbankLayoutController {
 	public void handleImport() {
 
 //		FileChooser fileChooser = new FileChooser();
-
-		// // Set extension filter
-		// FileChooser.ExtensionFilter extFilter = new
-		// FileChooser.ExtensionFilter(
-		// "TXT files (*.txt)", "*.txt");
-		// fileChooser.getExtensionFilters().add(extFilter);
-
-		// Show open file dialog
-		// File file = fileChooser.showOpenDialog(dialogStage);
-		//
-		// Import im = new Import();
-		// im.importFile(file);
+//
+//		// // Set extension filter
+//		FileChooser.ExtensionFilter extFilter = new
+//		 FileChooser.ExtensionFilter(
+//		"TXT files (*.txt)", "*.txt");
+//		 fileChooser.getExtensionFilters().add(extFilter);
+//
+//		// Show open file dialog
+//		 File file = fileChooser.showOpenDialog(dialogStage);
+//		//
+//		 Import im = new Import();
+//		 im.importFile(file);
+		
+		DBMatching dbm = new DBMatching();
+		dbm.deleteUmlaufplan(umlaufplanliste.get(0));
 
 	}
 
