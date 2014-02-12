@@ -10,9 +10,10 @@ public class Days {
 	private int d5;
 	private int d6;
 	private int d7;
+	private int fahrplanID;
 	
 	 
-	public Days(int tripID, int d1, int d2, int d3, int d4, int d5, int d6, int d7) {
+	public Days(int tripID, int d1, int d2, int d3, int d4, int d5, int d6, int d7, int fahrplanID) {
 		super();
 		this.tripID = tripID;
 		this.d1 = d1;
@@ -22,6 +23,7 @@ public class Days {
 		this.d5 = d5;
 		this.d6 = d6;
 		this.d7 = d7;
+		this.fahrplanID = fahrplanID;
 	}
 
 
@@ -82,6 +84,36 @@ public class Days {
 
 	public void setD5(int d5) {
 		this.d5 = d5;
+	}
+
+
+	public int getD6() {
+		return d6;
+	}
+
+
+	public void setD6(int d6) {
+		this.d6 = d6;
+	}
+
+
+	public int getD7() {
+		return d7;
+	}
+
+
+	public void setD7(int d7) {
+		this.d7 = d7;
+	}
+
+
+	public int getFahrplanID() {
+		return fahrplanID;
+	}
+
+
+	public void setFahrplanID(int fahrplanID) {
+		this.fahrplanID = fahrplanID;
 	}
 	
 	

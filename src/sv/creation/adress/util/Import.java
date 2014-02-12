@@ -9,7 +9,7 @@ public class Import {
 	public void importFile(File file) {
 
 		DBConnection dbc = new DBConnection();
-		StringSplitter ss = new StringSplitter();
+		StringSplitter ss = StringSplitter.getInstance();
 
 		if (file.getName().startsWith("vs")) {
 			ss.readTxtUmlaufplan(file.getPath());

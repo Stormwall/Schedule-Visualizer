@@ -3,6 +3,7 @@ package sv.creation.adress.model;
 public class ServiceJourney {
 	
 	private int iD;
+	private int serviceJourneyID;
 	private int lineID;
 	private int fromStopID;
 	private int toStopID;
@@ -18,9 +19,10 @@ public class ServiceJourney {
 	private String code;
 	private int fahrplanID;
 	
-	public ServiceJourney(int iD, int lineID, int fromStopID, int toStopID, String depTime, String arrTime, int minAheadTime, int minLayoverTime, int vehTypeGroupID, int maxShiftBackwardSeconds, int maxShiftForwardSeconds, int fromStopBreakFacility, int toStopBreakFacility, String code, int fahrplanID){
+	public ServiceJourney(int iD, int serviceJourneyID, int lineID, int fromStopID, int toStopID, String depTime, String arrTime, int minAheadTime, int minLayoverTime, int vehTypeGroupID, int maxShiftBackwardSeconds, int maxShiftForwardSeconds, int fromStopBreakFacility, int toStopBreakFacility, String code, int fahrplanID){
 		super();
 		this.iD=iD;
+		this.serviceJourneyID = serviceJourneyID;
 		this.lineID=lineID;
 		this.fromStopID=fromStopID;
 		this.toStopID=toStopID;
@@ -97,6 +99,10 @@ public class ServiceJourney {
 
 	public int getFahrplanID() {
 		return fahrplanID;
+	}
+
+	public void setiD(int iD) {
+		this.iD = iD;
 	}
 	
 	

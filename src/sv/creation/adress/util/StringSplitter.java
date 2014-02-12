@@ -28,7 +28,7 @@ import sv.creation.adress.database.DBMatching;
 
 public class StringSplitter {
 
-	public static StringSplitter instance = null; 
+	public static  StringSplitter instance = null; 
 
 	// ***********************************************************
 	// ***********************************************************
@@ -39,206 +39,206 @@ public class StringSplitter {
 	// ***********************************************************
 	// ***********************************************************
 
-	private static ArrayList<String> stringList = new ArrayList<String>();
+	private  ArrayList<String> stringList = new ArrayList<String>();
 	// *************************
 	// ******* duty roster******
 	// *************************
 
 	// Array lists of duty
-	private static ArrayList<String> dutyDutyID = new ArrayList<String>();
-	private static ArrayList<String> dutyDutyType = new ArrayList<String>();
+	private  ArrayList<String> dutyDutyID = new ArrayList<String>();
+	private  ArrayList<String> dutyDutyType = new ArrayList<String>();
 
 	// Array lists of dutyelement
-	private static ArrayList<String> dutyelementDutyID = new ArrayList<String>();
-	private static ArrayList<Integer> dutyelementBlockID = new ArrayList<Integer>();
-	private static ArrayList<String> dutyelementServiceJourneyID = new ArrayList<String>();
-	private static ArrayList<Integer> dutyelementElementType = new ArrayList<Integer>();
-	private static ArrayList<String> dutyelementServiceJourneyCode = new ArrayList<String>();
+	private  ArrayList<String> dutyelementDutyID = new ArrayList<String>();
+	private  ArrayList<Integer> dutyelementBlockID = new ArrayList<Integer>();
+	private  ArrayList<String> dutyelementServiceJourneyID = new ArrayList<String>();
+	private  ArrayList<Integer> dutyelementElementType = new ArrayList<Integer>();
+	private  ArrayList<String> dutyelementServiceJourneyCode = new ArrayList<String>();
 
 	// Array lists of exceptional dutyelements
 
-	private static ArrayList<String> exceptionaldutyelementServiceJourneyID = new ArrayList<String>();
-	private static ArrayList<String> exceptionaldutyelementDutyID = new ArrayList<String>();
-	private static ArrayList<Integer> exceptionaldutyelementBlockID = new ArrayList<Integer>();
-	private static ArrayList<Integer> exceptionaldutyelementFromStopID = new ArrayList<Integer>();
-	private static ArrayList<Integer> exceptionaldutyelementToStopID = new ArrayList<Integer>();
-	private static ArrayList<String> exceptionaldutyelementDepTime = new ArrayList<String>();
-	private static ArrayList<String> exceptionaldutyelementArrTime = new ArrayList<String>();
-	private static ArrayList<Integer> exceptionaldutyelementElementType = new ArrayList<Integer>();
-	private static ArrayList<Integer> exceptionaldutyelementServiceJourneyCode = new ArrayList<Integer>();
-	private static ArrayList<Integer> exceptionaldutyelementDutyelementID = new ArrayList<Integer>();
+	private  ArrayList<String> exceptionaldutyelementServiceJourneyID = new ArrayList<String>();
+	private  ArrayList<String> exceptionaldutyelementDutyID = new ArrayList<String>();
+	private  ArrayList<Integer> exceptionaldutyelementBlockID = new ArrayList<Integer>();
+	private  ArrayList<Integer> exceptionaldutyelementFromStopID = new ArrayList<Integer>();
+	private  ArrayList<Integer> exceptionaldutyelementToStopID = new ArrayList<Integer>();
+	private  ArrayList<String> exceptionaldutyelementDepTime = new ArrayList<String>();
+	private  ArrayList<String> exceptionaldutyelementArrTime = new ArrayList<String>();
+	private  ArrayList<Integer> exceptionaldutyelementElementType = new ArrayList<Integer>();
+	private  ArrayList<Integer> exceptionaldutyelementServiceJourneyCode = new ArrayList<Integer>();
+	private  ArrayList<Integer> exceptionaldutyelementDutyelementID = new ArrayList<Integer>();
 
 	// Array list of day id
-	private static ArrayList<String> dutyelementDayID = new ArrayList<String>();
+	private  ArrayList<Integer> dutyelementDayID = new ArrayList<Integer>();
 
 	// *************************
 	// ******* tour plan********
 	// *************************
 
 	// Array lists of block
-	private static ArrayList<Integer> id = new ArrayList<Integer>();
-	private static ArrayList<Integer> vehTypeID = new ArrayList<Integer>();
-	private static ArrayList<Integer> depotID = new ArrayList<Integer>();
+	private  ArrayList<Integer> id = new ArrayList<Integer>();
+	private  ArrayList<Integer> vehTypeID = new ArrayList<Integer>();
+	private  ArrayList<Integer> depotID = new ArrayList<Integer>();
 
 	// Array lists of blockelement
-	private static ArrayList<Integer> blockelementBlockID = new ArrayList<Integer>();
-	private static ArrayList<String> blockelementServiceJourneyID = new ArrayList<String>();
-	private static ArrayList<Integer> blockelementFromStopID = new ArrayList<Integer>();
-	private static ArrayList<Integer> blockelementToStopID = new ArrayList<Integer>();
-	private static ArrayList<String> blockelementDepTime = new ArrayList<String>();
-	private static ArrayList<String> blockelementArrTime = new ArrayList<String>();
-	private static ArrayList<Integer> blockelementElementType = new ArrayList<Integer>();
-	private static ArrayList<Integer> blockelementServiceJourneyCode = new ArrayList<Integer>();
+	private  ArrayList<Integer> blockelementBlockID = new ArrayList<Integer>();
+	private  ArrayList<String> blockelementServiceJourneyID = new ArrayList<String>();
+	private  ArrayList<Integer> blockelementFromStopID = new ArrayList<Integer>();
+	private  ArrayList<Integer> blockelementToStopID = new ArrayList<Integer>();
+	private  ArrayList<String> blockelementDepTime = new ArrayList<String>();
+	private  ArrayList<String> blockelementArrTime = new ArrayList<String>();
+	private  ArrayList<Integer> blockelementElementType = new ArrayList<Integer>();
+	private  ArrayList<Integer> blockelementServiceJourneyCode = new ArrayList<Integer>();
 
 	// Array lists of exceptional blockelements
 
-	private static ArrayList<String> exceptionalblockelementServiceJourneyID = new ArrayList<String>();
-	private static ArrayList<Integer> exceptionalblockelementBlockID = new ArrayList<Integer>();
-	private static ArrayList<Integer> exceptionalblockelementFromStopID = new ArrayList<Integer>();
-	private static ArrayList<Integer> exceptionalblockelementToStopID = new ArrayList<Integer>();
-	private static ArrayList<String> exceptionalblockelementDepTime = new ArrayList<String>();
-	private static ArrayList<String> exceptionalblockelementArrTime = new ArrayList<String>();
-	private static ArrayList<Integer> exceptionalblockelementElementType = new ArrayList<Integer>();
-	private static ArrayList<Integer> exceptionalblockelementServiceJourneyCode = new ArrayList<Integer>();
+	private  ArrayList<String> exceptionalblockelementServiceJourneyID = new ArrayList<String>();
+	private  ArrayList<Integer> exceptionalblockelementBlockID = new ArrayList<Integer>();
+	private  ArrayList<Integer> exceptionalblockelementFromStopID = new ArrayList<Integer>();
+	private  ArrayList<Integer> exceptionalblockelementToStopID = new ArrayList<Integer>();
+	private  ArrayList<String> exceptionalblockelementDepTime = new ArrayList<String>();
+	private  ArrayList<String> exceptionalblockelementArrTime = new ArrayList<String>();
+	private  ArrayList<Integer> exceptionalblockelementElementType = new ArrayList<Integer>();
+	private  ArrayList<Integer> exceptionalblockelementServiceJourneyCode = new ArrayList<Integer>();
 
 	// Array list of day id
-	private static ArrayList<String> blockelementDayID = new ArrayList<String>();
+	private  ArrayList<Integer> blockelementDayID = new ArrayList<Integer>();
 
 	// *************************
 	// *********schedule********
 	// *************************
 
 	// Array lists of stoppoint
-	private static ArrayList<Integer> stopID = new ArrayList<Integer>();
-	private static ArrayList<String> stopCode = new ArrayList<String>();
-	private static ArrayList<String> stopName = new ArrayList<String>();
+	private  ArrayList<Integer> stopID = new ArrayList<Integer>();
+	private  ArrayList<String> stopCode = new ArrayList<String>();
+	private  ArrayList<String> stopName = new ArrayList<String>();
 
 	// Array lists of line
-	private static ArrayList<Integer> lineID = new ArrayList<Integer>();
-	private static ArrayList<String> lineCode = new ArrayList<String>();
-	private static ArrayList<String> lineName = new ArrayList<String>();
+	private  ArrayList<Integer> lineID = new ArrayList<Integer>();
+	private  ArrayList<String> lineCode = new ArrayList<String>();
+	private  ArrayList<String> lineName = new ArrayList<String>();
 
 	
 	//Array lists of linebundles
-	private static ArrayList<Integer> linebundleID = new ArrayList<Integer>();
-	private static ArrayList<Integer> linebundleline = new ArrayList<Integer>();
+	private  ArrayList<Integer> linebundleID = new ArrayList<Integer>();
+	private  ArrayList<Integer> linebundleline = new ArrayList<Integer>();
 
 	// Array lists of vehicle type
-	private static ArrayList<Integer> vehicleTypeID = new ArrayList<Integer>();
-	private static ArrayList<String> vehicleTypeCode = new ArrayList<String>();
-	private static ArrayList<String> vehicleTypeName = new ArrayList<String>();
-	private static ArrayList<Float> vehicleTypeVehCost = new ArrayList<Float>();
-	private static ArrayList<Float> vehicleTypeKmCost = new ArrayList<Float>();
-	private static ArrayList<Float> vehicleTypeHourCost = new ArrayList<Float>();
-	private static ArrayList<Integer> vehicleTypeCapacity = new ArrayList<Integer>();
+	private  ArrayList<Integer> vehicleTypeID = new ArrayList<Integer>();
+	private  ArrayList<String> vehicleTypeCode = new ArrayList<String>();
+	private  ArrayList<String> vehicleTypeName = new ArrayList<String>();
+	private  ArrayList<Float> vehicleTypeVehCost = new ArrayList<Float>();
+	private  ArrayList<Float> vehicleTypeKmCost = new ArrayList<Float>();
+	private  ArrayList<Float> vehicleTypeHourCost = new ArrayList<Float>();
+	private  ArrayList<Integer> vehicleTypeCapacity = new ArrayList<Integer>();
 
 	// Array lists of vehicle type group
-	private static ArrayList<Integer> vehicleTypeGroupID = new ArrayList<Integer>();
-	private static ArrayList<String> vehicleTypeGroupCode = new ArrayList<String>();
-	private static ArrayList<String> vehicleTypeGroupName = new ArrayList<String>();
+	private  ArrayList<Integer> vehicleTypeGroupID = new ArrayList<Integer>();
+	private  ArrayList<String> vehicleTypeGroupCode = new ArrayList<String>();
+	private  ArrayList<String> vehicleTypeGroupName = new ArrayList<String>();
 
 	// Array lists of vehicle to vehicle type group
-	private static ArrayList<Integer> vehicleToVehicleTypeGroupVehTypeID = new ArrayList<Integer>();
-	private static ArrayList<Integer> vehicleToVehicleTypeGroupVehTypeGroupID = new ArrayList<Integer>();
+	private  ArrayList<Integer> vehicleToVehicleTypeGroupVehTypeID = new ArrayList<Integer>();
+	private  ArrayList<Integer> vehicleToVehicleTypeGroupVehTypeGroupID = new ArrayList<Integer>();
 
 	// Array lists of vehicle capacity to stoppoint
-	private static ArrayList<Integer> vehicleCapToStopVehTypeID = new ArrayList<Integer>();
-	private static ArrayList<Integer> vehicleCapToStopStoppointID = new ArrayList<Integer>();
-	private static ArrayList<Integer> vehicleCapToStopMin = new ArrayList<Integer>();
-	private static ArrayList<Integer> vehicleCapToStopMax = new ArrayList<Integer>();
+	private  ArrayList<Integer> vehicleCapToStopVehTypeID = new ArrayList<Integer>();
+	private  ArrayList<Integer> vehicleCapToStopStoppointID = new ArrayList<Integer>();
+	private  ArrayList<Integer> vehicleCapToStopMin = new ArrayList<Integer>();
+	private  ArrayList<Integer> vehicleCapToStopMax = new ArrayList<Integer>();
 
 	// Array lists of service journeys
-	private static ArrayList<Integer> serviceJourneyID = new ArrayList<Integer>();
-	private static ArrayList<Integer> serviceJourneyLineID = new ArrayList<Integer>();
-	private static ArrayList<Integer> serviceJourneyFromStopID = new ArrayList<Integer>();
-	private static ArrayList<Integer> serviceJourneyToStopID = new ArrayList<Integer>();
-	private static ArrayList<String> serviceJourneyDepTime = new ArrayList<String>();
-	private static ArrayList<String> serviceJourneyArrTime = new ArrayList<String>();
-	private static ArrayList<Integer> serviceJourneyMinAheadTime = new ArrayList<Integer>();
-	private static ArrayList<Integer> serviceJourneyMinLayoverTime = new ArrayList<Integer>();
-	private static ArrayList<Integer> serviceJourneyVehTypeGroupID = new ArrayList<Integer>();
-	private static ArrayList<Integer> serviceJourneyMaxShiftBackwardSeconds = new ArrayList<Integer>();
-	private static ArrayList<Integer> serviceJourneyMaxShiftForwardSeconds = new ArrayList<Integer>();
-	private static ArrayList<Integer> serviceJourneyFromStopBreakFacility = new ArrayList<Integer>();
-	private static ArrayList<Integer> serviceJourneyToStopBreakFacility = new ArrayList<Integer>();
-	private static ArrayList<String> serviceJourneyCode = new ArrayList<String>();
+	private  ArrayList<Integer> serviceJourneyID = new ArrayList<Integer>();
+	private  ArrayList<Integer> serviceJourneyLineID = new ArrayList<Integer>();
+	private  ArrayList<Integer> serviceJourneyFromStopID = new ArrayList<Integer>();
+	private  ArrayList<Integer> serviceJourneyToStopID = new ArrayList<Integer>();
+	private  ArrayList<String> serviceJourneyDepTime = new ArrayList<String>();
+	private  ArrayList<String> serviceJourneyArrTime = new ArrayList<String>();
+	private  ArrayList<Integer> serviceJourneyMinAheadTime = new ArrayList<Integer>();
+	private  ArrayList<Integer> serviceJourneyMinLayoverTime = new ArrayList<Integer>();
+	private  ArrayList<Integer> serviceJourneyVehTypeGroupID = new ArrayList<Integer>();
+	private  ArrayList<Integer> serviceJourneyMaxShiftBackwardSeconds = new ArrayList<Integer>();
+	private  ArrayList<Integer> serviceJourneyMaxShiftForwardSeconds = new ArrayList<Integer>();
+	private  ArrayList<Integer> serviceJourneyFromStopBreakFacility = new ArrayList<Integer>();
+	private  ArrayList<Integer> serviceJourneyToStopBreakFacility = new ArrayList<Integer>();
+	private  ArrayList<String> serviceJourneyCode = new ArrayList<String>();
 
 	// Array lists of connections (deadruntime)
-	private static ArrayList<Integer> deadruntimeFromStopID = new ArrayList<Integer>();
-	private static ArrayList<Integer> deadruntimeToStopID = new ArrayList<Integer>();
-	private static ArrayList<String> deadruntimeFromTime = new ArrayList<String>();
-	private static ArrayList<String> deadruntimeToTime = new ArrayList<String>();
-	private static ArrayList<Integer> deadruntimeDistance = new ArrayList<Integer>();
-	private static ArrayList<Integer> deadruntimeRuntime = new ArrayList<Integer>();
+	private  ArrayList<Integer> deadruntimeFromStopID = new ArrayList<Integer>();
+	private  ArrayList<Integer> deadruntimeToStopID = new ArrayList<Integer>();
+	private  ArrayList<String> deadruntimeFromTime = new ArrayList<String>();
+	private  ArrayList<String> deadruntimeToTime = new ArrayList<String>();
+	private  ArrayList<Integer> deadruntimeDistance = new ArrayList<Integer>();
+	private  ArrayList<Integer> deadruntimeRuntime = new ArrayList<Integer>();
 
 	// Array lists of reliefpoints
-	private static ArrayList<Integer> reliefpointID = new ArrayList<Integer>();
-	private static ArrayList<String> reliefpointServiceJourneyID = new ArrayList<String>();
-	private static ArrayList<Integer> reliefpointStoppointID = new ArrayList<Integer>();
-	private static ArrayList<String> reliefpointStoptime = new ArrayList<String>();
+	private  ArrayList<Integer> reliefpointID = new ArrayList<Integer>();
+	private  ArrayList<String> reliefpointServiceJourneyID = new ArrayList<String>();
+	private  ArrayList<Integer> reliefpointStoppointID = new ArrayList<Integer>();
+	private  ArrayList<String> reliefpointStoptime = new ArrayList<String>();
 
 	/**
 	 * Array lists of transfertimes
 	 */
 	// Array lists of DayIDs
-	private static ArrayList<Integer> dayID = new ArrayList<Integer>();
-	private static ArrayList<String> dayName = new ArrayList<String>();
+	private  ArrayList<Integer> dayID = new ArrayList<Integer>();
+	private  ArrayList<String> dayName = new ArrayList<String>();
 
 	// Array lists of Trips
-	private static ArrayList<Integer> tripID = new ArrayList<Integer>();
-	private static ArrayList<Integer> dayOne = new ArrayList<Integer>();
-	private static ArrayList<Integer> dayTwo = new ArrayList<Integer>();
-	private static ArrayList<Integer> dayThree = new ArrayList<Integer>();
-	private static ArrayList<Integer> dayFour = new ArrayList<Integer>();
-	private static ArrayList<Integer> dayFive = new ArrayList<Integer>();
-	private static ArrayList<Integer> daySix = new ArrayList<Integer>();
-	private static ArrayList<Integer> daySeven = new ArrayList<Integer>();
+	private  ArrayList<Integer> tripID = new ArrayList<Integer>();
+	private  ArrayList<Integer> dayOne = new ArrayList<Integer>();
+	private  ArrayList<Integer> dayTwo = new ArrayList<Integer>();
+	private  ArrayList<Integer> dayThree = new ArrayList<Integer>();
+	private  ArrayList<Integer> dayFour = new ArrayList<Integer>();
+	private  ArrayList<Integer> dayFive = new ArrayList<Integer>();
+	private  ArrayList<Integer> daySix = new ArrayList<Integer>();
+	private  ArrayList<Integer> daySeven = new ArrayList<Integer>();
 	
 	// Array lists of Walkruntimes
-		private static ArrayList<Integer> walkruntimeFromStopID = new ArrayList<Integer>();
-		private static ArrayList<Integer> walkruntimeToStopID = new ArrayList<Integer>();
-		private static ArrayList<String> walkruntimeFromTime = new ArrayList<String>();
-		private static ArrayList<String> walkruntimeToTime = new ArrayList<String>();
-		private static ArrayList<Integer> walkruntimeRuntime = new ArrayList<Integer>();
+		private  ArrayList<Integer> walkruntimeFromStopID = new ArrayList<Integer>();
+		private  ArrayList<Integer> walkruntimeToStopID = new ArrayList<Integer>();
+		private  ArrayList<String> walkruntimeFromTime = new ArrayList<String>();
+		private  ArrayList<String> walkruntimeToTime = new ArrayList<String>();
+		private  ArrayList<Integer> walkruntimeRuntime = new ArrayList<Integer>();
 
 
 	// Array lists of duty type (rules) file
-	private static ArrayList<String> name = new ArrayList<String>();
-	private static ArrayList<String> startTimeMin = new ArrayList<String>();
-	private static ArrayList<String> startTimeMax = new ArrayList<String>();
-	private static ArrayList<String> endTimeMin = new ArrayList<String>();
-	private static ArrayList<String> endTimeMax = new ArrayList<String>();
-	private static ArrayList<String> signOnTime = new ArrayList<String>();
-	private static ArrayList<String> signOffTime = new ArrayList<String>();
-	private static ArrayList<String> durationMin = new ArrayList<String>();
-	private static ArrayList<String> durationMax = new ArrayList<String>();
-	private static ArrayList<String> workingTimeTotalMin = new ArrayList<String>();
-	private static ArrayList<String> workingTimeTotalMax = new ArrayList<String>();
-	private static ArrayList<String> workingTimeBeforeBreakMin = new ArrayList<String>();
-	private static ArrayList<String> workingTimeWithoutBreakMin = new ArrayList<String>();
-	private static ArrayList<String> workingTimeAfterLastBreakMin = new ArrayList<String>();
-	private static ArrayList<String> drivingTimeTotalMin = new ArrayList<String>();
-	private static ArrayList<String> drivingTimeTotalMax = new ArrayList<String>();
-	private static ArrayList<String> drivingTimeWithoutBreakMin = new ArrayList<String>();
-	private static ArrayList<String> drivingTimeWithoutBreakMax = new ArrayList<String>();
-	private static ArrayList<String> drivingTimeWithoutBreakMinInterruptionTime = new ArrayList<String>();
-	private static ArrayList<String> drivingTimeBeforeFirstBreakMin = new ArrayList<String>();
-	private static ArrayList<String> breakType = new ArrayList<String>();
-	private static ArrayList<String> breakTimeTotalMin = new ArrayList<String>();
-	private static ArrayList<String> breakTimeTotalMax = new ArrayList<String>();
-	private static ArrayList<String> breakTimeMin = new ArrayList<String>();
-	private static ArrayList<String> breakTimeMax = new ArrayList<String>();
-	private static ArrayList<Integer> pieceCountMin = new ArrayList<Integer>();
-	private static ArrayList<Integer> pieceCountMax = new ArrayList<Integer>();
-	private static ArrayList<String> allowedCumulatedWorkingTimeMax = new ArrayList<String>();
-	private static ArrayList<Float> dutyFixCost = new ArrayList<Float>();
-	private static ArrayList<Integer> isWorkRateConsidered = new ArrayList<Integer>();
-	private static ArrayList<Integer> isBreakRateConsidered = new ArrayList<Integer>();
-	private static ArrayList<Float> dutyCostPerMinute = new ArrayList<Float>();
-	private static ArrayList<Integer> isVehicleChangeAllowedDuringBreak = new ArrayList<Integer>();
-	private static ArrayList<String> breakTimeAllowsStarts = new ArrayList<String>();
-	private static ArrayList<String> breakTimeAllowsEnds = new ArrayList<String>();
-	private static ArrayList<String> workingtimeWithoutBreakMax = new ArrayList<String>();
+	private  ArrayList<String> name = new ArrayList<String>();
+	private  ArrayList<String> startTimeMin = new ArrayList<String>();
+	private  ArrayList<String> startTimeMax = new ArrayList<String>();
+	private  ArrayList<String> endTimeMin = new ArrayList<String>();
+	private  ArrayList<String> endTimeMax = new ArrayList<String>();
+	private  ArrayList<String> signOnTime = new ArrayList<String>();
+	private  ArrayList<String> signOffTime = new ArrayList<String>();
+	private  ArrayList<String> durationMin = new ArrayList<String>();
+	private  ArrayList<String> durationMax = new ArrayList<String>();
+	private  ArrayList<String> workingTimeTotalMin = new ArrayList<String>();
+	private  ArrayList<String> workingTimeTotalMax = new ArrayList<String>();
+	private  ArrayList<String> workingTimeBeforeBreakMin = new ArrayList<String>();
+	private  ArrayList<String> workingTimeWithoutBreakMin = new ArrayList<String>();
+	private  ArrayList<String> workingTimeAfterLastBreakMin = new ArrayList<String>();
+	private  ArrayList<String> drivingTimeTotalMin = new ArrayList<String>();
+	private  ArrayList<String> drivingTimeTotalMax = new ArrayList<String>();
+	private  ArrayList<String> drivingTimeWithoutBreakMin = new ArrayList<String>();
+	private  ArrayList<String> drivingTimeWithoutBreakMax = new ArrayList<String>();
+	private  ArrayList<String> drivingTimeWithoutBreakMinInterruptionTime = new ArrayList<String>();
+	private  ArrayList<String> drivingTimeBeforeFirstBreakMin = new ArrayList<String>();
+	private  ArrayList<String> breakType = new ArrayList<String>();
+	private  ArrayList<String> breakTimeTotalMin = new ArrayList<String>();
+	private  ArrayList<String> breakTimeTotalMax = new ArrayList<String>();
+	private  ArrayList<String> breakTimeMin = new ArrayList<String>();
+	private  ArrayList<String> breakTimeMax = new ArrayList<String>();
+	private  ArrayList<Integer> pieceCountMin = new ArrayList<Integer>();
+	private  ArrayList<Integer> pieceCountMax = new ArrayList<Integer>();
+	private  ArrayList<String> allowedCumulatedWorkingTimeMax = new ArrayList<String>();
+	private  ArrayList<Float> dutyFixCost = new ArrayList<Float>();
+	private  ArrayList<Integer> isWorkRateConsidered = new ArrayList<Integer>();
+	private  ArrayList<Integer> isBreakRateConsidered = new ArrayList<Integer>();
+	private  ArrayList<Float> dutyCostPerMinute = new ArrayList<Float>();
+	private  ArrayList<Integer> isVehicleChangeAllowedDuringBreak = new ArrayList<Integer>();
+	private  ArrayList<String> breakTimeAllowsStarts = new ArrayList<String>();
+	private  ArrayList<String> breakTimeAllowsEnds = new ArrayList<String>();
+	private  ArrayList<String> workingtimeWithoutBreakMax = new ArrayList<String>();
 	
 	//array lists of the szenarios
 	private ArrayList<String> szenarioDutyID=new ArrayList<String>();
@@ -251,7 +251,7 @@ public class StringSplitter {
 	private String filename = null;
 
 	// Singleton
-	public static StringSplitter getInstance() {
+	public static  StringSplitter getInstance() {
 		if (instance == null) {
 			instance = new StringSplitter();
 		}
@@ -259,7 +259,7 @@ public class StringSplitter {
 	}
 
 	// correcting string format
-	public static ArrayList<String> convertStringToArraylist(String str) {
+	public  ArrayList<String> convertStringToArraylist(String str) {
 
 		// "\\s*,\\s*" anstatt "," damit Leerzeichen vor und nach dem Komma im
 		// ursprï¿½ï¿½nglichen String ignoriert werden.
@@ -754,15 +754,22 @@ public class StringSplitter {
 				boolean block = false;
 				boolean day = false;
 				while ((zeile = umlaufplan.readLine()) != null) {
+					
+					if (zeile.startsWith("$BLOCK")) {
+						block = true;
+						
+					}
+					
+					if (zeile.equals("$DAY:dayID;")) {
+						day = true;
+						
+					}
 
 					// All lines with relevant data will be read
 					if (!zeile.startsWith("*") && !zeile.startsWith("$")) {
 						Collections.addAll(zeilenelemente, zeile.split(";"));
 
-						if (zeile.startsWith("$BLOCK")) {
-							block = true;
-							continue;
-						}
+						
 
 						// The block data will be split in separated array
 						// lists
@@ -822,21 +829,18 @@ public class StringSplitter {
 								exceptionalblockelementArrTime
 										.add(changeDateFormat(zeilenelemente.get(5)));
 
-								zeilenelemente.clear();
+								
 							}
-						}
-						if (zeile.startsWith("$DAY")) {
-							day = true;
-							continue;
+							zeilenelemente.clear();
 						}
 						if (zeilenelemente.size() == 1 && day == true) {
-							blockelementDayID.add(zeilenelemente.get(0));
+							blockelementDayID.add(Integer.parseInt(zeilenelemente.get(0)));
 							zeilenelemente.clear();
 						}
 						if (day == false) {
-							String dayId = "NULL";
-							blockelementDayID.add(dayId);
-							zeilenelemente.clear();
+//							String dayId = "NULL";
+//							blockelementDayID.add(dayId);
+//							zeilenelemente.clear();
 						}
 
 						// Size of the zeilenelemente array list will be reset
@@ -1139,31 +1143,15 @@ public class StringSplitter {
 							e.printStackTrace();
 						}
 					}
-					/**
-					 * // ATTENTION: The data can contain 9 elements including
-					 * ServiceJourneyCode if (zeilenelemente.size() == 9) { int
-					 * blockIDZiffer=Integer.parseInt(zeilenelemente.get(1));
-					 * int
-					 * fromStopIDZiffer=Integer.parseInt(zeilenelemente.get(3));
-					 * int
-					 * toStopIDZiffer=Integer.parseInt(zeilenelemente.get(4));
-					 * int
-					 * elementTypeZiffer=Integer.parseInt(zeilenelemente.get(
-					 * 7)); dutyelementDutyID.add(zeilenelemente.get(0));
-					 * dutyelementBlockID.add(blockIDZiffer);
-					 * dutyelementServiceJourneyID.add(zeilenelemente.get(2));
-					 * dutyelementElementType.add(elementTypeZiffer);
-					 * dutyelementServiceJourneyCode
-					 * .add(zeilenelemente.get(8)); }
-					 */
+					
 					// day for which the schedule is valid***********
 					if (zeilenelemente.size() == 1) {
-						dutyelementDayID.add(zeilenelemente.get(0));
+						dutyelementDayID.add(Integer.parseInt(zeilenelemente.get(0)));
 						zeilenelemente.clear();
 					}
 					if (day == false) {
-						String dayId = "NULL";
-						dutyelementDayID.add(dayId);
+//						String dayId = "NULL";
+//						dutyelementDayID.add(dayId);
 						zeilenelemente.clear();
 					}
 
@@ -1798,11 +1786,11 @@ public class StringSplitter {
 		return daySeven;
 	}
 
-	public ArrayList<String> getDutyelementDayID() {
+	public ArrayList<Integer> getDutyelementDayID() {
 		return dutyelementDayID;
 	}
 
-	public ArrayList<String> getBlockelementDayID() {
+	public ArrayList<Integer> getBlockelementDayID() {
 		return blockelementDayID;
 	}
 

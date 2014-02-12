@@ -15,6 +15,7 @@ public class Fahrplan {
 	private ArrayList <Deadruntime> verbindungen = new ArrayList<Deadruntime>();
 	private ArrayList <Reliefpoint> reliefpoint = new ArrayList<Reliefpoint>();
 	private ArrayList <Transfertime> transfertime = new ArrayList<Transfertime>();
+	private ArrayList <Days> days = new ArrayList<Days>();
 	private String bezeichnung;
 	private String date;
 	
@@ -39,6 +40,7 @@ public class Fahrplan {
 			ArrayList<Deadruntime> verbindungen,
 			ArrayList<Reliefpoint> reliefpoint,
 			ArrayList<Transfertime> transfertime,
+			ArrayList<Days> days,
 			String bezeichnung, 
 			String date) {
 		super();
@@ -53,6 +55,7 @@ public class Fahrplan {
 		this.verbindungen = verbindungen;
 		this.reliefpoint = reliefpoint;
 		this.transfertime = transfertime;
+		this.days = days;
 		this.bezeichnung = bezeichnung;
 		this.date=date;
 		
@@ -190,6 +193,16 @@ public class Fahrplan {
 
 	public void setDate(String date) {
 		this.date = date;
+	}
+
+
+	public ArrayList<Days> getDays() {
+		return days;
+	}
+
+
+	public void setDays(ArrayList<Days> days) {
+		this.days = days;
 	}
 
 

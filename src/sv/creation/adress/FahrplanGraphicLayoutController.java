@@ -125,7 +125,8 @@ public class FahrplanGraphicLayoutController {
 				monday.setName("Montag");
 
 				result = vergleich.vergleicheFahrplan(this.fahrplan.getId(), 1);
-
+//				result = vergleich.vergleich(this.fahrplan,this.fahrplan.getId(), 1);
+				
 				for (int j = 0; j < result.length; j++) {
 					float xValue = (float) j / 60;
 					monday.getData().add(

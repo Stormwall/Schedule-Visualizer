@@ -6,8 +6,38 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import sv.creation.adress.database.DBConnection;
+import sv.creation.adress.model.Fahrplan;
 
 public class Vergleich {
+
+	public int[] vergleich(Fahrplan fahrplan, int id, int day) {
+
+		int[] anzahlServiceFahrten = new int[1440];
+		for (int i = 0; i < anzahlServiceFahrten.length; i++) {
+//			int trips = 0;
+		for (int j = 0; j < fahrplan.getDays().size(); j++) {
+			
+
+				if (fahrplan.getDays().get(j).getFahrplanID() == id
+						&& fahrplan.getDays().get(j).getTripID() == fahrplan
+								.getServicejourney().get(j).getiD()
+						&& fahrplan.getDays().get(j).getD1() == day
+						&& fahrplan.getServicejourney().get(j).getFahrplanID() == fahrplan
+								.getDays().get(j).getFahrplanID()) {
+					System.out.println(timeToInt(fahrplan.getServicejourney()
+							.get(j).getDepTime()));
+					if (timeToInt(fahrplan.getServicejourney().get(j)
+							.getDepTime()) >= i
+							&& timeToInt(fahrplan.getServicejourney().get(j)
+									.getArrTime()) <= i) {
+						anzahlServiceFahrten[i]++;
+					}
+				}
+			}
+			
+		}
+		return anzahlServiceFahrten;
+	}
 
 	public int[] vergleicheFahrplan(int id, int day) {
 
@@ -84,6 +114,17 @@ public class Vergleich {
 		} else {
 			time = hour + ":" + min;
 		}
+		return time;
+	}
+
+	public int timeToInt(String i) {
+		int time = 0;
+		String[] timeString = i.split(":");
+		if (Integer.parseInt(timeString[0]) >= 1) {
+			time = Integer.parseInt(timeString[0]) * 60
+					+ Integer.parseInt(timeString[1]);
+		} else
+			time = Integer.parseInt(timeString[1]);
 		return time;
 	}
 

@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import sv.creation.adress.database.DBMatching;
+import sv.creation.adress.database.DBSave;
 import sv.creation.adress.model.Dienstplan;
 import sv.creation.adress.model.Fahrplan;
 import sv.creation.adress.model.Umlaufplan;
@@ -274,8 +275,11 @@ public class DatenbankLayoutController {
 //		 Import im = new Import();
 //		 im.importFile(file);
 		
-		DBMatching dbm = new DBMatching();
-		dbm.deleteUmlaufplan(umlaufplanliste.get(0));
+//		DBMatching dbm = new DBMatching();
+//		dbm.deleteFahrplan(fahrplanliste.get(0));
+		
+		DBSave dbs = new DBSave();
+		dbs.saveUmlaufplan(umlaufplanliste.get(0), "Testversion");
 
 	}
 
