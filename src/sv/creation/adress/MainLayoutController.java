@@ -1055,8 +1055,9 @@ public class MainLayoutController {
 
 					this.umlaufIsCurrent = true;
 					this.dienstIsCurrent = false;
-
-					graphicTransition();
+					if (this.firstLowergrafikErstellt == false) {
+						graphicTransition();
+					}
 				}
 				// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne
 				this.UPlan1.setVisible(true);
@@ -1681,8 +1682,9 @@ public class MainLayoutController {
 
 					this.umlaufIsCurrent = false;
 					this.dienstIsCurrent = true;
-
-					graphicTransition();
+					if (this.firstUppergrafikErstellt == false) {
+						graphicTransition();
+					}			
 				}
 				// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne
 				this.DPlan1.setVisible(true);
@@ -4414,6 +4416,14 @@ public class MainLayoutController {
 
 		int pruefcounter = 0;
 
+		final SingleSelectionModel<Tab> selectionModel = Planpane
+				.getSelectionModel();
+
+		if (uDetailsTableErstellt == true) {
+			this.detailsUmlaufTable.getColumns().clear();
+			this.uDetailsTableErstellt = false;
+		}
+
 		// An dieser Stelle wird das richtige Objekt herausgefunden
 
 		if (this.UPlan1.isVisible() == true) {
@@ -4449,6 +4459,12 @@ public class MainLayoutController {
 			this.loeschenUmlaufplan.setVisible(false);
 			this.firstUppergrafikErstellt = false;
 			this.umlaufplanEins = null;
+			if (this.firstLowergrafikErstellt == false) {
+				this.filterPanel.setOpacity(0);
+				this.fehlerAnzeigen.setOpacity(0);
+				this.hilfslinien.setOpacity(0);
+			}
+
 			break;
 		case 1:
 			this.UPlan2.setVisible(false);
@@ -4456,11 +4472,25 @@ public class MainLayoutController {
 			this.upperGraphicPane2.setContent(null);
 			this.xUp2.getChildren().clear();
 			this.yUp2.setContent(null);
-			this.Plan2.setDisable(true);
+			if (this.secondLowergrafikErstellt == false) {
+				this.Plan2.setDisable(true);
+			}
+			selectionModel.select(this.Plan1);
 			this.secondUppergrafikErstellt = false;
 			this.umlaufplanZwei = null;
 			this.UPlanValue1
 					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+			changeFocusUplan(this.umlaufplanEins);
+
+			// Dienstplanobjekte ändern
+
+			this.DPlanValue1.setStyle("-fx-background-color:white;");
+			this.DPlanValue2.setStyle("-fx-background-color:white;");
+			this.DPlanValue3.setStyle("-fx-background-color:white;");
+			this.DPlanValue4.setStyle("-fx-background-color:white;");
+			this.DPlanValue5.setStyle("-fx-background-color:white;");
+			this.DPlanValue6.setStyle("-fx-background-color:white;");
+			this.DPlanValue7.setStyle("-fx-background-color:white;");
 			break;
 		case 2:
 			this.UPlan3.setVisible(false);
@@ -4468,12 +4498,25 @@ public class MainLayoutController {
 			this.upperGraphicPane3.setContent(null);
 			this.xUp3.getChildren().clear();
 			this.yUp3.setContent(null);
-			this.Plan3.setDisable(true);
+			if (this.thirdLowergrafikErstellt == false) {
+				this.Plan3.setDisable(true);
+			}
+			selectionModel.select(this.Plan2);
 			this.thirdUppergrafikErstellt = false;
 			this.umlaufplanDrei = null;
-			;
 			this.UPlanValue2
 					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+			changeFocusUplan(this.umlaufplanZwei);
+
+			// Dienstplanobjekte ändern
+
+			this.DPlanValue1.setStyle("-fx-background-color:white;");
+			this.DPlanValue2.setStyle("-fx-background-color:white;");
+			this.DPlanValue3.setStyle("-fx-background-color:white;");
+			this.DPlanValue4.setStyle("-fx-background-color:white;");
+			this.DPlanValue5.setStyle("-fx-background-color:white;");
+			this.DPlanValue6.setStyle("-fx-background-color:white;");
+			this.DPlanValue7.setStyle("-fx-background-color:white;");
 			break;
 		case 3:
 			this.UPlan4.setVisible(false);
@@ -4481,12 +4524,25 @@ public class MainLayoutController {
 			this.upperGraphicPane4.setContent(null);
 			this.xUp4.getChildren().clear();
 			this.yUp4.setContent(null);
-			this.Plan4.setDisable(true);
+			if (this.fourthLowergrafikErstellt == false) {
+				this.Plan4.setDisable(true);
+			}
+			selectionModel.select(this.Plan3);
 			this.fourthUppergrafikErstellt = false;
 			this.umlaufplanVier = null;
-			;
 			this.UPlanValue3
 					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+			changeFocusUplan(this.umlaufplanDrei);
+
+			// Dienstplanobjekte ändern
+
+			this.DPlanValue1.setStyle("-fx-background-color:white;");
+			this.DPlanValue2.setStyle("-fx-background-color:white;");
+			this.DPlanValue3.setStyle("-fx-background-color:white;");
+			this.DPlanValue4.setStyle("-fx-background-color:white;");
+			this.DPlanValue5.setStyle("-fx-background-color:white;");
+			this.DPlanValue6.setStyle("-fx-background-color:white;");
+			this.DPlanValue7.setStyle("-fx-background-color:white;");
 			break;
 		case 4:
 			this.UPlan5.setVisible(false);
@@ -4494,12 +4550,25 @@ public class MainLayoutController {
 			this.upperGraphicPane5.setContent(null);
 			this.xUp5.getChildren().clear();
 			this.yUp5.setContent(null);
-			this.Plan5.setDisable(true);
-			this.fifthUppergrafikErstellt = false;
-			this.umlaufplanFuenf = null;
-			;
+			if (this.fifthLowergrafikErstellt == false) {
+				this.Plan5.setDisable(true);
+			}
+			selectionModel.select(this.Plan4);
 			this.UPlanValue4
 					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+			this.fifthUppergrafikErstellt = false;
+			this.umlaufplanFuenf = null;
+			changeFocusUplan(this.umlaufplanVier);
+
+			// Dienstplanobjekte ändern
+
+			this.DPlanValue1.setStyle("-fx-background-color:white;");
+			this.DPlanValue2.setStyle("-fx-background-color:white;");
+			this.DPlanValue3.setStyle("-fx-background-color:white;");
+			this.DPlanValue4.setStyle("-fx-background-color:white;");
+			this.DPlanValue5.setStyle("-fx-background-color:white;");
+			this.DPlanValue6.setStyle("-fx-background-color:white;");
+			this.DPlanValue7.setStyle("-fx-background-color:white;");
 			break;
 		case 5:
 			this.UPlan6.setVisible(false);
@@ -4507,12 +4576,25 @@ public class MainLayoutController {
 			this.upperGraphicPane6.setContent(null);
 			this.xUp6.getChildren().clear();
 			this.yUp6.setContent(null);
-			this.Plan6.setDisable(true);
-			this.sixthUppergrafikErstellt = false;
-			this.umlaufplanSechs = null;
-			;
+			if (this.sixthLowergrafikErstellt == false) {
+				this.Plan6.setDisable(true);
+			}
+			selectionModel.select(this.Plan5);
 			this.UPlanValue5
 					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+			this.sixthUppergrafikErstellt = false;
+			this.umlaufplanSechs = null;
+			changeFocusUplan(this.umlaufplanFuenf);
+
+			// Dienstplanobjekte ändern
+
+			this.DPlanValue1.setStyle("-fx-background-color:white;");
+			this.DPlanValue2.setStyle("-fx-background-color:white;");
+			this.DPlanValue3.setStyle("-fx-background-color:white;");
+			this.DPlanValue4.setStyle("-fx-background-color:white;");
+			this.DPlanValue5.setStyle("-fx-background-color:white;");
+			this.DPlanValue6.setStyle("-fx-background-color:white;");
+			this.DPlanValue7.setStyle("-fx-background-color:white;");
 			break;
 		case 6:
 			this.UPlan7.setVisible(false);
@@ -4520,12 +4602,24 @@ public class MainLayoutController {
 			this.upperGraphicPane7.setContent(null);
 			this.xUp7.getChildren().clear();
 			this.yUp7.setContent(null);
-			this.Plan7.setDisable(true);
-			this.seventhUppergrafikErstellt = false;
-			this.umlaufplanSieben = null;
-			;
+			if (this.seventhLowergrafikErstellt == false) {
+				this.Plan7.setDisable(true);
+			}
+			selectionModel.select(this.Plan6);
 			this.UPlanValue6
 					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+			this.seventhUppergrafikErstellt = false;
+			this.umlaufplanSieben = null;
+			changeFocusUplan(this.umlaufplanSechs);
+			// Dienstplanobjekte ändern
+
+			this.DPlanValue1.setStyle("-fx-background-color:white;");
+			this.DPlanValue2.setStyle("-fx-background-color:white;");
+			this.DPlanValue3.setStyle("-fx-background-color:white;");
+			this.DPlanValue4.setStyle("-fx-background-color:white;");
+			this.DPlanValue5.setStyle("-fx-background-color:white;");
+			this.DPlanValue6.setStyle("-fx-background-color:white;");
+			this.DPlanValue7.setStyle("-fx-background-color:white;");
 			break;
 		default:
 			break;
@@ -4543,6 +4637,14 @@ public class MainLayoutController {
 	public void deleteLastDPlan() {
 
 		int pruefcounter = 0;
+
+		final SingleSelectionModel<Tab> selectionModel = Planpane
+				.getSelectionModel();
+
+		if (dDetailsTableErstellt == true) {
+			this.detailsDienstTable.getColumns().clear();
+			this.dDetailsTableErstellt = false;
+		}
 
 		// An dieser Stelle wird das richtige Objekt herausgefunden
 
@@ -4570,30 +4672,183 @@ public class MainLayoutController {
 		// Hier werden die Schritte für den Loeschvorgang bestimmt
 
 		switch (pruefcounter) {
-		case 1:
+		case 0:
+			this.DPlan1.setVisible(false);
+			this.DPlanValue1.setVisible(false);
+			this.lowerGraphicPane1.setContent(null);
+			this.xLow1.getChildren().clear();
+			this.yLow1.setContent(null);
+			this.loeschenDienstplan.setVisible(false);
+			this.firstLowergrafikErstellt = false;
+			this.dienstplanEins = null;
+			if (this.firstUppergrafikErstellt == false) {
+				this.filterPanel.setOpacity(0);
+				this.fehlerAnzeigen.setOpacity(0);
+				this.hilfslinien.setOpacity(0);
+			}
 
+			break;
+		case 1:
+			this.DPlan2.setVisible(false);
+			this.DPlanValue2.setVisible(false);
+			this.lowerGraphicPane2.setContent(null);
+			this.xLow2.getChildren().clear();
+			this.yLow2.setContent(null);
+			if (this.secondUppergrafikErstellt == false) {
+				this.Plan2.setDisable(true);
+			}
+			selectionModel.select(this.Plan1);
+			this.secondLowergrafikErstellt = false;
+			this.dienstplanZwei = null;
+			this.DPlanValue1
+					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+			changeFocusDplan(this.dienstplanEins);
+
+			// Umlaufplanobjekte ändern
+
+			this.UPlanValue1.setStyle("-fx-background-color:white;");
+			this.UPlanValue2.setStyle("-fx-background-color:white;");
+			this.UPlanValue3.setStyle("-fx-background-color:white;");
+			this.UPlanValue4.setStyle("-fx-background-color:white;");
+			this.UPlanValue5.setStyle("-fx-background-color:white;");
+			this.UPlanValue6.setStyle("-fx-background-color:white;");
+			this.UPlanValue7.setStyle("-fx-background-color:white;");
 			break;
 		case 2:
+			this.DPlan3.setVisible(false);
+			this.DPlanValue3.setVisible(false);
+			this.lowerGraphicPane3.setContent(null);
+			this.xLow3.getChildren().clear();
+			this.yLow3.setContent(null);
+			if (this.thirdUppergrafikErstellt == false) {
+				this.Plan3.setDisable(true);
+			}
+			selectionModel.select(this.Plan2);
+			this.thirdLowergrafikErstellt = false;
+			this.dienstplanDrei = null;
+			this.DPlanValue2
+					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+			changeFocusDplan(this.dienstplanZwei);
 
+			// Umlaufplanobjekte ändern
+
+			this.UPlanValue1.setStyle("-fx-background-color:white;");
+			this.UPlanValue2.setStyle("-fx-background-color:white;");
+			this.UPlanValue3.setStyle("-fx-background-color:white;");
+			this.UPlanValue4.setStyle("-fx-background-color:white;");
+			this.UPlanValue5.setStyle("-fx-background-color:white;");
+			this.UPlanValue6.setStyle("-fx-background-color:white;");
+			this.UPlanValue7.setStyle("-fx-background-color:white;");
 			break;
 		case 3:
+			this.DPlan4.setVisible(false);
+			this.DPlanValue4.setVisible(false);
+			this.lowerGraphicPane4.setContent(null);
+			this.xLow4.getChildren().clear();
+			this.yLow4.setContent(null);
+			if (this.fourthUppergrafikErstellt == false) {
+				this.Plan4.setDisable(true);
+			}
+			selectionModel.select(this.Plan3);
+			this.fourthLowergrafikErstellt = false;
+			this.dienstplanVier = null;
+			this.DPlanValue3
+					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+			changeFocusDplan(this.dienstplanDrei);
 
+			// Umlaufplanobjekte ändern
+
+			this.UPlanValue1.setStyle("-fx-background-color:white;");
+			this.UPlanValue2.setStyle("-fx-background-color:white;");
+			this.UPlanValue3.setStyle("-fx-background-color:white;");
+			this.UPlanValue4.setStyle("-fx-background-color:white;");
+			this.UPlanValue5.setStyle("-fx-background-color:white;");
+			this.UPlanValue6.setStyle("-fx-background-color:white;");
+			this.UPlanValue7.setStyle("-fx-background-color:white;");
 			break;
 		case 4:
+			this.DPlan5.setVisible(false);
+			this.DPlanValue5.setVisible(false);
+			this.lowerGraphicPane5.setContent(null);
+			this.xLow5.getChildren().clear();
+			this.yLow5.setContent(null);
+			if (this.fifthUppergrafikErstellt == false) {
+				this.Plan5.setDisable(true);
+			}
+			selectionModel.select(this.Plan4);
+			this.DPlanValue4
+					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+			this.fifthLowergrafikErstellt = false;
+			this.dienstplanFuenf = null;
+			changeFocusDplan(this.dienstplanVier);
 
+			// Umlaufplanobjekte ändern
+
+			this.UPlanValue1.setStyle("-fx-background-color:white;");
+			this.UPlanValue2.setStyle("-fx-background-color:white;");
+			this.UPlanValue3.setStyle("-fx-background-color:white;");
+			this.UPlanValue4.setStyle("-fx-background-color:white;");
+			this.UPlanValue5.setStyle("-fx-background-color:white;");
+			this.UPlanValue6.setStyle("-fx-background-color:white;");
+			this.UPlanValue7.setStyle("-fx-background-color:white;");
 			break;
 		case 5:
+			this.DPlan6.setVisible(false);
+			this.DPlanValue6.setVisible(false);
+			this.lowerGraphicPane6.setContent(null);
+			this.xLow6.getChildren().clear();
+			this.yLow6.setContent(null);
+			if (this.sixthUppergrafikErstellt == false) {
+				this.Plan6.setDisable(true);
+			}
+			selectionModel.select(this.Plan5);
+			this.DPlanValue5
+					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+			this.sixthLowergrafikErstellt = false;
+			this.dienstplanSechs = null;
+			changeFocusDplan(this.dienstplanFuenf);
 
+			// Umlaufplanobjekte ändern
+
+			this.UPlanValue1.setStyle("-fx-background-color:white;");
+			this.UPlanValue2.setStyle("-fx-background-color:white;");
+			this.UPlanValue3.setStyle("-fx-background-color:white;");
+			this.UPlanValue4.setStyle("-fx-background-color:white;");
+			this.UPlanValue5.setStyle("-fx-background-color:white;");
+			this.UPlanValue6.setStyle("-fx-background-color:white;");
+			this.UPlanValue7.setStyle("-fx-background-color:white;");
 			break;
 		case 6:
+			this.DPlan7.setVisible(false);
+			this.DPlanValue7.setVisible(false);
+			this.lowerGraphicPane7.setContent(null);
+			this.xLow7.getChildren().clear();
+			this.yLow7.setContent(null);
+			if (this.seventhUppergrafikErstellt == false) {
+				this.Plan7.setDisable(true);
+			}
+			selectionModel.select(this.Plan6);
+			this.DPlanValue6
+					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+			this.seventhLowergrafikErstellt = false;
+			this.dienstplanSieben = null;
+			changeFocusDplan(this.dienstplanSechs);
 
+			// Umlaufplanobjekte ändern
+
+			this.UPlanValue1.setStyle("-fx-background-color:white;");
+			this.UPlanValue2.setStyle("-fx-background-color:white;");
+			this.UPlanValue3.setStyle("-fx-background-color:white;");
+			this.UPlanValue4.setStyle("-fx-background-color:white;");
+			this.UPlanValue5.setStyle("-fx-background-color:white;");
+			this.UPlanValue6.setStyle("-fx-background-color:white;");
+			this.UPlanValue7.setStyle("-fx-background-color:white;");
 			break;
-		case 0:
-
-			break;
-
 		default:
 			break;
+		}
+		if (this.dienstTabCounter > 0) {
+			this.dienstTabCounter = this.dienstTabCounter - 1;
 		}
 
 	}
@@ -4616,7 +4871,6 @@ public class MainLayoutController {
 				System.out.println("Fehlende Daten oder Auswahl");
 			}
 		}
-		
 	}
 
 	/**

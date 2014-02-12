@@ -166,12 +166,12 @@
                             <Insets />
                           </padding>
                         </AnchorPane>
-                        <Button fx:id="loeschenUmlaufplan" mnemonicParsing="false" onAction="#deleteLastUPlan" opacity="1.0" styleClass="dark-blue" text="Löschen" visible="false" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                        <Button fx:id="loeschenUmlaufplan" mnemonicParsing="false" onAction="#deleteLastUPlan" opacity="1.0" styleClass="dark-blue" text="Entfernen" visible="false" GridPane.columnIndex="0" GridPane.rowIndex="2">
                           <GridPane.margin>
                             <Insets left="48.0" top="5.0" fx:id="x5" />
                           </GridPane.margin>
                         </Button>
-                        <Button fx:id="loeschenDienstplan" mnemonicParsing="false" styleClass="dark-blue" text="Löschen" visible="false" GridPane.columnIndex="0" GridPane.margin="$x5" GridPane.rowIndex="6" />
+                        <Button fx:id="loeschenDienstplan" mnemonicParsing="false" onAction="#deleteLastDPlan" styleClass="dark-blue" text="Entfernen" visible="false" GridPane.columnIndex="0" GridPane.margin="$x5" GridPane.rowIndex="6" />
                         <VBox id="VBox" alignment="CENTER" minHeight="34.0" prefHeight="34.0" prefWidth="167.0" spacing="10.0" GridPane.columnIndex="0" GridPane.rowIndex="7">
                           <children>
                             <CheckBox fx:id="hilfslinien" mnemonicParsing="false" opacity="0.0" styleClass="label-white" text="Hilfslinien" />
