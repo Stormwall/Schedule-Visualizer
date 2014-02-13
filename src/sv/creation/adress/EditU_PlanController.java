@@ -202,6 +202,11 @@ public class EditU_PlanController {
 			String sM = "";
 			String eS = "";
 			String eM = "";
+			int startHour = 0;
+			int startMin = 0;
+			int endHour = 0;
+			int endMin = 0;
+			boolean fehlerAnzeigen = true;
 
 			// Variablen werden belegt;
 			int id = blockelement.getId();
@@ -238,13 +243,13 @@ public class EditU_PlanController {
 									zeit = ss.intParse(this.umlaufplan
 											.getFahrtZuUmlauf().get(i - j)
 											.getDepTime());
-									int startHour = zeit[0] + result[3];
-									int startMin = zeit[1] + result[4];
+									startHour = zeit[0] + result[3];
+									startMin = zeit[1] + result[4];
 									zeit = ss.intParse(this.umlaufplan
 											.getFahrtZuUmlauf().get(i - j)
 											.getArrTime());
-									int endHour = zeit[0] + result[3];
-									int endMin = zeit[1] + result[4];
+									endHour = zeit[0] + result[3];
+									endMin = zeit[1] + result[4];
 
 									// Umformung zu den Strings
 
@@ -301,13 +306,45 @@ public class EditU_PlanController {
 									zeit = ss.intParse(this.umlaufplan
 											.getFahrtZuUmlauf().get(i - j)
 											.getDepTime());
-									int startHour = zeit[0] - result[3];
-									int startMin = zeit[1] - result[4];
+									if (zeit[0] < result[3]) {
+										startHour = zeit[0];
+									} else {
+										startHour = zeit[0] - result[3];
+									}
+									if (zeit[1] < result[4]) {
+										startMin = zeit[1];
+										if (fehlerAnzeigen) {
+											String fehlerA = "Elemente koennen nicht in den vorherigen Tag geschoben werden.";
+											String fehlerB = "Keine Verschiebung moeglich ?";
+											String fehlerC = "Fehler";
+											fehlerAnzeigen = false;
+											this.mainApp.fehlerMeldung(fehlerA,
+													fehlerB, fehlerC);
+										}
+									} else {
+										startMin = zeit[1] - result[4];
+									}
 									zeit = ss.intParse(this.umlaufplan
 											.getFahrtZuUmlauf().get(i - j)
 											.getArrTime());
-									int endHour = zeit[0] - result[3];
-									int endMin = zeit[1] - result[4];
+									if (zeit[0] < result[3]) {
+										endHour = zeit[0];
+										if (fehlerAnzeigen) {
+											String fehlerA = "Elemente koennen nicht in den vorherigen Tag geschoben werden.";
+											String fehlerB = "Keine Verschiebung moeglich ?";
+											String fehlerC = "Fehler";
+											fehlerAnzeigen = false;
+											this.mainApp.fehlerMeldung(fehlerA,
+													fehlerB, fehlerC);
+										}
+									} else {
+										endHour = zeit[0] - result[3];
+									}
+									if (zeit[1] < result[4]) {
+										endMin = zeit[1];
+									} else {
+										endMin = zeit[1] - result[4];
+									}
 
 									// Umformung zu den Strings
 
@@ -371,13 +408,13 @@ public class EditU_PlanController {
 									zeit = ss.intParse(this.umlaufplan
 											.getFahrtZuUmlauf().get(i + j)
 											.getDepTime());
-									int startHour = zeit[0] + result[3];
-									int startMin = zeit[1] + result[4];
+									startHour = zeit[0] + result[3];
+									startMin = zeit[1] + result[4];
 									zeit = ss.intParse(this.umlaufplan
 											.getFahrtZuUmlauf().get(i + j)
 											.getArrTime());
-									int endHour = zeit[0] + result[3];
-									int endMin = zeit[1] + result[4];
+									endHour = zeit[0] + result[3];
+									endMin = zeit[1] + result[4];
 
 									// Umformung zu den Strings
 
@@ -434,13 +471,45 @@ public class EditU_PlanController {
 									zeit = ss.intParse(this.umlaufplan
 											.getFahrtZuUmlauf().get(i + j)
 											.getDepTime());
-									int startHour = zeit[0] - result[3];
-									int startMin = zeit[1] - result[4];
+									if (zeit[0] < result[3]) {
+										startHour = zeit[0];
+									} else {
+										startHour = zeit[0] - result[3];
+									}
+									if (zeit[1] < result[4]) {
+										startMin = zeit[1];
+									} else {
+										startMin = zeit[1] - result[4];
+									}
 									zeit = ss.intParse(this.umlaufplan
 											.getFahrtZuUmlauf().get(i + j)
 											.getArrTime());
-									int endHour = zeit[0] - result[3];
-									int endMin = zeit[1] - result[4];
+									if (zeit[0] < result[3]) {
+										endHour = zeit[0];
+										if (fehlerAnzeigen) {
+											String fehlerA = "Elemente koennen nicht in den vorherigen Tag geschoben werden.";
+											String fehlerB = "Keine Verschiebung moeglich ?";
+											String fehlerC = "Fehler";
+											fehlerAnzeigen = false;
+											this.mainApp.fehlerMeldung(fehlerA,
+													fehlerB, fehlerC);
+										}
+									} else {
+										endHour = zeit[0] - result[3];
+									}
+									if (zeit[1] < result[4]) {
+										endMin = zeit[1];
+										if (fehlerAnzeigen) {
+											String fehlerA = "Elemente koennen nicht in den vorherigen Tag geschoben werden.";
+											String fehlerB = "Keine Verschiebung moeglich ?";
+											String fehlerC = "Fehler";
+											fehlerAnzeigen = false;
+											this.mainApp.fehlerMeldung(fehlerA,
+													fehlerB, fehlerC);
+										}
+									} else {
+										endMin = zeit[1] - result[4];
+									}
 
 									// Umformung zu den Strings
 
@@ -573,18 +642,18 @@ public class EditU_PlanController {
 		boolean start = true;
 
 		// Auslesen Blockelementanzahl
-		for (int i = 0; i < umlaufplan.getFahrtZuUmlauf().size(); i++) {
+		for (int i = 0; i < this.umlaufplan.getFahrtZuUmlauf().size(); i++) {
 
 			// Abgleich mit den Werten
-			if (umlaufplan.getFahrtZuUmlauf().get(i).getBlockID() == auswahl) {
+			if (this.umlaufplan.getFahrtZuUmlauf().get(i).getBlockID() == auswahl) {
 
 				// Auslesen der Zeit als Integer
 				StringSplitter ss = new StringSplitter();
 				int[] zeit = new int[2];
-				zeit = ss.intParse(umlaufplan.getFahrtZuUmlauf().get(i)
+				zeit = ss.intParse(this.umlaufplan.getFahrtZuUmlauf().get(i)
 						.getDepTime());
 				int startHour = zeit[0];
-				zeit = ss.intParse(umlaufplan.getFahrtZuUmlauf().get(i)
+				zeit = ss.intParse(this.umlaufplan.getFahrtZuUmlauf().get(i)
 						.getArrTime());
 				int endHour = zeit[0];
 
@@ -592,10 +661,16 @@ public class EditU_PlanController {
 					startzeitVar = startHour;
 					start = false;
 				}
-				if (umlaufplan.getFahrtZuUmlauf().get(i + 1).getBlockID() != auswahl) {
-					endzeitVar = endHour + 1;
-					if (endzeitVar < startzeitVar) {
-						endzeitVar = endzeitVar + 24;
+				// Kontrolliert den Fahrplan
+				if (this.umlaufplan.getFahrtZuUmlauf().get(i).getBlockID() == this.umlaufplan
+						.getUmlauf().size()-1) {					
+					
+				} else {
+					if (umlaufplan.getFahrtZuUmlauf().get(i + 1).getBlockID() != auswahl) {
+						endzeitVar = endHour + 1;
+						if (endzeitVar < startzeitVar) {
+							endzeitVar = endzeitVar + 24;
+						}
 					}
 				}
 			}
