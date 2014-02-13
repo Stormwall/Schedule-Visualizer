@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="300.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sv.creation.adress.EditD_PlanController">
+<AnchorPane prefHeight="300.0" prefWidth="700.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sv.creation.adress.EditD_PlanController">
   <!-- TODO Add Nodes -->
   <children>
     <SplitPane dividerPositions="0.7885906040268457" focusTraversable="true" orientation="VERTICAL" prefHeight="300.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -42,24 +42,24 @@
                         </ChoiceBox>
                         <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#handleauswaehlen" styleClass="dark-blue" text="Auswählen" />
                         <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#handlebearbeiten" styleClass="dark-blue" text="Bearbeiten" />
-                        <Button mnemonicParsing="false" styleClass="dark-blue" text="Gruppen Bearbeiten" />
+                        <Button mnemonicParsing="false" onAction="#handleMultipleBearbeiten" styleClass="dark-blue" text="Gruppen Bearbeiten" />
                       </children>
                     </HBox>
                   </children>
                 </AnchorPane>
                 <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                   <children>
-                    <HBox id="HBox" alignment="CENTER" prefHeight="50.0" prefWidth="289.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <HBox id="HBox" alignment="CENTER" layoutY="0.0" prefHeight="50.0" prefWidth="79.0" spacing="10.0" AnchorPane.rightAnchor="0.0">
                       <children>
-                        <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#handleuebernehemen" styleClass="dark-blue" text="Übernehmen" />
-                        <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#handleExport" styleClass="dark-blue" text="Exportieren" />
-                        <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Abbrechen" />
+                        <Button mnemonicParsing="false" onAction="#handleFullsreen" styleClass="dark-blue" text="Vollbild" />
                       </children>
                     </HBox>
-                    <HBox id="HBox" alignment="CENTER" prefHeight="50.0" prefWidth="179.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <HBox id="HBox" alignment="CENTER" layoutX="0.0" layoutY="0.0" prefHeight="50.0" prefWidth="420.0" spacing="10.0">
                       <children>
-                        <Button mnemonicParsing="false" styleClass="dark-blue" text="Kennzahlen" />
-                        <Button mnemonicParsing="false" onAction="#handleFullsreen" styleClass="dark-blue" text="Vollbild" />
+                        <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#handleuebernehemen" styleClass="dark-blue" text="Übernehmen" />
+                        <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#handleuebernehemen" styleClass="dark-blue" text="Neuer Datensatz" />
+                        <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#handleExport" styleClass="dark-blue" text="Exportieren" />
+                        <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Abbrechen" />
                       </children>
                     </HBox>
                   </children>

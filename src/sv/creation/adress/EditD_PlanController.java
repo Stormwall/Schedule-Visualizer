@@ -184,6 +184,416 @@ public class EditD_PlanController {
 	}
 
 	/**
+	 * Called when the user clicks mehrere bearbeiten.
+	 */
+	@FXML
+	private void handleMultipleBearbeiten() {
+
+		// Fehlerbehebung bei keiner Auswahl
+		if (this.elementsTable.getSelectionModel().getSelectedItem() != null) {
+
+			// Ausgewähltes Element auslesen
+
+			Dutyelement dutyelement = this.elementsTable.getSelectionModel()
+					.getSelectedItem();
+
+			// Arbeitsvariablen initieren
+			StringSplitter ss = new StringSplitter();
+			String sS = "";
+			String sM = "";
+			String eS = "";
+			String eM = "";
+			int startHour = 0;
+			int startMin = 0;
+			int endHour = 0;
+			int endMin = 0;
+			boolean fehlerAnzeigen = true;
+
+			// Variablen werden belegt;
+			int id = dutyelement.getId();
+			int blockid = dutyelement.getBlockID();
+
+			// Auszaehlen der Elemente
+
+			int before = 0;
+			int after = 0;
+			for (int i = 0; i < this.dienstplan.getDutyelement().size(); i++) {
+				if (this.dienstplan.getDutyelement().get(i).getBlockID() == blockid) {
+					if (this.dienstplan.getDutyelement().get(i).getId() < id) {
+						before = before + 1;
+					}
+					if (this.dienstplan.getDutyelement().get(i).getId() > id) {
+						after = after + 1;
+					}
+				}
+			}
+
+			// Aufruf der Methode
+
+			int[] result = mainApp.showEditMultipleTimeDetails(before, after,
+					id);
+			if (result[0] == 1) {
+				for (int i = 0; i < this.dienstplan.getDutyelement().size(); i++) {
+					if (this.dienstplan.getDutyelement().get(i).getId() == id) {
+						switch (result[1]) {
+						case 0:
+							switch (result[5]) {
+							case 0:
+								for (int j = 0; j <= result[2]; j++) {
+									int[] zeit = new int[2];
+									zeit = ss.intParse(this.dienstplan
+											.getDutyelement().get(i - j)
+											.getDepTime());
+									startHour = zeit[0] + result[3];
+									startMin = zeit[1] + result[4];
+									zeit = ss.intParse(this.dienstplan
+											.getDutyelement().get(i - j)
+											.getArrTime());
+									endHour = zeit[0] + result[3];
+									endMin = zeit[1] + result[4];
+
+									// Umformung zu den Strings
+
+									if (startMin > 59) {
+										startHour = startHour + 1;
+										startMin = startMin - 60;
+									}
+									if (startMin < 10) {
+										sM = ("0" + String.valueOf(startMin));
+									} else {
+										sM = String.valueOf(startMin);
+									}
+									if (startHour > 24) {
+										startHour = startHour - 24;
+									}
+									if (startHour < 10) {
+										sS = ("0" + String.valueOf(startHour));
+									} else {
+										sS = String.valueOf(startHour);
+									}
+									if (endMin > 59) {
+										endHour = endHour + 1;
+										endMin = endMin - 60;
+									}
+									if (endMin < 10) {
+										eM = ("0" + String.valueOf(endMin));
+									} else {
+										eM = String.valueOf(endMin);
+									}
+									if (endHour > 24) {
+										endHour = endHour - 24;
+									}
+									if (endHour < 10) {
+										eS = ("0" + String.valueOf(endHour));
+									} else {
+										eS = String.valueOf(endHour);
+									}
+
+									String startzeit = (sS + ":" + sM);
+									String endzeit = (eS + ":" + eM);
+
+									// Belegung des Planobjektes
+									this.dienstplan.getDutyelement().get(i - j)
+											.setDepTime(startzeit);
+									this.dienstplan.getDutyelement().get(i - j)
+											.setArrTime(endzeit);
+
+								}
+								break;
+
+							case 1:
+								for (int j = 0; j <= result[2]; j++) {
+									int[] zeit = new int[2];
+									zeit = ss.intParse(this.dienstplan
+											.getDutyelement().get(i - j)
+											.getDepTime());
+									if (zeit[0] < result[3]) {
+										startHour = zeit[0];
+									} else {
+										startHour = zeit[0] - result[3];
+									}
+									if (zeit[1] < result[4]) {
+										startMin = zeit[1];
+										if (fehlerAnzeigen) {
+											String fehlerA = "Elemente koennen nicht in den vorherigen Tag geschoben werden.";
+											String fehlerB = "Keine Verschiebung moeglich ?";
+											String fehlerC = "Fehler";
+											fehlerAnzeigen = false;
+											this.mainApp.fehlerMeldung(fehlerA,
+													fehlerB, fehlerC);
+										}
+									} else {
+										startMin = zeit[1] - result[4];
+									}
+									zeit = ss.intParse(this.dienstplan
+											.getDutyelement().get(i - j)
+											.getArrTime());
+									if (zeit[0] < result[3]) {
+										endHour = zeit[0];
+										if (fehlerAnzeigen) {
+											String fehlerA = "Elemente koennen nicht in den vorherigen Tag geschoben werden.";
+											String fehlerB = "Keine Verschiebung moeglich ?";
+											String fehlerC = "Fehler";
+											fehlerAnzeigen = false;
+											this.mainApp.fehlerMeldung(fehlerA,
+													fehlerB, fehlerC);
+										}
+									} else {
+										endHour = zeit[0] - result[3];
+									}
+									if (zeit[1] < result[4]) {
+										endMin = zeit[1];
+									} else {
+										endMin = zeit[1] - result[4];
+									}
+
+									// Umformung zu den Strings
+
+									if (startMin > 59) {
+										startHour = startHour + 1;
+										startMin = startMin - 60;
+									}
+									if (startMin < 10) {
+										sM = ("0" + String.valueOf(startMin));
+									} else {
+										sM = String.valueOf(startMin);
+									}
+									if (startHour > 24) {
+										startHour = startHour - 24;
+									}
+									if (startHour < 10) {
+										sS = ("0" + String.valueOf(startHour));
+									} else {
+										sS = String.valueOf(startHour);
+									}
+									if (endMin > 59) {
+										endHour = endHour + 1;
+										endMin = endMin - 60;
+									}
+									if (endMin < 10) {
+										eM = ("0" + String.valueOf(endMin));
+									} else {
+										eM = String.valueOf(endMin);
+									}
+									if (endHour > 24) {
+										endHour = endHour - 24;
+									}
+									if (endHour < 10) {
+										eS = ("0" + String.valueOf(endHour));
+									} else {
+										eS = String.valueOf(endHour);
+									}
+
+									String startzeit = (sS + ":" + sM);
+									String endzeit = (eS + ":" + eM);
+
+									// Belegung des Planobjektes
+									this.dienstplan.getDutyelement().get(i - j)
+											.setDepTime(startzeit);
+									this.dienstplan.getDutyelement().get(i - j)
+											.setArrTime(endzeit);
+
+								}
+								break;
+
+							default:
+								break;
+							}
+
+							break;
+						case 1:
+							switch (result[5]) {
+							case 0:
+								for (int j = 0; j <= result[2]; j++) {
+									int[] zeit = new int[2];
+									zeit = ss.intParse(this.dienstplan
+											.getDutyelement().get(i + j)
+											.getDepTime());
+									startHour = zeit[0] + result[3];
+									startMin = zeit[1] + result[4];
+									zeit = ss.intParse(this.dienstplan
+											.getDutyelement().get(i + j)
+											.getArrTime());
+									endHour = zeit[0] + result[3];
+									endMin = zeit[1] + result[4];
+
+									// Umformung zu den Strings
+
+									if (startMin > 59) {
+										startHour = startHour + 1;
+										startMin = startMin - 60;
+									}
+									if (startMin < 10) {
+										sM = ("0" + String.valueOf(startMin));
+									} else {
+										sM = String.valueOf(startMin);
+									}
+									if (startHour > 24) {
+										startHour = startHour - 24;
+									}
+									if (startHour < 10) {
+										sS = ("0" + String.valueOf(startHour));
+									} else {
+										sS = String.valueOf(startHour);
+									}
+									if (endMin > 59) {
+										endHour = endHour + 1;
+										endMin = endMin - 60;
+									}
+									if (endMin < 10) {
+										eM = ("0" + String.valueOf(endMin));
+									} else {
+										eM = String.valueOf(endMin);
+									}
+									if (endHour > 24) {
+										endHour = endHour - 24;
+									}
+									if (endHour < 10) {
+										eS = ("0" + String.valueOf(endHour));
+									} else {
+										eS = String.valueOf(endHour);
+									}
+
+									String startzeit = (sS + ":" + sM);
+									String endzeit = (eS + ":" + eM);
+
+									// Belegung des Planobjektes
+									this.dienstplan.getDutyelement().get(i - j)
+											.setDepTime(startzeit);
+									this.dienstplan.getDutyelement().get(i - j)
+											.setArrTime(endzeit);
+
+								}
+								break;
+
+							case 1:
+								for (int j = 0; j <= result[2]; j++) {
+									int[] zeit = new int[2];
+									zeit = ss.intParse(this.dienstplan
+											.getDutyelement().get(i + j)
+											.getDepTime());
+									if (zeit[0] < result[3]) {
+										startHour = zeit[0];
+									} else {
+										startHour = zeit[0] - result[3];
+									}
+									if (zeit[1] < result[4]) {
+										startMin = zeit[1];
+									} else {
+										startMin = zeit[1] - result[4];
+									}
+									zeit = ss.intParse(this.dienstplan
+											.getDutyelement().get(i + j)
+											.getArrTime());
+									if (zeit[0] < result[3]) {
+										endHour = zeit[0];
+										if (fehlerAnzeigen) {
+											String fehlerA = "Elemente koennen nicht in den vorherigen Tag geschoben werden.";
+											String fehlerB = "Keine Verschiebung moeglich ?";
+											String fehlerC = "Fehler";
+											fehlerAnzeigen = false;
+											this.mainApp.fehlerMeldung(fehlerA,
+													fehlerB, fehlerC);
+										}
+									} else {
+										endHour = zeit[0] - result[3];
+									}
+									if (zeit[1] < result[4]) {
+										endMin = zeit[1];
+										if (fehlerAnzeigen) {
+											String fehlerA = "Elemente koennen nicht in den vorherigen Tag geschoben werden.";
+											String fehlerB = "Keine Verschiebung moeglich ?";
+											String fehlerC = "Fehler";
+											fehlerAnzeigen = false;
+											this.mainApp.fehlerMeldung(fehlerA,
+													fehlerB, fehlerC);
+										}
+									} else {
+										endMin = zeit[1] - result[4];
+									}
+
+									// Umformung zu den Strings
+
+									if (startMin > 59) {
+										startHour = startHour + 1;
+										startMin = startMin - 60;
+									}
+									if (startMin < 10) {
+										sM = ("0" + String.valueOf(startMin));
+									} else {
+										sM = String.valueOf(startMin);
+									}
+									if (startHour > 24) {
+										startHour = startHour - 24;
+									}
+									if (startHour < 10) {
+										sS = ("0" + String.valueOf(startHour));
+									} else {
+										sS = String.valueOf(startHour);
+									}
+									if (endMin > 59) {
+										endHour = endHour + 1;
+										endMin = endMin - 60;
+									}
+									if (endMin < 10) {
+										eM = ("0" + String.valueOf(endMin));
+									} else {
+										eM = String.valueOf(endMin);
+									}
+									if (endHour > 24) {
+										endHour = endHour - 24;
+									}
+									if (endHour < 10) {
+										eS = ("0" + String.valueOf(endHour));
+									} else {
+										eS = String.valueOf(endHour);
+									}
+
+									String startzeit = (sS + ":" + sM);
+									String endzeit = (eS + ":" + eM);
+
+									// Belegung des Planobjektes
+									this.dienstplan.getDutyelement().get(i - j)
+											.setDepTime(startzeit);
+									this.dienstplan.getDutyelement().get(i - j)
+											.setArrTime(endzeit);
+								}
+								break;
+
+							default:
+								break;
+							}
+							break;
+
+						default:
+							break;
+						}
+					}
+				}
+
+				handleauswaehlen();
+				this.elementsTable.getColumns().get(0).setVisible(false);
+				this.elementsTable.getColumns().get(0).setVisible(true);
+				this.elementsTable.getColumns().get(1).setVisible(false);
+				this.elementsTable.getColumns().get(1).setVisible(true);
+				this.elementsTable.getColumns().get(2).setVisible(false);
+				this.elementsTable.getColumns().get(2).setVisible(true);
+				this.elementsTable.getColumns().get(3).setVisible(false);
+				this.elementsTable.getColumns().get(3).setVisible(true);
+				this.elementsTable.getColumns().get(4).setVisible(false);
+				this.elementsTable.getColumns().get(4).setVisible(true);
+				this.elementsTable.getColumns().get(5).setVisible(false);
+				this.elementsTable.getColumns().get(5).setVisible(true);
+			}
+		} else {
+			String fehlerA = "Es wurde noch Element ausgewaehlt";
+			String fehlerB = "Was soll bearbeitet werden ?";
+			String fehlerC = "Fehler";
+			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+		}
+	}
+
+	/**
 	 * Returns true if the user clicked OK, false otherwise.
 	 * 
 	 * @return
@@ -252,10 +662,18 @@ public class EditD_PlanController {
 					startzeitVar = startHour;
 					start = false;
 				}
-				if (!dienstplan.getDutyelement().get(i + 1).getDutyID().equals(auswahl)) {
-					endzeitVar = endHour + 1;
-					if (endzeitVar < startzeitVar) {
-						endzeitVar = endzeitVar + 24;
+
+				// Kontrolliert den Fahrplan
+				if (this.dienstplan.getDutyelement().get(i).getBlockID() == this.dienstplan
+						.getDuty().size() - 1) {
+
+				} else {
+					if (!dienstplan.getDutyelement().get(i + 1).getDutyID()
+							.equals(auswahl)) {
+						endzeitVar = endHour + 1;
+						if (endzeitVar < startzeitVar) {
+							endzeitVar = endzeitVar + 24;
+						}
 					}
 				}
 			}
@@ -279,7 +697,7 @@ public class EditD_PlanController {
 		gc.setFont(Font.getDefault());
 		gc.setFill(Color.BLACK);
 		gc.setStroke(Color.BLACK);
-		
+
 		// Variable zum Darstellen verschiedener Zeitpunkte
 		for (int i = 0; i <= (24 - 0); i++) {
 
@@ -308,7 +726,7 @@ public class EditD_PlanController {
 				// Belegung der Pixelwerte
 				if (0 <= startHour && 24 > endHour) {
 					int stundenDifferenz = startHour - startzeitVar;
-					int startPixelX = (int) ((stundenDifferenz * abstandNetz) + ((abstandNetz / 60) * startMin))+17;
+					int startPixelX = (int) ((stundenDifferenz * abstandNetz) + ((abstandNetz / 60) * startMin)) + 17;
 					int startPixelY = 10;
 					int fahrtDauer = 0;
 					// Berrechnen der Dauer zwischen der Abfahrt und der
