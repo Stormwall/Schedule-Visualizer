@@ -3534,6 +3534,8 @@ public class MainLayoutController {
 					int startMin = zeit[1];
 					zeit = ss.intParse(umlaufplan.getFahrtZuUmlauf().get(i)
 							.getArrTime());
+					int endHour = zeit[0];
+					int endMin = zeit[1];
 
 					// Prüfung der ersten Stunde
 					if (anfangUmlauf == true && startHour < changeHour) {
@@ -3546,6 +3548,12 @@ public class MainLayoutController {
 					}
 					if (startHour == changeHour && startMin < changeMin) {
 						startHour = startHour + 24;
+					}
+					if (endHour < changeHour) {
+						endHour = endHour + 24;
+					}
+					if (endHour == changeHour && endMin < changeMin) {
+						endHour = endHour + 24;
 					}
 
 					// Belegung der Pixelwerte
@@ -3653,6 +3661,10 @@ public class MainLayoutController {
 									startPixelX - 3 + (fahrtDauer / 5),
 									startPixelY + 14);
 						}
+						
+						// Pruefen der Ueberschneidungen
+						
+						boolean findDelay = findVerspaetungU(umlaufplan, i, umlaufplan.getFahrtZuUmlauf().get(i).getBlockID(),startHour,startMin,endHour,endMin);
 					}
 				}
 			}
@@ -4995,7 +5007,7 @@ public class MainLayoutController {
 
 	}
 
-	// Methoden zur BefÃ¼llung der Umlaufplanliste
+	// Methoden zur Befuellung der Umlaufplanliste
 
 	public void fillUmlaufplanliste() {
 
@@ -5023,6 +5035,40 @@ public class MainLayoutController {
 			}
 		}
 
+	}
+	
+	// Methoden zur Ueberpruefung der Verspaetungen
+	
+	public boolean findVerspaetungU(Umlaufplan umlaufplan, int elementID, int blockid, int startTimeHour, int startTimeMin, int endTimeHour, int endTimeMin){
+		
+		boolean verspFound = false; 
+		boolean beforeRelevant = true;
+		boolean afterRelevant = true;
+		StringSplitter ss = new StringSplitter();
+		int[] zeit = new int[2];
+				
+		// Überprüfung der Elemente
+		
+		
+		if (umlaufplan.getFahrtZuUmlauf().get(elementID).getId() > umlaufplan.getFahrtZuUmlauf().get(0).getId()) {
+			if (umlaufplan.getFahrtZuUmlauf().get(elementID).getBlockID() == umlaufplan.getFahrtZuUmlauf().get(elementID - 1).getBlockID()) {
+				
+				// Auslesen der Zeit als Integer				
+				
+				zeit = ss.intParse(umlaufplan.getFahrtZuUmlauf().get(elementID-1).getDepTime());
+				int startHourB = zeit[0];
+				int startMinB = zeit[1];
+				zeit = ss.intParse(umlaufplan.getFahrtZuUmlauf().get(elementID-1).getArrTime());
+				int endHourB = zeit[0];
+				int endMinB = zeit[1];
+				
+				
+			}
+		}else{
+			beforeRelevant = false;
+		}
+		
+		return verspFound;		
 	}
 
 	// Methoden zur Festsetzung der Main

@@ -458,9 +458,9 @@ public class EditD_PlanController {
 									String endzeit = (eS + ":" + eM);
 
 									// Belegung des Planobjektes
-									this.dienstplan.getDutyelement().get(i - j)
+									this.dienstplan.getDutyelement().get(i + j)
 											.setDepTime(startzeit);
-									this.dienstplan.getDutyelement().get(i - j)
+									this.dienstplan.getDutyelement().get(i + j)
 											.setArrTime(endzeit);
 
 								}
@@ -553,9 +553,9 @@ public class EditD_PlanController {
 									String endzeit = (eS + ":" + eM);
 
 									// Belegung des Planobjektes
-									this.dienstplan.getDutyelement().get(i - j)
+									this.dienstplan.getDutyelement().get(i + j)
 											.setDepTime(startzeit);
-									this.dienstplan.getDutyelement().get(i - j)
+									this.dienstplan.getDutyelement().get(i + j)
 											.setArrTime(endzeit);
 								}
 								break;

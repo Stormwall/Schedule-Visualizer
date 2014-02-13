@@ -458,9 +458,9 @@ public class EditU_PlanController {
 
 									// Belegung des Planobjektes
 									this.umlaufplan.getFahrtZuUmlauf()
-											.get(i - j).setDepTime(startzeit);
+											.get(i + j).setDepTime(startzeit);
 									this.umlaufplan.getFahrtZuUmlauf()
-											.get(i - j).setArrTime(endzeit);
+											.get(i + j).setArrTime(endzeit);
 
 								}
 								break;
@@ -553,9 +553,9 @@ public class EditU_PlanController {
 
 									// Belegung des Planobjektes
 									this.umlaufplan.getFahrtZuUmlauf()
-											.get(i - j).setDepTime(startzeit);
+											.get(i + j).setDepTime(startzeit);
 									this.umlaufplan.getFahrtZuUmlauf()
-											.get(i - j).setArrTime(endzeit);
+											.get(i + j).setArrTime(endzeit);
 								}
 								break;
 
