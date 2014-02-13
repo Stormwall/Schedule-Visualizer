@@ -183,6 +183,347 @@ public class EditU_PlanController {
 	}
 
 	/**
+	 * Called when the user clicks mehrere bearbeiten.
+	 */
+	@FXML
+	private void handleMultipleBearbeiten() {
+
+		// Fehlerbehebung bei keiner Auswahl
+		if (this.elementsTable.getSelectionModel().getSelectedItem() != null) {
+
+			// Ausgewähltes Element auslesen
+
+			Blockelement blockelement = this.elementsTable.getSelectionModel()
+					.getSelectedItem();
+
+			// Arbeitsvariablen initieren
+			StringSplitter ss = new StringSplitter();
+			String sS = "";
+			String sM = "";
+			String eS = "";
+			String eM = "";
+
+			// Variablen werden belegt;
+			int id = blockelement.getId();
+			int blockid = blockelement.getBlockID();
+
+			// Auszaehlen der Elemente
+
+			int before = 0;
+			int after = 0;
+			for (int i = 0; i < this.umlaufplan.getFahrtZuUmlauf().size(); i++) {
+				if (this.umlaufplan.getFahrtZuUmlauf().get(i).getBlockID() == blockid) {
+					if (this.umlaufplan.getFahrtZuUmlauf().get(i).getId() < id) {
+						before = before + 1;
+					}
+					if (this.umlaufplan.getFahrtZuUmlauf().get(i).getId() > id) {
+						after = after + 1;
+					}
+				}
+			}
+
+			// Aufruf der Methode
+
+			int[] result = mainApp.showEditMultipleTimeDetails(before, after,
+					id);
+			if (result[0] == 1) {
+				for (int i = 0; i < this.umlaufplan.getFahrtZuUmlauf().size(); i++) {
+					if (this.umlaufplan.getFahrtZuUmlauf().get(i).getId() == id) {
+						switch (result[1]) {
+						case 0:
+							switch (result[5]) {
+							case 0:
+								for (int j = 0; j <= result[2]; j++) {
+									int[] zeit = new int[2];
+									zeit = ss.intParse(this.umlaufplan
+											.getFahrtZuUmlauf().get(i - j)
+											.getDepTime());
+									int startHour = zeit[0] + result[3];
+									int startMin = zeit[1] + result[4];
+									zeit = ss.intParse(this.umlaufplan
+											.getFahrtZuUmlauf().get(i - j)
+											.getArrTime());
+									int endHour = zeit[0] + result[3];
+									int endMin = zeit[1] + result[4];
+
+									// Umformung zu den Strings
+
+									if (startMin > 59) {
+										startHour = startHour + 1;
+										startMin = startMin - 60;
+									}
+									if (startMin < 10) {
+										sM = ("0" + String.valueOf(startMin));
+									} else {
+										sM = String.valueOf(startMin);
+									}
+									if (startHour > 24) {
+										startHour = startHour - 24;
+									}
+									if (startHour < 10) {
+										sS = ("0" + String.valueOf(startHour));
+									} else {
+										sS = String.valueOf(startHour);
+									}
+									if (endMin > 59) {
+										endHour = endHour + 1;
+										endMin = endMin - 60;
+									}
+									if (endMin < 10) {
+										eM = ("0" + String.valueOf(endMin));
+									} else {
+										eM = String.valueOf(endMin);
+									}
+									if (endHour > 24) {
+										endHour = endHour - 24;
+									}
+									if (endHour < 10) {
+										eS = ("0" + String.valueOf(endHour));
+									} else {
+										eS = String.valueOf(endHour);
+									}
+
+									String startzeit = (sS + ":" + sM);
+									String endzeit = (eS + ":" + eM);
+
+									// Belegung des Planobjektes
+									this.umlaufplan.getFahrtZuUmlauf()
+											.get(i - j).setDepTime(startzeit);
+									this.umlaufplan.getFahrtZuUmlauf()
+											.get(i - j).setArrTime(endzeit);
+
+								}
+								break;
+
+							case 1:
+								for (int j = 0; j <= result[2]; j++) {
+									int[] zeit = new int[2];
+									zeit = ss.intParse(this.umlaufplan
+											.getFahrtZuUmlauf().get(i - j)
+											.getDepTime());
+									int startHour = zeit[0] - result[3];
+									int startMin = zeit[1] - result[4];
+									zeit = ss.intParse(this.umlaufplan
+											.getFahrtZuUmlauf().get(i - j)
+											.getArrTime());
+									int endHour = zeit[0] - result[3];
+									int endMin = zeit[1] - result[4];
+
+									// Umformung zu den Strings
+
+									if (startMin > 59) {
+										startHour = startHour + 1;
+										startMin = startMin - 60;
+									}
+									if (startMin < 10) {
+										sM = ("0" + String.valueOf(startMin));
+									} else {
+										sM = String.valueOf(startMin);
+									}
+									if (startHour > 24) {
+										startHour = startHour - 24;
+									}
+									if (startHour < 10) {
+										sS = ("0" + String.valueOf(startHour));
+									} else {
+										sS = String.valueOf(startHour);
+									}
+									if (endMin > 59) {
+										endHour = endHour + 1;
+										endMin = endMin - 60;
+									}
+									if (endMin < 10) {
+										eM = ("0" + String.valueOf(endMin));
+									} else {
+										eM = String.valueOf(endMin);
+									}
+									if (endHour > 24) {
+										endHour = endHour - 24;
+									}
+									if (endHour < 10) {
+										eS = ("0" + String.valueOf(endHour));
+									} else {
+										eS = String.valueOf(endHour);
+									}
+
+									String startzeit = (sS + ":" + sM);
+									String endzeit = (eS + ":" + eM);
+
+									// Belegung des Planobjektes
+									this.umlaufplan.getFahrtZuUmlauf()
+											.get(i - j).setDepTime(startzeit);
+									this.umlaufplan.getFahrtZuUmlauf()
+											.get(i - j).setArrTime(endzeit);
+
+								}
+								break;
+
+							default:
+								break;
+							}
+
+							break;
+						case 1:
+							switch (result[5]) {
+							case 0:
+								for (int j = 0; j <= result[2]; j++) {
+									int[] zeit = new int[2];
+									zeit = ss.intParse(this.umlaufplan
+											.getFahrtZuUmlauf().get(i + j)
+											.getDepTime());
+									int startHour = zeit[0] + result[3];
+									int startMin = zeit[1] + result[4];
+									zeit = ss.intParse(this.umlaufplan
+											.getFahrtZuUmlauf().get(i + j)
+											.getArrTime());
+									int endHour = zeit[0] + result[3];
+									int endMin = zeit[1] + result[4];
+
+									// Umformung zu den Strings
+
+									if (startMin > 59) {
+										startHour = startHour + 1;
+										startMin = startMin - 60;
+									}
+									if (startMin < 10) {
+										sM = ("0" + String.valueOf(startMin));
+									} else {
+										sM = String.valueOf(startMin);
+									}
+									if (startHour > 24) {
+										startHour = startHour - 24;
+									}
+									if (startHour < 10) {
+										sS = ("0" + String.valueOf(startHour));
+									} else {
+										sS = String.valueOf(startHour);
+									}
+									if (endMin > 59) {
+										endHour = endHour + 1;
+										endMin = endMin - 60;
+									}
+									if (endMin < 10) {
+										eM = ("0" + String.valueOf(endMin));
+									} else {
+										eM = String.valueOf(endMin);
+									}
+									if (endHour > 24) {
+										endHour = endHour - 24;
+									}
+									if (endHour < 10) {
+										eS = ("0" + String.valueOf(endHour));
+									} else {
+										eS = String.valueOf(endHour);
+									}
+
+									String startzeit = (sS + ":" + sM);
+									String endzeit = (eS + ":" + eM);
+
+									// Belegung des Planobjektes
+									this.umlaufplan.getFahrtZuUmlauf()
+											.get(i - j).setDepTime(startzeit);
+									this.umlaufplan.getFahrtZuUmlauf()
+											.get(i - j).setArrTime(endzeit);
+
+								}
+								break;
+
+							case 1:
+								for (int j = 0; j <= result[2]; j++) {
+									int[] zeit = new int[2];
+									zeit = ss.intParse(this.umlaufplan
+											.getFahrtZuUmlauf().get(i + j)
+											.getDepTime());
+									int startHour = zeit[0] - result[3];
+									int startMin = zeit[1] - result[4];
+									zeit = ss.intParse(this.umlaufplan
+											.getFahrtZuUmlauf().get(i + j)
+											.getArrTime());
+									int endHour = zeit[0] - result[3];
+									int endMin = zeit[1] - result[4];
+
+									// Umformung zu den Strings
+
+									if (startMin > 59) {
+										startHour = startHour + 1;
+										startMin = startMin - 60;
+									}
+									if (startMin < 10) {
+										sM = ("0" + String.valueOf(startMin));
+									} else {
+										sM = String.valueOf(startMin);
+									}
+									if (startHour > 24) {
+										startHour = startHour - 24;
+									}
+									if (startHour < 10) {
+										sS = ("0" + String.valueOf(startHour));
+									} else {
+										sS = String.valueOf(startHour);
+									}
+									if (endMin > 59) {
+										endHour = endHour + 1;
+										endMin = endMin - 60;
+									}
+									if (endMin < 10) {
+										eM = ("0" + String.valueOf(endMin));
+									} else {
+										eM = String.valueOf(endMin);
+									}
+									if (endHour > 24) {
+										endHour = endHour - 24;
+									}
+									if (endHour < 10) {
+										eS = ("0" + String.valueOf(endHour));
+									} else {
+										eS = String.valueOf(endHour);
+									}
+
+									String startzeit = (sS + ":" + sM);
+									String endzeit = (eS + ":" + eM);
+
+									// Belegung des Planobjektes
+									this.umlaufplan.getFahrtZuUmlauf()
+											.get(i - j).setDepTime(startzeit);
+									this.umlaufplan.getFahrtZuUmlauf()
+											.get(i - j).setArrTime(endzeit);
+								}
+								break;
+
+							default:
+								break;
+							}
+							break;
+
+						default:
+							break;
+						}
+					}
+				}
+
+				handleauswaehlen();
+				this.elementsTable.getColumns().get(0).setVisible(false);
+				this.elementsTable.getColumns().get(0).setVisible(true);
+				this.elementsTable.getColumns().get(1).setVisible(false);
+				this.elementsTable.getColumns().get(1).setVisible(true);
+				this.elementsTable.getColumns().get(2).setVisible(false);
+				this.elementsTable.getColumns().get(2).setVisible(true);
+				this.elementsTable.getColumns().get(3).setVisible(false);
+				this.elementsTable.getColumns().get(3).setVisible(true);
+				this.elementsTable.getColumns().get(4).setVisible(false);
+				this.elementsTable.getColumns().get(4).setVisible(true);
+				this.elementsTable.getColumns().get(5).setVisible(false);
+				this.elementsTable.getColumns().get(5).setVisible(true);
+			}
+		} else {
+			String fehlerA = "Es wurde noch Element ausgewaehlt";
+			String fehlerB = "Was soll bearbeitet werden ?";
+			String fehlerC = "Fehler";
+			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+		}
+	}
+
+	/**
 	 * Returns true if the user clicked OK, false otherwise.
 	 * 
 	 * @return
@@ -213,7 +554,7 @@ public class EditU_PlanController {
 			if (!file.getPath().endsWith(".txt")) {
 				file = new File(file.getPath() + ".txt");
 			}
-				
+
 			Export export = new Export();
 			export.exportUmlaufplan(umlaufplan, file);
 		}
@@ -224,19 +565,19 @@ public class EditU_PlanController {
 	public void drawCanvas(int auswahl) {
 
 		this.canvas.getChildren().clear();
-		
+
 		// Start und Endzeit
 
 		int startzeitVar = 0;
 		int endzeitVar = 24;
 		boolean start = true;
-		
+
 		// Auslesen Blockelementanzahl
 		for (int i = 0; i < umlaufplan.getFahrtZuUmlauf().size(); i++) {
 
 			// Abgleich mit den Werten
 			if (umlaufplan.getFahrtZuUmlauf().get(i).getBlockID() == auswahl) {
-			
+
 				// Auslesen der Zeit als Integer
 				StringSplitter ss = new StringSplitter();
 				int[] zeit = new int[2];
@@ -246,21 +587,19 @@ public class EditU_PlanController {
 				zeit = ss.intParse(umlaufplan.getFahrtZuUmlauf().get(i)
 						.getArrTime());
 				int endHour = zeit[0];
-				
+
 				if (start == true) {
 					startzeitVar = startHour;
 					start = false;
 				}
-				if (umlaufplan.getFahrtZuUmlauf().get(i+1).getBlockID() != auswahl) {
-					endzeitVar = endHour+1;
-					if (endzeitVar<startzeitVar) {
-						endzeitVar = endzeitVar +24;
+				if (umlaufplan.getFahrtZuUmlauf().get(i + 1).getBlockID() != auswahl) {
+					endzeitVar = endHour + 1;
+					if (endzeitVar < startzeitVar) {
+						endzeitVar = endzeitVar + 24;
 					}
 				}
 			}
 		}
-		
-		
 
 		// Initialize the Chart
 		Canvas Chart = new Canvas(this.canvas.getWidth() - 4,
@@ -281,11 +620,11 @@ public class EditU_PlanController {
 		gc.setFont(Font.getDefault());
 		gc.setFill(Color.BLACK);
 		gc.setStroke(Color.BLACK);
-		
+
 		// Variable zum Darstellen verschiedener Zeitpunkte
 		for (int i = 0; i <= (endzeitVar - startzeitVar); i++) {
 
-			double pixel = ((i) * abstandNetz)+17;
+			double pixel = ((i) * abstandNetz) + 17;
 			gc.strokeLine(pixel, 0, pixel, Chart.getHeight());
 		}
 
@@ -311,7 +650,7 @@ public class EditU_PlanController {
 				// Belegung der Pixelwerte
 				if (0 <= startHour && 24 > endHour) {
 					int stundenDifferenz = startHour - startzeitVar;
-					int startPixelX = (int) ((stundenDifferenz * abstandNetz) + ((abstandNetz / 60) * startMin))+17;
+					int startPixelX = (int) ((stundenDifferenz * abstandNetz) + ((abstandNetz / 60) * startMin)) + 17;
 					int startPixelY = 10;
 					int fahrtDauer = 0;
 					// Berrechnen der Dauer zwischen der Abfahrt und der
@@ -395,18 +734,16 @@ public class EditU_PlanController {
 							20, 10);
 					gc.strokeRoundRect(startPixelX, startPixelY, fahrtDauer,
 							20, 20, 10);
-					
+
 					// Beschriftet die Elemente
-						if (fahrtDauer > 30) {
-							gc.setFill(Color.BLACK);
-							gc.setFont(new Font("Arial", 12));
-							gc.fillText(
-									String.valueOf(umlaufplan
-											.getFahrtZuUmlauf().get(i)
-											.getId()), startPixelX - 3
-											+ (fahrtDauer / 5), startPixelY
-											+ 14);
-						
+					if (fahrtDauer > 30) {
+						gc.setFill(Color.BLACK);
+						gc.setFont(new Font("Arial", 12));
+						gc.fillText(
+								String.valueOf(umlaufplan.getFahrtZuUmlauf()
+										.get(i).getId()), startPixelX - 3
+										+ (fahrtDauer / 5), startPixelY + 14);
+
 					}
 				}
 
@@ -415,7 +752,7 @@ public class EditU_PlanController {
 
 		this.canvas.getChildren().add(Chart);
 	}
-	
+
 	/**
 	 * Called when the user clicks Vollbild.
 	 */

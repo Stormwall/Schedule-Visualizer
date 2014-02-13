@@ -406,6 +406,45 @@ public class MainApplication extends Application {
 		}
 
 	}
+	
+	public int[] showEditMultipleTimeDetails(int before, int after, int elementID) {
+
+		try {
+
+			// Load the fxml file and create a new stage for the popup
+			FXMLLoader loader = new FXMLLoader(
+					MainApplication.class
+							.getResource("view/EditMultipleTimeDetails.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Editor");
+			dialogStage.getIcons().add(
+					new Image("file:resources/images/IconFinal.png"));
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(primaryStage);
+			dialogStage.setResizable(false);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+
+			// Set the controller with all data
+			EditMultipleTimeDetailsLayoutController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			controller.setMainApp(this);
+			controller.setBefore(before);
+			controller.setAfter(after);
+			controller.setElementID(elementID);
+
+			// Show the dialog and wait until the user closes it
+			dialogStage.showAndWait();
+
+			return controller.getResult();
+
+		} catch (IOException e) {
+			// Exception gets thrown if the fxml file could not be loaded
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	// Fehlermeldung bei nicht erstellter Grafik
 
