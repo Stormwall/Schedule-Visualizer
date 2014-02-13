@@ -664,8 +664,8 @@ public class EditD_PlanController {
 				}
 
 				// Kontrolliert den Fahrplan
-				if (this.dienstplan.getDutyelement().get(i).getBlockID() == this.dienstplan
-						.getDuty().size() - 1) {
+				if (this.dienstplan.getDutyelement().get(i).getDutyHilfsID() == this.dienstplan
+						.getDuty().size()) {
 
 				} else {
 					if (!dienstplan.getDutyelement().get(i + 1).getDutyID()
