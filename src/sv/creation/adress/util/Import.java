@@ -22,7 +22,7 @@ public class Import {
 			ss.readTxtDiensttypen(file.getPath());
 		} else {
 			ss.readTxtFahrplan(file.getPath());
-			dbc.fillFahrplanIntoTables(ss);
+//			dbc.fillFahrplanIntoTables(ss);
 		}
 
 	}

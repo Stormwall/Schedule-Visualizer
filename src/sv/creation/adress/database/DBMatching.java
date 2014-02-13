@@ -115,7 +115,7 @@ public class DBMatching {
 			stmt3 = db.getConnection().createStatement();
 			// Two different datasets will be created
 			ResultSet rest3 = stmt
-					.executeQuery("SELECT ID, BlockID, ServiceJourneyID, ElementType, MatchingPos FROM Blockelement UNION SELECT ID, BlockID,ServiceJourneyID, ElementType, MatchingPos FROM ExceptionalBlockelement ORDER BY MatchingPos ASC;");
+					.executeQuery("SELECT ID, BlockID, ServiceJourneyID, ElementType, UmlaufplanID, MatchingPos FROM Blockelement UNION SELECT ID, BlockID,ServiceJourneyID, ElementType, UmlaufplanID, MatchingPos FROM ExceptionalBlockelement ORDER BY UmlaufplanID, MatchingPos ASC ;");
 			ResultSet rest2;
 			// All resulted datasets of the sql query will be added to the
 			// blockelement array list
@@ -327,9 +327,8 @@ public class DBMatching {
 			stmt4 = db.getConnection().createStatement();
 			// Two different datasets will be created
 			ResultSet rest3 = stmt
-					.executeQuery("SELECT ID, DutyID, BlockID, ServiceJourneyID, ElementType, MatchingPos FROM Dutyelement UNION SELECT ID, DutyID, BlockID,ServiceJourneyID, ElementType, MatchingPos FROM ExceptionalDutyelement ORDER BY MatchingPos ASC;");
+					.executeQuery("SELECT ID, DutyID, BlockID, ServiceJourneyID, ElementType, DienstplanID, MatchingPos FROM Dutyelement UNION SELECT ID, DutyID, BlockID,ServiceJourneyID, ElementType, DienstplanID, MatchingPos FROM ExceptionalDutyelement ORDER BY DienstplanID,MatchingPos ASC;");
 			ResultSet rest2;
-			ResultSet rest4;
 			// All resulted datasets of the sql query will be added to the
 			// blockelement array list
 			while (rest3.next()) {
@@ -418,13 +417,62 @@ public class DBMatching {
 					dutyelementList.add(dutyelement.get(j));
 				}
 			}
+			
+			//Buchstaben werden bei DutyID abgeschnitten
 			for (int j2 = zaehlerDienst; j2 < this.duty.size() - 1; j2++) {
 
-				if (this.duty.get(j2).getId().endsWith("p")
-						&& this.duty.get(j2 + 1).getId().endsWith("p")) {
+				if (this.duty.get(j2).getId().matches("^[a-z].*")
+						&& this.duty.get(j2 + 1).getId().matches("^[a-z].*")) {
 
-					String[] string = this.duty.get(j2).getId().split("p");
-					String[] string2 = this.duty.get(j2 + 1).getId().split("p");
+					String[] string = this.duty.get(j2).getId().split("[a-z]");
+					String[] string2 = this.duty.get(j2 + 1).getId().split("[a-z]");
+					int id1 = Integer.parseInt(string[1]);
+					int id2 = Integer.parseInt(string2[1]);
+
+					if (id1 < id2) {
+						dutyList.add(this.duty.get(j2));
+						zaehlerDienst = zaehlerDienst + 1;
+					}
+					if (id1 > id2) {
+						dutyList.add(this.duty.get(j2));
+						j2 = this.duty.size() - 1;
+					}
+
+				} else if (this.duty.get(j2).getId().matches("^[a-z].*")
+						&& !this.duty.get(j2 + 1).getId().matches("^[a-z].*")) {
+
+					String[] string = this.duty.get(j2).getId().split("[a-z]");
+					int id1 = Integer.parseInt(string[1]);
+
+					if (id1 < Integer.parseInt(this.duty.get(j2 + 1).getId())) {
+						dutyList.add(this.duty.get(j2));
+						zaehlerDienst = zaehlerDienst + 1;
+					}
+					if (id1 > Integer.parseInt(this.duty.get(j2 + 1).getId())) {
+						dutyList.add(this.duty.get(j2));
+						j2 = this.duty.size() - 1;
+					}
+
+				} else if (!this.duty.get(j2).getId().matches("^[a-z].*")
+						&& this.duty.get(j2 + 1).getId().matches("^[a-z].*")) {
+
+					String[] string = this.duty.get(j2 + 1).getId().split("[a-z]");
+					int id2 = Integer.parseInt(string[1]);
+
+					if (Integer.parseInt(this.duty.get(j2).getId()) < id2) {
+						dutyList.add(this.duty.get(j2));
+						zaehlerDienst = zaehlerDienst + 1;
+					}
+					if (Integer.parseInt(this.duty.get(j2).getId()) > id2) {
+						dutyList.add(this.duty.get(j2));
+						j2 = this.duty.size() - 1;
+					}
+
+				} else if (this.duty.get(j2).getId().matches(".[a-z]^")
+						&& this.duty.get(j2 + 1).getId().matches(".[a-z]^")) {
+
+					String[] string = this.duty.get(j2).getId().split("[a-z]");
+					String[] string2 = this.duty.get(j2 + 1).getId().split("[a-z]");
 					int id1 = Integer.parseInt(string[0]);
 					int id2 = Integer.parseInt(string2[0]);
 
@@ -437,10 +485,10 @@ public class DBMatching {
 						j2 = this.duty.size() - 1;
 					}
 
-				} else if (this.duty.get(j2).getId().endsWith("p")
-						&& !this.duty.get(j2 + 1).getId().endsWith("p")) {
+				} else if (this.duty.get(j2).getId().matches(".[a-z]^")
+						&& !this.duty.get(j2 + 1).getId().matches(".[a-z]^")) {
 
-					String[] string = this.duty.get(j2).getId().split("p");
+					String[] string = this.duty.get(j2).getId().split("[a-z]");
 					int id1 = Integer.parseInt(string[0]);
 
 					if (id1 < Integer.parseInt(this.duty.get(j2 + 1).getId())) {
@@ -452,10 +500,10 @@ public class DBMatching {
 						j2 = this.duty.size() - 1;
 					}
 
-				} else if (!this.duty.get(j2).getId().endsWith("p")
-						&& this.duty.get(j2 + 1).getId().endsWith("p")) {
+				} else if (!this.duty.get(j2).getId().matches(".[a-z]^")
+						&& this.duty.get(j2 + 1).getId().matches(".[a-z]^")) {
 
-					String[] string = this.duty.get(j2 + 1).getId().split("p");
+					String[] string = this.duty.get(j2 + 1).getId().split("[a-z]");
 					int id2 = Integer.parseInt(string[0]);
 
 					if (Integer.parseInt(this.duty.get(j2).getId()) < id2) {
@@ -467,7 +515,7 @@ public class DBMatching {
 						j2 = this.duty.size() - 1;
 					}
 
-				} else {
+				}else {
 
 					if (Integer.parseInt(this.duty.get(j2).getId()) < Integer
 							.parseInt(this.duty.get(j2 + 1).getId())) {
@@ -559,7 +607,6 @@ public class DBMatching {
 		// Anzahl der Fahrplaene wird ausgelesen
 		// Strukturvariablen
 		int anzahlPlan = 1;
-		int zaehlerFahrt = 0;
 		for (int i = 0; i < serviceJourney.size(); i++) {
 			if (i >= 1
 					&& serviceJourney.get(i).getFahrplanID() > serviceJourney

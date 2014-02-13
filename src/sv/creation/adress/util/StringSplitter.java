@@ -13,18 +13,13 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 
 import sv.creation.adress.database.DBConnection;
-import sv.creation.adress.database.DBMatching;
 
 public class StringSplitter {
 
@@ -274,6 +269,8 @@ public class StringSplitter {
 	// ***************************************************************************************************************************
 	
 	public void readTxtFahrplan(String path) {
+		
+		DBConnection dbc=DBConnection.getInstance();
 
 		try {
 
@@ -660,68 +657,16 @@ public class StringSplitter {
 						zeilenelemente.clear();
 					}
 
-//					if (zeilenelemente.size() == 7 && days == true) {
-//						int tripIDZiffer = Integer.parseInt(zeilenelemente
-//								.get(0));
-//						int dayOneZiffer = Integer.parseInt(zeilenelemente
-//								.get(1));
-//						int dayTwoZiffer = Integer.parseInt(zeilenelemente
-//								.get(2));
-//						int dayThreeZiffer = Integer.parseInt(zeilenelemente
-//								.get(3));
-//						int dayFourZiffer = Integer.parseInt(zeilenelemente
-//								.get(4));
-//						int dayFiveZiffer = Integer.parseInt(zeilenelemente
-//								.get(5));
-//						int daySixZiffer = Integer.parseInt(zeilenelemente
-//								.get(6));
-//
-//						tripID.add(tripIDZiffer);
-//						dayOne.add(dayOneZiffer);
-//						dayTwo.add(dayTwoZiffer);
-//						dayThree.add(dayThreeZiffer);
-//						dayFour.add(dayFourZiffer);
-//						dayFive.add(dayFiveZiffer);
-//						daySix.add(daySixZiffer);
-//						zeilenelemente.clear();
-//					}
-//
-//					if (zeilenelemente.size() == 8 && days == true) {
-//						int tripIDZiffer = Integer.parseInt(zeilenelemente
-//								.get(0));
-//						int dayOneZiffer = Integer.parseInt(zeilenelemente
-//								.get(1));
-//						int dayTwoZiffer = Integer.parseInt(zeilenelemente
-//								.get(2));
-//						int dayThreeZiffer = Integer.parseInt(zeilenelemente
-//								.get(3));
-//						int dayFourZiffer = Integer.parseInt(zeilenelemente
-//								.get(4));
-//						int dayFiveZiffer = Integer.parseInt(zeilenelemente
-//								.get(5));
-//						int daySixZiffer = Integer.parseInt(zeilenelemente
-//								.get(6));
-//						int daySevenZiffer = Integer.parseInt(zeilenelemente
-//								.get(7));
-//
-//						tripID.add(tripIDZiffer);
-//						dayOne.add(dayOneZiffer);
-//						dayTwo.add(dayTwoZiffer);
-//						dayThree.add(dayThreeZiffer);
-//						dayFour.add(dayFourZiffer);
-//						dayFive.add(dayFiveZiffer);
-//						daySix.add(daySixZiffer);
-//						daySeven.add(daySevenZiffer);
-//						zeilenelemente.clear();
-//					}
-
 				}
 
 			}
 			fahrplan.close();
+			dbc.fillFahrplanIntoTables(getFilename());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		clearFahrplanArraylists();
 	}
 		
 		// **************************************************************************************************************************
@@ -731,7 +676,7 @@ public class StringSplitter {
 
 		public void readTxtUmlaufplan(String path) {
 
-			DBConnection dbc=new DBConnection();
+			DBConnection dbc=DBConnection.getInstance();
 			// testumlauf.txt Data has to be in the project file in your
 			// workspace
 			File file = new File(path);
@@ -849,7 +794,9 @@ public class StringSplitter {
 					}
 				}
 				umlaufplan.close();
-				dbc.fillUmlaufplanIntoTables(getFilename());}
+				dbc.fillUmlaufplanIntoTables(getFilename());
+				clearUmlaufplanArraylists();
+				}
 				
 				else {
 					System.out.println("Es ist kein passender Fahrplan vorhanden!");
@@ -867,7 +814,7 @@ public class StringSplitter {
 
 		public void readTxtDiensttypen(String path) {
 
-			DBConnection dbc=new DBConnection();
+			DBConnection dbc=DBConnection.getInstance();
 			// testumlauf.txt Data has to be in the project file in your
 			// workspace
 			File file = new File(path);
@@ -1021,6 +968,7 @@ public class StringSplitter {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			
 
 		}
 
@@ -1030,7 +978,7 @@ public class StringSplitter {
 
 	public void readTxtDienstplan(String path) {
 
-		DBConnection dbc=new DBConnection();
+		DBConnection dbc=DBConnection.getInstance();
 		// testumlauf.txt Data has to be in the project file in your
 		// workspace
 		File file = new File(path);
@@ -1084,6 +1032,7 @@ public class StringSplitter {
 					if(zeilenelemente.size()==2){
 						dutyDutyID.add(zeilenelemente.get(0));
 						dutyDutyType.add(zeilenelemente.get(1));
+						zeilenelemente.clear();
 						
 					}
 					// The data is split in seperate array lists
@@ -1142,6 +1091,7 @@ public class StringSplitter {
 						} catch (NumberFormatException e) {
 							e.printStackTrace();
 						}
+						zeilenelemente.clear();
 					}
 					
 					// day for which the schedule is valid***********
@@ -1170,6 +1120,7 @@ public class StringSplitter {
 			e.printStackTrace();
 		}
 
+		clearDienstplanArraylists();
 	}
 
 		
@@ -1219,6 +1170,7 @@ public class StringSplitter {
 		blockelementElementType.clear();
 		blockelementFromStopID.clear();
 		blockelementServiceJourneyCode.clear();
+		blockelementServiceJourneyID.clear();
 		blockelementToStopID.clear();
 
 		exceptionalblockelementArrTime.clear();

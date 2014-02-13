@@ -1,5 +1,6 @@
 package sv.creation.adress;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import sv.creation.adress.database.DBMatching;
@@ -7,12 +8,14 @@ import sv.creation.adress.database.DBSave;
 import sv.creation.adress.model.Dienstplan;
 import sv.creation.adress.model.Fahrplan;
 import sv.creation.adress.model.Umlaufplan;
+import sv.creation.adress.util.Import;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class DatenbankLayoutController {
@@ -215,7 +218,7 @@ public class DatenbankLayoutController {
 
 			this.dienstplanliste.clear();
 			this.dienstplanliste = dbm.createDienstplanObject();
-			for (int i = 0; i < this.umlaufplanliste.size(); i++) {
+			for (int i = 0; i < this.dienstplanliste.size(); i++) {
 				this.dienstplanliste.get(i).setName(" Dienstplan " + (i + 1));
 			}
 
@@ -258,25 +261,25 @@ public class DatenbankLayoutController {
 	 */
 	public void handleImport() {
 
-//		FileChooser fileChooser = new FileChooser();
-//
-//		// // Set extension filter
-//		FileChooser.ExtensionFilter extFilter = new
-//		 FileChooser.ExtensionFilter(
-//		"TXT files (*.txt)", "*.txt");
-//		 fileChooser.getExtensionFilters().add(extFilter);
-//
-//		// Show open file dialog
-//		 File file = fileChooser.showOpenDialog(dialogStage);
-//		//
-//		 Import im = new Import();
-//		 im.importFile(file);
+		FileChooser fileChooser = new FileChooser();
+
+		// // Set extension filter
+		FileChooser.ExtensionFilter extFilter = new
+		 FileChooser.ExtensionFilter(
+		"TXT files (*.txt)", "*.txt");
+		 fileChooser.getExtensionFilters().add(extFilter);
+
+		// Show open file dialog
+		 File file = fileChooser.showOpenDialog(dialogStage);
+		//
+		 Import im = new Import();
+		 im.importFile(file);
 		
 //		DBMatching dbm = new DBMatching();
 //		dbm.deleteFahrplan(fahrplanliste.get(0));
 		
-		DBSave dbs = new DBSave();
-		dbs.saveUmlaufplan(umlaufplanliste.get(0), "Testversion");
+//		DBSave dbs = new DBSave();
+//		dbs.saveUmlaufplan(umlaufplanliste.get(0), "Testversion");
 
 	}
 

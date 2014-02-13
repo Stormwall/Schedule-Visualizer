@@ -469,12 +469,14 @@ public class DBConnection {
 	//filling the schedule data into the respective tables**************************************************************************************
 	//******************************************************************************************************************************************
 	
-	public void fillFahrplanIntoTables(StringSplitter ss){
+	public void fillFahrplanIntoTables(String filename){
 		
 		//temporary stringsplitter object that contains the the data from text files in array lists
-//		StringSplitter ss = StringSplitter.getInstance();
+		StringSplitter ss = StringSplitter.getInstance();
 		//invoke stringsplitter method for reading the data in  txt-files
 //		ss.readTxtFahrplan();
+		
+		String fileNameVergleich=filename;
 		
 		initDBConnection();
 		
@@ -482,7 +484,7 @@ public class DBConnection {
 		  //Fill values in specific tables
 		  
 		  //schedule name
-		  stmnt.executeUpdate("INSERT INTO Fahrplan (Bezeichnung, Datum) VALUES ('"+ss.getFilename()+"', CURRENT_DATE);");
+		  stmnt.executeUpdate("INSERT INTO Fahrplan (Bezeichnung, Datum) VALUES ('"+fileNameVergleich+"', CURRENT_DATE);");
 		  /**
 		   * TODO: VersNr. + File Type
 		   **/
@@ -517,15 +519,13 @@ public class DBConnection {
 		  //Vehicletype to Vehicletypegroup
 		  Iterator<Integer> it17 = ss.getVehicleToVehicleTypeGroupVehTypeID().iterator(); 
 		  Iterator<Integer> it18 = ss.getVehicleToVehicleTypeGroupVehTypeGroupID().iterator();
-		  Iterator<Integer> it171 = ss.getVehicleToVehicleTypeGroupVehTypeID().iterator(); 
-		  Iterator<Integer> it181 = ss.getVehicleToVehicleTypeGroupVehTypeGroupID().iterator();
+
 		  //Vehiclecap to Stoppoint
 		  Iterator<Integer> it19 = ss.getVehicleCapToStopVehTypeID().iterator(); 
 		  Iterator<Integer> it20 = ss.getVehicleCapToStopStoppointID().iterator();
 		  Iterator<Integer> it21= ss.getVehicleCapToStopMin().iterator(); 
 		  Iterator<Integer> it22 =ss.getVehicleCapToStopMax().iterator();
-		  Iterator<Integer> it191 = ss.getVehicleCapToStopVehTypeID().iterator();
-		  Iterator<Integer> it201 = ss.getVehicleCapToStopStoppointID().iterator();
+
 		  //Servicejourney
 		  Iterator<Integer> it23 =ss.getServiceJourneyID().iterator(); 
 		  Iterator<Integer> it24 =ss.getServiceJourneyLineID().iterator(); 
@@ -541,11 +541,7 @@ public class DBConnection {
 		  Iterator<Integer> it34 =ss.getServiceJourneyFromStopBreakFacility().iterator(); 
 		  Iterator<Integer> it35 =ss.getServiceJourneyToStopBreakFacility().iterator(); 
 		  Iterator<String> it36 =ss.getServiceJourneyCode().iterator();
-		  
-		  Iterator<Integer> it241 =ss.getServiceJourneyLineID().iterator();
-		  Iterator<Integer> it251 =ss.getServiceJourneyFromStopID().iterator();
-		  Iterator<Integer> it261 = ss.getServiceJourneyToStopID().iterator();
-		  Iterator<Integer> it311 = ss.getServiceJourneyVehTypeGroupID().iterator();
+
 		  //Deadruntime
 		  Iterator<Integer> it37 = ss.getDeadruntimeFromStopID().iterator();
 		  Iterator<Integer> it38 = ss.getDeadruntimeToStopID().iterator(); 
@@ -554,16 +550,14 @@ public class DBConnection {
 		  Iterator<Integer> it41 = ss.getDeadruntimeDistance().iterator(); 
 		  Iterator<Integer> it42 = ss.getDeadruntimeRuntime().iterator();
 		  
-		  Iterator<Integer> it371 = ss.getDeadruntimeFromStopID().iterator();
-		  Iterator<Integer> it381 = ss.getDeadruntimeToStopID().iterator();
+
 		  //Reliefpoints
 		  Iterator<Integer> it43 = ss.getReliefpointID().iterator(); 
 		  Iterator<String> it44 =ss.getReliefpointServiceJourneyID().iterator(); 
 		  Iterator<Integer> it45 =ss.getReliefpointStoppointID().iterator(); 
 		  Iterator<String> it46 =ss.getReliefpointStoptime().iterator(); 
 		  
-		  Iterator<String> it441 =ss.getReliefpointServiceJourneyID().iterator(); 
-		  Iterator<Integer> it451 =ss.getReliefpointStoppointID().iterator(); 
+
 		  //Transfertimes
 		  Iterator<Integer> it57 = ss.getWalkruntimeFromStopID().iterator(); 
 		  Iterator<Integer> it58 =ss.getWalkruntimeToStopID().iterator(); 
@@ -571,8 +565,6 @@ public class DBConnection {
 		  Iterator<String> it60 =ss.getWalkruntimeToTime().iterator(); 
 		  Iterator<Integer> it61 = ss.getWalkruntimeRuntime().iterator();  
 		  
-		  Iterator<Integer> it571 = ss.getWalkruntimeFromStopID().iterator(); 
-		  Iterator<Integer> it581 =ss.getWalkruntimeToStopID().iterator(); 
  
 		  //days
 		  Iterator<Integer> it49 = ss.getTripID().iterator(); 
@@ -584,15 +576,14 @@ public class DBConnection {
 		  Iterator<Integer> it55 =ss.getDaySix().iterator(); 
 		  Iterator<Integer> it56 =ss.getDaySeven().iterator();
 		  
-		  Iterator<Integer> it491 = ss.getTripID().iterator();
 
 		  //fill Stoppoint
 		  while((it.hasNext()&&it2.hasNext()&&it3.hasNext())){
-			stmnt.executeUpdate("INSERT INTO Stoppoint (StoppointID, Code, Name, FahrplanID) VALUES('"+it.next()+"','"+it2.next()+"','"+it3.next()+"',(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%'));");
+			stmnt.executeUpdate("INSERT INTO Stoppoint (StoppointID, Code, Name, FahrplanID) VALUES('"+it.next()+"','"+it2.next()+"','"+it3.next()+"',(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+fileNameVergleich+"%'));");
 			  }
 		  //fill line
 		  while((it4.hasNext()&&it5.hasNext()&&it6.hasNext())){
-			  stmnt.executeUpdate("INSERT INTO Line (LineID, Code, Name, FahrplanID) VALUES('"+it4.next()+"','"+it5.next()+"','"+it6.next()+"',(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%'));"); 
+			  stmnt.executeUpdate("INSERT INTO Line (LineID, Code, Name, FahrplanID) VALUES('"+it4.next()+"','"+it5.next()+"','"+it6.next()+"',(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+fileNameVergleich+"%'));"); 
 		  }
 		  //fill linebundle
 		  while((it62.hasNext()&&it64.hasNext())){
@@ -604,40 +595,40 @@ public class DBConnection {
 		  //fill Vehicletype
 		  while((it7.hasNext()&&it8.hasNext()&&it9.hasNext()&&it10.hasNext()&&it11.hasNext()&&it12.hasNext()&&it13.hasNext())){
 			  
-			  stmnt.executeUpdate("INSERT INTO VehicleType (VehicleTypeID, Code, Name, VehCost, KmCost, HourCost, Capacity, FahrplanID) VALUES('"+it7.next()+"','"+it8.next()+"','"+it9.next()+"','"+it10.next()+"','"+it11.next()+"','"+it12.next()+"','"+it13.next()+"',(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%'));"); 
+			  stmnt.executeUpdate("INSERT INTO VehicleType (VehicleTypeID, Code, Name, VehCost, KmCost, HourCost, Capacity, FahrplanID) VALUES('"+it7.next()+"','"+it8.next()+"','"+it9.next()+"','"+it10.next()+"','"+it11.next()+"','"+it12.next()+"','"+it13.next()+"',(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+fileNameVergleich+"%'));"); 
 		  }
 		  //fill vehicletypegroup
 		  while((it14.hasNext()&&it15.hasNext()&&it16.hasNext())){
-			  stmnt.executeUpdate("INSERT INTO VehicleTypeGroup (VehicleTypeGroupID, Code, Name, FahrplanID) VALUES('"+it14.next()+"','"+it15.next()+"','"+it16.next()+"',(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%'));"); 
+			  stmnt.executeUpdate("INSERT INTO VehicleTypeGroup (VehicleTypeGroupID, Code, Name, FahrplanID) VALUES('"+it14.next()+"','"+it15.next()+"','"+it16.next()+"',(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+fileNameVergleich+"%'));"); 
 		  }
 		  //fill vehicletype to vehicletypegroup
 		  while((it17.hasNext()&&it18.hasNext())){
-			  stmnt.executeUpdate("INSERT INTO VehicleTypeToVehicleTypeGroup (VehTypeID,VehTypeGroupID, FahrplanID) VALUES((SELECT vt.ID FROM VehicleType AS vt WHERE vt.VehicleTypeID='"+it17.next()+"' AND vt.FahrplanID= (SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%')),(SELECT vtg.ID FROM VehicleTypeGroup AS vtg WHERE vtg.VehicleTypeGroupID='"+it18.next()+"'AND vtg.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%')),(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%'))");
+			  stmnt.executeUpdate("INSERT INTO VehicleTypeToVehicleTypeGroup (VehTypeID,VehTypeGroupID, FahrplanID) VALUES((SELECT vt.ID FROM VehicleType AS vt WHERE vt.VehicleTypeID='"+it17.next()+"' AND vt.FahrplanID= (SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+fileNameVergleich+"%')),(SELECT vtg.ID FROM VehicleTypeGroup AS vtg WHERE vtg.VehicleTypeGroupID='"+it18.next()+"'AND vtg.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%')),(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%'))");
 					  																																				
 		  }
 		  //vehiclecap to stoppoint
 		  while((it19.hasNext()&&it20.hasNext()&&it21.hasNext()&&it22.hasNext())){
-			  stmnt.executeUpdate("INSERT INTO VehicleCapToStoppoint (Min, Max, FahrplanID, VehTypeID, StoppointID) VALUES('"+it21.next()+"','"+it22.next()+"',(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%'), "
-					  																																																			+ " (SELECT vt.ID FROM VehicleType AS vt WHERE vt.VehicleTypeID='"+it19.next()+"' AND vt.FahrplanID= (SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%')), "
-					  																																																			+ "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.StoppointID='"+it20.next()+"' AND sp.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%')));"); 
+			  stmnt.executeUpdate("INSERT INTO VehicleCapToStoppoint (Min, Max, FahrplanID, VehTypeID, StoppointID) VALUES('"+it21.next()+"','"+it22.next()+"',(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+fileNameVergleich+"%'), "
+					  																																																			+ " (SELECT vt.ID FROM VehicleType AS vt WHERE vt.VehicleTypeID='"+it19.next()+"' AND vt.FahrplanID= (SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+fileNameVergleich+"%')), "
+					  																																																			+ "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.StoppointID='"+it20.next()+"' AND sp.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+fileNameVergleich+"%')));"); 
 		  }
 		  //fill Servicejourney
 		  while((it23.hasNext()&&it24.hasNext()&&it25.hasNext()&&it26.hasNext()&&it27.hasNext()&&it28.hasNext()&&it29.hasNext()&&it30.hasNext()&&it31.hasNext()&&it32.hasNext()&&it33.hasNext()&&it34.hasNext()&&it35.hasNext()&&it36.hasNext())){
 			  
 			  stmnt.executeUpdate("INSERT INTO ServiceJourney (ServiceJourneyID, DepTime, ArrTime, MinAheadTime, MinLayoverTime, MaxShiftBackwardSeconds, MaxShiftForwardSeconds, FromStopBreakFacility, ToStopBreakFacility, Code, FahrplanID, LineID, FromStopID, ToStopID, VehTypeGroupID) VALUES('"+it23.next()+"','"+it27.next()+"','"+it28.next()+"','"+it29.next()+"','"+it30.next()+"','"+it32.next()+"','"+it33.next()+"','"+it34.next()+"','"+it35.next()+"','"+it36.next()+"', "
 					  																																																													+ "(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%'), "
-			  																																																															+ "(SELECT l.ID FROM Line AS l WHERE l.LineID='"+it24.next()+"' AND l.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%')), "
-			  																																																															+ "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.StoppointID='"+it25.next()+"' AND sp.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%')), "
-			  																																																															+ "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.StoppointID='"+it26.next()+"' AND sp.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%')), "
-			  																																																															+ "(SELECT vt.ID FROM VehicleType AS vt WHERE vt.VehicleTypeID='"+it31.next()+"' AND vt.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%')));"); 
+			  																																																															+ "(SELECT l.ID FROM Line AS l WHERE l.LineID='"+it24.next()+"' AND l.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+fileNameVergleich+"%')), "
+			  																																																															+ "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.StoppointID='"+it25.next()+"' AND sp.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+fileNameVergleich+"%')), "
+			  																																																															+ "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.StoppointID='"+it26.next()+"' AND sp.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+fileNameVergleich+"%')), "
+			  																																																															+ "(SELECT vt.ID FROM VehicleType AS vt WHERE vt.VehicleTypeID='"+it31.next()+"' AND vt.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+fileNameVergleich+"%')));"); 
 		  }
 		  //fill deadruntime
 		  while((it37.hasNext()&&it38.hasNext()&&it39.hasNext()&&it40.hasNext()&&it41.hasNext()&&it42.hasNext())){
 			  
 			  stmnt.executeUpdate("INSERT INTO Deadruntime (FromTime, ToTime, Distance, Runtime, FahrplanID, FromStopID, ToStopID) VALUES('"+it39.next()+"','"+it40.next()+"','"+it41.next()+"','"+it42.next()+"', "
-					  																																					+ "(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%'), "
-					  																																					+ "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.StoppointID='"+it37.next()+"' AND sp.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%')), "
-			  																																							+ "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.StoppointID='"+it38.next()+"' AND sp.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%')));"); 
+					  																																					+ "(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+fileNameVergleich+"%'), "
+					  																																					+ "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.StoppointID='"+it37.next()+"' AND sp.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+fileNameVergleich+"%')), "
+			  																																							+ "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.StoppointID='"+it38.next()+"' AND sp.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+fileNameVergleich+"%')));"); 
 		  }
 		  //fill Reliefpoint
 			while ((it43.hasNext() && it44.hasNext() && it45.hasNext() && it46
@@ -649,7 +640,7 @@ public class DBConnection {
 						+ it46.next()
 						+ "', "
 						+ "(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '%"
-						+ ss.getFilename()
+						+ fileNameVergleich
 						+ "%'), "
 						+ "(SELECT sj.ID FROM ServiceJourney AS sj WHERE sj.ServiceJourneyID='"
 						+ it44.next()
@@ -659,14 +650,14 @@ public class DBConnection {
 						+ "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.StoppointID='"
 						+ it45.next()
 						+ "' AND sp.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '%"
-						+ ss.getFilename() + "%')));");
+						+ fileNameVergleich+ "%')));");
 			}
 		  //fill Transfertime
 		  while((it57.hasNext()&&it58.hasNext()&&it59.hasNext()&&it60.hasNext()&&it61.hasNext())){
 			  stmnt.executeUpdate("INSERT INTO Transfertime (FromTime, ToTime, Runtime, FahrplanID, FromStopID, ToStopID) VALUES('"+it59.next()+"','"+it60.next()+"','"+it61.next()+"', "
-					  																																	+ "(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%'), "
-																																						+ "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.StoppointID='"+it57.next()+"' AND sp.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%')), "
-					  																																	+ "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.StoppointID='"+it58.next()+"' AND sp.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%')));"); 
+					  																																	+ "(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+fileNameVergleich+"%'), "
+																																						+ "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.StoppointID='"+it57.next()+"' AND sp.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+fileNameVergleich+"%')), "
+					  																																	+ "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.StoppointID='"+it58.next()+"' AND sp.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+fileNameVergleich+"%')));"); 
 		  }
 		  
 		  //fill days according to how much days are considered in the plan (min: 5, max: 7)
@@ -675,16 +666,16 @@ public class DBConnection {
 			  int id=it49.next();
 			  
 			  stmnt.executeUpdate("INSERT INTO Days (d1, d2, d3, d4, d5, FahrplanID, TRIPID) VALUES('"+it50.next()+"','"+it51.next()+"','"+it52.next()+"','"+it53.next()+"','"+it54.next()+"', "
-					  																						+ "(SELECT ID FROM Fahrplan WHERE Bezeichnung = '"+ss.getFilename()+"'), "
-					  																						+ "(SELECT sj.ID FROM ServiceJourney AS sj WHERE sj.ServiceJourneyID='"+id+"' AND sj.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung = '"+ss.getFilename()+"')));");
+					  																						+ "(SELECT ID FROM Fahrplan WHERE Bezeichnung = '"+fileNameVergleich+"'), "
+					  																						+ "(SELECT sj.ID FROM ServiceJourney AS sj WHERE sj.ServiceJourneyID='"+id+"' AND sj.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung = '"+fileNameVergleich+"')));");
 		  }
 		  //6 days
 		  while((it49.hasNext()&&it50.hasNext()&&it51.hasNext()&&it52.hasNext()&&it53.hasNext()&&it54.hasNext()&&it55.hasNext())){
 			  int id=it49.next();
 			  
 			  stmnt.executeUpdate("INSERT INTO Days (d1, d2, d3, d4, d5, d6, FahrplanID, TRIPID) VALUES('"+it50.next()+"','"+it51.next()+"','"+it52.next()+"','"+it53.next()+"','"+it54.next()+"','"+it55.next()+"',"
-					  																							+ "(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%'), "
-					  																							+ "(SELECT sj.ID FROM ServiceJourney AS sj WHERE sj.ServiceJourneyID='"+id+"' AND sj.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%')));");
+					  																							+ "(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+fileNameVergleich+"%'), "
+					  																							+ "(SELECT sj.ID FROM ServiceJourney AS sj WHERE sj.ServiceJourneyID='"+id+"' AND sj.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+fileNameVergleich+"%')));");
 
 		  }
 		  //7 days
@@ -692,8 +683,8 @@ public class DBConnection {
 			  int id=it49.next();
 			  
 			  stmnt.executeUpdate("INSERT INTO Days (d1, d2, d3, d4, d5, d6, d7, FahrplanID, TRIPID) VALUES('"+it50.next()+"','"+it51.next()+"','"+it52.next()+"','"+it53.next()+"','"+it54.next()+"','"+it55.next()+"','"+it56.next()+"', "
-					  																								+ "(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%'), "
-					  																								+ "(SELECT sj.ID FROM ServiceJourney AS sj WHERE sj.ServiceJourneyID='"+id+"' AND sj.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+ss.getFilename()+"%')));");
+					  																								+ "(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+fileNameVergleich+"%'), "
+					  																								+ "(SELECT sj.ID FROM ServiceJourney AS sj WHERE sj.ServiceJourneyID='"+id+"' AND sj.FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE '"+fileNameVergleich+"%')));");
 		  }
 		  
 		  //All Fahrplan array lists will be cleared
@@ -771,7 +762,7 @@ public class DBConnection {
 			  stmnt.executeUpdate("INSERT INTO Block (BlockID, VehTypeID, DepotID, UmlaufplanID)  VALUES('"+BlockID+"', "
 			  + "(SELECT vt.ID FROM VehicleType AS vt WHERE vt.VehicleTypeID='"+vehType+"' AND vt.FahrplanID= (SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%'))), "
 			  + "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.StoppointID='"+DepotID+"' AND sp.FahrplanID=(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%'))), "
-			  + "(SELECT up.ID FROM Umlaufplan AS up WHERE Bezeichnung = '"+fileNameVergleich+"'));");
+			  + "(SELECT up.ID FROM Umlaufplan AS up WHERE Bezeichnung LIKE '"+fileNameVergleich+"'));");
 				}
 		  
 		//fill special journey
@@ -785,9 +776,9 @@ public class DBConnection {
 			if (EleType == 1){
 				
 				stmnt.executeUpdate("INSERT INTO Blockelement (ElementType, BlockID, ServiceJourneyID, UmlaufplanID, MatchingPos) VALUES('"+EleType+"', "
-						  + "(SELECT b.ID FROM Block AS b WHERE b.BlockID='"+blockID+"' AND b.UmlaufplanID=(SELECT up.ID FROM Umlaufplan AS up WHERE up.Bezeichnung LIKE ('%"+finalString+"%'))), "
+						  + "(SELECT b.ID FROM Block AS b WHERE b.BlockID='"+blockID+"' AND b.UmlaufplanID=(SELECT up.ID FROM Umlaufplan AS up WHERE up.Bezeichnung LIKE ('"+fileNameVergleich+"'))), "
 						  + "(SELECT sj.ID FROM ServiceJourney AS sj WHERE sj.ServiceJourneyID='"+sjID+"' AND sj.FahrplanID=(SELECT fp.ID FROM Fahrplan AS fp WHERE fp.Bezeichnung LIKE ('%"+finalString+"%'))), "
-						  + "(SELECT ID FROM Umlaufplan WHERE Bezeichnung = '"+fileNameVergleich+"'),'"+pos+"');");
+						  + "(SELECT ID FROM Umlaufplan WHERE Bezeichnung LIKE '"+fileNameVergleich+"'),'"+pos+"');");
 				
 			}else{
 				int fromstop = it16.next();
@@ -804,7 +795,6 @@ public class DBConnection {
 		 }
 		 
 		//All umlaufplan array lists will be cleared
-		  ss.clearUmlaufplanArraylists();
 		  closeConnection();
 		  System.out.println("Umlaufplan importiert!");
 		  
@@ -935,7 +925,7 @@ public class DBConnection {
 		  Iterator<String> it3 =ss.getDutyelementDutyID().iterator();
 		  Iterator<Integer> it4 =ss.getDutyelementBlockID().iterator();
 		  Iterator<String> it5 =ss.getDutyelementServiceJourneyID().iterator();
-		  Iterator<Integer> it10 = ss.getDutyelementElementType().iterator();
+
 
 		  /**
 		   * TODO:
@@ -944,8 +934,7 @@ public class DBConnection {
 		   * ServiceJourneycode(Z512) muss wieder rein, wirft dann aber Fehler wegen static
 		  */
 		  //exceptional journeys
-		  Iterator<String> it13 =ss.getExceptionaldutyelementDutyID().iterator();
-		  Iterator<Integer> it14 =ss.getExceptionaldutyelementBlockID().iterator(); 
+
 		  Iterator<String> it15 =ss.getExceptionaldutyelementServiceJourneyID().iterator();
 		  Iterator<Integer>it16 = ss.getExceptionaldutyelementFromStopID().iterator(); 
 		  Iterator<Integer>it17 = ss.getExceptionaldutyelementToStopID().iterator(); 
@@ -985,7 +974,7 @@ public class DBConnection {
 				  if (de_elementtype==1){
 					 stmnt.executeUpdate("INSERT INTO Dutyelement (ElementType, DutyID, BlockID, ServiceJourneyID, DienstplanID, MatchingPos) VALUES('"+de_elementtype+"', "
 								  + "(SELECT d.ID from Duty AS d WHERE d.DutyID = '"+dutyelementdutyID+"' AND d.DienstplanID=(SELECT dp.ID FROM Dienstplan AS dp WHERE Bezeichnung LIKE ('%"+fileNameVergleich+"%'))), "
-								  + "(SELECT b.ID FROM Block AS b WHERE b.BlockID='"+dutyelementblockID+"' AND b.UmlaufplanID=(SELECT dp.ID FROM Dienstplan AS dp WHERE Bezeichnung LIKE ('%"+fileNameVergleich+"%'))), "
+								  + "(SELECT b.ID FROM Block AS b WHERE b.BlockID='"+dutyelementblockID+"' AND b.UmlaufplanID=(SELECT u.ID FROM Umlaufplan AS u WHERE FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE ('%"+finalString+"%')))), "
 								  + "(SELECT sj.ID FROM ServiceJourney AS sj WHERE sj.ServiceJourneyID='"+dutyelementservicejourneyID+"' AND sj.FahrplanID=(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%'))), "
 								  + "(SELECT ID FROM Dienstplan WHERE Bezeichnung='"+fileNameVergleich+"'),'"+pos+"');");
 
