@@ -450,7 +450,8 @@ public class DBMatching {
 					}
 					if (id1 > Integer.parseInt(this.duty.get(j2 + 1).getId())) {
 						dutyList.add(this.duty.get(j2));
-						j2 = this.duty.size() - 1;
+						//j2 = this.duty.size() - 1;
+						zaehlerDienst = zaehlerDienst + 1;
 					}
 
 				} else if (!this.duty.get(j2).getId().matches("^[a-z].*")
