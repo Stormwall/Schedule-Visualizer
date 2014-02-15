@@ -36,6 +36,7 @@ public class DBConnection {
 	File file=new File(DB_PATH);
 	private boolean fahrplanVorhanden=false;
 	private boolean diensttypenVorhanden=false;
+	private boolean umlaufplanVorhanden=false;
 	//loading database drivers
 	static {
 		try {
@@ -430,9 +431,12 @@ public class DBConnection {
 //																				+ "ServiceJourneyID_txt VARCHAR(30) NOT NULL, "
 																				+ "DepTime VARCHAR(30) NOT NULL, "
 																				+ "Delay INTEGER NOT NULL, "
-																				+ "FahrplanID INTEGER NOT NULL, "
+																				+ "SzenarioID INTEGER NOT NULL, "
 																				+ "FOREIGN KEY (ServiceJourneyID) REFERENCES ServiceJourney(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
-																				+ "FOREIGN KEY (FahrplanID) REFERENCES Fahrplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);");
+																				+ "FOREIGN KEY (SzenarioID) REFERENCES Szenario(ID) ON UPDATE CASCADE ON DELETE CASCADE);");
+			
+			//table szenario
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Szenario (ID INTEGER PRIMARY KEY AUTOINCREMENT, Bezeichnung VARCHAR(30) NOT NULL, FahrplanID INTEGER NOT NULL, Datum DATE NOT NULL, FOREIGN KEY (FahrplanID) REFERENCES Fahrplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);"); 
 						
 
 			
@@ -788,8 +792,8 @@ public class DBConnection {
 				
 				stmnt.executeUpdate("INSERT INTO ExceptionalBlockelement ( DepTime, ArrTime, ServiceJourneyID, ElementType, BlockID, FromStopID, ToStopID, UmlaufplanID, MatchingPos) VALUES('"+deptime+"','"+arrtime+"','"+it15.next()+"','"+EleType+"', "
 						  + "(SELECT b.ID FROM Block AS b WHERE b.BlockID='"+blockID+"' AND b.UmlaufplanID= (SELECT up.ID FROM Umlaufplan AS up WHERE Bezeichnung LIKE '"+fileNameVergleich+"')), "
-						  + "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.StoppointID='"+fromstop+"' AND sp.FahrplanID=(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"'))), "
-						  + "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.StoppointID='"+tostop+"' AND sp.FahrplanID=(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"'))), "
+						  + "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.StoppointID='"+fromstop+"' AND sp.FahrplanID=(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%'))), "
+						  + "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.StoppointID='"+tostop+"' AND sp.FahrplanID=(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%'))), "
 						  + "(SELECT up.ID FROM Umlaufplan AS up WHERE Bezeichnung LIKE '"+fileNameVergleich+"'),'"+pos+"');");
 			}	 
 		 }
@@ -907,12 +911,12 @@ public class DBConnection {
 			  dayID = ss.getDutyelementDayID().get(0);
 			  //filling Dienstplan Table
 		  stmnt.executeUpdate("INSERT INTO Dienstplan (Bezeichnung, FahrplanID, DayID, Datum) VALUES ('"
-				  			+fileNameVergleich+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"')),'"+dayID+"', CURRENT_DATE);");
+				  			+fileNameVergleich+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%')),'"+dayID+"', CURRENT_DATE);");
 		  }else{
 			    
 			  //filling Dienstplan Table
 		  stmnt.executeUpdate("INSERT INTO Dienstplan (Bezeichnung, FahrplanID, Datum) VALUES ('"
-				  			+fileNameVergleich+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"')), CURRENT_DATE);");
+				  			+fileNameVergleich+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%')), CURRENT_DATE);");
 		  }
 		  //iterators for getting values from stringsplitter object
 		  Iterator<Integer> it11 = ss.getDutyelementElementType().iterator();
@@ -1007,30 +1011,17 @@ public class DBConnection {
 	//******************************************************************************************************************************************
 	//filling the scenario data into the respective tables**************************************************************************************
 	//******************************************************************************************************************************************
-	public void fillSzenarioIntoTables(){
+	public void fillSzenarioIntoTables(String filename){
 		
 		Statement stmnt;
 		StringSplitter ss = StringSplitter.getInstance();
 		
+		String fileNameVergleich=filename;
+		  String finalString=getVehicleScheduleNameSzenario(fileNameVergleich);
+		
 		try {
 			stmnt = connection.createStatement();
 		
-		
-		//temporary stringsplitter object that contains the the data from text files in array lists
-		
-		
-		
-		String fileNameVergleich=ss.getFilename();
-		  String[] resultString=fileNameVergleich.split("_");
-		  String finalString="";
-		  for (int i = 0; i < resultString.length-1; i++) {
-			  if(i!=resultString.length-2){
-			  finalString+=resultString[i]+"_";
-			  }else
-				  finalString+=resultString[i];
-		}
-
-
 		  //Szenario
 		  Iterator<String> it1 = ss.getSzenarioDutyID().iterator();
 		  Iterator<String> it2 = ss.getSzenarioVehicleID().iterator(); 
@@ -1038,15 +1029,19 @@ public class DBConnection {
 		  Iterator<String> it4 = ss.getSzenarioDepTime().iterator();
 		  Iterator<Integer> it5 = ss.getSzenarioDelay().iterator();
 		  
+		  stmnt.executeUpdate("INSERT INTO Szenario (Bezeichnung, FahrplanID, Datum) VALUES('"+fileNameVergleich+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%')), CURRENT_DATE);");
+		  
 		  while((it1.hasNext()&&it2.hasNext()&&it3.hasNext()&&it4.hasNext()&&it5.hasNext())){
-			  stmnt.executeUpdate("INSERT INTO PrimeDelaySzenario (DutyID, VehicleID, ServiceJourneyID, DepTime, Delay, FahrplanID) VALUES('"+it1.next()+"','"+it2.next()+"','"+it3.next()+"','"+it4.next()+"','"+it5.next()+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('"+finalString+"%')));");
+			  stmnt.executeUpdate("INSERT INTO PrimeDelaySzenario (DutyID, VehicleID, ServiceJourneyID, DepTime, Delay, SzenarioID) VALUES('"+it1.next()+"','"+it2.next()+"','"+it3.next()+"','"+it4.next()+"','"+it5.next()+"',(SELECT s.ID FROM Szenario AS s WHERE s.Bezeichnung LIKE('"+fileNameVergleich+"')));");
 		  }
+		  
 		  closeConnection();
 		  } 
 		catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} 
+		System.out.println("Szenario importiert!");
 	}
 	
 	public boolean checkFahrplan(String filename){
@@ -1059,7 +1054,7 @@ public class DBConnection {
 			fahrplaene.add(rest1.getString("Bezeichnung"));
 			}
 			for (int i = 0; i < fahrplaene.size(); i++) {
-				if(fahrplaene.get(i).endsWith(filename)){
+				if(fahrplaene.get(i).contains(filename)){
 					fahrplanVorhanden=true;
 					break;
 				}
@@ -1094,12 +1089,46 @@ public class DBConnection {
 
 	public String getVehicleScheduleName(String filename){
 		String vehicleschedulename =filename;
-		String[] resultString=filename.split("_real");
-		vehicleschedulename=resultString[1];
-		return vehicleschedulename;
+		String[] string=filename.split("_real");
+		vehicleschedulename=string[1];
+		String[] resultString=vehicleschedulename.split(".txt");
+		String scheduleName=resultString[0];
+		return scheduleName;
 	}
-
-
+	
+	public String getVehicleScheduleNameSzenario(String filename)
+	{
+		String vehicleschedulename =filename;
+		String scheduleName="";
+		String[] string=filename.split("_real");
+		vehicleschedulename=string[1];
+		String[] resultString=vehicleschedulename.split("_");
+		for (int i = 1; i < resultString.length; i++) {
+			if(resultString[i].matches("^[0-9].*")&&resultString[i].endsWith("txt")){
+				break;
+			}else{
+				scheduleName+="_"+resultString[i];
+			}
+		}
+		return scheduleName;
+	}
+	public boolean checkUmlaufplan(String test) {
+		
+		try{
+			Statement stmnt=getConnection().createStatement();
+			ResultSet rest1=stmnt.executeQuery("SELECT b.BlockID FROM Block AS b, Umlaufplan AS u, Fahrplan AS f WHERE b.UmlaufplanID=u.ID AND u.FahrplanID=f.ID AND f.Bezeichnung='"+test+"';");
+			if(!rest1.next()){
+			umlaufplanVorhanden=true;
+			}else{
+				umlaufplanVorhanden=false;
+			}
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
+		return umlaufplanVorhanden;
+		
+	}
+	
 	//getter for DB connection
 	public Connection getConnection() {
 		return connection;
@@ -1112,6 +1141,12 @@ public class DBConnection {
 	public boolean isDiensttypenVorhanden() {
 		return diensttypenVorhanden;
 	}
+
+	public boolean isUmlaufplanVorhanden() {
+		return umlaufplanVorhanden;
+	}
+
+
 	
 	
 	

@@ -14,9 +14,11 @@ import sv.creation.adress.model.Duty;
 import sv.creation.adress.model.Dutyelement;
 import sv.creation.adress.model.Fahrplan;
 import sv.creation.adress.model.Line;
+import sv.creation.adress.model.PrimeDelay;
 import sv.creation.adress.model.Reliefpoint;
 import sv.creation.adress.model.ServiceJourney;
 import sv.creation.adress.model.Stoppoint;
+import sv.creation.adress.model.Szenario;
 import sv.creation.adress.model.Transfertime;
 import sv.creation.adress.model.Umlaufplan;
 import sv.creation.adress.model.VehicleCapToStoppoint;
@@ -57,12 +59,21 @@ public class DBMatching {
 	ArrayList<Integer> umlaufplanDayList = new ArrayList<Integer>();
 	ArrayList<Integer> dienstplanDayList = new ArrayList<Integer>();
 	ArrayList<Days> daysList = new ArrayList<Days>();
+	// *************************************************************
+	// ****** Array lists to create objects of the szenarios *******
+	// ****** 											     *******
+	// *************************************************************
+	ArrayList<PrimeDelay> primeDelay = new ArrayList<PrimeDelay>();
 	// ********************************
 	// ****** Plan objects *******
 	// ********************************
 	Umlaufplan umlaufplan;
 	Dienstplan dienstplan;
 	Fahrplan fahrplan;
+	// *********************************
+	// ****** Szenario object    *******
+	// *********************************
+	Szenario szenario;
 	// *********************************
 	// ****** ArrayList of plans *******
 	// *********************************
@@ -450,8 +461,8 @@ public class DBMatching {
 					}
 					if (id1 > Integer.parseInt(this.duty.get(j2 + 1).getId())) {
 						dutyList.add(this.duty.get(j2));
-						//j2 = this.duty.size() - 1;
 						zaehlerDienst = zaehlerDienst + 1;
+//						j2 = this.duty.size() - 1;
 					}
 
 				} else if (!this.duty.get(j2).getId().matches("^[a-z].*")
@@ -498,6 +509,7 @@ public class DBMatching {
 					}
 					if (id1 > Integer.parseInt(this.duty.get(j2 + 1).getId())) {
 						dutyList.add(this.duty.get(j2));
+						zaehlerDienst = zaehlerDienst + 1;
 						j2 = this.duty.size() - 1;
 					}
 
@@ -534,7 +546,7 @@ public class DBMatching {
 				}
 			}
 			zaehlerDienst = zaehlerDienst + 1;
-			Dienstplan dienstplanAdd = new Dienstplan(1, dutyList,
+			Dienstplan dienstplanAdd = new Dienstplan(i, dutyList,
 					dutyelementList, getFahrplanzugehoerigkeitDienstPlan(i),
 					changeDateFormat(dienstplanDateList.get(i - 1)));
 			dienstplanliste.add(dienstplanAdd);
@@ -1299,6 +1311,84 @@ public void deleteDienstplan(Dienstplan dienstplan){
 		}
 		
 	}
+	
+	public ArrayList<Szenario> createSzenarioObject(){
+		
+		ArrayList<Szenario>szenarioList = new ArrayList<Szenario>();
+		ArrayList<PrimeDelay> primeDelayList = new ArrayList<PrimeDelay>();
+		createSzenario();
+		int anzahlSzenarien = 1;
+		
+		//Anzahl der Szenarien wird ermittelt
+		for (int i = 0; i < primeDelay.size(); i++) {
+			if(Integer.parseInt(primeDelay.get(i).getServiceJourneyID())>Integer.parseInt(primeDelay.get(i+1).getServiceJourneyID())){
+				anzahlSzenarien++;
+			}
+		}
+		
+		for (int i = 0; i < anzahlSzenarien; i++) {
+			for (int j = 0; j < primeDelay.size(); j++) {
+				if(primeDelay.get(j).getSzenarioID()==i){
+					primeDelayList.add(primeDelay.get(j));
+				}
+			}
+			Szenario szenario = new Szenario(i,primeDelayList,getFahrplanzugehoerigkeitSzenario(i));
+			szenarioList.add(szenario);
+		}
+		return szenarioList;
+		
+	}
+
+	private int getFahrplanzugehoerigkeitSzenario(int i) {
+		
+		int fahrplanID = 0;
+
+		DBConnection db = new DBConnection();
+		db.initDBConnection();
+		// Creating a sql query
+		try {
+			stmt = db.getConnection().createStatement();
+			ResultSet rest1 = stmt
+					.executeQuery("SELECT * FROM Szenario WHERE ID="
+							+ i);
+			fahrplanID = rest1.getInt("FahrplanID");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return fahrplanID;
+	}
+
+	private void createSzenario() {
+		
+		DBConnection db = new DBConnection();
+		db.initDBConnection();
+		// Creating a sql query
+		try {
+			stmt = db.getConnection().createStatement();
+			ResultSet rest1 = stmt
+					.executeQuery("SELECT * FROM PrimeDelaySzenario");
+			// All resulted datasets of the sql query will be added to the block
+			// array list
+			while (rest1.next()) {
+				String dutyID = rest1
+						.getString("DutyID");
+				String vehicleID = rest1.getString("VehicleID");
+				String serviceJourneyID = rest1.getString("ServiceJourneyID");
+				String depTime = rest1.getString("DepTime");
+				int delay = Integer
+						.parseInt(rest1.getString("Delay"));
+				int szenarioID = Integer
+						.parseInt(rest1.getString("SzenarioID"));
+				primeDelay
+						.add(new PrimeDelay(dutyID, vehicleID, serviceJourneyID, depTime, delay, szenarioID));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 
 	// *****************************
 	// ****** Getter methods *******
@@ -1314,5 +1404,9 @@ public void deleteDienstplan(Dienstplan dienstplan){
 	public Fahrplan getFahrplan() {
 		return fahrplan;
 	}
+
+	public Szenario getSzenario() {
+		return szenario;
+	}	
 
 }

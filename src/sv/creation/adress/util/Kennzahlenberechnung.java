@@ -17,7 +17,7 @@ public class Kennzahlenberechnung {
 		int anzahlGleicheDuty=0;
 		double avgrepeat=0.0;
 		
-		//Anzahl der Dienste von allen Dienstplänen
+		//Anzahl der Dienste von allen Dienstpl��nen
 		for (int i = 0; i < dienstplanliste.size(); i++) {
 			
 			if(dienstplanliste.get(i).getFahrplanID()==fahrplan.getId()){
@@ -25,11 +25,20 @@ public class Kennzahlenberechnung {
 			}
 		}
 		
-		//Anzahl gleicher Dienste zwischen zwei Dienstplänen
+		//Anzahl gleicher Dienste zwischen zwei Dienstpl��nen
 		for (int i = 0; i < dienstplanliste.size(); i++) {
+			if(i==dienstplanliste.size()-1){
+				break;
+			}
 			for (int j = 0; j < dienstplanliste.get(i).getDuty().size(); j++) {
-				if(dienstplanliste.get(i).getDuty().get(j)==dienstplanliste.get(i+1).getDuty().get(j+1)){
+				for (int j2 = 0; j2 < dienstplanliste.get(i+1).getDuty().size(); j2++) {
+					
+				if(j==dienstplanliste.get(i).getDuty().size()-1){
+				break;
+				}
+				if(dienstplanliste.get(i).getDuty().get(j)==dienstplanliste.get(i+1).getDuty().get(j2)){
 					anzahlGleicheDuty++;
+				}
 				}
 			}
 		}
@@ -39,14 +48,14 @@ public class Kennzahlenberechnung {
 		}
 		
 		if(anzahlDutyGesamt==0){
-			System.out.println("Es müssen mindestens zwei Dienstpläne mit dem gleichen Fahrplan ausgewählt werden!");
+			System.out.println("Es m��ssen mindestens zwei Dienstpl��ne mit dem gleichen Fahrplan ausgew��hlt werden!");
 		}
 		
 		//Wenn Nenner 0, dann wird Durchschnitt auf 0 gesetzt
 		if(anzahlGleicheDuty==0){
 			avgrepeat=0.0;
 		}else{
-		//Formel für durchschn. Wiederholrate
+		//Formel f��r durchschn. Wiederholrate
 		avgrepeat=anzahlDutyGesamt/(anzahlDutyGesamt-anzahlGleicheDuty);
 		}
 		return avgrepeat;
@@ -58,14 +67,14 @@ public class Kennzahlenberechnung {
 		int anzahlGleicheBlock=0;
 		double avgrepeat=0.0;
 		
-		//Anzahl der Umläufe von allen Umlaufplänen, die zu dem Fahrplan gehören
+		//Anzahl der Uml��ufe von allen Umlaufpl��nen, die zu dem Fahrplan geh��ren
 		for (int i = 0; i < umlaufplanliste.size(); i++) {
 			if(umlaufplanliste.get(i).getFahrplanID()==fahrplan.getId()){
 			anzahlBlockGesamt+=umlaufplanliste.get(i).getUmlauf().size();
 			}
 		}
 		
-		//Anzahl gleicher Umläufe zwischen zwei Umlaufplänen
+		//Anzahl gleicher Uml��ufe zwischen zwei Umlaufpl��nen
 		for (int i = 0; i < umlaufplanliste.size(); i++) {
 			for (int j = 0; j < umlaufplanliste.get(i).getUmlauf().size(); j++) {
 				if(umlaufplanliste.get(i).getUmlauf().get(j)==umlaufplanliste.get(i+1).getUmlauf().get(j+1)){
@@ -79,19 +88,19 @@ public class Kennzahlenberechnung {
 		}
 		
 		if(anzahlBlockGesamt==0){
-			System.out.println("Es müssen mindestens zwei Umlaufpläne mit dem gleichen Fahrplan ausgewählt werden!");
+			System.out.println("Es m��ssen mindestens zwei Umlaufpl��ne mit dem gleichen Fahrplan ausgew��hlt werden!");
 		}
 		//Wenn Nenner 0, dann wird Durchschnitt auf 0 gesetzt
 		if(anzahlGleicheBlock==0){
 			avgrepeat=0.0;
 		}else{
-		//Formel für durchschn. Wiederholrate
+		//Formel f��r durchschn. Wiederholrate
 		avgrepeat=anzahlBlockGesamt/(anzahlBlockGesamt-anzahlGleicheBlock);
 		}
 		return avgrepeat;
 	}
 	
-	//Methode bekommt dienstplanliste mit Dienstplänen und dem dazugehörigen Fahrplan
+	//Methode bekommt dienstplanliste mit Dienstpl��nen und dem dazugeh��rigen Fahrplan
 	public ArrayList<Dutyelement> regelmaessigeDutyelement(ArrayList <Dienstplan> dienstplanliste, Fahrplan fahrplan){
 		
 		ArrayList<Dutyelement> dutyelementList = new ArrayList<Dutyelement>();
@@ -99,7 +108,7 @@ public class Kennzahlenberechnung {
 		for (int i = 0; i < dienstplanliste.size(); i++) {
 			for (int j = 0; j < dienstplanliste.get(i).getDuty().size(); j++) {
 				for (int j2 = 0; j2 < dienstplanliste.get(i).getDutyelement().size(); j2++) {
-					if(Integer.parseInt(dienstplanliste.get(i).getDutyelement().get(j2).getServiceJourneyID())==fahrplan.getDays().get(j2).getTripID()&&fahrplan.getDays().get(j2).getD1()==1&&fahrplan.getDays().get(j2).getD2()==1&&fahrplan.getDays().get(j2).getD3()==1&&fahrplan.getDays().get(j2).getD4()==1&&fahrplan.getDays().get(j2).getD5()==1){
+					if(dienstplanliste.get(i).getDutyelement().get(j2).getServiceJourneyID().equals(fahrplan.getDays().get(j2).getTripID())&&fahrplan.getDays().get(j2).getD1()==1&&fahrplan.getDays().get(j2).getD2()==1&&fahrplan.getDays().get(j2).getD3()==1&&fahrplan.getDays().get(j2).getD4()==1&&fahrplan.getDays().get(j2).getD5()==1){
 						dutyelementList.add(dienstplanliste.get(i).getDutyelement().get(j2));
 					}
 				}
@@ -110,30 +119,33 @@ public class Kennzahlenberechnung {
 	
 	public double berechneDurschnittlicheWiederholrateDienstplanRegular(ArrayList<Dienstplan> dienstplanliste, ArrayList<ArrayList<ArrayList<String>>> ListPlaeneGesamt, Fahrplan fahrplan){
 		
-		int anzahlDutyGesamt=0;
-		int anzahlGleicheDuty=0;
-		double avgrepeat=0.0;
+		double anzahlDutyGesamt=0.0;
+		double anzahlGleicheDuty=0.0;
+		double avgrepeat;
 		boolean alleGleich=false;
 		
 		ArrayList<Dutyelement> dutyelementlist = new ArrayList<Dutyelement>();
-		dutyelementlist=regelmaessigeDutyelement(dienstplanliste, fahrplan);
+//		dutyelementlist=regelmaessigeDutyelement(dienstplanliste, fahrplan);
 		
-		//Anzahl der Dienste von allen Dienstplänen
+		//Anzahl der Dienste von allen Dienstpl��nen
 		for (int i = 0; i < dienstplanliste.size(); i++) {
 			if(dienstplanliste.get(i).getFahrplanID()==fahrplan.getId()){
 				anzahlDutyGesamt+=dienstplanliste.get(i).getDuty().size();
 			}
 		}
-		//Alle Dienstpläne
-		for (int plan = 0; plan < ListPlaeneGesamt.size(); plan++) {
-			//Alle Bündel in einem Plan
+		//Alle Dienstpl��ne
+		for (int plan = 0; plan < ListPlaeneGesamt.size()-1; plan++) {
+			alleGleich=false;
+			//Alle B��ndel in einem Plan
 			for (int buendel = 0; buendel < ListPlaeneGesamt.get(plan).size(); buendel++) {
-			//Alle ServiceJounreys im ersten Bündel im ersten Plan
+			//Alle ServiceJounreys im ersten B��ndel im ersten Plan
 			for (int buendel2 = 0; buendel2 < ListPlaeneGesamt.get(plan+1).size(); buendel2++) {
-					//Alle ServiceJourneys im Bündel
+				
+				if(ListPlaeneGesamt.get(plan).get(buendel).size()==ListPlaeneGesamt.get(plan+1).get(buendel2).size()){
+					//Alle ServiceJourneys im B��ndel
 					for (int serviceJourney = 0; serviceJourney < ListPlaeneGesamt.get(plan).get(buendel).size(); serviceJourney++) {
 						
-						if(ListPlaeneGesamt.get(plan).get(buendel).get(serviceJourney)!=ListPlaeneGesamt.get(plan+1).get(buendel2).get(serviceJourney)){
+						if(!(ListPlaeneGesamt.get(plan).get(buendel).get(serviceJourney).equals(ListPlaeneGesamt.get(plan+1).get(buendel2).get(serviceJourney)))){
 							alleGleich=false;
 							break;
 						}
@@ -141,36 +153,48 @@ public class Kennzahlenberechnung {
 					}
 					if(alleGleich){
 						anzahlGleicheDuty++;
+						break;
 					}
+				}else{
+					alleGleich=false;
+				}
 				
 				}
 			}
 		}
 		
 		avgrepeat=anzahlDutyGesamt/(anzahlDutyGesamt-anzahlGleicheDuty);
+		
 		return avgrepeat;
 		
 	}
 	
-	//Erstellt eine ArrayList mit allen Bündeln an ServiceJourneys zu den einzelnen Dienstplänen
-	public void erstelleDutyelementList(ArrayList<Dienstplan> dienstplanliste){
+	//Erstellt eine ArrayList mit allen B��ndeln an ServiceJourneys zu den einzelnen Dienstpl��nen
+	public ArrayList<ArrayList<ArrayList<String>>> erstelleDutyelementList(ArrayList<Dienstplan> dienstplanliste){
 		
 		ArrayList<ArrayList<ArrayList<String>>> ListPlaeneGesamt = new ArrayList<ArrayList<ArrayList<String>>>();
-		ArrayList<ArrayList<String>> ListPlan = new ArrayList<ArrayList<String>>();
-		ArrayList<String> serviceJourneyList = new ArrayList<String>();
+		int zaehler=0;
 		
 		for (int i = 0; i < dienstplanliste.size(); i++) {
-			for (int j = 0; j < dienstplanliste.get(i).getDutyelement().size(); j++) {
-				String dutyID=dienstplanliste.get(i).getDutyelement().get(i).getDutyID();
-					while(dienstplanliste.get(i).getDutyelement().get(j).getDutyID().equals(dutyID)){	
-						serviceJourneyList.add(dienstplanliste.get(i).getDutyelement().get(j).getServiceJourneyID());
-					}	
+			ArrayList<ArrayList<String>> ListPlan = new ArrayList<ArrayList<String>>();
+			zaehler=0;
+			for (int j = 0; j < dienstplanliste.get(i).getDuty().size(); j++) {
+				ArrayList<String> serviceJourneyList = new ArrayList<String>();
+				for (int j2 = zaehler; j2 < dienstplanliste.get(i).getDutyelement().size(); j2++) {
+				String dutyID=dienstplanliste.get(i).getDuty().get(j).getId();
+					if(dienstplanliste.get(i).getDutyelement().get(j2).getDutyID().equals(dutyID)){	
+						serviceJourneyList.add(dienstplanliste.get(i).getDutyelement().get(j2).getServiceJourneyID());
+						zaehler++;
+					}else{
+						ListPlan.add(serviceJourneyList);
+						break;
+					}
+				}
 			}
-			ListPlan.add(serviceJourneyList);
 			ListPlaeneGesamt.add(ListPlan);
-			serviceJourneyList.clear();
-			ListPlan.clear();
 		}
+		return ListPlaeneGesamt;
+		
 		
 	}
 	

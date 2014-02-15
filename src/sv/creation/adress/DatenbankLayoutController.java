@@ -9,6 +9,7 @@ import sv.creation.adress.model.Dienstplan;
 import sv.creation.adress.model.Fahrplan;
 import sv.creation.adress.model.Umlaufplan;
 import sv.creation.adress.util.Import;
+import sv.creation.adress.util.Kennzahlenberechnung;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -261,25 +262,30 @@ public class DatenbankLayoutController {
 	 */
 	public void handleImport() {
 
-		FileChooser fileChooser = new FileChooser();
-
-		// // Set extension filter
-		FileChooser.ExtensionFilter extFilter = new
-		 FileChooser.ExtensionFilter(
-		"TXT files (*.txt)", "*.txt");
-		 fileChooser.getExtensionFilters().add(extFilter);
-
-		// Show open file dialog
-		 File file = fileChooser.showOpenDialog(dialogStage);
-		//
-		 Import im = new Import();
-		 im.importFile(file);
+//		FileChooser fileChooser = new FileChooser();
+//
+//		// // Set extension filter
+//		FileChooser.ExtensionFilter extFilter = new
+//		 FileChooser.ExtensionFilter(
+//		"TXT files (*.txt)", "*.txt");
+//		 fileChooser.getExtensionFilters().add(extFilter);
+//
+//		// Show open file dialog
+//		 File file = fileChooser.showOpenDialog(dialogStage);
+//		//
+//		 Import im = new Import();
+//		 im.importFile(file);
 		
 //		DBMatching dbm = new DBMatching();
 //		dbm.deleteFahrplan(fahrplanliste.get(0));
 		
 //		DBSave dbs = new DBSave();
 //		dbs.saveUmlaufplan(umlaufplanliste.get(0), "Testversion");
+		
+		Kennzahlenberechnung kzb = new Kennzahlenberechnung();
+		System.out.println(kzb.berechneDurschnittlicheWiederholrateDienstplanRegular(dienstplanliste,kzb.erstelleDutyelementList(dienstplanliste), fahrplanliste.get(0))   );
+		
+		
 
 	}
 

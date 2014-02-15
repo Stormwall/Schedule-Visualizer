@@ -968,7 +968,7 @@ public class StringSplitter {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
+			clearDiensttypenArrayLists();
 
 		}
 
@@ -992,8 +992,11 @@ public class StringSplitter {
 			
 			String test=dbc.getVehicleScheduleName(getFilename());
 			dbc.checkFahrplan(test);
+			dbc.checkUmlaufplan(test);
+			dbc.checkDiensttypen(test);
 			if(dbc.isFahrplanVorhanden()){
-
+				if(dbc.isUmlaufplanVorhanden()){
+					if(dbc.isDiensttypenVorhanden()){
 			Statement stmnt;
 			int anzahl = 0;
 			try {
@@ -1113,6 +1116,13 @@ public class StringSplitter {
 			}
 			dienstplan.close();
 			dbc.fillDienstplanIntoTable(getFilename());}
+					
+					else{
+				System.out.println("Es sind keine passenden Diensttypen vorhanden!");}}
+			
+				else{
+				System.out.println("Es ist kein passender Umlaufplan vorhanden!");	
+			}}
 			else {
 				System.out.println("Es ist kein passender Fahrplan vorhanden!");
 			}
@@ -1126,6 +1136,8 @@ public class StringSplitter {
 		
 	public void readTxtFromSzenario(String path){
 		
+		DBConnection dbc = DBConnection.getInstance();
+		
 		try {
 
 			// szenario Data has to be in the project file in your
@@ -1134,6 +1146,10 @@ public class StringSplitter {
 			BufferedReader szenario = new BufferedReader(new FileReader(file));
 			filename = file.getName();
 			
+			String test=dbc.getVehicleScheduleNameSzenario(getFilename());
+			dbc.checkFahrplan(test);
+			
+			if(dbc.isFahrplanVorhanden()){
 			
 			String zeile = null;
 			ArrayList<String> zeilenelemente = new ArrayList<String>();
@@ -1148,10 +1164,16 @@ public class StringSplitter {
 						szenarioDelay.add(Integer.parseInt(zeilenelemente.get(4)));
 						zeilenelemente.clear();
 						
-					}
+					}	
 				}
+				
 			}
 			szenario.close();
+			dbc.fillSzenarioIntoTables(getFilename());
+			clearSzenarioArrayLists();}
+			else{
+				System.out.println("Kein passender Fahrplan vorhanden!");
+			}
 			}catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -1280,6 +1302,46 @@ public class StringSplitter {
 		szenarioServiceJourneyID.clear();
 		szenarioDepTime.clear();
 		szenarioDelay.clear();
+	}
+	
+	public void clearDiensttypenArrayLists(){
+		
+		name.clear();
+		startTimeMin.clear();
+		startTimeMax.clear();
+		endTimeMin.clear();
+		endTimeMax.clear();
+		signOnTime.clear();
+		signOffTime.clear();
+		durationMin.clear();
+		durationMax.clear();
+		workingTimeTotalMin.clear();
+		workingTimeTotalMax.clear();
+		workingTimeBeforeBreakMin.clear();
+		workingTimeWithoutBreakMin.clear();
+		workingTimeAfterLastBreakMin.clear();
+		drivingTimeTotalMin.clear();
+		drivingTimeTotalMax.clear();
+		drivingTimeWithoutBreakMin.clear();
+		drivingTimeWithoutBreakMax.clear();
+		drivingTimeWithoutBreakMinInterruptionTime.clear();
+		drivingTimeBeforeFirstBreakMin.clear();
+		breakType.clear();
+		breakTimeTotalMin.clear();
+		breakTimeTotalMax.clear();
+		breakTimeMin.clear();
+		breakTimeMax.clear();
+		pieceCountMin.clear();
+		pieceCountMax.clear();
+		allowedCumulatedWorkingTimeMax.clear();
+		dutyFixCost.clear();
+		isWorkRateConsidered.clear();
+		isBreakRateConsidered.clear();
+		dutyCostPerMinute.clear();
+		isVehicleChangeAllowedDuringBreak.clear();
+		breakTimeAllowsStarts.clear();
+		breakTimeAllowsEnds.clear();
+		workingtimeWithoutBreakMax.clear();
 	}
 
 	// ************************************************
