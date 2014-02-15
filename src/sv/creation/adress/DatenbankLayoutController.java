@@ -283,10 +283,12 @@ public class DatenbankLayoutController {
 //		dbs.saveUmlaufplan(umlaufplanliste.get(0), "Testversion");
 		
 		Kennzahlenberechnung kzb = new Kennzahlenberechnung();
-		System.out.println(kzb.berechneDurschnittlicheWiederholrateDienstplanRegular(dienstplanliste,kzb.erstelleDutyelementList(dienstplanliste), fahrplanliste.get(0))   );
-		
-		
-
+////		kzb.regelmaessigeDutyelement(dienstplanliste.get(0), fahrplanliste.get(0));
+//		kzb.erstelleDutyelementListRegular(dienstplanliste, fahrplanliste.get(0));
+//		System.out.println(kzb.berechneDurschnittlicheWiederholrateDienstplanRegular(dienstplanliste, fahrplanliste.get(0)));
+//		System.out.println(kzb.berechneDurschnittlicheWiederholrateDienstplanAll(dienstplanliste,kzb.erstelleDutyelementListAll(dienstplanliste), fahrplanliste.get(0)));
+//		
+		kzb.berechneDistanz(dienstplanliste, fahrplanliste.get(0));
 	}
 
 	public Stage getDialogStage() {
