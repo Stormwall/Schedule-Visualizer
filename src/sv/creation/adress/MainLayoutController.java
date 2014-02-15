@@ -381,6 +381,20 @@ public class MainLayoutController {
 	private boolean fifthUppergrafikErstellt = false;
 	private boolean sixthUppergrafikErstellt = false;
 	private boolean seventhUppergrafikErstellt = false;
+	private boolean firstCheckU1 = false;
+	private boolean firstCheckU2 = false;
+	private boolean firstCheckU3 = false;
+	private boolean firstCheckU4 = false;
+	private boolean firstCheckU5 = false;
+	private boolean firstCheckU6 = false;
+	private boolean firstCheckU7 = false;
+	private boolean changeCheckU1 = false;
+	private boolean changeCheckU2 = false;
+	private boolean changeCheckU3 = false;
+	private boolean changeCheckU4 = false;
+	private boolean changeCheckU5 = false;
+	private boolean changeCheckU6 = false;
+	private boolean changeCheckU7 = false;
 
 	private int umlaufChoice = 0;
 	private int umlaufTabCounter = 0;
@@ -396,6 +410,20 @@ public class MainLayoutController {
 	private boolean fifthLowergrafikErstellt = false;
 	private boolean sixthLowergrafikErstellt = false;
 	private boolean seventhLowergrafikErstellt = false;
+	private boolean firstCheckD1 = false;
+	private boolean firstCheckD2 = false;
+	private boolean firstCheckD3 = false;
+	private boolean firstCheckD4 = false;
+	private boolean firstCheckD5 = false;
+	private boolean firstCheckD6 = false;
+	private boolean firstCheckD7 = false;
+	private boolean changeCheckD1 = false;
+	private boolean changeCheckD2 = false;
+	private boolean changeCheckD3 = false;
+	private boolean changeCheckD4 = false;
+	private boolean changeCheckD5 = false;
+	private boolean changeCheckD6 = false;
+	private boolean changeCheckD7 = false;
 
 	private int dienstChoice = 0;
 	private int dienstTabCounter = 0;
@@ -1025,8 +1053,29 @@ public class MainLayoutController {
 	@FXML
 	private void createUpperGraphic() {
 
-		this.lowerDetailsPane.setMaxHeight(lowerDetailsPane.getHeight());
-		this.lowerDetailsPane.setMinHeight(lowerDetailsPane.getHeight());
+		// Die Kontrollpruefung wird zurückgesetzt
+
+		if (this.changeCheckU1 == false) {
+			this.firstCheckU1 = false;
+		}
+		if (this.changeCheckU2 == false) {
+			this.firstCheckU2 = false;
+		}
+		if (this.changeCheckU3 == false) {
+			this.firstCheckU3 = false;
+		}
+		if (this.changeCheckU4 == false) {
+			this.firstCheckU4 = false;
+		}
+		if (this.changeCheckU5 == false) {
+			this.firstCheckU5 = false;
+		}
+		if (this.changeCheckU6 == false) {
+			this.firstCheckU6 = false;
+		}
+		if (this.changeCheckU7 == false) {
+			this.firstCheckU7 = false;
+		}
 
 		final SingleSelectionModel<Tab> selectionModel = Planpane
 				.getSelectionModel();
@@ -1050,6 +1099,7 @@ public class MainLayoutController {
 					this.UPlanValue1.setText(UPlan.getSelectionModel()
 							.getSelectedItem().toString());
 					this.umlaufChoice = 1;
+					firstCheckU1 = true;
 
 					// Zuordnung der Auswahl
 
@@ -1097,7 +1147,8 @@ public class MainLayoutController {
 				createUpperBackgroundGraphicFirstPane();
 				createUpperXScalePane(this.xUp1, this.upperGraphicPane1);
 				createUmlaufElementGraphic(this.umlaufplanEins,
-						this.upperGraphicPane1, this.upperChart1, this.uppergc1);
+						this.upperGraphicPane1, this.upperChart1,
+						this.uppergc1, firstCheckU1);
 				// FÃ¼gt den EventhÃ¤ndler hinzu
 				this.upperChart1.addEventHandler(MouseEvent.MOUSE_CLICKED,
 						new EventHandler<MouseEvent>() {
@@ -1106,6 +1157,8 @@ public class MainLayoutController {
 								boolean okClicked = mainApp
 										.showEditUPlan(umlaufplanEins);
 								if (okClicked) {
+									firstCheckU1 = true;
+									changeCheckU1 = true;
 									refreshBothGraphics();
 									fillUmlaufplanliste();
 								}
@@ -1135,6 +1188,7 @@ public class MainLayoutController {
 					this.UPlanValue2.setText(UPlan.getSelectionModel()
 							.getSelectedItem().toString());
 					this.umlaufChoice = 2;
+					firstCheckU2 = true;
 
 					// Zuordnung der Auswahl
 
@@ -1183,7 +1237,8 @@ public class MainLayoutController {
 				createUpperXScalePane(this.xUp2, this.upperGraphicPane2);
 
 				createUmlaufElementGraphic(this.umlaufplanZwei,
-						this.upperGraphicPane2, this.upperChart2, this.uppergc2);
+						this.upperGraphicPane2, this.upperChart2,
+						this.uppergc2, firstCheckU2);
 				// FÃ¼gt den EventhÃ¤ndler hinzu
 				this.upperChart2.addEventHandler(MouseEvent.MOUSE_CLICKED,
 						new EventHandler<MouseEvent>() {
@@ -1192,6 +1247,8 @@ public class MainLayoutController {
 								boolean okClicked = mainApp
 										.showEditUPlan(umlaufplanZwei);
 								if (okClicked) {
+									firstCheckU2 = true;
+									changeCheckU2 = true;
 									refreshBothGraphics();
 									fillUmlaufplanliste();
 								}
@@ -1220,6 +1277,7 @@ public class MainLayoutController {
 					this.UPlanValue3.setText(UPlan.getSelectionModel()
 							.getSelectedItem().toString());
 					this.umlaufChoice = 3;
+					firstCheckU3 = true;
 
 					// Zuordnung der Auswahl
 
@@ -1267,7 +1325,8 @@ public class MainLayoutController {
 				createUpperXScalePane(this.xUp3, this.upperGraphicPane3);
 
 				createUmlaufElementGraphic(this.umlaufplanDrei,
-						this.upperGraphicPane3, this.upperChart3, this.uppergc3);
+						this.upperGraphicPane3, this.upperChart3,
+						this.uppergc3, firstCheckU3);
 				// FÃ¼gt den EventhÃ¤ndler hinzu
 				this.upperChart3.addEventHandler(MouseEvent.MOUSE_CLICKED,
 						new EventHandler<MouseEvent>() {
@@ -1304,6 +1363,7 @@ public class MainLayoutController {
 					this.UPlanValue4.setText(UPlan.getSelectionModel()
 							.getSelectedItem().toString());
 					this.umlaufChoice = 4;
+					firstCheckU4 = true;
 
 					// Zuordnung der Auswahl
 
@@ -1351,7 +1411,8 @@ public class MainLayoutController {
 				createUpperXScalePane(this.xUp4, this.upperGraphicPane4);
 
 				createUmlaufElementGraphic(this.umlaufplanVier,
-						this.upperGraphicPane4, this.upperChart4, this.uppergc4);
+						this.upperGraphicPane4, this.upperChart4,
+						this.uppergc4, firstCheckU4);
 				// FÃ¼gt den EventhÃ¤ndler hinzu
 				this.upperChart4.addEventHandler(MouseEvent.MOUSE_CLICKED,
 						new EventHandler<MouseEvent>() {
@@ -1388,6 +1449,7 @@ public class MainLayoutController {
 					this.UPlanValue5.setText(UPlan.getSelectionModel()
 							.getSelectedItem().toString());
 					this.umlaufChoice = 5;
+					firstCheckU5 = true;
 
 					// Zuordnung der Auswahl
 
@@ -1435,7 +1497,8 @@ public class MainLayoutController {
 				createUpperXScalePane(this.xUp5, this.upperGraphicPane5);
 
 				createUmlaufElementGraphic(this.umlaufplanFuenf,
-						this.upperGraphicPane5, this.upperChart5, this.uppergc5);
+						this.upperGraphicPane5, this.upperChart5,
+						this.uppergc5, firstCheckU5);
 				// FÃ¼gt den EventhÃ¤ndler hinzu
 				this.upperChart5.addEventHandler(MouseEvent.MOUSE_CLICKED,
 						new EventHandler<MouseEvent>() {
@@ -1472,6 +1535,7 @@ public class MainLayoutController {
 					this.UPlanValue6.setText(UPlan.getSelectionModel()
 							.getSelectedItem().toString());
 					this.umlaufChoice = 6;
+					firstCheckU6 = true;
 
 					// Zuordnung der Auswahl
 
@@ -1518,7 +1582,8 @@ public class MainLayoutController {
 				createUpperBackgroundGraphicSixthPane();
 				createUpperXScalePane(this.xUp6, this.upperGraphicPane6);
 				createUmlaufElementGraphic(this.umlaufplanSechs,
-						this.upperGraphicPane6, this.upperChart6, this.uppergc6);
+						this.upperGraphicPane6, this.upperChart6,
+						this.uppergc6, firstCheckU6);
 				// FÃ¼gt den EventhÃ¤ndler hinzu
 				this.upperChart6.addEventHandler(MouseEvent.MOUSE_CLICKED,
 						new EventHandler<MouseEvent>() {
@@ -1555,6 +1620,7 @@ public class MainLayoutController {
 					this.UPlanValue7.setText(UPlan.getSelectionModel()
 							.getSelectedItem().toString());
 					this.umlaufChoice = 7;
+					firstCheckU7 = true;
 
 					// Zuordnung der Auswahl
 
@@ -1602,7 +1668,8 @@ public class MainLayoutController {
 				createUpperXScalePane(this.xUp7, this.upperGraphicPane7);
 
 				createUmlaufElementGraphic(this.umlaufplanSieben,
-						this.upperGraphicPane7, this.upperChart7, this.uppergc7);
+						this.upperGraphicPane7, this.upperChart7,
+						this.uppergc7, firstCheckU7);
 				// FÃ¼gt den EventhÃ¤ndler hinzu
 				this.upperChart7.addEventHandler(MouseEvent.MOUSE_CLICKED,
 						new EventHandler<MouseEvent>() {
@@ -1623,6 +1690,14 @@ public class MainLayoutController {
 				changeUplanDetails();
 			}
 		}
+
+		this.changeCheckU1 = false;
+		this.changeCheckU2 = false;
+		this.changeCheckU3 = false;
+		this.changeCheckU4 = false;
+		this.changeCheckU5 = false;
+		this.changeCheckU6 = false;
+		this.changeCheckU7 = false;
 	}
 
 	/**
@@ -1630,6 +1705,30 @@ public class MainLayoutController {
 	 */
 	@FXML
 	private void createLowerGraphic() {
+
+		// Die Kontrollpruefung wird zurückgesetzt
+
+		if (this.changeCheckD1 == false) {
+			this.firstCheckD1 = false;
+		}
+		if (this.changeCheckD2 == false) {
+			this.firstCheckD2 = false;
+		}
+		if (this.changeCheckD3 == false) {
+			this.firstCheckD3 = false;
+		}
+		if (this.changeCheckD4 == false) {
+			this.firstCheckD4 = false;
+		}
+		if (this.changeCheckD5 == false) {
+			this.firstCheckD5 = false;
+		}
+		if (this.changeCheckD6 == false) {
+			this.firstCheckD6 = false;
+		}
+		if (this.changeCheckD7 == false) {
+			this.firstCheckD7 = false;
+		}
 
 		// Clearen der X-Scales
 
@@ -1684,7 +1783,7 @@ public class MainLayoutController {
 					this.dienstIsCurrent = true;
 					if (this.firstUppergrafikErstellt == false) {
 						graphicTransition();
-					}			
+					}
 				}
 				// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne
 				this.DPlan1.setVisible(true);
@@ -1725,7 +1824,7 @@ public class MainLayoutController {
 				createLowerBackgroundGraphicFirstPane();
 				createLowerXScalePane(this.xLow1, this.lowerGraphicPane1);
 				createDienstElementGraphic(this.dienstplanEins,
-						this.lowerGraphicPane1, this.lowerChart1, this.lowergc1);
+						this.lowerGraphicPane1, this.lowerChart1, this.lowergc1, this.firstCheckD1);
 
 				// Fügt den EventhÃ¤ndler hinzu
 				this.lowerChart1.addEventHandler(MouseEvent.MOUSE_CLICKED,
@@ -1735,6 +1834,8 @@ public class MainLayoutController {
 								boolean okClicked = mainApp
 										.showEditDPlan(dienstplanEins);
 								if (okClicked) {
+									firstCheckD1 = true;
+									changeCheckD1 = true;
 									refreshBothGraphics();
 									fillDienstplanliste();
 								}
@@ -1809,7 +1910,7 @@ public class MainLayoutController {
 				createLowerXScalePane(this.xLow2, this.lowerGraphicPane2);
 
 				createDienstElementGraphic(this.dienstplanZwei,
-						this.lowerGraphicPane2, this.lowerChart2, this.lowergc2);
+						this.lowerGraphicPane2, this.lowerChart2, this.lowergc2, this.firstCheckD2);
 				// FÃ¼gt den EventhÃ¤ndler hinzu
 				this.lowerChart2.addEventHandler(MouseEvent.MOUSE_CLICKED,
 						new EventHandler<MouseEvent>() {
@@ -1818,6 +1919,8 @@ public class MainLayoutController {
 								boolean okClicked = mainApp
 										.showEditDPlan(dienstplanZwei);
 								if (okClicked) {
+									firstCheckD2 = true;
+									changeCheckD2 = true;
 									refreshBothGraphics();
 									fillDienstplanliste();
 								}
@@ -1888,7 +1991,7 @@ public class MainLayoutController {
 				createLowerXScalePane(this.xLow3, this.lowerGraphicPane3);
 
 				createDienstElementGraphic(this.dienstplanDrei,
-						this.lowerGraphicPane3, this.lowerChart3, this.lowergc3);
+						this.lowerGraphicPane3, this.lowerChart3, this.lowergc3, this.firstCheckD3);
 				// FÃ¼gt den EventhÃ¤ndler hinzu
 				this.lowerChart3.addEventHandler(MouseEvent.MOUSE_CLICKED,
 						new EventHandler<MouseEvent>() {
@@ -1897,6 +2000,8 @@ public class MainLayoutController {
 								boolean okClicked = mainApp
 										.showEditDPlan(dienstplanDrei);
 								if (okClicked) {
+									firstCheckD3 = true;
+									changeCheckD3 = true;
 									refreshBothGraphics();
 									fillDienstplanliste();
 								}
@@ -1967,7 +2072,7 @@ public class MainLayoutController {
 				createLowerXScalePane(this.xLow4, this.lowerGraphicPane4);
 
 				createDienstElementGraphic(this.dienstplanVier,
-						this.lowerGraphicPane4, this.lowerChart4, this.lowergc4);
+						this.lowerGraphicPane4, this.lowerChart4, this.lowergc4, this.firstCheckD4);
 				// FÃ¼gt den EventhÃ¤ndler hinzu
 				this.lowerChart4.addEventHandler(MouseEvent.MOUSE_CLICKED,
 						new EventHandler<MouseEvent>() {
@@ -1976,6 +2081,8 @@ public class MainLayoutController {
 								boolean okClicked = mainApp
 										.showEditDPlan(dienstplanVier);
 								if (okClicked) {
+									firstCheckD4 = true;
+									changeCheckD4 = true;
 									refreshBothGraphics();
 									fillDienstplanliste();
 								}
@@ -2049,7 +2156,7 @@ public class MainLayoutController {
 				createLowerXScalePane(this.xLow5, this.lowerGraphicPane5);
 
 				createDienstElementGraphic(this.dienstplanFuenf,
-						this.lowerGraphicPane5, this.lowerChart5, this.lowergc5);
+						this.lowerGraphicPane5, this.lowerChart5, this.lowergc5, this.firstCheckD5);
 				// FÃ¼gt den EventhÃ¤ndler hinzu
 				this.lowerChart5.addEventHandler(MouseEvent.MOUSE_CLICKED,
 						new EventHandler<MouseEvent>() {
@@ -2058,6 +2165,8 @@ public class MainLayoutController {
 								boolean okClicked = mainApp
 										.showEditDPlan(dienstplanFuenf);
 								if (okClicked) {
+									firstCheckD5 = true;
+									changeCheckD5 = true;
 									refreshBothGraphics();
 									fillDienstplanliste();
 								}
@@ -2130,7 +2239,7 @@ public class MainLayoutController {
 				createLowerBackgroundGraphicSixthPane();
 				createLowerXScalePane(this.xLow6, this.lowerGraphicPane6);
 				createDienstElementGraphic(this.dienstplanSechs,
-						this.lowerGraphicPane6, this.lowerChart6, this.lowergc6);
+						this.lowerGraphicPane6, this.lowerChart6, this.lowergc6, this.firstCheckD6);
 				// FÃ¼gt den EventhÃ¤ndler hinzu
 				this.lowerChart6.addEventHandler(MouseEvent.MOUSE_CLICKED,
 						new EventHandler<MouseEvent>() {
@@ -2139,6 +2248,8 @@ public class MainLayoutController {
 								boolean okClicked = mainApp
 										.showEditDPlan(dienstplanSechs);
 								if (okClicked) {
+									firstCheckD6 = true;
+									changeCheckD6 = true;
 									refreshBothGraphics();
 									fillDienstplanliste();
 								}
@@ -2212,7 +2323,7 @@ public class MainLayoutController {
 				createLowerXScalePane(this.xLow7, this.lowerGraphicPane7);
 
 				createDienstElementGraphic(this.dienstplanSieben,
-						this.lowerGraphicPane7, this.lowerChart7, this.lowergc7);
+						this.lowerGraphicPane7, this.lowerChart7, this.lowergc7, this.firstCheckD7);
 				// FÃ¼gt den EventhÃ¤ndler hinzu
 				this.lowerChart7.addEventHandler(MouseEvent.MOUSE_CLICKED,
 						new EventHandler<MouseEvent>() {
@@ -2221,6 +2332,8 @@ public class MainLayoutController {
 								boolean okClicked = mainApp
 										.showEditDPlan(dienstplanSieben);
 								if (okClicked) {
+									firstCheckD7 = true;
+									changeCheckD7 = true;
 									refreshBothGraphics();
 									fillDienstplanliste();
 								}
@@ -2232,8 +2345,14 @@ public class MainLayoutController {
 			if (this.dienstIsCurrent == true) {
 				changeDplanDetails();
 			}
-
 		}
+		this.changeCheckD1 = false;
+		this.changeCheckD2 = false;
+		this.changeCheckD3 = false;
+		this.changeCheckD4 = false;
+		this.changeCheckD5 = false;
+		this.changeCheckD6 = false;
+		this.changeCheckD7 = false;
 	}
 
 	/**
@@ -3506,10 +3625,15 @@ public class MainLayoutController {
 	 * Creates Umlauf Elements in the Graphic.
 	 */
 	private void createUmlaufElementGraphic(Umlaufplan umlaufplan,
-			ScrollPane scrollPane, Canvas canvas, GraphicsContext gc) {
+			ScrollPane scrollPane, Canvas canvas, GraphicsContext gc,
+			boolean firstCheck) {
+
+		// Variablen der Methode
 
 		double abstandNetz = (canvas.getWidth() - 30)
 				/ (this.endzeitVar - this.startzeitVar);
+		ArrayList<Integer> delayElements = new ArrayList<Integer>();
+		boolean delayFound = false;
 
 		// Auslesen der Blockanzahl
 		for (int j = 0; j < umlaufplan.getUmlauf().size(); j++) {
@@ -3661,13 +3785,35 @@ public class MainLayoutController {
 									startPixelX - 3 + (fahrtDauer / 5),
 									startPixelY + 14);
 						}
-						
+
 						// Pruefen der Ueberschneidungen
-						
-						boolean findDelay = findVerspaetungU(umlaufplan, i, umlaufplan.getFahrtZuUmlauf().get(i).getBlockID(),startHour,startMin,endHour,endMin);
+
+						boolean findDelay = findVerspaetungU(umlaufplan, i,
+								startHour, startMin);
+						if (findDelay) {
+							delayElements.add(umlaufplan.getFahrtZuUmlauf()
+									.get(i).getId());
+							delayFound = true;
+						}
 					}
 				}
 			}
+		}
+
+		// Ausgabe der Ueberschneidungsfehlermeldung
+
+		if (firstCheck && delayFound) {
+			String result = "";
+			for (Integer s : delayElements) {
+				result += "BlockEle. " + s + ", ";
+			}
+			String fehlerA = "Folgende Elemente koennen Probleme im Plan erzeugen : "
+					+ result;
+			String fehlerB = "Elemente kontrollieren";
+			String fehlerC = "Ueberschneidungen im Plan: "
+					+ umlaufplan.getName();
+			mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+			firstCheck = false;
 		}
 	}
 
@@ -3675,10 +3821,13 @@ public class MainLayoutController {
 	 * Creates Duty Elements in the Graphic.
 	 */
 	private void createDienstElementGraphic(Dienstplan dienstplan,
-			ScrollPane scrollPane, Canvas canvas, GraphicsContext gc) {
+			ScrollPane scrollPane, Canvas canvas, GraphicsContext gc, boolean firstCheck) {
 
+		// Arbeitsvariablen der Methode
 		double abstandNetz = (canvas.getWidth() - 30)
 				/ (this.endzeitVar - this.startzeitVar);
+		ArrayList<Integer> delayElements = new ArrayList<Integer>();
+		boolean delayFound = false;
 
 		// Auslesen der Blockanzahl
 		for (int j = 0; j < dienstplan.getDuty().size(); j++) {
@@ -3824,9 +3973,34 @@ public class MainLayoutController {
 											+ (fahrtDauer / 5),
 									startPixelY + 14);
 						}
+
+						// Pruefen der Ueberschneidungen
+
+						boolean findDelay = findVerspaetungD(dienstplan, i,
+								startHour, startMin);
+						if (findDelay) {
+							delayElements.add(dienstplan.getDutyelement()
+									.get(i).getId());
+							delayFound = true;
+						}
 					}
 				}
 			}
+		}
+		// Ausgabe der Ueberschneidungsfehlermeldung
+
+		if (firstCheck && delayFound) {
+			String result = "";
+			for (Integer s : delayElements) {
+				result += "DutyEle. " + s + ", ";
+			}
+			String fehlerA = "Folgende Elemente koennen Probleme im Plan erzeugen : "
+					+ result;
+			String fehlerB = "Elemente kontrollieren";
+			String fehlerC = "Ueberschneidungen im Plan: "
+					+ dienstplan.getName();
+			mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+			firstCheck = false;
 		}
 	}
 
@@ -5036,39 +5210,125 @@ public class MainLayoutController {
 		}
 
 	}
-	
+
 	// Methoden zur Ueberpruefung der Verspaetungen
-	
-	public boolean findVerspaetungU(Umlaufplan umlaufplan, int elementID, int blockid, int startTimeHour, int startTimeMin, int endTimeHour, int endTimeMin){
-		
-		boolean verspFound = false; 
-		boolean beforeRelevant = true;
-		boolean afterRelevant = true;
+
+	public boolean findVerspaetungU(Umlaufplan umlaufplan, int elementID,
+			int startTimeHour, int startTimeMin) {
+
 		StringSplitter ss = new StringSplitter();
 		int[] zeit = new int[2];
-				
-		// Überprüfung der Elemente
-		
-		
-		if (umlaufplan.getFahrtZuUmlauf().get(elementID).getId() > umlaufplan.getFahrtZuUmlauf().get(0).getId()) {
-			if (umlaufplan.getFahrtZuUmlauf().get(elementID).getBlockID() == umlaufplan.getFahrtZuUmlauf().get(elementID - 1).getBlockID()) {
-				
-				// Auslesen der Zeit als Integer				
-				
-				zeit = ss.intParse(umlaufplan.getFahrtZuUmlauf().get(elementID-1).getDepTime());
+
+		// Überprüfung des vorherigen Elements
+
+		if (umlaufplan.getFahrtZuUmlauf().get(elementID).getId() > umlaufplan
+				.getFahrtZuUmlauf().get(0).getId()) {
+			if (umlaufplan.getFahrtZuUmlauf().get(elementID).getBlockID() == umlaufplan
+					.getFahrtZuUmlauf().get(elementID - 1).getBlockID()) {
+
+				// Auslesen der vorherigen Zeit als Integer
+
+				zeit = ss.intParse(umlaufplan.getFahrtZuUmlauf()
+						.get(elementID - 1).getDepTime());
 				int startHourB = zeit[0];
 				int startMinB = zeit[1];
-				zeit = ss.intParse(umlaufplan.getFahrtZuUmlauf().get(elementID-1).getArrTime());
+				zeit = ss.intParse(umlaufplan.getFahrtZuUmlauf()
+						.get(elementID - 1).getArrTime());
 				int endHourB = zeit[0];
 				int endMinB = zeit[1];
-				
-				
+
+				if (startTimeHour > 23) {
+					if (startHourB < 12) {
+						startHourB = startHourB + 24;
+					}
+					if (endHourB < 12) {
+						endHourB = endHourB + 24;
+					}
+				}
+
+				// Abgleich der Zeiten
+
+				if (startTimeHour < startHourB) {
+					return true;
+				}
+				if (startTimeHour == startHourB) {
+					if (startTimeMin < startMinB) {
+						return true;
+					}
+				}
+				if (startTimeHour < endHourB) {
+					return true;
+				}
+				if (startTimeHour == endHourB) {
+					if (startTimeMin < endMinB) {
+						return true;
+					}
+				}
 			}
-		}else{
-			beforeRelevant = false;
 		}
-		
-		return verspFound;		
+
+		return false;
+	}
+
+	public boolean findVerspaetungD(Dienstplan dienstplan, int elementID,
+			int startTimeHour, int startTimeMin) {
+
+		StringSplitter ss = new StringSplitter();
+		int[] zeit = new int[2];
+
+		// Überprüfung des vorherigen Elements
+
+		if (dienstplan.getDutyelement().get(elementID).getId() > dienstplan
+				.getDutyelement().get(0).getId()) {
+			if (dienstplan
+					.getDutyelement()
+					.get(elementID)
+					.getDutyID()
+					.equals(dienstplan.getDutyelement().get(elementID - 1)
+							.getDutyID())) {
+
+				// Auslesen der vorherigen Zeit als Integer
+
+				zeit = ss.intParse(dienstplan.getDutyelement()
+						.get(elementID - 1).getDepTime());
+				int startHourB = zeit[0];
+				int startMinB = zeit[1];
+				zeit = ss.intParse(dienstplan.getDutyelement()
+						.get(elementID - 1).getArrTime());
+				int endHourB = zeit[0];
+				int endMinB = zeit[1];
+
+				if (startTimeHour > 23) {
+					if (startHourB < 12) {
+						startHourB = startHourB + 24;
+					}
+					if (endHourB < 12) {
+						endHourB = endHourB + 24;
+					}
+				}
+
+				// Abgleich der Zeiten
+
+				if (startTimeHour < startHourB) {
+					return true;
+				}
+				if (startTimeHour == startHourB) {
+					if (startTimeMin < startMinB) {
+						return true;
+					}
+				}
+				if (startTimeHour < endHourB) {
+					return true;
+				}
+				if (startTimeHour == endHourB) {
+					if (startTimeMin < endMinB) {
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
 	}
 
 	// Methoden zur Festsetzung der Main
