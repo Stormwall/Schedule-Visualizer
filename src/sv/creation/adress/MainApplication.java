@@ -180,6 +180,7 @@ public class MainApplication extends Application {
 					.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setUmlaufplan(umlaufplan);
+			controller.setMainApp(this);
 
 			dialogStage.show();
 
@@ -215,6 +216,7 @@ public class MainApplication extends Application {
 					.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setDienstplan(dienstplan);
+			controller.setMainApp(this);
 
 			dialogStage.show();
 
@@ -251,6 +253,7 @@ public class MainApplication extends Application {
 			controller.setDialogStage(dialogStage);
 			controller.setFahrplan(fahrplan);
 			controller.setErstauswahl(auswahl);
+			controller.setMainApp(this);
 
 			dialogStage.show();
 

@@ -15,7 +15,7 @@
   <children>
     <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="0">
       <children>
-        <AreaChart id="AreaChartNxN" fx:id="fahrplanvergleich" alternativeRowFillVisible="false" legendVisible="false" prefHeight="735.0" prefWidth="760.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <AreaChart fx:id="fahrplanvergleich" alternativeRowFillVisible="false" legendVisible="false" prefHeight="735.0" prefWidth="760.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
           <xAxis>
             <NumberAxis fx:id="xAxis" autoRanging="false" minorTickCount="4" side="BOTTOM" tickLabelFill="WHITE">
               <tickLabelFont>
@@ -24,14 +24,19 @@
             </NumberAxis>
           </xAxis>
           <yAxis>
-            <NumberAxis fx:id="yAxis" side="LEFT" styleClass="axis-fahrplan" tickLabelFill="WHITE" tickLabelFont="$x1" />
+            <NumberAxis fx:id="yAxis" autoRanging="false" side="LEFT" styleClass="axis-fahrplan" tickLabelFill="WHITE" tickLabelFont="$x1" />
           </yAxis>
         </AreaChart>
       </children>
     </AnchorPane>
     <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
       <children>
-        <Button layoutY="5.0" mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Abbrechen" AnchorPane.rightAnchor="13.0" />
+        <HBox id="HBox" alignment="CENTER" layoutY="5.0" spacing="5.0" AnchorPane.rightAnchor="14.0">
+          <children>
+            <Button mnemonicParsing="false" onAction="#saveAsPng" styleClass="dark-blue" text="Grafik exportieren" />
+            <Button mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Abbrechen" />
+          </children>
+        </HBox>
         <HBox id="HBox" alignment="CENTER" layoutY="5.0" prefWidth="377.0" spacing="5.0" AnchorPane.leftAnchor="3.0">
           <children>
             <Label styleClass="label-white" text="von" />

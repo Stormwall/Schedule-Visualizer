@@ -1,21 +1,29 @@
 package sv.creation.adress;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.imageio.ImageIO;
+
 import sv.creation.adress.model.Dienstplan;
 import sv.creation.adress.util.StringSplitter;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.CheckBox;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class FullScreenLayoutControllerDienstplan {
@@ -45,6 +53,10 @@ public class FullScreenLayoutControllerDienstplan {
 	private int endzeitVar = 24;
 	private int breite = 0;
 	private boolean beschriftungCheck = false;
+	
+	// Referenz zur MainApp
+
+	private MainApplication mainApp;
 
 	/**
 	 * Initializes the controller class. This method is automatically called
@@ -414,6 +426,28 @@ public class FullScreenLayoutControllerDienstplan {
 			}
 		}
 	}
+	
+	@FXML
+	public void saveAsPng() {
+		
+	  WritableImage image = GraphicPane.snapshot(new SnapshotParameters(), null);
+	  
+	    FileChooser fileChooser = new FileChooser();
+
+		// Set extension filter
+	    FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
+		fileChooser.getExtensionFilters().add(extFilterPNG);
+
+	  // TODO: probably use a file chooser here
+		File fileF= fileChooser.showSaveDialog(this.mainApp.getPrimaryStage());
+		File file = new File(fileF.getAbsolutePath()+".png");
+	  
+	    try {
+	        ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+	    } catch (IOException e) {
+	      // TODO: handle exception here
+	    }
+	}
 
 	// Methode zum Beenden des PopUp
 
@@ -424,6 +458,14 @@ public class FullScreenLayoutControllerDienstplan {
 
 	public Stage getDialogStage() {
 		return dialogStage;
+	}
+	
+	public MainApplication getMainApp() {
+		return mainApp;
+	}
+	
+	public void setMainApp(MainApplication mainApp) {
+		this.mainApp = mainApp;
 	}
 
 	public void setDialogStage(Stage dialogStage) {

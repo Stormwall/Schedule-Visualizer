@@ -9,7 +9,7 @@
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sv.creation.adress.FullScreenLayoutControllerDienstplan">
   <!-- TODO Add Nodes -->
   <children>
-    <SplitPane dividerPositions="0.9170854271356784" focusTraversable="true" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" styleClass="background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <SplitPane dividerPositions="0.9045226130653267" focusTraversable="true" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" styleClass="background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <items>
         <GridPane id="xPane">
           <children>
@@ -26,10 +26,15 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           </rowConstraints>
         </GridPane>
-        <AnchorPane maxHeight="30.0" maxWidth="-1.0" minHeight="30.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+        <AnchorPane maxHeight="35.0" maxWidth="-1.0" minHeight="35.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
           <children>
-            <Button layoutY="4.0" mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Schließen" AnchorPane.rightAnchor="8.0" />
-            <CheckBox fx:id="beschriftung" layoutY="7.0" mnemonicParsing="false" text="Beschriftung der Elemente" textFill="#d0d0d0" AnchorPane.leftAnchor="8.0" />
+            <CheckBox fx:id="beschriftung" layoutY="9.0" mnemonicParsing="false" text="Beschriftung der Elemente" textFill="#d0d0d0" AnchorPane.leftAnchor="8.0" />
+            <HBox id="HBox" alignment="CENTER" layoutY="6.0" spacing="5.0" AnchorPane.rightAnchor="6.0">
+              <children>
+                <Button mnemonicParsing="false" onAction="#saveAsPng" styleClass="dark-blue" text="Grafik exportieren" />
+                <Button mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Schließen" />
+              </children>
+            </HBox>
           </children>
         </AnchorPane>
       </items>
