@@ -633,7 +633,7 @@ public class EditD_PlanController {
 	// Draws the Canvas
 
 	public void drawCanvas(String auswahl) {
-
+		
 		this.canvas.getChildren().clear();
 
 		// Start und Endzeit

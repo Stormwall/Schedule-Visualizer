@@ -53,7 +53,7 @@ public class FullScreenLayoutControllerDienstplan {
 	private int endzeitVar = 24;
 	private int breite = 0;
 	private boolean beschriftungCheck = false;
-	
+
 	// Referenz zur MainApp
 
 	private MainApplication mainApp;
@@ -191,7 +191,7 @@ public class FullScreenLayoutControllerDienstplan {
 		this.breite = (int) b;
 
 		this.GraphicPane.getChildren().add(this.canvas);
-		createUmlaufElementGraphic();
+		createDienstElementGraphic();
 	}
 
 	/**
@@ -240,6 +240,68 @@ public class FullScreenLayoutControllerDienstplan {
 	 * Creates The Y - Scale.
 	 */
 	private void createYScale() {
+		
+		// Sortierung des Planes
+				ArrayList<String> orderList = new ArrayList<String>();
+				ArrayList<Integer> listInt = new ArrayList<Integer>();
+				ArrayList<Integer> match = new ArrayList<Integer>();
+				ArrayList<Integer> orderedDuty = new ArrayList<Integer>();
+				boolean idChange = true;
+				String dutyBefore = null;
+
+				for (int i = 0; i < this.dienstplan.getDutyelement().size(); i++) {
+					if (idChange) {
+						orderList.add(this.dienstplan.getDutyelement().get(i).getDepTime());
+						dutyBefore = this.dienstplan.getDutyelement().get(i).getDutyID();
+						idChange = false;
+					}
+					if(!this.dienstplan.getDutyelement().get(i).getDutyID().equals(dutyBefore)){
+						idChange = true;
+						i = i-1;
+					}
+				}
+
+				for (int i = 0; i < orderList.size(); i++) {
+					StringSplitter ss = new StringSplitter();
+					int[] zeit = new int[2];
+					zeit = ss.intParse(orderList.get(i));
+					int startHour = zeit[0];
+					int startMin = zeit[1];
+
+					listInt.add((startHour * 100) + startMin);
+					match.add((startHour * 100) + startMin);
+				}
+				// Sortierung (Bubble Sort)
+				boolean unsortiert = true;
+				int temp;
+				while (unsortiert) {
+					unsortiert = false;
+					for (int i = 0; i < listInt.size() - 1; i++)
+						if (listInt.get(i) > listInt.get(i + 1)) {
+							temp = listInt.get(i);
+							listInt.set(i, listInt.get(i + 1));
+							listInt.set(i + 1, temp);
+							unsortiert = true;
+						}
+				}
+
+				for (int i = 0; i < listInt.size(); i++) {
+					temp = listInt.get(i);
+					for (int j = 0; j < match.size(); j++) {
+						if (match.get(j) == temp) {
+							int index = j;
+							boolean auslassen = false;
+							for (int j2 = 0; j2 < orderedDuty.size(); j2++) {
+								if (index == orderedDuty.get(j2)) {
+									auslassen = true;
+								}
+							}
+							if (auslassen == false) {
+								orderedDuty.add(j);
+							}
+						}
+					}
+				}
 
 		// Hier wird das Skala Canvas erzeugt
 		this.yCanvas = new Canvas(this.yPane.getWidth(), this.yPane.getHeight());
@@ -257,7 +319,7 @@ public class FullScreenLayoutControllerDienstplan {
 		// Auslesen der Werte
 		for (int j = 0; j < dienstplan.getDuty().size(); j++) {
 
-			ygc.fillText("D " + dienstplan.getDuty().get(j).getHilfsID(), 4,
+			ygc.fillText("D " + dienstplan.getDuty().get(orderedDuty.get(j)).getHilfsID(), 4,
 					22 + (j * this.breite));
 
 		}
@@ -266,9 +328,71 @@ public class FullScreenLayoutControllerDienstplan {
 	}
 
 	/**
-	 * Creates Umlauf Elements in the Graphic.
+	 * Creates Duty Elements in the Graphic.
 	 */
-	private void createUmlaufElementGraphic() {
+	private void createDienstElementGraphic() {
+
+		// Sortierung des Planes
+		ArrayList<String> orderList = new ArrayList<String>();
+		ArrayList<Integer> listInt = new ArrayList<Integer>();
+		ArrayList<Integer> match = new ArrayList<Integer>();
+		ArrayList<Integer> orderedDuty = new ArrayList<Integer>();
+		boolean idChange = true;
+		String dutyBefore = null;
+
+		for (int i = 0; i < this.dienstplan.getDutyelement().size(); i++) {
+			if (idChange) {
+				orderList.add(this.dienstplan.getDutyelement().get(i).getDepTime());
+				dutyBefore = this.dienstplan.getDutyelement().get(i).getDutyID();
+				idChange = false;
+			}
+			if(!this.dienstplan.getDutyelement().get(i).getDutyID().equals(dutyBefore)){
+				idChange = true;
+				i = i-1;
+			}
+		}
+
+		for (int i = 0; i < orderList.size(); i++) {
+			StringSplitter ss = new StringSplitter();
+			int[] zeit = new int[2];
+			zeit = ss.intParse(orderList.get(i));
+			int startHour = zeit[0];
+			int startMin = zeit[1];
+
+			listInt.add((startHour * 100) + startMin);
+			match.add((startHour * 100) + startMin);
+		}
+		// Sortierung (Bubble Sort)
+		boolean unsortiert = true;
+		int temp;
+		while (unsortiert) {
+			unsortiert = false;
+			for (int i = 0; i < listInt.size() - 1; i++)
+				if (listInt.get(i) > listInt.get(i + 1)) {
+					temp = listInt.get(i);
+					listInt.set(i, listInt.get(i + 1));
+					listInt.set(i + 1, temp);
+					unsortiert = true;
+				}
+		}
+
+		for (int i = 0; i < listInt.size(); i++) {
+			temp = listInt.get(i);
+			for (int j = 0; j < match.size(); j++) {
+				if (match.get(j) == temp) {
+					int index = j;
+					boolean auslassen = false;
+					for (int j2 = 0; j2 < orderedDuty.size(); j2++) {
+						if (index == orderedDuty.get(j2)) {
+							auslassen = true;
+						}
+					}
+					if (auslassen == false) {
+						orderedDuty.add(j);
+					}
+				}
+			}
+		}
 
 		double abstandNetz = (this.canvas.getWidth() - 30)
 				/ (this.endzeitVar - this.startzeitVar);
@@ -286,7 +410,7 @@ public class FullScreenLayoutControllerDienstplan {
 
 				// Abgleich mit den Werten
 				if (dienstplan.getDutyelement().get(i).getDutyID()
-						.equals(dienstplan.getDuty().get(j).getId())) {
+						.equals(dienstplan.getDuty().get(orderedDuty.get(j)).getId())) {
 
 					// Auslesen der Zeit als Integer
 					StringSplitter ss = new StringSplitter();
@@ -295,8 +419,6 @@ public class FullScreenLayoutControllerDienstplan {
 							.getDepTime());
 					int startHour = zeit[0];
 					int startMin = zeit[1];
-					zeit = ss.intParse(this.dienstplan.getDutyelement().get(i)
-							.getArrTime());
 
 					// Prüfung der ersten Stunde
 					if (anfangDienst == true && startHour < changeHour) {
@@ -316,7 +438,7 @@ public class FullScreenLayoutControllerDienstplan {
 						int stundenDifferenz = startHour - this.startzeitVar;
 						int startPixelX = (int) ((stundenDifferenz * abstandNetz) + ((abstandNetz / 60) * startMin));
 
-						int startPixelY = 10 + (j * this.breite);
+						int startPixelY = 15 + (j * this.breite);
 						int fahrtDauer = 0;
 
 						// Berrechnen der Dauer zwischen der Abfahrt und der
@@ -426,27 +548,29 @@ public class FullScreenLayoutControllerDienstplan {
 			}
 		}
 	}
-	
+
 	@FXML
 	public void saveAsPng() {
-		
-	  WritableImage image = GraphicPane.snapshot(new SnapshotParameters(), null);
-	  
-	    FileChooser fileChooser = new FileChooser();
+
+		WritableImage image = GraphicPane.snapshot(new SnapshotParameters(),
+				null);
+
+		FileChooser fileChooser = new FileChooser();
 
 		// Set extension filter
-	    FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
+		FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter(
+				"PNG files (*.png)", "*.PNG");
 		fileChooser.getExtensionFilters().add(extFilterPNG);
 
-	  // TODO: probably use a file chooser here
-		File fileF= fileChooser.showSaveDialog(this.mainApp.getPrimaryStage());
-		File file = new File(fileF.getAbsolutePath()+".png");
-	  
-	    try {
-	        ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
-	    } catch (IOException e) {
-	      // TODO: handle exception here
-	    }
+		// TODO: probably use a file chooser here
+		File fileF = fileChooser.showSaveDialog(this.mainApp.getPrimaryStage());
+		File file = new File(fileF.getAbsolutePath() + ".png");
+
+		try {
+			ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+		} catch (IOException e) {
+			// TODO: handle exception here
+		}
 	}
 
 	// Methode zum Beenden des PopUp
@@ -459,11 +583,11 @@ public class FullScreenLayoutControllerDienstplan {
 	public Stage getDialogStage() {
 		return dialogStage;
 	}
-	
+
 	public MainApplication getMainApp() {
 		return mainApp;
 	}
-	
+
 	public void setMainApp(MainApplication mainApp) {
 		this.mainApp = mainApp;
 	}
@@ -489,8 +613,12 @@ public class FullScreenLayoutControllerDienstplan {
 
 			for (int j = 0; j < this.dienstplan.getDutyelement().size(); j++) {
 
-				if (this.dienstplan.getDuty().get(i).getId().equals(this.dienstplan
-						.getDutyelement().get(j).getDutyID())
+				if (this.dienstplan
+						.getDuty()
+						.get(i)
+						.getId()
+						.equals(this.dienstplan.getDutyelement().get(j)
+								.getDutyID())
 						&& anfang == true) {
 					startzeiten.add(this.dienstplan.getDutyelement().get(j)
 							.getDepTime());

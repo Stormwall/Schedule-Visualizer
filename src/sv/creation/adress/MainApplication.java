@@ -342,7 +342,7 @@ public class MainApplication extends Application {
 					MainApplication.class.getResource("view/EditD_Plan.fxml"));
 			AnchorPane page = (AnchorPane) loader.load();
 			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Umlaufplanbearbeitung");
+			dialogStage.setTitle("Dienstplanbearbeitung");
 			dialogStage.getIcons().add(
 					new Image("file:resources/images/IconFinal.png"));
 			dialogStage.initModality(Modality.WINDOW_MODAL);
