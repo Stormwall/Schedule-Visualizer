@@ -22,6 +22,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -954,6 +955,190 @@ public class MainLayoutController {
 					}
 				});
 
+		// Cursorevents for ValueLabels
+
+		this.UPlanValue1.setOnMouseEntered(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				UPlanValue1.setCursor(Cursor.HAND);
+			}
+		});
+
+		this.UPlanValue1.setOnMouseExited(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				UPlanValue1.setCursor(Cursor.DEFAULT);
+			}
+		});
+		this.UPlanValue2.setOnMouseEntered(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				UPlanValue2.setCursor(Cursor.HAND);
+			}
+		});
+
+		this.UPlanValue2.setOnMouseExited(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				UPlanValue2.setCursor(Cursor.DEFAULT);
+			}
+		});
+		this.UPlanValue3.setOnMouseEntered(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				UPlanValue3.setCursor(Cursor.HAND);
+			}
+		});
+
+		this.UPlanValue3.setOnMouseExited(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				UPlanValue3.setCursor(Cursor.DEFAULT);
+			}
+		});
+		this.UPlanValue4.setOnMouseEntered(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				UPlanValue4.setCursor(Cursor.HAND);
+			}
+		});
+
+		this.UPlanValue4.setOnMouseExited(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				UPlanValue4.setCursor(Cursor.DEFAULT);
+			}
+		});
+		this.UPlanValue5.setOnMouseEntered(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				UPlanValue5.setCursor(Cursor.HAND);
+			}
+		});
+		this.UPlanValue5.setOnMouseExited(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				UPlanValue5.setCursor(Cursor.DEFAULT);
+			}
+		});
+		this.UPlanValue6.setOnMouseEntered(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				UPlanValue6.setCursor(Cursor.HAND);
+			}
+		});
+
+		this.UPlanValue6.setOnMouseExited(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				UPlanValue6.setCursor(Cursor.DEFAULT);
+			}
+		});
+		this.UPlanValue7.setOnMouseEntered(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				UPlanValue7.setCursor(Cursor.HAND);
+			}
+		});
+
+		this.UPlanValue7.setOnMouseExited(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				UPlanValue7.setCursor(Cursor.DEFAULT);
+			}
+		});
+
+		this.DPlanValue1.setOnMouseEntered(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				DPlanValue1.setCursor(Cursor.HAND);
+			}
+		});
+
+		this.DPlanValue1.setOnMouseExited(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				DPlanValue1.setCursor(Cursor.DEFAULT);
+			}
+		});
+		this.DPlanValue2.setOnMouseEntered(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				DPlanValue2.setCursor(Cursor.HAND);
+			}
+		});
+
+		this.DPlanValue2.setOnMouseExited(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				DPlanValue2.setCursor(Cursor.DEFAULT);
+			}
+		});
+		this.DPlanValue3.setOnMouseEntered(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				DPlanValue3.setCursor(Cursor.HAND);
+			}
+		});
+
+		this.DPlanValue3.setOnMouseExited(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				DPlanValue3.setCursor(Cursor.DEFAULT);
+			}
+		});
+		this.DPlanValue4.setOnMouseEntered(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				DPlanValue4.setCursor(Cursor.HAND);
+			}
+		});
+
+		this.DPlanValue4.setOnMouseExited(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				DPlanValue4.setCursor(Cursor.DEFAULT);
+			}
+		});
+		this.DPlanValue5.setOnMouseEntered(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				DPlanValue5.setCursor(Cursor.HAND);
+			}
+		});
+		this.DPlanValue5.setOnMouseExited(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				DPlanValue5.setCursor(Cursor.DEFAULT);
+			}
+		});
+		this.DPlanValue6.setOnMouseEntered(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				DPlanValue6.setCursor(Cursor.HAND);
+			}
+		});
+
+		this.DPlanValue6.setOnMouseExited(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				DPlanValue6.setCursor(Cursor.DEFAULT);
+			}
+		});
+		this.DPlanValue7.setOnMouseEntered(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				DPlanValue7.setCursor(Cursor.HAND);
+			}
+		});
+
+		this.DPlanValue7.setOnMouseExited(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				DPlanValue7.setCursor(Cursor.DEFAULT);
+			}
+		});
+
 		// Listen for selection changes (Checkbox... Hilfslinien)
 
 		this.hilfslinien.selectedProperty().addListener(
@@ -1096,8 +1281,9 @@ public class MainLayoutController {
 							.size() * 40 + 10;
 					createUpperYScale(yUp1, upperYChart1, upperYgc1,
 							this.upperheightEins, this.umlaufplanEins);
-					this.UPlanValue1.setText(UPlan.getSelectionModel()
-							.getSelectedItem().toString());
+					this.UPlanValue1.setText(" "
+							+ UPlan.getSelectionModel().getSelectedItem()
+									.toString() + " ");
 					this.umlaufChoice = 1;
 					firstCheckU1 = true;
 
@@ -1185,8 +1371,9 @@ public class MainLayoutController {
 							.size() * 40 + 10;
 					createUpperYScale(yUp2, upperYChart2, upperYgc2,
 							this.upperheightZwei, this.umlaufplanZwei);
-					this.UPlanValue2.setText(UPlan.getSelectionModel()
-							.getSelectedItem().toString());
+					this.UPlanValue2.setText(" "
+							+ UPlan.getSelectionModel().getSelectedItem()
+									.toString() + " ");
 					this.umlaufChoice = 2;
 					firstCheckU2 = true;
 
@@ -1274,8 +1461,9 @@ public class MainLayoutController {
 							.size() * 40 + 10;
 					createUpperYScale(yUp3, upperYChart3, upperYgc3,
 							this.upperheightDrei, this.umlaufplanDrei);
-					this.UPlanValue3.setText(UPlan.getSelectionModel()
-							.getSelectedItem().toString());
+					this.UPlanValue3.setText(" "
+							+ UPlan.getSelectionModel().getSelectedItem()
+									.toString() + " ");
 					this.umlaufChoice = 3;
 					firstCheckU3 = true;
 
@@ -1360,8 +1548,9 @@ public class MainLayoutController {
 							.size() * 40 + 10;
 					createUpperYScale(yUp4, upperYChart4, upperYgc4,
 							this.upperheightVier, this.umlaufplanVier);
-					this.UPlanValue4.setText(UPlan.getSelectionModel()
-							.getSelectedItem().toString());
+					this.UPlanValue4.setText(" "
+							+ UPlan.getSelectionModel().getSelectedItem()
+									.toString() + " ");
 					this.umlaufChoice = 4;
 					firstCheckU4 = true;
 
@@ -1446,8 +1635,9 @@ public class MainLayoutController {
 							.size() * 40 + 10;
 					createUpperYScale(yUp5, upperYChart5, upperYgc5,
 							this.upperheightFuenf, this.umlaufplanFuenf);
-					this.UPlanValue5.setText(UPlan.getSelectionModel()
-							.getSelectedItem().toString());
+					this.UPlanValue5.setText(" "
+							+ UPlan.getSelectionModel().getSelectedItem()
+									.toString() + " ");
 					this.umlaufChoice = 5;
 					firstCheckU5 = true;
 
@@ -1532,8 +1722,9 @@ public class MainLayoutController {
 							.size() * 40 + 10;
 					createUpperYScale(yUp6, upperYChart6, upperYgc6,
 							this.upperheightSechs, this.umlaufplanSechs);
-					this.UPlanValue6.setText(UPlan.getSelectionModel()
-							.getSelectedItem().toString());
+					this.UPlanValue6.setText(" "
+							+ UPlan.getSelectionModel().getSelectedItem()
+									.toString() + " ");
 					this.umlaufChoice = 6;
 					firstCheckU6 = true;
 
@@ -1617,8 +1808,9 @@ public class MainLayoutController {
 							.size() * 40 + 10;
 					createUpperYScale(yUp7, upperYChart7, upperYgc7,
 							this.upperheightSieben, this.umlaufplanSieben);
-					this.UPlanValue7.setText(UPlan.getSelectionModel()
-							.getSelectedItem().toString());
+					this.UPlanValue7.setText(" "
+							+ UPlan.getSelectionModel().getSelectedItem()
+									.toString() + " ");
 					this.umlaufChoice = 7;
 					firstCheckU7 = true;
 
@@ -1773,8 +1965,9 @@ public class MainLayoutController {
 					this.lowerheightEins = this.dienstplanEins.getDuty().size() * 40 + 10;
 					createLowerYScale(yLow1, lowerYChart1, lowerYgc1,
 							this.lowerheightEins, this.dienstplanEins);
-					this.DPlanValue1.setText(DPlan.getSelectionModel()
-							.getSelectedItem().toString());
+					this.DPlanValue1.setText(" "
+							+ DPlan.getSelectionModel().getSelectedItem()
+									.toString() + " ");
 					this.dienstChoice = 1;
 
 					// Zuordnung der Auswahl
@@ -1824,7 +2017,8 @@ public class MainLayoutController {
 				createLowerBackgroundGraphicFirstPane();
 				createLowerXScalePane(this.xLow1, this.lowerGraphicPane1);
 				createDienstElementGraphic(this.dienstplanEins,
-						this.lowerGraphicPane1, this.lowerChart1, this.lowergc1, this.firstCheckD1);
+						this.lowerGraphicPane1, this.lowerChart1,
+						this.lowergc1, this.firstCheckD1);
 
 				// Fügt den EventhÃ¤ndler hinzu
 				this.lowerChart1.addEventHandler(MouseEvent.MOUSE_CLICKED,
@@ -1861,8 +2055,9 @@ public class MainLayoutController {
 					this.lowerheightZwei = this.dienstplanZwei.getDuty().size() * 40 + 10;
 					createLowerYScale(yLow2, lowerYChart2, lowerYgc2,
 							this.lowerheightZwei, this.dienstplanZwei);
-					this.DPlanValue2.setText(DPlan.getSelectionModel()
-							.getSelectedItem().toString());
+					this.DPlanValue2.setText(" "
+							+ DPlan.getSelectionModel().getSelectedItem()
+									.toString() + " ");
 					this.dienstChoice = 2;
 
 					this.umlaufIsCurrent = false;
@@ -1910,7 +2105,8 @@ public class MainLayoutController {
 				createLowerXScalePane(this.xLow2, this.lowerGraphicPane2);
 
 				createDienstElementGraphic(this.dienstplanZwei,
-						this.lowerGraphicPane2, this.lowerChart2, this.lowergc2, this.firstCheckD2);
+						this.lowerGraphicPane2, this.lowerChart2,
+						this.lowergc2, this.firstCheckD2);
 				// FÃ¼gt den EventhÃ¤ndler hinzu
 				this.lowerChart2.addEventHandler(MouseEvent.MOUSE_CLICKED,
 						new EventHandler<MouseEvent>() {
@@ -1943,8 +2139,9 @@ public class MainLayoutController {
 					this.lowerheightDrei = this.dienstplanDrei.getDuty().size() * 40 + 10;
 					createLowerYScale(yLow3, lowerYChart3, lowerYgc3,
 							this.lowerheightDrei, this.dienstplanDrei);
-					this.DPlanValue3.setText(DPlan.getSelectionModel()
-							.getSelectedItem().toString());
+					this.DPlanValue3.setText(" "
+							+ DPlan.getSelectionModel().getSelectedItem()
+									.toString() + " ");
 					this.dienstChoice = 3;
 
 					this.umlaufIsCurrent = false;
@@ -1991,7 +2188,8 @@ public class MainLayoutController {
 				createLowerXScalePane(this.xLow3, this.lowerGraphicPane3);
 
 				createDienstElementGraphic(this.dienstplanDrei,
-						this.lowerGraphicPane3, this.lowerChart3, this.lowergc3, this.firstCheckD3);
+						this.lowerGraphicPane3, this.lowerChart3,
+						this.lowergc3, this.firstCheckD3);
 				// FÃ¼gt den EventhÃ¤ndler hinzu
 				this.lowerChart3.addEventHandler(MouseEvent.MOUSE_CLICKED,
 						new EventHandler<MouseEvent>() {
@@ -2024,8 +2222,9 @@ public class MainLayoutController {
 					this.lowerheightVier = this.dienstplanVier.getDuty().size() * 40 + 10;
 					createLowerYScale(yLow4, lowerYChart4, lowerYgc4,
 							this.lowerheightVier, this.dienstplanVier);
-					this.DPlanValue4.setText(DPlan.getSelectionModel()
-							.getSelectedItem().toString());
+					this.DPlanValue4.setText(" "
+							+ DPlan.getSelectionModel().getSelectedItem()
+									.toString() + " ");
 					this.dienstChoice = 4;
 
 					this.umlaufIsCurrent = false;
@@ -2072,7 +2271,8 @@ public class MainLayoutController {
 				createLowerXScalePane(this.xLow4, this.lowerGraphicPane4);
 
 				createDienstElementGraphic(this.dienstplanVier,
-						this.lowerGraphicPane4, this.lowerChart4, this.lowergc4, this.firstCheckD4);
+						this.lowerGraphicPane4, this.lowerChart4,
+						this.lowergc4, this.firstCheckD4);
 				// FÃ¼gt den EventhÃ¤ndler hinzu
 				this.lowerChart4.addEventHandler(MouseEvent.MOUSE_CLICKED,
 						new EventHandler<MouseEvent>() {
@@ -2108,8 +2308,9 @@ public class MainLayoutController {
 							.size() * 40 + 10;
 					createLowerYScale(yLow5, lowerYChart5, lowerYgc5,
 							this.lowerheightFuenf, this.dienstplanFuenf);
-					this.DPlanValue5.setText(DPlan.getSelectionModel()
-							.getSelectedItem().toString());
+					this.DPlanValue5.setText(" "
+							+ DPlan.getSelectionModel().getSelectedItem()
+									.toString() + " ");
 					this.dienstChoice = 5;
 
 					this.umlaufIsCurrent = false;
@@ -2156,7 +2357,8 @@ public class MainLayoutController {
 				createLowerXScalePane(this.xLow5, this.lowerGraphicPane5);
 
 				createDienstElementGraphic(this.dienstplanFuenf,
-						this.lowerGraphicPane5, this.lowerChart5, this.lowergc5, this.firstCheckD5);
+						this.lowerGraphicPane5, this.lowerChart5,
+						this.lowergc5, this.firstCheckD5);
 				// FÃ¼gt den EventhÃ¤ndler hinzu
 				this.lowerChart5.addEventHandler(MouseEvent.MOUSE_CLICKED,
 						new EventHandler<MouseEvent>() {
@@ -2192,8 +2394,9 @@ public class MainLayoutController {
 							.size() * 40 + 10;
 					createLowerYScale(yLow6, lowerYChart6, lowerYgc6,
 							this.lowerheightSechs, this.dienstplanSechs);
-					this.DPlanValue6.setText(DPlan.getSelectionModel()
-							.getSelectedItem().toString());
+					this.DPlanValue6.setText(" "
+							+ DPlan.getSelectionModel().getSelectedItem()
+									.toString() + " ");
 					this.dienstChoice = 6;
 
 					this.umlaufIsCurrent = false;
@@ -2239,7 +2442,8 @@ public class MainLayoutController {
 				createLowerBackgroundGraphicSixthPane();
 				createLowerXScalePane(this.xLow6, this.lowerGraphicPane6);
 				createDienstElementGraphic(this.dienstplanSechs,
-						this.lowerGraphicPane6, this.lowerChart6, this.lowergc6, this.firstCheckD6);
+						this.lowerGraphicPane6, this.lowerChart6,
+						this.lowergc6, this.firstCheckD6);
 				// FÃ¼gt den EventhÃ¤ndler hinzu
 				this.lowerChart6.addEventHandler(MouseEvent.MOUSE_CLICKED,
 						new EventHandler<MouseEvent>() {
@@ -2275,8 +2479,9 @@ public class MainLayoutController {
 							.size() * 40 + 10;
 					createLowerYScale(yLow7, lowerYChart7, lowerYgc7,
 							this.lowerheightSieben, this.dienstplanSieben);
-					this.DPlanValue7.setText(DPlan.getSelectionModel()
-							.getSelectedItem().toString());
+					this.DPlanValue7.setText(" "
+							+ DPlan.getSelectionModel().getSelectedItem()
+									.toString() + " ");
 					this.dienstChoice = 7;
 
 					this.umlaufIsCurrent = false;
@@ -2323,7 +2528,8 @@ public class MainLayoutController {
 				createLowerXScalePane(this.xLow7, this.lowerGraphicPane7);
 
 				createDienstElementGraphic(this.dienstplanSieben,
-						this.lowerGraphicPane7, this.lowerChart7, this.lowergc7, this.firstCheckD7);
+						this.lowerGraphicPane7, this.lowerChart7,
+						this.lowergc7, this.firstCheckD7);
 				// FÃ¼gt den EventhÃ¤ndler hinzu
 				this.lowerChart7.addEventHandler(MouseEvent.MOUSE_CLICKED,
 						new EventHandler<MouseEvent>() {
@@ -3019,7 +3225,7 @@ public class MainLayoutController {
 			}
 			changeFocusUplan(this.umlaufplanEins);
 			this.UPlanValue1
-					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+					.setStyle("-fx-background-color:linear-gradient(white,#a7aacc);-fx-background-radius: 15 15 15 15; -fx-font-weight: bold;");
 			this.UPlanValue2.setStyle("-fx-background-color:white;");
 			this.UPlanValue3.setStyle("-fx-background-color:white;");
 			this.UPlanValue4.setStyle("-fx-background-color:white;");
@@ -3043,7 +3249,7 @@ public class MainLayoutController {
 			changeFocusUplan(this.umlaufplanZwei);
 			this.UPlanValue1.setStyle("-fx-background-color:white;");
 			this.UPlanValue2
-					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+					.setStyle("-fx-background-color:linear-gradient(white,#a7aacc);-fx-background-radius: 15 15 15 15; -fx-font-weight: bold;");
 			this.UPlanValue3.setStyle("-fx-background-color:white;");
 			this.UPlanValue4.setStyle("-fx-background-color:white;");
 			this.UPlanValue5.setStyle("-fx-background-color:white;");
@@ -3067,7 +3273,7 @@ public class MainLayoutController {
 			this.UPlanValue1.setStyle("-fx-background-color:white;");
 			this.UPlanValue2.setStyle("-fx-background-color:white;");
 			this.UPlanValue3
-					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+					.setStyle("-fx-background-color:linear-gradient(white,#a7aacc);-fx-background-radius: 15 15 15 15; -fx-font-weight: bold;");
 			this.UPlanValue4.setStyle("-fx-background-color:white;");
 			this.UPlanValue5.setStyle("-fx-background-color:white;");
 			this.UPlanValue6.setStyle("-fx-background-color:white;");
@@ -3091,7 +3297,7 @@ public class MainLayoutController {
 			this.UPlanValue2.setStyle("-fx-background-color:white;");
 			this.UPlanValue3.setStyle("-fx-background-color:white;");
 			this.UPlanValue4
-					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+					.setStyle("-fx-background-color:linear-gradient(white,#a7aacc);-fx-background-radius: 15 15 15 15; -fx-font-weight: bold;");
 			this.UPlanValue5.setStyle("-fx-background-color:white;");
 			this.UPlanValue6.setStyle("-fx-background-color:white;");
 			this.UPlanValue7.setStyle("-fx-background-color:white;");
@@ -3115,7 +3321,7 @@ public class MainLayoutController {
 			this.UPlanValue3.setStyle("-fx-background-color:white;");
 			this.UPlanValue4.setStyle("-fx-background-color:white;");
 			this.UPlanValue5
-					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+					.setStyle("-fx-background-color:linear-gradient(white,#a7aacc);-fx-background-radius: 15 15 15 15; -fx-font-weight: bold;");
 			this.UPlanValue6.setStyle("-fx-background-color:white;");
 			this.UPlanValue7.setStyle("-fx-background-color:white;");
 			this.DPlanValue1.setStyle("-fx-background-color:white;");
@@ -3139,7 +3345,7 @@ public class MainLayoutController {
 			this.UPlanValue4.setStyle("-fx-background-color:white;");
 			this.UPlanValue5.setStyle("-fx-background-color:white;");
 			this.UPlanValue6
-					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+					.setStyle("-fx-background-color:linear-gradient(white,#a7aacc);-fx-background-radius: 15 15 15 15; -fx-font-weight: bold;");
 			this.UPlanValue7.setStyle("-fx-background-color:white;");
 			this.DPlanValue1.setStyle("-fx-background-color:white;");
 			this.DPlanValue2.setStyle("-fx-background-color:white;");
@@ -3165,7 +3371,7 @@ public class MainLayoutController {
 			this.UPlanValue5.setStyle("-fx-background-color:white;");
 			this.UPlanValue6.setStyle("-fx-background-color:white;");
 			this.UPlanValue7
-					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+					.setStyle("-fx-background-color:linear-gradient(white,#a7aacc);-fx-background-radius: 15 15 15 15; -fx-font-weight: bold;");
 			this.DPlanValue1.setStyle("-fx-background-color:white;");
 			this.DPlanValue2.setStyle("-fx-background-color:white;");
 			this.DPlanValue3.setStyle("-fx-background-color:white;");
@@ -3199,7 +3405,7 @@ public class MainLayoutController {
 			}
 			changeFocusDplan(this.dienstplanEins);
 			this.DPlanValue1
-					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+					.setStyle("-fx-background-color:linear-gradient(white,#a7aacc);-fx-background-radius: 15 15 15 15; -fx-font-weight: bold;");
 			this.DPlanValue2.setStyle("-fx-background-color:white;");
 			this.DPlanValue3.setStyle("-fx-background-color:white;");
 			this.DPlanValue4.setStyle("-fx-background-color:white;");
@@ -3223,7 +3429,7 @@ public class MainLayoutController {
 			changeFocusDplan(this.dienstplanZwei);
 			this.DPlanValue1.setStyle("-fx-background-color:white;");
 			this.DPlanValue2
-					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+					.setStyle("-fx-background-color:linear-gradient(white,#a7aacc);-fx-background-radius: 15 15 15 15; -fx-font-weight: bold;");
 			this.DPlanValue3.setStyle("-fx-background-color:white;");
 			this.DPlanValue4.setStyle("-fx-background-color:white;");
 			this.DPlanValue5.setStyle("-fx-background-color:white;");
@@ -3247,7 +3453,7 @@ public class MainLayoutController {
 			this.DPlanValue1.setStyle("-fx-background-color:white;");
 			this.DPlanValue2.setStyle("-fx-background-color:white;");
 			this.DPlanValue3
-					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+					.setStyle("-fx-background-color:linear-gradient(white,#a7aacc);-fx-background-radius: 15 15 15 15; -fx-font-weight: bold;");
 			this.DPlanValue4.setStyle("-fx-background-color:white;");
 			this.DPlanValue5.setStyle("-fx-background-color:white;");
 			this.DPlanValue6.setStyle("-fx-background-color:white;");
@@ -3271,7 +3477,7 @@ public class MainLayoutController {
 			this.DPlanValue2.setStyle("-fx-background-color:white;");
 			this.DPlanValue3.setStyle("-fx-background-color:white;");
 			this.DPlanValue4
-					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+					.setStyle("-fx-background-color:linear-gradient(white,#a7aacc);-fx-background-radius: 15 15 15 15; -fx-font-weight: bold;");
 			this.DPlanValue5.setStyle("-fx-background-color:white;");
 			this.DPlanValue6.setStyle("-fx-background-color:white;");
 			this.UPlanValue7.setStyle("-fx-background-color:white;");
@@ -3295,7 +3501,7 @@ public class MainLayoutController {
 			this.DPlanValue3.setStyle("-fx-background-color:white;");
 			this.DPlanValue4.setStyle("-fx-background-color:white;");
 			this.DPlanValue5
-					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+					.setStyle("-fx-background-color:linear-gradient(white,#a7aacc);-fx-background-radius: 15 15 15 15; -fx-font-weight: bold;");
 			this.DPlanValue6.setStyle("-fx-background-color:white;");
 			this.DPlanValue7.setStyle("-fx-background-color:white;");
 			this.UPlanValue1.setStyle("-fx-background-color:white;");
@@ -3319,7 +3525,7 @@ public class MainLayoutController {
 			this.DPlanValue4.setStyle("-fx-background-color:white;");
 			this.DPlanValue5.setStyle("-fx-background-color:white;");
 			this.DPlanValue6
-					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+					.setStyle("-fx-background-color:linear-gradient(white,#a7aacc);-fx-background-radius: 15 15 15 15; -fx-font-weight: bold;");
 			this.DPlanValue7.setStyle("-fx-background-color:white;");
 			this.UPlanValue1.setStyle("-fx-background-color:white;");
 			this.UPlanValue2.setStyle("-fx-background-color:white;");
@@ -3345,7 +3551,7 @@ public class MainLayoutController {
 			this.DPlanValue5.setStyle("-fx-background-color:white;");
 			this.DPlanValue6.setStyle("-fx-background-color:white;");
 			this.DPlanValue7
-					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+					.setStyle("-fx-background-color:linear-gradient(white,#a7aacc);-fx-background-radius: 15 15 15 15; -fx-font-weight: bold;");
 			this.UPlanValue1.setStyle("-fx-background-color:white;");
 			this.UPlanValue2.setStyle("-fx-background-color:white;");
 			this.UPlanValue3.setStyle("-fx-background-color:white;");
@@ -3821,7 +4027,8 @@ public class MainLayoutController {
 	 * Creates Duty Elements in the Graphic.
 	 */
 	private void createDienstElementGraphic(Dienstplan dienstplan,
-			ScrollPane scrollPane, Canvas canvas, GraphicsContext gc, boolean firstCheck) {
+			ScrollPane scrollPane, Canvas canvas, GraphicsContext gc,
+			boolean firstCheck) {
 
 		// Arbeitsvariablen der Methode
 		double abstandNetz = (canvas.getWidth() - 30)
@@ -4665,7 +4872,7 @@ public class MainLayoutController {
 			this.secondUppergrafikErstellt = false;
 			this.umlaufplanZwei = null;
 			this.UPlanValue1
-					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+					.setStyle("-fx-background-color:linear-gradient(white,#a7aacc);-fx-background-radius: 15 15 15 15; -fx-font-weight: bold;");
 			changeFocusUplan(this.umlaufplanEins);
 
 			// Dienstplanobjekte ändern
@@ -4691,7 +4898,7 @@ public class MainLayoutController {
 			this.thirdUppergrafikErstellt = false;
 			this.umlaufplanDrei = null;
 			this.UPlanValue2
-					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+					.setStyle("-fx-background-color:linear-gradient(white,#a7aacc);-fx-background-radius: 15 15 15 15; -fx-font-weight: bold;");
 			changeFocusUplan(this.umlaufplanZwei);
 
 			// Dienstplanobjekte ändern
@@ -4717,7 +4924,7 @@ public class MainLayoutController {
 			this.fourthUppergrafikErstellt = false;
 			this.umlaufplanVier = null;
 			this.UPlanValue3
-					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+					.setStyle("-fx-background-color:linear-gradient(white,#a7aacc);-fx-background-radius: 15 15 15 15; -fx-font-weight: bold;");
 			changeFocusUplan(this.umlaufplanDrei);
 
 			// Dienstplanobjekte ändern
@@ -4741,7 +4948,7 @@ public class MainLayoutController {
 			}
 			selectionModel.select(this.Plan4);
 			this.UPlanValue4
-					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+					.setStyle("-fx-background-color:linear-gradient(white,#a7aacc);-fx-background-radius: 15 15 15 15; -fx-font-weight: bold;");
 			this.fifthUppergrafikErstellt = false;
 			this.umlaufplanFuenf = null;
 			changeFocusUplan(this.umlaufplanVier);
@@ -4767,7 +4974,7 @@ public class MainLayoutController {
 			}
 			selectionModel.select(this.Plan5);
 			this.UPlanValue5
-					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+					.setStyle("-fx-background-color:linear-gradient(white,#a7aacc);-fx-background-radius: 15 15 15 15; -fx-font-weight: bold;");
 			this.sixthUppergrafikErstellt = false;
 			this.umlaufplanSechs = null;
 			changeFocusUplan(this.umlaufplanFuenf);
@@ -4793,7 +5000,7 @@ public class MainLayoutController {
 			}
 			selectionModel.select(this.Plan6);
 			this.UPlanValue6
-					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+					.setStyle("-fx-background-color:linear-gradient(white,#a7aacc);-fx-background-radius: 15 15 15 15; -fx-font-weight: bold;");
 			this.seventhUppergrafikErstellt = false;
 			this.umlaufplanSieben = null;
 			changeFocusUplan(this.umlaufplanSechs);
@@ -4887,7 +5094,7 @@ public class MainLayoutController {
 			this.secondLowergrafikErstellt = false;
 			this.dienstplanZwei = null;
 			this.DPlanValue1
-					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+					.setStyle("-fx-background-color:linear-gradient(white,#a7aacc);-fx-background-radius: 15 15 15 15; -fx-font-weight: bold;");
 			changeFocusDplan(this.dienstplanEins);
 
 			// Umlaufplanobjekte ändern
@@ -4913,7 +5120,7 @@ public class MainLayoutController {
 			this.thirdLowergrafikErstellt = false;
 			this.dienstplanDrei = null;
 			this.DPlanValue2
-					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+					.setStyle("-fx-background-color:linear-gradient(white,#a7aacc);-fx-background-radius: 15 15 15 15; -fx-font-weight: bold;");
 			changeFocusDplan(this.dienstplanZwei);
 
 			// Umlaufplanobjekte ändern
@@ -4939,7 +5146,7 @@ public class MainLayoutController {
 			this.fourthLowergrafikErstellt = false;
 			this.dienstplanVier = null;
 			this.DPlanValue3
-					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+					.setStyle("-fx-background-color:linear-gradient(white,#a7aacc);-fx-background-radius: 15 15 15 15; -fx-font-weight: bold;");
 			changeFocusDplan(this.dienstplanDrei);
 
 			// Umlaufplanobjekte ändern
@@ -4963,7 +5170,7 @@ public class MainLayoutController {
 			}
 			selectionModel.select(this.Plan4);
 			this.DPlanValue4
-					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+					.setStyle("-fx-background-color:linear-gradient(white,#a7aacc);-fx-background-radius: 15 15 15 15; -fx-font-weight: bold;");
 			this.fifthLowergrafikErstellt = false;
 			this.dienstplanFuenf = null;
 			changeFocusDplan(this.dienstplanVier);
@@ -4989,7 +5196,7 @@ public class MainLayoutController {
 			}
 			selectionModel.select(this.Plan5);
 			this.DPlanValue5
-					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+					.setStyle("-fx-background-color:linear-gradient(white,#a7aacc);-fx-background-radius: 15 15 15 15; -fx-font-weight: bold;");
 			this.sixthLowergrafikErstellt = false;
 			this.dienstplanSechs = null;
 			changeFocusDplan(this.dienstplanFuenf);
@@ -5015,7 +5222,7 @@ public class MainLayoutController {
 			}
 			selectionModel.select(this.Plan6);
 			this.DPlanValue6
-					.setStyle("-fx-background-color:#a7aacc; -fx-font-weight: bold;");
+					.setStyle("-fx-background-color:linear-gradient(white,#a7aacc);-fx-background-radius: 15 15 15 15; -fx-font-weight: bold;");
 			this.seventhLowergrafikErstellt = false;
 			this.dienstplanSieben = null;
 			changeFocusDplan(this.dienstplanSechs);

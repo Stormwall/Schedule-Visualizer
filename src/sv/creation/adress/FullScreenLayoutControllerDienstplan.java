@@ -240,68 +240,71 @@ public class FullScreenLayoutControllerDienstplan {
 	 * Creates The Y - Scale.
 	 */
 	private void createYScale() {
-		
+
 		// Sortierung des Planes
-				ArrayList<String> orderList = new ArrayList<String>();
-				ArrayList<Integer> listInt = new ArrayList<Integer>();
-				ArrayList<Integer> match = new ArrayList<Integer>();
-				ArrayList<Integer> orderedDuty = new ArrayList<Integer>();
-				boolean idChange = true;
-				String dutyBefore = null;
+		ArrayList<String> orderList = new ArrayList<String>();
+		ArrayList<Integer> listInt = new ArrayList<Integer>();
+		ArrayList<Integer> match = new ArrayList<Integer>();
+		ArrayList<Integer> orderedDuty = new ArrayList<Integer>();
+		boolean idChange = true;
+		String dutyBefore = null;
 
-				for (int i = 0; i < this.dienstplan.getDutyelement().size(); i++) {
-					if (idChange) {
-						orderList.add(this.dienstplan.getDutyelement().get(i).getDepTime());
-						dutyBefore = this.dienstplan.getDutyelement().get(i).getDutyID();
-						idChange = false;
-					}
-					if(!this.dienstplan.getDutyelement().get(i).getDutyID().equals(dutyBefore)){
-						idChange = true;
-						i = i-1;
-					}
-				}
+		for (int i = 0; i < this.dienstplan.getDutyelement().size(); i++) {
+			if (idChange) {
+				orderList.add(this.dienstplan.getDutyelement().get(i)
+						.getDepTime());
+				dutyBefore = this.dienstplan.getDutyelement().get(i)
+						.getDutyID();
+				idChange = false;
+			}
+			if (!this.dienstplan.getDutyelement().get(i).getDutyID()
+					.equals(dutyBefore)) {
+				idChange = true;
+				i = i - 1;
+			}
+		}
 
-				for (int i = 0; i < orderList.size(); i++) {
-					StringSplitter ss = new StringSplitter();
-					int[] zeit = new int[2];
-					zeit = ss.intParse(orderList.get(i));
-					int startHour = zeit[0];
-					int startMin = zeit[1];
+		for (int i = 0; i < orderList.size(); i++) {
+			StringSplitter ss = new StringSplitter();
+			int[] zeit = new int[2];
+			zeit = ss.intParse(orderList.get(i));
+			int startHour = zeit[0];
+			int startMin = zeit[1];
 
-					listInt.add((startHour * 100) + startMin);
-					match.add((startHour * 100) + startMin);
-				}
-				// Sortierung (Bubble Sort)
-				boolean unsortiert = true;
-				int temp;
-				while (unsortiert) {
-					unsortiert = false;
-					for (int i = 0; i < listInt.size() - 1; i++)
-						if (listInt.get(i) > listInt.get(i + 1)) {
-							temp = listInt.get(i);
-							listInt.set(i, listInt.get(i + 1));
-							listInt.set(i + 1, temp);
-							unsortiert = true;
-						}
-				}
-
-				for (int i = 0; i < listInt.size(); i++) {
+			listInt.add((startHour * 100) + startMin);
+			match.add((startHour * 100) + startMin);
+		}
+		// Sortierung (Bubble Sort)
+		boolean unsortiert = true;
+		int temp;
+		while (unsortiert) {
+			unsortiert = false;
+			for (int i = 0; i < listInt.size() - 1; i++)
+				if (listInt.get(i) > listInt.get(i + 1)) {
 					temp = listInt.get(i);
-					for (int j = 0; j < match.size(); j++) {
-						if (match.get(j) == temp) {
-							int index = j;
-							boolean auslassen = false;
-							for (int j2 = 0; j2 < orderedDuty.size(); j2++) {
-								if (index == orderedDuty.get(j2)) {
-									auslassen = true;
-								}
-							}
-							if (auslassen == false) {
-								orderedDuty.add(j);
-							}
+					listInt.set(i, listInt.get(i + 1));
+					listInt.set(i + 1, temp);
+					unsortiert = true;
+				}
+		}
+
+		for (int i = 0; i < listInt.size(); i++) {
+			temp = listInt.get(i);
+			for (int j = 0; j < match.size(); j++) {
+				if (match.get(j) == temp) {
+					int index = j;
+					boolean auslassen = false;
+					for (int j2 = 0; j2 < orderedDuty.size(); j2++) {
+						if (index == orderedDuty.get(j2)) {
+							auslassen = true;
 						}
 					}
+					if (auslassen == false) {
+						orderedDuty.add(j);
+					}
 				}
+			}
+		}
 
 		// Hier wird das Skala Canvas erzeugt
 		this.yCanvas = new Canvas(this.yPane.getWidth(), this.yPane.getHeight());
@@ -319,8 +322,10 @@ public class FullScreenLayoutControllerDienstplan {
 		// Auslesen der Werte
 		for (int j = 0; j < dienstplan.getDuty().size(); j++) {
 
-			ygc.fillText("D " + dienstplan.getDuty().get(orderedDuty.get(j)).getHilfsID(), 4,
-					22 + (j * this.breite));
+			ygc.fillText(
+					"D "
+							+ dienstplan.getDuty().get(orderedDuty.get(j))
+									.getHilfsID(), 4, 22 + (j * this.breite));
 
 		}
 
@@ -342,13 +347,16 @@ public class FullScreenLayoutControllerDienstplan {
 
 		for (int i = 0; i < this.dienstplan.getDutyelement().size(); i++) {
 			if (idChange) {
-				orderList.add(this.dienstplan.getDutyelement().get(i).getDepTime());
-				dutyBefore = this.dienstplan.getDutyelement().get(i).getDutyID();
+				orderList.add(this.dienstplan.getDutyelement().get(i)
+						.getDepTime());
+				dutyBefore = this.dienstplan.getDutyelement().get(i)
+						.getDutyID();
 				idChange = false;
 			}
-			if(!this.dienstplan.getDutyelement().get(i).getDutyID().equals(dutyBefore)){
+			if (!this.dienstplan.getDutyelement().get(i).getDutyID()
+					.equals(dutyBefore)) {
 				idChange = true;
-				i = i-1;
+				i = i - 1;
 			}
 		}
 
@@ -409,8 +417,12 @@ public class FullScreenLayoutControllerDienstplan {
 			for (int i = 0; i < this.dienstplan.getDutyelement().size(); i++) {
 
 				// Abgleich mit den Werten
-				if (dienstplan.getDutyelement().get(i).getDutyID()
-						.equals(dienstplan.getDuty().get(orderedDuty.get(j)).getId())) {
+				if (dienstplan
+						.getDutyelement()
+						.get(i)
+						.getDutyID()
+						.equals(dienstplan.getDuty().get(orderedDuty.get(j))
+								.getId())) {
 
 					// Auslesen der Zeit als Integer
 					StringSplitter ss = new StringSplitter();
