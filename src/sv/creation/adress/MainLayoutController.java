@@ -1150,8 +1150,8 @@ public class MainLayoutController {
 						if (new_val == true) {
 							if (firstUppergrafikErstellt == true
 									|| firstLowergrafikErstellt == true) {
-								createHelpLines();
 								hilfslinienAktiv = true;
+								refreshBothGraphics();								
 							} else {
 								String fehlerA = "Es wurde noch keine Grafik erzeugt";
 								String fehlerB = "Noch nicht";
@@ -1252,10 +1252,6 @@ public class MainLayoutController {
 			}
 			this.addButtonPressed = false;
 			createLowerGraphic();
-		}
-
-		if (this.hilfslinienAktiv == true) {
-			createHelpLines();
 		}
 	}
 
@@ -4063,6 +4059,10 @@ public class MainLayoutController {
 
 			firstCheck = false;
 		}
+		
+		if (this.hilfslinienAktiv) {
+			createHelpLines(canvas, gc);
+		}
 	}
 
 	/**
@@ -4265,6 +4265,10 @@ public class MainLayoutController {
 
 			firstCheck = false;	
 		}
+			
+			if (this.hilfslinienAktiv) {
+				createHelpLines(canvas, gc);
+			}
 	}
 
 	/**
@@ -4343,519 +4347,40 @@ public class MainLayoutController {
 	/**
 	 * Creates The Helplines in the graphic.
 	 */
-	private void createHelpLines() {
-
-		createHelpLinesFirstTab();
-		if (this.secondGrafikErstellt == true) {
-			createHelpLinesSecondTab();
-		}
-		if (this.thirdGrafikErstellt == true) {
-			createHelpLinesThirdTab();
-		}
-		if (this.fourthGrafikErstellt == true) {
-			createHelpLinesFourthTab();
-		}
-		if (this.fifthGrafikErstellt == true) {
-			createHelpLinesFifthTab();
-		}
-		if (this.sixthGrafikErstellt == true) {
-			createHelpLinesSixthTab();
-		}
-		if (this.seventhGrafikErstellt == true) {
-			createHelpLinesSeventhTab();
-		}
-	}
-
-	/**
-	 * Creates The Helplines in the graphic.
-	 */
-	private void createHelpLinesFirstTab() {
+	private void createHelpLines(Canvas canvas, GraphicsContext gc) {
 
 		// Methoden zu Erstellung der dynamischen Hilfslinien
 
-		if (this.firstLowergrafikErstellt == true) {
-
-			double abstandNetz = (this.lowerChart1.getWidth() - 30)
+			double abstandNetz = (canvas.getWidth() - 30)
 					/ (this.endzeitVar - this.startzeitVar);
 
-			this.lowergc1.setLineWidth(1);
-			this.lowergc1.setStroke(Color.LIGHTGREY);
+			gc.setLineWidth(1);
+			gc.setStroke(Color.LIGHTGREY);
 
 			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
 
 				double pixel = ((i) * abstandNetz) + abstandNetz / 4;
-				this.lowergc1.strokeLine(pixel, 0, pixel,
-						this.lowerChart1.getHeight() - 3);
+				gc.strokeLine(pixel, 0, pixel,
+						canvas.getHeight() - 3);
 
 			}
 			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
 
 				double pixel = ((i) * abstandNetz) + abstandNetz / 2;
-				this.lowergc1.strokeLine(pixel, 0, pixel,
-						this.lowerChart1.getHeight() - 3);
+				gc.strokeLine(pixel, 0, pixel,
+						canvas.getHeight() - 3);
 
 			}
 			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
 
 				double pixel = ((i) * abstandNetz) + abstandNetz / 4 * 3;
-				this.lowergc1.strokeLine(pixel, 0, pixel,
-						this.lowerChart1.getHeight() - 3);
+				gc.strokeLine(pixel, 0, pixel,
+						canvas.getHeight() - 3);
 
-			}
 		}
-		if (this.firstUppergrafikErstellt == true) {
-
-			double abstandNetz = (this.upperChart1.getWidth() - 30)
-					/ (this.endzeitVar - this.startzeitVar);
-
-			this.uppergc1.setLineWidth(1);
-			this.uppergc1.setStroke(Color.LIGHTGREY);
-
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 4;
-				this.uppergc1.strokeLine(pixel, 0, pixel,
-						this.upperChart1.getHeight());
-
-			}
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 2;
-				this.uppergc1.strokeLine(pixel, 0, pixel,
-						this.upperChart1.getHeight());
-
-			}
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 4 * 3;
-				this.uppergc1.strokeLine(pixel, 0, pixel,
-						this.upperChart1.getHeight());
-
-			}
-		}
-
 	}
 
-	/**
-	 * Creates The Helplines in the graphic.
-	 */
-	private void createHelpLinesSecondTab() {
-
-		// Methoden zu Erstellung der dynamischen Hilfslinien
-
-		if (this.secondLowergrafikErstellt == true) {
-
-			double abstandNetz = (this.lowerChart2.getWidth() - 30)
-					/ (this.endzeitVar - this.startzeitVar);
-
-			this.lowergc2.setLineWidth(1);
-			this.lowergc2.setStroke(Color.LIGHTGREY);
-
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 4;
-				this.lowergc2.strokeLine(pixel, 0, pixel,
-						this.lowerChart2.getHeight() - 3);
-
-			}
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 2;
-				this.lowergc2.strokeLine(pixel, 0, pixel,
-						this.lowerChart2.getHeight() - 3);
-
-			}
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 4 * 3;
-				this.lowergc2.strokeLine(pixel, 0, pixel,
-						this.lowerChart2.getHeight() - 3);
-
-			}
-		}
-
-		if (this.secondUppergrafikErstellt == true) {
-
-			double abstandNetz = (this.upperChart2.getWidth() - 30)
-					/ (this.endzeitVar - this.startzeitVar);
-
-			this.uppergc2.setLineWidth(1);
-			this.uppergc2.setStroke(Color.LIGHTGREY);
-
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 4;
-				this.uppergc2.strokeLine(pixel, 0, pixel,
-						this.upperChart1.getHeight());
-
-			}
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 2;
-				this.uppergc2.strokeLine(pixel, 0, pixel,
-						this.upperChart1.getHeight());
-
-			}
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 4 * 3;
-				this.uppergc2.strokeLine(pixel, 0, pixel,
-						this.upperChart1.getHeight());
-
-			}
-		}
-
-	}
-
-	/**
-	 * Creates The Helplines in the graphic.
-	 */
-	private void createHelpLinesThirdTab() {
-
-		// Methoden zu Erstellung der dynamischen Hilfslinien
-
-		if (this.thirdLowergrafikErstellt == true) {
-
-			double abstandNetz = (this.lowerChart3.getWidth() - 30)
-					/ (this.endzeitVar - this.startzeitVar);
-
-			this.lowergc3.setLineWidth(1);
-			this.lowergc3.setStroke(Color.LIGHTGREY);
-
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 4;
-				this.lowergc3.strokeLine(pixel, 0, pixel,
-						this.lowerChart3.getHeight() - 3);
-
-			}
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 2;
-				this.lowergc3.strokeLine(pixel, 0, pixel,
-						this.lowerChart3.getHeight() - 3);
-
-			}
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 4 * 3;
-				this.lowergc3.strokeLine(pixel, 0, pixel,
-						this.lowerChart3.getHeight() - 3);
-
-			}
-		}
-		if (this.thirdUppergrafikErstellt == true) {
-
-			double abstandNetz = (this.upperChart3.getWidth() - 30)
-					/ (this.endzeitVar - this.startzeitVar);
-
-			this.uppergc3.setLineWidth(1);
-			this.uppergc3.setStroke(Color.LIGHTGREY);
-
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 4;
-				this.uppergc3.strokeLine(pixel, 0, pixel,
-						this.upperChart3.getHeight());
-
-			}
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 2;
-				this.uppergc3.strokeLine(pixel, 0, pixel,
-						this.upperChart3.getHeight());
-
-			}
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 4 * 3;
-				this.uppergc3.strokeLine(pixel, 0, pixel,
-						this.upperChart3.getHeight());
-
-			}
-		}
-
-	}
-
-	/**
-	 * Creates The Helplines in the graphic.
-	 */
-	private void createHelpLinesFourthTab() {
-
-		// Methoden zu Erstellung der dynamischen Hilfslinien
-
-		if (this.fourthLowergrafikErstellt == true) {
-
-			double abstandNetz = (this.lowerChart4.getWidth() - 30)
-					/ (this.endzeitVar - this.startzeitVar);
-
-			this.lowergc4.setLineWidth(1);
-			this.lowergc4.setStroke(Color.LIGHTGREY);
-
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 4;
-				this.lowergc4.strokeLine(pixel, 0, pixel,
-						this.lowerChart4.getHeight() - 3);
-
-			}
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 2;
-				this.lowergc4.strokeLine(pixel, 0, pixel,
-						this.lowerChart4.getHeight() - 3);
-
-			}
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 4 * 3;
-				this.lowergc4.strokeLine(pixel, 0, pixel,
-						this.lowerChart4.getHeight() - 3);
-
-			}
-		}
-		if (this.fourthUppergrafikErstellt == true) {
-
-			double abstandNetz = (this.upperChart4.getWidth() - 30)
-					/ (this.endzeitVar - this.startzeitVar);
-
-			this.uppergc4.setLineWidth(1);
-			this.uppergc4.setStroke(Color.LIGHTGREY);
-
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 4;
-				this.uppergc4.strokeLine(pixel, 0, pixel,
-						this.upperChart4.getHeight());
-
-			}
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 2;
-				this.uppergc4.strokeLine(pixel, 0, pixel,
-						this.upperChart4.getHeight());
-
-			}
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 4 * 3;
-				this.uppergc4.strokeLine(pixel, 0, pixel,
-						this.upperChart4.getHeight());
-
-			}
-		}
-
-	}
-
-	/**
-	 * Creates The Helplines in the graphic.
-	 */
-	private void createHelpLinesFifthTab() {
-
-		// Methoden zu Erstellung der dynamischen Hilfslinien
-
-		if (this.fifthLowergrafikErstellt == true) {
-
-			double abstandNetz = (this.lowerChart5.getWidth() - 30)
-					/ (this.endzeitVar - this.startzeitVar);
-
-			this.lowergc5.setLineWidth(1);
-			this.lowergc5.setStroke(Color.LIGHTGREY);
-
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 4;
-				this.lowergc5.strokeLine(pixel, 0, pixel,
-						this.lowerChart5.getHeight() - 3);
-
-			}
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 2;
-				this.lowergc5.strokeLine(pixel, 0, pixel,
-						this.lowerChart5.getHeight() - 3);
-
-			}
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 4 * 3;
-				this.lowergc5.strokeLine(pixel, 0, pixel,
-						this.lowerChart5.getHeight() - 3);
-
-			}
-		}
-		if (this.fifthUppergrafikErstellt == true) {
-
-			double abstandNetz = (this.upperChart5.getWidth() - 30)
-					/ (this.endzeitVar - this.startzeitVar);
-
-			this.uppergc5.setLineWidth(1);
-			this.uppergc5.setStroke(Color.LIGHTGREY);
-
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 4;
-				this.uppergc5.strokeLine(pixel, 0, pixel,
-						this.upperChart5.getHeight());
-
-			}
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 2;
-				this.uppergc5.strokeLine(pixel, 0, pixel,
-						this.upperChart5.getHeight());
-
-			}
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 4 * 3;
-				this.uppergc5.strokeLine(pixel, 0, pixel,
-						this.upperChart5.getHeight());
-
-			}
-		}
-
-	}
-
-	/**
-	 * Creates The Helplines in the graphic.
-	 */
-	private void createHelpLinesSixthTab() {
-
-		// Methoden zu Erstellung der dynamischen Hilfslinien
-
-		if (this.sixthLowergrafikErstellt == true) {
-
-			double abstandNetz = (this.lowerChart6.getWidth() - 30)
-					/ (this.endzeitVar - this.startzeitVar);
-
-			this.lowergc6.setLineWidth(1);
-			this.lowergc6.setStroke(Color.LIGHTGREY);
-
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 4;
-				this.lowergc6.strokeLine(pixel, 0, pixel,
-						this.lowerChart6.getHeight() - 3);
-
-			}
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 2;
-				this.lowergc6.strokeLine(pixel, 0, pixel,
-						this.lowerChart6.getHeight() - 3);
-
-			}
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 4 * 3;
-				this.lowergc6.strokeLine(pixel, 0, pixel,
-						this.lowerChart6.getHeight() - 3);
-
-			}
-		}
-		if (this.sixthUppergrafikErstellt == true) {
-
-			double abstandNetz = (this.upperChart6.getWidth() - 30)
-					/ (this.endzeitVar - this.startzeitVar);
-
-			this.uppergc6.setLineWidth(1);
-			this.uppergc6.setStroke(Color.LIGHTGREY);
-
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 4;
-				this.uppergc6.strokeLine(pixel, 0, pixel,
-						this.upperChart6.getHeight());
-
-			}
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 2;
-				this.uppergc6.strokeLine(pixel, 0, pixel,
-						this.upperChart6.getHeight());
-
-			}
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 4 * 3;
-				this.uppergc6.strokeLine(pixel, 0, pixel,
-						this.upperChart6.getHeight());
-
-			}
-		}
-
-	}
-
-	/**
-	 * Creates The Helplines in the graphic.
-	 */
-	private void createHelpLinesSeventhTab() {
-
-		// Methoden zu Erstellung der dynamischen Hilfslinien
-
-		if (this.seventhLowergrafikErstellt == true) {
-
-			double abstandNetz = (this.lowerChart7.getWidth() - 30)
-					/ (this.endzeitVar - this.startzeitVar);
-
-			this.lowergc7.setLineWidth(1);
-			this.lowergc7.setStroke(Color.LIGHTGREY);
-
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 4;
-				this.lowergc7.strokeLine(pixel, 0, pixel,
-						this.lowerChart7.getHeight() - 3);
-
-			}
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 2;
-				this.lowergc7.strokeLine(pixel, 0, pixel,
-						this.lowerChart7.getHeight() - 3);
-
-			}
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 4 * 3;
-				this.lowergc7.strokeLine(pixel, 0, pixel,
-						this.lowerChart7.getHeight() - 3);
-
-			}
-		}
-		if (this.seventhUppergrafikErstellt == true) {
-
-			double abstandNetz = (this.upperChart7.getWidth() - 30)
-					/ (this.endzeitVar - this.startzeitVar);
-
-			this.uppergc7.setLineWidth(1);
-			this.uppergc7.setStroke(Color.LIGHTGREY);
-
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 4;
-				this.uppergc7.strokeLine(pixel, 0, pixel,
-						this.upperChart7.getHeight());
-
-			}
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 2;
-				this.uppergc7.strokeLine(pixel, 0, pixel,
-						this.upperChart7.getHeight());
-
-			}
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
-
-				double pixel = ((i) * abstandNetz) + abstandNetz / 4 * 3;
-				this.uppergc7.strokeLine(pixel, 0, pixel,
-						this.upperChart7.getHeight());
-
-			}
-		}
-
-	}
+	
 
 	/**
 	 * Deletes the latest U-Plan
