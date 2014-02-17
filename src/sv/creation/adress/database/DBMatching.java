@@ -1438,6 +1438,51 @@ public void deleteDienstplan(Dienstplan dienstplan){
 		}
 		
 	}
+	
+	public void benenneFahrplanUm(int fahrplanID, String bezeichnung){
+		
+		DBConnection db = new DBConnection();
+		db.initDBConnection();
+		// Creating a sql query
+		try {
+			stmt = db.getConnection().createStatement();
+			stmt.executeUpdate("UPDATE Fahrplan SET Bezeichnung='"+bezeichnung+"' WHERE ID='"+fahrplanID+"'");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void benenneUmlaufplanUm(int umlaufplanID, String bezeichnung){
+		
+		DBConnection db = new DBConnection();
+		db.initDBConnection();
+		// Creating a sql query
+		try {
+			stmt = db.getConnection().createStatement();
+			stmt.executeUpdate("UPDATE Umlaufplan SET Bezeichnung='"+bezeichnung+"' WHERE ID='"+umlaufplanID+"'");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void benenneDienstplanUm(int dienstplanID, String bezeichnung){
+		
+		DBConnection db = new DBConnection();
+		db.initDBConnection();
+		// Creating a sql query
+		try {
+			stmt = db.getConnection().createStatement();
+			stmt.executeUpdate("UPDATE Dienstplan SET Bezeichnung='"+bezeichnung+"' WHERE ID='"+dienstplanID+"'");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 
 	// *****************************
 	// ****** Getter methods *******

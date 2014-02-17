@@ -349,8 +349,8 @@ public class DatenbankLayoutController {
 //		 Import im = new Import();
 //		 im.importFile(file);
 		
-//		DBMatching dbm = new DBMatching();
-//		dbm.deleteFahrplan(fahrplanliste.get(0));
+		DBMatching dbm = new DBMatching();
+		dbm.benenneFahrplanUm(fahrplanliste.get(0).getId(), "Test");
 		
 //		DBSave dbs = new DBSave();
 //		dbs.saveUmlaufplan(umlaufplanliste.get(0), "Testversion");
@@ -362,6 +362,7 @@ public class DatenbankLayoutController {
 //		System.out.println(kzb.berechneDurschnittlicheWiederholrateDienstplanAll(dienstplanliste,kzb.erstelleDutyelementListAll(dienstplanliste), fahrplanliste.get(0)));
 //		
 //		kzb.berechneDistanz(dienstplanliste, fahrplanliste.get(0));
+		
 		// testausgabe Dienstplanstatistik
 /*		ScheduleStatistics stat = new ScheduleStatistics();
 		ArrayList<ScheduleStatistics> sstats = new ArrayList<ScheduleStatistics>();
