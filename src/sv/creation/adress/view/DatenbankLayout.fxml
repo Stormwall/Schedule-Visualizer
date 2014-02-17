@@ -58,7 +58,7 @@
                                       <children>
                                         <Button layoutY="5.0" mnemonicParsing="false" styleClass="dark-blue" text="Umbennen" AnchorPane.rightAnchor="14.0" />
                                         <TextField layoutY="5.0" prefWidth="200.0" AnchorPane.rightAnchor="108.0" />
-                                        <Button layoutY="5.0" mnemonicParsing="false" styleClass="dark-blue" text="Löschen" AnchorPane.leftAnchor="14.0" />
+                                        <Button layoutY="5.0" mnemonicParsing="false" onAction="#deleteUplan" styleClass="dark-blue" text="Löschen" AnchorPane.leftAnchor="14.0" />
                                       </children>
                                     </AnchorPane>
                                   </items>
@@ -89,7 +89,7 @@
                                       <children>
                                         <Button layoutY="5.0" mnemonicParsing="false" styleClass="dark-blue" text="Umbennen" AnchorPane.rightAnchor="14.0" />
                                         <TextField layoutY="5.0" prefWidth="200.0" AnchorPane.rightAnchor="108.0" />
-                                        <Button layoutY="5.0" mnemonicParsing="false" styleClass="dark-blue" text="Löschen" AnchorPane.leftAnchor="14.0" />
+                                        <Button layoutY="5.0" mnemonicParsing="false" onAction="#deleteDplan" styleClass="dark-blue" text="Löschen" AnchorPane.leftAnchor="14.0" />
                                       </children>
                                     </AnchorPane>
                                   </items>
@@ -119,7 +119,7 @@
                                       <children>
                                         <Button layoutY="5.0" mnemonicParsing="false" styleClass="dark-blue" text="Umbennen" AnchorPane.rightAnchor="14.0" />
                                         <TextField layoutY="5.0" prefWidth="200.0" AnchorPane.rightAnchor="108.0" />
-                                        <Button layoutY="5.0" mnemonicParsing="false" styleClass="dark-blue" text="Löschen" AnchorPane.leftAnchor="14.0" />
+                                        <Button layoutY="5.0" mnemonicParsing="false" onAction="#deleteFplan" styleClass="dark-blue" text="Löschen" AnchorPane.leftAnchor="14.0" />
                                       </children>
                                     </AnchorPane>
                                   </items>

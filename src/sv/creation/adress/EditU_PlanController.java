@@ -5,6 +5,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import sv.creation.adress.database.DBMatching;
+import sv.creation.adress.database.DBSave;
 import sv.creation.adress.model.Blockelement;
 import sv.creation.adress.model.Umlaufplan;
 import sv.creation.adress.util.Export;
@@ -126,6 +128,18 @@ public class EditU_PlanController {
 
 		okClicked = true;
 		dialogStage.close();
+	}
+	
+	/**
+	 * Safes U-Plan
+	 */
+
+	@FXML
+	private void handleSafeUplanInDatabase() {
+		
+		DBSave dbm = new DBSave();
+		
+//		dbm.saveUmlaufplan(umlaufplan, bezeichnung);;
 	}
 
 	/**

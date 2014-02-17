@@ -24,6 +24,7 @@ public class MainApplication extends Application {
 	private Stage primaryStage;
 
 	private BorderPane rootLayout;
+	MainLayoutController controller = null;
 
 	// Stageübergabeobjekte
 
@@ -80,6 +81,7 @@ public class MainApplication extends Application {
 
 			// Give the controller access to the main app
 			MainLayoutController controller = loader.getController();
+			this.controller = controller;
 			controller.setMainApp(this);
 
 		} catch (IOException e) {
@@ -144,8 +146,15 @@ public class MainApplication extends Application {
 			// Set the controller
 			DatenbankLayoutController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
+			controller.setMainApp(this);
 
-			dialogStage.show();
+			dialogStage.showAndWait();
+			
+			this.controller.fillUmlaufplanliste();
+			this.controller.fillDienstplanliste();
+			this.controller.fillFahrplanliste();
+
+			showMainScene();
 
 		} catch (IOException e) {
 			// Exception gets thrown if the fxml file could not be loaded
@@ -248,8 +257,7 @@ public class MainApplication extends Application {
 			dialogStage.setScene(scene);
 
 			// Set the controller
-			FahrplanGraphicLayoutController controller = loader
-					.getController();
+			FahrplanGraphicLayoutController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setFahrplan(fahrplan);
 			controller.setErstauswahl(auswahl);
@@ -409,8 +417,9 @@ public class MainApplication extends Application {
 		}
 
 	}
-	
-	public int[] showEditMultipleTimeDetails(int before, int after, int elementID) {
+
+	public int[] showEditMultipleTimeDetails(int before, int after,
+			int elementID) {
 
 		try {
 
@@ -430,7 +439,8 @@ public class MainApplication extends Application {
 			dialogStage.setScene(scene);
 
 			// Set the controller with all data
-			EditMultipleTimeDetailsLayoutController controller = loader.getController();
+			EditMultipleTimeDetailsLayoutController controller = loader
+					.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setMainApp(this);
 			controller.setBefore(before);

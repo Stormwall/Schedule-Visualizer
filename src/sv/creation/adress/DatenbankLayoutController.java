@@ -180,6 +180,79 @@ public class DatenbankLayoutController {
 
 	}
 	
+	/**
+	 * Deletes U-Plan
+	 */
+
+	@FXML
+	private void deleteUplan() {
+		
+		DBMatching dbm = new DBMatching();
+		
+		if (this.umlauftable.getSelectionModel().getSelectedItem()!=null) {
+			Umlaufplan umlaufplan = this.umlauftable.getSelectionModel().getSelectedItem();
+			dbm.deleteUmlaufplan(umlaufplan);
+			
+			// Aktualisieren der Listen und Anzeigen
+			fillUmlaufplanliste();
+			refreshUmlaufplan();
+		}else{
+			String fehlerA = "Es wurde noch Element ausgewählt";
+			String fehlerB = "Was soll geloescht werden ?";
+			String fehlerC = "Fehler";
+			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+		}
+				
+	}
+	
+	/**
+	 * Deletes D-Plan
+	 */
+
+	@FXML
+	private void deleteDplan() {
+		
+		DBMatching dbm = new DBMatching();
+		
+		if (this.diensttable.getSelectionModel().getSelectedItem()!=null) {
+			Dienstplan dienstplan = this.diensttable.getSelectionModel().getSelectedItem();
+			dbm.deleteDienstplan(dienstplan);
+			
+			// Aktualisieren der Listen und Anzeigen
+			fillDienstplanliste();
+			refreshDienstplan();
+		}else{
+			String fehlerA = "Es wurde noch Element ausgewählt";
+			String fehlerB = "Was soll geloescht werden ?";
+			String fehlerC = "Fehler";
+			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+		}
+	}
+	
+	/**
+	 * Deletes F-Plan
+	 */
+
+	@FXML
+	private void deleteFplan() {
+		
+		DBMatching dbm = new DBMatching();
+		
+		if (this.fahrtable.getSelectionModel().getSelectedItem()!=null) {
+			Fahrplan fahrplan = this.fahrtable.getSelectionModel().getSelectedItem();
+			dbm.deleteFahrplan(fahrplan);
+			
+			// Aktualisieren der Listen und Anzeigen
+			fillFahrplanliste();
+			refreshFahrplan();
+		}else{
+			String fehlerA = "Es wurde noch Element ausgewählt";
+			String fehlerB = "Was soll geloescht werden ?";
+			String fehlerC = "Fehler";
+			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+		}
+	}
+	
 	// Methoden zur Befuellung der Fahrplanliste
 	
 	public void fillFahrplanliste() {
@@ -196,7 +269,7 @@ public class DatenbankLayoutController {
 
 			this.fahrplanliste.clear();
 			this.fahrplanliste = dbm.createFahrplanObject();
-			for (int i = 0; i < this.fahrplanliste.size(); i++) {
+			for (int i = 0; i < this.fahrplanliste.size(); i++) {				
 				this.fahrplanliste.get(i).setBezeichnung(" Fahrplan " + (i + 1));
 			}
 
@@ -226,7 +299,7 @@ public class DatenbankLayoutController {
 		}
 	}
 
-	// Methoden zur Bef��llung der Umlaufplanliste
+	// Methoden zur Befuellung der Umlaufplanliste
 
 	public void fillUmlaufplanliste() {
 

@@ -431,7 +431,7 @@ public class MainLayoutController {
 
 	private boolean dDetailsTableErstellt = false;
 
-	// weitere PrÃ¼fvariablen
+	// weitere Pruefvariablen
 
 	private boolean secondGrafikErstellt = false;
 	private boolean thirdGrafikErstellt = false;
@@ -3838,8 +3838,9 @@ public class MainLayoutController {
 
 		double abstandNetz = (canvas.getWidth() - 30)
 				/ (this.endzeitVar - this.startzeitVar);
-		ArrayList<Integer> delayElements = new ArrayList<Integer>();
 		boolean delayFound = false;
+		ArrayList<String> resultList = new ArrayList<String>();
+		String result = "";
 
 		// Auslesen der Blockanzahl
 		for (int j = 0; j < umlaufplan.getUmlauf().size(); j++) {
@@ -3997,9 +3998,20 @@ public class MainLayoutController {
 						boolean findDelay = findVerspaetungU(umlaufplan, i,
 								startHour, startMin);
 						if (findDelay) {
-							delayElements.add(umlaufplan.getFahrtZuUmlauf()
-									.get(i).getId());
 							delayFound = true;
+
+							// Malt die Ueberschneidungen ein
+							drawUeberschneidungU(startPixelX, startPixelY, gc);
+
+							// Ausgabe der Ueberschneidungsfehlermeldung
+
+							if (firstCheck && delayFound) {
+								result = "BlockEle. " + umlaufplan.getFahrtZuUmlauf()
+										.get(i).getId() + " aus dem Block "+ umlaufplan.getFahrtZuUmlauf()
+										.get(i).getBlockID()+ ", " ;
+								resultList.add(result);
+
+							}
 						}
 					}
 				}
@@ -4009,9 +4021,8 @@ public class MainLayoutController {
 		// Ausgabe der Ueberschneidungsfehlermeldung
 
 		if (firstCheck && delayFound) {
-			String result = "";
-			for (Integer s : delayElements) {
-				result += "BlockEle. " + s + ", ";
+			for (String s : resultList) {
+				result += s;
 			}
 			String fehlerA = "Folgende Elemente koennen Probleme im Plan erzeugen : "
 					+ result;
@@ -4019,6 +4030,7 @@ public class MainLayoutController {
 			String fehlerC = "Ueberschneidungen im Plan: "
 					+ umlaufplan.getName();
 			mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+
 			firstCheck = false;
 		}
 	}
@@ -4033,8 +4045,9 @@ public class MainLayoutController {
 		// Arbeitsvariablen der Methode
 		double abstandNetz = (canvas.getWidth() - 30)
 				/ (this.endzeitVar - this.startzeitVar);
-		ArrayList<Integer> delayElements = new ArrayList<Integer>();
 		boolean delayFound = false;
+		ArrayList<String> resultList = new ArrayList<String>();
+		String result = "";
 
 		// Auslesen der Blockanzahl
 		for (int j = 0; j < dienstplan.getDuty().size(); j++) {
@@ -4186,28 +4199,39 @@ public class MainLayoutController {
 						boolean findDelay = findVerspaetungD(dienstplan, i,
 								startHour, startMin);
 						if (findDelay) {
-							delayElements.add(dienstplan.getDutyelement()
-									.get(i).getId());
 							delayFound = true;
+
+							// Malt die Ueberschneidungen ein
+							drawUeberschneidungU(startPixelX, startPixelY, gc);
+
+							// Ausgabe der Ueberschneidungsfehlermeldung
+
+							if (firstCheck && delayFound) {
+								result = "DutyEle. " + dienstplan.getDutyelement()
+										.get(i).getId() + " aus der Duty "+ dienstplan.getDutyelement()
+										.get(i).getDutyHilfsID()+ ", " ;								
+							resultList.add(result);
+							}
 						}
 					}
 				}
 			}
 		}
+		
 		// Ausgabe der Ueberschneidungsfehlermeldung
 
-		if (firstCheck && delayFound) {
-			String result = "";
-			for (Integer s : delayElements) {
-				result += "DutyEle. " + s + ", ";
-			}
+			if (firstCheck && delayFound) {
+				for (String s : resultList) {
+					result += s;
+				}			
 			String fehlerA = "Folgende Elemente koennen Probleme im Plan erzeugen : "
 					+ result;
 			String fehlerB = "Elemente kontrollieren";
 			String fehlerC = "Ueberschneidungen im Plan: "
 					+ dienstplan.getName();
 			mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
-			firstCheck = false;
+
+			firstCheck = false;	
 		}
 	}
 
@@ -5333,9 +5357,9 @@ public class MainLayoutController {
 		this.fahrplanliste.clear();
 
 		if (dbm.databaseIsEmpty() || dbm.fahrplanIsEmpty()) {
-
+			this.FPlan.setDisable(true);
 		} else {
-
+			this.FPlan.setDisable(false);
 			this.fahrplanliste.clear();
 			this.fahrplanliste = dbm.createFahrplanObject();
 			for (int i = 0; i < this.fahrplanliste.size(); i++) {
@@ -5367,9 +5391,9 @@ public class MainLayoutController {
 		this.dienstplanliste.clear();
 
 		if (dbm.databaseIsEmpty() || dbm.dienstplanIsEmpty()) {
-
+			this.DPlan.setDisable(true);
 		} else {
-
+			this.DPlan.setDisable(false);
 			this.dienstplanliste.clear();
 
 			this.dienstplanliste = dbm.createDienstplanObject();
@@ -5399,9 +5423,9 @@ public class MainLayoutController {
 		this.umlaufplanliste.clear();
 
 		if (dbm.databaseIsEmpty() || dbm.umlaufplanIsEmpty()) {
-
+			this.UPlan.setDisable(true);
 		} else {
-
+			this.UPlan.setDisable(false);
 			this.umlaufplanliste = dbm.createUmlaufplanObject();
 			for (int i = 0; i < this.umlaufplanliste.size(); i++) {
 				this.umlaufplanliste.get(i).setName(" Umlaufplan " + (i + 1));
@@ -5475,6 +5499,20 @@ public class MainLayoutController {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Draws Ueberschneidungen .
+	 */
+	private void drawUeberschneidungU(int startPixelX, int startPixelY,
+			GraphicsContext gc) {
+
+		gc.setStroke(Color.RED);
+		gc.setLineWidth(3);
+
+		gc.strokeRoundRect(startPixelX - 5, startPixelY - 3, 10, 26, 24, 10);
+		gc.setStroke(Color.BLACK);
+		gc.setLineWidth(1);
 	}
 
 	public boolean findVerspaetungD(Dienstplan dienstplan, int elementID,
