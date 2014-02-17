@@ -219,9 +219,11 @@ public class DBMatching {
 
 	public ArrayList<Umlaufplan> createUmlaufplanObject() {
 		
+		
 		createBlock();
 		createBlockelement();
 		createUmlaufplanDayAndDate();
+		ArrayList<Integer> idList=createUmlaufplanIDs();
 		// Anzahl der UmlaufplÃƒÂ¤ne wird ausgelesen
 		// Strukturvariablen
 		int anzahlPlan = 1;
@@ -261,13 +263,36 @@ public class DBMatching {
 				
 
 			}
+			int fahrplanID=getFahrplanzugehoerigkeitUmlaufplan(idList.get(i-1));
 			zaehlerUmlauf = zaehlerUmlauf + 1;
 			Umlaufplan umlaufplanAdd = new Umlaufplan(i, blockList,
-					blockelementList,umlaufplanDayList.get(i-1),getFahrplanzugehoerigkeitUmlaufplan(i),
+					blockelementList,umlaufplanDayList.get(i-1),fahrplanID,
 					changeDateFormat(umlaufplanDateList.get(i - 1)));
 			umlaufplanliste.add(umlaufplanAdd);
 		}
 		return umlaufplanliste;
+	}
+
+	private ArrayList<Integer> createUmlaufplanIDs() {
+		
+		DBConnection db = new DBConnection();
+		db.initDBConnection();
+		ArrayList<Integer> idList = new ArrayList<Integer>();
+		// Creating a sql query
+		try {
+			stmt = db.getConnection().createStatement();
+			ResultSet rest1 = stmt.executeQuery("SELECT ID FROM Umlaufplan");
+			// All resulted datasets of the sql query will be added to the block
+			// array list
+			while (rest1.next()) {
+				idList.add(rest1.getInt("ID"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return idList;
+		
 	}
 
 	private void createUmlaufplanDayAndDate() {
@@ -412,6 +437,8 @@ public class DBMatching {
 		// Strukturvariablen
 		int anzahlPlan = 1;
 		int zaehlerDienst = 0;
+		
+		ArrayList<Integer> idList=createDienstplanIDs();
 		for (int i = 0; i < dutyelement.size(); i++) {
 			if (i >= 1
 					&& dutyelement.get(i).getDienstplanID() > dutyelement.get(
@@ -547,12 +574,34 @@ public class DBMatching {
 			}
 			zaehlerDienst = zaehlerDienst + 1;
 			Dienstplan dienstplanAdd = new Dienstplan(i, dutyList,
-					dutyelementList, getFahrplanzugehoerigkeitDienstPlan(i),
+					dutyelementList, getFahrplanzugehoerigkeitDienstPlan(idList.get(i-1)),
 					changeDateFormat(dienstplanDateList.get(i - 1)));
 			dienstplanliste.add(dienstplanAdd);
 		}
 
 		return dienstplanliste;
+	}
+	
+	private ArrayList<Integer> createDienstplanIDs() {
+		
+		DBConnection db = new DBConnection();
+		db.initDBConnection();
+		ArrayList<Integer> idList = new ArrayList<Integer>();
+		// Creating a sql query
+		try {
+			stmt = db.getConnection().createStatement();
+			ResultSet rest1 = stmt.executeQuery("SELECT ID FROM Dienstplan");
+			// All resulted datasets of the sql query will be added to the block
+			// array list
+			while (rest1.next()) {
+				idList.add(rest1.getInt("ID"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return idList;
+		
 	}
 
 	private void createDienstplanDate() {

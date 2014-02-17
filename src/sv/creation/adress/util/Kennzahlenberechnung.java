@@ -6,6 +6,7 @@ import sv.creation.adress.model.Dienstplan;
 import sv.creation.adress.model.Duty;
 import sv.creation.adress.model.Dutyelement;
 import sv.creation.adress.model.Fahrplan;
+import sv.creation.adress.model.ServiceJourney;
 import sv.creation.adress.model.Umlaufplan;
 
 
@@ -21,7 +22,12 @@ public class Kennzahlenberechnung {
 		//Anzahl der Dienste von allen Dienstpl������nen
 		for (int i = 0; i < dienstplanliste.size(); i++) {
 			if(dienstplanliste.get(i).getFahrplanID()==fahrplan.getId()){
-				anzahlDutyGesamt+=dienstplanliste.get(i).getDuty().size();
+				for (int j = 0; j < dienstplanliste.get(i).getDutyelement().size(); j++) {
+					if(dienstplanliste.get(i).getDutyelement().get(j).getElementType()==1){
+						anzahlDutyGesamt++;
+					}
+					
+				}
 			}
 		}
 		//Alle Dienstpl������ne
@@ -128,7 +134,11 @@ public class Kennzahlenberechnung {
 		//Anzahl der Dienste von allen Dienstpl������nen
 		for (int i = 0; i < dienstplanliste.size(); i++) {
 			if(dienstplanliste.get(i).getFahrplanID()==fahrplan.getId()){
-				anzahlDutyGesamt+=dienstplanliste.get(i).getDuty().size();
+				for (int j = 0; j < dienstplanliste.get(i).getDutyelement().size(); j++) {
+					if(dienstplanliste.get(i).getDutyelement().get(j).getElementType()==1){
+						anzahlDutyGesamt++;
+					}
+				}
 			}
 		}
 		//Alle Dienstpl������ne
@@ -180,13 +190,15 @@ public class Kennzahlenberechnung {
 				ArrayList<String> serviceJourneyList = new ArrayList<String>();
 				for (int j2 = zaehler; j2 < dienstplanliste.get(i).getDutyelement().size(); j2++) {
 				String dutyID=dienstplanliste.get(i).getDuty().get(j).getId();
-					if(dienstplanliste.get(i).getDutyelement().get(j2).getDutyID().equals(dutyID)){	
+					if(dienstplanliste.get(i).getDutyelement().get(j2).getElementType()==1){
+						if(dienstplanliste.get(i).getDutyelement().get(j2).getDutyID().equals(dutyID)){	
 						serviceJourneyList.add(dienstplanliste.get(i).getDutyelement().get(j2).getServiceJourneyID());
-						zaehler++;
-					}else{
-						ListPlan.add(serviceJourneyList);
-						break;
+						}else{
+							ListPlan.add(serviceJourneyList);
+							break;
+						}
 					}
+					zaehler++;
 				}
 			}
 			ListPlaeneGesamt.add(ListPlan);
@@ -194,7 +206,7 @@ public class Kennzahlenberechnung {
 		return ListPlaeneGesamt;
 	}
 	
-public ArrayList<ArrayList<ArrayList<String>>> erstelleDutyelementListRegular(ArrayList<Dienstplan> dienstplanliste, Fahrplan fahrplan){
+	public ArrayList<ArrayList<ArrayList<String>>> erstelleDutyelementListRegular(ArrayList<Dienstplan> dienstplanliste, Fahrplan fahrplan){
 		
 		ArrayList<ArrayList<ArrayList<String>>> ListPlaeneGesamt = new ArrayList<ArrayList<ArrayList<String>>>();
 		int zaehler=0;
@@ -208,10 +220,13 @@ public ArrayList<ArrayList<ArrayList<String>>> erstelleDutyelementListRegular(Ar
 			for (int j = 0; j < dienstplanliste.get(i).getDuty().size(); j++) {
 				ArrayList<String> serviceJourneyList = new ArrayList<String>();
 				for (int j2 = zaehler; j2 < dutyelementlist.size(); j2++) {
-				String dutyID=dienstplanliste.get(i).getDuty().get(j).getId();
+					String dutyID=dienstplanliste.get(i).getDuty().get(j).getId();
 					if(dutyelementlist.get(j2).getDutyID().equals(dutyID)){	
 						serviceJourneyList.add(dutyelementlist.get(j2).getServiceJourneyID());
 						zaehler++;
+						if(zaehler==dutyelementlist.size()){
+							ListPlan.add(serviceJourneyList);
+						}
 					}else{
 						ListPlan.add(serviceJourneyList);
 						break;
@@ -223,12 +238,13 @@ public ArrayList<ArrayList<ArrayList<String>>> erstelleDutyelementListRegular(Ar
 		return ListPlaeneGesamt;
 	}
 
-	public ArrayList<ArrayList<ArrayList<ArrayList<Integer>>>> berechneDistanz(ArrayList<Dienstplan> dienstplanliste, Fahrplan fahrplan){
+	//
+	public int berechneDistanz(ArrayList<Dienstplan> dienstplanliste, Fahrplan fahrplan){
 		
 		ArrayList<ArrayList<ArrayList<String>>> regularList = erstelleDutyelementListRegular(dienstplanliste, fahrplan);
-		
 		ArrayList<ArrayList<ArrayList<ArrayList<Integer>>>> planListe= new ArrayList<ArrayList<ArrayList<ArrayList<Integer>>>>();
 		
+		//for each service journey will be set the previous and next service journey
 		//Plaene
 		for (int i = 0; i < regularList.size(); i++) {
 			ArrayList<ArrayList<ArrayList<Integer>>> plaene = new ArrayList<ArrayList<ArrayList<Integer>>>();
@@ -238,7 +254,6 @@ public ArrayList<ArrayList<ArrayList<String>>> erstelleDutyelementListRegular(Ar
 				//regular service journeys
 				for (int j2 = 0; j2 < regularList.get(i).get(j).size(); j2++) {
 					ArrayList<Integer> reihenfolge = new ArrayList<Integer>();
-
 					if(j2==0){
 						//Vorgaenger
 						reihenfolge.add(null);
@@ -247,13 +262,14 @@ public ArrayList<ArrayList<ArrayList<String>>> erstelleDutyelementListRegular(Ar
 						//nachfolger
 						reihenfolge.add(Integer.parseInt(regularList.get(i).get(j).get(j2+1)));
 						
-					}else if(j2==regularList.get(i).get(j).size()){
+					}else if(j2==regularList.get(i).get(j).size()-1){
 						//Vorgaenger
 						reihenfolge.add(Integer.parseInt(regularList.get(i).get(j).get(j2-1)));
 						//pointer
 						reihenfolge.add(Integer.parseInt(regularList.get(i).get(j).get(j2)));
 						//nachfolger
 						reihenfolge.add(null);
+						serviceJourneyReihenfolge.add(reihenfolge);
 						break;
 					}else{
 						//Vorgaenger
@@ -261,15 +277,80 @@ public ArrayList<ArrayList<ArrayList<String>>> erstelleDutyelementListRegular(Ar
 						//pointer
 						reihenfolge.add(Integer.parseInt(regularList.get(i).get(j).get(j2)));
 						//nachfolger
-						reihenfolge.add(Integer.parseInt(regularList.get(i).get(j).get(j2)));
+						reihenfolge.add(Integer.parseInt(regularList.get(i).get(j).get(j2+1)));
 					}
 					serviceJourneyReihenfolge.add(reihenfolge);
-				}
-				plaene.add(serviceJourneyReihenfolge);
 			}
+				plaene.add(serviceJourneyReihenfolge);
+		}
 			planListe.add(plaene);
 		}
-		return planListe;
 		
+		int regelmaessigeFahrt=0;
+		
+		ArrayList<Dutyelement> dutyelementRegular = regelmaessigeDutyelement(dienstplanliste.get(0), fahrplan);
+		ArrayList<ArrayList<Integer>> listDP1  = new ArrayList<ArrayList<Integer>>();
+		ArrayList<ArrayList<Integer>> listDP2  = new ArrayList<ArrayList<Integer>>();
+		
+		//two lists with regular service journeys of each dienstplan will be filled
+		for (int i = 0; i < planListe.size(); i++) {
+			for (int j = 0; j < planListe.get(i).size(); j++) {
+				for (int j2 = 0; j2 < planListe.get(i).get(j).size(); j2++) {
+					if(i==0){
+						listDP1.add(planListe.get(i).get(j).get(j2));
+					}else if(i==1){
+						listDP2.add(planListe.get(i).get(j).get(j2));
+					}
+				}
+			}
+		}
+		
+		int[] reihenfolgeDP1=new int[3];
+		int[] reihenfolgeDP2=new int[3];
+		
+		for (int i = 0; i < dutyelementRegular.size(); i++) {
+			
+			for (int j = 0; j < listDP1.size(); j++) {
+				if(listDP1.get(j).get(1)==Integer.parseInt(dutyelementRegular.get(i).getServiceJourneyID())){
+					//if the dutyelement before/after the pointer null the value will be set -1
+					if(listDP1.get(j).get(0)==null){
+						reihenfolgeDP1[0]=-1;
+					}else{
+					reihenfolgeDP1[0]=listDP1.get(j).get(0);
+					}
+					if(listDP1.get(j).get(2)==null){
+						reihenfolgeDP1[2]=-1;
+					}else{
+						reihenfolgeDP1[2]=listDP1.get(j).get(2);
+					}
+					reihenfolgeDP1[1]=listDP1.get(j).get(1);
+					break;
+				}
+			}
+			
+			for (int j = 0; j < listDP2.size(); j++) {
+				if(listDP2.get(j).get(1)==Integer.parseInt(dutyelementRegular.get(i).getServiceJourneyID())){
+					//if the dutyelement before/after the pointer null the value will be set -1
+					if(listDP2.get(j).get(0)==null){
+						reihenfolgeDP2[0]=-1;
+					}else{
+					reihenfolgeDP2[0]=listDP2.get(j).get(0);
+					}
+					if(listDP2.get(j).get(2)==null){
+						reihenfolgeDP2[2]=-1;
+					}else{
+						reihenfolgeDP2[2]=listDP2.get(j).get(2);
+					}
+					reihenfolgeDP2[1]=listDP2.get(j).get(1);
+					break;
+				}
+			}
+			
+			//if the previous and next service journey of a regular service journey similar to the regular service journey in the second diesntplan the counter of regular service journeys will be increased
+			if(reihenfolgeDP1[0]==reihenfolgeDP2[0]&&reihenfolgeDP1[1]==reihenfolgeDP2[1]&&reihenfolgeDP1[2]==reihenfolgeDP2[2]){
+				regelmaessigeFahrt++;
+			}
+		}
+		return regelmaessigeFahrt;
 	}
 }
