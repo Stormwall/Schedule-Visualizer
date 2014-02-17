@@ -154,8 +154,6 @@ public class MainApplication extends Application {
 			this.controller.fillDienstplanliste();
 			this.controller.fillFahrplanliste();
 
-			showMainScene();
-
 		} catch (IOException e) {
 			// Exception gets thrown if the fxml file could not be loaded
 			e.printStackTrace();
@@ -465,6 +463,18 @@ public class MainApplication extends Application {
 			String fehlermeldungC) {
 
 		Dialogs.showErrorDialog(primaryStage, fehlermeldungA, fehlermeldungB,
+				fehlermeldungC);
+	}
+	public void warnungsMeldung(String fehlermeldungA, String fehlermeldungB,
+			String fehlermeldungC) {
+
+		Dialogs.showWarningDialog(primaryStage, fehlermeldungA, fehlermeldungB,
+				fehlermeldungC);
+	}
+	public String inputMeldung(String fehlermeldungA, String fehlermeldungB,
+			String fehlermeldungC) {
+
+		return Dialogs.showInputDialog(primaryStage, fehlermeldungA, fehlermeldungB,
 				fehlermeldungC);
 	}
 

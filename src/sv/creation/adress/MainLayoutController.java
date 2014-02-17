@@ -444,6 +444,7 @@ public class MainLayoutController {
 	private boolean dienstIsCurrent = false;
 
 	private boolean hilfslinienAktiv = false;
+	private boolean fehlerAnzeigenAktiv = false;
 	private boolean addButtonPressed = true;
 
 	// Referenz zur MainApp
@@ -1164,6 +1165,32 @@ public class MainLayoutController {
 							hilfslinienAktiv = false;
 							refreshBothGraphics();
 
+						}
+					}
+				});
+		
+		this.fehlerAnzeigen.selectedProperty().addListener(
+				new ChangeListener<Boolean>() {
+					public void changed(ObservableValue<? extends Boolean> ov,
+							Boolean old_val, Boolean new_val) {
+						// Handhabung wenn die Checkbox angewaehlt wird
+						if (new_val == true) {
+							if (firstUppergrafikErstellt == true
+									|| firstLowergrafikErstellt == true) {
+								fehlerAnzeigenAktiv = true;
+								refreshBothGraphics();
+							} else {
+								String fehlerA = "Es wurde noch keine Grafik erzeugt";
+								String fehlerB = "Noch nicht";
+								String fehlerC = "Fehler";
+								mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+								fehlerAnzeigen.setSelected(false);
+							}
+							
+						}
+						if (new_val == false) {
+							fehlerAnzeigenAktiv = false;
+							refreshBothGraphics();
 						}
 					}
 				});
@@ -2402,7 +2429,7 @@ public class MainLayoutController {
 					this.umlaufIsCurrent = false;
 					this.dienstIsCurrent = true;
 				}
-				// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne und Enabling des Tabs
+				// Labelbeschriftungen fuer UmlaufplÃ¤ne und Enabling des Tabs
 
 				this.Plan6.setDisable(false);
 				this.DPlan6.setVisible(true);
@@ -2487,7 +2514,7 @@ public class MainLayoutController {
 					this.umlaufIsCurrent = false;
 					this.dienstIsCurrent = true;
 				}
-				// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne und Enabling des Tabs
+				// Labelbeschriftungen fuer Umlaufplaene und Enabling des Tabs
 
 				this.Plan7.setDisable(false);
 				this.DPlan7.setVisible(true);
@@ -4001,7 +4028,10 @@ public class MainLayoutController {
 							delayFound = true;
 
 							// Malt die Ueberschneidungen ein
-							drawUeberschneidungU(startPixelX, startPixelY, gc);
+							if (this.fehlerAnzeigenAktiv) {
+								drawUeberschneidungU(startPixelX, startPixelY, gc);
+							}
+							
 
 							// Ausgabe der Ueberschneidungsfehlermeldung
 
@@ -4202,7 +4232,9 @@ public class MainLayoutController {
 							delayFound = true;
 
 							// Malt die Ueberschneidungen ein
+							if (this.fehlerAnzeigenAktiv) {
 							drawUeberschneidungU(startPixelX, startPixelY, gc);
+							}
 
 							// Ausgabe der Ueberschneidungsfehlermeldung
 

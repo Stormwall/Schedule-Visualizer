@@ -5,7 +5,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import sv.creation.adress.database.DBMatching;
 import sv.creation.adress.database.DBSave;
 import sv.creation.adress.model.Blockelement;
 import sv.creation.adress.model.Umlaufplan;
@@ -139,7 +138,12 @@ public class EditU_PlanController {
 		
 		DBSave dbm = new DBSave();
 		
-//		dbm.saveUmlaufplan(umlaufplan, bezeichnung);;
+		try {
+			dbm.saveUmlaufplan(umlaufplan, this.mainApp.inputMeldung("Geben Sie bitte eine Bezeichnung für den Umlaufplan ein.", "Bitte eingeben", "Bezeichnung Umlaufplan"));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**

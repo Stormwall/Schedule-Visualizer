@@ -253,6 +253,87 @@ public class DatenbankLayoutController {
 		}
 	}
 	
+	/**
+	 * Renames U-Plan
+	 */
+
+	@FXML
+	private void renamesUplan() {
+		
+		if (this.umlauftable.getSelectionModel().getSelectedItem() != null) {
+			DBMatching dbm = new DBMatching();
+			String name = this.mainApp.inputMeldung("Geben Sie bitte eine Bezeichnung für den Umlaufplan ein.", "Bitte eingeben", "Bezeichnung Dienstplan");
+			if(name != null){
+				dbm.benenneUmlaufplanUm(this.umlauftable.getSelectionModel().getSelectedItem().getId(),name);
+			}else{
+				String fehlerA = "Es wurde noch kein Name angegeben";
+				String fehlerB = "Wie soll der Plan bennant werden ?";
+				String fehlerC = "Fehler";
+				this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+			}
+		}else{
+			String fehlerA = "Es wurde noch Element ausgewaehlt";
+			String fehlerB = "Was soll bearbeitet werden ?";
+			String fehlerC = "Fehler";
+			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+		}
+				
+	}
+	
+	/**
+	 * Renames D-Plan
+	 */
+
+	@FXML
+	private void renamesDplan() {
+		
+		if (this.diensttable.getSelectionModel().getSelectedItem() != null) {
+			DBMatching dbm = new DBMatching();
+			String name = this.mainApp.inputMeldung("Geben Sie bitte eine Bezeichnung für den Dienstplan ein.", "Bitte eingeben", "Bezeichnung Dienstplan");
+			if(name != null){
+				dbm.benenneDienstplanUm(this.diensttable.getSelectionModel().getSelectedItem().getId(),name);
+			}else{
+				String fehlerA = "Es wurde noch kein Name angegeben";
+				String fehlerB = "Wie soll der Plan bennant werden ?";
+				String fehlerC = "Fehler";
+				this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+			}
+		}else{
+			String fehlerA = "Es wurde noch Element ausgewaehlt";
+			String fehlerB = "Was soll bearbeitet werden ?";
+			String fehlerC = "Fehler";
+			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+		}
+		
+
+	}
+	
+	/**
+	 * Renames F-Plan
+	 */
+
+	@FXML
+	private void renamesFplan() {
+		
+		if (this.fahrtable.getSelectionModel().getSelectedItem() != null) {
+			DBMatching dbm = new DBMatching();
+			String name = this.mainApp.inputMeldung("Geben Sie bitte eine Bezeichnung für den Fahrplan ein.", "Bitte eingeben", "Bezeichnung Fahrplan");
+			if(name != null){
+				dbm.benenneFahrplanUm(this.fahrtable.getSelectionModel().getSelectedItem().getId(),name);
+			}else{
+				String fehlerA = "Es wurde noch kein Name angegeben";
+				String fehlerB = "Wie soll der Plan bennant werden ?";
+				String fehlerC = "Fehler";
+				this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+			}
+		}else{
+			String fehlerA = "Es wurde noch Element ausgewaehlt";
+			String fehlerB = "Was soll bearbeitet werden ?";
+			String fehlerC = "Fehler";
+			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+		}
+	}
+	
 	// Methoden zur Befuellung der Fahrplanliste
 	
 	public void fillFahrplanliste() {

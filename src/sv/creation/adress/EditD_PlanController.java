@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import sv.creation.adress.database.DBSave;
 import sv.creation.adress.model.Dienstplan;
 import sv.creation.adress.model.Dutyelement;
 import sv.creation.adress.util.Export;
@@ -113,7 +114,7 @@ public class EditD_PlanController {
 				}
 
 			}
-			// �bergabe der Daten an Tabelle und Canvas
+			// Uebergabe der Daten an Tabelle und Canvas
 			this.elementsTable.setItems(data);
 			drawCanvas(dutyAuswahl);
 		}
@@ -127,6 +128,14 @@ public class EditD_PlanController {
 
 		okClicked = true;
 		dialogStage.close();
+	}
+	
+	@FXML
+	private void handleSafeDplanInDatabase() {
+		
+		DBSave dbm = new DBSave();
+		
+//		dbm.saveDienstplan(this.dienstplan, this.mainApp.inputMeldung("Geben Sie bitte eine Bezeichnung für den Umlaufplan ein.", "Bitte eingeben", "Bezeichnung Umlaufplan"));
 	}
 
 	/**
