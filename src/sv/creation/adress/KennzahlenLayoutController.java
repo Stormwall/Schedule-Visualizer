@@ -18,6 +18,13 @@ public class KennzahlenLayoutController {
 	      
 	  }
 	
+	/**
+	 * Opens the Kostenview.
+	 */
+	@FXML
+	private void handleKosten() {
+		
+	}
 	// Methode zum Beenden des PopUp
 	
 	public void endStage(){

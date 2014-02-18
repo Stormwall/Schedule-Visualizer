@@ -2,11 +2,258 @@
 
 <?import java.lang.*?>
 <?import java.net.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="600.0" prefWidth="600.0" styleClass="background" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sv.creation.adress.KennzahlenLayoutController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" styleClass="background" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sv.creation.adress.KennzahlenLayoutController">
   <!-- TODO Add Nodes -->
+  <children>
+    <TabPane prefHeight="600.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <tabs>
+        <Tab text="Umlaufplan">
+          <content>
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <SplitPane dividerPositions="0.9329805996472663" focusTraversable="true" orientation="VERTICAL" prefHeight="569.0" prefWidth="600.0" styleClass="background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <items>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                      <children>
+                        <GridPane prefHeight="526.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <children>
+                            <ScrollPane content="$null" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                              <children>
+                                <HBox id="HBox" alignment="CENTER" layoutY="7.0" spacing="10.0" AnchorPane.rightAnchor="0.0">
+                                  <children>
+                                    <Button mnemonicParsing="false" styleClass="dark-blue" text="Hinzufuegen" />
+                                    <Button mnemonicParsing="false" styleClass="dark-blue" text="Entfernen" />
+                                  </children>
+                                </HBox>
+                                <Label layoutX="0.0" layoutY="11.0" styleClass="label-white" text="Auswahl :" />
+                                <Label layoutX="66.0" layoutY="11.0" prefWidth="385.0" styleClass="label-white" text="Text" />
+                              </children>
+                            </AnchorPane>
+                          </children>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="200.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-1.0" minWidth="10.0" prefWidth="356.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="8.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="-1.0" minHeight="10.0" prefHeight="439.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                        </GridPane>
+                      </children>
+                    </AnchorPane>
+                    <AnchorPane maxHeight="35.0" minHeight="35.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                      <children>
+                        <Button layoutY="6.0" mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Abbrechen" AnchorPane.rightAnchor="7.0" />
+                        <HBox id="HBox" alignment="CENTER" layoutY="7.0" spacing="10.0" AnchorPane.leftAnchor="14.0">
+                          <children>
+                            <Button mnemonicParsing="false" styleClass="dark-blue" text="Statistik" />
+                            <Button mnemonicParsing="false" styleClass="dark-blue" text="Kosten" />
+                            <Button mnemonicParsing="false" styleClass="dark-blue" text="Durchschnittliche Wiederholrate" />
+                            <Button mnemonicParsing="false" styleClass="dark-blue" text="Distanzmaß" />
+                          </children>
+                        </HBox>
+                      </children>
+                    </AnchorPane>
+                  </items>
+                </SplitPane>
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
+        <Tab text="Dienstplan">
+          <content>
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <SplitPane dividerPositions="0.9329805996472663" focusTraversable="true" orientation="VERTICAL" prefHeight="569.0" prefWidth="600.0" styleClass="background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <items>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                      <children>
+                        <GridPane prefHeight="526.0" prefWidth="798.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <children>
+                            <ScrollPane content="$null" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                              <children>
+                                <HBox id="HBox" alignment="CENTER" layoutY="7.0" spacing="10.0" AnchorPane.rightAnchor="0.0">
+                                  <children>
+                                    <Button mnemonicParsing="false" styleClass="dark-blue" text="Hinzufuegen" />
+                                    <Button mnemonicParsing="false" styleClass="dark-blue" text="Entfernen" />
+                                  </children>
+                                </HBox>
+                                <Label layoutX="0.0" layoutY="11.0" styleClass="label-white" text="Auswahl :" />
+                                <Label layoutX="66.0" layoutY="11.0" prefWidth="385.0" styleClass="label-white" text="Text" />
+                              </children>
+                            </AnchorPane>
+                          </children>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="200.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-1.0" minWidth="10.0" prefWidth="356.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="8.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="-1.0" minHeight="10.0" prefHeight="439.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                        </GridPane>
+                      </children>
+                    </AnchorPane>
+                    <AnchorPane maxHeight="35.0" minHeight="35.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                      <children>
+                        <AnchorPane maxHeight="35.0" minHeight="35.0" minWidth="0.0" prefHeight="35.0" prefWidth="798.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <children>
+                            <Button layoutY="6.0" mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Abbrechen" AnchorPane.rightAnchor="7.0" />
+                            <HBox id="HBox" alignment="CENTER" layoutY="7.0" spacing="10.0" AnchorPane.leftAnchor="14.0">
+                              <children>
+                                <Button mnemonicParsing="false" styleClass="dark-blue" text="Statistik" />
+                                <Button mnemonicParsing="false" styleClass="dark-blue" text="Kosten" />
+                                <Button mnemonicParsing="false" styleClass="dark-blue" text="Durchschnittliche Wiederholrate" />
+                                <Button mnemonicParsing="false" styleClass="dark-blue" text="Distanzmaß" />
+                              </children>
+                            </HBox>
+                          </children>
+                        </AnchorPane>
+                      </children>
+                    </AnchorPane>
+                  </items>
+                </SplitPane>
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
+        <Tab text="Fahrplan">
+          <content>
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <SplitPane dividerPositions="0.9329805996472663" focusTraversable="true" orientation="VERTICAL" prefHeight="569.0" prefWidth="600.0" styleClass="background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <items>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                      <children>
+                        <GridPane prefHeight="526.0" prefWidth="798.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <children>
+                            <ScrollPane content="$null" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                              <children>
+                                <HBox id="HBox" alignment="CENTER" layoutY="7.0" spacing="10.0" AnchorPane.rightAnchor="0.0">
+                                  <children>
+                                    <Button mnemonicParsing="false" styleClass="dark-blue" text="Hinzufuegen" />
+                                    <Button mnemonicParsing="false" styleClass="dark-blue" text="Entfernen" />
+                                  </children>
+                                </HBox>
+                                <Label layoutX="0.0" layoutY="11.0" styleClass="label-white" text="Auswahl :" />
+                                <Label layoutX="66.0" layoutY="11.0" prefWidth="385.0" styleClass="label-white" text="Text" />
+                              </children>
+                            </AnchorPane>
+                          </children>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="200.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-1.0" minWidth="10.0" prefWidth="356.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="8.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="-1.0" minHeight="10.0" prefHeight="439.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                        </GridPane>
+                      </children>
+                    </AnchorPane>
+                    <AnchorPane maxHeight="35.0" minHeight="35.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                      <children>
+                        <AnchorPane maxHeight="35.0" minHeight="35.0" minWidth="0.0" prefHeight="35.0" prefWidth="798.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <children>
+                            <Button layoutY="6.0" mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Abbrechen" AnchorPane.rightAnchor="7.0" />
+                            <HBox id="HBox" alignment="CENTER" layoutY="7.0" spacing="10.0" AnchorPane.leftAnchor="14.0">
+                              <children>
+                                <Button mnemonicParsing="false" styleClass="dark-blue" text="Statistik" />
+                                <Button mnemonicParsing="false" styleClass="dark-blue" text="Kosten" />
+                                <Button mnemonicParsing="false" styleClass="dark-blue" text="Durchschnittliche Wiederholrate" />
+                                <Button mnemonicParsing="false" styleClass="dark-blue" text="Distanzmaß" />
+                              </children>
+                            </HBox>
+                          </children>
+                        </AnchorPane>
+                      </children>
+                    </AnchorPane>
+                  </items>
+                </SplitPane>
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
+        <Tab text="Szenarien">
+          <content>
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <SplitPane dividerPositions="0.9329805996472663" focusTraversable="true" orientation="VERTICAL" prefHeight="569.0" prefWidth="600.0" styleClass="background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <items>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                      <children>
+                        <GridPane prefHeight="526.0" prefWidth="798.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <children>
+                            <ScrollPane content="$null" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                              <children>
+                                <HBox id="HBox" alignment="CENTER" layoutY="7.0" spacing="10.0" AnchorPane.rightAnchor="0.0">
+                                  <children>
+                                    <Button mnemonicParsing="false" styleClass="dark-blue" text="Hinzufuegen" />
+                                    <Button mnemonicParsing="false" styleClass="dark-blue" text="Entfernen" />
+                                  </children>
+                                </HBox>
+                                <Label layoutX="0.0" layoutY="11.0" styleClass="label-white" text="Auswahl :" />
+                                <Label layoutX="66.0" layoutY="11.0" prefWidth="385.0" styleClass="label-white" text="Text" />
+                              </children>
+                            </AnchorPane>
+                          </children>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="200.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-1.0" minWidth="10.0" prefWidth="356.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="8.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="-1.0" minHeight="10.0" prefHeight="439.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                        </GridPane>
+                      </children>
+                    </AnchorPane>
+                    <AnchorPane maxHeight="35.0" minHeight="35.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                      <children>
+                        <AnchorPane maxHeight="35.0" minHeight="35.0" minWidth="0.0" prefHeight="35.0" prefWidth="798.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <children>
+                            <Button layoutY="6.0" mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Abbrechen" AnchorPane.rightAnchor="7.0" />
+                            <HBox id="HBox" alignment="CENTER" layoutY="7.0" spacing="10.0" AnchorPane.leftAnchor="14.0">
+                              <children>
+                                <Button mnemonicParsing="false" styleClass="dark-blue" text="Statistik" />
+                                <Button mnemonicParsing="false" styleClass="dark-blue" text="Kosten" />
+                                <Button mnemonicParsing="false" styleClass="dark-blue" text="Durchschnittliche Wiederholrate" />
+                                <Button mnemonicParsing="false" styleClass="dark-blue" text="Distanzmaß" />
+                              </children>
+                            </HBox>
+                          </children>
+                        </AnchorPane>
+                      </children>
+                    </AnchorPane>
+                  </items>
+                </SplitPane>
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
+      </tabs>
+    </TabPane>
+  </children>
   <stylesheets>
     <URL value="@MainLayout.css" />
   </stylesheets>

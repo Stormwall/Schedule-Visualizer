@@ -19,7 +19,7 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Bearbeiten">
           <items>
-            <MenuItem mnemonicParsing="false" text="Kennzahlen berrechnen" />
+            <MenuItem mnemonicParsing="false" onAction="#handleKennzahlen" text="Kennzahlen" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Hilfe">
