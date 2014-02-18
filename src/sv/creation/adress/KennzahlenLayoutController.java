@@ -3,9 +3,8 @@ package sv.creation.adress;
 import javafx.fxml.FXML;
 import javafx.stage.Stage;
 
+public class KennzahlenLayoutController {
 
-public class HandbuchLayoutController {
-	
 	private Stage dialogStage;
 	
 
@@ -38,3 +37,4 @@ public class HandbuchLayoutController {
 	
 	
 }
+

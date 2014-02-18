@@ -12,13 +12,6 @@
       <menus>
         <Menu mnemonicParsing="false" text="Menü">
           <items>
-            <MenuItem mnemonicParsing="false" onAction="#handleOpen" text="Öffnen" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Speichern" />
-            <MenuItem mnemonicParsing="false" text="Speichern unter" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Drucken" />
-            <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" onAction="#handleDatenbank" text="Datenbankeinsicht" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Schließen" />
@@ -26,23 +19,12 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Bearbeiten">
           <items>
-            <MenuItem mnemonicParsing="false" text="Vergleichen" />
-            <Menu mnemonicParsing="false" text="Bewerten">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Statistik" />
-                <MenuItem mnemonicParsing="false" text="Kennzahlen" />
-                <MenuItem mnemonicParsing="false" onAction="#handleKosten" text="Kostenkalkulation" />
-              </items>
-            </Menu>
-            <MenuItem mnemonicParsing="false" text="Restriktion verändern" />
-            <MenuItem mnemonicParsing="false" text="Kennzahlen hinzufügen" />
+            <MenuItem mnemonicParsing="false" text="Kennzahlen berrechnen" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Hilfe">
           <items>
-            <MenuItem mnemonicParsing="false" onAction="#handleHandbuch" text="Handbuch" />
             <MenuItem mnemonicParsing="false" text="Kontakt" />
-            <MenuItem mnemonicParsing="false" text="Impressum" />
           </items>
         </Menu>
       </menus>

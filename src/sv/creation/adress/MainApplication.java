@@ -92,17 +92,17 @@ public class MainApplication extends Application {
 
 	// Initiate Handbuch fxml
 
-	public void showHandbuch() {
+	public void showKennzahlen() {
 
 		try {
 
 			// Load the fxml file and create a new stage for the popup
 			FXMLLoader loader = new FXMLLoader(
 					MainApplication.class
-							.getResource("view/HandbuchLayout.fxml"));
+							.getResource("view/KennzahlenLayout.fxml"));
 			AnchorPane page = (AnchorPane) loader.load();
 			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Handbuch");
+			dialogStage.setTitle("Kennzahlen");
 			dialogStage.getIcons().add(
 					new Image("file:resources/images/IconFinal.png"));
 			dialogStage.initModality(Modality.WINDOW_MODAL);
@@ -111,7 +111,7 @@ public class MainApplication extends Application {
 			dialogStage.setScene(scene);
 
 			// Set the controller
-			HandbuchLayoutController controller = loader.getController();
+			KennzahlenLayoutController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 
 			dialogStage.show();
