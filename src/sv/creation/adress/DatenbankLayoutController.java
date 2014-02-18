@@ -250,7 +250,7 @@ public class DatenbankLayoutController {
 			String fehlerB = "Was soll geloescht werden ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
-		}
+		}	
 	}
 	
 	/**
@@ -277,7 +277,7 @@ public class DatenbankLayoutController {
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
 		}
-				
+	refreshUmlaufplan();			
 	}
 	
 	/**
@@ -304,8 +304,7 @@ public class DatenbankLayoutController {
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
 		}
-		
-
+		refreshDienstplan();
 	}
 	
 	/**
@@ -332,6 +331,7 @@ public class DatenbankLayoutController {
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
 		}
+		refreshFahrplan();
 	}
 	
 	// Methoden zur Befuellung der Fahrplanliste
@@ -350,10 +350,11 @@ public class DatenbankLayoutController {
 
 			this.fahrplanliste.clear();
 			this.fahrplanliste = dbm.createFahrplanObject();
-			for (int i = 0; i < this.fahrplanliste.size(); i++) {				
-				this.fahrplanliste.get(i).setBezeichnung(" Fahrplan " + (i + 1));
+			for (int i = 0; i < this.fahrplanliste.size(); i++) {	
+				if (this.fahrplanliste.get(i).getBezeichnung() == null) {
+					this.fahrplanliste.get(i).setBezeichnung(" Fahrplan " + (i + 1));
+				}	
 			}
-
 		}
 	}
 	
@@ -361,7 +362,7 @@ public class DatenbankLayoutController {
 
 	public void fillDienstplanliste() {
 
-		// Dienstpl��ne -- Choicebox wird gef��llt
+		// Dienstplaene -- Choicebox wird geuellt
 
 		DBMatching dbm = new DBMatching();
 
@@ -374,9 +375,10 @@ public class DatenbankLayoutController {
 			this.dienstplanliste.clear();
 			this.dienstplanliste = dbm.createDienstplanObject();
 			for (int i = 0; i < this.dienstplanliste.size(); i++) {
-				this.dienstplanliste.get(i).setName(" Dienstplan " + (i + 1));
+				if (this.dienstplanliste.get(i).getName() == null) {
+					this.dienstplanliste.get(i).setName(" Dienstplan " + (i + 1));
+				}	
 			}
-
 		}
 	}
 
@@ -384,7 +386,7 @@ public class DatenbankLayoutController {
 
 	public void fillUmlaufplanliste() {
 
-		// Umlaufpl��ne -- Choicebox wird gef��llt
+		// Umlaufplaene -- Choicebox wird gef��llt
 
 		DBMatching dbm = new DBMatching();
 
@@ -396,7 +398,9 @@ public class DatenbankLayoutController {
 			this.umlaufplanliste.clear();
 			this.umlaufplanliste = dbm.createUmlaufplanObject();
 			for (int i = 0; i < this.umlaufplanliste.size(); i++) {
-				this.umlaufplanliste.get(i).setName(" Umlaufplan " + (i + 1));
+				if (this.umlaufplanliste.get(i).getName() == null) {
+					this.umlaufplanliste.get(i).setName(" Umlaufplan " + (i + 1));
+				}				
 			}
 		}
 

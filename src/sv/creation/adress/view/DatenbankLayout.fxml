@@ -56,8 +56,7 @@
                                     </AnchorPane>
                                     <AnchorPane maxHeight="35.0" minHeight="35.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="background">
                                       <children>
-                                        <Button layoutY="5.0" mnemonicParsing="false" styleClass="dark-blue" text="Umbennen" AnchorPane.rightAnchor="14.0" />
-                                        <TextField layoutY="5.0" prefWidth="200.0" AnchorPane.rightAnchor="108.0" />
+                                        <Button layoutY="5.0" mnemonicParsing="false" onAction="#renamesUplan" styleClass="dark-blue" text="Umbennen" AnchorPane.rightAnchor="14.0" />
                                         <Button layoutY="5.0" mnemonicParsing="false" onAction="#deleteUplan" styleClass="dark-blue" text="Löschen" AnchorPane.leftAnchor="14.0" />
                                       </children>
                                     </AnchorPane>
@@ -87,8 +86,7 @@
                                     </AnchorPane>
                                     <AnchorPane maxHeight="35.0" minHeight="35.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="background">
                                       <children>
-                                        <Button layoutY="5.0" mnemonicParsing="false" styleClass="dark-blue" text="Umbennen" AnchorPane.rightAnchor="14.0" />
-                                        <TextField layoutY="5.0" prefWidth="200.0" AnchorPane.rightAnchor="108.0" />
+                                        <Button layoutY="5.0" mnemonicParsing="false" onAction="#renamesDplan" styleClass="dark-blue" text="Umbennen" AnchorPane.rightAnchor="14.0" />
                                         <Button layoutY="5.0" mnemonicParsing="false" onAction="#deleteDplan" styleClass="dark-blue" text="Löschen" AnchorPane.leftAnchor="14.0" />
                                       </children>
                                     </AnchorPane>
@@ -117,8 +115,7 @@
                                     </AnchorPane>
                                     <AnchorPane maxHeight="35.0" minHeight="35.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="background">
                                       <children>
-                                        <Button layoutY="5.0" mnemonicParsing="false" styleClass="dark-blue" text="Umbennen" AnchorPane.rightAnchor="14.0" />
-                                        <TextField layoutY="5.0" prefWidth="200.0" AnchorPane.rightAnchor="108.0" />
+                                        <Button layoutY="5.0" mnemonicParsing="false" onAction="#renamesFplan" styleClass="dark-blue" text="Umbennen" AnchorPane.rightAnchor="14.0" />
                                         <Button layoutY="5.0" mnemonicParsing="false" onAction="#deleteFplan" styleClass="dark-blue" text="Löschen" AnchorPane.leftAnchor="14.0" />
                                       </children>
                                     </AnchorPane>

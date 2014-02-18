@@ -432,14 +432,6 @@ public class MainLayoutController {
 	private boolean dDetailsTableErstellt = false;
 
 	// weitere Pruefvariablen
-
-	private boolean secondGrafikErstellt = false;
-	private boolean thirdGrafikErstellt = false;
-	private boolean fourthGrafikErstellt = false;
-	private boolean fifthGrafikErstellt = false;
-	private boolean sixthGrafikErstellt = false;
-	private boolean seventhGrafikErstellt = false;
-
 	private boolean umlaufIsCurrent = false;
 	private boolean dienstIsCurrent = false;
 
@@ -1151,7 +1143,7 @@ public class MainLayoutController {
 							if (firstUppergrafikErstellt == true
 									|| firstLowergrafikErstellt == true) {
 								hilfslinienAktiv = true;
-								refreshBothGraphics();								
+								refreshBothGraphics();
 							} else {
 								String fehlerA = "Es wurde noch keine Grafik erzeugt";
 								String fehlerB = "Noch nicht";
@@ -1168,7 +1160,7 @@ public class MainLayoutController {
 						}
 					}
 				});
-		
+
 		this.fehlerAnzeigen.selectedProperty().addListener(
 				new ChangeListener<Boolean>() {
 					public void changed(ObservableValue<? extends Boolean> ov,
@@ -1186,7 +1178,7 @@ public class MainLayoutController {
 								mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
 								fehlerAnzeigen.setSelected(false);
 							}
-							
+
 						}
 						if (new_val == false) {
 							fehlerAnzeigenAktiv = false;
@@ -1440,7 +1432,6 @@ public class MainLayoutController {
 				}
 
 				this.secondUppergrafikErstellt = true;
-				this.secondGrafikErstellt = true;
 
 				// Hintergrunderstellung
 				createUpperBackgroundGraphicSecondPane();
@@ -1529,7 +1520,6 @@ public class MainLayoutController {
 				}
 
 				this.thirdUppergrafikErstellt = true;
-				this.thirdGrafikErstellt = true;
 
 				// Hintergrunderstellung
 				createUpperBackgroundGraphicThirdPane();
@@ -1616,8 +1606,6 @@ public class MainLayoutController {
 				}
 
 				this.fourthUppergrafikErstellt = true;
-				this.fourthGrafikErstellt = true;
-
 				// Hintergrunderstellung
 				createUpperBackgroundGraphicFourthPane();
 				createUpperXScalePane(this.xUp4, this.upperGraphicPane4);
@@ -1703,7 +1691,6 @@ public class MainLayoutController {
 				}
 
 				this.fifthUppergrafikErstellt = true;
-				this.fifthGrafikErstellt = true;
 
 				// Hintergrunderstellung
 				createUpperBackgroundGraphicFifthPane();
@@ -1790,7 +1777,6 @@ public class MainLayoutController {
 				}
 
 				this.sixthUppergrafikErstellt = true;
-				this.sixthGrafikErstellt = true;
 
 				// Hintergrunderstellung
 				createUpperBackgroundGraphicSixthPane();
@@ -1876,7 +1862,6 @@ public class MainLayoutController {
 				}
 
 				this.seventhUppergrafikErstellt = true;
-				this.seventhGrafikErstellt = true;
 
 				// Hintergrunderstellung
 				createUpperBackgroundGraphicSeventhPane();
@@ -2121,7 +2106,6 @@ public class MainLayoutController {
 				}
 
 				this.secondLowergrafikErstellt = true;
-				this.secondGrafikErstellt = true;
 
 				// Hintergrunderstellung
 				createLowerBackgroundGraphicSecondPane();
@@ -2204,7 +2188,6 @@ public class MainLayoutController {
 				}
 
 				this.thirdLowergrafikErstellt = true;
-				this.thirdGrafikErstellt = true;
 
 				// Hintergrunderstellung
 				createLowerBackgroundGraphicThirdPane();
@@ -2287,7 +2270,6 @@ public class MainLayoutController {
 				}
 
 				this.fourthLowergrafikErstellt = true;
-				this.fourthGrafikErstellt = true;
 
 				// Hintergrunderstellung
 				createLowerBackgroundGraphicFourthPane();
@@ -2373,7 +2355,6 @@ public class MainLayoutController {
 				}
 
 				this.fifthLowergrafikErstellt = true;
-				this.fifthGrafikErstellt = true;
 
 				// Hintergrunderstellung
 				createLowerBackgroundGraphicFifthPane();
@@ -2459,7 +2440,6 @@ public class MainLayoutController {
 				}
 
 				this.sixthLowergrafikErstellt = true;
-				this.sixthGrafikErstellt = true;
 
 				// Hintergrunderstellung
 				createLowerBackgroundGraphicSixthPane();
@@ -2544,7 +2524,6 @@ public class MainLayoutController {
 				}
 
 				this.seventhLowergrafikErstellt = true;
-				this.seventhGrafikErstellt = true;
 
 				// Hintergrunderstellung
 				createLowerBackgroundGraphicSeventhPane();
@@ -3836,7 +3815,7 @@ public class MainLayoutController {
 			differenz = (differenz / 1000) / 60;
 			dienstplan.getDutyelement().get(i).setDriveTime(differenz + " min");
 
-			// HinzufÃ¼gen der Daten
+			// Hinzufuegen der Daten
 
 			data.add(dienstplan.getDutyelement().get(i));
 		}
@@ -4025,16 +4004,19 @@ public class MainLayoutController {
 
 							// Malt die Ueberschneidungen ein
 							if (this.fehlerAnzeigenAktiv) {
-								drawUeberschneidungU(startPixelX, startPixelY, gc);
+								drawUeberschneidungU(startPixelX, startPixelY,
+										gc);
 							}
-							
 
 							// Ausgabe der Ueberschneidungsfehlermeldung
 
 							if (firstCheck && delayFound) {
-								result = "BlockEle. " + umlaufplan.getFahrtZuUmlauf()
-										.get(i).getId() + " aus dem Block "+ umlaufplan.getFahrtZuUmlauf()
-										.get(i).getBlockID()+ ", " ;
+								result = "BlockEle. "
+										+ umlaufplan.getFahrtZuUmlauf().get(i)
+												.getId()
+										+ " aus dem Block "
+										+ umlaufplan.getFahrtZuUmlauf().get(i)
+												.getBlockID() + ", ";
 								resultList.add(result);
 
 							}
@@ -4047,6 +4029,7 @@ public class MainLayoutController {
 		// Ausgabe der Ueberschneidungsfehlermeldung
 
 		if (firstCheck && delayFound) {
+			result ="";
 			for (String s : resultList) {
 				result += s;
 			}
@@ -4059,7 +4042,7 @@ public class MainLayoutController {
 
 			firstCheck = false;
 		}
-		
+
 		if (this.hilfslinienAktiv) {
 			createHelpLines(canvas, gc);
 		}
@@ -4233,29 +4216,34 @@ public class MainLayoutController {
 
 							// Malt die Ueberschneidungen ein
 							if (this.fehlerAnzeigenAktiv) {
-							drawUeberschneidungU(startPixelX, startPixelY, gc);
+								drawUeberschneidungU(startPixelX, startPixelY,
+										gc);
 							}
 
 							// Ausgabe der Ueberschneidungsfehlermeldung
 
 							if (firstCheck && delayFound) {
-								result = "DutyEle. " + dienstplan.getDutyelement()
-										.get(i).getId() + " aus der Duty "+ dienstplan.getDutyelement()
-										.get(i).getDutyHilfsID()+ ", " ;								
-							resultList.add(result);
+								result = "DutyEle. "
+										+ dienstplan.getDutyelement().get(i)
+												.getId()
+										+ " aus der Duty "
+										+ dienstplan.getDutyelement().get(i)
+												.getDutyHilfsID() + ", ";
+								resultList.add(result);
 							}
 						}
 					}
 				}
 			}
 		}
-		
+
 		// Ausgabe der Ueberschneidungsfehlermeldung
 
-			if (firstCheck && delayFound) {
-				for (String s : resultList) {
-					result += s;
-				}			
+		if (firstCheck && delayFound) {
+			result ="";
+			for (String s : resultList) {
+				result += s;
+			}
 			String fehlerA = "Folgende Elemente koennen Probleme im Plan erzeugen : "
 					+ result;
 			String fehlerB = "Elemente kontrollieren";
@@ -4263,12 +4251,12 @@ public class MainLayoutController {
 					+ dienstplan.getName();
 			mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
 
-			firstCheck = false;	
+			firstCheck = false;
 		}
-			
-			if (this.hilfslinienAktiv) {
-				createHelpLines(canvas, gc);
-			}
+
+		if (this.hilfslinienAktiv) {
+			createHelpLines(canvas, gc);
+		}
 	}
 
 	/**
@@ -4351,36 +4339,31 @@ public class MainLayoutController {
 
 		// Methoden zu Erstellung der dynamischen Hilfslinien
 
-			double abstandNetz = (canvas.getWidth() - 30)
-					/ (this.endzeitVar - this.startzeitVar);
+		double abstandNetz = (canvas.getWidth() - 30)
+				/ (this.endzeitVar - this.startzeitVar);
 
-			gc.setLineWidth(1);
-			gc.setStroke(Color.LIGHTGREY);
+		gc.setLineWidth(1);
+		gc.setStroke(Color.LIGHTGREY);
 
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+		for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
 
-				double pixel = ((i) * abstandNetz) + abstandNetz / 4;
-				gc.strokeLine(pixel, 0, pixel,
-						canvas.getHeight() - 3);
+			double pixel = ((i) * abstandNetz) + abstandNetz / 4;
+			gc.strokeLine(pixel, 0, pixel, canvas.getHeight() - 3);
 
-			}
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+		}
+		for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
 
-				double pixel = ((i) * abstandNetz) + abstandNetz / 2;
-				gc.strokeLine(pixel, 0, pixel,
-						canvas.getHeight() - 3);
+			double pixel = ((i) * abstandNetz) + abstandNetz / 2;
+			gc.strokeLine(pixel, 0, pixel, canvas.getHeight() - 3);
 
-			}
-			for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
+		}
+		for (int i = 0; i < (this.endzeitVar - this.startzeitVar); i++) {
 
-				double pixel = ((i) * abstandNetz) + abstandNetz / 4 * 3;
-				gc.strokeLine(pixel, 0, pixel,
-						canvas.getHeight() - 3);
+			double pixel = ((i) * abstandNetz) + abstandNetz / 4 * 3;
+			gc.strokeLine(pixel, 0, pixel, canvas.getHeight() - 3);
 
 		}
 	}
-
-	
 
 	/**
 	 * Deletes the latest U-Plan
@@ -4920,8 +4903,10 @@ public class MainLayoutController {
 			this.fahrplanliste.clear();
 			this.fahrplanliste = dbm.createFahrplanObject();
 			for (int i = 0; i < this.fahrplanliste.size(); i++) {
-				this.fahrplanliste.get(i)
-						.setBezeichnung(" Fahrplan " + (i + 1));
+				if (this.fahrplanliste.get(i).getBezeichnung() == null) {
+					this.fahrplanliste.get(i).setBezeichnung(
+							" Fahrplan " + (i + 1));
+				}
 			}
 
 			this.FPlan.setItems(FXCollections.observableArrayList(fahrplanliste
@@ -4955,7 +4940,10 @@ public class MainLayoutController {
 
 			this.dienstplanliste = dbm.createDienstplanObject();
 			for (int i = 0; i < this.dienstplanliste.size(); i++) {
-				this.dienstplanliste.get(i).setName(" Dienstplan " + (i + 1));
+				if (this.dienstplanliste.get(i).getName() == null) {
+					this.dienstplanliste.get(i).setName(
+							" Dienstplan " + (i + 1));
+				}
 			}
 
 			if (this.firstLowergrafikErstellt == false) {
@@ -4985,7 +4973,10 @@ public class MainLayoutController {
 			this.UPlan.setDisable(false);
 			this.umlaufplanliste = dbm.createUmlaufplanObject();
 			for (int i = 0; i < this.umlaufplanliste.size(); i++) {
-				this.umlaufplanliste.get(i).setName(" Umlaufplan " + (i + 1));
+				if (this.umlaufplanliste.get(i).getName() == null) {
+					this.umlaufplanliste.get(i).setName(
+							" Umlaufplan " + (i + 1));
+				}
 			}
 
 			if (this.firstUppergrafikErstellt == false) {
