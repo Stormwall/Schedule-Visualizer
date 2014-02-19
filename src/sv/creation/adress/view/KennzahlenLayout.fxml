@@ -21,19 +21,23 @@
                       <children>
                         <GridPane prefHeight="526.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <children>
-                            <ScrollPane content="$null" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                             <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                               <children>
                                 <HBox id="HBox" alignment="CENTER" layoutY="7.0" spacing="10.0" AnchorPane.rightAnchor="0.0">
                                   <children>
-                                    <Button mnemonicParsing="false" styleClass="dark-blue" text="Hinzufuegen" />
+                                    <Button mnemonicParsing="false" onAction="#chooseUmlaufplan" styleClass="dark-blue" text="Hinzufuegen" />
                                     <Button mnemonicParsing="false" styleClass="dark-blue" text="Entfernen" />
                                   </children>
                                 </HBox>
                                 <Label layoutX="0.0" layoutY="11.0" styleClass="label-white" text="Auswahl :" />
-                                <Label layoutX="66.0" layoutY="11.0" prefWidth="385.0" styleClass="label-white" text="Text" />
+                                <Label id="auswahl" fx:id="auswahlUmlaufplan" layoutX="66.0" layoutY="11.0" prefWidth="385.0" styleClass="label-white" text="" />
                               </children>
                             </AnchorPane>
+                            <ScrollPane fx:id="umlaufplanPane" fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" styleClass="background" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                              <content>
+                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="465.0" prefWidth="756.0" />
+                              </content>
+                            </ScrollPane>
                           </children>
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="200.0" />
@@ -54,7 +58,7 @@
                         <Button layoutY="6.0" mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Abbrechen" AnchorPane.rightAnchor="7.0" />
                         <HBox id="HBox" alignment="CENTER" layoutY="7.0" spacing="10.0" AnchorPane.leftAnchor="14.0">
                           <children>
-                            <Button mnemonicParsing="false" onAction="#handleStatistikenUplanSingle" styleClass="dark-blue" text="Statistik" />
+                            <Button mnemonicParsing="false" onAction="#handleStatistikenUplan" styleClass="dark-blue" text="Statistik" />
                             <Button mnemonicParsing="false" styleClass="dark-blue" text="Kosten" />
                             <Button mnemonicParsing="false" styleClass="dark-blue" text="Durchschnittliche Wiederholrate" />
                             <Button mnemonicParsing="false" styleClass="dark-blue" text="Distanzmaß" />
@@ -78,7 +82,7 @@
                       <children>
                         <GridPane prefHeight="526.0" prefWidth="798.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <children>
-                            <ScrollPane content="$null" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                            <ScrollPane fx:id="dienstplanPane" content="$null" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                             <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                               <children>
                                 <HBox id="HBox" alignment="CENTER" layoutY="7.0" spacing="10.0" AnchorPane.rightAnchor="0.0">
@@ -139,7 +143,7 @@
                       <children>
                         <GridPane prefHeight="526.0" prefWidth="798.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <children>
-                            <ScrollPane content="$null" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                            <ScrollPane fx:id="fahrplanPane" content="$null" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                             <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                               <children>
                                 <HBox id="HBox" alignment="CENTER" layoutY="7.0" spacing="10.0" AnchorPane.rightAnchor="0.0">

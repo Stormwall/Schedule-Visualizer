@@ -8,6 +8,7 @@ import java.util.Date;
 import sv.creation.adress.model.Umlaufplan;
 
 public class BlockStatistics {
+	int blockID;
 	double blocktotalNumberOfTrips = 0;
 	double blocktotalRunTime = 0;
 	double blocknumberOfServiceTrips = 0;
@@ -51,8 +52,8 @@ public class BlockStatistics {
 		for (int block = 0; block < up.getUmlauf().size(); block++){
 			
 
-			int blockID = up.getUmlauf().get(block).getId();
-			
+			blockID = up.getUmlauf().get(block).getId();
+						
 			BlockStatistics blockstat = new BlockStatistics();
 			for (int blockelement = 0; blockelement < up.getFahrtZuUmlauf().size(); blockelement++){
 				
@@ -210,5 +211,118 @@ public class BlockStatistics {
 		differenz = (differenz / 1000);
 
 		return differenz;
+	}
+	
+
+	public int getBlockID() {
+		return blockID;
+	}
+
+	public double getBlocktotalNumberOfTrips() {
+		return blocktotalNumberOfTrips;
+	}
+
+	public double getBlocktotalRunTime() {
+		return blocktotalRunTime;
+	}
+
+	public double getBlocknumberOfServiceTrips() {
+		return blocknumberOfServiceTrips;
+	}
+
+	public double getBlockaverageLengthOfServiceTrips() {
+		return blockaverageLengthOfServiceTrips;
+	}
+
+	public double getBlocknumberOfDeadheads() {
+		return blocknumberOfDeadheads;
+	}
+
+	public double getBlockaverageLengthOfDeadheads() {
+		return blockaverageLengthOfDeadheads;
+	}
+
+	public double getBlocknumberOfWaitings() {
+		return blocknumberOfWaitings;
+	}
+
+	public double getBlockaverageLengthOfWaitings() {
+		return blockaverageLengthOfWaitings;
+	}
+
+	public double getBlocknumberOfPullOuts() {
+		return blocknumberOfPullOuts;
+	}
+
+	public double getBlockaverageLengthOfPullOuts() {
+		return blockaverageLengthOfPullOuts;
+	}
+
+	public double getBlocknumberOfPullIns() {
+		return blocknumberOfPullIns;
+	}
+
+	public double getBlockaverageLengthOfPullIns() {
+		return blockaverageLengthOfPullIns;
+	}
+
+	public double getBlocknumberOfPreparations() {
+		return blocknumberOfPreparations;
+	}
+
+	public double getBlockaverageLengthOfPreparations() {
+		return blockaverageLengthOfPreparations;
+	}
+
+	public double getBlocknumberOfWrapUps() {
+		return blocknumberOfWrapUps;
+	}
+
+	public double getBlockaverageLengthOfWrapUps() {
+		return blockaverageLengthOfWrapUps;
+	}
+
+	public double getBlocknumberOfLayovers() {
+		return blocknumberOfLayovers;
+	}
+
+	public double getBlockaverageLengthOfLayovers() {
+		return blockaverageLengthOfLayovers;
+	}
+
+	public double getBlockserviceTimetotalBlockTimeRatio() {
+		return blockserviceTimetotalBlockTimeRatio;
+	}
+
+	public double getBlockoveralldurationServicetrips() {
+		return blockoveralldurationServicetrips;
+	}
+
+	public double getBlockoveralldurationDeadheads() {
+		return blockoveralldurationDeadheads;
+	}
+
+	public double getBlockoveralldurationWaitings() {
+		return blockoveralldurationWaitings;
+	}
+
+	public double getBlockoveralldurationPullouts() {
+		return blockoveralldurationPullouts;
+	}
+
+	public double getBlockoveralldurationPullins() {
+		return blockoveralldurationPullins;
+	}
+
+	public double getBlockoveralldurationPreparations() {
+		return blockoveralldurationPreparations;
+	}
+
+	public double getBlockoveralldurationWrapUps() {
+		return blockoveralldurationWrapUps;
+	}
+
+	public double getBlockoveralldurationLayovers() {
+		return blockoveralldurationLayovers;
 	}
 }

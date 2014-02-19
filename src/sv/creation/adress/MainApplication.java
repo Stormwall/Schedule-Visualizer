@@ -1,6 +1,7 @@
 package sv.creation.adress;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import sv.creation.adress.model.Dienstplan;
 import sv.creation.adress.model.Fahrplan;
@@ -124,7 +125,7 @@ public class MainApplication extends Application {
 		}
 	}
 	
-	public void showStatistikUPlanSingle() {
+	public void showStatistikUPlanSingle(ArrayList<Umlaufplan> umlaufplanliste) {
 
 		try {
 
@@ -146,6 +147,7 @@ public class MainApplication extends Application {
 			// Set the controller
 			StatistikenUPlanSingleLayoutController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
+			controller.setUmlaufplanliste(umlaufplanliste);
 
 			dialogStage.show();
 
