@@ -27,6 +27,7 @@ import java.util.Iterator;
 import sv.creation.adress.util.StringSplitter;
 
 public class DBConnection {
+	
 
 	public static DBConnection instance = null;
 	private static Connection connection;

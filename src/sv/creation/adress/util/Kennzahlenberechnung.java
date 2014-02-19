@@ -19,6 +19,8 @@ public class Kennzahlenberechnung {
 		double avgrepeat;
 		boolean alleGleich=false;
 		
+		
+		
 		//Anzahl der Dienste von allen Dienstpl������nen
 		for (int i = 0; i < dienstplanliste.size(); i++) {
 			if(dienstplanliste.get(i).getFahrplanID()==fahrplan.getId()){
