@@ -434,13 +434,14 @@ public class DatenbankLayoutController {
 //		 Import im = new Import();
 //		 im.importFile(file);
 		
-		DBMatching dbm = new DBMatching();
-		dbm.benenneFahrplanUm(fahrplanliste.get(0).getId(), "Test");
+//		DBMatching dbm = new DBMatching();
+//		dbm.benenneFahrplanUm(fahrplanliste.get(0).getId(), "Test");
 		
 //		DBSave dbs = new DBSave();
 //		dbs.saveUmlaufplan(umlaufplanliste.get(0), "Testversion");
 		
-//		Kennzahlenberechnung kzb = new Kennzahlenberechnung();
+		Kennzahlenberechnung kzb = new Kennzahlenberechnung();
+		kzb.pVergleich(fahrplanliste.get(0));
 ////		kzb.regelmaessigeDutyelement(dienstplanliste.get(0), fahrplanliste.get(0));
 //		kzb.erstelleDutyelementListRegular(dienstplanliste, fahrplanliste.get(0));
 //		System.out.println(kzb.berechneDurschnittlicheWiederholrateDienstplanRegular(dienstplanliste, fahrplanliste.get(0)));
@@ -448,50 +449,6 @@ public class DatenbankLayoutController {
 //		
 //		kzb.berechneDistanz(dienstplanliste, fahrplanliste.get(0));
 		
-		// testausgabe Dienstplanstatistik
-/*		ScheduleStatistics stat = new ScheduleStatistics();
-		ArrayList<ScheduleStatistics> sstats = new ArrayList<ScheduleStatistics>();
-		sstats = stat.calculateCrewScheduleStatistics(dienstplanliste);
-		for (int i = 0; i < 1; i++) {
-			System.out.println("Dienstplan global:");
-			System.out.println(sstats.get(i).getTotalNumberOfTrips());
-			System.out.println(sstats.get(i).getTotalRunTime());
-			;
-			System.out.println(sstats.get(i).getNumberOfServiceTrips());
-			System.out.println(sstats.get(i).getAverageLengthOfServiceTrips());
-			System.out.println(sstats.get(i).getNumberOfDeadheads());
-			System.out.println(sstats.get(i).getAverageLengthOfDeadheads());
-			System.out.println(sstats.get(i).getNumberOfWaitings());
-			System.out.println(sstats.get(i).getAverageLengthOfWaitings());
-			System.out.println(sstats.get(i).getNumberOfPullOuts());
-			System.out.println(sstats.get(i).getAverageLengthOfPullOuts());
-			System.out.println(sstats.get(i).getNumberOfPullIns());
-			System.out.println(sstats.get(i).getAverageLengthOfPullIns());
-			System.out
-					.println(sstats.get(i).getServiceTimetotalDutyTimeRatio());
-		}
-		// testausgabe Umlaufplanstatistik
-		ScheduleStatistics stat = new ScheduleStatistics();
-		ArrayList<ScheduleStatistics> sstats = new ArrayList<ScheduleStatistics>();
-		sstats = stat.calculateVehicleScheduleStatistics(umlaufplanliste);
-		for (int i = 0; i < 1; i++) {
-			System.out.println("Umlaufplan global:");
-			System.out.println(sstats.get(i).getTotalNumberOfTrips());
-			System.out.println(sstats.get(i).getTotalRunTime());
-			;
-			System.out.println(sstats.get(i).getNumberOfServiceTrips());
-			System.out.println(sstats.get(i).getAverageLengthOfServiceTrips());
-			System.out.println(sstats.get(i).getNumberOfDeadheads());
-			System.out.println(sstats.get(i).getAverageLengthOfDeadheads());
-			System.out.println(sstats.get(i).getNumberOfWaitings());
-			System.out.println(sstats.get(i).getAverageLengthOfWaitings());
-			System.out.println(sstats.get(i).getNumberOfPullOuts());
-			System.out.println(sstats.get(i).getAverageLengthOfPullOuts());
-			System.out.println(sstats.get(i).getNumberOfPullIns());
-			System.out.println(sstats.get(i).getAverageLengthOfPullIns());
-			System.out.println(sstats.get(i)
-					.getServiceTimetotalBlockTimeRatio());
-		}*/
 	}
 
 	public Stage getDialogStage() {
