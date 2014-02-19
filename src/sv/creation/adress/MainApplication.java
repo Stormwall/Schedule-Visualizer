@@ -139,6 +139,7 @@ public class MainApplication extends Application {
 					new Image("file:resources/images/IconFinal.png"));
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.initOwner(primaryStage);
+			dialogStage.setFullScreen(true);
 			Scene scene = new Scene(page);
 			dialogStage.setScene(scene);
 

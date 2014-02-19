@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sv.creation.adress.StatistikenUPlanSingleLayoutController">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sv.creation.adress.StatistikenUPlanSingleLayoutController">
   <!-- TODO Add Nodes -->
   <children>
     <SplitPane dividerPositions="0.4230769230769231" focusTraversable="true" orientation="VERTICAL" prefHeight="600.0" prefWidth="600.0" styleClass="background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -29,7 +29,7 @@
                 </AnchorPane>
                 <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                   <children>
-                    <GridPane prefHeight="210.0" prefWidth="378.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <GridPane prefHeight="210.0" prefWidth="378.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-1.0">
                       <children>
                         <Label styleClass="label-white" text="Gesamt" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                         <Label styleClass="label-white" text="Servicefahrten" GridPane.columnIndex="0" GridPane.rowIndex="2" />
@@ -62,6 +62,11 @@
                         <Label fx:id="dEinrueckfahrt" styleClass="label-white" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="5" />
                         <Label fx:id="duAusrueckfahrt" styleClass="label-white" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="6" />
                         <Label fx:id="duAnzahllinien" styleClass="label-white" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="8">
+                          <children>
+                            <Button layoutY="0.0" mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Abbrechen" AnchorPane.rightAnchor="14.0" />
+                          </children>
+                        </AnchorPane>
                       </children>
                       <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -70,18 +75,20 @@
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       </columnConstraints>
                       <rowConstraints>
-                        <RowConstraints maxHeight="26.0" minHeight="10.0" prefHeight="26.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="26.0" minHeight="10.0" prefHeight="26.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="26.0" minHeight="10.0" prefHeight="26.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="26.0" minHeight="10.0" prefHeight="26.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="26.0" minHeight="10.0" prefHeight="26.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="26.0" minHeight="10.0" prefHeight="26.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="27.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="27.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="26.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="26.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="26.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="26.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="26.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="26.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="27.0" minHeight="10.0" prefHeight="24.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="27.0" minHeight="10.0" prefHeight="24.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="27.0" minHeight="10.0" prefHeight="24.0" vgrow="SOMETIMES" />
                       </rowConstraints>
                     </GridPane>
                   </children>
                 </AnchorPane>
+                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="0" />
               </children>
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="100.0" />

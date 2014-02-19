@@ -1,5 +1,6 @@
 package sv.creation.adress;
 
+import sv.creation.adress.model.Umlaufplan;
 import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
@@ -58,6 +59,10 @@ public class StatistikenUPlanSingleLayoutController {
 	@FXML
 	private PieChart graphic;
 	
+	// Arbeitsvariabelen
+	
+	private Umlaufplan umlaufplan;
+	
 
 	private Stage dialogStage;
 	
@@ -71,7 +76,15 @@ public class StatistikenUPlanSingleLayoutController {
 	  private void initialize() {
 	      
 	  }	
-
+	
+	
+	// Methode zum Beenden des PopUp
+	
+	public void endStage(){
+		
+		dialogStage.close();
+	}
+	
 	
 	//Zuordnungsmethoden
 

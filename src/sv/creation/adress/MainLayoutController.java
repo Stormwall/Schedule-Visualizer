@@ -168,7 +168,6 @@ public class MainLayoutController {
 
 	private TableView<Blockelement> detailsUmlaufTable = new TableView<Blockelement>();
 	private TableView<Dutyelement> detailsDienstTable = new TableView<Dutyelement>();
-	private TableView<Fahrplan> detailsFahrplanTable = new TableView<Fahrplan>();
 
 	// Zugriff auf die Labels des DetailPane
 
@@ -469,7 +468,7 @@ public class MainLayoutController {
 		ft.setAutoReverse(true);
 		ft.play();
 
-		// BefÃ¼llung der Dropdownmenues zur Auswahl der PlÃ¤ne
+		// Befuellung der Dropdownmenues zur Auswahl der PlÃ¤ne
 
 		fillUmlaufplanliste();
 		fillDienstplanliste();
@@ -481,9 +480,6 @@ public class MainLayoutController {
 				.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
 		detailsDienstTable
-				.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
-		detailsFahrplanTable
 				.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
 		this.yUp1.setHbarPolicy(ScrollBarPolicy.NEVER);
