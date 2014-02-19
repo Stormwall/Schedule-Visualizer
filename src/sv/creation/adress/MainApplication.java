@@ -90,7 +90,7 @@ public class MainApplication extends Application {
 		}
 	}
 
-	// Initiate Handbuch fxml
+	// Initiate Kennzahlen fxml
 
 	public void showKennzahlen() {
 
