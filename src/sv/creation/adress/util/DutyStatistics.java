@@ -8,7 +8,7 @@ import java.util.Date;
 import sv.creation.adress.model.Dienstplan;
 
 public class DutyStatistics{
-		
+	String dutyID;
 	double dutytotalNumberOfTrips = 0;
 	double dutytotalRunTime = 0;
 	double dutynumberOfServiceTrips = 0;
@@ -58,24 +58,21 @@ public class DutyStatistics{
 		ArrayList<DutyStatistics> dutystatlist = new ArrayList<DutyStatistics>();
 		for (int duty = 0; duty < dp.getDuty().size(); duty++){
 			
-			//int lineID[];
-			String dutyID = dp.getDuty().get(duty).getId();
 			
+			String dutyiD = dp.getDuty().get(duty).getId();
+			ArrayList<Integer> dutyblockID = new ArrayList<Integer>();
 			DutyStatistics dutystat = new DutyStatistics();
 			for (int dutyelement = 0; dutyelement < dp.getDutyelement().size(); dutyelement++){
-				//ServiceJourney sj 
-				//lineID[dutyelement] =  dp.getDutyelement().get(dutyelement).getId();
-				
-				
-					if(dp.getDutyelement().get(dutyelement).getDutyID().equals(dutyID)){
+							
+					if(dp.getDutyelement().get(dutyelement).getDutyID().equals(dutyiD)){
+						
+						dutyblockID.add(dp.getDutyelement().get(dutyelement).getBlockID());
 						
 						long runtime = dutystat.calculateDriveTime(dp.getDutyelement().get(dutyelement).getDepTime(), dp.getDutyelement().get(dutyelement).getArrTime());
-								
+						dutystat.dutyID=dutyiD;	
 						dutystat.dutytotalNumberOfTrips++;
 						dutystat.dutytotalRunTime = dutystat.dutytotalRunTime + runtime;
-						
-						
-						
+
 						
 						switch (dp.getDutyelement().get(dutyelement).getElementType()){
 						case 1:
@@ -129,6 +126,18 @@ public class DutyStatistics{
 							dutystat.dutyoveralldurationLayovers = dutystat.dutyoveralldurationLayovers + runtime;
 							break;
 						}
+						//TODO
+						//Vehicles per Duty
+						int countvehicles = 0;
+						for (int i=0; i < dutyblockID.size();i++){
+							
+							if(dutyblockID.get(i)>0){
+								if(dutyblockID.get(i)!=dutyblockID.get(i-1)){
+									countvehicles++;
+								}
+							}
+						}
+						dutystat.dutynumberOfVehicles = countvehicles;
 				}//if
 					
 				
@@ -212,8 +221,7 @@ public class DutyStatistics{
 			} else {
 				dutystat.dutyserviceTimetotalDutyTimeRatio = 0;	
 			}
-			//Vehicles per Duty
-			dutystat.dutynumberOfVehicles = dutystat.dutynumberOfPullOuts;
+			
 			//Lines
 			
 			dutystatlist.add(dutystat);

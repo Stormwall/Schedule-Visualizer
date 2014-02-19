@@ -60,7 +60,7 @@ public class BlockStatistics {
 				
 				
 					if(up.getFahrtZuUmlauf().get(blockelement).getBlockID()==blockID){
-					
+						blockstat.blockID = blockID;
 						long runtime = blockstat.calculateDriveTime(up.getFahrtZuUmlauf().get(blockelement).getDepTime(), up.getFahrtZuUmlauf().get(blockelement).getArrTime());
 								
 						blockstat.blocktotalNumberOfTrips++;
