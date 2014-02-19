@@ -113,6 +113,38 @@ public class MainApplication extends Application {
 			// Set the controller
 			KennzahlenLayoutController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
+			controller.setMainApp(this);
+			
+
+			dialogStage.show();
+
+		} catch (IOException e) {
+			// Exception gets thrown if the fxml file could not be loaded
+			e.printStackTrace();
+		}
+	}
+	
+	public void showStatistikUPlanSingle() {
+
+		try {
+
+			// Load the fxml file and create a new stage for the popup
+			FXMLLoader loader = new FXMLLoader(
+					MainApplication.class
+							.getResource("view/StatistikenUPlanSingleLayout.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Kennzahlen");
+			dialogStage.getIcons().add(
+					new Image("file:resources/images/IconFinal.png"));
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+
+			// Set the controller
+			StatistikenUPlanSingleLayoutController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
 
 			dialogStage.show();
 

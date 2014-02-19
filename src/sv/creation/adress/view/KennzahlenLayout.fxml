@@ -54,7 +54,7 @@
                         <Button layoutY="6.0" mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Abbrechen" AnchorPane.rightAnchor="7.0" />
                         <HBox id="HBox" alignment="CENTER" layoutY="7.0" spacing="10.0" AnchorPane.leftAnchor="14.0">
                           <children>
-                            <Button mnemonicParsing="false" styleClass="dark-blue" text="Statistik" />
+                            <Button mnemonicParsing="false" onAction="#handleStatistikenUplanSingle" styleClass="dark-blue" text="Statistik" />
                             <Button mnemonicParsing="false" styleClass="dark-blue" text="Kosten" />
                             <Button mnemonicParsing="false" styleClass="dark-blue" text="Durchschnittliche Wiederholrate" />
                             <Button mnemonicParsing="false" styleClass="dark-blue" text="Distanzmaß" />

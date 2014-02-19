@@ -7,6 +7,10 @@ public class KennzahlenLayoutController {
 
 	private Stage dialogStage;
 	
+	// Referenz zur MainApp
+
+	private MainApplication mainApp;
+	
 
 	  /**
 	  * Initializes the controller class. This method is automatically called
@@ -17,6 +21,15 @@ public class KennzahlenLayoutController {
 	  private void initialize() {
 	      
 	  }
+	
+	/**
+	 * Opens the Kostenview.
+	 */
+	@FXML
+	private void handleStatistikenUplanSingle() {
+		
+		this.mainApp.showStatistikUPlanSingle();
+	}
 	
 	/**
 	 * Opens the Kostenview.
@@ -40,6 +53,14 @@ public class KennzahlenLayoutController {
 
 	public void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
+	}
+
+	public MainApplication getMainApp() {
+		return mainApp;
+	}
+
+	public void setMainApp(MainApplication mainApp) {
+		this.mainApp = mainApp;
 	}
 	
 	

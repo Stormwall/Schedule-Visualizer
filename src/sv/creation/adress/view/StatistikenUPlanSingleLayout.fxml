@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sv.creation.adress.StatistikenUPlanSingleLayoutController">
   <!-- TODO Add Nodes -->
   <children>
     <SplitPane dividerPositions="0.4230769230769231" focusTraversable="true" orientation="VERTICAL" prefHeight="600.0" prefWidth="600.0" styleClass="background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -17,7 +17,7 @@
           <children>
             <GridPane prefHeight="250.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <children>
-                <PieChart id="PieChart" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                <PieChart id="PieChart" fx:id="graphic" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                 <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
                   <children>
                     <Label layoutX="22.0" layoutY="7.0" text="Label" textFill="#dfdfdf">
@@ -41,27 +41,27 @@
                         <Label styleClass="label-white" text="Anzahl" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                         <Label styleClass="label-white" text="Dauer" GridPane.columnIndex="2" GridPane.rowIndex="0" />
                         <Label styleClass="label-white" text="Durchschnitt" GridPane.columnIndex="3" GridPane.rowIndex="0" />
-                        <Label styleClass="label-white" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label styleClass="label-white" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label styleClass="label-white" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Label styleClass="label-white" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Label styleClass="label-white" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <Label styleClass="label-white" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                        <Label styleClass="label-white" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                        <Label styleClass="label-white" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                        <Label styleClass="label-white" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                        <Label styleClass="label-white" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                        <Label styleClass="label-white" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                        <Label styleClass="label-white" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                        <Label styleClass="label-white" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-                        <Label styleClass="label-white" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-                        <Label styleClass="label-white" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                        <Label styleClass="label-white" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                        <Label styleClass="label-white" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                        <Label styleClass="label-white" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                        <Label styleClass="label-white" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-                        <Label styleClass="label-white" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-                        <Label styleClass="label-white" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+                        <Label fx:id="aGesamt" styleClass="label-white" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label id="aServicefahrteb" fx:id="aServicefahrten" styleClass="label-white" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label fx:id="aVerbindungsfahrt" styleClass="label-white" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label fx:id="aWarten" styleClass="label-white" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label fx:id="aEinrueckfahrt" styleClass="label-white" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Label fx:id="aAusrueckfahrt" styleClass="label-white" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Label fx:id="aAnzahllinien" styleClass="label-white" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <Label fx:id="dGesamt" styleClass="label-white" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <Label fx:id="dServicefahrten" styleClass="label-white" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <Label fx:id="dVerbindungsfahrt" styleClass="label-white" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                        <Label fx:id="dWarten" styleClass="label-white" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                        <Label fx:id="duEinrueckfahrt" styleClass="label-white" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                        <Label fx:id="dAusrueckfahrt" styleClass="label-white" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                        <Label fx:id="dAnzahllinien" styleClass="label-white" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                        <Label fx:id="duGesamt" styleClass="label-white" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                        <Label fx:id="duServicefahrten" styleClass="label-white" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                        <Label fx:id="duVerbindungsfahrt" styleClass="label-white" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                        <Label fx:id="duWarten" styleClass="label-white" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                        <Label fx:id="dEinrueckfahrt" styleClass="label-white" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                        <Label fx:id="duAusrueckfahrt" styleClass="label-white" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                        <Label fx:id="duAnzahllinien" styleClass="label-white" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="7" />
                       </children>
                       <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -99,7 +99,7 @@
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
           <children>
-            <ScrollPane content="$null" prefHeight="342.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <ScrollPane fx:id="tablePane" content="$null" prefHeight="342.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
           </children>
         </AnchorPane>
       </items>
