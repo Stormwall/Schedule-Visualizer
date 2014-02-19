@@ -19,14 +19,13 @@ public class Kennzahlenberechnung {
 		double avgrepeat;
 		boolean alleGleich=false;
 		
+		
+		
 		//Anzahl der Dienste von allen Dienstpl������nen
 		for (int i = 0; i < dienstplanliste.size(); i++) {
 			if(dienstplanliste.get(i).getFahrplanID()==fahrplan.getId()){
-				for (int j = 0; j < dienstplanliste.get(i).getDutyelement().size(); j++) {
-					if(dienstplanliste.get(i).getDutyelement().get(j).getElementType()==1){
+				for (int j = 0; j < dienstplanliste.get(i).getDuty().size(); j++) {
 						anzahlDutyGesamt++;
-					}
-					
 				}
 			}
 		}
@@ -134,10 +133,9 @@ public class Kennzahlenberechnung {
 		//Anzahl der Dienste von allen Dienstpl������nen
 		for (int i = 0; i < dienstplanliste.size(); i++) {
 			if(dienstplanliste.get(i).getFahrplanID()==fahrplan.getId()){
-				for (int j = 0; j < dienstplanliste.get(i).getDutyelement().size(); j++) {
-					if(dienstplanliste.get(i).getDutyelement().get(j).getElementType()==1){
+				for (int j = 0; j < dienstplanliste.get(i).getDuty().size(); j++) {
 						anzahlDutyGesamt++;
-					}
+					
 				}
 			}
 		}
@@ -199,6 +197,9 @@ public class Kennzahlenberechnung {
 						}
 					}
 					zaehler++;
+					if(zaehler==dienstplanliste.get(i).getDutyelement().size()){
+						ListPlan.add(serviceJourneyList);
+					}
 				}
 			}
 			ListPlaeneGesamt.add(ListPlan);
@@ -286,7 +287,7 @@ public class Kennzahlenberechnung {
 			planListe.add(plaene);
 		}
 		
-		int regelmaessigeFahrt=0;
+		int unregelmaessigeFahrt=0;
 		
 		ArrayList<Dutyelement> dutyelementRegular = regelmaessigeDutyelement(dienstplanliste.get(0), fahrplan);
 		ArrayList<ArrayList<Integer>> listDP1  = new ArrayList<ArrayList<Integer>>();
@@ -347,10 +348,15 @@ public class Kennzahlenberechnung {
 			}
 			
 			//if the previous and next service journey of a regular service journey similar to the regular service journey in the second diesntplan the counter of regular service journeys will be increased
-			if(reihenfolgeDP1[0]==reihenfolgeDP2[0]&&reihenfolgeDP1[1]==reihenfolgeDP2[1]&&reihenfolgeDP1[2]==reihenfolgeDP2[2]){
-				regelmaessigeFahrt++;
+			if(reihenfolgeDP1[0]!=reihenfolgeDP2[0]&&reihenfolgeDP1[1]==reihenfolgeDP2[1]&&reihenfolgeDP1[2]==reihenfolgeDP2[2]){
+				unregelmaessigeFahrt++;
+			}else if(reihenfolgeDP1[0]==reihenfolgeDP2[0]&&reihenfolgeDP1[1]==reihenfolgeDP2[1]&&reihenfolgeDP1[2]!=reihenfolgeDP2[2]){
+				unregelmaessigeFahrt++;
+			}else if(reihenfolgeDP1[0]!=reihenfolgeDP2[0]&&reihenfolgeDP1[1]==reihenfolgeDP2[1]&&reihenfolgeDP1[2]!=reihenfolgeDP2[2]){
+				unregelmaessigeFahrt++;
+				unregelmaessigeFahrt++;
 			}
 		}
-		return regelmaessigeFahrt;
+		return unregelmaessigeFahrt;
 	}
 }

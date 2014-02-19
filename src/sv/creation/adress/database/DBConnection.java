@@ -27,6 +27,7 @@ import java.util.Iterator;
 import sv.creation.adress.util.StringSplitter;
 
 public class DBConnection {
+	
 
 	public static DBConnection instance = null;
 	private static Connection connection;
@@ -374,8 +375,9 @@ public class DBConnection {
 			//*********************************************************************************************************************************************
 			
 			//table for duty roster
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Dienstplan (ID INTEGER PRIMARY KEY AUTOINCREMENT, Bezeichnung VARCHAR(255), FahrplanID INTEGER, DayID INTEGER, Datum DATE, "
-																		+ "FOREIGN KEY (FahrplanID) REFERENCES Fahrplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);");
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Dienstplan (ID INTEGER PRIMARY KEY AUTOINCREMENT, Bezeichnung VARCHAR(255), FahrplanID INTEGER NOT NULL, UmlaufplanID INTEGER NOT NULL, DayID INTEGER, Datum DATE, "
+																		+ "FOREIGN KEY (FahrplanID) REFERENCES Fahrplan(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
+																		+ "FOREIGN KEY (UmlaufplanID) REFERENCES Umlaufplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);");
 			
 			//table for duty
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Duty (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -415,7 +417,7 @@ public class DBConnection {
 																	  + "DienstplanID INTEGER NOT NULL, "
 																	  + "MatchingPos INTEGER NOT NULL, "
 																	  + "FOREIGN KEY (DutyID) REFERENCES Duty(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
-																	  + "FOREIGN KEY (BlockID) REFERENCES Block(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
+//																	  + "FOREIGN KEY (BlockID) REFERENCES Block(ID, UmlaufplanID) ON UPDATE CASCADE ON DELETE CASCADE, "
 																	  + "FOREIGN KEY (ServiceJourneyID) REFERENCES ServiceJourney(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
 																	  + "FOREIGN KEY (DienstplanID) REFERENCES Dienstplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);");
 			
@@ -910,13 +912,13 @@ public class DBConnection {
 			  //Get Day on which the crew schedule is valid
 			  dayID = ss.getDutyelementDayID().get(0);
 			  //filling Dienstplan Table
-		  stmnt.executeUpdate("INSERT INTO Dienstplan (Bezeichnung, FahrplanID, DayID, Datum) VALUES ('"
-				  			+fileNameVergleich+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%')),'"+dayID+"', CURRENT_DATE);");
+		  stmnt.executeUpdate("INSERT INTO Dienstplan (Bezeichnung, FahrplanID, UmlaufplanID, DayID, Datum) VALUES ('"
+				  			+fileNameVergleich+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%')),(SELECT u.ID FROM Umlaufplan AS u WHERE u.FahrplanID=(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%')) AND u.DayID='"+dayID+"'),'"+dayID+"', CURRENT_DATE);");
 		  }else{
 			    
 			  //filling Dienstplan Table
-		  stmnt.executeUpdate("INSERT INTO Dienstplan (Bezeichnung, FahrplanID, Datum) VALUES ('"
-				  			+fileNameVergleich+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%')), CURRENT_DATE);");
+		  stmnt.executeUpdate("INSERT INTO Dienstplan (Bezeichnung, FahrplanID, UmlaufplanID, Datum) VALUES ('"
+				  			+fileNameVergleich+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%')),(SELECT u.ID FROM Umlaufplan AS u WHERE u.FahrplanID=(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%'))), CURRENT_DATE);");
 		  }
 		  //iterators for getting values from stringsplitter object
 		  Iterator<Integer> it11 = ss.getDutyelementElementType().iterator();
@@ -978,7 +980,7 @@ public class DBConnection {
 				  if (de_elementtype==1){
 					 stmnt.executeUpdate("INSERT INTO Dutyelement (ElementType, DutyID, BlockID, ServiceJourneyID, DienstplanID, MatchingPos) VALUES('"+de_elementtype+"', "
 								  + "(SELECT d.ID from Duty AS d WHERE d.DutyID = '"+dutyelementdutyID+"' AND d.DienstplanID=(SELECT dp.ID FROM Dienstplan AS dp WHERE Bezeichnung LIKE ('%"+fileNameVergleich+"%'))), "
-								  + "(SELECT b.ID FROM Block AS b WHERE b.BlockID='"+dutyelementblockID+"' AND b.UmlaufplanID=(SELECT u.ID FROM Umlaufplan AS u WHERE FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE ('%"+finalString+"%')))), "
+								  + "(SELECT b.ID FROM Block AS b, Dienstplan AS dp WHERE b.BlockID='"+dutyelementblockID+"' AND b.UmlaufplanID=(SELECT u.ID FROM Umlaufplan AS u WHERE FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE ('%"+finalString+"%'))) AND b.UmlaufplanID=dp.ID), "
 								  + "(SELECT sj.ID FROM ServiceJourney AS sj WHERE sj.ServiceJourneyID='"+dutyelementservicejourneyID+"' AND sj.FahrplanID=(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%'))), "
 								  + "(SELECT ID FROM Dienstplan WHERE Bezeichnung='"+fileNameVergleich+"'),'"+pos+"');");
 

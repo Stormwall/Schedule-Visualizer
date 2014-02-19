@@ -20,6 +20,16 @@ public class BlockStatistics {
 	double blockaverageLengthOfPullOuts = 0;
 	double blocknumberOfPullIns = 0;
 	double blockaverageLengthOfPullIns = 0;
+	//int blocknumberOfLines = 0;
+	
+	double blocknumberOfPreparations = 0;
+	double blockaverageLengthOfPreparations = 0;
+	double blocknumberOfWrapUps = 0;
+	double blockaverageLengthOfWrapUps = 0;
+	double blocknumberOfLayovers = 0;
+	double blockaverageLengthOfLayovers = 0;
+
+	
 	double blockserviceTimetotalBlockTimeRatio = 0;
 	
 	double blockoveralldurationServicetrips = 0;
@@ -27,6 +37,10 @@ public class BlockStatistics {
 	double blockoveralldurationWaitings = 0;
 	double blockoveralldurationPullouts = 0;
 	double blockoveralldurationPullins = 0;
+	
+	double blockoveralldurationPreparations = 0;
+	double blockoveralldurationWrapUps = 0;
+	double blockoveralldurationLayovers = 0;
 	/****************************************************************************
 	method for calculating statistics for all duties contained in a crew schedule
 	*****************************************************************************/
@@ -71,49 +85,87 @@ public class BlockStatistics {
 							blockstat.blocknumberOfPullOuts++;
 							blockstat.blockoveralldurationPullouts = blockstat.blockoveralldurationPullouts + runtime;
 							break;
+						case 5:
+							//Preparation
+							blockstat.blocknumberOfPreparations++;
+							blockstat.blockoveralldurationPreparations = blockstat.blockoveralldurationPreparations + runtime;
+							break;
+						case 6:
+							//Wrap-Ups
+							blockstat.blocknumberOfWrapUps++;
+							blockstat.blockoveralldurationWrapUps = blockstat.blockoveralldurationWrapUps + runtime;
+							break;
 						case 9:
-							//Waitings
+							//Waiting
 							blockstat.blocknumberOfWaitings++;
 							blockstat.blockoveralldurationWaitings = blockstat.blockoveralldurationWaitings + runtime;
 							break;
+						case 10:
+							//Layover
+							blockstat.blocknumberOfLayovers++;
+							blockstat.blockoveralldurationLayovers = blockstat.blockoveralldurationLayovers + runtime;
+							break;
 						}
-				}//if
+				}
 					
-				
-				
-				
-			}//for dutyelement
+			}
+			//Elementtypes
 			if (blockstat.blocknumberOfServiceTrips != 0) {
 				blockstat.blockaverageLengthOfServiceTrips = blockstat.blockoveralldurationServicetrips
 						/ blockstat.blocknumberOfServiceTrips;
 			} else {
 				blockstat.blockaverageLengthOfServiceTrips = 0;
 			}
+			//DH
 			if (blockstat.blocknumberOfDeadheads != 0) {
 				blockstat.blockaverageLengthOfDeadheads = blockstat.blockoveralldurationDeadheads
 						/ blockstat.blocknumberOfDeadheads;
 			} else {
-				blockstat.blocknumberOfDeadheads = 0;
+				blockstat.blockaverageLengthOfDeadheads = 0;
 			}
-			if (blockstat.blocknumberOfWaitings != 0) {
-				blockstat.blockaverageLengthOfWaitings = blockstat.blockoveralldurationWaitings
-						/ blockstat.blocknumberOfWaitings;
-			} else {
-				blockstat.blocknumberOfWaitings = 0;
-			}
+			//PO
 			if (blockstat.blocknumberOfPullOuts != 0) {
 				blockstat.blockaverageLengthOfPullOuts = blockstat.blockoveralldurationPullouts
 						/ blockstat.blocknumberOfPullOuts;
 			} else {
-				blockstat.blocknumberOfPullOuts = 0;
+				blockstat.blockaverageLengthOfPullOuts = 0;
 			}
+			//PI
 			if (blockstat.blocknumberOfPullIns != 0) {
 				blockstat.blockaverageLengthOfPullIns = blockstat.blockoveralldurationPullins
 						/ blockstat.blocknumberOfPullIns;
 			} else {
-				blockstat.blocknumberOfPullIns = 0;
+				blockstat.blockaverageLengthOfPullIns = 0;
 			}
-
+			//Preps
+			if (blockstat.blocknumberOfPreparations != 0) {
+				blockstat.blockaverageLengthOfPreparations = blockstat.blockoveralldurationPreparations
+						/ blockstat.blocknumberOfPreparations;
+			} else {
+				blockstat.blockaverageLengthOfPreparations = 0;
+			}
+			//Wraps
+			if (blockstat.blocknumberOfWrapUps != 0) {
+				blockstat.blockaverageLengthOfWrapUps = blockstat.blockoveralldurationWrapUps
+						/ blockstat.blocknumberOfWrapUps;
+			} else {
+				blockstat.blockaverageLengthOfWrapUps = 0;
+			}
+			//Waiting
+			if (blockstat.blocknumberOfWaitings != 0) {
+				blockstat.blockaverageLengthOfWaitings = blockstat.blockoveralldurationWaitings
+						/ blockstat.blocknumberOfWaitings;
+			} else {
+				blockstat.blockaverageLengthOfWaitings = 0;
+			}
+			//Layover
+			if (blockstat.blocknumberOfLayovers != 0) {
+				blockstat.blockaverageLengthOfLayovers = blockstat.blockoveralldurationLayovers
+						/ blockstat.blocknumberOfLayovers;
+			} else {
+				blockstat.blockaverageLengthOfLayovers = 0;
+			}
+			//Ratio
 			if (blockstat.blocktotalRunTime != 0) {
 				blockstat.blockserviceTimetotalBlockTimeRatio = blockstat.blockoveralldurationServicetrips
 						/ blockstat.blocktotalRunTime;
@@ -123,7 +175,7 @@ public class BlockStatistics {
 			
 			blockstatlist.add(blockstat);
 				
-		}//for duty
+		}//
 		
 		return blockstatlist;
 	}

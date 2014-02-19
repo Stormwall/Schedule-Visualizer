@@ -21,6 +21,21 @@ public class DutyStatistics{
 	double dutyaverageLengthOfPullOuts = 0;
 	double dutynumberOfPullIns = 0;
 	double dutyaverageLengthOfPullIns = 0;
+	
+	//int dutynumberOfLines = 0;
+	double dutynumberOfVehicles = 0;
+	
+	double dutynumberOfPreparations = 0;
+	double dutyaverageLengthOfPreparations = 0;
+	double dutynumberOfWrapUps = 0;
+	double dutyaverageLengthOfWrapUps = 0;
+	double dutynumberOfLayovers = 0;
+	double dutyaverageLengthOfLayovers = 0;
+	double dutynumberOfTransfers = 0;
+	double dutyaverageLengthOfTransfers = 0;
+	double dutynumberOfBreaks = 0;
+	double dutyaverageLengthOfBreaks = 0;
+	
 	double dutyserviceTimetotalDutyTimeRatio = 0;
 	
 	double dutyoveralldurationServicetrips = 0;
@@ -28,6 +43,12 @@ public class DutyStatistics{
 	double dutyoveralldurationWaitings = 0;
 	double dutyoveralldurationPullouts = 0;
 	double dutyoveralldurationPullins = 0;
+	
+	double dutyoveralldurationPreparations = 0;
+	double dutyoveralldurationWrapUps = 0;
+	double dutyoveralldurationLayovers = 0;
+	double dutyoveralldurationTransfers = 0;
+	double dutyoveralldurationBreaks = 0;
 	/****************************************************************************
 	method for calculating statistics for all duties contained in a crew schedule
 	*****************************************************************************/
@@ -37,20 +58,25 @@ public class DutyStatistics{
 		ArrayList<DutyStatistics> dutystatlist = new ArrayList<DutyStatistics>();
 		for (int duty = 0; duty < dp.getDuty().size(); duty++){
 			
-
+			//int lineID[];
 			String dutyID = dp.getDuty().get(duty).getId();
 			
 			DutyStatistics dutystat = new DutyStatistics();
 			for (int dutyelement = 0; dutyelement < dp.getDutyelement().size(); dutyelement++){
-				
+				//ServiceJourney sj 
+				//lineID[dutyelement] =  dp.getDutyelement().get(dutyelement).getId();
 				
 				
 					if(dp.getDutyelement().get(dutyelement).getDutyID().equals(dutyID)){
-					
+						
 						long runtime = dutystat.calculateDriveTime(dp.getDutyelement().get(dutyelement).getDepTime(), dp.getDutyelement().get(dutyelement).getArrTime());
 								
 						dutystat.dutytotalNumberOfTrips++;
 						dutystat.dutytotalRunTime = dutystat.dutytotalRunTime + runtime;
+						
+						
+						
+						
 						switch (dp.getDutyelement().get(dutyelement).getElementType()){
 						case 1:
 							//Service Trip
@@ -62,20 +88,45 @@ public class DutyStatistics{
 							dutystat.dutynumberOfDeadheads++;
 							dutystat.dutyoveralldurationDeadheads = dutystat.dutyoveralldurationDeadheads + runtime;
 							break;
-						case 5:
+						case 3:
 							//Pullins
 							dutystat.dutynumberOfPullIns++;
 							dutystat.dutyoveralldurationPullins = dutystat.dutyoveralldurationPullins + runtime;
 							break;
-						case 6:
+						case 4:
 							//Pullout
 							dutystat.dutynumberOfPullOuts++;
 							dutystat.dutyoveralldurationPullouts = dutystat.dutyoveralldurationPullouts + runtime;
 							break;
+						case 5:
+							//Preparation
+							dutystat.dutynumberOfPreparations++;
+							dutystat.dutyoveralldurationPreparations = dutystat.dutyoveralldurationPreparations + runtime;
+							break;
+						case 6:
+							//Wrap-Ups
+							dutystat.dutynumberOfWrapUps++;
+							dutystat.dutyoveralldurationWrapUps = dutystat.dutyoveralldurationWrapUps + runtime;
+							break;
+						case 7:
+							//Transfer
+							dutystat.dutynumberOfTransfers++;
+							dutystat.dutyoveralldurationTransfers = dutystat.dutyoveralldurationTransfers + runtime;
+							break;
+						case 8:
+							//Break
+							dutystat.dutynumberOfBreaks++;
+							dutystat.dutyoveralldurationBreaks = dutystat.dutyoveralldurationBreaks + runtime;
+							break;
 						case 9:
-							//Waitings
+							//Waiting
 							dutystat.dutynumberOfWaitings++;
 							dutystat.dutyoveralldurationWaitings = dutystat.dutyoveralldurationWaitings + runtime;
+							break;
+						case 10:
+							//Layover
+							dutystat.dutynumberOfLayovers++;
+							dutystat.dutyoveralldurationLayovers = dutystat.dutyoveralldurationLayovers + runtime;
 							break;
 						}
 				}//if
@@ -83,44 +134,87 @@ public class DutyStatistics{
 				
 				
 				
-			}//for dutyelement
+			}
+			//Elementtypes
 			if (dutystat.dutynumberOfServiceTrips != 0) {
 				dutystat.dutyaverageLengthOfServiceTrips = dutystat.dutyoveralldurationServicetrips
 						/ dutystat.dutynumberOfServiceTrips;
 			} else {
 				dutystat.dutyaverageLengthOfServiceTrips = 0;
 			}
+			//DH
 			if (dutystat.dutynumberOfDeadheads != 0) {
 				dutystat.dutyaverageLengthOfDeadheads = dutystat.dutyoveralldurationDeadheads
 						/ dutystat.dutynumberOfDeadheads;
 			} else {
-				dutystat.dutynumberOfDeadheads = 0;
+				dutystat.dutyaverageLengthOfDeadheads = 0;
 			}
-			if (dutystat.dutynumberOfWaitings != 0) {
-				dutystat.dutyaverageLengthOfWaitings = dutystat.dutyoveralldurationWaitings
-						/ dutystat.dutynumberOfWaitings;
-			} else {
-				dutystat.dutynumberOfWaitings = 0;
-			}
+			//PO
 			if (dutystat.dutynumberOfPullOuts != 0) {
 				dutystat.dutyaverageLengthOfPullOuts = dutystat.dutyoveralldurationPullouts
 						/ dutystat.dutynumberOfPullOuts;
 			} else {
-				dutystat.dutynumberOfPullOuts = 0;
+				dutystat.dutyaverageLengthOfPullOuts = 0;
 			}
+			//PI
 			if (dutystat.dutynumberOfPullIns != 0) {
 				dutystat.dutyaverageLengthOfPullIns = dutystat.dutyoveralldurationPullins
 						/ dutystat.dutynumberOfPullIns;
 			} else {
-				dutystat.dutynumberOfPullIns = 0;
+				dutystat.dutyaverageLengthOfPullIns = 0;
 			}
-
+			//Preps
+			if (dutystat.dutynumberOfPreparations != 0) {
+				dutystat.dutyaverageLengthOfPreparations = dutystat.dutyoveralldurationPreparations
+						/ dutystat.dutynumberOfPreparations;
+			} else {
+				dutystat.dutyaverageLengthOfPreparations = 0;
+			}
+			//Wraps
+			if (dutystat.dutynumberOfWrapUps != 0) {
+				dutystat.dutyaverageLengthOfWrapUps = dutystat.dutyoveralldurationWrapUps
+						/ dutystat.dutynumberOfWrapUps;
+			} else {
+				dutystat.dutyaverageLengthOfWrapUps = 0;
+			}
+			//Transfer
+			if (dutystat.dutynumberOfTransfers != 0) {
+				dutystat.dutyaverageLengthOfTransfers = dutystat.dutyoveralldurationTransfers
+						/ dutystat.dutynumberOfTransfers;
+			} else {
+				dutystat.dutyaverageLengthOfTransfers = 0;
+			}
+			//Breaks
+			if (dutystat.dutynumberOfBreaks != 0) {
+				dutystat.dutyaverageLengthOfBreaks = dutystat.dutyoveralldurationBreaks
+						/ dutystat.dutynumberOfBreaks;
+			} else {
+				dutystat.dutyaverageLengthOfBreaks = 0;
+			}
+			//Waiting
+			if (dutystat.dutynumberOfWaitings != 0) {
+				dutystat.dutyaverageLengthOfWaitings = dutystat.dutyoveralldurationWaitings
+						/ dutystat.dutynumberOfWaitings;
+			} else {
+				dutystat.dutyaverageLengthOfWaitings = 0;
+			}
+			//Layover
+			if (dutystat.dutynumberOfLayovers != 0) {
+				dutystat.dutyaverageLengthOfLayovers = dutystat.dutyoveralldurationLayovers
+						/ dutystat.dutynumberOfLayovers;
+			} else {
+				dutystat.dutyaverageLengthOfLayovers = 0;
+			}
+			//Ratio
 			if (dutystat.dutytotalRunTime != 0) {
 				dutystat.dutyserviceTimetotalDutyTimeRatio = dutystat.dutyoveralldurationServicetrips
 						/ dutystat.dutytotalRunTime;
 			} else {
 				dutystat.dutyserviceTimetotalDutyTimeRatio = 0;	
 			}
+			//Vehicles per Duty
+			dutystat.dutynumberOfVehicles = dutystat.dutynumberOfPullOuts;
+			//Lines
 			
 			dutystatlist.add(dutystat);
 				
