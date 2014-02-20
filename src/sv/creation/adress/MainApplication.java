@@ -156,6 +156,38 @@ public class MainApplication extends Application {
 			e.printStackTrace();
 		}
 	}
+	
+	public void showStatistikDPlanSingle(ArrayList<Dienstplan> dienstplanliste) {
+
+		try {
+
+			// Load the fxml file and create a new stage for the popup
+			FXMLLoader loader = new FXMLLoader(
+					MainApplication.class
+							.getResource("view/StatistikenDPlanSingleLayout.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Kennzahlen");
+			dialogStage.getIcons().add(
+					new Image("file:resources/images/IconFinal.png"));
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(primaryStage);
+			dialogStage.setFullScreen(true);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+
+			// Set the controller
+			StatistikenDPlanSingleLayoutController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			controller.setDienstplanliste(dienstplanliste);
+
+			dialogStage.show();
+
+		} catch (IOException e) {
+			// Exception gets thrown if the fxml file could not be loaded
+			e.printStackTrace();
+		}
+	}
 
 	// Initiate DatenbankLayout fxml
 

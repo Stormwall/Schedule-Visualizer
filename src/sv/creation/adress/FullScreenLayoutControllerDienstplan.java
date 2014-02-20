@@ -323,7 +323,7 @@ public class FullScreenLayoutControllerDienstplan {
 		for (int j = 0; j < dienstplan.getDuty().size(); j++) {
 
 			ygc.fillText(
-					"D "
+					""
 							+ dienstplan.getDuty().get(orderedDuty.get(j))
 									.getHilfsID(), 4, 22 + (j * this.breite));
 

@@ -118,23 +118,23 @@ public class StatistikenUPlanSingleLayoutController {
 		TableColumn<BlockStatistics, Double> blocknumberOfServiceTrips = new TableColumn<BlockStatistics, Double>(
 				"# Servicefahrten");
 		TableColumn<BlockStatistics, Double> blockaverageLengthOfServiceTrips = new TableColumn<BlockStatistics, Double>(
-				"Durchschnittl. Dauer Serv.F.");
+				"Ø Dauer Serv.F.");
 		TableColumn<BlockStatistics, Double> blocknumberOfDeadheads = new TableColumn<BlockStatistics, Double>(
 				"# Verbindungsfahrten");
 		TableColumn<BlockStatistics, Double> blockaverageLengthOfDeadheads = new TableColumn<BlockStatistics, Double>(
-				"Durchschnittl. Dauer Verb.F.");
+				"Ø Dauer Verb.F.");
 		TableColumn<BlockStatistics, Double> blocknumberOfWaitings = new TableColumn<BlockStatistics, Double>(
 				"# Warten");
 		TableColumn<BlockStatistics, Double> blockaverageLengthOfWaitings = new TableColumn<BlockStatistics, Double>(
-				"Durchschnittl. Dauer Warten");
+				"Ø Dauer Warten");
 		TableColumn<BlockStatistics, Double> blocknumberOfPullIns = new TableColumn<BlockStatistics, Double>(
 				"# Pull in");
 		TableColumn<BlockStatistics, Double> blockaverageLengthOfPullIns = new TableColumn<BlockStatistics, Double>(
-				"Durchschnittl. Pull in");
+				"Ø Pull in");
 		TableColumn<BlockStatistics, Double> blocknumberOfPullOuts = new TableColumn<BlockStatistics, Double>(
 				"# Pull outs");
 		TableColumn<BlockStatistics, Double> blockaverageLengthOfPullOuts = new TableColumn<BlockStatistics, Double>(
-				"Durchschnittl. Pull outs");
+				"Ø Pull outs");
 		TableColumn<BlockStatistics, Double> blockserviceTimetotalBlockTimeRatio = new TableColumn<BlockStatistics, Double>(
 				"Servicefahrten / Gesamt");
 
@@ -233,70 +233,113 @@ public class StatistikenUPlanSingleLayoutController {
 
 	public void fillLabels() {
 
-		aGesamt.setText(String.valueOf(Math.round(this.scheduleStatistics
+		this.aGesamt.setText(String.valueOf(Math.round(this.scheduleStatistics
 				.get(0).getTotalNumberOfTrips() * 100) / 100));
-		aServicefahrten
+		this.aServicefahrten
 				.setText(String.valueOf(Math.round(this.scheduleStatistics.get(
 						0).getNumberOfServiceTrips() * 100) / 100));
-		aVerbindungsfahrt
+		this.aVerbindungsfahrt
 				.setText(String.valueOf(Math.round(this.scheduleStatistics.get(
 						0).getNumberOfDeadheads() * 100) / 100));
-		aWarten.setText(String.valueOf(Math.round(this.scheduleStatistics
+		this.aWarten.setText(String.valueOf(Math.round(this.scheduleStatistics
 				.get(0).getNumberOfWaitings() * 100) / 100));
-		aEinrueckfahrt
+		this.aEinrueckfahrt
 				.setText(String.valueOf(Math.round(this.scheduleStatistics.get(
 						0).getNumberOfPullIns() * 100) / 100));
-		aAusrueckfahrt
+		this.aAusrueckfahrt
 				.setText(String.valueOf(Math.round(this.scheduleStatistics.get(
 						0).getNumberOfPullOuts() * 100) / 100));
-		aAnzahllinien.setText("Folgt");
+		this.aAnzahllinien.setText("Folgt");
 
-		dGesamt.setText(String.valueOf(Math.round(this.scheduleStatistics
+		this.dGesamt.setText(String.valueOf(Math.round(this.scheduleStatistics
 				.get(0).getTotalRunTime() * 100) / 100) + " sek");
-		dServicefahrten.setText(String.valueOf(Math
+		this.dServicefahrten.setText(String.valueOf(Math
 				.round(this.scheduleStatistics.get(0)
 						.getOveralldurationServiceTrips() * 100) / 100)
 				+ " sek");
-		dVerbindungsfahrt.setText(String.valueOf(Math
+		this.dVerbindungsfahrt.setText(String.valueOf(Math
 				.round(this.scheduleStatistics.get(0)
 						.getOveralldurationDeadHeads() * 100) / 100)
 				+ " sek");
-		dWarten.setText(String.valueOf(Math.round(this.scheduleStatistics
+		this.dWarten.setText(String.valueOf(Math.round(this.scheduleStatistics
 				.get(0).getOveralldurationWaitings() * 100) / 100) + " sek");
-		dEinrueckfahrt.setText(String.valueOf(Math
+		this.dEinrueckfahrt.setText(String.valueOf(Math
 				.round(this.scheduleStatistics.get(0)
 						.getOveralldurationPullIns() * 100) / 100)
 				+ " sek");
-		dAusrueckfahrt.setText(String.valueOf(Math
+		this.dAusrueckfahrt.setText(String.valueOf(Math
 				.round(this.scheduleStatistics.get(0)
 						.getOveralldurationPullOuts() * 100) / 100)
 				+ " sek");
-		dAnzahllinien.setText("Folgt");
+		this.dAnzahllinien.setText("Folgt");
 
-		duGesamt.setText(String.valueOf(Math.round(this.scheduleStatistics.get(
+		this.duGesamt.setText(String.valueOf(Math.round(this.scheduleStatistics.get(
 				0).getAverageLengthOfTotalTrips() * 100) / 100)
 				+ " sek");
-		duServicefahrten.setText(String.valueOf(Math
+		this.duServicefahrten.setText(String.valueOf(Math
 				.round(this.scheduleStatistics.get(0)
 						.getAverageLengthOfServiceTrips() * 100) / 100)
 				+ " sek");
-		duVerbindungsfahrt.setText(String.valueOf(Math
+		this.duVerbindungsfahrt.setText(String.valueOf(Math
 				.round(this.scheduleStatistics.get(0)
 						.getAverageLengthOfDeadheads() * 100) / 100)
 				+ " sek");
-		duWarten.setText(String.valueOf(Math.round(this.scheduleStatistics.get(
+		this.duWarten.setText(String.valueOf(Math.round(this.scheduleStatistics.get(
 				0).getAverageLengthOfWaitings() * 100) / 100)
 				+ " sek");
-		duEinrueckfahrt.setText(String.valueOf(Math
+		this.duEinrueckfahrt.setText(String.valueOf(Math
 				.round(this.scheduleStatistics.get(0)
 						.getAverageLengthOfPullIns() * 100) / 100)
 				+ " sek");
-		duAusrueckfahrt.setText(String.valueOf(Math
+		this.duAusrueckfahrt.setText(String.valueOf(Math
 				.round(this.scheduleStatistics.get(0)
 						.getAverageLengthOfPullOuts() * 100) / 100)
 				+ " sek");
-		duAnzahllinien.setText("Folgt");
+		this.duAnzahllinien.setText("Folgt");
 
+	}
+
+	// Fuellt das PieChart
+
+	public void fillPieChart() {
+
+		ObservableList<PieChart.Data> pieChartData = FXCollections
+				.observableArrayList(
+						new PieChart.Data(
+								"Servicefahrten",
+								(int) (this.scheduleStatistics.get(0)
+										.getOveralldurationServiceTrips() * 100) / 100),
+						new PieChart.Data(
+								"Verbindungsfahrt",
+								(int) (this.scheduleStatistics.get(0)
+										.getOveralldurationDeadHeads() * 100) / 100),
+						new PieChart.Data(
+								"Warten",
+								(int) (this.scheduleStatistics.get(0)
+										.getOveralldurationWaitings() * 100) / 100),
+						new PieChart.Data(
+								"Einruecken",
+								(int) (this.scheduleStatistics.get(0)
+										.getOveralldurationPullIns() * 100) / 100),
+						new PieChart.Data(
+								"Ausruecken",
+								(int) (this.scheduleStatistics.get(0)
+										.getOveralldurationPullOuts() * 100) / 100),
+						new PieChart.Data(
+								"Vorbereitung",
+								(int) (this.scheduleStatistics.get(0)
+										.getOveralldurationPreparations() * 100) / 100),
+						new PieChart.Data(
+								"WrapUps",
+								(int) (this.scheduleStatistics.get(0)
+										.getOveralldurationWrapUps() * 100) / 100),
+						new PieChart.Data(
+								"Layovers",
+								(int) (this.scheduleStatistics.get(0)
+										.getOveralldurationLayovers() * 100) / 100));
+		
+		this.graphic.setData(pieChartData);
+		this.graphic.setTitle("Zeitverteilung");
 	}
 
 	// Zuordnungsmethoden
@@ -328,6 +371,7 @@ public class StatistikenUPlanSingleLayoutController {
 		// Aufruf der Arbeitsmethoden
 		fillLabels();
 		createTableViewBlockStat();
+		fillPieChart();
 	}
 
 }

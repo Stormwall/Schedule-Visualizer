@@ -8,7 +8,7 @@ import java.util.Date;
 import sv.creation.adress.model.Dienstplan;
 
 public class DutyStatistics{
-	String dutyID;
+	int dutyHilfsID;
 	double dutytotalNumberOfTrips = 0;
 	double dutytotalRunTime = 0;
 	double dutynumberOfServiceTrips = 0;
@@ -60,6 +60,7 @@ public class DutyStatistics{
 			
 			
 			String dutyiD = dp.getDuty().get(duty).getId();
+			int hilfsID = dp.getDuty().get(duty).getHilfsID();
 			ArrayList<Integer> dutyblockID = new ArrayList<Integer>();
 			DutyStatistics dutystat = new DutyStatistics();
 			for (int dutyelement = 0; dutyelement < dp.getDutyelement().size(); dutyelement++){
@@ -69,7 +70,7 @@ public class DutyStatistics{
 						dutyblockID.add(dp.getDutyelement().get(dutyelement).getBlockID());
 						
 						long runtime = dutystat.calculateDriveTime(dp.getDutyelement().get(dutyelement).getDepTime(), dp.getDutyelement().get(dutyelement).getArrTime());
-						dutystat.dutyID=dutyiD;	
+						dutystat.dutyHilfsID=hilfsID;	
 						dutystat.dutytotalNumberOfTrips++;
 						dutystat.dutytotalRunTime = dutystat.dutytotalRunTime + runtime;
 
@@ -262,4 +263,148 @@ public class DutyStatistics{
 
 			return differenz;
 		}
+
+
+
+		public int getDutyHilfsID() {
+			return dutyHilfsID;
+		}
+
+		public double getDutytotalNumberOfTrips() {
+			return dutytotalNumberOfTrips;
+		}
+
+		public double getDutytotalRunTime() {
+			return dutytotalRunTime;
+		}
+
+		public double getDutynumberOfServiceTrips() {
+			return dutynumberOfServiceTrips;
+		}
+
+		public double getDutyaverageLengthOfServiceTrips() {
+			return dutyaverageLengthOfServiceTrips;
+		}
+
+		public double getDutynumberOfDeadheads() {
+			return dutynumberOfDeadheads;
+		}
+
+		public double getDutyaverageLengthOfDeadheads() {
+			return dutyaverageLengthOfDeadheads;
+		}
+
+		public double getDutynumberOfWaitings() {
+			return dutynumberOfWaitings;
+		}
+
+		public double getDutyaverageLengthOfWaitings() {
+			return dutyaverageLengthOfWaitings;
+		}
+
+		public double getDutynumberOfPullOuts() {
+			return dutynumberOfPullOuts;
+		}
+
+		public double getDutyaverageLengthOfPullOuts() {
+			return dutyaverageLengthOfPullOuts;
+		}
+
+		public double getDutynumberOfPullIns() {
+			return dutynumberOfPullIns;
+		}
+
+		public double getDutyaverageLengthOfPullIns() {
+			return dutyaverageLengthOfPullIns;
+		}
+
+		public double getDutynumberOfVehicles() {
+			return dutynumberOfVehicles;
+		}
+
+		public double getDutynumberOfPreparations() {
+			return dutynumberOfPreparations;
+		}
+
+		public double getDutyaverageLengthOfPreparations() {
+			return dutyaverageLengthOfPreparations;
+		}
+
+		public double getDutynumberOfWrapUps() {
+			return dutynumberOfWrapUps;
+		}
+
+		public double getDutyaverageLengthOfWrapUps() {
+			return dutyaverageLengthOfWrapUps;
+		}
+
+		public double getDutynumberOfLayovers() {
+			return dutynumberOfLayovers;
+		}
+
+		public double getDutyaverageLengthOfLayovers() {
+			return dutyaverageLengthOfLayovers;
+		}
+
+		public double getDutynumberOfTransfers() {
+			return dutynumberOfTransfers;
+		}
+
+		public double getDutyaverageLengthOfTransfers() {
+			return dutyaverageLengthOfTransfers;
+		}
+
+		public double getDutynumberOfBreaks() {
+			return dutynumberOfBreaks;
+		}
+
+		public double getDutyaverageLengthOfBreaks() {
+			return dutyaverageLengthOfBreaks;
+		}
+
+		public double getDutyserviceTimetotalDutyTimeRatio() {
+			return dutyserviceTimetotalDutyTimeRatio;
+		}
+
+		public double getDutyoveralldurationServicetrips() {
+			return dutyoveralldurationServicetrips;
+		}
+
+		public double getDutyoveralldurationDeadheads() {
+			return dutyoveralldurationDeadheads;
+		}
+
+		public double getDutyoveralldurationWaitings() {
+			return dutyoveralldurationWaitings;
+		}
+
+		public double getDutyoveralldurationPullouts() {
+			return dutyoveralldurationPullouts;
+		}
+
+		public double getDutyoveralldurationPullins() {
+			return dutyoveralldurationPullins;
+		}
+
+		public double getDutyoveralldurationPreparations() {
+			return dutyoveralldurationPreparations;
+		}
+
+		public double getDutyoveralldurationWrapUps() {
+			return dutyoveralldurationWrapUps;
+		}
+
+		public double getDutyoveralldurationLayovers() {
+			return dutyoveralldurationLayovers;
+		}
+
+		public double getDutyoveralldurationTransfers() {
+			return dutyoveralldurationTransfers;
+		}
+
+		public double getDutyoveralldurationBreaks() {
+			return dutyoveralldurationBreaks;
+		}
+		
+		
 }

@@ -25,7 +25,7 @@ public class KennzahlenLayoutController {
 	private MainApplication mainApp;
 
 	// Arbeitsvariablen der Stage
-	
+
 	@FXML
 	private ScrollPane umlaufplanPane;
 	@FXML
@@ -34,13 +34,19 @@ public class KennzahlenLayoutController {
 	private ScrollPane fahrplanPane;
 	@FXML
 	private Label auswahlUmlaufplan;
+	@FXML
+	private Label auswahlDienstplan;
+	@FXML
+	private Label auswahlFahrplan;
+	@FXML
+	private Label auswahlSzenario;
 
 	// Bau der Zugriffslisten
 
 	private ArrayList<Umlaufplan> umlaufplanliste = new ArrayList<Umlaufplan>();
 	private ArrayList<Dienstplan> dienstplanliste = new ArrayList<Dienstplan>();
 	private ArrayList<Fahrplan> fahrplanliste = new ArrayList<Fahrplan>();
-	
+
 	private ArrayList<Umlaufplan> umlaufplanChoiceliste = new ArrayList<Umlaufplan>();
 	private ArrayList<Dienstplan> dienstplanChoiceliste = new ArrayList<Dienstplan>();
 	private ArrayList<Fahrplan> fahrplanChoiceliste = new ArrayList<Fahrplan>();
@@ -64,11 +70,13 @@ public class KennzahlenLayoutController {
 		fillUmlaufplanliste();
 		fillDienstplanliste();
 		fillFahrplanliste();
-		
+
 		// Belegen der Tableviews
-		
+
 		createTableViewUmlauf();
-		
+		createTableViewDienst();
+		createTableViewFahrplan();
+
 		// Sets the Standardelement condition of the Interface
 
 		detailsUmlaufTable
@@ -83,19 +91,34 @@ public class KennzahlenLayoutController {
 	}
 
 	/**
-	 * Opens the Kostenview.
+	 * Opens the Statistikview Umlaufplan.
 	 */
 	@FXML
 	private void handleStatistikenUplan() {
-		
-		
-		if (this.umlaufplanChoiceliste.size()== 1) {
-			this.mainApp.showStatistikUPlanSingle(this.umlaufplanChoiceliste);
-		}
-		if (this.umlaufplanChoiceliste.size()> 1) {
 
-		}else{
-			
+		if (this.umlaufplanChoiceliste.size() == 1) {
+			this.mainApp.showStatistikUPlanSingle(this.umlaufplanChoiceliste);
+		} else {
+			String fehlerA = "Es wurde noch Element ausgewählt";
+			String fehlerB = "Welche Statistik soll angezeigt werden ?";
+			String fehlerC = "Fehler";
+			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+		}
+	}
+	
+	/**
+	 * Opens the Statistikview Dienstplan.
+	 */
+	@FXML
+	private void handleStatistikenDplan() {
+
+		if (this.dienstplanChoiceliste.size() == 1) {
+			this.mainApp.showStatistikDPlanSingle(this.dienstplanChoiceliste);
+		} else {
+			String fehlerA = "Es wurde noch Element ausgewählt";
+			String fehlerB = "Welche Statistik soll angezeigt werden ?";
+			String fehlerC = "Fehler";
+			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
 		}
 	}
 
@@ -106,19 +129,129 @@ public class KennzahlenLayoutController {
 	private void handleKosten() {
 
 	}
-	
+
 	/**
-	 * UmlaufChoice.
+	 * UmlaufChoiceAdd.
 	 */
 	@FXML
 	private void chooseUmlaufplan() {
-		
+
+		this.umlaufplanChoiceliste.clear();
+
 		if (this.detailsUmlaufTable.getSelectionModel().getSelectedItem() != null) {
-			this.umlaufplanChoiceliste.add(this.detailsUmlaufTable.getSelectionModel().getSelectedItem());
-			this.auswahlUmlaufplan.setText(umlaufplanChoiceliste.get(0).getName());
-		}		
-		
+			this.umlaufplanChoiceliste.add(this.detailsUmlaufTable
+					.getSelectionModel().getSelectedItem());
+			this.auswahlUmlaufplan.setText(umlaufplanChoiceliste.get(0)
+					.getName());
+		} else {
+			String fehlerA = "Es wurde noch Element ausgewählt";
+			String fehlerB = "Was soll ausgewaehlt werden ?";
+			String fehlerC = "Fehler";
+			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+		}
+
 	}
+
+	/**
+	 * UmlaufChoiceDelete.
+	 */
+	@FXML
+	private void deleteUmlaufplan() {
+
+		if (this.umlaufplanChoiceliste.isEmpty()) {
+			String fehlerA = "Es wurde noch Element ausgewählt";
+			String fehlerB = "Was soll geloescht werden ?";
+			String fehlerC = "Fehler";
+			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+		} else {
+			this.umlaufplanChoiceliste.clear();
+
+			this.auswahlUmlaufplan.setText("");
+		}
+	}
+
+	/**
+	 * DutyChoiceAdd.
+	 */
+	@FXML
+	private void chooseDienstplan() {
+
+		this.dienstplanChoiceliste.clear();
+
+		if (this.detailsDienstTable.getSelectionModel().getSelectedItem() != null) {
+			this.dienstplanChoiceliste.add(this.detailsDienstTable
+					.getSelectionModel().getSelectedItem());
+			this.auswahlDienstplan.setText(dienstplanChoiceliste.get(0)
+					.getName());
+		} else {
+			String fehlerA = "Es wurde noch Element ausgewählt";
+			String fehlerB =  "Was soll ausgewaehlt werden ?";
+			String fehlerC = "Fehler";
+			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+		}
+
+	}
+
+	/**
+	 * DutyChoiceDelete.
+	 */
+	@FXML
+	private void deleteDienstplan() {
+
+		if (this.dienstplanChoiceliste.isEmpty()) {
+			String fehlerA = "Es wurde noch Element ausgewählt";
+			String fehlerB = "Was soll geloescht werden ?";
+			String fehlerC = "Fehler";
+			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+		} else {
+			this.dienstplanChoiceliste.clear();
+
+			this.auswahlDienstplan.setText("");
+		}
+
+
+	}
+
+	/**
+	 * FahrplanChoiceAdd.
+	 */
+	@FXML
+	private void chooseFahrplan() {
+
+		this.fahrplanChoiceliste.clear();
+
+		if (this.detailsFahrplanTable.getSelectionModel().getSelectedItem() != null) {
+			this.fahrplanChoiceliste.add(this.detailsFahrplanTable
+					.getSelectionModel().getSelectedItem());
+			this.auswahlFahrplan.setText(fahrplanChoiceliste.get(0)
+					.getBezeichnung());
+		} else {
+			String fehlerA = "Es wurde noch Element ausgewählt";
+			String fehlerB =  "Was soll ausgewaehlt werden ?";
+			String fehlerC = "Fehler";
+			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+		}
+
+	}
+
+	/**
+	 * FahrplanChoiceDelete.
+	 */
+	@FXML
+	private void deleteFahrplan() {
+
+		if (this.fahrplanChoiceliste.isEmpty()) {
+
+			String fehlerA = "Es wurde noch Element ausgewählt";
+			String fehlerB = "Was soll geloescht werden ?";
+			String fehlerC = "Fehler";
+			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+		} else {
+			this.fahrplanChoiceliste.clear();
+			this.auswahlFahrplan.setText("");
+		}
+	}
+
 	// Methode zum Beenden des PopUp
 
 	public void endStage() {
@@ -127,14 +260,14 @@ public class KennzahlenLayoutController {
 	}
 
 	/**
-	 * Builds Umlaufplantabkeview.
+	 * Builds Umlaufplantableview.
 	 */
 	@SuppressWarnings("unchecked")
 	@FXML
 	private void createTableViewUmlauf() {
-		
+
 		this.umlaufplanPane.setContent(null);
-		
+
 		this.detailsUmlaufTable.setEditable(true);
 
 		TableColumn<Umlaufplan, String> uBezeichnung = new TableColumn<Umlaufplan, String>(
@@ -162,17 +295,111 @@ public class KennzahlenLayoutController {
 		uID.prefWidthProperty().bind(uID.widthProperty());
 		ufahrplanID.prefWidthProperty().bind(uUploadDate.widthProperty());
 		uUploadDate.prefWidthProperty().bind(uUploadDate.widthProperty());
-		
+
 		ObservableList<Umlaufplan> data = FXCollections.observableArrayList();
 
 		for (int i = 0; i < this.umlaufplanliste.size(); i++) {
 			data.add(this.umlaufplanliste.get(i));
 		}
-		
+
 		this.detailsUmlaufTable.setItems(data);
 		this.detailsUmlaufTable.getColumns().addAll(uBezeichnung, uID,
 				ufahrplanID, uUploadDate);
 		this.umlaufplanPane.setContent(this.detailsUmlaufTable);
+
+	}
+
+	/**
+	 * Builds Dienstplantableview.
+	 */
+	@SuppressWarnings("unchecked")
+	@FXML
+	private void createTableViewDienst() {
+
+		this.dienstplanPane.setContent(null);
+
+		this.detailsDienstTable.setEditable(true);
+
+		TableColumn<Dienstplan, String> dBezeichnung = new TableColumn<Dienstplan, String>(
+				"Bezeichnung");
+		TableColumn<Dienstplan, Integer> dID = new TableColumn<Dienstplan, Integer>(
+				"ID");
+		TableColumn<Dienstplan, Integer> dfahrplanID = new TableColumn<Dienstplan, Integer>(
+				"FahrplanID");
+		TableColumn<Dienstplan, String> dUploadDate = new TableColumn<Dienstplan, String>(
+				"Upload");
+
+		dBezeichnung
+				.setCellValueFactory(new PropertyValueFactory<Dienstplan, String>(
+						"name"));
+		dID.setCellValueFactory(new PropertyValueFactory<Dienstplan, Integer>(
+				"id"));
+		dfahrplanID
+				.setCellValueFactory(new PropertyValueFactory<Dienstplan, Integer>(
+						"fahrplanID"));
+		dUploadDate
+				.setCellValueFactory(new PropertyValueFactory<Dienstplan, String>(
+						"date"));
+
+		dBezeichnung.prefWidthProperty().bind(dBezeichnung.widthProperty());
+		dID.prefWidthProperty().bind(dID.widthProperty());
+		dfahrplanID.prefWidthProperty().bind(dfahrplanID.widthProperty());
+		dUploadDate.prefWidthProperty().bind(dUploadDate.widthProperty());
+
+		ObservableList<Dienstplan> data = FXCollections.observableArrayList();
+
+		for (int i = 0; i < this.dienstplanliste.size(); i++) {
+			data.add(this.dienstplanliste.get(i));
+		}
+
+		this.detailsDienstTable.setItems(data);
+		this.detailsDienstTable.getColumns().addAll(dBezeichnung, dID,
+				dfahrplanID, dUploadDate);
+		this.dienstplanPane.setContent(this.detailsDienstTable);
+
+	}
+
+	/**
+	 * Builds Fahrplantableview.
+	 */
+	@SuppressWarnings("unchecked")
+	@FXML
+	private void createTableViewFahrplan() {
+
+		this.fahrplanPane.setContent(null);
+
+		this.detailsFahrplanTable.setEditable(true);
+
+		TableColumn<Fahrplan, String> fBezeichnung = new TableColumn<Fahrplan, String>(
+				"Bezeichnung");
+		TableColumn<Fahrplan, Integer> fID = new TableColumn<Fahrplan, Integer>(
+				"ID");
+		TableColumn<Fahrplan, String> fUploadDate = new TableColumn<Fahrplan, String>(
+				"Upload");
+
+		fBezeichnung
+				.setCellValueFactory(new PropertyValueFactory<Fahrplan, String>(
+						"bezeichnung"));
+		fID.setCellValueFactory(new PropertyValueFactory<Fahrplan, Integer>(
+				"id"));
+		fUploadDate
+				.setCellValueFactory(new PropertyValueFactory<Fahrplan, String>(
+						"date"));
+
+		fBezeichnung.prefWidthProperty().bind(fBezeichnung.widthProperty());
+		fID.prefWidthProperty().bind(fID.widthProperty());
+		fUploadDate.prefWidthProperty().bind(fUploadDate.widthProperty());
+
+		ObservableList<Fahrplan> data = FXCollections.observableArrayList();
+
+		for (int i = 0; i < this.fahrplanliste.size(); i++) {
+			data.add(this.fahrplanliste.get(i));
+		}
+
+		this.detailsFahrplanTable.setItems(data);
+		this.detailsFahrplanTable.getColumns().addAll(fBezeichnung, fID,
+				fUploadDate);
+		this.fahrplanPane.setContent(this.detailsFahrplanTable);
 
 	}
 
