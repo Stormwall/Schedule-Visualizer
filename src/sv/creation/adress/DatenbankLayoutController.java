@@ -338,7 +338,7 @@ public class DatenbankLayoutController {
 
 		this.fahrplanliste.clear();
 
-		if (this.dbm.databaseIsEmpty() || this.dbm.dienstplanIsEmpty()) {
+		if (this.dbm.databaseIsEmpty() || this.dbm.fahrplanIsEmpty()) {
 
 		} else {
 

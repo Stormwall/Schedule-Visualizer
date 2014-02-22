@@ -40,8 +40,8 @@ public class DBSave {
 				}else{
 					stmt.executeUpdate("INSERT INTO ExceptionalBlockelement ( DepTime, ArrTime, ServiceJourneyID, ElementType, BlockID, FromStopID, ToStopID, UmlaufplanID, MatchingPos) VALUES('"+umlaufplan.getFahrtZuUmlauf().get(i).getDepTime()+"','"+umlaufplan.getFahrtZuUmlauf().get(i).getArrTime()+"','"+umlaufplan.getFahrtZuUmlauf().get(i).getServiceJourneyID()+"','"+umlaufplan.getFahrtZuUmlauf().get(i).getElementType()+"', "
 							  + "(SELECT b.ID FROM Block AS b WHERE b.ID='"+umlaufplan.getFahrtZuUmlauf().get(i).getBlockID()+"' AND b.UmlaufplanID= (SELECT up.ID FROM Umlaufplan AS up WHERE Bezeichnung = '"+bezeichnung+"')), "
-							  + "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.ID='"+umlaufplan.getFahrtZuUmlauf().get(i).getFromStopID()+"' AND sp.FahrplanID='"+umlaufplan.getFahrplanID()+"')), "
-							  + "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.ID='"+umlaufplan.getFahrtZuUmlauf().get(i).getToStopID()+"' AND sp.FahrplanID='"+umlaufplan.getFahrplanID()+"'))), "
+							  + "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.ID='"+umlaufplan.getFahrtZuUmlauf().get(i).getFromStopID()+"' AND sp.FahrplanID='"+umlaufplan.getFahrplanID()+"'), "
+							  + "(SELECT sp.ID FROM Stoppoint AS sp WHERE sp.ID='"+umlaufplan.getFahrtZuUmlauf().get(i).getToStopID()+"' AND sp.FahrplanID='"+umlaufplan.getFahrplanID()+"'), "
 							  + "(SELECT up.ID FROM Umlaufplan AS up WHERE Bezeichnung = '"+bezeichnung+"'),'"+pos+"');");
 				
 				}

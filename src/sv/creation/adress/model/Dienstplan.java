@@ -15,13 +15,15 @@ public class Dienstplan {
 	 * @param dienstplan
 	 */
 	public Dienstplan(int id, ArrayList<Duty> duty,
-			ArrayList<Dutyelement> dutyelement, int fahrplanID, String date) {
+			ArrayList<Dutyelement> dutyelement, int fahrplanID, String name, String date) {
 		// super();
 		this.id = id;
 		this.duty = duty;
 		this.dutyelement = dutyelement;
 		this.fahrplanID = fahrplanID;
+		this.name = name;
 		this.date = date;
+		
 	}
 
 	public int getId() {

@@ -118,7 +118,7 @@ public class DBConnection {
 			//*********************************************************************************************************************************************
 			
 			//table for schedule
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Fahrplan (ID INTEGER PRIMARY KEY AUTOINCREMENT, Bezeichnung VARCHAR(255), VersNr VARCHAR(30), FileType VARCHAR(30), Datum DATE);");
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Fahrplan (ID INTEGER PRIMARY KEY AUTOINCREMENT, Bezeichnung VARCHAR(255), Name VARCHAR(100), VersNr VARCHAR(30), FileType VARCHAR(30), Datum DATE);");
 			
 			//table for stoppoints
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Stoppoint (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -278,7 +278,7 @@ public class DBConnection {
 			//****************************************************************************************************************************	
 			
 			//table for tour roster
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Umlaufplan (ID INTEGER PRIMARY KEY AUTOINCREMENT, Bezeichnung VARCHAR(255), FahrplanID INTEGER, DayID INTEGER, Datum DATE, "
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Umlaufplan (ID INTEGER PRIMARY KEY AUTOINCREMENT, Bezeichnung VARCHAR(255), Name VARCHAR(100), FahrplanID INTEGER, DayID INTEGER, Datum DATE, "
 																		+ "FOREIGN KEY (FahrplanID) REFERENCES Fahrplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);");
 			
 			//table for tours
@@ -378,7 +378,7 @@ public class DBConnection {
 			//*********************************************************************************************************************************************
 			
 			//table for duty roster
-			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Dienstplan (ID INTEGER PRIMARY KEY AUTOINCREMENT, Bezeichnung VARCHAR(255), FahrplanID INTEGER NOT NULL, UmlaufplanID INTEGER NOT NULL, DayID INTEGER, Datum DATE, "
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Dienstplan (ID INTEGER PRIMARY KEY AUTOINCREMENT, Bezeichnung VARCHAR(255), Name VARCHAR(100), FahrplanID INTEGER NOT NULL, UmlaufplanID INTEGER NOT NULL, DayID INTEGER, Datum DATE, "
 																		+ "FOREIGN KEY (FahrplanID) REFERENCES Fahrplan(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
 																		+ "FOREIGN KEY (UmlaufplanID) REFERENCES Umlaufplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);");
 			
@@ -508,7 +508,7 @@ public class DBConnection {
 		  //Fill values in specific tables
 		  
 		  //schedule name
-		  stmnt.executeUpdate("INSERT INTO Fahrplan (Bezeichnung, Datum) VALUES ('"+fileNameVergleich+"', CURRENT_DATE);");
+		  stmnt.executeUpdate("INSERT INTO Fahrplan (Bezeichnung,Name, Datum) VALUES ('"+fileNameVergleich+"','"+fileNameVergleich+"', CURRENT_DATE);");
 		  /**
 		   * TODO: VersNr. + File Type
 		   **/
@@ -751,10 +751,10 @@ public class DBConnection {
 		  if(!ss.getBlockelementDayID().isEmpty()){
 			  dayID = ss.getBlockelementDayID().get(0);
 		  
-		  stmnt.executeUpdate("INSERT INTO Umlaufplan (Bezeichnung, FahrplanID, DayID, Datum) VALUES ('"+fileNameVergleich+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%')), '"+dayID+"', CURRENT_DATE);");
+		  stmnt.executeUpdate("INSERT INTO Umlaufplan (Bezeichnung, Name, FahrplanID, DayID, Datum) VALUES ('"+fileNameVergleich+"','"+fileNameVergleich+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%')), '"+dayID+"', CURRENT_DATE);");
 		  }
 		  else{
-			  stmnt.executeUpdate("INSERT INTO Umlaufplan (Bezeichnung, FahrplanID, Datum) VALUES ('"+fileNameVergleich+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%')), CURRENT_DATE);");
+			  stmnt.executeUpdate("INSERT INTO Umlaufplan (Bezeichnung, Name, FahrplanID, Datum) VALUES ('"+fileNameVergleich+"','"+fileNameVergleich+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%')), CURRENT_DATE);");
 		  }    
 		  
 		  
@@ -941,17 +941,14 @@ public class DBConnection {
 			  dayID = ss.getDutyelementDayID().get(0);
 			  //filling Dienstplan Table
 
-		  stmnt.executeUpdate("INSERT INTO Dienstplan (Bezeichnung, FahrplanID, UmlaufplanID, DayID, Datum) VALUES ('"
-				  			+fileNameVergleich+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%')),(SELECT u.ID FROM Umlaufplan AS u WHERE u.FahrplanID=(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%') AND u.Bezeichnung LIKE ('%"
+		  stmnt.executeUpdate("INSERT INTO Dienstplan (Bezeichnung, Name, FahrplanID, UmlaufplanID, DayID, Datum) VALUES ('"
+				  			+fileNameVergleich+"','"+fileNameVergleich+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%')),(SELECT u.ID FROM Umlaufplan AS u WHERE u.FahrplanID=(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%') AND u.Bezeichnung LIKE ('%"
 				  			+dienstplanNameCut+"') AND u.DayID='"+dayID+"')),'"+dayID+"', CURRENT_DATE);");
 		  }else{
 			    
 			  //filling Dienstplan Table
-			  System.out.println("INSERT INTO Dienstplan (Bezeichnung, FahrplanID, UmlaufplanID, Datum) VALUES ('"
-				  			+fileNameVergleich+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%')),(SELECT u.ID FROM Umlaufplan AS u WHERE u.FahrplanID=(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%')AND u.Bezeichnung LIKE ('%"
-				  			+dienstplanNameCut+"))), CURRENT_DATE);");
 		  stmnt.executeUpdate("INSERT INTO Dienstplan (Bezeichnung, FahrplanID, UmlaufplanID, Datum) VALUES ('"
-				  			+fileNameVergleich+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%')),(SELECT u.ID FROM Umlaufplan AS u WHERE u.FahrplanID=(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%')AND u.Bezeichnung LIKE ('%"
+				  			+fileNameVergleich+"','"+fileNameVergleich+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%')),(SELECT u.ID FROM Umlaufplan AS u WHERE u.FahrplanID=(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%')AND u.Bezeichnung LIKE ('%"
 				  			+dienstplanNameCut+"'))), CURRENT_DATE);");
 		  }
 		  //iterators for getting values from stringsplitter object
