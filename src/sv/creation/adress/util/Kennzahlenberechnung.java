@@ -1,7 +1,5 @@
 package sv.creation.adress.util;
-
 import java.util.ArrayList;
-
 import sv.creation.adress.model.Blockelement;
 import sv.creation.adress.model.Dienstplan;
 import sv.creation.adress.model.Duty;
@@ -9,8 +7,6 @@ import sv.creation.adress.model.Dutyelement;
 import sv.creation.adress.model.Fahrplan;
 import sv.creation.adress.model.ServiceJourney;
 import sv.creation.adress.model.Umlaufplan;
-
-
 public class Kennzahlenberechnung {
 	/*********************************************************************************************************************************
 	 ****berechnet durchschnittl. Wiederholrate für Dienstplanliste mit allen Fahrten*************************************************
@@ -432,7 +428,6 @@ public class Kennzahlenberechnung {
 		}
 		return ListPlaeneGesamt;
 	}
-
 	
 	/*********************************************************************************************************************************
 	 ****berechnet Distanzmaß für Umlaufplanliste**************************************************************************************
@@ -608,5 +603,191 @@ public ArrayList<Blockelement> regelmaessigeBlockelement(Umlaufplan umlaufplan, 
 				}
 		}	
 	return blockelementList;
+}
+
+public double pVergleich(Fahrplan fahrplan) {
+
+	int[][] anzahlFahrten = new int[7][1];
+
+	// Alle regulären Fahrten eines Fahrplans
+	ArrayList<Integer> serviceJourneyList = new ArrayList<Integer>();
+	for (int i = 0; i < fahrplan.getServicejourney().size(); i++) {
+		for (int k = 0; k < fahrplan.getDays().size(); k++) {
+			if (fahrplan.getServicejourney().get(i).getiD() == fahrplan
+					.getDays().get(k).getTripID()
+					&& fahrplan.getDays().get(k).getD1() == 1
+					&& fahrplan.getDays().get(k).getD2() == 1
+					&& fahrplan.getDays().get(k).getD3() == 1
+					&& fahrplan.getDays().get(k).getD4() == 1
+					&& fahrplan.getDays().get(k).getD5() == 1) {
+				serviceJourneyList.add(fahrplan.getServicejourney().get(i)
+						.getiD());
+				break;
+			}
+		}
+	}
+
+	// Listen mit allen Fahrten des jeweiligen Tages
+	ArrayList<Integer> tripTotalMo = new ArrayList<Integer>();
+	ArrayList<Integer> tripTotalDi = new ArrayList<Integer>();
+	ArrayList<Integer> tripTotalMi = new ArrayList<Integer>();
+	ArrayList<Integer> tripTotalDo = new ArrayList<Integer>();
+	ArrayList<Integer> tripTotalFr = new ArrayList<Integer>();
+	ArrayList<Integer> tripTotalSa = new ArrayList<Integer>();
+	ArrayList<Integer> tripTotalSo = new ArrayList<Integer>();
+
+	int days = 0;
+
+	while (days < 7) {
+		for (int i = 0; i < fahrplan.getDays().size(); i++) {
+
+			switch (days) {
+			case 0:
+
+				if (fahrplan.getDays().get(i).getD1() == 1) {
+					tripTotalMo.add(fahrplan.getDays().get(i).getTripID());
+					anzahlFahrten[0][0]++;
+				}
+				break;
+			case 1:
+				if (fahrplan.getDays().get(i).getD2() == 1) {
+					tripTotalDi.add(fahrplan.getDays().get(i).getTripID());
+					anzahlFahrten[1][0]++;
+				}
+				break;
+			case 2:
+
+				if (fahrplan.getDays().get(i).getD3() == 1) {
+					tripTotalMi.add(fahrplan.getDays().get(i).getTripID());
+					anzahlFahrten[2][0]++;
+				}
+				break;
+			case 3:
+
+				if (fahrplan.getDays().get(i).getD4() == 1) {
+					tripTotalDo.add(fahrplan.getDays().get(i).getTripID());
+					anzahlFahrten[3][0]++;
+				}
+				break;
+			case 4:
+
+				if (fahrplan.getDays().get(i).getD5() == 1) {
+					tripTotalFr.add(fahrplan.getDays().get(i).getTripID());
+					anzahlFahrten[4][0]++;
+				}
+				break;
+			case 5:
+
+				if (fahrplan.getDays().get(i).getD6() == 1) {
+					tripTotalSa.add(fahrplan.getDays().get(i).getTripID());
+					anzahlFahrten[0][0]++;
+				}
+				break;
+			case 6:
+
+				if (fahrplan.getDays().get(i).getD7() == 1) {
+					tripTotalSo.add(fahrplan.getDays().get(i).getTripID());
+					anzahlFahrten[6][0]++;
+				}
+				break;
+			default:
+				break;
+			}
+
+		}
+		days++;
+	}
+
+	// Listen mit allen Fahrten des jeweiligen Tages
+	ArrayList<Integer> tripIrregularMo = new ArrayList<Integer>();
+	ArrayList<Integer> tripIrregularDi = new ArrayList<Integer>();
+	ArrayList<Integer> tripIrregularMi = new ArrayList<Integer>();
+	ArrayList<Integer> tripIrregularDo = new ArrayList<Integer>();
+	ArrayList<Integer> tripIrregularFr = new ArrayList<Integer>();
+	ArrayList<Integer> tripIrregularSa = new ArrayList<Integer>();
+	ArrayList<Integer> tripIrregularSo = new ArrayList<Integer>();
+
+	for (int j = 0; j < tripTotalMo.size(); j++) {
+		if (!serviceJourneyList.contains(tripTotalMo.get(j))) {
+			tripIrregularMo.add(tripTotalMo.get(j));
+		}
+	}
+	for (int j = 0; j < tripTotalDi.size(); j++) {
+		if (!serviceJourneyList.contains(tripTotalDi.get(j))) {
+			tripIrregularDi.add(tripTotalDi.get(j));
+		}
+	}
+	for (int j = 0; j < tripTotalMi.size(); j++) {
+		if (!serviceJourneyList.contains(tripTotalMi.get(j))) {
+			tripIrregularMi.add(tripTotalMi.get(j));
+		}
+	}
+	for (int j = 0; j < tripTotalDo.size(); j++) {
+		if (!serviceJourneyList.contains(tripTotalDo.get(j))) {
+			tripIrregularDo.add(tripTotalDo.get(j));
+		}
+	}
+	for (int j = 0; j < tripTotalFr.size(); j++) {
+		if (!serviceJourneyList.contains(tripTotalFr.get(j))) {
+			tripIrregularFr.add(tripTotalFr.get(j));
+		}
+	}
+	for (int j = 0; j < tripTotalSa.size(); j++) {
+		if (!serviceJourneyList.contains(tripTotalSa.get(j))) {
+			tripIrregularSa.add(tripTotalSa.get(j));
+		}
+	}
+	for (int j = 0; j < tripTotalSo.size(); j++) {
+		if (!serviceJourneyList.contains(tripTotalSo.get(j))) {
+			tripIrregularSo.add(tripTotalSo.get(j));
+		}
+	}
+	
+	ArrayList<ArrayList<Integer>> listDays = new ArrayList<ArrayList<Integer>>();
+	listDays.add(tripIrregularMo);
+	listDays.add(tripIrregularDi);
+	listDays.add(tripIrregularMi);
+	listDays.add(tripIrregularDo);
+	listDays.add(tripIrregularFr);
+	listDays.add(tripIrregularSa);
+	listDays.add(tripIrregularSo);
+	
+	int[][] matrix = new int[7][7];
+	int count=0;
+	for (int tag = 0; tag < listDays.size(); tag++) {	
+			for (int tag2 = tag+1; tag2 < listDays.size()-2; tag2++) {
+				for (int j = 0; j < listDays.get(tag).size(); j++) {
+					for (int j2 = 0; j2 < listDays.get(tag2).size(); j2++) {
+						System.out.println(listDays.get(tag).get(j).intValue());
+						System.out.println(listDays.get(tag2).get(j2).intValue());
+						if(listDays.get(tag).get(j).intValue()==listDays.get(tag2).get(j2).intValue()){
+						count++;
+						}
+						
+					}
+					if(j==listDays.get(tag).size()-1){
+						matrix[tag2][tag]=listDays.get(tag).size()+listDays.get(tag2).size()-count;
+						count=0;
+				}
+			}
+		}
+	}
+	
+	double zahlFahrten = 0;
+	double zwischenwert=0;
+	for (int i = 0; i < matrix.length; i++) {
+		for (int j = 0; j < matrix.length; j++) {
+			if(matrix[i][j]>0){
+				zwischenwert+=matrix[i][j];
+				zahlFahrten++;
+			}
+		}
+	}
+	
+	double pWert=zwischenwert/zahlFahrten;
+	
+	
+	
+	return pWert;
 }
 }
