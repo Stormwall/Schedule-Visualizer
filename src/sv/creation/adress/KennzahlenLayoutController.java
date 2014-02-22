@@ -1,20 +1,26 @@
 package sv.creation.adress;
 
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.TreeSet;
 
 import sv.creation.adress.database.DBMatching;
 import sv.creation.adress.model.Dienstplan;
 import sv.creation.adress.model.Fahrplan;
 import sv.creation.adress.model.Umlaufplan;
+import sv.creation.adress.util.Kennzahlenberechnung;
+import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class KennzahlenLayoutController {
 
@@ -40,6 +46,22 @@ public class KennzahlenLayoutController {
 	private Label auswahlFahrplan;
 	@FXML
 	private Label auswahlSzenario;
+	@FXML
+	private Button dWU;
+	@FXML
+	private Button dWD;
+	@FXML
+	private Button dMU;
+	@FXML
+	private Button dMD;
+	@FXML
+	private Button kostenU;
+	@FXML
+	private Button kostenD;
+	@FXML
+	private Button statisitkU;
+	@FXML
+	private Button statistikD;
 
 	// Bau der Zugriffslisten
 
@@ -105,7 +127,7 @@ public class KennzahlenLayoutController {
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
 		}
 	}
-	
+
 	/**
 	 * Opens the Statistikview Dienstplan.
 	 */
@@ -114,6 +136,7 @@ public class KennzahlenLayoutController {
 
 		if (this.dienstplanChoiceliste.size() == 1) {
 			this.mainApp.showStatistikDPlanSingle(this.dienstplanChoiceliste);
+
 		} else {
 			String fehlerA = "Es wurde noch Element ausgew‰hlt";
 			String fehlerB = "Welche Statistik soll angezeigt werden ?";
@@ -123,11 +146,153 @@ public class KennzahlenLayoutController {
 	}
 
 	/**
+	 * Opens the durchschnittl. U w.
+	 */
+	@FXML
+	private void handleDurchschnittWU() {
+
+		// Arbeitsvariablen der Methode
+		Kennzahlenberechnung calc = new Kennzahlenberechnung();
+		Fahrplan fahrplan = null;
+		boolean matchFplan = false;
+		int i = 0;
+		// Zuordnung des PLans
+
+		while (matchFplan == false) {
+			if (this.umlaufplanChoiceliste.get(0).getFahrplanID() == this.fahrplanliste
+					.get(i).getId()) {
+				fahrplan = this.fahrplanliste.get(i);
+				matchFplan = true;
+			}
+			++i;
+		}
+
+		// Berrechnung der Plaene
+		double result = calc.berechneDurschnittlicheWiederholrateUmlaufplanAll(
+				this.umlaufplanChoiceliste, fahrplan);
+
+		String fehlerA = "Die durschnittliche Wiederholrate der eingebenen Umlaufplaene lautet : "
+				+ result;
+		String fehlerB = "Ihr Ergebnis";
+		String fehlerC = "Ausgabe";
+		this.mainApp.informationMeldung(fehlerA, fehlerB, fehlerC);
+
+	}
+
+	/**
+	 * Opens the durchschnittl. D w.
+	 */
+	@FXML
+	private void handleDurchschnittWD() {
+
+		// Arbeitsvariablen der Methode
+		Kennzahlenberechnung calc = new Kennzahlenberechnung();
+		Fahrplan fahrplan = null;
+		boolean matchFplan = false;
+		int i = 0;
+		// Zuordnung des PLans
+
+		while (matchFplan == false) {
+			if (this.dienstplanChoiceliste.get(0).getFahrplanID() == this.fahrplanliste
+					.get(i).getId()) {
+				fahrplan = this.fahrplanliste.get(i);
+				matchFplan = true;
+			}
+			++i;
+		}
+
+		// Berrechnung der Plaene
+		double result = calc.berechneDurschnittlicheWiederholrateDienstplanAll(
+				this.dienstplanChoiceliste, fahrplan);
+
+		String fehlerA = "Die durschnittliche Wiederholrate der eingebenen Dienstplaene lautet : "
+				+ result;
+		String fehlerB = "Ihr Ergebnis";
+		String fehlerC = "Ausgabe";
+		this.mainApp.informationMeldung(fehlerA, fehlerB, fehlerC);
+
+	}
+
+	/**
+	 * Opens the durchschnittl. U w.
+	 */
+	@FXML
+	private void handleDistanzMU() {
+
+		// Arbeitsvariablen der Methode
+		Kennzahlenberechnung calc = new Kennzahlenberechnung();
+		Fahrplan fahrplan = null;
+		boolean matchFplan = false;
+		int i = 0;
+		// Zuordnung des PLans
+
+		while (matchFplan == false) {
+			if (this.umlaufplanChoiceliste.get(0).getFahrplanID() == this.fahrplanliste
+					.get(i).getId()) {
+				fahrplan = this.fahrplanliste.get(i);
+				matchFplan = true;
+			}
+			++i;
+		}
+
+		// Berrechnung der Plaene
+		double result = calc.berechneDistanzVehSchedule(this.umlaufplanChoiceliste, fahrplan);
+
+		String fehlerA = "Das Distanzmaﬂ der eingebenen Umlaufplaene lautet : "
+				+ result;
+		String fehlerB = "Ihr Ergebnis";
+		String fehlerC = "Ausgabe";
+		this.mainApp.informationMeldung(fehlerA, fehlerB, fehlerC);
+
+	}
+
+	/**
+	 * Opens the durchschnittl. D w.
+	 */
+	@FXML
+	private void handleDistanzMD() {
+
+		// Arbeitsvariablen der Methode
+		Kennzahlenberechnung calc = new Kennzahlenberechnung();
+		Fahrplan fahrplan = null;
+		boolean matchFplan = false;
+		int i = 0;
+		// Zuordnung des PLans
+
+		while (matchFplan == false) {
+			if (this.dienstplanChoiceliste.get(0).getFahrplanID() == this.fahrplanliste
+					.get(i).getId()) {
+				fahrplan = this.fahrplanliste.get(i);
+				matchFplan = true;
+			}
+			++i;
+		}
+
+		// Berrechnung der Plaene
+		double result = calc.berechneDistanzCrewSchedule(this.dienstplanChoiceliste, fahrplan);
+
+		String fehlerA = "Das Distanzmaﬂ der eingebenen Dienstplaene lautet : "
+				+ result;
+		String fehlerB = "Ihr Ergebnis";
+		String fehlerC = "Ausgabe";
+		this.mainApp.informationMeldung(fehlerA, fehlerB, fehlerC);
+
+	}
+
+	/**
 	 * Opens the Kostenview.
 	 */
 	@FXML
-	private void handleKosten() {
+	private void handleKostenU() {
+		this.mainApp.showKostenU();
+	}
 
+	/**
+	 * Opens the Kostenview.
+	 */
+	@FXML
+	private void handleKostenD() {
+		this.mainApp.showKostenD();
 	}
 
 	/**
@@ -136,20 +301,106 @@ public class KennzahlenLayoutController {
 	@FXML
 	private void chooseUmlaufplan() {
 
-		this.umlaufplanChoiceliste.clear();
-
 		if (this.detailsUmlaufTable.getSelectionModel().getSelectedItem() != null) {
-			this.umlaufplanChoiceliste.add(this.detailsUmlaufTable
-					.getSelectionModel().getSelectedItem());
-			this.auswahlUmlaufplan.setText(umlaufplanChoiceliste.get(0)
-					.getName());
+
+			boolean checkList = true;
+
+			for (int i = 0; i < this.umlaufplanChoiceliste.size(); i++) {
+				if (this.detailsUmlaufTable.getSelectionModel()
+						.getSelectedItem().getName() == this.umlaufplanChoiceliste
+						.get(i).getName()) {
+					checkList = false;
+				}
+			}
+			if (checkList) {
+
+				this.umlaufplanChoiceliste.add(this.detailsUmlaufTable
+						.getSelectionModel().getSelectedItem());
+
+				Set<String> setInput = new TreeSet<String>();
+				for (int i = 0; i < this.umlaufplanChoiceliste.size(); i++) {
+					setInput.add(this.umlaufplanChoiceliste.get(i).getName());
+				}
+
+				StringBuilder sb = new StringBuilder();
+				for (String tempString : setInput) {
+					sb.append("").append(tempString).append(",");
+				}
+
+				this.auswahlUmlaufplan.setText(sb.toString());
+
+				if (this.umlaufplanChoiceliste.size() == 1
+						&& this.statisitkU.getOpacity() != 1) {
+					FadeTransition fa = new FadeTransition(
+							Duration.millis(1000), this.statisitkU);
+					fa.setFromValue(0.0);
+					fa.setToValue(1.0);
+					fa.setAutoReverse(true);
+					fa.play();
+					this.statisitkU.setDisable(false);
+				}
+				if (this.umlaufplanChoiceliste.size() > 1
+						&& this.statisitkU.getOpacity() == 1) {
+					FadeTransition faa = new FadeTransition(
+							Duration.millis(1000), this.statisitkU);
+					faa.setFromValue(1.0);
+					faa.setToValue(0.0);
+					faa.setAutoReverse(true);
+					faa.play();
+					this.statisitkU.setDisable(true);
+				}
+				if (this.umlaufplanChoiceliste.size() >= 1
+						&& this.kostenU.getOpacity() != 1) {
+					FadeTransition fa = new FadeTransition(
+							Duration.millis(1000), this.kostenU);
+					fa.setFromValue(0.0);
+					fa.setToValue(1.0);
+					fa.setAutoReverse(true);
+					fa.play();
+					this.kostenU.setDisable(false);
+				}
+				if (this.umlaufplanChoiceliste.size() == 2
+						&& this.dMU.getOpacity() != 1) {
+					FadeTransition fa = new FadeTransition(
+							Duration.millis(1000), this.dMU);
+					fa.setFromValue(0.0);
+					fa.setToValue(1.0);
+					fa.setAutoReverse(true);
+					fa.play();
+					this.dMU.setDisable(false);
+				}
+				if (this.umlaufplanChoiceliste.size() > 2
+						&& this.dMU.getOpacity() == 1) {
+					FadeTransition faa = new FadeTransition(
+							Duration.millis(1000), this.dMU);
+					faa.setFromValue(1.0);
+					faa.setToValue(0.0);
+					faa.setAutoReverse(true);
+					faa.play();
+					this.dMU.setDisable(true);
+				}
+				if (this.umlaufplanChoiceliste.size() >= 2
+						&& this.dWU.getOpacity() != 1) {
+					FadeTransition fa = new FadeTransition(
+							Duration.millis(1000), this.dWU);
+					fa.setFromValue(0.0);
+					fa.setToValue(1.0);
+					fa.setAutoReverse(true);
+					fa.play();
+					this.dWU.setDisable(false);
+				}
+			} else {
+				String fehlerA = "Das Element wurde bereits ausgewaehlt.";
+				String fehlerB = "Was soll ausgewaehlt werden ?";
+				String fehlerC = "Fehler";
+				this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+			}
 		} else {
 			String fehlerA = "Es wurde noch Element ausgew‰hlt";
 			String fehlerB = "Was soll ausgewaehlt werden ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
 		}
-
 	}
 
 	/**
@@ -164,9 +415,110 @@ public class KennzahlenLayoutController {
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
 		} else {
-			this.umlaufplanChoiceliste.clear();
 
-			this.auswahlUmlaufplan.setText("");
+			this.umlaufplanChoiceliste.remove(((this.umlaufplanChoiceliste
+					.size() - 1)));
+
+			Set<String> setInput = new TreeSet<String>();
+			for (int i = 0; i < this.umlaufplanChoiceliste.size(); i++) {
+				setInput.add(this.umlaufplanChoiceliste.get(i).getName());
+			}
+
+			StringBuilder sb = new StringBuilder();
+			for (String tempString : setInput) {
+				sb.append("").append(tempString).append(",");
+			}
+
+			this.auswahlUmlaufplan.setText(sb.toString());
+			if (this.umlaufplanChoiceliste.size() == 0
+					&& this.statisitkU.getOpacity() == 1) {
+				FadeTransition faa = new FadeTransition(Duration.millis(1000),
+						this.statisitkU);
+				faa.setFromValue(1.0);
+				faa.setToValue(0.0);
+				faa.setAutoReverse(true);
+				faa.play();
+				this.statisitkU.setDisable(true);
+
+				FadeTransition faaa = new FadeTransition(Duration.millis(1000),
+						this.kostenU);
+				faaa.setFromValue(1.0);
+				faaa.setToValue(0.0);
+				faaa.setAutoReverse(true);
+				faaa.play();
+				this.kostenU.setDisable(true);
+			}
+
+			if (this.umlaufplanChoiceliste.size() == 1
+					&& this.statisitkU.getOpacity() != 1) {
+				FadeTransition fa = new FadeTransition(Duration.millis(1000),
+						this.statisitkU);
+				fa.setFromValue(0.0);
+				fa.setToValue(1.0);
+				fa.setAutoReverse(true);
+				fa.play();
+				this.statisitkU.setDisable(false);
+			}
+			if (this.umlaufplanChoiceliste.size() > 1
+					&& this.statisitkU.getOpacity() == 1) {
+				FadeTransition faa = new FadeTransition(Duration.millis(1000),
+						this.statisitkU);
+				faa.setFromValue(1.0);
+				faa.setToValue(0.0);
+				faa.setAutoReverse(true);
+				faa.play();
+				this.statisitkU.setDisable(true);
+			}
+			if (this.umlaufplanChoiceliste.size() >= 1
+					&& this.kostenU.getOpacity() != 1) {
+				FadeTransition fa = new FadeTransition(Duration.millis(1000),
+						this.kostenU);
+				fa.setFromValue(0.0);
+				fa.setToValue(1.0);
+				fa.setAutoReverse(true);
+				fa.play();
+				this.kostenU.setDisable(false);
+			}
+			if (this.umlaufplanChoiceliste.size() == 2
+					&& this.dMU.getOpacity() != 1) {
+				FadeTransition fa = new FadeTransition(Duration.millis(1000),
+						this.dMU);
+				fa.setFromValue(0.0);
+				fa.setToValue(1.0);
+				fa.setAutoReverse(true);
+				fa.play();
+				this.dMU.setDisable(false);
+			}
+			if (this.umlaufplanChoiceliste.size() != 2
+					&& this.dMU.getOpacity() == 1) {
+				FadeTransition faa = new FadeTransition(Duration.millis(1000),
+						this.dMU);
+				faa.setFromValue(1.0);
+				faa.setToValue(0.0);
+				faa.setAutoReverse(true);
+				faa.play();
+				this.dMU.setDisable(true);
+			}
+			if (this.umlaufplanChoiceliste.size() >= 2
+					&& this.dWU.getOpacity() != 1) {
+				FadeTransition fa = new FadeTransition(Duration.millis(1000),
+						this.dWU);
+				fa.setFromValue(0.0);
+				fa.setToValue(1.0);
+				fa.setAutoReverse(true);
+				fa.play();
+				this.dWU.setDisable(false);
+			}
+			if (this.umlaufplanChoiceliste.size() < 2
+					&& this.dWU.getOpacity() == 1) {
+				FadeTransition faa = new FadeTransition(Duration.millis(1000),
+						this.dWU);
+				faa.setFromValue(1.0);
+				faa.setToValue(0.0);
+				faa.setAutoReverse(true);
+				faa.play();
+				this.dWU.setDisable(true);
+			}
 		}
 	}
 
@@ -176,16 +528,103 @@ public class KennzahlenLayoutController {
 	@FXML
 	private void chooseDienstplan() {
 
-		this.dienstplanChoiceliste.clear();
-
 		if (this.detailsDienstTable.getSelectionModel().getSelectedItem() != null) {
-			this.dienstplanChoiceliste.add(this.detailsDienstTable
-					.getSelectionModel().getSelectedItem());
-			this.auswahlDienstplan.setText(dienstplanChoiceliste.get(0)
-					.getName());
+
+			boolean checkList = true;
+
+			for (int i = 0; i < this.dienstplanChoiceliste.size(); i++) {
+				if (this.detailsDienstTable.getSelectionModel()
+						.getSelectedItem().getName() == this.dienstplanChoiceliste
+						.get(i).getName()) {
+					checkList = false;
+				}
+			}
+			if (checkList) {
+
+				this.dienstplanChoiceliste.add(this.detailsDienstTable
+						.getSelectionModel().getSelectedItem());
+
+				Set<String> setInput = new TreeSet<String>();
+				for (int i = 0; i < this.dienstplanChoiceliste.size(); i++) {
+					setInput.add(this.dienstplanChoiceliste.get(i).getName());
+				}
+
+				StringBuilder sb = new StringBuilder();
+				for (String tempString : setInput) {
+					sb.append("").append(tempString).append(",");
+				}
+
+				this.auswahlDienstplan.setText(sb.toString());
+
+				if (this.dienstplanChoiceliste.size() == 1
+						&& this.statistikD.getOpacity() != 1) {
+					FadeTransition fa = new FadeTransition(
+							Duration.millis(1000), this.statistikD);
+					fa.setFromValue(0.0);
+					fa.setToValue(1.0);
+					fa.setAutoReverse(true);
+					fa.play();
+					this.statistikD.setDisable(false);
+				}
+				if (this.dienstplanChoiceliste.size() > 1
+						&& this.statistikD.getOpacity() == 1) {
+					FadeTransition faa = new FadeTransition(
+							Duration.millis(1000), this.statistikD);
+					faa.setFromValue(1.0);
+					faa.setToValue(0.0);
+					faa.setAutoReverse(true);
+					faa.play();
+					this.statistikD.setDisable(true);
+				}
+				if (this.dienstplanChoiceliste.size() >= 1
+						&& this.kostenD.getOpacity() != 1) {
+					FadeTransition fa = new FadeTransition(
+							Duration.millis(1000), this.kostenD);
+					fa.setFromValue(0.0);
+					fa.setToValue(1.0);
+					fa.setAutoReverse(true);
+					fa.play();
+					this.kostenD.setDisable(false);
+				}
+				if (this.dienstplanChoiceliste.size() == 2
+						&& this.dMD.getOpacity() != 1) {
+					FadeTransition fa = new FadeTransition(
+							Duration.millis(1000), this.dMD);
+					fa.setFromValue(0.0);
+					fa.setToValue(1.0);
+					fa.setAutoReverse(true);
+					fa.play();
+					this.dMD.setDisable(false);
+				}
+				if (this.dienstplanChoiceliste.size() != 2
+						&& this.dMD.getOpacity() == 1) {
+					FadeTransition faa = new FadeTransition(
+							Duration.millis(1000), this.dMD);
+					faa.setFromValue(1.0);
+					faa.setToValue(0.0);
+					faa.setAutoReverse(true);
+					faa.play();
+					this.dMD.setDisable(true);
+				}
+				if (this.dienstplanChoiceliste.size() >= 2
+						&& this.dWD.getOpacity() != 1) {
+					FadeTransition fa = new FadeTransition(
+							Duration.millis(1000), this.dWD);
+					fa.setFromValue(0.0);
+					fa.setToValue(1.0);
+					fa.setAutoReverse(true);
+					fa.play();
+					this.dWD.setDisable(false);
+				}
+			} else {
+				String fehlerA = "Das Element wurde bereits ausgewaehlt.";
+				String fehlerB = "Was soll ausgewaehlt werden ?";
+				String fehlerC = "Fehler";
+				this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+			}
 		} else {
 			String fehlerA = "Es wurde noch Element ausgew‰hlt";
-			String fehlerB =  "Was soll ausgewaehlt werden ?";
+			String fehlerB = "Was soll ausgewaehlt werden ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
 		}
@@ -204,11 +643,110 @@ public class KennzahlenLayoutController {
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
 		} else {
-			this.dienstplanChoiceliste.clear();
+			this.dienstplanChoiceliste.remove(((this.dienstplanChoiceliste
+					.size() - 1)));
 
-			this.auswahlDienstplan.setText("");
+			Set<String> setInput = new TreeSet<String>();
+			for (int i = 0; i < this.dienstplanChoiceliste.size(); i++) {
+				setInput.add(this.dienstplanChoiceliste.get(i).getName());
+			}
+
+			StringBuilder sb = new StringBuilder();
+			for (String tempString : setInput) {
+				sb.append("").append(tempString).append(",");
+			}
+
+			this.auswahlDienstplan.setText(sb.toString());
+
+			if (this.dienstplanChoiceliste.size() == 0
+					&& this.statistikD.getOpacity() == 1) {
+				FadeTransition faa = new FadeTransition(Duration.millis(1000),
+						this.statistikD);
+				faa.setFromValue(1.0);
+				faa.setToValue(0.0);
+				faa.setAutoReverse(true);
+				faa.play();
+				this.statistikD.setDisable(true);
+
+				FadeTransition faaa = new FadeTransition(Duration.millis(1000),
+						this.kostenD);
+				faaa.setFromValue(1.0);
+				faaa.setToValue(0.0);
+				faaa.setAutoReverse(true);
+				faaa.play();
+				this.kostenD.setDisable(true);
+			}
+			if (this.dienstplanChoiceliste.size() == 1
+					&& this.statistikD.getOpacity() != 1) {
+				FadeTransition fa = new FadeTransition(Duration.millis(1000),
+						this.statistikD);
+				fa.setFromValue(0.0);
+				fa.setToValue(1.0);
+				fa.setAutoReverse(true);
+				fa.play();
+				this.statistikD.setDisable(false);
+			}
+			if (this.dienstplanChoiceliste.size() > 1
+					&& this.statistikD.getOpacity() == 1) {
+				FadeTransition faa = new FadeTransition(Duration.millis(1000),
+						this.statistikD);
+				faa.setFromValue(1.0);
+				faa.setToValue(0.0);
+				faa.setAutoReverse(true);
+				faa.play();
+				this.statistikD.setDisable(true);
+			}
+			if (this.dienstplanChoiceliste.size() >= 1
+					&& this.kostenD.getOpacity() != 1) {
+				FadeTransition fa = new FadeTransition(Duration.millis(1000),
+						this.kostenD);
+				fa.setFromValue(0.0);
+				fa.setToValue(1.0);
+				fa.setAutoReverse(true);
+				fa.play();
+				this.kostenD.setDisable(false);
+			}
+			if (this.dienstplanChoiceliste.size() == 2
+					&& this.dMD.getOpacity() != 1) {
+				FadeTransition fa = new FadeTransition(Duration.millis(1000),
+						this.dMD);
+				fa.setFromValue(0.0);
+				fa.setToValue(1.0);
+				fa.setAutoReverse(true);
+				fa.play();
+				this.dMD.setDisable(false);
+			}
+			if (this.dienstplanChoiceliste.size() != 2
+					&& this.dMD.getOpacity() == 1) {
+				FadeTransition faa = new FadeTransition(Duration.millis(1000),
+						this.dMD);
+				faa.setFromValue(1.0);
+				faa.setToValue(0.0);
+				faa.setAutoReverse(true);
+				faa.play();
+				this.dMD.setDisable(true);
+			}
+			if (this.dienstplanChoiceliste.size() >= 2
+					&& this.dWD.getOpacity() != 1) {
+				FadeTransition fa = new FadeTransition(Duration.millis(1000),
+						this.dWD);
+				fa.setFromValue(0.0);
+				fa.setToValue(1.0);
+				fa.setAutoReverse(true);
+				fa.play();
+				this.dWD.setDisable(false);
+			}
+			if (this.dienstplanChoiceliste.size() < 2
+					&& this.dWD.getOpacity() == 1) {
+				FadeTransition faa = new FadeTransition(Duration.millis(1000),
+						this.dWD);
+				faa.setFromValue(1.0);
+				faa.setToValue(0.0);
+				faa.setAutoReverse(true);
+				faa.play();
+				this.dWD.setDisable(true);
+			}
 		}
-
 
 	}
 
@@ -227,7 +765,7 @@ public class KennzahlenLayoutController {
 					.getBezeichnung());
 		} else {
 			String fehlerA = "Es wurde noch Element ausgew‰hlt";
-			String fehlerB =  "Was soll ausgewaehlt werden ?";
+			String fehlerB = "Was soll ausgewaehlt werden ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
 		}

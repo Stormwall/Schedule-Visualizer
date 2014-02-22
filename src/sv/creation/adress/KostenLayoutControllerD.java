@@ -3,7 +3,7 @@ package sv.creation.adress;
 import javafx.fxml.FXML;
 import javafx.stage.Stage;
 
-public class KostenLayoutController {
+public class KostenLayoutControllerD {
 
 	private Stage dialogStage;
 	

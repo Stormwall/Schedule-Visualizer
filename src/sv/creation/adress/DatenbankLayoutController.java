@@ -421,19 +421,23 @@ public class DatenbankLayoutController {
 	 */
 	public void handleImport() {
 
-		FileChooser fileChooser = new FileChooser();
-//
-//		// // Set extension filter
-		FileChooser.ExtensionFilter extFilter = new
-		 FileChooser.ExtensionFilter(
-		"TXT files (*.txt)", "*.txt");
-		 fileChooser.getExtensionFilters().add(extFilter);
-//
-//		// Show open file dialog
-		 File file = fileChooser.showOpenDialog(dialogStage);
-//		//
-		 Import im = new Import();
-		 im.importFile(file);
+		try {
+			FileChooser fileChooser = new FileChooser();
+
+			 // Set extension filter
+			FileChooser.ExtensionFilter extFilter = new
+			 FileChooser.ExtensionFilter(
+			"TXT files (*.txt)", "*.txt");
+			 fileChooser.getExtensionFilters().add(extFilter);
+
+			// Show open file dialog
+			 File file = fileChooser.showOpenDialog(dialogStage);
+			
+			 Import im = new Import();
+			 im.importFile(file);
+		} catch (Exception e) {
+
+		}
 		
 		//DBMatching dbm = new DBMatching();
 		//dbm.benenneFahrplanUm(fahrplanliste.get(0).getId(), "Test");

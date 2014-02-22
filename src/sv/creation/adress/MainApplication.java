@@ -338,13 +338,13 @@ public class MainApplication extends Application {
 
 	// Initiate KostenLayout fxml
 
-	public void showKosten() {
+	public void showKostenU() {
 
 		try {
 
 			// Load the fxml file and create a new stage for the popup
 			FXMLLoader loader = new FXMLLoader(
-					MainApplication.class.getResource("view/KostenLayout.fxml"));
+					MainApplication.class.getResource("view/KostenLayoutU.fxml"));
 			AnchorPane page = (AnchorPane) loader.load();
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("Kostenkalkulation");
@@ -352,11 +352,43 @@ public class MainApplication extends Application {
 					new Image("file:resources/images/IconFinal.png"));
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.initOwner(primaryStage);
+			dialogStage.setResizable(false);
 			Scene scene = new Scene(page);
 			dialogStage.setScene(scene);
 
 			// Set the controller
-			KostenLayoutController controller = loader.getController();
+			KostenLayoutControllerU controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+
+			dialogStage.show();
+		} catch (IOException e) {
+			// Exception gets thrown if the fxml file could not be loaded
+			e.printStackTrace();
+		}
+	}
+	
+	// Initiate KostenLayout fxml
+
+	public void showKostenD() {
+
+		try {
+
+			// Load the fxml file and create a new stage for the popup
+			FXMLLoader loader = new FXMLLoader(
+					MainApplication.class.getResource("view/KostenLayoutD.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Kostenkalkulation");
+			dialogStage.getIcons().add(
+					new Image("file:resources/images/IconFinal.png"));
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.setResizable(false);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+
+			// Set the controller
+			KostenLayoutControllerD controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 
 			dialogStage.show();
@@ -536,6 +568,12 @@ public class MainApplication extends Application {
 			String fehlermeldungC) {
 
 		Dialogs.showWarningDialog(primaryStage, fehlermeldungA, fehlermeldungB,
+				fehlermeldungC);
+	}
+	public void informationMeldung(String fehlermeldungA, String fehlermeldungB,
+			String fehlermeldungC) {
+
+		Dialogs.showInformationDialog(primaryStage, fehlermeldungA, fehlermeldungB,
 				fehlermeldungC);
 	}
 	public String inputMeldung(String fehlermeldungA, String fehlermeldungB,

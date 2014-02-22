@@ -16,7 +16,7 @@ public class RootLayoutController {
 	 */
 	@FXML
 	private void handleKosten() {
-		mainApp.showKosten();
+		mainApp.showKostenU();
 	}
 	
 	/**

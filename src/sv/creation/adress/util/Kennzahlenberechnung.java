@@ -15,13 +15,16 @@ public class Kennzahlenberechnung {
 	/*********************************************************************************************************************************
 	 ****berechnet durchschnittl. Wiederholrate für Dienstplanliste mit allen Fahrten*************************************************
 	 *********************************************************************************************************************************/
-	public double berechneDurschnittlicheWiederholrateDienstplanAll(ArrayList<Dienstplan> dienstplanliste, ArrayList<ArrayList<ArrayList<String>>> ListPlaeneGesamt, Fahrplan fahrplan){
+	public double berechneDurschnittlicheWiederholrateDienstplanAll(ArrayList<Dienstplan> dienstplanliste,  Fahrplan fahrplan){
 		
 		double anzahlDutyGesamt=0.0;
 		double anzahlGleicheDuty=0.0;
 		double avgrepeat;
 		boolean alleGleich=false;
 		
+		
+		
+		ArrayList<ArrayList<ArrayList<String>>> ListPlaeneGesamt = erstelleDutyelementListAll(dienstplanliste);
 		
 		
 		//Anzahl der Dienste von allen Dienstpl������nen
@@ -32,7 +35,7 @@ public class Kennzahlenberechnung {
 				}
 			}
 		}
-		//Alle Dienstpl������ne
+		//Alle Dienstplaene
 		for (int plan = 0; plan < ListPlaeneGesamt.size()-1; plan++) {
 			alleGleich=false;
 			//Alle B������ndel in einem Plan

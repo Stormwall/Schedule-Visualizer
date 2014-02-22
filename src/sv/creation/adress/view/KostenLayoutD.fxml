@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="226.0" prefWidth="300.0" styleClass="background" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sv.creation.adress.KostenLayoutControllerD">
+  <!-- TODO Add Nodes -->
+  <children>
+    <TextField layoutX="145.0" layoutY="13.0" prefWidth="145.0" />
+    <TextField layoutX="145.0" layoutY="49.0" prefWidth="145.0" />
+    <Label layoutX="10.0" layoutY="17.0" styleClass="label-white" text="Variabler Kostensatz" />
+    <Label layoutX="10.0" layoutY="53.0" styleClass="label-white" text="Fixkosten" />
+    <Button layoutX="211.0" layoutY="80.0" mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Berrechen" />
+    <GridPane prefHeight="71.0" prefWidth="300.0" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="112.0">
+      <children>
+        <Label styleClass="label-white" text="Fixkosten Gesamt" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+        <Label styleClass="label-white" text="Variable Kosten Gesamt" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <Label styleClass="label-white" text="Gesamtkosten" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        <Label styleClass="label-white" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+        <Label styleClass="label-white" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+        <Label styleClass="label-white" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+      </children>
+      <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="98.0" minWidth="10.0" prefWidth="10.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="190.0" minWidth="10.0" prefWidth="149.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="153.0" minWidth="10.0" prefWidth="141.0" />
+      </columnConstraints>
+      <rowConstraints>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      </rowConstraints>
+    </GridPane>
+    <Button layoutX="211.0" layoutY="192.0" mnemonicParsing="false" styleClass="dark-blue" text="Schließen" />
+  </children>
+  <stylesheets>
+    <URL value="@MainLayout.css" />
+  </stylesheets>
+</AnchorPane>

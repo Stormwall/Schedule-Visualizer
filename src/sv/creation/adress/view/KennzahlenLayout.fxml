@@ -30,7 +30,7 @@
                                   </children>
                                 </HBox>
                                 <Label layoutX="0.0" layoutY="11.0" styleClass="label-white" text="Auswahl :" />
-                                <Label id="auswahl" fx:id="auswahlUmlaufplan" layoutX="66.0" layoutY="11.0" prefWidth="385.0" styleClass="label-white" text="" />
+                                <Label id="auswahl" fx:id="auswahlUmlaufplan" layoutX="66.0" layoutY="11.0" prefWidth="508.0" styleClass="label-white" text="" />
                               </children>
                             </AnchorPane>
                             <ScrollPane fx:id="umlaufplanPane" fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" styleClass="background" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -58,10 +58,10 @@
                         <Button layoutY="6.0" mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Abbrechen" AnchorPane.rightAnchor="7.0" />
                         <HBox id="HBox" alignment="CENTER" layoutY="7.0" spacing="10.0" AnchorPane.leftAnchor="14.0">
                           <children>
-                            <Button mnemonicParsing="false" onAction="#handleStatistikenUplan" styleClass="dark-blue" text="Statistik" />
-                            <Button mnemonicParsing="false" styleClass="dark-blue" text="Kosten" />
-                            <Button mnemonicParsing="false" styleClass="dark-blue" text="Durchschnittliche Wiederholrate" />
-                            <Button mnemonicParsing="false" styleClass="dark-blue" text="Distanzmaß" />
+                            <Button fx:id="statisitkU" mnemonicParsing="false" onAction="#handleStatistikenUplan" opacity="0.0" styleClass="dark-blue" text="Statistik" />
+                            <Button fx:id="kostenU" mnemonicParsing="false" onAction="#handleKostenU" opacity="0.0" styleClass="dark-blue" text="Kosten" />
+                            <Button fx:id="dWU" mnemonicParsing="false" onAction="#handleDurchschnittWU" opacity="0.0" styleClass="dark-blue" text="Durchschnittliche Wiederholrate" />
+                            <Button fx:id="dMU" mnemonicParsing="false" onAction="#handleDistanzMU" opacity="0.0" styleClass="dark-blue" text="Distanzmaß" />
                           </children>
                         </HBox>
                       </children>
@@ -121,10 +121,10 @@
                             <Button layoutY="6.0" mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Abbrechen" AnchorPane.rightAnchor="7.0" />
                             <HBox id="HBox" alignment="CENTER" layoutY="7.0" spacing="10.0" AnchorPane.leftAnchor="14.0">
                               <children>
-                                <Button mnemonicParsing="false" onAction="#handleStatistikenDplan" styleClass="dark-blue" text="Statistik" />
-                                <Button mnemonicParsing="false" styleClass="dark-blue" text="Kosten" />
-                                <Button mnemonicParsing="false" styleClass="dark-blue" text="Durchschnittliche Wiederholrate" />
-                                <Button mnemonicParsing="false" styleClass="dark-blue" text="Distanzmaß" />
+                                <Button fx:id="statistikD" mnemonicParsing="false" onAction="#handleStatistikenDplan" opacity="0.0" styleClass="dark-blue" text="Statistik" />
+                                <Button fx:id="kostenD" mnemonicParsing="false" onAction="#handleKostenD" opacity="0.0" styleClass="dark-blue" text="Kosten" />
+                                <Button fx:id="dWD" mnemonicParsing="false" onAction="#handleDurchschnittWD" opacity="0.0" styleClass="dark-blue" text="Durchschnittliche Wiederholrate" />
+                                <Button fx:id="dMD" mnemonicParsing="false" onAction="#handleDistanzMD" opacity="0.0" styleClass="dark-blue" text="Distanzmaß" />
                               </children>
                             </HBox>
                           </children>
