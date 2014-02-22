@@ -2,10 +2,8 @@ package sv.creation.adress.util;
 import java.util.ArrayList;
 import sv.creation.adress.model.Blockelement;
 import sv.creation.adress.model.Dienstplan;
-import sv.creation.adress.model.Duty;
 import sv.creation.adress.model.Dutyelement;
 import sv.creation.adress.model.Fahrplan;
-import sv.creation.adress.model.ServiceJourney;
 import sv.creation.adress.model.Umlaufplan;
 public class Kennzahlenberechnung {
 	/*********************************************************************************************************************************
@@ -17,7 +15,6 @@ public class Kennzahlenberechnung {
 		double anzahlGleicheDuty=0.0;
 		double avgrepeat;
 		boolean alleGleich=false;
-		
 		
 		
 		ArrayList<ArrayList<ArrayList<String>>> ListPlaeneGesamt = erstelleDutyelementListAll(dienstplanliste);
@@ -758,8 +755,6 @@ public double pVergleich(Fahrplan fahrplan) {
 			for (int tag2 = tag+1; tag2 < listDays.size()-2; tag2++) {
 				for (int j = 0; j < listDays.get(tag).size(); j++) {
 					for (int j2 = 0; j2 < listDays.get(tag2).size(); j2++) {
-						System.out.println(listDays.get(tag).get(j).intValue());
-						System.out.println(listDays.get(tag2).get(j2).intValue());
 						if(listDays.get(tag).get(j).intValue()==listDays.get(tag2).get(j2).intValue()){
 						count++;
 						}
@@ -785,8 +780,6 @@ public double pVergleich(Fahrplan fahrplan) {
 	}
 	
 	double pWert=zwischenwert/zahlFahrten;
-	
-	
 	
 	return pWert;
 }

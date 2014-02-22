@@ -135,7 +135,7 @@ public class EditD_PlanController {
 		
 		DBSave dbm = new DBSave();
 		
-//		dbm.saveDienstplan(this.dienstplan, this.mainApp.inputMeldung("Geben Sie bitte eine Bezeichnung für den Umlaufplan ein.", "Bitte eingeben", "Bezeichnung Umlaufplan"));
+		dbm.saveDienstplan(this.dienstplan, this.mainApp.inputMeldung("Geben Sie bitte eine Bezeichnung für den Dienstplan ein.", "Bitte eingeben", "Bezeichnung Dienstplan"));
 	}
 
 	/**

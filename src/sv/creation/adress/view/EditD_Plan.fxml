@@ -57,7 +57,7 @@
                     <HBox id="HBox" alignment="CENTER" layoutX="0.0" layoutY="0.0" prefHeight="50.0" prefWidth="420.0" spacing="10.0">
                       <children>
                         <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#handleuebernehemen" styleClass="dark-blue" text="Übernehmen" />
-                        <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#handleuebernehemen" styleClass="dark-blue" text="Neuer Datensatz" />
+                        <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#handleSafeDplanInDatabase" styleClass="dark-blue" text="Neuer Datensatz" />
                         <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#handleExport" styleClass="dark-blue" text="Exportieren" />
                         <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Abbrechen" />
                       </children>

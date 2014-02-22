@@ -65,6 +65,10 @@ public class DBMatching {
 	ArrayList<String> fahrplanNameList  = new ArrayList<String>();
 	ArrayList<String> umlaufplanplanNameList  = new ArrayList<String>();
 	ArrayList<String> dienstplanNameList  = new ArrayList<String>();
+	ArrayList<String> dienstplanBezeichnungList  = new ArrayList<String>();
+	ArrayList<String> umlaufplanBezeichnungList  = new ArrayList<String>();
+	ArrayList<Integer> diesntplanUplanIDList  =new ArrayList<Integer>();
+//	ArrayList<String> fahrplanBezeichnungList  = new ArrayList<String>();
 	
 	ArrayList<Days> daysList = new ArrayList<Days>();
 	// *************************************************************
@@ -233,6 +237,7 @@ public class DBMatching {
 		createBlock();
 		createBlockelement();
 		createUmlaufplanDayAndDate();
+		this.umlaufplanBezeichnungList=createUmlaufplanBezeichnunglist();
 		ArrayList<Integer> idList=createUmlaufplanIDs();
 		this.umlaufplanplanNameList=createUmlaufplanNameList();
 		// Anzahl der UmlaufplÃƒÂ¤ne wird ausgelesen
@@ -277,12 +282,30 @@ public class DBMatching {
 			}
 			int fahrplanID=getFahrplanzugehoerigkeitUmlaufplan(idList.get(i-1));
 			zaehlerUmlauf = zaehlerUmlauf + 1;
-			Umlaufplan umlaufplanAdd = new Umlaufplan(i, blockList,
+			Umlaufplan umlaufplanAdd = new Umlaufplan(i,this.umlaufplanBezeichnungList.get(i-1), blockList,
 					blockelementList,umlaufplanDayList.get(i-1),fahrplanID,umlaufplanplanNameList.get(i-1),
 					changeDateFormat(umlaufplanDateList.get(i - 1)));
 			umlaufplanliste.add(umlaufplanAdd);
 		}
 		return umlaufplanliste;
+	}
+
+	private ArrayList<String> createUmlaufplanBezeichnunglist() {
+		
+		this.db.initDBConnection();
+		ArrayList<String> bezeichnunglist= new ArrayList<String>();
+		ResultSet rest1;
+		try {
+			rest1 = stmt.executeQuery("SELECT Bezeichnung FROM Umlaufplan;");
+			while(rest1.next()){
+				bezeichnunglist.add(rest1.getString("Bezeichnung"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return bezeichnunglist;
 	}
 
 	private ArrayList<String> createUmlaufplanNameList() {
@@ -465,6 +488,9 @@ public class DBMatching {
 		createDuty();
 		createDutyelement();
 		createDienstplanDate();
+		this.dienstplanDayList=createDienstplanDayIDList();
+		this.diesntplanUplanIDList=createDienstplanUplanIDList();
+		this.dienstplanBezeichnungList=createDienstplanBezeichnungList();
 		this.dienstplanNameList=createDienstplanNameList();
 		// Anzahl der DienstplÃƒÂ¤ne wird ausgelesen
 		// Strukturvariablen
@@ -606,15 +632,62 @@ public class DBMatching {
 				}
 			}
 			zaehlerDienst = zaehlerDienst + 1;
-			Dienstplan dienstplanAdd = new Dienstplan(i, dutyList,
-					dutyelementList, getFahrplanzugehoerigkeitDienstPlan(idList.get(i-1)),this.dienstplanNameList.get(i-1),
-					changeDateFormat(dienstplanDateList.get(i - 1)));
+			Dienstplan dienstplanAdd = new Dienstplan(i,this.dienstplanBezeichnungList.get(i-1), dutyList,
+					dutyelementList, getFahrplanzugehoerigkeitDienstPlan(idList.get(i-1)),this.diesntplanUplanIDList.get(i-1),this.dienstplanNameList.get(i-1),
+					changeDateFormat(dienstplanDateList.get(i - 1)),this.dienstplanDayList.get(i-1));
 			dienstplanliste.add(dienstplanAdd);
 		}
 
 		return dienstplanliste;
 	}
 	
+	private ArrayList<Integer> createDienstplanUplanIDList() {
+		this.db.initDBConnection();
+		ArrayList<Integer> idList=new ArrayList<Integer>();
+		ResultSet rest1;
+		try {
+			rest1 = stmt.executeQuery("SELECT UmlaufplanID FROM Dienstplan;");
+			while(rest1.next()){
+				idList.add(rest1.getInt("UmlaufplanID"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return idList;
+	}
+
+	private ArrayList<String> createDienstplanBezeichnungList() {
+		this.db.initDBConnection();
+		ArrayList<String> bezeichnungList = new ArrayList<String>();
+		ResultSet rest1;
+		try {
+			rest1 = stmt.executeQuery("SELECT Bezeichnung FROM Dienstplan;");
+			while(rest1.next()){
+				bezeichnungList.add(rest1.getString("Bezeichnung"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return bezeichnungList;
+	}
+
+	private ArrayList<Integer> createDienstplanDayIDList() {
+		this.db.initDBConnection();
+		ArrayList<Integer> dayList = new ArrayList<Integer>();
+			try {
+				ResultSet rest1=stmt.executeQuery("SELECT DayID FROM Dienstplan;");
+				while(rest1.next()){
+				dayList.add(rest1.getInt("DayID"));
+			} }catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		return dayList;
+	}
+
 	private ArrayList<String> createDienstplanNameList() {
 		this.db.initDBConnection();
 		ArrayList<String> nameList = new ArrayList<String>();

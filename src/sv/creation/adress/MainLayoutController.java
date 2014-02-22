@@ -4970,12 +4970,12 @@ public class MainLayoutController {
 		} else {
 			this.UPlan.setDisable(false);
 			this.umlaufplanliste = dbm.createUmlaufplanObject();
-			for (int i = 0; i < this.umlaufplanliste.size(); i++) {
-				if (this.umlaufplanliste.get(i).getName() == null) {
-					this.umlaufplanliste.get(i).setName(
-							" Umlaufplan " + (i + 1));
-				}
-			}
+//			for (int i = 0; i < this.umlaufplanliste.size(); i++) {
+//				if (this.umlaufplanliste.get(i).getName() == null) {
+//					this.umlaufplanliste.get(i).setName(
+//							" Umlaufplan " + (i + 1));
+//				}
+//			}
 
 			if (this.firstUppergrafikErstellt == false) {
 				this.UPlan.setItems(FXCollections

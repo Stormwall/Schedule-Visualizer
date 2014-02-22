@@ -6,6 +6,7 @@ public class Umlaufplan {
 	
 	private int id;
 	private String name;
+	private String bezeichnung;
 	private ArrayList<Block> umlauf = new ArrayList<Block>();
 	private ArrayList<Blockelement> fahrtZuUmlauf = new ArrayList<Blockelement>();
 	private int fahrplanID;
@@ -15,9 +16,10 @@ public class Umlaufplan {
 	/**
 	 * @param umlaufplan
 	 */
-	public Umlaufplan(int id,ArrayList<Block> umlauf, ArrayList<Blockelement> fahrtZuUmlauf,int dayID, int fahrplanID, String name,String date) {
+	public Umlaufplan(int id, String bezeichnung,ArrayList<Block> umlauf, ArrayList<Blockelement> fahrtZuUmlauf,int dayID, int fahrplanID, String name,String date) {
 		super();
 		this.id=id;
+		this.bezeichnung = bezeichnung;
 		this.umlauf = umlauf;
 		this.fahrtZuUmlauf=fahrtZuUmlauf;
 		this.dayID = dayID;
@@ -68,6 +70,14 @@ public class Umlaufplan {
 
 	public void setDayID(int dayID) {
 		this.dayID = dayID;
+	}
+
+	public String getBezeichnung() {
+		return bezeichnung;
+	}
+
+	public void setBezeichnung(String bezeichnung) {
+		this.bezeichnung = bezeichnung;
 	}
 	
 
