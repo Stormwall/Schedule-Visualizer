@@ -6,8 +6,9 @@ import sv.creation.adress.model.Dienstplan;
 import sv.creation.adress.model.Umlaufplan;
 
 public class ScheduleCosts {
-double fixedschedulecosts = 0;
-double variableschedulecosts = 0;
+private double fixedschedulecosts = 0;
+private double variableschedulecosts = 0;
+private double schedulecosts = 0;
 
 public ArrayList<ScheduleCosts> calculateCrewScheduleCosts(ArrayList<Dienstplan> dp, double Kf, double kvhour){
 	
@@ -22,6 +23,7 @@ public ArrayList<ScheduleCosts> calculateCrewScheduleCosts(ArrayList<Dienstplan>
 		ScheduleCosts scosts = new ScheduleCosts();
 		scosts.fixedschedulecosts = Kf;
 		scosts.variableschedulecosts = kvhour * (sstats.get(i).getTotalRunTime()/60/60);
+		scosts.schedulecosts = scosts.fixedschedulecosts+scosts.variableschedulecosts;
 		scostslist.add(scosts);
 	}
 	return scostslist;
@@ -39,7 +41,8 @@ public ArrayList<ScheduleCosts> calculateVehicleScheduleCosts(ArrayList<Umlaufpl
 	for(int i = 0; i < sstats.size();i++){
 		ScheduleCosts scosts = new ScheduleCosts();
 		scosts.fixedschedulecosts = Kf;
-		scosts.variableschedulecosts = kvhour * (sstats.get(i).getTotalRunTime()/60/60);
+		scosts.variableschedulecosts = kvhour * ((sstats.get(i).getOveralldurationServiceTrips()+sstats.get(i).getOveralldurationDeadHeads()+sstats.get(i).getOveralldurationPullOuts()+sstats.get(i).getOveralldurationPullIns())/60/60);
+		scosts.schedulecosts = scosts.fixedschedulecosts+scosts.variableschedulecosts;
 		scostslist.add(scosts);
 	}
 	return scostslist;
