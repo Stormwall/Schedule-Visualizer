@@ -269,6 +269,10 @@ public class MainLayoutController {
 	private ArrayList<Umlaufplan> umlaufplanliste = new ArrayList<Umlaufplan>();
 	private ArrayList<Dienstplan> dienstplanliste = new ArrayList<Dienstplan>();
 	private ArrayList<Fahrplan> fahrplanliste = new ArrayList<Fahrplan>();
+	
+	//Erstellen eines DBMatching-Objekts
+	
+	DBMatching dbm = new DBMatching();
 
 	// Zuordnung der Umlaufplaene
 
@@ -4888,7 +4892,7 @@ public class MainLayoutController {
 
 		// Fahrplaene -- Choicebox wird gefaellt
 
-		DBMatching dbm = new DBMatching();
+		
 
 		this.fahrplanliste.clear();
 
@@ -4924,7 +4928,6 @@ public class MainLayoutController {
 
 		// DienstplÃ¤ne -- Choicebox wird gefÃ¼llt
 
-		DBMatching dbm = new DBMatching();
 
 		this.dienstplanliste.clear();
 
@@ -4959,7 +4962,6 @@ public class MainLayoutController {
 
 		// UmlaufplÃ¤ne -- Choicebox wird gefÃ¼llt
 
-		DBMatching dbm = new DBMatching();
 
 		this.umlaufplanliste.clear();
 

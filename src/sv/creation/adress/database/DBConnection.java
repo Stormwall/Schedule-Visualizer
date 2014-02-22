@@ -57,6 +57,9 @@ public class DBConnection {
 		return instance;
 	}
 	
+	public DBConnection(){
+		System.out.println("DBConnection");
+	}
 	//Create connection to database
 	
 	public void initDBConnection() {
@@ -440,7 +443,9 @@ public class DBConnection {
 			//table szenario
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Szenario (ID INTEGER PRIMARY KEY AUTOINCREMENT, Bezeichnung VARCHAR(30) NOT NULL, FahrplanID INTEGER NOT NULL, Datum DATE NOT NULL, FOREIGN KEY (FahrplanID) REFERENCES Fahrplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);"); 
 						
-
+			//table colors
+			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Colors (ID INTEGER PRIMARY KEY AUTOINCREMENT, Farbe VARCHAR(30) NOT NULL);"); 
+			
 			
 
 			//***************************
@@ -463,6 +468,19 @@ public class DBConnection {
 			  stmnt.executeUpdate("INSERT INTO Day VALUES('5','Sa');"); 
 			  stmnt.executeUpdate("INSERT INTO Day VALUES('6','So');"); 
 			}
+			
+			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('Color.SEAGREEEN');");
+			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('Color.LIGHTCORAL');");
+			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('Color.ANTIQUEWHITE');");
+			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('Color.WHITESMOKE');");
+			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('Color.GREEEN');");
+			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('Color.GREEEN');");
+			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('Color.GREEEN');");
+			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('Color.ORANGE');");
+			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('Color.LIGHTSKYBLUE');");
+			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('Color.GREEEN');");
+			 
+
 		//catch for the whole table creation
 		} catch (SQLException e) {
 			System.out.println("Could not execute SQL-Query!");
@@ -639,6 +657,7 @@ public class DBConnection {
 		  //fill Reliefpoint
 			while ((it43.hasNext() && it44.hasNext() && it45.hasNext() && it46
 					.hasNext())) {
+
 
 				stmnt.executeUpdate("INSERT INTO Reliefpoint (ReliefpointID, StopTime, FahrplanID, ServiceJourneyID, StoppointID) VALUES('"
 						+ it43.next()
@@ -899,7 +918,16 @@ public class DBConnection {
 		
 		//temporary stringsplitter object that contains the the data from text files in array lists
 		StringSplitter ss = StringSplitter.getInstance();
+		String[] cutFilename=filename.split("_");
 		String fileNameVergleich=filename;
+		String dienstplanNameCut="";
+		for (int i = 1; i < cutFilename.length; i++) {
+			if (i<cutFilename.length-1) {
+				dienstplanNameCut+=cutFilename[i]+"_";
+			}else{
+			dienstplanNameCut+=cutFilename[i];
+			}
+		}
 		  String finalString=getVehicleScheduleName(fileNameVergleich);
 		//invoke stringsplitter method for reading the data in  txt-files
 		int pos=0;
@@ -912,13 +940,19 @@ public class DBConnection {
 			  //Get Day on which the crew schedule is valid
 			  dayID = ss.getDutyelementDayID().get(0);
 			  //filling Dienstplan Table
+
 		  stmnt.executeUpdate("INSERT INTO Dienstplan (Bezeichnung, FahrplanID, UmlaufplanID, DayID, Datum) VALUES ('"
-				  			+fileNameVergleich+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%')),(SELECT u.ID FROM Umlaufplan AS u WHERE u.FahrplanID=(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%')) AND u.DayID='"+dayID+"'),'"+dayID+"', CURRENT_DATE);");
+				  			+fileNameVergleich+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%')),(SELECT u.ID FROM Umlaufplan AS u WHERE u.FahrplanID=(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%') AND u.Bezeichnung LIKE ('%"
+				  			+dienstplanNameCut+"') AND u.DayID='"+dayID+"')),'"+dayID+"', CURRENT_DATE);");
 		  }else{
 			    
 			  //filling Dienstplan Table
+			  System.out.println("INSERT INTO Dienstplan (Bezeichnung, FahrplanID, UmlaufplanID, Datum) VALUES ('"
+				  			+fileNameVergleich+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%')),(SELECT u.ID FROM Umlaufplan AS u WHERE u.FahrplanID=(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%')AND u.Bezeichnung LIKE ('%"
+				  			+dienstplanNameCut+"))), CURRENT_DATE);");
 		  stmnt.executeUpdate("INSERT INTO Dienstplan (Bezeichnung, FahrplanID, UmlaufplanID, Datum) VALUES ('"
-				  			+fileNameVergleich+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%')),(SELECT u.ID FROM Umlaufplan AS u WHERE u.FahrplanID=(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%'))), CURRENT_DATE);");
+				  			+fileNameVergleich+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%')),(SELECT u.ID FROM Umlaufplan AS u WHERE u.FahrplanID=(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%')AND u.Bezeichnung LIKE ('%"
+				  			+dienstplanNameCut+"'))), CURRENT_DATE);");
 		  }
 		  //iterators for getting values from stringsplitter object
 		  Iterator<Integer> it11 = ss.getDutyelementElementType().iterator();
@@ -979,10 +1013,10 @@ public class DBConnection {
 				   
 				  if (de_elementtype==1){
 					 stmnt.executeUpdate("INSERT INTO Dutyelement (ElementType, DutyID, BlockID, ServiceJourneyID, DienstplanID, MatchingPos) VALUES('"+de_elementtype+"', "
-								  + "(SELECT d.ID from Duty AS d WHERE d.DutyID = '"+dutyelementdutyID+"' AND d.DienstplanID=(SELECT dp.ID FROM Dienstplan AS dp WHERE Bezeichnung LIKE ('%"+fileNameVergleich+"%'))), "
-								  + "(SELECT b.ID FROM Block AS b, Dienstplan AS dp WHERE b.BlockID='"+dutyelementblockID+"' AND b.UmlaufplanID=(SELECT u.ID FROM Umlaufplan AS u WHERE FahrplanID=(SELECT ID FROM Fahrplan WHERE Bezeichnung LIKE ('%"+finalString+"%'))) AND b.UmlaufplanID=dp.ID), "
-								  + "(SELECT sj.ID FROM ServiceJourney AS sj WHERE sj.ServiceJourneyID='"+dutyelementservicejourneyID+"' AND sj.FahrplanID=(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%'))), "
-								  + "(SELECT ID FROM Dienstplan WHERE Bezeichnung='"+fileNameVergleich+"'),'"+pos+"');");
+							  + "(SELECT d.ID from Duty AS d WHERE d.DutyID = '"+dutyelementdutyID+"' AND d.DienstplanID=(SELECT dp.ID FROM Dienstplan AS dp WHERE Bezeichnung LIKE ('%"+fileNameVergleich+"%'))), "
+							  + "(SELECT b.ID FROM Block AS b, Dienstplan AS dp WHERE b.BlockID='"+dutyelementblockID+"' AND b.UmlaufplanID=(SELECT d.UmlaufplanID FROM Dienstplan AS d WHERE d.Bezeichnung='"+fileNameVergleich+"')), "
+							  + "(SELECT sj.ID FROM ServiceJourney AS sj WHERE sj.ServiceJourneyID='"+dutyelementservicejourneyID+"' AND sj.FahrplanID=(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%'))), "
+							  + "(SELECT ID FROM Dienstplan WHERE Bezeichnung='"+fileNameVergleich+"'),'"+pos+"');");
 
 				  }else{
 					  
@@ -992,7 +1026,7 @@ public class DBConnection {
 					  String exdutyelementarrtime = it19.next();
 
 					    stmnt.executeUpdate("INSERT INTO ExceptionalDutyelement (DepTime, ArrTime,FromStopID, ToStopID, ServiceJourneyID, Elementtype, DutyID, BlockID, DienstplanID, MatchingPos ) VALUES('"+exdutyelemmentdeptime+"','"+exdutyelementarrtime+"','"+exdutyelementfromstopID+"','"+exdutyelementtostopID+"','"+dutyelementservicejourneyID+"','"+de_elementtype+"', "
-								  + "(SELECT ID from Duty WHERE DutyID ='"+dutyelementdutyID+"'),'"+dutyelementblockID+"',"
+								  + "(SELECT ID from Duty WHERE DutyID ='"+dutyelementdutyID+"' AND DienstplanID =(SELECT ID FROM Dienstplan WHERE Bezeichnung='"+fileNameVergleich+"')),'"+dutyelementblockID+"',"
 								  + "(SELECT ID FROM Dienstplan WHERE Bezeichnung='"+fileNameVergleich+"'),'"+pos+"');");
 				  }			  
 		  }

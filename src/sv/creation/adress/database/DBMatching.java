@@ -32,6 +32,10 @@ import sv.creation.adress.model.VehicleTypeToVehicleTypeGroup;
  * 
  */
 public class DBMatching {
+	
+	//Erstellt DBConnection-Objekt
+	private DBConnection db = new DBConnection();
+	
 	// **********************************************************************
 	// ****** Array lists to create objects of the schedule elements *******
 	// ****** *******
@@ -85,17 +89,20 @@ public class DBMatching {
 	Statement stmt2;
 	Statement stmt3;
 	Statement stmt4;
+	
+	public DBMatching(){
+		System.out.println("DBMatching");
+	}
 
 	// **********************************************************************
 	// ****** In this method an block object will be created *******
 	// ****** *******
 	// **********************************************************************
 	public void createBlock() {
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
+		this.db.initDBConnection();
 		// Creating a sql query
 		try {
-			stmt = db.getConnection().createStatement();
+			stmt = this.db.getConnection().createStatement();
 			ResultSet rest1 = stmt
 					.executeQuery("SELECT  DISTINCT * FROM Block");
 			// All resulted datasets of the sql query will be added to the block
@@ -117,13 +124,13 @@ public class DBMatching {
 	// ****** *******
 	// **********************************************************************
 	public void createBlockelement() {
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
+
+		this.db.initDBConnection();
 		try {
 			// Creating separated statements for the sql queries
-			stmt = db.getConnection().createStatement();
-			stmt2 = db.getConnection().createStatement();
-			stmt3 = db.getConnection().createStatement();
+			stmt = this.db.getConnection().createStatement();
+			stmt2 = this.db.getConnection().createStatement();
+			stmt3 = this.db.getConnection().createStatement();
 			// Two different datasets will be created
 			ResultSet rest3 = stmt
 					.executeQuery("SELECT ID, BlockID, ServiceJourneyID, ElementType, UmlaufplanID, MatchingPos FROM Blockelement UNION SELECT ID, BlockID,ServiceJourneyID, ElementType, UmlaufplanID, MatchingPos FROM ExceptionalBlockelement ORDER BY UmlaufplanID, MatchingPos ASC ;");
@@ -219,7 +226,6 @@ public class DBMatching {
 
 	public ArrayList<Umlaufplan> createUmlaufplanObject() {
 		
-		
 		createBlock();
 		createBlockelement();
 		createUmlaufplanDayAndDate();
@@ -242,7 +248,7 @@ public class DBMatching {
 			
 			
 			for (int j = 0; j < this.blockelement.size(); j++) {
-				if (this.blockelement.get(j).getUmlaufplanID() == i) {
+				if (this.blockelement.get(j).getUmlaufplanID() == idList.get(i-1)) {
 					blockelementList.add(blockelement.get(j));
 				}
 			}
@@ -275,12 +281,11 @@ public class DBMatching {
 
 	private ArrayList<Integer> createUmlaufplanIDs() {
 		
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
+		this.db.initDBConnection();
 		ArrayList<Integer> idList = new ArrayList<Integer>();
 		// Creating a sql query
 		try {
-			stmt = db.getConnection().createStatement();
+			stmt = this.db.getConnection().createStatement();
 			ResultSet rest1 = stmt.executeQuery("SELECT ID FROM Umlaufplan");
 			// All resulted datasets of the sql query will be added to the block
 			// array list
@@ -297,11 +302,10 @@ public class DBMatching {
 
 	private void createUmlaufplanDayAndDate() {
 
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
+		this.db.initDBConnection();
 		// Creating a sql query
 		try {
-			stmt = db.getConnection().createStatement();
+			stmt = this.db.getConnection().createStatement();
 			ResultSet rest1 = stmt.executeQuery("SELECT DayID,Datum FROM Umlaufplan");
 			// All resulted datasets of the sql query will be added to the block
 			// array list
@@ -328,11 +332,11 @@ public class DBMatching {
 	// ****** *******
 	// **********************************************************************
 	public void createDuty() {
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
+
+		this.db.initDBConnection();
 		// Creating a sql query
 		try {
-			stmt = db.getConnection().createStatement();
+			stmt = this.db.getConnection().createStatement();
 			ResultSet rest1 = stmt.executeQuery("SELECT  DISTINCT * FROM Duty");
 			// All resulted datasets of the sql query will be added to the block
 			// array list
@@ -353,14 +357,14 @@ public class DBMatching {
 	// ****** *******
 	// **********************************************************************
 	public void createDutyelement() {
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
+
+		this.db.initDBConnection();
 		try {
 			// Creating separated statements for the sql queries
-			stmt = db.getConnection().createStatement();
-			stmt2 = db.getConnection().createStatement();
-			stmt3 = db.getConnection().createStatement();
-			stmt4 = db.getConnection().createStatement();
+			stmt = this.db.getConnection().createStatement();
+			stmt2 = this.db.getConnection().createStatement();
+			stmt3 = this.db.getConnection().createStatement();
+			stmt4 = this.db.getConnection().createStatement();
 			// Two different datasets will be created
 			ResultSet rest3 = stmt
 					.executeQuery("SELECT ID, DutyID, BlockID, ServiceJourneyID, ElementType, DienstplanID, MatchingPos FROM Dutyelement UNION SELECT ID, DutyID, BlockID,ServiceJourneyID, ElementType, DienstplanID, MatchingPos FROM ExceptionalDutyelement ORDER BY DienstplanID,MatchingPos ASC;");
@@ -381,6 +385,7 @@ public class DBMatching {
 									+ rest3.getString("BlockID")
 									+ "' AND d.ID='"
 									+ rest3.getString("DutyID") + "';");
+					
 					// if the read blockelement is a exceptional servie journey
 					// the second sql query will be execute
 				} else {
@@ -451,7 +456,7 @@ public class DBMatching {
 			ArrayList<Dutyelement> dutyelementList = new ArrayList<Dutyelement>();
 			ArrayList<Duty> dutyList = new ArrayList<Duty>();
 			for (int j = 0; j < this.dutyelement.size(); j++) {
-				if (this.dutyelement.get(j).getDienstplanID() == i) {
+				if (this.dutyelement.get(j).getDienstplanID() == idList.get(i-1)) {
 					dutyelementList.add(dutyelement.get(j));
 				}
 			}
@@ -459,6 +464,7 @@ public class DBMatching {
 			//Buchstaben werden bei DutyID abgeschnitten
 			for (int j2 = zaehlerDienst; j2 < this.duty.size() - 1; j2++) {
 
+					//prüft ob zwei duties mit einem Buchstaben beginnen
 				if (this.duty.get(j2).getId().matches("^[a-z].*")
 						&& this.duty.get(j2 + 1).getId().matches("^[a-z].*")) {
 
@@ -489,9 +495,8 @@ public class DBMatching {
 					if (id1 > Integer.parseInt(this.duty.get(j2 + 1).getId())) {
 						dutyList.add(this.duty.get(j2));
 						zaehlerDienst = zaehlerDienst + 1;
-//						j2 = this.duty.size() - 1;
 					}
-
+					//erste Duty beginnt nicht mit Buchstaben, zweite Duty beginnt mit Buchstaben
 				} else if (!this.duty.get(j2).getId().matches("^[a-z].*")
 						&& this.duty.get(j2 + 1).getId().matches("^[a-z].*")) {
 
@@ -506,9 +511,9 @@ public class DBMatching {
 						dutyList.add(this.duty.get(j2));
 						j2 = this.duty.size() - 1;
 					}
-
-				} else if (this.duty.get(j2).getId().matches(".[a-z]^")
-						&& this.duty.get(j2 + 1).getId().matches(".[a-z]^")) {
+					//Beide Duties enden mit Buchstaben
+				} else if (this.duty.get(j2).getId().substring(this.duty.get(j2).getId().length()-1).matches("[a-z]*")
+						&& this.duty.get(j2+1).getId().substring(this.duty.get(j2+1).getId().length()-1).matches("[a-z]*")) {
 
 					String[] string = this.duty.get(j2).getId().split("[a-z]");
 					String[] string2 = this.duty.get(j2 + 1).getId().split("[a-z]");
@@ -523,9 +528,9 @@ public class DBMatching {
 						dutyList.add(this.duty.get(j2));
 						j2 = this.duty.size() - 1;
 					}
-
-				} else if (this.duty.get(j2).getId().matches(".[a-z]^")
-						&& !this.duty.get(j2 + 1).getId().matches(".[a-z]^")) {
+					//Erste Duty endet Buchstaben, zweite Duty nicht
+				} else if (this.duty.get(j2).getId().substring(this.duty.get(j2).getId().length()-1).matches("[a-z]*")
+						&& !this.duty.get(j2+1).getId().substring(this.duty.get(j2+1).getId().length()-1).matches("[a-z]*")) {
 
 					String[] string = this.duty.get(j2).getId().split("[a-z]");
 					int id1 = Integer.parseInt(string[0]);
@@ -539,9 +544,9 @@ public class DBMatching {
 						zaehlerDienst = zaehlerDienst + 1;
 						j2 = this.duty.size() - 1;
 					}
-
-				} else if (!this.duty.get(j2).getId().matches(".[a-z]^")
-						&& this.duty.get(j2 + 1).getId().matches(".[a-z]^")) {
+					//Erste Duty endet nicht mit Buchstaben, zweite endet mit Buchstaben
+				} else if (!this.duty.get(j2).getId().substring(this.duty.get(j2).getId().length()-1).matches("[a-z]*")
+						&& this.duty.get(j2+1).getId().substring(this.duty.get(j2+1).getId().length()-1).matches("[a-z]*")) {
 
 					String[] string = this.duty.get(j2 + 1).getId().split("[a-z]");
 					int id2 = Integer.parseInt(string[0]);
@@ -554,7 +559,7 @@ public class DBMatching {
 						dutyList.add(this.duty.get(j2));
 						j2 = this.duty.size() - 1;
 					}
-
+					//keine der beiden Duties enthält ein Buchstaben
 				}else {
 
 					if (Integer.parseInt(this.duty.get(j2).getId()) < Integer
@@ -584,12 +589,11 @@ public class DBMatching {
 	
 	private ArrayList<Integer> createDienstplanIDs() {
 		
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
+		this.db.initDBConnection();
 		ArrayList<Integer> idList = new ArrayList<Integer>();
 		// Creating a sql query
 		try {
-			stmt = db.getConnection().createStatement();
+			stmt = this.db.getConnection().createStatement();
 			ResultSet rest1 = stmt.executeQuery("SELECT ID FROM Dienstplan");
 			// All resulted datasets of the sql query will be added to the block
 			// array list
@@ -606,11 +610,10 @@ public class DBMatching {
 
 	private void createDienstplanDate() {
 
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
+		this.db.initDBConnection();
 		// Creating a sql query
 		try {
-			stmt = db.getConnection().createStatement();
+			stmt = this.db.getConnection().createStatement();
 			ResultSet rest1 = stmt.executeQuery("SELECT Datum FROM Dienstplan");
 			// All resulted datasets of the sql query will be added to the block
 			// array list
@@ -628,11 +631,10 @@ public class DBMatching {
 	public int getFahrplanzugehoerigkeitUmlaufplan(int umlaufplanID) {
 		int fahrplanID = 0;
 
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
+		this.db.initDBConnection();
 		// Creating a sql query
 		try {
-			stmt = db.getConnection().createStatement();
+			stmt = this.db.getConnection().createStatement();
 			ResultSet rest1 = stmt
 					.executeQuery("SELECT * FROM Umlaufplan WHERE ID="
 							+ umlaufplanID);
@@ -755,21 +757,15 @@ public class DBMatching {
 					changeDateFormat(fahrplanDateList.get(i - 1)));
 			fahrplanliste.add(fahrplanAdd);
 		}
-
-		/**
-		 * WICHTIG!!!! Es muss noch die FahrplanID ausgelesen werden. DB
-		 * VerknÃƒÂ¼pfung!!!!
-		 */
 		return fahrplanliste;
 	}
 
 	private void createFahrplanDate() {
 
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
+		this.db.initDBConnection();
 		// Creating a sql query
 		try {
-			stmt = db.getConnection().createStatement();
+			stmt = this.db.getConnection().createStatement();
 			ResultSet rest1 = stmt.executeQuery("SELECT Datum FROM Fahrplan");
 			// All resulted datasets of the sql query will be added to the block
 			// array list
@@ -786,11 +782,10 @@ public class DBMatching {
 
 	private void createFahrplanBezeichnugn() {
 
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
+		this.db.initDBConnection();
 		// Creating a sql query
 		try {
-			stmt = db.getConnection().createStatement();
+			stmt = this.db.getConnection().createStatement();
 			ResultSet rest1 = stmt
 					.executeQuery("SELECT Bezeichnung FROM Fahrplan");
 			// All resulted datasets of the sql query will be added to the block
@@ -808,11 +803,10 @@ public class DBMatching {
 
 	private void createFahrplanID() {
 
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
+		this.db.initDBConnection();
 		// Creating a sql query
 		try {
-			stmt = db.getConnection().createStatement();
+			stmt = this.db.getConnection().createStatement();
 			ResultSet rest1 = stmt.executeQuery("SELECT ID FROM Fahrplan");
 			// All resulted datasets of the sql query will be added to the block
 			// array list
@@ -829,11 +823,10 @@ public class DBMatching {
 
 	private void createTransfertime() {
 
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
+		this.db.initDBConnection();
 		// Creating a sql query
 		try {
-			stmt = db.getConnection().createStatement();
+			stmt = this.db.getConnection().createStatement();
 			ResultSet rest1 = stmt
 					.executeQuery("SELECT  DISTINCT * FROM Transfertime");
 			// All resulted datasets of the sql query will be added to the block
@@ -859,11 +852,10 @@ public class DBMatching {
 
 	private void createDays() {
 
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
+		this.db.initDBConnection();
 		// Creating a sql query
 		try {
-			stmt = db.getConnection().createStatement();
+			stmt = this.db.getConnection().createStatement();
 			ResultSet rest1 = stmt.executeQuery("SELECT  DISTINCT * FROM Days");
 			// All resulted datasets of the sql query will be added to the block
 			// array list
@@ -895,11 +887,10 @@ public class DBMatching {
 
 	private void createReliefpoint() {
 
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
+		this.db.initDBConnection();
 		// Creating a sql query
 		try {
-			stmt = db.getConnection().createStatement();
+			stmt = this.db.getConnection().createStatement();
 			ResultSet rest1 = stmt
 					.executeQuery("SELECT  rp.ReliefpointID, sj.ServiceJourneyID, st.StoppointID, rp.StopTime, rp.FahrplanID FROM Reliefpoint AS rp, ServiceJourney AS sj, Stoppoint AS st WHERE rp.ServiceJourneyID=sj.ID AND rp.StoppointID=st.ID");
 			// All resulted datasets of the sql query will be added to the block
@@ -926,11 +917,10 @@ public class DBMatching {
 
 	private void createDeadruntime() {
 
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
+		this.db.initDBConnection();
 		// Creating a sql query
 		try {
-			stmt = db.getConnection().createStatement();
+			stmt = this.db.getConnection().createStatement();
 			ResultSet rest1 = stmt
 					.executeQuery("SELECT  DISTINCT * FROM Deadruntime");
 			// All resulted datasets of the sql query will be added to the block
@@ -957,11 +947,10 @@ public class DBMatching {
 
 	private void createServiceJourney() {
 
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
+		this.db.initDBConnection();
 		// Creating a sql query
 		try {
-			stmt = db.getConnection().createStatement();
+			stmt = this.db.getConnection().createStatement();
 			ResultSet rest1 = stmt
 //					.executeQuery("SELECT sj.ID,sj.ServiceJourneyID,l.LineID,sj.FromStopID,sj.ToStopID, sj.DepTime, sj.ArrTime, sj.MinAheadTime, sj.MinLayoverTime, vtg.VehicleTypeGroupID, sj.MaxShiftBackwardSeconds, sj.MaxShiftForwardSeconds, sj.FromStopBreakFacility, sj.ToStopBreakFacility, sj.Code FROM ServiceJourney AS sj, VehicleTypeGroup AS vtg, Line AS l, Stoppoint AS st WHERE sj.LineID=l.ID AND sj.FromStopID=st.ID AND sj.ToStopID=st.ID AND sj.VehTypeGroupID=vtg.ID");
 			.executeQuery("SELECT * FROM ServiceJourney;");
@@ -1010,11 +999,10 @@ public class DBMatching {
 
 	private void createVehCapToStoppoint() {
 
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
+		this.db.initDBConnection();
 		// Creating a sql query
 		try {
-			stmt = db.getConnection().createStatement();
+			stmt = this.db.getConnection().createStatement();
 			ResultSet rest1 = stmt
 					.executeQuery("SELECT  vt.VehicleTypeID, st.StoppointID, vcts.Min, vcts.Max,vcts.FahrplanID FROM VehicleCapToStoppoint AS vcts, VehicleType AS vt, Stoppoint AS st WHERE vcts.VehTypeID=vt.ID AND vcts.StoppointID=st.ID");
 			// All resulted datasets of the sql query will be added to the block
@@ -1039,11 +1027,10 @@ public class DBMatching {
 
 	private void createVehTypeToVehTypeGroup() {
 
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
+		this.db.initDBConnection();
 		// Creating a sql query
 		try {
-			stmt = db.getConnection().createStatement();
+			stmt = this.db.getConnection().createStatement();
 			ResultSet rest1 = stmt
 					.executeQuery("SELECT  vtg.VehicleTypeGroupID, vt.VehicleTypeID, v.FahrplanID FROM VehicleTypeToVehicleTypeGroup AS v, VehicleTypeGroup AS vtg, VehicleType AS vt WHERE v.VehTypeID=vt.ID AND v.VehTypeGroupID=vtg.ID");
 			// All resulted datasets of the sql query will be added to the block
@@ -1066,11 +1053,10 @@ public class DBMatching {
 
 	private void createVehTypeGroup() {
 
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
+		this.db.initDBConnection();
 		// Creating a sql query
 		try {
-			stmt = db.getConnection().createStatement();
+			stmt = this.db.getConnection().createStatement();
 			ResultSet rest1 = stmt
 					.executeQuery("SELECT  DISTINCT * FROM VehicleTypeGroup");
 			// All resulted datasets of the sql query will be added to the block
@@ -1093,11 +1079,10 @@ public class DBMatching {
 
 	private void createVehType() {
 
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
+		this.db.initDBConnection();
 		// Creating a sql query
 		try {
-			stmt = db.getConnection().createStatement();
+			stmt = this.db.getConnection().createStatement();
 			ResultSet rest1 = stmt
 					.executeQuery("SELECT  DISTINCT * FROM VehicleType");
 			// All resulted datasets of the sql query will be added to the block
@@ -1125,11 +1110,10 @@ public class DBMatching {
 
 	private void createLine() {
 
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
+		this.db.initDBConnection();
 		// Creating a sql query
 		try {
-			stmt = db.getConnection().createStatement();
+			stmt = this.db.getConnection().createStatement();
 			ResultSet rest1 = stmt.executeQuery("SELECT  DISTINCT * FROM Line");
 			// All resulted datasets of the sql query will be added to the block
 			// array list
@@ -1149,11 +1133,10 @@ public class DBMatching {
 
 	private void createStoppoint() {
 
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
+		this.db.initDBConnection();
 		// Creating a sql query
 		try {
-			stmt = db.getConnection().createStatement();
+			stmt = this.db.getConnection().createStatement();
 			ResultSet rest1 = stmt
 					.executeQuery("SELECT  DISTINCT * FROM Stoppoint");
 			// All resulted datasets of the sql query will be added to the block
@@ -1177,11 +1160,10 @@ public class DBMatching {
 	public int getFahrplanzugehoerigkeitDienstPlan(int dienstplanID) {
 		int fahrplanID = 0;
 
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
+		this.db.initDBConnection();
 		// Creating a sql query
 		try {
-			stmt = db.getConnection().createStatement();
+			stmt = this.db.getConnection().createStatement();
 			ResultSet rest1 = stmt
 					.executeQuery("SELECT * FROM Dienstplan WHERE ID="
 							+ dienstplanID);
@@ -1197,14 +1179,13 @@ public class DBMatching {
 
 		boolean isEmpty = false;
 
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
+		this.db.initDBConnection();
 
 		ArrayList<Integer> id = new ArrayList<Integer>();
 
 		// Creating a sql query
 		try {
-			stmt = db.getConnection().createStatement();
+			stmt = this.db.getConnection().createStatement();
 			ResultSet rest1 = stmt.executeQuery("SELECT * FROM Fahrplan;");
 			while (rest1.next()) {
 				id.add(Integer.parseInt(rest1.getString("ID")));
@@ -1222,14 +1203,13 @@ public class DBMatching {
 	public boolean umlaufplanIsEmpty() {
 		boolean isEmpty = false;
 
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
+		this.db.initDBConnection();
 
 		ArrayList<Integer> id = new ArrayList<Integer>();
 
 		// Creating a sql query
 		try {
-			stmt = db.getConnection().createStatement();
+			stmt = this.db.getConnection().createStatement();
 			ResultSet rest1 = stmt.executeQuery("SELECT * FROM Umlaufplan;");
 			while (rest1.next()) {
 				id.add(Integer.parseInt(rest1.getString("ID")));
@@ -1247,15 +1227,14 @@ public class DBMatching {
 	public boolean dienstplanIsEmpty() {
 		boolean isEmpty = false;
 
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
+		this.db.initDBConnection();
 
 		ArrayList<Integer> dienstplan = new ArrayList<Integer>();
 
 		// Creating a sql query
 		try {
 
-			stmt = db.getConnection().createStatement();
+			stmt = this.db.getConnection().createStatement();
 			ResultSet rest1 = stmt.executeQuery("SELECT * FROM Dienstplan;");
 			while (rest1.next()) {
 				dienstplan.add(Integer.parseInt(rest1.getString("ID")));
@@ -1274,15 +1253,14 @@ public class DBMatching {
 	public boolean fahrplanIsEmpty() {
 		boolean isEmpty = false;
 
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
+		this.db.initDBConnection();
 
 		ArrayList<Integer> fahrplan = new ArrayList<Integer>();
 
 		// Creating a sql query
 		try {
 
-			stmt = db.getConnection().createStatement();
+			stmt = this.db.getConnection().createStatement();
 			ResultSet rest1 = stmt.executeQuery("SELECT * FROM Fahrplan;");
 			while (rest1.next()) {
 				fahrplan.add(Integer.parseInt(rest1.getString("ID")));
@@ -1309,13 +1287,12 @@ public class DBMatching {
 	
 	public void deleteFahrplan(Fahrplan fahrplan){
 		
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
+		this.db.initDBConnection();
 
 		// Creating a sql query
 		try {
 
-			stmt = db.getConnection().createStatement();
+			stmt = this.db.getConnection().createStatement();
 			stmt.executeUpdate("DELETE FROM Fahrplan WHERE ID='"+fahrplan.getId()+"';");
 
 		} catch (SQLException e) {
@@ -1327,13 +1304,12 @@ public class DBMatching {
 	
 public void deleteDienstplan(Dienstplan dienstplan){
 		
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
+		this.db.initDBConnection();
 
 		// Creating a sql query
 		try {
 
-			stmt = db.getConnection().createStatement();
+			stmt = this.db.getConnection().createStatement();
 			stmt.executeUpdate("DELETE FROM Dienstplan WHERE ID='"+dienstplan.getId()+"';");
 
 		} catch (SQLException e) {
@@ -1345,13 +1321,12 @@ public void deleteDienstplan(Dienstplan dienstplan){
 	
 	public void deleteUmlaufplan(Umlaufplan umlaufplan){
 		
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
+		this.db.initDBConnection();
 
 		// Creating a sql query
 		try {
 
-			stmt = db.getConnection().createStatement();
+			stmt = this.db.getConnection().createStatement();
 			stmt.executeUpdate("DELETE FROM Umlaufplan WHERE ID='"+umlaufplan.getId()+"';");
 
 		} catch (SQLException e) {
@@ -1392,11 +1367,10 @@ public void deleteDienstplan(Dienstplan dienstplan){
 		
 		int fahrplanID = 0;
 
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
+		this.db.initDBConnection();
 		// Creating a sql query
 		try {
-			stmt = db.getConnection().createStatement();
+			stmt = this.db.getConnection().createStatement();
 			ResultSet rest1 = stmt
 					.executeQuery("SELECT * FROM Szenario WHERE ID="
 							+ i);
@@ -1410,11 +1384,10 @@ public void deleteDienstplan(Dienstplan dienstplan){
 
 	private void createSzenario() {
 		
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
+		this.db.initDBConnection();
 		// Creating a sql query
 		try {
-			stmt = db.getConnection().createStatement();
+			stmt = this.db.getConnection().createStatement();
 			ResultSet rest1 = stmt
 					.executeQuery("SELECT * FROM PrimeDelaySzenario");
 			// All resulted datasets of the sql query will be added to the block
@@ -1441,11 +1414,10 @@ public void deleteDienstplan(Dienstplan dienstplan){
 	
 	public void benenneFahrplanUm(int fahrplanID, String bezeichnung){
 		
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
+		this.db.initDBConnection();
 		// Creating a sql query
 		try {
-			stmt = db.getConnection().createStatement();
+			stmt = this.db.getConnection().createStatement();
 			stmt.executeUpdate("UPDATE Fahrplan SET Bezeichnung='"+bezeichnung+"' WHERE ID='"+fahrplanID+"'");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -1456,11 +1428,10 @@ public void deleteDienstplan(Dienstplan dienstplan){
 	
 	public void benenneUmlaufplanUm(int umlaufplanID, String bezeichnung){
 		
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
+		this.db.initDBConnection();
 		// Creating a sql query
 		try {
-			stmt = db.getConnection().createStatement();
+			stmt = this.db.getConnection().createStatement();
 			stmt.executeUpdate("UPDATE Umlaufplan SET Bezeichnung='"+bezeichnung+"' WHERE ID='"+umlaufplanID+"'");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -1471,11 +1442,10 @@ public void deleteDienstplan(Dienstplan dienstplan){
 	
 	public void benenneDienstplanUm(int dienstplanID, String bezeichnung){
 		
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
+		this.db.initDBConnection();
 		// Creating a sql query
 		try {
-			stmt = db.getConnection().createStatement();
+			stmt = this.db.getConnection().createStatement();
 			stmt.executeUpdate("UPDATE Dienstplan SET Bezeichnung='"+bezeichnung+"' WHERE ID='"+dienstplanID+"'");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

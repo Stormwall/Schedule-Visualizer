@@ -52,7 +52,7 @@
                     <HBox id="HBox" alignment="CENTER" prefHeight="50.0" prefWidth="420.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                       <children>
                         <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#handleuebernehemen" styleClass="dark-blue" text="Übernehmen" />
-                        <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#handleuebernehemen" styleClass="dark-blue" text="Neuer Datensatz" />
+                        <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#handleSaveUplanInDatabase" styleClass="dark-blue" text="Neuer Datensatz" />
                         <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#handleExport" styleClass="dark-blue" text="Exportieren" />
                         <Button maxHeight="23.0" minHeight="23.0" mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Abbrechen" />
                       </children>

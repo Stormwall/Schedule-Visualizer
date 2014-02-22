@@ -86,7 +86,7 @@ public class EditU_PlanController {
 	}
 
 	/**
-	 * Called when the user clicks auswählen.
+	 * Called when the user clicks auswï¿½hlen.
 	 */
 	@FXML
 	private void handleauswaehlen() {
@@ -113,14 +113,14 @@ public class EditU_PlanController {
 				}
 
 			}
-			// Übergabe der Daten an Tabelle und Canvas
+			// ï¿½bergabe der Daten an Tabelle und Canvas
 			this.elementsTable.setItems(data);
 			drawCanvas(blockAuswahl);
 		}
 	}
 
 	/**
-	 * Called when the user clicks übernehmen.
+	 * Called when the user clicks ï¿½bernehmen.
 	 */
 	@FXML
 	private void handleuebernehemen() {
@@ -134,12 +134,12 @@ public class EditU_PlanController {
 	 */
 
 	@FXML
-	private void handleSafeUplanInDatabase() {
+	private void handleSaveUplanInDatabase() {
 		
 		DBSave dbm = new DBSave();
 		
 		try {
-			dbm.saveUmlaufplan(umlaufplan, this.mainApp.inputMeldung("Geben Sie bitte eine Bezeichnung für den Umlaufplan ein.", "Bitte eingeben", "Bezeichnung Umlaufplan"));
+			dbm.saveUmlaufplan(umlaufplan, this.mainApp.inputMeldung("Geben Sie bitte eine Bezeichnung f\u00fcr den Umlaufplan ein.", "Bitte eingeben", "Bezeichnung Umlaufplan"));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -156,7 +156,7 @@ public class EditU_PlanController {
 
 		if (this.elementsTable.getSelectionModel().getSelectedItem() != null) {
 
-			// Ausgewähltes Element auslesen
+			// Ausgewï¿½hltes Element auslesen
 
 			Blockelement blockelement = this.elementsTable.getSelectionModel()
 					.getSelectedItem();
@@ -192,7 +192,7 @@ public class EditU_PlanController {
 			}
 
 		} else {
-			String fehlerA = "Es wurde noch Element ausgewählt";
+			String fehlerA = "Es wurde noch Element ausgewï¿½hlt";
 			String fehlerB = "Was soll bearbeitet werden ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
@@ -209,7 +209,7 @@ public class EditU_PlanController {
 		// Fehlerbehebung bei keiner Auswahl
 		if (this.elementsTable.getSelectionModel().getSelectedItem() != null) {
 
-			// Ausgewähltes Element auslesen
+			// Ausgewï¿½hltes Element auslesen
 
 			Blockelement blockelement = this.elementsTable.getSelectionModel()
 					.getSelectedItem();
@@ -774,7 +774,7 @@ public class EditU_PlanController {
 
 					fahrtDauer = (int) (differenz * (abstandNetz / 60));
 
-					// Färben der Elemente
+					// Fï¿½rben der Elemente
 
 					switch (umlaufplan.getFahrtZuUmlauf().get(i)
 							.getElementType()) {
