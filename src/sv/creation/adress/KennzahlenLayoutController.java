@@ -292,7 +292,7 @@ public class KennzahlenLayoutController {
 	 */
 	@FXML
 	private void handleKostenD() {
-		this.mainApp.showKostenD();
+		this.mainApp.showKostenD();//
 	}
 
 	/**
