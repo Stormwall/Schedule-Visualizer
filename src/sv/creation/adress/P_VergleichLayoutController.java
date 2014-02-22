@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 
 public class P_VergleichLayoutController {
 
-	// Arbeitsvariablen
+	//  Arbeitsvariablen
 	@FXML
 	private Label ms;
 	@FXML
