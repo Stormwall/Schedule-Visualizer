@@ -62,6 +62,10 @@ public class DBMatching {
 	ArrayList<String> dienstplanDateList = new ArrayList<String>();
 	ArrayList<Integer> umlaufplanDayList = new ArrayList<Integer>();
 	ArrayList<Integer> dienstplanDayList = new ArrayList<Integer>();
+	ArrayList<String> fahrplanNameList  = new ArrayList<String>();
+	ArrayList<String> umlaufplanplanNameList  = new ArrayList<String>();
+	ArrayList<String> dienstplanNameList  = new ArrayList<String>();
+	
 	ArrayList<Days> daysList = new ArrayList<Days>();
 	// *************************************************************
 	// ****** Array lists to create objects of the szenarios *******
@@ -230,6 +234,7 @@ public class DBMatching {
 		createBlockelement();
 		createUmlaufplanDayAndDate();
 		ArrayList<Integer> idList=createUmlaufplanIDs();
+		this.umlaufplanplanNameList=createUmlaufplanNameList();
 		// Anzahl der UmlaufplÃƒÂ¤ne wird ausgelesen
 		// Strukturvariablen
 		int anzahlPlan = 1;
@@ -252,6 +257,7 @@ public class DBMatching {
 					blockelementList.add(blockelement.get(j));
 				}
 			}
+			
 			for (int j2 = zaehlerUmlauf; j2 < this.umlauf.size() - 1; j2++) {
 				if (this.umlauf.get(j2).getId() < this.umlauf.get(j2 + 1)
 						.getId()) {
@@ -272,11 +278,32 @@ public class DBMatching {
 			int fahrplanID=getFahrplanzugehoerigkeitUmlaufplan(idList.get(i-1));
 			zaehlerUmlauf = zaehlerUmlauf + 1;
 			Umlaufplan umlaufplanAdd = new Umlaufplan(i, blockList,
-					blockelementList,umlaufplanDayList.get(i-1),fahrplanID,
+					blockelementList,umlaufplanDayList.get(i-1),fahrplanID,umlaufplanplanNameList.get(i-1),
 					changeDateFormat(umlaufplanDateList.get(i - 1)));
 			umlaufplanliste.add(umlaufplanAdd);
 		}
 		return umlaufplanliste;
+	}
+
+	private ArrayList<String> createUmlaufplanNameList() {
+		
+		this.db.initDBConnection();
+		ArrayList<String> nameList = new ArrayList<String>();
+		// Creating a sql query
+				try {
+					stmt = this.db.getConnection().createStatement();
+					ResultSet rest1 = stmt.executeQuery("SELECT Name FROM Umlaufplan");
+					// All resulted datasets of the sql query will be added to the block
+					// array list
+					while (rest1.next()) {
+						nameList.add(rest1.getString("Name"));
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return nameList;
+		
 	}
 
 	private ArrayList<Integer> createUmlaufplanIDs() {
@@ -438,6 +465,7 @@ public class DBMatching {
 		createDuty();
 		createDutyelement();
 		createDienstplanDate();
+		this.dienstplanNameList=createDienstplanNameList();
 		// Anzahl der DienstplÃƒÂ¤ne wird ausgelesen
 		// Strukturvariablen
 		int anzahlPlan = 1;
@@ -579,7 +607,7 @@ public class DBMatching {
 			}
 			zaehlerDienst = zaehlerDienst + 1;
 			Dienstplan dienstplanAdd = new Dienstplan(i, dutyList,
-					dutyelementList, getFahrplanzugehoerigkeitDienstPlan(idList.get(i-1)),
+					dutyelementList, getFahrplanzugehoerigkeitDienstPlan(idList.get(i-1)),this.dienstplanNameList.get(i-1),
 					changeDateFormat(dienstplanDateList.get(i - 1)));
 			dienstplanliste.add(dienstplanAdd);
 		}
@@ -587,6 +615,21 @@ public class DBMatching {
 		return dienstplanliste;
 	}
 	
+	private ArrayList<String> createDienstplanNameList() {
+		this.db.initDBConnection();
+		ArrayList<String> nameList = new ArrayList<String>();
+		try {
+			ResultSet rest1=stmt.executeQuery("SELECT Name FROM Dienstplan;");
+			while (rest1.next()) {
+				nameList.add(rest1.getString("Name"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return nameList;
+	}
+
 	private ArrayList<Integer> createDienstplanIDs() {
 		
 		this.db.initDBConnection();
@@ -668,6 +711,7 @@ public class DBMatching {
 		createTransfertime();
 		createFahrplanBezeichnugn();
 		createFahrplanDate();
+		this.fahrplanNameList=createFahrplanNameList();
 		// Anzahl der Fahrplaene wird ausgelesen
 		// Strukturvariablen
 		int anzahlPlan = 1;
@@ -753,11 +797,27 @@ public class DBMatching {
 					stoppointList, lineList, vehTypeList, vehTypeGroupList,
 					vehTypeToVehTypeGroupList, vehCapToStoppointList,
 					serviceJourneyList, deadruntimeList, reliefpointList,
-					transfertimeList, daysList, fahrplanBezeichnungList.get(i - 1),
+					transfertimeList, daysList, fahrplanBezeichnungList.get(i - 1),this.fahrplanNameList.get(i-1),
 					changeDateFormat(fahrplanDateList.get(i - 1)));
 			fahrplanliste.add(fahrplanAdd);
 		}
 		return fahrplanliste;
+	}
+
+	private ArrayList<String> createFahrplanNameList() {
+	this.db.initDBConnection();
+	ArrayList<String> namelist = new ArrayList<String>();
+		try {
+			ResultSet rest1=stmt.executeQuery("SELECT Name FROM Fahrplan;");
+			while(rest1.next()){
+			namelist.add(rest1.getString("Name"));
+		} }catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		
+	}
+		return namelist;
+		
 	}
 
 	private void createFahrplanDate() {
@@ -1418,7 +1478,7 @@ public void deleteDienstplan(Dienstplan dienstplan){
 		// Creating a sql query
 		try {
 			stmt = this.db.getConnection().createStatement();
-			stmt.executeUpdate("UPDATE Fahrplan SET Bezeichnung='"+bezeichnung+"' WHERE ID='"+fahrplanID+"'");
+			stmt.executeUpdate("UPDATE Fahrplan SET Name='"+bezeichnung+"' WHERE ID='"+fahrplanID+"'");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1432,7 +1492,7 @@ public void deleteDienstplan(Dienstplan dienstplan){
 		// Creating a sql query
 		try {
 			stmt = this.db.getConnection().createStatement();
-			stmt.executeUpdate("UPDATE Umlaufplan SET Bezeichnung='"+bezeichnung+"' WHERE ID='"+umlaufplanID+"'");
+			stmt.executeUpdate("UPDATE Umlaufplan SET Name='"+bezeichnung+"' WHERE ID='"+umlaufplanID+"'");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1446,7 +1506,7 @@ public void deleteDienstplan(Dienstplan dienstplan){
 		// Creating a sql query
 		try {
 			stmt = this.db.getConnection().createStatement();
-			stmt.executeUpdate("UPDATE Dienstplan SET Bezeichnung='"+bezeichnung+"' WHERE ID='"+dienstplanID+"'");
+			stmt.executeUpdate("UPDATE Dienstplan SET Name='"+bezeichnung+"' WHERE ID='"+dienstplanID+"'");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
