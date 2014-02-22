@@ -62,6 +62,8 @@ public class KennzahlenLayoutController {
 	private Button statisitkU;
 	@FXML
 	private Button statistikD;
+	@FXML
+	private Button pVergleich;
 
 	// Bau der Zugriffslisten
 
@@ -284,7 +286,8 @@ public class KennzahlenLayoutController {
 	 */
 	@FXML
 	private void handleKostenU() {
-		this.mainApp.showKostenU();
+		
+		this.mainApp.showKostenU(this.umlaufplanChoiceliste);
 	}
 
 	/**
@@ -292,7 +295,16 @@ public class KennzahlenLayoutController {
 	 */
 	@FXML
 	private void handleKostenD() {
-		this.mainApp.showKostenD();//
+		this.mainApp.showKostenD(this.dienstplanChoiceliste);
+	}
+	
+	/**
+	 * Opens the P-Vergleich.
+	 */
+	@FXML
+	private void handleP_Vergleich() {
+		
+		this.mainApp.showP_Vergleich(this.fahrplanChoiceliste.get(0));
 	}
 
 	/**
@@ -762,7 +774,15 @@ public class KennzahlenLayoutController {
 			this.fahrplanChoiceliste.add(this.detailsFahrplanTable
 					.getSelectionModel().getSelectedItem());
 			this.auswahlFahrplan.setText(fahrplanChoiceliste.get(0)
-					.getBezeichnung());
+					.getBezeichnung());			
+			FadeTransition faa = new FadeTransition(Duration.millis(1000),
+					this.pVergleich);
+			faa.setFromValue(0.0);
+			faa.setToValue(1.0);
+			faa.setAutoReverse(true);
+			faa.play();
+			this.pVergleich.setDisable(false);
+			
 		} else {
 			String fehlerA = "Es wurde noch Element ausgewählt";
 			String fehlerB = "Was soll ausgewaehlt werden ?";
@@ -787,6 +807,14 @@ public class KennzahlenLayoutController {
 		} else {
 			this.fahrplanChoiceliste.clear();
 			this.auswahlFahrplan.setText("");
+			
+			FadeTransition faa = new FadeTransition(Duration.millis(1000),
+					this.pVergleich);
+			faa.setFromValue(1.0);
+			faa.setToValue(0.0);
+			faa.setAutoReverse(true);
+			faa.play();
+			this.pVergleich.setDisable(true);
 		}
 	}
 

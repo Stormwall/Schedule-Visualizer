@@ -184,6 +184,7 @@
                         <AnchorPane maxHeight="35.0" minHeight="35.0" minWidth="0.0" prefHeight="35.0" prefWidth="798.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <children>
                             <Button layoutY="6.0" mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Abbrechen" AnchorPane.rightAnchor="7.0" />
+                            <Button id="statisitkU" fx:id="pVergleich" layoutX="14.0" layoutY="6.0" mnemonicParsing="false" onAction="#handleP_Vergleich" opacity="0.0" styleClass="dark-blue" text="P-Vergleich" />
                           </children>
                         </AnchorPane>
                       </children>

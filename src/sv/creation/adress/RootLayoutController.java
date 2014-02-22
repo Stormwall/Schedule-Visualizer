@@ -11,14 +11,7 @@ public class RootLayoutController {
 		this.mainApp = mainApp;
 	}
 
-	/**
-	 * Opens the Kostenview.
-	 */
-	@FXML
-	private void handleKosten() {
-		mainApp.showKostenU();
-	}
-	
+
 	/**
 	 * Opens the Kostenview.
 	 */

@@ -338,7 +338,7 @@ public class MainApplication extends Application {
 
 	// Initiate KostenLayout fxml
 
-	public void showKostenU() {
+	public void showKostenU(ArrayList<Umlaufplan> umlaufplanliste) {
 
 		try {
 
@@ -359,6 +359,7 @@ public class MainApplication extends Application {
 			// Set the controller
 			KostenLayoutControllerU controller = loader.getController();
 			controller.setDialogStage(dialogStage);
+			controller.setUmlaufplanliste(umlaufplanliste);
 
 			dialogStage.show();
 		} catch (IOException e) {
@@ -369,7 +370,7 @@ public class MainApplication extends Application {
 	
 	// Initiate KostenLayout fxml
 
-	public void showKostenD() {
+	public void showKostenD(ArrayList<Dienstplan> dienstplanChoiceliste) {
 
 		try {
 
@@ -390,6 +391,38 @@ public class MainApplication extends Application {
 			// Set the controller
 			KostenLayoutControllerD controller = loader.getController();
 			controller.setDialogStage(dialogStage);
+
+			dialogStage.show();
+		} catch (IOException e) {
+			// Exception gets thrown if the fxml file could not be loaded
+			e.printStackTrace();
+		}
+	}
+	
+	// Initiate P-Vergleich Layout fxml
+
+	public void showP_Vergleich(Fahrplan fahrplan) {
+
+		try {
+
+			// Load the fxml file and create a new stage for the popup
+			FXMLLoader loader = new FXMLLoader(
+					MainApplication.class.getResource("view/P_VergleichLayout.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Kostenkalkulation");
+			dialogStage.getIcons().add(
+					new Image("file:resources/images/IconFinal.png"));
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.setResizable(false);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+
+			// Set the controller
+			P_VergleichLayoutController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			controller.setFahrplan(fahrplan);
 
 			dialogStage.show();
 		} catch (IOException e) {
