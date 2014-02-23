@@ -309,16 +309,16 @@ public class ColorChoiceLayoutController {
 
 		Color color = new Color();
 
-//		color.changeColor(1, "SEAGREEN");
-//		color.changeColor(2, "LIGHTCORAL");
-//		color.changeColor(3, "ANTIQUEWHITE");
-//		color.changeColor(4, "WHITESMOKE");
-//		color.changeColor(5, "GREEN");
-//		color.changeColor(6, "GREEN");
-//		color.changeColor(7, "GREEN");
-//		color.changeColor(8, "ORANGE");
-//		color.changeColor(9, "LIGHTSKYBLUE");
-//		color.changeColor(10, "GREEN");
+		color.changeColor(1, "SEAGREEN");
+		color.changeColor(2, "LIGHTCORAL");
+		color.changeColor(3, "ANTIQUEWHITE");
+		color.changeColor(4, "WHITESMOKE");
+		color.changeColor(5, "GREEN");
+		color.changeColor(6, "GREEN");
+		color.changeColor(7, "GREEN");
+		color.changeColor(8, "ORANGE");
+		color.changeColor(9, "LIGHTSKYBLUE");
+		color.changeColor(10, "GREEN");
 		
 		this.colors = color.readColorTable();
 		
