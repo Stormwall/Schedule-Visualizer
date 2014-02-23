@@ -287,6 +287,7 @@ public class DBMatching {
 					changeDateFormat(umlaufplanDateList.get(i - 1)));
 			umlaufplanliste.add(umlaufplanAdd);
 		}
+		blockelement.clear();
 		return umlaufplanliste;
 	}
 
@@ -637,7 +638,7 @@ public class DBMatching {
 					changeDateFormat(dienstplanDateList.get(i - 1)),this.dienstplanDayList.get(i-1));
 			dienstplanliste.add(dienstplanAdd);
 		}
-
+		dutyelement.clear();
 		return dienstplanliste;
 	}
 	
@@ -874,6 +875,7 @@ public class DBMatching {
 					changeDateFormat(fahrplanDateList.get(i - 1)));
 			fahrplanliste.add(fahrplanAdd);
 		}
+		this.serviceJourney.clear();
 		return fahrplanliste;
 	}
 
