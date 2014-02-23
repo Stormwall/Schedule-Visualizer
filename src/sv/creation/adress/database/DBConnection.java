@@ -943,13 +943,13 @@ public class DBConnection {
 
 		  stmnt.executeUpdate("INSERT INTO Dienstplan (Bezeichnung, Name, FahrplanID, UmlaufplanID, DayID, Datum) VALUES ('"
 				  			+fileNameVergleich+"','"+fileNameVergleich+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%')),(SELECT u.ID FROM Umlaufplan AS u WHERE u.FahrplanID=(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%') AND u.Bezeichnung LIKE ('%"
-				  			+dienstplanNameCut+"') AND u.DayID='"+dayID+"')),'"+dayID+"', CURRENT_DATE);");
+				  			+dienstplanNameCut+"%') AND u.DayID='"+dayID+"')),'"+dayID+"', CURRENT_DATE);");
 		  }else{
 			    
 			  //filling Dienstplan Table
-		  stmnt.executeUpdate("INSERT INTO Dienstplan (Bezeichnung, FahrplanID, UmlaufplanID, Datum) VALUES ('"
+		  stmnt.executeUpdate("INSERT INTO Dienstplan (Bezeichnung, Name, FahrplanID, UmlaufplanID, Datum) VALUES ('"
 				  			+fileNameVergleich+"','"+fileNameVergleich+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%')),(SELECT u.ID FROM Umlaufplan AS u WHERE u.FahrplanID=(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%')AND u.Bezeichnung LIKE ('%"
-				  			+dienstplanNameCut+"'))), CURRENT_DATE);");
+				  			+dienstplanNameCut+"%'))), CURRENT_DATE);");
 		  }
 		  //iterators for getting values from stringsplitter object
 		  Iterator<Integer> it11 = ss.getDutyelementElementType().iterator();
@@ -1124,8 +1124,15 @@ public class DBConnection {
 		String vehicleschedulename =filename;
 		String[] string=filename.split("_real");
 		vehicleschedulename=string[1];
-		String[] resultString=vehicleschedulename.split(".txt");
-		String scheduleName=resultString[0];
+		String[] resultString=vehicleschedulename.split("_");
+		String scheduleName="";
+		for (int i = 0; i < resultString.length-1; i++) {
+			if(i==resultString.length-2){
+				scheduleName+=resultString[i];
+			}else{
+			scheduleName+=resultString[i]+"_";
+			}
+		}
 		return scheduleName;
 	}
 	

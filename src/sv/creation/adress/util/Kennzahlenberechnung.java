@@ -67,40 +67,55 @@ public class Kennzahlenberechnung {
 	 *********************************************************************************************************************************/
 	public double berechneDurschnittlicheWiederholrateUmlaufplanAll(ArrayList<Umlaufplan> umlaufplanliste, Fahrplan fahrplan){
 		
-		int anzahlBlockGesamt=0;
-		int anzahlGleicheBlock=0;
-		double avgrepeat=0.0;
+		double anzahlBlockGesamt=0.0;
+		double anzahlGleicheBloecke=0.0;
+		double avgrepeat;
+		boolean alleGleich=false;
 		
-		//Anzahl der Uml������ufe von allen Umlaufpl������nen, die zu dem Fahrplan geh������ren
+		
+		ArrayList<ArrayList<ArrayList<String>>> ListPlaeneGesamt = erstelleBlockelementListAll(umlaufplanliste);
+		
+		
+		//Anzahl der Dienste von allen Dienstpl������nen
 		for (int i = 0; i < umlaufplanliste.size(); i++) {
 			if(umlaufplanliste.get(i).getFahrplanID()==fahrplan.getId()){
-			anzahlBlockGesamt+=umlaufplanliste.get(i).getUmlauf().size();
-			}
-		}
-		
-		//Anzahl gleicher Uml������ufe zwischen zwei Umlaufpl������nen
-		for (int i = 0; i < umlaufplanliste.size(); i++) {
-			for (int j = 0; j < umlaufplanliste.get(i).getUmlauf().size(); j++) {
-				if(umlaufplanliste.get(i).getUmlauf().get(j)==umlaufplanliste.get(i+1).getUmlauf().get(j+1)){
-					anzahlGleicheBlock++;
+				for (int j = 0; j < umlaufplanliste.get(i).getUmlauf().size(); j++) {
+						anzahlBlockGesamt++;
 				}
 			}
 		}
-		//Man darf nicht durch 0 teilen
-		if(anzahlGleicheBlock==0){
-			anzahlGleicheBlock=anzahlBlockGesamt;
+		//Alle Dienstplaene
+		for (int plan = 0; plan < ListPlaeneGesamt.size()-1; plan++) {
+			alleGleich=false;
+			//Alle B������ndel in einem Plan
+			for (int buendel = 0; buendel < ListPlaeneGesamt.get(plan).size(); buendel++) {
+			//Alle ServiceJounreys im ersten B������ndel im ersten Plan
+			for (int buendel2 = 0; buendel2 < ListPlaeneGesamt.get(plan+1).size(); buendel2++) {
+				
+				if(ListPlaeneGesamt.get(plan).get(buendel).size()==ListPlaeneGesamt.get(plan+1).get(buendel2).size()){
+					//Alle ServiceJourneys im B������ndel
+					for (int serviceJourney = 0; serviceJourney < ListPlaeneGesamt.get(plan).get(buendel).size(); serviceJourney++) {
+						
+						if(!(ListPlaeneGesamt.get(plan).get(buendel).get(serviceJourney).equals(ListPlaeneGesamt.get(plan+1).get(buendel2).get(serviceJourney)))){
+							alleGleich=false;
+							break;
+						}
+						alleGleich=true;
+					}
+					if(alleGleich){
+						anzahlGleicheBloecke++;
+						break;
+					}
+				}else{
+					alleGleich=false;
+				}
+				
+				}
+			}
 		}
 		
-		if(anzahlBlockGesamt==0){
-			System.out.println("Es m������ssen mindestens zwei Umlaufpl������ne mit dem gleichen Fahrplan ausgew������hlt werden!");
-		}
-		//Wenn Nenner 0, dann wird Durchschnitt auf 0 gesetzt
-		if(anzahlGleicheBlock==0){
-			avgrepeat=0.0;
-		}else{
-		//Formel f������r durchschn. Wiederholrate
-		avgrepeat=anzahlBlockGesamt/(anzahlBlockGesamt-anzahlGleicheBlock);
-		}
+		avgrepeat=anzahlBlockGesamt/(anzahlBlockGesamt-anzahlGleicheBloecke);
+		
 		return avgrepeat;
 	}
 	
@@ -123,6 +138,9 @@ public class Kennzahlenberechnung {
 			}	
 		return dutyelementList;
 	}
+	
+	
+
 	/*********************************************************************************************************************************
 	 ****berechnet durchschnittl. Wiederholrate der regelmaessigen Fahrten in Dienstplanliste*****************************************
 	 *********************************************************************************************************************************/
@@ -782,5 +800,40 @@ public double pVergleich(Fahrplan fahrplan) {
 	double pWert=zwischenwert/zahlFahrten;
 	
 	return pWert;
+}
+
+/*********************************************************************************************************************************
+ ****Erstellt eine ArrayList mit allen Buendeln an ServiceJourneys zu den einzelnen Umlaufplaenen*********************************
+ *********************************************************************************************************************************/
+//Erstellt eine ArrayList mit allen Buendeln an ServiceJourneys zu den einzelnen Umlaufplaenen
+public ArrayList<ArrayList<ArrayList<String>>> erstelleBlockelementListAll(ArrayList<Umlaufplan> umlaufplanliste){
+	
+	ArrayList<ArrayList<ArrayList<String>>> ListPlaeneGesamt = new ArrayList<ArrayList<ArrayList<String>>>();
+	int zaehler=0;
+	
+	for (int i = 0; i < umlaufplanliste.size(); i++) {
+		ArrayList<ArrayList<String>> ListPlan = new ArrayList<ArrayList<String>>();
+		zaehler=0;
+		for (int j = 0; j < umlaufplanliste.get(i).getUmlauf().size(); j++) {
+			ArrayList<String> serviceJourneyList = new ArrayList<String>();
+			for (int j2 = zaehler; j2 < umlaufplanliste.get(i).getFahrtZuUmlauf().size(); j2++) {
+			int blockID=umlaufplanliste.get(i).getUmlauf().get(j).getId();
+				if(umlaufplanliste.get(i).getFahrtZuUmlauf().get(j2).getElementType()==1){
+					if(umlaufplanliste.get(i).getFahrtZuUmlauf().get(j2).getBlockID()==(blockID)){	
+					serviceJourneyList.add(umlaufplanliste.get(i).getFahrtZuUmlauf().get(j2).getServiceJourneyID());
+					}else{
+						ListPlan.add(serviceJourneyList);
+						break;
+					}
+				}
+				zaehler++;
+				if(zaehler==umlaufplanliste.get(i).getFahrtZuUmlauf().size()){
+					ListPlan.add(serviceJourneyList);
+				}
+			}
+		}
+		ListPlaeneGesamt.add(ListPlan);
+	}
+	return ListPlaeneGesamt;
 }
 }

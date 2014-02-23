@@ -85,7 +85,7 @@ public class Export {
 				writer.write(textOutput + lineSeparator);
 			}
 			textOutput = "*"+lineSeparator+"* FahrtZuUmlauf"+lineSeparator+"*"+lineSeparator+"$BLOCKELEMENT:BlockID;ServiceJourneyID;FromStopID;ToStopID;DepTime;ArrTime;ElementType;ServiceJourneyCode";
-			writer.write(textOutput + "\n");
+			writer.write(textOutput + lineSeparator);
 			for (int i = 0; i < umlaufplan.getFahrtZuUmlauf().size(); i++) {
 				textOutput = umlaufplan.getFahrtZuUmlauf().get(i).getBlockID()
 						+ ";"
