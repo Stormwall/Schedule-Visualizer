@@ -27,8 +27,10 @@ public class Color {
 	public ArrayList<String> readColorTable(){
 		
 		ArrayList<String> colors = new ArrayList<String>();
+		this.dbc.initDBConnection();
 		try {
-			ResultSet rest1=stmt.executeQuery("SELECT * FROM Colors;");
+			stmt = this.dbc.getConnection().createStatement();
+			ResultSet rest1=stmt.executeQuery("SELECT Farbe FROM Colors;");
 			while (rest1.next()) {
 				String farbe=rest1.getString("Farbe");
 				colors.add(farbe);
@@ -37,7 +39,6 @@ public class Color {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		return colors;
 		}
 }

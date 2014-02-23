@@ -620,7 +620,7 @@ public ArrayList<Blockelement> regelmaessigeBlockelement(Umlaufplan umlaufplan, 
 	return blockelementList;
 }
 
-public double pVergleich(Fahrplan fahrplan) {
+public int[][] erstelleMatrixpVergleich(Fahrplan fahrplan) {
 
 	int[][] anzahlFahrten = new int[7][1];
 
@@ -785,7 +785,13 @@ public double pVergleich(Fahrplan fahrplan) {
 			}
 		}
 	}
+	return matrix;
 	
+}
+
+public double berechneMatrixPVergleich (int[][] matrix){
+	
+	double pWert=0.0;
 	double zahlFahrten = 0;
 	double zwischenwert=0;
 	for (int i = 0; i < matrix.length; i++) {
@@ -797,10 +803,279 @@ public double pVergleich(Fahrplan fahrplan) {
 		}
 	}
 	
-	double pWert=zwischenwert/zahlFahrten;
+	pWert=zwischenwert/zahlFahrten;
 	
 	return pWert;
+	
 }
+
+public double [][] matrixFahrplan(Fahrplan fahrplan){
+	
+	double [][] matrix = new double[6][6];
+	double anzahlFahrtenGesamt=fahrplan.getDays().size();
+	double fahrtenMontagAlle=0.0;
+	double fahrtenMontag1=0.0;
+	double fahrtenMontag2=0.0;
+	double fahrtenMontag3=0.0;
+	double fahrtenMontag4=0.0;
+	double fahrtenDienstagAlle=0.0;
+	double fahrtenDienstag1=0.0;
+	double fahrtenDienstag2=0.0;
+	double fahrtenDienstag3=0.0;
+	double fahrtenDienstag4=0.0;
+	double fahrtenMittwochAlle=0.0;
+	double fahrtenMittwoch1=0.0;
+	double fahrtenMittwoch2=0.0;
+	double fahrtenMittwoch3=0.0;
+	double fahrtenMittwoch4=0.0;
+	double fahrtenDonnerstagAlle=0.0;
+	double fahrtenDonnerstag1=0.0;
+	double fahrtenDonnerstag2=0.0;
+	double fahrtenDonnerstag3=0.0;
+	double fahrtenDonnerstag4=0.0;
+	double fahrtenFreitagAlle=0.0;
+	double fahrtenFreitag1=0.0;
+	double fahrtenFreitag2=0.0;
+	double fahrtenFreitag3=0.0;
+	double fahrtenFreitag4=0.0;
+	double fahrtenMontagGesamt=0.0;
+	double fahrtenDienstagGesamt=0.0;
+	double fahrtenMittwochGesamt=0.0;
+	double fahrtenDonnerstagGesamt=0.0;
+	double fahrtenFreitagGesamt=0.0;
+	
+	matrix[0][0]=anzahlFahrtenGesamt;
+	for (int i = 0; i < fahrplan.getDays().size(); i++) {
+		//Montag
+		if (fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==1) {
+			fahrtenMontagAlle++;
+			fahrtenDienstagAlle++;
+			fahrtenMittwochAlle++;
+			fahrtenDonnerstagAlle++;
+			fahrtenFreitagAlle++;
+		}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==0&&fahrplan.getDays().get(i).getD3()==0&&fahrplan.getDays().get(i).getD4()==0&&fahrplan.getDays().get(i).getD5()==0) {
+			fahrtenMontag1++;
+			//Zwei Tage gültig
+		}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==0&&fahrplan.getDays().get(i).getD4()==0&&fahrplan.getDays().get(i).getD5()==0) {
+			fahrtenMontag2++;
+		}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==0&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==0&&fahrplan.getDays().get(i).getD5()==0) {
+			fahrtenMontag2++;
+		}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==0&&fahrplan.getDays().get(i).getD3()==0&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==0) {
+			fahrtenMontag2++;
+		}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==0&&fahrplan.getDays().get(i).getD3()==0&&fahrplan.getDays().get(i).getD4()==0&&fahrplan.getDays().get(i).getD5()==1) {
+			fahrtenMontag2++;
+			//Drei Tage gültig
+		}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==0&&fahrplan.getDays().get(i).getD5()==0) {
+			fahrtenMontag3++;
+		}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==0&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==0) {
+			fahrtenMontag3++;
+		}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==0&&fahrplan.getDays().get(i).getD3()==0&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==1) {
+			fahrtenMontag3++;
+		}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==0&&fahrplan.getDays().get(i).getD4()==0&&fahrplan.getDays().get(i).getD5()==1) {
+			fahrtenMontag3++;
+		}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==0&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==0&&fahrplan.getDays().get(i).getD5()==1) {
+			fahrtenMontag3++;
+		}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==0&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==0) {
+			fahrtenMontag3++;
+		}//Vier Tage gültig
+		else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==0) {
+			fahrtenMontag4++;
+		}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==0&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==1) {
+			fahrtenMontag4++;
+		}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==0&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==1) {
+			fahrtenMontag4++;
+		}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==0&&fahrplan.getDays().get(i).getD5()==1) {
+			fahrtenMontag4++;
+		}
+		//Dienstag
+		else if(fahrplan.getDays().get(i).getD1()==0&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==0&&fahrplan.getDays().get(i).getD4()==0&&fahrplan.getDays().get(i).getD5()==0) {
+					fahrtenDienstag1++;
+					//Zwei Tage gültig
+				}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==0&&fahrplan.getDays().get(i).getD4()==0&&fahrplan.getDays().get(i).getD5()==0) {
+					fahrtenDienstag2++;
+				}else if(fahrplan.getDays().get(i).getD1()==0&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==0&&fahrplan.getDays().get(i).getD5()==0) {
+					fahrtenDienstag2++;
+				}else if(fahrplan.getDays().get(i).getD1()==0&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==0&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==0) {
+					fahrtenDienstag2++;
+				}else if(fahrplan.getDays().get(i).getD1()==0&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==0&&fahrplan.getDays().get(i).getD4()==0&&fahrplan.getDays().get(i).getD5()==1) {
+					fahrtenDienstag2++;
+					//Drei Tage gültig
+				}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==0&&fahrplan.getDays().get(i).getD5()==0) {
+					fahrtenDienstag3++;
+				}else if(fahrplan.getDays().get(i).getD1()==0&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==0) {
+					fahrtenDienstag3++;
+				}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==0&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==0) {
+					fahrtenDienstag3++;
+				}else if(fahrplan.getDays().get(i).getD1()==0&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==0&&fahrplan.getDays().get(i).getD5()==1) {
+					fahrtenDienstag3++;
+				}else if(fahrplan.getDays().get(i).getD1()==0&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==0&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==1) {
+					fahrtenDienstag3++;
+				}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==0&&fahrplan.getDays().get(i).getD4()==0&&fahrplan.getDays().get(i).getD5()==1) {
+					fahrtenDienstag3++;
+				}//Vier Tage gültig
+				else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==0) {
+					fahrtenDienstag4++;
+				}else if(fahrplan.getDays().get(i).getD1()==0&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==1) {
+					fahrtenDienstag4++;
+				}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==0&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==1) {
+					fahrtenDienstag4++;
+				}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==0&&fahrplan.getDays().get(i).getD5()==1) {
+					fahrtenDienstag4++;
+				}
+				//Mittwoch
+				else if(fahrplan.getDays().get(i).getD1()==0&&fahrplan.getDays().get(i).getD2()==0&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==0&&fahrplan.getDays().get(i).getD5()==0) {
+					fahrtenMittwoch1++;
+					//Zwei Tage gültig
+				}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==0&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==0&&fahrplan.getDays().get(i).getD5()==0) {
+					fahrtenMittwoch2++;
+				}else if(fahrplan.getDays().get(i).getD1()==0&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==0&&fahrplan.getDays().get(i).getD5()==0) {
+					fahrtenMittwoch2++;
+				}else if(fahrplan.getDays().get(i).getD1()==0&&fahrplan.getDays().get(i).getD2()==0&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==0) {
+					fahrtenMittwoch2++;
+				}else if(fahrplan.getDays().get(i).getD1()==0&&fahrplan.getDays().get(i).getD2()==0&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==0&&fahrplan.getDays().get(i).getD5()==1) {
+					fahrtenMittwoch2++;
+					//Drei Tage gültig
+				}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==0&&fahrplan.getDays().get(i).getD5()==0) {
+					fahrtenMittwoch3++;
+				}else if(fahrplan.getDays().get(i).getD1()==0&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==0) {
+					fahrtenMittwoch3++;
+				}else if(fahrplan.getDays().get(i).getD1()==0&&fahrplan.getDays().get(i).getD2()==0&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==1) {
+					fahrtenMittwoch3++;
+				}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==0&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==0) {
+					fahrtenMittwoch3++;
+				}else if(fahrplan.getDays().get(i).getD1()==0&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==0&&fahrplan.getDays().get(i).getD5()==1) {
+					fahrtenMittwoch3++;
+				}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==0&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==0&&fahrplan.getDays().get(i).getD5()==1) {
+					fahrtenMittwoch3++;
+				}//Vier Tage gültig
+				else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==0) {
+					fahrtenMontag4++;
+				}else if(fahrplan.getDays().get(i).getD1()==0&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==1) {
+					fahrtenMontag4++;
+				}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==0&&fahrplan.getDays().get(i).getD5()==1) {
+					fahrtenMontag4++;
+				}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==0&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==1) {
+					fahrtenMontag4++;
+				}
+				//Donnerstag
+				else if(fahrplan.getDays().get(i).getD1()==0&&fahrplan.getDays().get(i).getD2()==0&&fahrplan.getDays().get(i).getD3()==0&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==0) {
+					fahrtenDonnerstag1++;
+					//Zwei Tage gültig
+				}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==0&&fahrplan.getDays().get(i).getD3()==0&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==0) {
+					fahrtenDonnerstag2++;
+				}else if(fahrplan.getDays().get(i).getD1()==0&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==0&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==0) {
+					fahrtenDonnerstag2++;
+				}else if(fahrplan.getDays().get(i).getD1()==0&&fahrplan.getDays().get(i).getD2()==0&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==0) {
+					fahrtenDonnerstag2++;
+				}else if(fahrplan.getDays().get(i).getD1()==0&&fahrplan.getDays().get(i).getD2()==0&&fahrplan.getDays().get(i).getD3()==0&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==1) {
+					fahrtenDonnerstag2++;
+					//Drei Tage gültig
+				}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==0&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==0) {
+					fahrtenDonnerstag3++;
+				}else if(fahrplan.getDays().get(i).getD1()==0&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==0) {
+					fahrtenDonnerstag3++;
+				}else if(fahrplan.getDays().get(i).getD1()==0&&fahrplan.getDays().get(i).getD2()==0&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==1) {
+					fahrtenDonnerstag3++;
+				}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==0&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==0) {
+					fahrtenDonnerstag3++;
+				}else if(fahrplan.getDays().get(i).getD1()==0&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==0&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==1) {
+					fahrtenDonnerstag3++;
+				}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==0&&fahrplan.getDays().get(i).getD3()==0&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==1) {
+					fahrtenDonnerstag3++;
+				}//Vier Tage gültig
+				else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==0) {
+					fahrtenDonnerstag4++;
+				}else if(fahrplan.getDays().get(i).getD1()==0&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==1) {
+					fahrtenDonnerstag4++;
+				}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==0&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==1) {
+					fahrtenDonnerstag4++;
+				}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==0&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==1) {
+					fahrtenDonnerstag4++;
+				}
+				//Freitag
+				else if(fahrplan.getDays().get(i).getD1()==0&&fahrplan.getDays().get(i).getD2()==0&&fahrplan.getDays().get(i).getD3()==0&&fahrplan.getDays().get(i).getD4()==0&&fahrplan.getDays().get(i).getD5()==1) {
+					fahrtenFreitag1++;
+					//Zwei Tage gültig
+				}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==0&&fahrplan.getDays().get(i).getD3()==0&&fahrplan.getDays().get(i).getD4()==0&&fahrplan.getDays().get(i).getD5()==1) {
+					fahrtenFreitag2++;
+				}else if(fahrplan.getDays().get(i).getD1()==0&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==0&&fahrplan.getDays().get(i).getD4()==0&&fahrplan.getDays().get(i).getD5()==1) {
+					fahrtenFreitag2++;
+				}else if(fahrplan.getDays().get(i).getD1()==0&&fahrplan.getDays().get(i).getD2()==0&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==0&&fahrplan.getDays().get(i).getD5()==1) {
+					fahrtenFreitag2++;
+				}else if(fahrplan.getDays().get(i).getD1()==0&&fahrplan.getDays().get(i).getD2()==0&&fahrplan.getDays().get(i).getD3()==0&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==1) {
+					fahrtenFreitag2++;
+					//Drei Tage gültig
+				}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==0&&fahrplan.getDays().get(i).getD4()==0&&fahrplan.getDays().get(i).getD5()==1) {
+					fahrtenFreitag3++;
+				}else if(fahrplan.getDays().get(i).getD1()==0&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==0&&fahrplan.getDays().get(i).getD5()==1) {
+					fahrtenFreitag3++;
+				}else if(fahrplan.getDays().get(i).getD1()==0&&fahrplan.getDays().get(i).getD2()==0&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==1) {
+					fahrtenFreitag3++;
+				}else if(fahrplan.getDays().get(i).getD1()==0&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==0&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==1) {
+					fahrtenFreitag3++;
+				}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==0&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==0&&fahrplan.getDays().get(i).getD5()==1) {
+					fahrtenFreitag3++;
+				}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==0&&fahrplan.getDays().get(i).getD3()==0&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==1) {
+					fahrtenFreitag3++;
+				}//Vier Tage gültig
+				else if(fahrplan.getDays().get(i).getD1()==0&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==1) {
+					fahrtenFreitag4++;
+				}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==0&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==1) {
+					fahrtenFreitag4++;
+				}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==0&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==1&&fahrplan.getDays().get(i).getD5()==1) {
+					fahrtenFreitag4++;
+				}else if(fahrplan.getDays().get(i).getD1()==1&&fahrplan.getDays().get(i).getD2()==1&&fahrplan.getDays().get(i).getD3()==1&&fahrplan.getDays().get(i).getD4()==0&&fahrplan.getDays().get(i).getD5()==1) {
+					fahrtenFreitag4++;
+				}
+	}
+	
+	for (int j = 0; j < fahrplan.getDays().size(); j++) {
+		if(fahrplan.getDays().get(j).getD1()==1){
+			fahrtenMontagGesamt++;
+		}else if(fahrplan.getDays().get(j).getD2()==1){
+			fahrtenDienstagGesamt++;
+		}else if(fahrplan.getDays().get(j).getD3()==1){
+			fahrtenMittwochGesamt++;
+		}else if(fahrplan.getDays().get(j).getD4()==1){
+			fahrtenDonnerstagGesamt++;
+		}else if(fahrplan.getDays().get(j).getD5()==1){
+			fahrtenFreitagGesamt++;
+		}
+	}
+	
+	matrix[1][0]=fahrtenMontagAlle;
+	matrix[2][0]=fahrtenDienstagAlle;
+	matrix[3][0]=fahrtenMittwochAlle;
+	matrix[4][0]=fahrtenDonnerstagAlle;
+	matrix[5][0]=fahrtenFreitagAlle;
+	matrix[1][1]=fahrtenMontagAlle/fahrtenMontagGesamt;
+	matrix[1][2]=fahrtenMontag4/fahrtenMontagGesamt;
+	matrix[1][3]=fahrtenMontag3/fahrtenMontagGesamt;
+	matrix[1][4]=fahrtenMontag2/fahrtenMontagGesamt;
+	matrix[1][5]=fahrtenMontag1/fahrtenMontagGesamt;
+	matrix[2][1]=fahrtenDienstagAlle/fahrtenDienstagGesamt;
+	matrix[2][2]=fahrtenDienstag4/fahrtenDienstagGesamt;
+	matrix[2][3]=fahrtenDienstag3/fahrtenDienstagGesamt;
+	matrix[2][4]=fahrtenDienstag2/fahrtenDienstagGesamt;
+	matrix[2][5]=fahrtenDienstag1/fahrtenDienstagGesamt;
+	matrix[3][1]=fahrtenMittwochAlle/fahrtenMittwochGesamt;
+	matrix[3][2]=fahrtenMittwoch4/fahrtenMittwochGesamt;
+	matrix[3][3]=fahrtenMittwoch3/fahrtenMittwochGesamt;
+	matrix[3][4]=fahrtenMittwoch2/fahrtenMittwochGesamt;
+	matrix[3][5]=fahrtenMittwoch1/fahrtenMittwochGesamt;
+	matrix[4][1]=fahrtenDonnerstagAlle/fahrtenDonnerstagGesamt;
+	matrix[4][2]=fahrtenDonnerstag4/fahrtenDonnerstagGesamt;
+	matrix[4][3]=fahrtenDonnerstag3/fahrtenDonnerstagGesamt;
+	matrix[4][4]=fahrtenDonnerstag2/fahrtenDonnerstagGesamt;
+	matrix[4][5]=fahrtenDonnerstag1/fahrtenDonnerstagGesamt;
+	matrix[5][1]=fahrtenFreitagAlle/fahrtenFreitagGesamt;
+	matrix[5][2]=fahrtenFreitag4/fahrtenFreitagGesamt;
+	matrix[5][3]=fahrtenFreitag3/fahrtenFreitagGesamt;
+	matrix[5][4]=fahrtenFreitag2/fahrtenFreitagGesamt;
+	matrix[5][5]=fahrtenFreitag1/fahrtenFreitagGesamt;
+	return matrix;
+	}
+
 
 /*********************************************************************************************************************************
  ****Erstellt eine ArrayList mit allen Buendeln an ServiceJourneys zu den einzelnen Umlaufplaenen*********************************

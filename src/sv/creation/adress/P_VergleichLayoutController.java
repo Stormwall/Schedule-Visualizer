@@ -93,7 +93,43 @@ public class P_VergleichLayoutController {
 
 		Kennzahlenberechnung kb = new Kennzahlenberechnung();
 
-		double result = kb.pVergleich(this.fahrplan);
+		double[][]matrix  = kb.matrixFahrplan(this.fahrplan);
+		int[][] pMatrix=kb.erstelleMatrixpVergleich(this.fahrplan);
+		double result = kb.berechneMatrixPVergleich(pMatrix);
+		
+		
+		this.ms.setText(""+matrix[1][0]);
+		this.ds.setText(""+matrix[2][0]);
+		this.mis.setText(""+matrix[3][0]);
+		this.dos.setText(""+matrix[4][0]);
+		this.fs.setText(""+matrix[5][0]);
+		this.m1.setText(""+matrix[1][1]);
+		this.m2.setText(""+matrix[1][2]);
+		this.m3.setText(""+matrix[1][3]);
+		this.m4.setText(""+matrix[1][4]);
+		this.m5.setText(""+matrix[2][5]);
+		this.d1.setText(""+matrix[2][1]);
+		this.d2.setText(""+matrix[2][2]);
+		this.d3.setText(""+matrix[2][3]);
+		this.d4.setText(""+matrix[2][4]);
+		this.d5.setText(""+matrix[2][5]);
+		this.mi1.setText(""+matrix[3][1]);
+		this.mi2.setText(""+matrix[3][2]);
+		this.mi3.setText(""+matrix[3][3]);
+		this.mi4.setText(""+matrix[3][4]);
+		this.mi5.setText(""+matrix[3][5]);
+		this.do1.setText(""+matrix[4][1]);
+		this.do2.setText(""+matrix[4][2]);
+		this.do3.setText(""+matrix[4][3]);
+		this.do4.setText(""+matrix[4][4]);
+		this.do5.setText(""+matrix[4][5]);
+		this.f1.setText(""+matrix[5][1]);
+		this.f2.setText(""+matrix[5][2]);
+		this.f3.setText(""+matrix[5][3]);
+		this.f4.setText(""+matrix[5][4]);
+		this.f5.setText(""+matrix[5][5]);
+		
+		//Hier matrix einfuegen
 		this.result.setText(String.valueOf(result));
 	}
 
