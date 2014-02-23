@@ -11,7 +11,13 @@ public class RootLayoutController {
 		this.mainApp = mainApp;
 	}
 
-
+	/**
+	 * Opens the ColorChange.
+	 */
+	@FXML
+	private void handleColorChange() {
+		mainApp.showColorChoice();
+	}
 	/**
 	 * Opens the Kostenview.
 	 */

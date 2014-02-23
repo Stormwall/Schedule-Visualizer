@@ -1,8 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.text.*?>
 
-<GridPane xmlns:fx="http://javafx.com/fxml">
-	<!-- TODO Add Nodes -->
+<GridPane prefHeight="480.0" prefWidth="350.0" styleClass="background" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sv.creation.adress.ColorChoiceLayoutController">
+  <!-- TODO Add Nodes -->
+  <children>
+    <Label styleClass="label-white" text="Servicefahrt" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+    <Label styleClass="label-white" text="Leerfahrt Haltestellen" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+    <Label styleClass="label-white" text="Fahrt ins Depot" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+    <Label styleClass="label-white" text="Fahrt aus dem Depot" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+    <Label styleClass="label-white" text="Vorbereitung" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+    <Label styleClass="label-white" text="Nachbereitung" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+    <Label styleClass="label-white" text="Transfer" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+    <Label styleClass="label-white" text="Pause" GridPane.columnIndex="1" GridPane.rowIndex="16" />
+    <Label styleClass="label-white" text="Warten" GridPane.columnIndex="1" GridPane.rowIndex="18" />
+    <Label styleClass="label-white" text="LayoverTime" GridPane.columnIndex="1" GridPane.rowIndex="20" />
+    <AnchorPane fx:id="a1" maxHeight="36.0" maxWidth="28.0" minHeight="36.0" minWidth="28.0" prefHeight="14.0" prefWidth="8.0" styleClass="background-paper" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+    <AnchorPane fx:id="a2" maxHeight="36.0" maxWidth="28.0" minHeight="36.0" minWidth="28.0" prefHeight="14.0" prefWidth="8.0" styleClass="background-paper" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+    <AnchorPane fx:id="a3" maxHeight="36.0" maxWidth="28.0" minHeight="36.0" minWidth="28.0" prefHeight="14.0" prefWidth="8.0" styleClass="background-paper" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+    <AnchorPane fx:id="a4" maxHeight="36.0" maxWidth="28.0" minHeight="36.0" minWidth="28.0" prefHeight="14.0" prefWidth="8.0" styleClass="background-paper" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+    <AnchorPane fx:id="a5" maxHeight="36.0" maxWidth="28.0" minHeight="36.0" minWidth="28.0" prefHeight="14.0" prefWidth="8.0" styleClass="background-paper" GridPane.columnIndex="2" GridPane.rowIndex="10" />
+    <AnchorPane fx:id="a6" maxHeight="36.0" maxWidth="28.0" minHeight="36.0" minWidth="28.0" prefHeight="14.0" prefWidth="8.0" styleClass="background-paper" GridPane.columnIndex="2" GridPane.rowIndex="12" />
+    <AnchorPane fx:id="a7" maxHeight="36.0" maxWidth="28.0" minHeight="36.0" minWidth="28.0" prefHeight="14.0" prefWidth="8.0" styleClass="background-paper" GridPane.columnIndex="2" GridPane.rowIndex="14" />
+    <AnchorPane fx:id="a9" maxHeight="36.0" maxWidth="28.0" minHeight="36.0" minWidth="28.0" prefHeight="14.0" prefWidth="8.0" styleClass="background-paper" GridPane.columnIndex="2" GridPane.rowIndex="18" />
+    <AnchorPane fx:id="a8" maxHeight="36.0" maxWidth="28.0" minHeight="36.0" minWidth="28.0" prefHeight="14.0" prefWidth="8.0" styleClass="background-paper" GridPane.columnIndex="2" GridPane.rowIndex="16" />
+    <AnchorPane fx:id="a10" maxHeight="36.0" maxWidth="28.0" minHeight="36.0" minWidth="28.0" prefHeight="14.0" prefWidth="8.0" styleClass="background-paper" GridPane.columnIndex="2" GridPane.rowIndex="20" />
+    <Label text="Farbverwaltung" textFill="#dfdfdf" GridPane.columnIndex="1" GridPane.rowIndex="0">
+      <font>
+        <Font name="Arial Bold" size="14.0" />
+      </font>
+    </Label>
+    <AnchorPane prefHeight="30.0" prefWidth="178.0" GridPane.columnIndex="1" GridPane.rowIndex="21">
+      <children>
+        <HBox id="HBox" alignment="CENTER" layoutX="-2.0" layoutY="7.0" spacing="5.0">
+          <children>
+            <Button mnemonicParsing="false" styleClass="dark-blue" text="OK" />
+            <Button mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Abbrechen" />
+          </children>
+        </HBox>
+      </children>
+    </AnchorPane>
+    <ColorPicker fx:id="colorPicker1" styleClass="dark-blue-Choicebox" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+    <ColorPicker fx:id="colorPicker2" styleClass="dark-blue-Choicebox" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+    <ColorPicker fx:id="colorPicker3" styleClass="dark-blue-Choicebox" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+    <ColorPicker fx:id="colorPicker4" styleClass="dark-blue-Choicebox" GridPane.columnIndex="4" GridPane.rowIndex="8" />
+    <ColorPicker fx:id="colorPicker5" styleClass="dark-blue-Choicebox" GridPane.columnIndex="4" GridPane.rowIndex="10" />
+    <ColorPicker fx:id="colorPicker6" styleClass="dark-blue-Choicebox" GridPane.columnIndex="4" GridPane.rowIndex="12" />
+    <ColorPicker fx:id="colorPicker7" styleClass="dark-blue-Choicebox" GridPane.columnIndex="4" GridPane.rowIndex="14" />
+    <ColorPicker fx:id="colorPicker8" styleClass="dark-blue-Choicebox" GridPane.columnIndex="4" GridPane.rowIndex="16" />
+    <ColorPicker fx:id="colorPicker9" styleClass="dark-blue-Choicebox" GridPane.columnIndex="4" GridPane.rowIndex="18" />
+    <ColorPicker fx:id="colorPicker10" styleClass="dark-blue-Choicebox" GridPane.columnIndex="4" GridPane.rowIndex="20" />
+  </children>
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="18.0" minWidth="10.0" prefWidth="18.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="186.0" minWidth="10.0" prefWidth="186.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="28.0" minWidth="10.0" prefWidth="28.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="17.0" minWidth="8.0" prefWidth="8.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="93.0" minWidth="10.0" prefWidth="93.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="17.0" minWidth="10.0" prefWidth="17.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="31.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="36.0" minHeight="8.0" prefHeight="8.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="36.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="21.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="21.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="21.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="21.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="21.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="21.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+  <stylesheets>
+    <URL value="@MainLayout.css" />
+  </stylesheets>
 </GridPane>
-

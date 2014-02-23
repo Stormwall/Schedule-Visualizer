@@ -18,7 +18,6 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 public class MainApplication extends Application {
 
@@ -246,7 +245,6 @@ public class MainApplication extends Application {
 					new Image("file:resources/images/IconFinal.png"));
 			dialogStage.setFullScreen(true);
 			dialogStage.initModality(Modality.WINDOW_MODAL);
-			dialogStage.initStyle(StageStyle.UTILITY);
 			dialogStage.initOwner(primaryStage);
 			Scene scene = new Scene(page);
 			dialogStage.setScene(scene);
@@ -282,7 +280,6 @@ public class MainApplication extends Application {
 					new Image("file:resources/images/IconFinal.png"));
 			dialogStage.setFullScreen(true);
 			dialogStage.initModality(Modality.WINDOW_MODAL);
-			dialogStage.initStyle(StageStyle.UTILITY);
 			dialogStage.initOwner(primaryStage);
 			Scene scene = new Scene(page);
 			dialogStage.setScene(scene);
@@ -318,7 +315,6 @@ public class MainApplication extends Application {
 					new Image("file:resources/images/IconFinal.png"));
 			dialogStage.setFullScreen(true);
 			dialogStage.initModality(Modality.WINDOW_MODAL);
-			dialogStage.initStyle(StageStyle.UTILITY);
 			dialogStage.initOwner(primaryStage);
 			Scene scene = new Scene(page);
 			dialogStage.setScene(scene);
@@ -352,9 +348,8 @@ public class MainApplication extends Application {
 			Stage dialogStage = new Stage();
 			dialogStage.getIcons().add(
 					new Image("file:resources/images/IconFinal.png"));
-			dialogStage.setFullScreen(true);
 			dialogStage.initModality(Modality.WINDOW_MODAL);
-			dialogStage.initStyle(StageStyle.UTILITY);
+			dialogStage.setResizable(false);
 			dialogStage.initOwner(primaryStage);
 			Scene scene = new Scene(page);
 			dialogStage.setScene(scene);

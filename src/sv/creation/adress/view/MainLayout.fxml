@@ -10,10 +10,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sv.creation.adress.MainLayoutController">
+<AnchorPane prefHeight="700.0" prefWidth="1300.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sv.creation.adress.MainLayoutController">
   <!-- TODO Add Nodes -->
   <children>
-    <SplitPane disable="false" dividerPositions="0.08361204013377926" focusTraversable="true" maxHeight="-1.0" orientation="VERTICAL" prefHeight="500.0" prefWidth="1000.0" styleClass="background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <SplitPane disable="false" dividerPositions="0.07163323782234957" focusTraversable="true" maxHeight="-1.0" orientation="VERTICAL" prefHeight="500.0" prefWidth="1000.0" styleClass="background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <items>
         <AnchorPane maxHeight="47.0" maxWidth="-1.0" minHeight="47.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
           <children>
@@ -38,11 +38,12 @@
                 <Button id="apply" fx:id="applyFilter" mnemonicParsing="false" onAction="#refreshBothGraphics" styleClass="dark-blue" text="Anwenden" />
               </children>
             </HBox>
+            <Button layoutY="14.0" mnemonicParsing="false" styleClass="dark-blue" text="Vollbild" AnchorPane.rightAnchor="14.0" />
           </children>
         </AnchorPane>
         <AnchorPane fx:id="MainPane" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
           <children>
-            <SplitPane disable="false" dividerPositions="0.1706827309236948" focusTraversable="true" prefHeight="445.0" prefWidth="998.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <SplitPane disable="false" dividerPositions="0.13117283950617284" focusTraversable="true" prefHeight="445.0" prefWidth="998.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <items>
                 <AnchorPane fx:id="leftinnerPane" maxHeight="-1.0" maxWidth="167.0" minHeight="0.0" minWidth="167.0" prefHeight="160.0" prefWidth="100.0" styleClass="background">
                   <children>
@@ -198,7 +199,7 @@
                 </AnchorPane>
                 <AnchorPane fx:id="rightinnerPane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                   <children>
-                    <SplitPane disable="false" dividerPositions="0.7911275415896488" focusTraversable="true" orientation="VERTICAL" prefHeight="443.0" prefWidth="823.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <SplitPane disable="false" dividerPositions="0.8237129485179407" focusTraversable="true" orientation="VERTICAL" prefHeight="443.0" prefWidth="823.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                       <items>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                           <children>
@@ -518,7 +519,7 @@
                         </AnchorPane>
                         <AnchorPane fx:id="lowerDetailsPane" maxHeight="110.0" minHeight="110.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                           <children>
-                            <SplitPane dividerPositions="0.24786324786324787" focusTraversable="true" maxHeight="-1.0" minHeight="107.0" prefHeight="126.0" prefWidth="821.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <SplitPane dividerPositions="0.18141197497765862" focusTraversable="true" maxHeight="-1.0" minHeight="107.0" prefHeight="126.0" prefWidth="821.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                               <items>
                                 <AnchorPane maxHeight="105.0" maxWidth="200.0" minHeight="0.0" minWidth="200.0" prefHeight="160.0" prefWidth="100.0" styleClass="background">
                                   <children>
@@ -549,7 +550,7 @@
                                 </AnchorPane>
                                 <AnchorPane maxHeight="-1.0" maxWidth="-1.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                   <children>
-                                    <SplitPane dividerPositions="0.7168576104746317" focusTraversable="true" prefHeight="103.0" prefWidth="613.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <SplitPane dividerPositions="0.8100987925356751" focusTraversable="true" prefHeight="103.0" prefWidth="613.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                       <items>
                                         <AnchorPane id="tablePane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                           <children>
