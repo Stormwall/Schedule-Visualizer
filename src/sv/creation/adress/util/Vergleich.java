@@ -93,6 +93,7 @@ public class Vergleich {
 				}
 				
 			}
+			break;
 			
 		//Mittwoch
 		case 3:
@@ -133,6 +134,7 @@ public class Vergleich {
 				}
 				
 			}
+			break;
 			
 		//Donnerstag	
 		case 4:
@@ -173,6 +175,7 @@ public class Vergleich {
 				}
 				
 			}
+			break;
 			
 		//Freitag:
 		case 5:
@@ -213,6 +216,7 @@ public class Vergleich {
 				}
 				
 			}
+			break;
 			
 		//Samstag
 		case 6:
@@ -253,6 +257,7 @@ public class Vergleich {
 				}
 				
 			}
+			break;
 			
 		//Sonntag
 		case 7:
@@ -293,11 +298,12 @@ public class Vergleich {
 				}
 				
 			}
+			break;
 			
 		default:
 			break;
 		}
-		return anzahlServiceFahrten;
+		return this.anzahlServiceFahrten;
 	}
 
 	public String timeFormat(int i) {
