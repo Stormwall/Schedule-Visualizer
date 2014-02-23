@@ -3,6 +3,7 @@ package sv.creation.adress.util;
 import java.util.ArrayList;
 
 import sv.creation.adress.model.Dienstplan;
+import sv.creation.adress.model.Fahrplan;
 import sv.creation.adress.model.Umlaufplan;
 
 /****************************************************************************
@@ -90,7 +91,7 @@ public class ScheduleStatistics {
 	 *****************************************************************/
 
 	public ArrayList<ScheduleStatistics> calculateCrewScheduleStatistics(
-			ArrayList<Dienstplan> dienstplanliste) {
+			ArrayList<Dienstplan> dienstplanliste, Fahrplan fp) {
 		ArrayList<ScheduleStatistics> crewschedulestatisticslist = new ArrayList<ScheduleStatistics>();
 
 		for (int i = 0; i < dienstplanliste.size(); i++) {
@@ -98,7 +99,7 @@ public class ScheduleStatistics {
 
 			DutyStatistics stat = new DutyStatistics();
 			ArrayList<DutyStatistics> dutystats = new ArrayList<DutyStatistics>();
-			dutystats = stat.calculateDutystatistics(dienstplanliste.get(i));
+			dutystats = stat.calculateDutystatistics(dienstplanliste.get(i), fp);
 			for (int j = 0; j < dutystats.size(); j++) {
 				// Total Trips
 				schedulestats.totalNumberOfTrips = roundValue(schedulestats.totalNumberOfTrips
@@ -222,7 +223,7 @@ public class ScheduleStatistics {
 	 ************************************************************************/
 
 	public ArrayList<ScheduleStatistics> calculateVehicleScheduleStatistics(
-			ArrayList<Umlaufplan> umlaufplanliste) {
+			ArrayList<Umlaufplan> umlaufplanliste,Fahrplan fp) {
 		ArrayList<ScheduleStatistics> blockchedulestatisticslist = new ArrayList<ScheduleStatistics>();
 
 		for (int i = 0; i < umlaufplanliste.size(); i++) {
@@ -230,7 +231,7 @@ public class ScheduleStatistics {
 
 			BlockStatistics stat = new BlockStatistics();
 			ArrayList<BlockStatistics> blockstats = new ArrayList<BlockStatistics>();
-			blockstats = stat.calculateBlockStatistics(umlaufplanliste.get(i));
+			blockstats = stat.calculateBlockStatistics(umlaufplanliste.get(i),fp);
 			for (int j = 0; j < blockstats.size(); j++) {
 
 				// Total Trips
@@ -298,7 +299,8 @@ public class ScheduleStatistics {
 				schedulestats.sumserviceTimetotalTimeRatio = schedulestats.sumserviceTimetotalTimeRatio
 						+ blockstats.get(j).blockserviceTimetotalBlockTimeRatio;
 			}
-
+			schedulestats.averageLengthOfTotalTrips = roundValue(schedulestats.totalRunTime
+					/ schedulestats.totalNumberOfTrips);
 			schedulestats.averageLengthOfServiceTrips = schedulestats.sumavgServicetrips
 					/ blockstats.size();
 			schedulestats.averageLengthOfDeadheads = schedulestats.sumavgDeadheads

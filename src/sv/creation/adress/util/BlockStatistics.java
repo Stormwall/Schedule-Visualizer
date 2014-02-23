@@ -4,48 +4,50 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 
+import sv.creation.adress.model.Fahrplan;
 import sv.creation.adress.model.Umlaufplan;
 
 public class BlockStatistics {
 	int blockID;
-	double blocktotalNumberOfTrips = 0;
-	double blocktotalRunTime = 0;
-	double blocknumberOfServiceTrips = 0;
-	double blockaverageLengthOfServiceTrips = 0;
-	double blocknumberOfDeadheads = 0;
-	double blockaverageLengthOfDeadheads = 0;
-	double blocknumberOfWaitings = 0;
-	double blockaverageLengthOfWaitings = 0;
-	double blocknumberOfPullOuts = 0;
-	double blockaverageLengthOfPullOuts = 0;
-	double blocknumberOfPullIns = 0;
-	double blockaverageLengthOfPullIns = 0;
-	//int blocknumberOfLines = 0;
+	int blocktotalNumberOfTrips = 0;	
+	int blocknumberOfServiceTrips = 0;
+	int blocknumberOfDeadheads = 0;
+	int blocknumberOfWaitings = 0;
+	int blocknumberOfPullOuts = 0;
+	int blocknumberOfPullIns = 0;
+	int blocknumberOfPreparations = 0;
+	int blocknumberOfWrapUps = 0;
+	int blocknumberOfLayovers = 0;
 	
-	double blocknumberOfPreparations = 0;
-	double blockaverageLengthOfPreparations = 0;
-	double blocknumberOfWrapUps = 0;
-	double blockaverageLengthOfWrapUps = 0;
-	double blocknumberOfLayovers = 0;
+	int blocknumberOfLines = 0;
+	
+	double blockaverageLengthOfServiceTrips = 0;
+	double blockaverageLengthOfDeadheads = 0;	
+	double blockaverageLengthOfWaitings = 0;	
+	double blockaverageLengthOfPullOuts = 0;	
+	double blockaverageLengthOfPullIns = 0;	
+	double blockaverageLengthOfPreparations = 0;	
+	double blockaverageLengthOfWrapUps = 0;	
 	double blockaverageLengthOfLayovers = 0;
-
 	
 	double blockserviceTimetotalBlockTimeRatio = 0;
 	
-	double blockoveralldurationServicetrips = 0;
-	double blockoveralldurationDeadheads = 0;
-	double blockoveralldurationWaitings = 0;
-	double blockoveralldurationPullouts = 0;
-	double blockoveralldurationPullins = 0;
+	long blocktotalRunTime = 0;
+	long blockoveralldurationServicetrips = 0;
+	long blockoveralldurationDeadheads = 0;
+	long blockoveralldurationWaitings = 0;
+	long blockoveralldurationPullouts = 0;
+	long blockoveralldurationPullins = 0;
 	
-	double blockoveralldurationPreparations = 0;
-	double blockoveralldurationWrapUps = 0;
-	double blockoveralldurationLayovers = 0;
+	long blockoveralldurationPreparations = 0;
+	long blockoveralldurationWrapUps = 0;
+	long blockoveralldurationLayovers = 0;
 	/****************************************************************************
 	method for calculating statistics for all duties contained in a crew schedule
 	*****************************************************************************/
-	public ArrayList<BlockStatistics> calculateBlockStatistics(Umlaufplan up){
+	public ArrayList<BlockStatistics> calculateBlockStatistics(Umlaufplan up,Fahrplan fp){
 
 		
 		ArrayList<BlockStatistics> blockstatlist = new ArrayList<BlockStatistics>();
@@ -53,7 +55,7 @@ public class BlockStatistics {
 			
 
 			blockID = up.getUmlauf().get(block).getId();
-						
+			HashSet blocklineID = new HashSet();			
 			BlockStatistics blockstat = new BlockStatistics();
 			for (int blockelement = 0; blockelement < up.getFahrtZuUmlauf().size(); blockelement++){
 				
@@ -70,6 +72,9 @@ public class BlockStatistics {
 							//Service Trip
 							blockstat.blocknumberOfServiceTrips++;
 							blockstat.blockoveralldurationServicetrips = blockstat.blockoveralldurationServicetrips + runtime;
+							int test = fp.getServicejourney().get(Integer.parseInt(up.getFahrtZuUmlauf().get(blockelement).getServiceJourneyID())).getLineID();
+							blocklineID.add(fp.getServicejourney().get(Integer.parseInt(up.getFahrtZuUmlauf().get(blockelement).getServiceJourneyID())).getLineID());
+							
 							break;
 						case 2:
 							//Deadheading
@@ -110,6 +115,8 @@ public class BlockStatistics {
 				}
 					
 			}
+			//Lines per Block
+			blockstat.blocknumberOfLines = blocklineID.size();
 			//Elementtypes
 			if (blockstat.blocknumberOfServiceTrips != 0) {
 				blockstat.blockaverageLengthOfServiceTrips = blockstat.blockoveralldurationServicetrips
@@ -324,5 +331,9 @@ public class BlockStatistics {
 
 	public double getBlockoveralldurationLayovers() {
 		return blockoveralldurationLayovers;
+	}
+
+	public int getBlocknumberOfLines() {
+		return blocknumberOfLines;
 	}
 }

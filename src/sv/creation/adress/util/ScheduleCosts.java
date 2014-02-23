@@ -3,6 +3,7 @@ package sv.creation.adress.util;
 import java.util.ArrayList;
 
 import sv.creation.adress.model.Dienstplan;
+import sv.creation.adress.model.Fahrplan;
 import sv.creation.adress.model.Umlaufplan;
 
 public class ScheduleCosts {
@@ -11,14 +12,14 @@ public class ScheduleCosts {
 	private double schedulecosts = 0;
 
 	public ArrayList<ScheduleCosts> calculateCrewScheduleCosts(
-			ArrayList<Dienstplan> dp, double Kf, double kvhour) {
+			ArrayList<Dienstplan> dp, Fahrplan fp, double Kf, double kvhour) {
 
 		ArrayList<ScheduleCosts> scostslist = new ArrayList<ScheduleCosts>();
 
 		// calculate runtimes using schedule statistcs class
 		ScheduleStatistics stat = new ScheduleStatistics();
 		ArrayList<ScheduleStatistics> sstats = new ArrayList<ScheduleStatistics>();
-		sstats = stat.calculateCrewScheduleStatistics(dp);
+		sstats = stat.calculateCrewScheduleStatistics(dp,fp);
 
 		for (int i = 0; i < sstats.size(); i++) {
 			ScheduleCosts scosts = new ScheduleCosts();
@@ -33,14 +34,14 @@ public class ScheduleCosts {
 	}
 
 	public ArrayList<ScheduleCosts> calculateVehicleScheduleCosts(
-			ArrayList<Umlaufplan> up, double Kf, double kvhour) {
+			ArrayList<Umlaufplan> up, Fahrplan fp, double Kf, double kvhour) {
 
 		ArrayList<ScheduleCosts> scostslist = new ArrayList<ScheduleCosts>();
 
 		// calculate runtimes using schedule statistcs class
 		ScheduleStatistics stat = new ScheduleStatistics();
 		ArrayList<ScheduleStatistics> sstats = new ArrayList<ScheduleStatistics>();
-		sstats = stat.calculateVehicleScheduleStatistics(up);
+		sstats = stat.calculateVehicleScheduleStatistics(up,fp);
 
 		for (int i = 0; i < sstats.size(); i++) {
 			ScheduleCosts scosts = new ScheduleCosts();
