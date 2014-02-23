@@ -2,6 +2,7 @@ package sv.creation.adress;
 
 import java.util.ArrayList;
 
+import sv.creation.adress.model.Fahrplan;
 import sv.creation.adress.model.Umlaufplan;
 import sv.creation.adress.util.BlockStatistics;
 import sv.creation.adress.util.ScheduleStatistics;
@@ -73,6 +74,7 @@ public class StatistikenUPlanSingleLayoutController {
 	// Arbeitsvariabelen
 
 	private ArrayList<Umlaufplan> umlaufplanliste = new ArrayList<Umlaufplan>();
+	private Fahrplan fahrplan;
 	private TableView<BlockStatistics> detailsBlockTable = new TableView<BlockStatistics>();
 
 	private Stage dialogStage;
@@ -351,6 +353,14 @@ public class StatistikenUPlanSingleLayoutController {
 	public void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
 	}
+	
+	public Fahrplan getFahrplan() {
+		return fahrplan;
+	}
+
+	public void setFahrplan(Fahrplan fahrplan) {
+		this.fahrplan = fahrplan;
+	}
 
 	public ArrayList<Umlaufplan> getUmlaufplanliste() {
 		return umlaufplanliste;
@@ -364,9 +374,9 @@ public class StatistikenUPlanSingleLayoutController {
 		ScheduleStatistics stat = new ScheduleStatistics();
 		BlockStatistics bstat = new BlockStatistics();
 		this.scheduleStatistics = stat
-				.calculateVehicleScheduleStatistics(umlaufplanliste);
+				.calculateVehicleScheduleStatistics(umlaufplanliste, this.fahrplan);
 		this.blockStatistics = bstat
-				.calculateBlockStatistics(this.umlaufplanliste.get(0));
+				.calculateBlockStatistics(this.umlaufplanliste.get(0), this.fahrplan);
 
 		// Aufruf der Arbeitsmethoden
 		fillLabels();

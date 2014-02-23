@@ -125,7 +125,7 @@ public class MainApplication extends Application {
 		}
 	}
 	
-	public void showStatistikUPlanSingle(ArrayList<Umlaufplan> umlaufplanliste) {
+	public void showStatistikUPlanSingle(ArrayList<Umlaufplan> umlaufplanliste, Fahrplan fahrplan) {
 
 		try {
 
@@ -147,6 +147,7 @@ public class MainApplication extends Application {
 			// Set the controller
 			StatistikenUPlanSingleLayoutController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
+			controller.setFahrplan(fahrplan);
 			controller.setUmlaufplanliste(umlaufplanliste);
 
 			dialogStage.show();
@@ -157,7 +158,7 @@ public class MainApplication extends Application {
 		}
 	}
 	
-	public void showStatistikDPlanSingle(ArrayList<Dienstplan> dienstplanliste) {
+	public void showStatistikDPlanSingle(ArrayList<Dienstplan> dienstplanliste, Fahrplan fahrplan) {
 
 		try {
 
@@ -179,6 +180,7 @@ public class MainApplication extends Application {
 			// Set the controller
 			StatistikenDPlanSingleLayoutController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
+			controller.setFahrplan(fahrplan);
 			controller.setDienstplanliste(dienstplanliste);
 
 			dialogStage.show();
@@ -335,10 +337,44 @@ public class MainApplication extends Application {
 			e.printStackTrace();
 		}
 	}
+	
+	// Initiate Color Choice fxml
+
+	public void showColorChoice() {
+
+		try {
+
+			// Load the fxml file and create a new stage for the popup
+			FXMLLoader loader = new FXMLLoader(
+					MainApplication.class
+							.getResource("view/ColorChoiceLayout.fxml"));
+			GridPane page = (GridPane) loader.load();
+			Stage dialogStage = new Stage();
+			dialogStage.getIcons().add(
+					new Image("file:resources/images/IconFinal.png"));
+			dialogStage.setFullScreen(true);
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initStyle(StageStyle.UTILITY);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+
+			// Set the controller
+			ColorChoiceLayoutController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			controller.setMainApp(this);
+
+			dialogStage.show();
+
+		} catch (IOException e) {
+			// Exception gets thrown if the fxml file could not be loade
+			e.printStackTrace();
+		}
+	}
 
 	// Initiate KostenLayout fxml
 
-	public void showKostenU(ArrayList<Umlaufplan> umlaufplanliste) {
+	public void showKostenU(ArrayList<Umlaufplan> umlaufplanliste, ArrayList<Fahrplan> fahrplanliste) {
 
 		try {
 
@@ -360,6 +396,7 @@ public class MainApplication extends Application {
 			KostenLayoutControllerU controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setUmlaufplanliste(umlaufplanliste);
+			controller.setFahrplanliste(fahrplanliste);
 
 			dialogStage.show();
 		} catch (IOException e) {
@@ -370,7 +407,7 @@ public class MainApplication extends Application {
 	
 	// Initiate KostenLayout fxml
 
-	public void showKostenD(ArrayList<Dienstplan> dienstplanChoiceliste) {
+	public void showKostenD(ArrayList<Dienstplan> dienstplanChoiceliste, ArrayList<Fahrplan> fahrplanliste) {
 
 		try {
 

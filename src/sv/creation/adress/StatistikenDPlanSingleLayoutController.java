@@ -3,6 +3,7 @@ package sv.creation.adress;
 import java.util.ArrayList;
 
 import sv.creation.adress.model.Dienstplan;
+import sv.creation.adress.model.Fahrplan;
 import sv.creation.adress.util.DutyStatistics;
 import sv.creation.adress.util.ScheduleStatistics;
 import javafx.collections.FXCollections;
@@ -85,6 +86,7 @@ public class StatistikenDPlanSingleLayoutController {
 	// Arbeitsvariabelen
 
 	private ArrayList<Dienstplan> dienstplanliste = new ArrayList<Dienstplan>();
+	private Fahrplan fahrplan;
 	private TableView<DutyStatistics> detailsdutyTable = new TableView<DutyStatistics>();
 
 	private Stage dialogStage;
@@ -394,6 +396,14 @@ public class StatistikenDPlanSingleLayoutController {
 		return dienstplanliste;
 	}
 
+	public Fahrplan getFahrplan() {
+		return fahrplan;
+	}
+
+	public void setFahrplan(Fahrplan fahrplan) {
+		this.fahrplan = fahrplan;
+	}
+
 	public void setDienstplanliste(ArrayList<Dienstplan> dienstplanliste) {
 		this.dienstplanliste = dienstplanliste;
 
@@ -402,9 +412,9 @@ public class StatistikenDPlanSingleLayoutController {
 		ScheduleStatistics stat = new ScheduleStatistics();
 		DutyStatistics dstat = new DutyStatistics();
 		this.scheduleStatistics = stat
-				.calculateCrewScheduleStatistics(dienstplanliste);
+				.calculateCrewScheduleStatistics(dienstplanliste, this.fahrplan);
 		this.dutyStatistics = dstat
-				.calculateDutystatistics(this.dienstplanliste.get(0));
+				.calculateDutystatistics(this.dienstplanliste.get(0), this.fahrplan);
 
 		// Aufruf der Arbeitsmethoden
 		fillLabels();

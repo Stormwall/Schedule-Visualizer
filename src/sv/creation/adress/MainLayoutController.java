@@ -4902,18 +4902,12 @@ public class MainLayoutController {
 			this.FPlan.setDisable(false);
 			this.fahrplanliste.clear();
 			this.fahrplanliste = dbm.createFahrplanObject();
-			for (int i = 0; i < this.fahrplanliste.size(); i++) {
-				if (this.fahrplanliste.get(i).getBezeichnung() == null) {
-					this.fahrplanliste.get(i).setBezeichnung(
-							" Fahrplan " + (i + 1));
-				}
-			}
 
 			this.FPlan.setItems(FXCollections.observableArrayList(fahrplanliste
 					.get(0).getBezeichnung()));
 			for (int i = 1; i < fahrplanliste.size(); i++) {
 				this.FPlan.getItems()
-						.add(fahrplanliste.get(i).getBezeichnung());
+						.add(fahrplanliste.get(i).getName());
 			}
 
 		}
@@ -4938,12 +4932,6 @@ public class MainLayoutController {
 			this.dienstplanliste.clear();
 
 			this.dienstplanliste = dbm.createDienstplanObject();
-			for (int i = 0; i < this.dienstplanliste.size(); i++) {
-				if (this.dienstplanliste.get(i).getName() == null) {
-					this.dienstplanliste.get(i).setName(
-							" Dienstplan " + (i + 1));
-				}
-			}
 
 			if (this.firstLowergrafikErstellt == false) {
 				this.DPlan.setItems(FXCollections
@@ -4970,12 +4958,6 @@ public class MainLayoutController {
 		} else {
 			this.UPlan.setDisable(false);
 			this.umlaufplanliste = dbm.createUmlaufplanObject();
-//			for (int i = 0; i < this.umlaufplanliste.size(); i++) {
-//				if (this.umlaufplanliste.get(i).getName() == null) {
-//					this.umlaufplanliste.get(i).setName(
-//							" Umlaufplan " + (i + 1));
-//				}
-//			}
 
 			if (this.firstUppergrafikErstellt == false) {
 				this.UPlan.setItems(FXCollections

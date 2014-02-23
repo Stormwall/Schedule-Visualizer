@@ -121,7 +121,14 @@ public class KennzahlenLayoutController {
 	private void handleStatistikenUplan() {
 
 		if (this.umlaufplanChoiceliste.size() == 1) {
-			this.mainApp.showStatistikUPlanSingle(this.umlaufplanChoiceliste);
+			
+			Fahrplan fahrplan = null;
+			for (int i = 0; i < this.fahrplanliste.size(); i++) {
+				if (this.umlaufplanChoiceliste.get(0).getFahrplanID()==this.fahrplanliste.get(i).getId()) {
+					fahrplan = this.fahrplanliste.get(i);
+				}
+			}
+			this.mainApp.showStatistikUPlanSingle(this.umlaufplanChoiceliste,fahrplan);
 		} else {
 			String fehlerA = "Es wurde noch Element ausgewählt";
 			String fehlerB = "Welche Statistik soll angezeigt werden ?";
@@ -137,7 +144,14 @@ public class KennzahlenLayoutController {
 	private void handleStatistikenDplan() {
 
 		if (this.dienstplanChoiceliste.size() == 1) {
-			this.mainApp.showStatistikDPlanSingle(this.dienstplanChoiceliste);
+			
+			Fahrplan fahrplan = null;
+			for (int i = 0; i < this.fahrplanliste.size(); i++) {
+				if (this.umlaufplanChoiceliste.get(0).getFahrplanID()==this.fahrplanliste.get(i).getId()) {
+					fahrplan = this.fahrplanliste.get(i);
+				}
+			}
+			this.mainApp.showStatistikDPlanSingle(this.dienstplanChoiceliste, fahrplan);
 
 		} else {
 			String fehlerA = "Es wurde noch Element ausgewählt";
@@ -287,7 +301,7 @@ public class KennzahlenLayoutController {
 	@FXML
 	private void handleKostenU() {
 		
-		this.mainApp.showKostenU(this.umlaufplanChoiceliste);
+		this.mainApp.showKostenU(this.umlaufplanChoiceliste, this.fahrplanliste);
 	}
 
 	/**
@@ -295,7 +309,7 @@ public class KennzahlenLayoutController {
 	 */
 	@FXML
 	private void handleKostenD() {
-		this.mainApp.showKostenD(this.dienstplanChoiceliste);
+		this.mainApp.showKostenD(this.dienstplanChoiceliste, this.fahrplanliste);
 	}
 	
 	/**
