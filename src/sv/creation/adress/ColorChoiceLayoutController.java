@@ -77,9 +77,13 @@ public class ColorChoiceLayoutController {
 
 		 fillColorArray();
 
-		for (int i = 0; i < 10; i++) {
-			colors.add(String.valueOf(i));
+		for (int i = 0; i < this.colors.size(); i++) {
+			
+			System.out.println(this.colors.get(i));
+//			javafx.scene.paint.Color c = javafx.scene.paint.Color.valueOf(this.colors.get(i));
+			
 		}
+		
 
 		// Action Listener
 
@@ -305,7 +309,19 @@ public class ColorChoiceLayoutController {
 
 		Color color = new Color();
 
+//		color.changeColor(1, "SEAGREEN");
+//		color.changeColor(2, "LIGHTCORAL");
+//		color.changeColor(3, "ANTIQUEWHITE");
+//		color.changeColor(4, "WHITESMOKE");
+//		color.changeColor(5, "GREEN");
+//		color.changeColor(6, "GREEN");
+//		color.changeColor(7, "GREEN");
+//		color.changeColor(8, "ORANGE");
+//		color.changeColor(9, "LIGHTSKYBLUE");
+//		color.changeColor(10, "GREEN");
+		
 		this.colors = color.readColorTable();
+		
 	}
 
 	public Stage getDialogStage() {

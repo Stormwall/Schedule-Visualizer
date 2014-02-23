@@ -154,6 +154,8 @@ public class MainLayoutController {
 	@FXML
 	private Button loeschenDienstplan;
 	@FXML
+	private Button fullscreen;
+	@FXML
 	private Slider startzeitSlider;
 	@FXML
 	private Slider endzeitSlider;
@@ -269,9 +271,9 @@ public class MainLayoutController {
 	private ArrayList<Umlaufplan> umlaufplanliste = new ArrayList<Umlaufplan>();
 	private ArrayList<Dienstplan> dienstplanliste = new ArrayList<Dienstplan>();
 	private ArrayList<Fahrplan> fahrplanliste = new ArrayList<Fahrplan>();
-	
-	//Erstellen eines DBMatching-Objekts
-	
+
+	// Erstellen eines DBMatching-Objekts
+
 	DBMatching dbm = new DBMatching();
 
 	// Zuordnung der Umlaufplaene
@@ -437,6 +439,7 @@ public class MainLayoutController {
 	// weitere Pruefvariablen
 	private boolean umlaufIsCurrent = false;
 	private boolean dienstIsCurrent = false;
+	private String current;
 
 	private boolean hilfslinienAktiv = false;
 	private boolean fehlerAnzeigenAktiv = false;
@@ -1301,6 +1304,7 @@ public class MainLayoutController {
 									.toString() + " ");
 					this.umlaufChoice = 1;
 					firstCheckU1 = true;
+					this.current = "u1";
 
 					// Zuordnung der Auswahl
 
@@ -1391,7 +1395,7 @@ public class MainLayoutController {
 									.toString() + " ");
 					this.umlaufChoice = 2;
 					firstCheckU2 = true;
-
+					this.current = "u2";
 					// Zuordnung der Auswahl
 
 					umlaufIsCurrent = true;
@@ -1480,7 +1484,7 @@ public class MainLayoutController {
 									.toString() + " ");
 					this.umlaufChoice = 3;
 					firstCheckU3 = true;
-
+					this.current = "u3";
 					// Zuordnung der Auswahl
 
 					umlaufIsCurrent = true;
@@ -1566,7 +1570,7 @@ public class MainLayoutController {
 									.toString() + " ");
 					this.umlaufChoice = 4;
 					firstCheckU4 = true;
-
+					this.current = "u4";
 					// Zuordnung der Auswahl
 
 					umlaufIsCurrent = true;
@@ -1651,7 +1655,7 @@ public class MainLayoutController {
 									.toString() + " ");
 					this.umlaufChoice = 5;
 					firstCheckU5 = true;
-
+					this.current = "u5";
 					// Zuordnung der Auswahl
 
 					umlaufIsCurrent = true;
@@ -1737,7 +1741,7 @@ public class MainLayoutController {
 									.toString() + " ");
 					this.umlaufChoice = 6;
 					firstCheckU6 = true;
-
+					this.current = "u6";
 					// Zuordnung der Auswahl
 
 					umlaufIsCurrent = true;
@@ -1822,7 +1826,7 @@ public class MainLayoutController {
 									.toString() + " ");
 					this.umlaufChoice = 7;
 					firstCheckU7 = true;
-
+					this.current = "u7";
 					// Zuordnung der Auswahl
 
 					umlaufIsCurrent = true;
@@ -1977,6 +1981,7 @@ public class MainLayoutController {
 							+ DPlan.getSelectionModel().getSelectedItem()
 									.toString() + " ");
 					this.dienstChoice = 1;
+					this.current = "d1";
 
 					// Zuordnung der Auswahl
 
@@ -2067,7 +2072,7 @@ public class MainLayoutController {
 							+ DPlan.getSelectionModel().getSelectedItem()
 									.toString() + " ");
 					this.dienstChoice = 2;
-
+					this.current = "d2";
 					this.umlaufIsCurrent = false;
 					this.dienstIsCurrent = true;
 				}
@@ -2150,7 +2155,7 @@ public class MainLayoutController {
 							+ DPlan.getSelectionModel().getSelectedItem()
 									.toString() + " ");
 					this.dienstChoice = 3;
-
+					this.current = "d3";
 					this.umlaufIsCurrent = false;
 					this.dienstIsCurrent = true;
 				}
@@ -2232,7 +2237,7 @@ public class MainLayoutController {
 							+ DPlan.getSelectionModel().getSelectedItem()
 									.toString() + " ");
 					this.dienstChoice = 4;
-
+					this.current = "d4";
 					this.umlaufIsCurrent = false;
 					this.dienstIsCurrent = true;
 				}
@@ -2317,7 +2322,7 @@ public class MainLayoutController {
 							+ DPlan.getSelectionModel().getSelectedItem()
 									.toString() + " ");
 					this.dienstChoice = 5;
-
+					this.current = "d5";
 					this.umlaufIsCurrent = false;
 					this.dienstIsCurrent = true;
 				}
@@ -2402,7 +2407,7 @@ public class MainLayoutController {
 							+ DPlan.getSelectionModel().getSelectedItem()
 									.toString() + " ");
 					this.dienstChoice = 6;
-
+					this.current = "d6";
 					this.umlaufIsCurrent = false;
 					this.dienstIsCurrent = true;
 				}
@@ -2486,7 +2491,7 @@ public class MainLayoutController {
 							+ DPlan.getSelectionModel().getSelectedItem()
 									.toString() + " ");
 					this.dienstChoice = 7;
-
+					this.current = "d7";
 					this.umlaufIsCurrent = false;
 					this.dienstIsCurrent = true;
 				}
@@ -4029,7 +4034,7 @@ public class MainLayoutController {
 		// Ausgabe der Ueberschneidungsfehlermeldung
 
 		if (firstCheck && delayFound) {
-			result ="";
+			result = "";
 			for (String s : resultList) {
 				result += s;
 			}
@@ -4240,7 +4245,7 @@ public class MainLayoutController {
 		// Ausgabe der Ueberschneidungsfehlermeldung
 
 		if (firstCheck && delayFound) {
-			result ="";
+			result = "";
 			for (String s : resultList) {
 				result += s;
 			}
@@ -4420,8 +4425,11 @@ public class MainLayoutController {
 				this.filterPanel.setOpacity(0);
 				this.fehlerAnzeigen.setOpacity(0);
 				this.hilfslinien.setOpacity(0);
+				this.fullscreen.setOpacity(0);
 			}
-
+			if (this.current == "U1") {
+				this.current = "neu waehlen";
+			}
 			break;
 		case 1:
 			this.UPlan2.setVisible(false);
@@ -4448,6 +4456,9 @@ public class MainLayoutController {
 			this.DPlanValue5.setStyle("-fx-background-color:white;");
 			this.DPlanValue6.setStyle("-fx-background-color:white;");
 			this.DPlanValue7.setStyle("-fx-background-color:white;");
+			if (this.current == "U2") {
+				this.current = "neu waehlen";
+			}
 			break;
 		case 2:
 			this.UPlan3.setVisible(false);
@@ -4474,6 +4485,9 @@ public class MainLayoutController {
 			this.DPlanValue5.setStyle("-fx-background-color:white;");
 			this.DPlanValue6.setStyle("-fx-background-color:white;");
 			this.DPlanValue7.setStyle("-fx-background-color:white;");
+			if (this.current == "U3") {
+				this.current = "neu waehlen";
+			}
 			break;
 		case 3:
 			this.UPlan4.setVisible(false);
@@ -4500,6 +4514,9 @@ public class MainLayoutController {
 			this.DPlanValue5.setStyle("-fx-background-color:white;");
 			this.DPlanValue6.setStyle("-fx-background-color:white;");
 			this.DPlanValue7.setStyle("-fx-background-color:white;");
+			if (this.current =="U4") {
+				this.current = "neu waehlen";
+			}
 			break;
 		case 4:
 			this.UPlan5.setVisible(false);
@@ -4526,6 +4543,9 @@ public class MainLayoutController {
 			this.DPlanValue5.setStyle("-fx-background-color:white;");
 			this.DPlanValue6.setStyle("-fx-background-color:white;");
 			this.DPlanValue7.setStyle("-fx-background-color:white;");
+			if (this.current == "U5") {
+				this.current = "neu waehlen";
+			}
 			break;
 		case 5:
 			this.UPlan6.setVisible(false);
@@ -4552,6 +4572,9 @@ public class MainLayoutController {
 			this.DPlanValue5.setStyle("-fx-background-color:white;");
 			this.DPlanValue6.setStyle("-fx-background-color:white;");
 			this.DPlanValue7.setStyle("-fx-background-color:white;");
+			if (this.current == "U6") {
+				this.current = "neu waehlen";
+			}
 			break;
 		case 6:
 			this.UPlan7.setVisible(false);
@@ -4577,6 +4600,9 @@ public class MainLayoutController {
 			this.DPlanValue5.setStyle("-fx-background-color:white;");
 			this.DPlanValue6.setStyle("-fx-background-color:white;");
 			this.DPlanValue7.setStyle("-fx-background-color:white;");
+			if (this.current == "U7") {
+				this.current = "neu waehlen";
+			}
 			break;
 		default:
 			break;
@@ -4642,8 +4668,11 @@ public class MainLayoutController {
 				this.filterPanel.setOpacity(0);
 				this.fehlerAnzeigen.setOpacity(0);
 				this.hilfslinien.setOpacity(0);
+				this.fullscreen.setOpacity(0);
 			}
-
+			if (this.current == "d1") {
+				this.current = "neu waehlen";
+			}
 			break;
 		case 1:
 			this.DPlan2.setVisible(false);
@@ -4670,6 +4699,9 @@ public class MainLayoutController {
 			this.UPlanValue5.setStyle("-fx-background-color:white;");
 			this.UPlanValue6.setStyle("-fx-background-color:white;");
 			this.UPlanValue7.setStyle("-fx-background-color:white;");
+			if (this.current == "d2") {
+				this.current = "neu waehlen";
+			}
 			break;
 		case 2:
 			this.DPlan3.setVisible(false);
@@ -4696,6 +4728,9 @@ public class MainLayoutController {
 			this.UPlanValue5.setStyle("-fx-background-color:white;");
 			this.UPlanValue6.setStyle("-fx-background-color:white;");
 			this.UPlanValue7.setStyle("-fx-background-color:white;");
+			if (this.current == "d3") {
+				this.current = "neu waehlen";
+			}
 			break;
 		case 3:
 			this.DPlan4.setVisible(false);
@@ -4722,6 +4757,9 @@ public class MainLayoutController {
 			this.UPlanValue5.setStyle("-fx-background-color:white;");
 			this.UPlanValue6.setStyle("-fx-background-color:white;");
 			this.UPlanValue7.setStyle("-fx-background-color:white;");
+			if (this.current == "d4") {
+				this.current = "neu waehlen";
+			}
 			break;
 		case 4:
 			this.DPlan5.setVisible(false);
@@ -4748,6 +4786,9 @@ public class MainLayoutController {
 			this.UPlanValue5.setStyle("-fx-background-color:white;");
 			this.UPlanValue6.setStyle("-fx-background-color:white;");
 			this.UPlanValue7.setStyle("-fx-background-color:white;");
+			if (this.current == "d5") {
+				this.current = "neu waehlen";
+			}
 			break;
 		case 5:
 			this.DPlan6.setVisible(false);
@@ -4774,6 +4815,9 @@ public class MainLayoutController {
 			this.UPlanValue5.setStyle("-fx-background-color:white;");
 			this.UPlanValue6.setStyle("-fx-background-color:white;");
 			this.UPlanValue7.setStyle("-fx-background-color:white;");
+			if (this.current == "d6") {
+				this.current = "neu waehlen";
+			}
 			break;
 		case 6:
 			this.DPlan7.setVisible(false);
@@ -4800,6 +4844,9 @@ public class MainLayoutController {
 			this.UPlanValue5.setStyle("-fx-background-color:white;");
 			this.UPlanValue6.setStyle("-fx-background-color:white;");
 			this.UPlanValue7.setStyle("-fx-background-color:white;");
+			if (this.current ==  "d7") {
+				this.current = "neu waehlen";
+			}
 			break;
 		default:
 			break;
@@ -4857,6 +4904,82 @@ public class MainLayoutController {
 		faaa.setToValue(1.0);
 		faaa.setAutoReverse(true);
 		faaa.play();
+		
+		FadeTransition faaaa = new FadeTransition(Duration.millis(1500),
+				this.fullscreen);
+		faaaa.setFromValue(0.0);
+		faaaa.setToValue(1.0);
+		faaaa.setAutoReverse(true);
+		faaaa.play();
+
+	}
+
+	/**
+	 * Shows Fullscreen
+	 */
+	@FXML
+	public void showFullScreen() {
+
+		switch (this.current) {
+		case "u1":
+			this.mainApp.showFullScreenGraphicUmlaufplan(this.umlaufplanEins);
+			break;
+		case "u2":
+			this.mainApp.showFullScreenGraphicUmlaufplan(this.umlaufplanZwei);
+			break;
+		case "u3":
+			this.mainApp.showFullScreenGraphicUmlaufplan(this.umlaufplanDrei);
+			break;
+		case "u4":
+			this.mainApp.showFullScreenGraphicUmlaufplan(this.umlaufplanVier);
+			break;
+		case "u5":
+			this.mainApp.showFullScreenGraphicUmlaufplan(this.umlaufplanFuenf);
+			break;
+		case "u6":
+			this.mainApp.showFullScreenGraphicUmlaufplan(this.umlaufplanSechs);
+			break;
+		case "u7":
+			this.mainApp.showFullScreenGraphicUmlaufplan(this.umlaufplanSieben);
+			break;
+		case "d1":
+			this.mainApp.showFullScreenGraphicDienstplan(this.dienstplanEins);
+			break;
+		case "d2":
+			this.mainApp.showFullScreenGraphicDienstplan(this.dienstplanZwei);
+			break;
+		case "d3":
+			this.mainApp.showFullScreenGraphicDienstplan(this.dienstplanDrei);
+			break;
+		case "d4":
+			this.mainApp.showFullScreenGraphicDienstplan(this.dienstplanVier);
+			break;
+		case "d5":
+			this.mainApp.showFullScreenGraphicDienstplan(this.dienstplanFuenf);
+			break;
+		case "d6":
+			this.mainApp.showFullScreenGraphicDienstplan(this.dienstplanSechs);
+			break;
+		case "d7":
+			this.mainApp.showFullScreenGraphicDienstplan(this.dienstplanSieben);
+			break;
+		case "neu waehlen":
+			String fehlerA = "Nach dem Entfernen eines Planes bitte neu waehlen";
+			String fehlerB = "Vollbild anzeigen ?";
+			String fehlerC = "Fehler";
+			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+			System.out.println();
+			break;
+		case "":
+			String fehlerD = "Es wurde noch Element ausgewaehlt";
+			String fehlerE = "Was soll bearbeitet werden ?";
+			String fehlerF = "Fehler";
+			this.mainApp.fehlerMeldung(fehlerD, fehlerE, fehlerF);
+			break;
+
+		default:
+			break;
+		}
 
 	}
 
@@ -4892,8 +5015,6 @@ public class MainLayoutController {
 
 		// Fahrplaene -- Choicebox wird gefaellt
 
-		
-
 		this.fahrplanliste.clear();
 
 		if (dbm.databaseIsEmpty() || dbm.fahrplanIsEmpty()) {
@@ -4906,8 +5027,7 @@ public class MainLayoutController {
 			this.FPlan.setItems(FXCollections.observableArrayList(fahrplanliste
 					.get(0).getBezeichnung()));
 			for (int i = 1; i < fahrplanliste.size(); i++) {
-				this.FPlan.getItems()
-						.add(fahrplanliste.get(i).getName());
+				this.FPlan.getItems().add(fahrplanliste.get(i).getName());
 			}
 
 		}
@@ -4921,7 +5041,6 @@ public class MainLayoutController {
 	public void fillDienstplanliste() {
 
 		// DienstplÃ¤ne -- Choicebox wird gefÃ¼llt
-
 
 		this.dienstplanliste.clear();
 
@@ -4949,7 +5068,6 @@ public class MainLayoutController {
 	public void fillUmlaufplanliste() {
 
 		// UmlaufplÃ¤ne -- Choicebox wird gefÃ¼llt
-
 
 		this.umlaufplanliste.clear();
 

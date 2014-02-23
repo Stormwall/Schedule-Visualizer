@@ -38,7 +38,7 @@
                 <Button id="apply" fx:id="applyFilter" mnemonicParsing="false" onAction="#refreshBothGraphics" styleClass="dark-blue" text="Anwenden" />
               </children>
             </HBox>
-            <Button layoutY="14.0" mnemonicParsing="false" styleClass="dark-blue" text="Vollbild" AnchorPane.rightAnchor="14.0" />
+            <Button fx:id="fullscreen" layoutY="14.0" mnemonicParsing="false" onAction="#showFullScreen" opacity="0.0" styleClass="dark-blue" text="Vollbild" AnchorPane.rightAnchor="14.0" />
           </children>
         </AnchorPane>
         <AnchorPane fx:id="MainPane" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">

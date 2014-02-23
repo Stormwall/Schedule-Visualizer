@@ -244,7 +244,7 @@ public class MainApplication extends Application {
 			dialogStage.getIcons().add(
 					new Image("file:resources/images/IconFinal.png"));
 			dialogStage.setFullScreen(true);
-			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initModality(Modality.NONE);
 			dialogStage.initOwner(primaryStage);
 			Scene scene = new Scene(page);
 			dialogStage.setScene(scene);
@@ -279,7 +279,7 @@ public class MainApplication extends Application {
 			dialogStage.getIcons().add(
 					new Image("file:resources/images/IconFinal.png"));
 			dialogStage.setFullScreen(true);
-			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initModality(Modality.NONE);
 			dialogStage.initOwner(primaryStage);
 			Scene scene = new Scene(page);
 			dialogStage.setScene(scene);
@@ -314,7 +314,7 @@ public class MainApplication extends Application {
 			dialogStage.getIcons().add(
 					new Image("file:resources/images/IconFinal.png"));
 			dialogStage.setFullScreen(true);
-			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initModality(Modality.NONE);
 			dialogStage.initOwner(primaryStage);
 			Scene scene = new Scene(page);
 			dialogStage.setScene(scene);
