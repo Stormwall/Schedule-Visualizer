@@ -132,6 +132,7 @@ public class FahrplanGraphicLayoutController {
 		// Zuordnung der entsprechenden Fahrplaene
 
 		for (int i = this.tagStart; i <= this.tagEnde; i++) {
+			
 
 			switch (i) {
 			case 0:
@@ -139,9 +140,7 @@ public class FahrplanGraphicLayoutController {
 				XYChart.Series<Number, Number> monday = new XYChart.Series<Number, Number>();
 				monday.setName("Montag");
 
-				result = vergleich.vergleicheFahrplan(this.fahrplan.getId(), 1);
-				// result =
-				// vergleich.vergleich(this.fahrplan,this.fahrplan.getId(), 1);
+				 result =vergleich.vergleicheFahrplan(this.fahrplan,this.fahrplan.getId(), 1);
 
 				for (int j = 0; j < result.length; j++) {
 					float xValue = (float) j / 60;
@@ -157,8 +156,8 @@ public class FahrplanGraphicLayoutController {
 			case 1:
 				XYChart.Series<Number, Number> tuesday = new XYChart.Series<Number, Number>();
 				tuesday.setName("Dienstag");
-
-				result = vergleich.vergleicheFahrplan(this.fahrplan.getId(), 2);
+				
+				result =vergleich.vergleicheFahrplan(this.fahrplan,this.fahrplan.getId(), 2);
 
 				for (int j = 0; j < result.length; j++) {
 					float xValue = (float) j / 60;
@@ -175,7 +174,7 @@ public class FahrplanGraphicLayoutController {
 				XYChart.Series<Number, Number> wednsday = new XYChart.Series<Number, Number>();
 				wednsday.setName("Mittwoch");
 
-				result = vergleich.vergleicheFahrplan(this.fahrplan.getId(), 3);
+				result =vergleich.vergleicheFahrplan(this.fahrplan,this.fahrplan.getId(), 3);
 
 				for (int j = 0; j < result.length; j++) {
 					float xValue = (float) j / 60;
@@ -192,7 +191,7 @@ public class FahrplanGraphicLayoutController {
 				XYChart.Series<Number, Number> thursday = new XYChart.Series<Number, Number>();
 				thursday.setName("Donnerstag");
 
-				result = vergleich.vergleicheFahrplan(this.fahrplan.getId(), 4);
+				result =vergleich.vergleicheFahrplan(this.fahrplan,this.fahrplan.getId(), 4);
 
 				for (int j = 0; j < result.length; j++) {
 					float xValue = (float) j / 60;
@@ -209,7 +208,7 @@ public class FahrplanGraphicLayoutController {
 				XYChart.Series<Number, Number> friday = new XYChart.Series<Number, Number>();
 				friday.setName("Freitag");
 
-				result = vergleich.vergleicheFahrplan(this.fahrplan.getId(), 5);
+				result =vergleich.vergleicheFahrplan(this.fahrplan,this.fahrplan.getId(), 5);
 
 				for (int j = 0; j < result.length; j++) {
 					float xValue = (float) j / 60;
@@ -226,7 +225,7 @@ public class FahrplanGraphicLayoutController {
 				XYChart.Series<Number, Number> saturday = new XYChart.Series<Number, Number>();
 				saturday.setName("Samstag");
 
-				result = vergleich.vergleicheFahrplan(this.fahrplan.getId(), 6);
+				result =vergleich.vergleicheFahrplan(this.fahrplan,this.fahrplan.getId(), 6);
 
 				for (int j = 0; j < result.length; j++) {
 					float xValue = (float) j / 60;
@@ -243,7 +242,7 @@ public class FahrplanGraphicLayoutController {
 				XYChart.Series<Number, Number> sunday = new XYChart.Series<Number, Number>();
 				sunday.setName("Sonntag");
 
-				result = vergleich.vergleicheFahrplan(this.fahrplan.getId(), 7);
+				result =vergleich.vergleicheFahrplan(this.fahrplan,this.fahrplan.getId(), 7);
 
 				for (int j = 0; j < result.length; j++) {
 					float xValue = (float) j / 60;
@@ -253,13 +252,12 @@ public class FahrplanGraphicLayoutController {
 						maxService = result[j];
 					}
 				}
-
 				mainChart.add(sunday);
 				break;
 			default:
 				break;
 			}
-
+			
 		}
 		
 		this.yAxis.setLowerBound(0);
@@ -1064,6 +1062,7 @@ public class FahrplanGraphicLayoutController {
 		drawFahrplanvergleich();
 
 	}
+	
 
 	public void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;

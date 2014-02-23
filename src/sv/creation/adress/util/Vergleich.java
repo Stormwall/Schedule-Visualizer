@@ -1,103 +1,303 @@
 package sv.creation.adress.util;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-
-import sv.creation.adress.database.DBConnection;
 import sv.creation.adress.model.Fahrplan;
 
 public class Vergleich {
+	
+	private int[] anzahlServiceFahrten = new int[1440];
 
-	public int[] vergleich(Fahrplan fahrplan, int id, int day) {
+	public int[] vergleicheFahrplan(Fahrplan fahrplan, int id, int day) {
 
-		int[] anzahlServiceFahrten = new int[1440];
-		for (int i = 0; i < anzahlServiceFahrten.length; i++) {
-//			int trips = 0;
-		for (int j = 0; j < fahrplan.getDays().size(); j++) {
-			
-
-				if (fahrplan.getDays().get(j).getFahrplanID() == id
-						&& fahrplan.getDays().get(j).getTripID() == fahrplan
-								.getServicejourney().get(j).getiD()
-						&& fahrplan.getDays().get(j).getD1() == day
-						&& fahrplan.getServicejourney().get(j).getFahrplanID() == fahrplan
-								.getDays().get(j).getFahrplanID()) {
-					System.out.println(timeToInt(fahrplan.getServicejourney()
-							.get(j).getDepTime()));
-					if (timeToInt(fahrplan.getServicejourney().get(j)
-							.getDepTime()) >= i
-							&& timeToInt(fahrplan.getServicejourney().get(j)
-									.getArrTime()) <= i) {
-						anzahlServiceFahrten[i]++;
+		clearArray(this.anzahlServiceFahrten);
+		
+		
+		switch (day) {
+		
+		//Montag
+		case 1:
+			for (int i = 0; i < this.anzahlServiceFahrten.length; i++) {
+				for (int j = 0; j < fahrplan.getDays().size(); j++) {
+					if (fahrplan.getDays().get(j).getFahrplanID() == id
+							&& fahrplan.getDays().get(j).getTripID() == fahrplan
+									.getServicejourney().get(j).getiD()
+							&& fahrplan.getDays().get(j).getD1() == 1
+							&& fahrplan.getServicejourney().get(j).getFahrplanID() == fahrplan
+									.getDays().get(j).getFahrplanID()) {
+						//prüft, ob Zeit zwischen Abfahrts- und Ankunftszeit liegt
+						if (timeToInt(fahrplan.getServicejourney().get(j)
+								.getDepTime()) <= i
+								&& timeToInt(fahrplan.getServicejourney().get(j)
+										.getArrTime()) >= i) {
+							this.anzahlServiceFahrten[i]++;
+							//prüft ob Abfahrtszeit im Tag 0 liegt und Ankunftszeit im Tag 1
+						}else if(timeToInt(fahrplan.getServicejourney().get(j)
+								.getDepTime()) >
+								timeToInt(fahrplan.getServicejourney().get(j)
+										.getArrTime())) {
+							//prüft, ob i kleiner Abfahrtszeit und kleiner Ankunftszeit ist (Bsp: Abfahrt: 23:50 i:00:01 Ankunft: 00:12)
+							if(timeToInt(fahrplan.getServicejourney().get(j)
+								.getDepTime()) >=i
+								&&timeToInt(fahrplan.getServicejourney().get(j)
+										.getArrTime())>=i){
+							this.anzahlServiceFahrten[i]++;
+							//prüft, ob i größer Abfahrtszeit aber kleiner Ankunftszeit ist (Bsp: Abfahrt: 23:50 i:23:53 Ankunft: 00:12)
+							}else if(timeToInt(fahrplan.getServicejourney().get(j)
+								.getDepTime()) <=i
+								&&timeToInt(fahrplan.getServicejourney().get(j)
+										.getArrTime())<=i){
+								this.anzahlServiceFahrten[i]++;
+							}
+						}
 					}
 				}
+				
+			}
+			break;
+			
+		//Dienstag
+		case 2:
+			for (int i = 0; i < this.anzahlServiceFahrten.length; i++) {
+				for (int j = 0; j < fahrplan.getDays().size(); j++) {
+					if (fahrplan.getDays().get(j).getFahrplanID() == id
+							&& fahrplan.getDays().get(j).getTripID() == fahrplan
+									.getServicejourney().get(j).getiD()
+							&& fahrplan.getDays().get(j).getD2() == 1
+							&& fahrplan.getServicejourney().get(j).getFahrplanID() == fahrplan
+									.getDays().get(j).getFahrplanID()) {
+						//prüft, ob Zeit zwischen Abfahrts- und Ankunftszeit liegt
+						if (timeToInt(fahrplan.getServicejourney().get(j)
+								.getDepTime()) <= i
+								&& timeToInt(fahrplan.getServicejourney().get(j)
+										.getArrTime()) >= i) {
+							this.anzahlServiceFahrten[i]++;
+							//prüft ob Abfahrtszeit im Tag 0 liegt und Ankunftszeit im Tag 1
+						}else if(timeToInt(fahrplan.getServicejourney().get(j)
+								.getDepTime()) >
+								timeToInt(fahrplan.getServicejourney().get(j)
+										.getArrTime())) {
+							//prüft, ob i kleiner Abfahrtszeit und kleiner Ankunftszeit ist (Bsp: Abfahrt: 23:50 i:00:01 Ankunft: 00:12)
+							if(timeToInt(fahrplan.getServicejourney().get(j)
+								.getDepTime()) >=i
+								&&timeToInt(fahrplan.getServicejourney().get(j)
+										.getArrTime())>=i){
+							this.anzahlServiceFahrten[i]++;
+							//prüft, ob i größer Abfahrtszeit aber kleiner Ankunftszeit ist (Bsp: Abfahrt: 23:50 i:23:53 Ankunft: 00:12)
+							}else if(timeToInt(fahrplan.getServicejourney().get(j)
+								.getDepTime()) <=i
+								&&timeToInt(fahrplan.getServicejourney().get(j)
+										.getArrTime())<=i){
+								this.anzahlServiceFahrten[i]++;
+							}
+						}
+					}
+				}
+				
 			}
 			
-		}
-		return anzahlServiceFahrten;
-	}
-
-	public int[] vergleicheFahrplan(int id, int day) {
-
-		int[] anzahlServiceFahrten = new int[1440];
-		String dayString = "d" + day;
-		DBConnection db = new DBConnection();
-		db.initDBConnection();
-		ArrayList<Integer> trips = new ArrayList<Integer>();
-		Statement stmt;
-
-		// Creating a sql query
-		try {
-
-			for (int i = 0; i <= 1439; i++) {
-				String time = timeFormat(i);
-				stmt = db.getConnection().createStatement();
-				ResultSet rest1 = stmt
-						.executeQuery("SELECT COUNT(sj.ServiceJourneyID) AS AnzahlFahrten FROM ServiceJourney AS sj, Days AS d WHERE sj.ID=d.TRIPID AND d."
-								+ dayString
-								+ "='1' AND d.FahrplanID= '"
-								+ id
-								+ "'AND d.FahrplanID=sj.FahrplanID AND '"
-								+ time + "' BETWEEN sj.DepTime AND sj.ArrTime;");
-				while (rest1.next()) {
-					int trip = rest1.getInt("AnzahlFahrten");
-					anzahlServiceFahrten[i] = trip;
-				}
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		// the sum of all servicejourneys will be count if some servicejourneys
-		// exists
-		if (!trips.isEmpty()) {
-
-			for (int i = 0; i < trips.size(); i++) {
-
-				// Creating a sql query
-				try {
-					stmt = db.getConnection().createStatement();
-					ResultSet rest1 = stmt
-							.executeQuery("SELECT TRIPID FROM Days WHERE "
-									+ dayString + "='1' AND FahrplanID= '" + id
-									+ "';");
-					while (rest1.next()) {
-						int trip = rest1.getInt("TRIPID");
-						trips.add(trip);
+		//Mittwoch
+		case 3:
+			for (int i = 0; i < this.anzahlServiceFahrten.length; i++) {
+				for (int j = 0; j < fahrplan.getDays().size(); j++) {
+					if (fahrplan.getDays().get(j).getFahrplanID() == id
+							&& fahrplan.getDays().get(j).getTripID() == fahrplan
+									.getServicejourney().get(j).getiD()
+							&& fahrplan.getDays().get(j).getD3() == 1
+							&& fahrplan.getServicejourney().get(j).getFahrplanID() == fahrplan
+									.getDays().get(j).getFahrplanID()) {
+						//prüft, ob Zeit zwischen Abfahrts- und Ankunftszeit liegt
+						if (timeToInt(fahrplan.getServicejourney().get(j)
+								.getDepTime()) <= i
+								&& timeToInt(fahrplan.getServicejourney().get(j)
+										.getArrTime()) >= i) {
+							this.anzahlServiceFahrten[i]++;
+							//prüft ob Abfahrtszeit im Tag 0 liegt und Ankunftszeit im Tag 1
+						}else if(timeToInt(fahrplan.getServicejourney().get(j)
+								.getDepTime()) >
+								timeToInt(fahrplan.getServicejourney().get(j)
+										.getArrTime())) {
+							//prüft, ob i kleiner Abfahrtszeit und kleiner Ankunftszeit ist (Bsp: Abfahrt: 23:50 i:00:01 Ankunft: 00:12)
+							if(timeToInt(fahrplan.getServicejourney().get(j)
+								.getDepTime()) >=i
+								&&timeToInt(fahrplan.getServicejourney().get(j)
+										.getArrTime())>=i){
+							this.anzahlServiceFahrten[i]++;
+							//prüft, ob i größer Abfahrtszeit aber kleiner Ankunftszeit ist (Bsp: Abfahrt: 23:50 i:23:53 Ankunft: 00:12)
+							}else if(timeToInt(fahrplan.getServicejourney().get(j)
+								.getDepTime()) <=i
+								&&timeToInt(fahrplan.getServicejourney().get(j)
+										.getArrTime())<=i){
+								this.anzahlServiceFahrten[i]++;
+							}
+						}
 					}
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
-
+				
 			}
+			
+		//Donnerstag	
+		case 4:
+			for (int i = 0; i < this.anzahlServiceFahrten.length; i++) {
+				for (int j = 0; j < fahrplan.getDays().size(); j++) {
+					if (fahrplan.getDays().get(j).getFahrplanID() == id
+							&& fahrplan.getDays().get(j).getTripID() == fahrplan
+									.getServicejourney().get(j).getiD()
+							&& fahrplan.getDays().get(j).getD4() == 1
+							&& fahrplan.getServicejourney().get(j).getFahrplanID() == fahrplan
+									.getDays().get(j).getFahrplanID()) {
+						//prüft, ob Zeit zwischen Abfahrts- und Ankunftszeit liegt
+						if (timeToInt(fahrplan.getServicejourney().get(j)
+								.getDepTime()) <= i
+								&& timeToInt(fahrplan.getServicejourney().get(j)
+										.getArrTime()) >= i) {
+							this.anzahlServiceFahrten[i]++;
+							//prüft ob Abfahrtszeit im Tag 0 liegt und Ankunftszeit im Tag 1
+						}else if(timeToInt(fahrplan.getServicejourney().get(j)
+								.getDepTime()) >
+								timeToInt(fahrplan.getServicejourney().get(j)
+										.getArrTime())) {
+							//prüft, ob i kleiner Abfahrtszeit und kleiner Ankunftszeit ist (Bsp: Abfahrt: 23:50 i:00:01 Ankunft: 00:12)
+							if(timeToInt(fahrplan.getServicejourney().get(j)
+								.getDepTime()) >=i
+								&&timeToInt(fahrplan.getServicejourney().get(j)
+										.getArrTime())>=i){
+							this.anzahlServiceFahrten[i]++;
+							//prüft, ob i größer Abfahrtszeit aber kleiner Ankunftszeit ist (Bsp: Abfahrt: 23:50 i:23:53 Ankunft: 00:12)
+							}else if(timeToInt(fahrplan.getServicejourney().get(j)
+								.getDepTime()) <=i
+								&&timeToInt(fahrplan.getServicejourney().get(j)
+										.getArrTime())<=i){
+								this.anzahlServiceFahrten[i]++;
+							}
+						}
+					}
+				}
+				
+			}
+			
+		//Freitag:
+		case 5:
+			for (int i = 0; i < this.anzahlServiceFahrten.length; i++) {
+				for (int j = 0; j < fahrplan.getDays().size(); j++) {
+					if (fahrplan.getDays().get(j).getFahrplanID() == id
+							&& fahrplan.getDays().get(j).getTripID() == fahrplan
+									.getServicejourney().get(j).getiD()
+							&& fahrplan.getDays().get(j).getD5() == 1
+							&& fahrplan.getServicejourney().get(j).getFahrplanID() == fahrplan
+									.getDays().get(j).getFahrplanID()) {
+						//prüft, ob Zeit zwischen Abfahrts- und Ankunftszeit liegt
+						if (timeToInt(fahrplan.getServicejourney().get(j)
+								.getDepTime()) <= i
+								&& timeToInt(fahrplan.getServicejourney().get(j)
+										.getArrTime()) >= i) {
+							this.anzahlServiceFahrten[i]++;
+							//prüft ob Abfahrtszeit im Tag 0 liegt und Ankunftszeit im Tag 1
+						}else if(timeToInt(fahrplan.getServicejourney().get(j)
+								.getDepTime()) >
+								timeToInt(fahrplan.getServicejourney().get(j)
+										.getArrTime())) {
+							//prüft, ob i kleiner Abfahrtszeit und kleiner Ankunftszeit ist (Bsp: Abfahrt: 23:50 i:00:01 Ankunft: 00:12)
+							if(timeToInt(fahrplan.getServicejourney().get(j)
+								.getDepTime()) >=i
+								&&timeToInt(fahrplan.getServicejourney().get(j)
+										.getArrTime())>=i){
+							this.anzahlServiceFahrten[i]++;
+							//prüft, ob i größer Abfahrtszeit aber kleiner Ankunftszeit ist (Bsp: Abfahrt: 23:50 i:23:53 Ankunft: 00:12)
+							}else if(timeToInt(fahrplan.getServicejourney().get(j)
+								.getDepTime()) <=i
+								&&timeToInt(fahrplan.getServicejourney().get(j)
+										.getArrTime())<=i){
+								this.anzahlServiceFahrten[i]++;
+							}
+						}
+					}
+				}
+				
+			}
+			
+		//Samstag
+		case 6:
+			for (int i = 0; i < this.anzahlServiceFahrten.length; i++) {
+				for (int j = 0; j < fahrplan.getDays().size(); j++) {
+					if (fahrplan.getDays().get(j).getFahrplanID() == id
+							&& fahrplan.getDays().get(j).getTripID() == fahrplan
+									.getServicejourney().get(j).getiD()
+							&& fahrplan.getDays().get(j).getD6() == 1
+							&& fahrplan.getServicejourney().get(j).getFahrplanID() == fahrplan
+									.getDays().get(j).getFahrplanID()) {
+						//prüft, ob Zeit zwischen Abfahrts- und Ankunftszeit liegt
+						if (timeToInt(fahrplan.getServicejourney().get(j)
+								.getDepTime()) <= i
+								&& timeToInt(fahrplan.getServicejourney().get(j)
+										.getArrTime()) >= i) {
+							this.anzahlServiceFahrten[i]++;
+							//prüft ob Abfahrtszeit im Tag 0 liegt und Ankunftszeit im Tag 1
+						}else if(timeToInt(fahrplan.getServicejourney().get(j)
+								.getDepTime()) >
+								timeToInt(fahrplan.getServicejourney().get(j)
+										.getArrTime())) {
+							//prüft, ob i kleiner Abfahrtszeit und kleiner Ankunftszeit ist (Bsp: Abfahrt: 23:50 i:00:01 Ankunft: 00:12)
+							if(timeToInt(fahrplan.getServicejourney().get(j)
+								.getDepTime()) >=i
+								&&timeToInt(fahrplan.getServicejourney().get(j)
+										.getArrTime())>=i){
+							this.anzahlServiceFahrten[i]++;
+							//prüft, ob i größer Abfahrtszeit aber kleiner Ankunftszeit ist (Bsp: Abfahrt: 23:50 i:23:53 Ankunft: 00:12)
+							}else if(timeToInt(fahrplan.getServicejourney().get(j)
+								.getDepTime()) <=i
+								&&timeToInt(fahrplan.getServicejourney().get(j)
+										.getArrTime())<=i){
+								this.anzahlServiceFahrten[i]++;
+							}
+						}
+					}
+				}
+				
+			}
+			
+		//Sonntag
+		case 7:
+			for (int i = 0; i < this.anzahlServiceFahrten.length; i++) {
+				for (int j = 0; j < fahrplan.getDays().size(); j++) {
+					if (fahrplan.getDays().get(j).getFahrplanID() == id
+							&& fahrplan.getDays().get(j).getTripID() == fahrplan
+									.getServicejourney().get(j).getiD()
+							&& fahrplan.getDays().get(j).getD7() == 1
+							&& fahrplan.getServicejourney().get(j).getFahrplanID() == fahrplan
+									.getDays().get(j).getFahrplanID()) {
+						//prüft, ob Zeit zwischen Abfahrts- und Ankunftszeit liegt
+						if (timeToInt(fahrplan.getServicejourney().get(j)
+								.getDepTime()) <= i
+								&& timeToInt(fahrplan.getServicejourney().get(j)
+										.getArrTime()) >= i) {
+							this.anzahlServiceFahrten[i]++;
+							//prüft ob Abfahrtszeit im Tag 0 liegt und Ankunftszeit im Tag 1
+						}else if(timeToInt(fahrplan.getServicejourney().get(j)
+								.getDepTime()) >
+								timeToInt(fahrplan.getServicejourney().get(j)
+										.getArrTime())) {
+							//prüft, ob i kleiner Abfahrtszeit und kleiner Ankunftszeit ist (Bsp: Abfahrt: 23:50 i:00:01 Ankunft: 00:12)
+							if(timeToInt(fahrplan.getServicejourney().get(j)
+								.getDepTime()) >=i
+								&&timeToInt(fahrplan.getServicejourney().get(j)
+										.getArrTime())>=i){
+							this.anzahlServiceFahrten[i]++;
+							//prüft, ob i größer Abfahrtszeit aber kleiner Ankunftszeit ist (Bsp: Abfahrt: 23:50 i:23:53 Ankunft: 00:12)
+							}else if(timeToInt(fahrplan.getServicejourney().get(j)
+								.getDepTime()) <=i
+								&&timeToInt(fahrplan.getServicejourney().get(j)
+										.getArrTime())<=i){
+								this.anzahlServiceFahrten[i]++;
+							}
+						}
+					}
+				}
+				
+			}
+			
+		default:
+			break;
 		}
-
 		return anzahlServiceFahrten;
-
 	}
 
 	public String timeFormat(int i) {
@@ -126,6 +326,14 @@ public class Vergleich {
 		} else
 			time = Integer.parseInt(timeString[1]);
 		return time;
+	}
+	
+	//Methode löscht alle Elemente aus einem Array
+	public int[] clearArray(int[]array){
+		for (int i = 0; i < array.length; i++) {
+			array[i]=0;
+		}
+		return array;
 	}
 
 }
