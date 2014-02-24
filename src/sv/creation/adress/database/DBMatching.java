@@ -14,6 +14,7 @@ import sv.creation.adress.model.Duty;
 import sv.creation.adress.model.Dutyelement;
 import sv.creation.adress.model.Fahrplan;
 import sv.creation.adress.model.Line;
+import sv.creation.adress.model.Linebundle;
 import sv.creation.adress.model.PrimeDelay;
 import sv.creation.adress.model.Reliefpoint;
 import sv.creation.adress.model.ServiceJourney;
@@ -32,10 +33,10 @@ import sv.creation.adress.model.VehicleTypeToVehicleTypeGroup;
  * 
  */
 public class DBMatching {
-	
-	//Erstellt DBConnection-Objekt
+
+	// Erstellt DBConnection-Objekt
 	private DBConnection db = new DBConnection();
-	
+
 	// **********************************************************************
 	// ****** Array lists to create objects of the schedule elements *******
 	// ****** *******
@@ -46,6 +47,7 @@ public class DBMatching {
 	ArrayList<Dutyelement> dutyelement = new ArrayList<Dutyelement>();
 	ArrayList<Stoppoint> stoppoint = new ArrayList<Stoppoint>();
 	ArrayList<Line> line = new ArrayList<Line>();
+	ArrayList<Linebundle> linebundle = new ArrayList<Linebundle>();
 	ArrayList<VehicleType> vehType = new ArrayList<VehicleType>();
 	ArrayList<VehicleTypeGroup> vehTypeGroup = new ArrayList<VehicleTypeGroup>();
 	ArrayList<VehicleTypeToVehicleTypeGroup> vehTypeToVehTypeGroup = new ArrayList<VehicleTypeToVehicleTypeGroup>();
@@ -62,18 +64,18 @@ public class DBMatching {
 	ArrayList<String> dienstplanDateList = new ArrayList<String>();
 	ArrayList<Integer> umlaufplanDayList = new ArrayList<Integer>();
 	ArrayList<Integer> dienstplanDayList = new ArrayList<Integer>();
-	ArrayList<String> fahrplanNameList  = new ArrayList<String>();
-	ArrayList<String> umlaufplanplanNameList  = new ArrayList<String>();
-	ArrayList<String> dienstplanNameList  = new ArrayList<String>();
-	ArrayList<String> dienstplanBezeichnungList  = new ArrayList<String>();
-	ArrayList<String> umlaufplanBezeichnungList  = new ArrayList<String>();
-	ArrayList<Integer> diesntplanUplanIDList  =new ArrayList<Integer>();
-//	ArrayList<String> fahrplanBezeichnungList  = new ArrayList<String>();
-	
+	ArrayList<String> fahrplanNameList = new ArrayList<String>();
+	ArrayList<String> umlaufplanplanNameList = new ArrayList<String>();
+	ArrayList<String> dienstplanNameList = new ArrayList<String>();
+	ArrayList<String> dienstplanBezeichnungList = new ArrayList<String>();
+	ArrayList<String> umlaufplanBezeichnungList = new ArrayList<String>();
+	ArrayList<Integer> diesntplanUplanIDList = new ArrayList<Integer>();
+	// ArrayList<String> fahrplanBezeichnungList = new ArrayList<String>();
+
 	ArrayList<Days> daysList = new ArrayList<Days>();
 	// *************************************************************
 	// ****** Array lists to create objects of the szenarios *******
-	// ****** 											     *******
+	// ****** *******
 	// *************************************************************
 	ArrayList<PrimeDelay> primeDelay = new ArrayList<PrimeDelay>();
 	// ********************************
@@ -83,7 +85,7 @@ public class DBMatching {
 	Dienstplan dienstplan;
 	Fahrplan fahrplan;
 	// *********************************
-	// ****** Szenario object    *******
+	// ****** Szenario object *******
 	// *********************************
 	Szenario szenario;
 	// *********************************
@@ -97,8 +99,8 @@ public class DBMatching {
 	Statement stmt2;
 	Statement stmt3;
 	Statement stmt4;
-	
-	public DBMatching(){
+
+	public DBMatching() {
 		System.out.println("DBMatching");
 	}
 
@@ -122,7 +124,7 @@ public class DBMatching {
 				umlauf.add(new Block(id, vehTypeID, depotID));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 	}
@@ -220,7 +222,7 @@ public class DBMatching {
 						arrTime, elementType, elementTypeName, umlaufplanID));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 	}
@@ -233,13 +235,13 @@ public class DBMatching {
 	// ***********************************************************************************************
 
 	public ArrayList<Umlaufplan> createUmlaufplanObject() {
-		
+
 		createBlock();
 		createBlockelement();
 		createUmlaufplanDayAndDate();
-		this.umlaufplanBezeichnungList=createUmlaufplanBezeichnunglist();
-		ArrayList<Integer> idList=createUmlaufplanIDs();
-		this.umlaufplanplanNameList=createUmlaufplanNameList();
+		this.umlaufplanBezeichnungList = createUmlaufplanBezeichnunglist();
+		ArrayList<Integer> idList = createUmlaufplanIDs();
+		this.umlaufplanplanNameList = createUmlaufplanNameList();
 		// Anzahl der UmlaufplÃƒÂ¤ne wird ausgelesen
 		// Strukturvariablen
 		int anzahlPlan = 1;
@@ -255,14 +257,14 @@ public class DBMatching {
 		for (int i = 1; i <= anzahlPlan; i++) {
 			ArrayList<Blockelement> blockelementList = new ArrayList<Blockelement>();
 			ArrayList<Block> blockList = new ArrayList<Block>();
-			
-			
+
 			for (int j = 0; j < this.blockelement.size(); j++) {
-				if (this.blockelement.get(j).getUmlaufplanID() == idList.get(i-1)) {
+				if (this.blockelement.get(j).getUmlaufplanID() == idList
+						.get(i - 1)) {
 					blockelementList.add(blockelement.get(j));
 				}
 			}
-			
+
 			for (int j2 = zaehlerUmlauf; j2 < this.umlauf.size() - 1; j2++) {
 				if (this.umlauf.get(j2).getId() < this.umlauf.get(j2 + 1)
 						.getId()) {
@@ -277,13 +279,15 @@ public class DBMatching {
 				if (j2 == this.umlauf.size() - 2) {
 					blockList.add(this.umlauf.get(j2 + 1));
 				}
-				
 
 			}
-			int fahrplanID=getFahrplanzugehoerigkeitUmlaufplan(idList.get(i-1));
+			int fahrplanID = getFahrplanzugehoerigkeitUmlaufplan(idList
+					.get(i - 1));
 			zaehlerUmlauf = zaehlerUmlauf + 1;
-			Umlaufplan umlaufplanAdd = new Umlaufplan(i,this.umlaufplanBezeichnungList.get(i-1), blockList,
-					blockelementList,umlaufplanDayList.get(i-1),fahrplanID,umlaufplanplanNameList.get(i-1),
+			Umlaufplan umlaufplanAdd = new Umlaufplan(i,
+					this.umlaufplanBezeichnungList.get(i - 1), blockList,
+					blockelementList, umlaufplanDayList.get(i - 1), fahrplanID,
+					umlaufplanplanNameList.get(i - 1),
 					changeDateFormat(umlaufplanDateList.get(i - 1)));
 			umlaufplanliste.add(umlaufplanAdd);
 		}
@@ -292,46 +296,47 @@ public class DBMatching {
 	}
 
 	private ArrayList<String> createUmlaufplanBezeichnunglist() {
-		
+
 		this.db.initDBConnection();
-		ArrayList<String> bezeichnunglist= new ArrayList<String>();
+		ArrayList<String> bezeichnunglist = new ArrayList<String>();
 		ResultSet rest1;
 		try {
 			rest1 = stmt.executeQuery("SELECT Bezeichnung FROM Umlaufplan;");
-			while(rest1.next()){
+			while (rest1.next()) {
 				bezeichnunglist.add(rest1.getString("Bezeichnung"));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
-		
+
 		return bezeichnunglist;
 	}
 
+	// Erstellt eine Liste
 	private ArrayList<String> createUmlaufplanNameList() {
-		
+
 		this.db.initDBConnection();
 		ArrayList<String> nameList = new ArrayList<String>();
 		// Creating a sql query
-				try {
-					stmt = this.db.getConnection().createStatement();
-					ResultSet rest1 = stmt.executeQuery("SELECT Name FROM Umlaufplan");
-					// All resulted datasets of the sql query will be added to the block
-					// array list
-					while (rest1.next()) {
-						nameList.add(rest1.getString("Name"));
-					}
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				return nameList;
-		
+		try {
+			stmt = this.db.getConnection().createStatement();
+			ResultSet rest1 = stmt.executeQuery("SELECT Name FROM Umlaufplan");
+			// All resulted datasets of the sql query will be added to the block
+			// array list
+			while (rest1.next()) {
+				nameList.add(rest1.getString("Name"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return nameList;
+
 	}
 
+	// Erstellt eine Liste mit allen IDs zu den jeweiligen Umlaufplänen
 	private ArrayList<Integer> createUmlaufplanIDs() {
-		
+
 		this.db.initDBConnection();
 		ArrayList<Integer> idList = new ArrayList<Integer>();
 		// Creating a sql query
@@ -344,35 +349,35 @@ public class DBMatching {
 				idList.add(rest1.getInt("ID"));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return idList;
-		
+
 	}
 
+	// Überprüft alle DayIDs und Upladdaten zu den jeweiligen Umlaufplänen
 	private void createUmlaufplanDayAndDate() {
 
 		this.db.initDBConnection();
 		// Creating a sql query
 		try {
 			stmt = this.db.getConnection().createStatement();
-			ResultSet rest1 = stmt.executeQuery("SELECT DayID,Datum FROM Umlaufplan");
+			ResultSet rest1 = stmt
+					.executeQuery("SELECT DayID,Datum FROM Umlaufplan");
 			// All resulted datasets of the sql query will be added to the block
 			// array list
 			while (rest1.next()) {
 				int dayID;
-				if(rest1.getString("DayID")!=null){
-				dayID=Integer.parseInt(rest1.getString("DayID"));
-				}else{
-					dayID=-1;
+				if (rest1.getString("DayID") != null) {
+					dayID = Integer.parseInt(rest1.getString("DayID"));
+				} else {
+					dayID = -1;
 				}
 				umlaufplanDayList.add(dayID);
 				String datum = rest1.getString("Datum").toString();
 				umlaufplanDateList.add(datum);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -398,7 +403,6 @@ public class DBMatching {
 				duty.add(new Duty(hilfsID, id, type));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -436,7 +440,7 @@ public class DBMatching {
 									+ rest3.getString("BlockID")
 									+ "' AND d.ID='"
 									+ rest3.getString("DutyID") + "';");
-					
+
 					// if the read blockelement is a exceptional servie journey
 					// the second sql query will be execute
 				} else {
@@ -473,7 +477,6 @@ public class DBMatching {
 						arrTime, elementType, dienstplanID, dutyHilfsID));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -489,16 +492,16 @@ public class DBMatching {
 		createDuty();
 		createDutyelement();
 		createDienstplanDate();
-		this.dienstplanDayList=createDienstplanDayIDList();
-		this.diesntplanUplanIDList=createDienstplanUplanIDList();
-		this.dienstplanBezeichnungList=createDienstplanBezeichnungList();
-		this.dienstplanNameList=createDienstplanNameList();
+		this.dienstplanDayList = createDienstplanDayIDList();
+		this.diesntplanUplanIDList = createDienstplanUplanIDList();
+		this.dienstplanBezeichnungList = createDienstplanBezeichnungList();
+		this.dienstplanNameList = createDienstplanNameList();
 		// Anzahl der DienstplÃƒÂ¤ne wird ausgelesen
 		// Strukturvariablen
 		int anzahlPlan = 1;
 		int zaehlerDienst = 0;
-		
-		ArrayList<Integer> idList=createDienstplanIDs();
+		ArrayList<Integer> idList = createDienstplanIDs();
+		// Zählt wieviele Dienstpläne in der Datenbank vorhanden sind
 		for (int i = 0; i < dutyelement.size(); i++) {
 			if (i >= 1
 					&& dutyelement.get(i).getDienstplanID() > dutyelement.get(
@@ -511,20 +514,22 @@ public class DBMatching {
 			ArrayList<Dutyelement> dutyelementList = new ArrayList<Dutyelement>();
 			ArrayList<Duty> dutyList = new ArrayList<Duty>();
 			for (int j = 0; j < this.dutyelement.size(); j++) {
-				if (this.dutyelement.get(j).getDienstplanID() == idList.get(i-1)) {
+				if (this.dutyelement.get(j).getDienstplanID() == idList
+						.get(i - 1)) {
 					dutyelementList.add(dutyelement.get(j));
 				}
 			}
-			
-			//Buchstaben werden bei DutyID abgeschnitten
+
+			// Buchstaben werden bei DutyID abgeschnitten
 			for (int j2 = zaehlerDienst; j2 < this.duty.size() - 1; j2++) {
 
-					//prüft ob zwei duties mit einem Buchstaben beginnen
+				// prüft ob zwei duties mit einem Buchstaben beginnen
 				if (this.duty.get(j2).getId().matches("^[a-z].*")
 						&& this.duty.get(j2 + 1).getId().matches("^[a-z].*")) {
 
 					String[] string = this.duty.get(j2).getId().split("[a-z]");
-					String[] string2 = this.duty.get(j2 + 1).getId().split("[a-z]");
+					String[] string2 = this.duty.get(j2 + 1).getId()
+							.split("[a-z]");
 					int id1 = Integer.parseInt(string[1]);
 					int id2 = Integer.parseInt(string2[1]);
 
@@ -551,11 +556,13 @@ public class DBMatching {
 						dutyList.add(this.duty.get(j2));
 						zaehlerDienst = zaehlerDienst + 1;
 					}
-					//erste Duty beginnt nicht mit Buchstaben, zweite Duty beginnt mit Buchstaben
+					// erste Duty beginnt nicht mit Buchstaben, zweite Duty
+					// beginnt mit Buchstaben
 				} else if (!this.duty.get(j2).getId().matches("^[a-z].*")
 						&& this.duty.get(j2 + 1).getId().matches("^[a-z].*")) {
 
-					String[] string = this.duty.get(j2 + 1).getId().split("[a-z]");
+					String[] string = this.duty.get(j2 + 1).getId()
+							.split("[a-z]");
 					int id2 = Integer.parseInt(string[1]);
 
 					if (Integer.parseInt(this.duty.get(j2).getId()) < id2) {
@@ -566,12 +573,20 @@ public class DBMatching {
 						dutyList.add(this.duty.get(j2));
 						j2 = this.duty.size() - 1;
 					}
-					//Beide Duties enden mit Buchstaben
-				} else if (this.duty.get(j2).getId().substring(this.duty.get(j2).getId().length()-1).matches("[a-z]*")
-						&& this.duty.get(j2+1).getId().substring(this.duty.get(j2+1).getId().length()-1).matches("[a-z]*")) {
+					// Beide Duties enden mit Buchstaben
+				} else if (this.duty.get(j2).getId()
+						.substring(this.duty.get(j2).getId().length() - 1)
+						.matches("[a-z]*")
+						&& this.duty
+								.get(j2 + 1)
+								.getId()
+								.substring(
+										this.duty.get(j2 + 1).getId().length() - 1)
+								.matches("[a-z]*")) {
 
 					String[] string = this.duty.get(j2).getId().split("[a-z]");
-					String[] string2 = this.duty.get(j2 + 1).getId().split("[a-z]");
+					String[] string2 = this.duty.get(j2 + 1).getId()
+							.split("[a-z]");
 					int id1 = Integer.parseInt(string[0]);
 					int id2 = Integer.parseInt(string2[0]);
 
@@ -583,9 +598,16 @@ public class DBMatching {
 						dutyList.add(this.duty.get(j2));
 						j2 = this.duty.size() - 1;
 					}
-					//Erste Duty endet Buchstaben, zweite Duty nicht
-				} else if (this.duty.get(j2).getId().substring(this.duty.get(j2).getId().length()-1).matches("[a-z]*")
-						&& !this.duty.get(j2+1).getId().substring(this.duty.get(j2+1).getId().length()-1).matches("[a-z]*")) {
+					// Erste Duty endet Buchstaben, zweite Duty nicht
+				} else if (this.duty.get(j2).getId()
+						.substring(this.duty.get(j2).getId().length() - 1)
+						.matches("[a-z]*")
+						&& !this.duty
+								.get(j2 + 1)
+								.getId()
+								.substring(
+										this.duty.get(j2 + 1).getId().length() - 1)
+								.matches("[a-z]*")) {
 
 					String[] string = this.duty.get(j2).getId().split("[a-z]");
 					int id1 = Integer.parseInt(string[0]);
@@ -599,11 +621,20 @@ public class DBMatching {
 						zaehlerDienst = zaehlerDienst + 1;
 						j2 = this.duty.size() - 1;
 					}
-					//Erste Duty endet nicht mit Buchstaben, zweite endet mit Buchstaben
-				} else if (!this.duty.get(j2).getId().substring(this.duty.get(j2).getId().length()-1).matches("[a-z]*")
-						&& this.duty.get(j2+1).getId().substring(this.duty.get(j2+1).getId().length()-1).matches("[a-z]*")) {
+					// Erste Duty endet nicht mit Buchstaben, zweite endet mit
+					// Buchstaben
+				} else if (!this.duty.get(j2).getId()
+						.substring(this.duty.get(j2).getId().length() - 1)
+						.matches("[a-z]*")
+						&& this.duty
+								.get(j2 + 1)
+								.getId()
+								.substring(
+										this.duty.get(j2 + 1).getId().length() - 1)
+								.matches("[a-z]*")) {
 
-					String[] string = this.duty.get(j2 + 1).getId().split("[a-z]");
+					String[] string = this.duty.get(j2 + 1).getId()
+							.split("[a-z]");
 					int id2 = Integer.parseInt(string[0]);
 
 					if (Integer.parseInt(this.duty.get(j2).getId()) < id2) {
@@ -614,8 +645,8 @@ public class DBMatching {
 						dutyList.add(this.duty.get(j2));
 						j2 = this.duty.size() - 1;
 					}
-					//keine der beiden Duties enthält ein Buchstaben
-				}else {
+					// keine der beiden Duties enthält ein Buchstaben
+				} else {
 
 					if (Integer.parseInt(this.duty.get(j2).getId()) < Integer
 							.parseInt(this.duty.get(j2 + 1).getId())) {
@@ -633,79 +664,91 @@ public class DBMatching {
 				}
 			}
 			zaehlerDienst = zaehlerDienst + 1;
-			Dienstplan dienstplanAdd = new Dienstplan(i,this.dienstplanBezeichnungList.get(i-1), dutyList,
-					dutyelementList, getFahrplanzugehoerigkeitDienstPlan(idList.get(i-1)),this.diesntplanUplanIDList.get(i-1),this.dienstplanNameList.get(i-1),
-					changeDateFormat(dienstplanDateList.get(i - 1)),this.dienstplanDayList.get(i-1));
+			// Dienstplanobjekt wird erzeugt
+			Dienstplan dienstplanAdd = new Dienstplan(i,
+					this.dienstplanBezeichnungList.get(i - 1), dutyList,
+					dutyelementList,
+					getFahrplanzugehoerigkeitDienstPlan(idList.get(i - 1)),
+					this.diesntplanUplanIDList.get(i - 1),
+					this.dienstplanNameList.get(i - 1),
+					changeDateFormat(dienstplanDateList.get(i - 1)),
+					this.dienstplanDayList.get(i - 1));
+			// Erzeugtes Dienstplanobjekt wird einer Liste mit allen
+			// Dienstplänen hinzugefügt
 			dienstplanliste.add(dienstplanAdd);
 		}
 		dutyelement.clear();
 		return dienstplanliste;
 	}
-	
+
+	// Erstellt eine Liste mit allen IDs der jeweiligen Umlaufpläne
 	private ArrayList<Integer> createDienstplanUplanIDList() {
 		this.db.initDBConnection();
-		ArrayList<Integer> idList=new ArrayList<Integer>();
+		ArrayList<Integer> idList = new ArrayList<Integer>();
 		ResultSet rest1;
 		try {
 			rest1 = stmt.executeQuery("SELECT UmlaufplanID FROM Dienstplan;");
-			while(rest1.next()){
+			while (rest1.next()) {
 				idList.add(rest1.getInt("UmlaufplanID"));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return idList;
 	}
 
+	// Erstellt eine List mit den Bezeichungen zu den vorhandenen Dienstplänen
 	private ArrayList<String> createDienstplanBezeichnungList() {
 		this.db.initDBConnection();
 		ArrayList<String> bezeichnungList = new ArrayList<String>();
 		ResultSet rest1;
 		try {
 			rest1 = stmt.executeQuery("SELECT Bezeichnung FROM Dienstplan;");
-			while(rest1.next()){
+			while (rest1.next()) {
 				bezeichnungList.add(rest1.getString("Bezeichnung"));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return bezeichnungList;
 	}
 
+	// Erstellt eine Liste von Tagen an den die jeweiligen Dienstpläne gültig
+	// sind
 	private ArrayList<Integer> createDienstplanDayIDList() {
 		this.db.initDBConnection();
 		ArrayList<Integer> dayList = new ArrayList<Integer>();
-			try {
-				ResultSet rest1=stmt.executeQuery("SELECT DayID FROM Dienstplan;");
-				while(rest1.next()){
+		try {
+			ResultSet rest1 = stmt
+					.executeQuery("SELECT DayID FROM Dienstplan;");
+			while (rest1.next()) {
 				dayList.add(rest1.getInt("DayID"));
-			} }catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
-			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 		return dayList;
 	}
 
+	// Erstellt eine Liste mit allen Namen zu den vorhandenen Dienstplänen
 	private ArrayList<String> createDienstplanNameList() {
 		this.db.initDBConnection();
 		ArrayList<String> nameList = new ArrayList<String>();
 		try {
-			ResultSet rest1=stmt.executeQuery("SELECT Name FROM Dienstplan;");
+			ResultSet rest1 = stmt.executeQuery("SELECT Name FROM Dienstplan;");
 			while (rest1.next()) {
 				nameList.add(rest1.getString("Name"));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return nameList;
 	}
 
+	// Erstellt eine Liste mit allen IDs zu den vorhandenen Dienstplänen
 	private ArrayList<Integer> createDienstplanIDs() {
-		
+
 		this.db.initDBConnection();
 		ArrayList<Integer> idList = new ArrayList<Integer>();
 		// Creating a sql query
@@ -718,13 +761,13 @@ public class DBMatching {
 				idList.add(rest1.getInt("ID"));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return idList;
-		
+
 	}
 
+	// Erstellt eine Liste von Uploaddaten der vorhandenen Dienstpläne
 	private void createDienstplanDate() {
 
 		this.db.initDBConnection();
@@ -739,12 +782,12 @@ public class DBMatching {
 				dienstplanDateList.add(datum);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
 
+	// Prüft zu welchem Fahrplan der übergebene Umlaufplan gehört
 	public int getFahrplanzugehoerigkeitUmlaufplan(int umlaufplanID) {
 		int fahrplanID = 0;
 
@@ -758,7 +801,6 @@ public class DBMatching {
 			fahrplanID = rest1.getInt("FahrplanID");
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return fahrplanID;
@@ -774,6 +816,7 @@ public class DBMatching {
 		createFahrplanID();
 		createStoppoint();
 		createLine();
+		createLinebundle();
 		createVehType();
 		createVehTypeGroup();
 		createVehTypeToVehTypeGroup();
@@ -785,7 +828,7 @@ public class DBMatching {
 		createTransfertime();
 		createFahrplanBezeichnugn();
 		createFahrplanDate();
-		this.fahrplanNameList=createFahrplanNameList();
+		this.fahrplanNameList = createFahrplanNameList();
 		// Anzahl der Fahrplaene wird ausgelesen
 		// Strukturvariablen
 		int anzahlPlan = 1;
@@ -801,6 +844,7 @@ public class DBMatching {
 			ArrayList<ServiceJourney> serviceJourneyList = new ArrayList<ServiceJourney>();
 			ArrayList<Stoppoint> stoppointList = new ArrayList<Stoppoint>();
 			ArrayList<Line> lineList = new ArrayList<Line>();
+			ArrayList<Linebundle> linebundleList = new ArrayList<Linebundle>();
 			ArrayList<VehicleType> vehTypeList = new ArrayList<VehicleType>();
 			ArrayList<VehicleTypeGroup> vehTypeGroupList = new ArrayList<VehicleTypeGroup>();
 			ArrayList<VehicleTypeToVehicleTypeGroup> vehTypeToVehTypeGroupList = new ArrayList<VehicleTypeToVehicleTypeGroup>();
@@ -823,6 +867,12 @@ public class DBMatching {
 			for (int j = 0; j < line.size(); j++) {
 				if (this.line.get(j).getFahrplanID() == i) {
 					lineList.add(line.get(j));
+				}
+			}
+
+			for (int j = 0; j < linebundle.size(); j++) {
+				if (this.linebundle.get(j).getFahrplanID() == i) {
+					linebundleList.add(linebundle.get(j));
 				}
 			}
 			for (int j = 0; j < vehType.size(); j++) {
@@ -860,39 +910,71 @@ public class DBMatching {
 					transfertimeList.add(transfertime.get(j));
 				}
 			}
-			
+
 			for (int j = 0; j < days.size(); j++) {
 				if (days.get(j).getFahrplanID() == i) {
 					daysList.add(days.get(j));
 				}
 			}
 
+			// Ein Fahrplanobjekt wird erzeugt
 			Fahrplan fahrplanAdd = new Fahrplan(fahrplanIDList.get(i - 1),
-					stoppointList, lineList, vehTypeList, vehTypeGroupList,
-					vehTypeToVehTypeGroupList, vehCapToStoppointList,
-					serviceJourneyList, deadruntimeList, reliefpointList,
-					transfertimeList, daysList, fahrplanBezeichnungList.get(i - 1),this.fahrplanNameList.get(i-1),
+					stoppointList, lineList, linebundleList, vehTypeList,
+					vehTypeGroupList, vehTypeToVehTypeGroupList,
+					vehCapToStoppointList, serviceJourneyList, deadruntimeList,
+					reliefpointList, transfertimeList, daysList,
+					fahrplanBezeichnungList.get(i - 1),
+					this.fahrplanNameList.get(i - 1),
 					changeDateFormat(fahrplanDateList.get(i - 1)));
+			// Erzeugtes Fahrplanobjekt wird zu einer Liste aller
+			// Fahrplanobjekte hinzugefügt
 			fahrplanliste.add(fahrplanAdd);
 		}
 		this.serviceJourney.clear();
 		return fahrplanliste;
 	}
 
-	private ArrayList<String> createFahrplanNameList() {
-	this.db.initDBConnection();
-	ArrayList<String> namelist = new ArrayList<String>();
+	// Erstellt eine ArrayList mit allen in der Datenbank vorhandenen
+	// Linebundles
+	private void createLinebundle() {
+
+		this.db.initDBConnection();
+		// Creating a sql query
 		try {
-			ResultSet rest1=stmt.executeQuery("SELECT Name FROM Fahrplan;");
-			while(rest1.next()){
-			namelist.add(rest1.getString("Name"));
-		} }catch (SQLException e) {
-			// TODO Auto-generated catch block
+			stmt = this.db.getConnection().createStatement();
+			ResultSet rest1 = stmt.executeQuery("SELECT  * FROM Linebundle");
+			// All resulted datasets of the sql query will be added to the block
+			// array list
+			while (rest1.next()) {
+				int id = Integer.parseInt(rest1.getString("ID"));
+				int linebundleID = Integer.parseInt(rest1
+						.getString("LinebundleID"));
+				int lineID = Integer.parseInt(rest1.getString("LineID"));
+				int fahrplanID = Integer
+						.parseInt(rest1.getString("FahrplanID"));
+				linebundle.add(new Linebundle(id, linebundleID, lineID,
+						fahrplanID));
+			}
+		} catch (SQLException e) {
 			e.printStackTrace();
-		
+		}
+
 	}
+
+	private ArrayList<String> createFahrplanNameList() {
+		this.db.initDBConnection();
+		ArrayList<String> namelist = new ArrayList<String>();
+		try {
+			ResultSet rest1 = stmt.executeQuery("SELECT Name FROM Fahrplan;");
+			while (rest1.next()) {
+				namelist.add(rest1.getString("Name"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+		}
 		return namelist;
-		
+
 	}
 
 	private void createFahrplanDate() {
@@ -909,7 +991,6 @@ public class DBMatching {
 				fahrplanDateList.add(datum);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -930,7 +1011,6 @@ public class DBMatching {
 				fahrplanBezeichnungList.add(bezeichnung);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -950,7 +1030,6 @@ public class DBMatching {
 				fahrplanIDList.add(id);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -979,7 +1058,7 @@ public class DBMatching {
 						fromTime, toTime, runtime, fahrplanID));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 
@@ -1009,12 +1088,14 @@ public class DBMatching {
 				if (rest1.getString("d7") != null) {
 					d7 = Integer.parseInt(rest1.getString("d7"));
 				}
-				int fahrplanID = Integer.parseInt(rest1.getString("FahrplanID"));
+				int fahrplanID = Integer
+						.parseInt(rest1.getString("FahrplanID"));
 				;
-				days.add(new Days(tripID, d1, d2, d3, d4, d5, d6, d7,fahrplanID));
+				days.add(new Days(tripID, d1, d2, d3, d4, d5, d6, d7,
+						fahrplanID));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 
@@ -1044,7 +1125,7 @@ public class DBMatching {
 						serviceJourneyID, stoppointID, stopTime, fahrplanID));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 
@@ -1074,7 +1155,7 @@ public class DBMatching {
 						toTime, distance, runtime, fahrplanID));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 
@@ -1087,12 +1168,12 @@ public class DBMatching {
 		try {
 			stmt = this.db.getConnection().createStatement();
 			ResultSet rest1 = stmt
-//					.executeQuery("SELECT sj.ID,sj.ServiceJourneyID,l.LineID,sj.FromStopID,sj.ToStopID, sj.DepTime, sj.ArrTime, sj.MinAheadTime, sj.MinLayoverTime, vtg.VehicleTypeGroupID, sj.MaxShiftBackwardSeconds, sj.MaxShiftForwardSeconds, sj.FromStopBreakFacility, sj.ToStopBreakFacility, sj.Code FROM ServiceJourney AS sj, VehicleTypeGroup AS vtg, Line AS l, Stoppoint AS st WHERE sj.LineID=l.ID AND sj.FromStopID=st.ID AND sj.ToStopID=st.ID AND sj.VehTypeGroupID=vtg.ID");
-			.executeQuery("SELECT * FROM ServiceJourney;");
+			// .executeQuery("SELECT sj.ID,sj.ServiceJourneyID,l.LineID,sj.FromStopID,sj.ToStopID, sj.DepTime, sj.ArrTime, sj.MinAheadTime, sj.MinLayoverTime, vtg.VehicleTypeGroupID, sj.MaxShiftBackwardSeconds, sj.MaxShiftForwardSeconds, sj.FromStopBreakFacility, sj.ToStopBreakFacility, sj.Code FROM ServiceJourney AS sj, VehicleTypeGroup AS vtg, Line AS l, Stoppoint AS st WHERE sj.LineID=l.ID AND sj.FromStopID=st.ID AND sj.ToStopID=st.ID AND sj.VehTypeGroupID=vtg.ID");
+					.executeQuery("SELECT * FROM ServiceJourney;");
 			// All resulted datasets of the sql query will be added to the block
 			// array list
 			while (rest1.next()) {
-				int id=Integer.parseInt(rest1.getString("ID"));
+				int id = Integer.parseInt(rest1.getString("ID"));
 				int serviceJourneyID = Integer.parseInt(rest1
 						.getString("ServiceJourneyID"));
 				int lineID = Integer.parseInt(rest1.getString("LineID"));
@@ -1118,20 +1199,22 @@ public class DBMatching {
 				String code = rest1.getString("Code");
 				int fahrplanID = Integer
 						.parseInt(rest1.getString("FahrplanID"));
-				serviceJourney.add(new ServiceJourney(id,serviceJourneyID, lineID,
-						fromStopID, toStopID, depTime, arrTime, minAheadTime,
-						minLayoverTime, vehTypeGroupID,
+				serviceJourney.add(new ServiceJourney(id, serviceJourneyID,
+						lineID, fromStopID, toStopID, depTime, arrTime,
+						minAheadTime, minLayoverTime, vehTypeGroupID,
 						maxShiftBackwardSeconds, maxShiftForwardSeconds,
 						fromStopBreakFacility, toStopBreakFacility, code,
 						fahrplanID));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 
 	}
 
+	// Füllt eine Liste mit allen Fahrzeugkapazitäten, die den Haltestellen
+	// zugeordnet sind
 	private void createVehCapToStoppoint() {
 
 		this.db.initDBConnection();
@@ -1143,7 +1226,8 @@ public class DBMatching {
 			// All resulted datasets of the sql query will be added to the block
 			// array list
 			while (rest1.next()) {
-				int vehTypeID = Integer.parseInt(rest1.getString("VehicleTypeID"));
+				int vehTypeID = Integer.parseInt(rest1
+						.getString("VehicleTypeID"));
 				int stoppointID = Integer.parseInt(rest1
 						.getString("StoppointID"));
 				int min = Integer.parseInt(rest1.getString("Min"));
@@ -1154,12 +1238,14 @@ public class DBMatching {
 						stoppointID, min, max, fahrplanID));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 
 	}
 
+	// Füllt eine Liste mit allen Fahrzeugtypen, die zu einer Fahrzeugtypgruppe
+	// gehören
 	private void createVehTypeToVehTypeGroup() {
 
 		this.db.initDBConnection();
@@ -1173,19 +1259,21 @@ public class DBMatching {
 			while (rest1.next()) {
 				int vehTypeGroupID = Integer.parseInt(rest1
 						.getString("VehicleTypeGroupID"));
-				int vehTypeID = Integer.parseInt(rest1.getString("VehicleTypeID"));
+				int vehTypeID = Integer.parseInt(rest1
+						.getString("VehicleTypeID"));
 				int fahrplanID = Integer
 						.parseInt(rest1.getString("FahrplanID"));
 				vehTypeToVehTypeGroup.add(new VehicleTypeToVehicleTypeGroup(
 						vehTypeID, vehTypeGroupID, fahrplanID));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 
 	}
 
+	// Füllt eine Liste mit allen Fahrzuegtypgruppen
 	private void createVehTypeGroup() {
 
 		this.db.initDBConnection();
@@ -1207,11 +1295,12 @@ public class DBMatching {
 						name, fahrplanID));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 	}
 
+	// Füllt eine Liste mit allen Fahrzeugtypen
 	private void createVehType() {
 
 		this.db.initDBConnection();
@@ -1237,12 +1326,13 @@ public class DBMatching {
 						kmCost, hourCost, capacity, fahrplanID));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 
 	}
 
+	// Füllt eine Liste mit allen Linien
 	private void createLine() {
 
 		this.db.initDBConnection();
@@ -1261,11 +1351,12 @@ public class DBMatching {
 				line.add(new Line(lineID, code, name, fahrplanID));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 	}
 
+	// Füllt eine Liste mit allen Stoppoints
 	private void createStoppoint() {
 
 		this.db.initDBConnection();
@@ -1287,11 +1378,12 @@ public class DBMatching {
 						.add(new Stoppoint(stoppointID, code, name, fahrplanID));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 	}
 
+	// Prüft zu welchem Fahrplan der Dienstplan gehört
 	public int getFahrplanzugehoerigkeitDienstPlan(int dienstplanID) {
 		int fahrplanID = 0;
 
@@ -1304,12 +1396,13 @@ public class DBMatching {
 							+ dienstplanID);
 			fahrplanID = rest1.getInt("FahrplanID");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		return fahrplanID;
 	}
 
+	// Prüft, ob Datenbank leer ist
 	public boolean databaseIsEmpty() {
 
 		boolean isEmpty = false;
@@ -1326,7 +1419,7 @@ public class DBMatching {
 				id.add(Integer.parseInt(rest1.getString("ID")));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		if (id.isEmpty()) {
@@ -1335,6 +1428,7 @@ public class DBMatching {
 		return isEmpty;
 	}
 
+	// Prüft, ob kein Umlaufplan vorhanden ist
 	public boolean umlaufplanIsEmpty() {
 		boolean isEmpty = false;
 
@@ -1350,7 +1444,7 @@ public class DBMatching {
 				id.add(Integer.parseInt(rest1.getString("ID")));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		if (id.isEmpty()) {
@@ -1359,6 +1453,7 @@ public class DBMatching {
 		return isEmpty;
 	}
 
+	// Prüft, ob kein Dienstplan vorhanden ist
 	public boolean dienstplanIsEmpty() {
 		boolean isEmpty = false;
 
@@ -1376,7 +1471,7 @@ public class DBMatching {
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		if (dienstplan.isEmpty()) {
@@ -1384,7 +1479,8 @@ public class DBMatching {
 		}
 		return isEmpty;
 	}
-	
+
+	// Prüft, ob kein Fahrplan vorhanden ist
 	public boolean fahrplanIsEmpty() {
 		boolean isEmpty = false;
 
@@ -1402,7 +1498,7 @@ public class DBMatching {
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		if (fahrplan.isEmpty()) {
@@ -1411,6 +1507,7 @@ public class DBMatching {
 		return isEmpty;
 	}
 
+	// Wandelt einen String in das richte Datumsformat um
 	public String changeDateFormat(String date) {
 
 		String newDate = "";
@@ -1419,87 +1516,98 @@ public class DBMatching {
 
 		return newDate;
 	}
-	
-	public void deleteFahrplan(Fahrplan fahrplan){
-		
+
+	// Löscht einen Fahrplan
+	public void deleteFahrplan(Fahrplan fahrplan) {
+
 		this.db.initDBConnection();
 
 		// Creating a sql query
 		try {
 
 			stmt = this.db.getConnection().createStatement();
-			stmt.executeUpdate("DELETE FROM Fahrplan WHERE ID='"+fahrplan.getId()+"';");
+			stmt.executeUpdate("DELETE FROM Fahrplan WHERE ID='"
+					+ fahrplan.getId() + "';");
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-public void deleteDienstplan(Dienstplan dienstplan){
-		
+
+	// Löscht einen Dienstplan
+	public void deleteDienstplan(Dienstplan dienstplan) {
+
 		this.db.initDBConnection();
 
 		// Creating a sql query
 		try {
 
 			stmt = this.db.getConnection().createStatement();
-			stmt.executeUpdate("DELETE FROM Dienstplan WHERE ID='"+dienstplan.getId()+"';");
+			stmt.executeUpdate("DELETE FROM Dienstplan WHERE ID='"
+					+ dienstplan.getId() + "';");
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	public void deleteUmlaufplan(Umlaufplan umlaufplan){
-		
+
+	// Löscht einen Umlaufplan
+	public void deleteUmlaufplan(Umlaufplan umlaufplan) {
+
 		this.db.initDBConnection();
 
 		// Creating a sql query
 		try {
 
 			stmt = this.db.getConnection().createStatement();
-			stmt.executeUpdate("DELETE FROM Umlaufplan WHERE ID='"+umlaufplan.getId()+"';");
+			stmt.executeUpdate("DELETE FROM Umlaufplan WHERE ID='"
+					+ umlaufplan.getId() + "';");
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	public ArrayList<Szenario> createSzenarioObject(){
-		
-		ArrayList<Szenario>szenarioList = new ArrayList<Szenario>();
+
+	public ArrayList<Szenario> createSzenarioObject() {
+
+		ArrayList<Szenario> szenarioList = new ArrayList<Szenario>();
 		ArrayList<PrimeDelay> primeDelayList = new ArrayList<PrimeDelay>();
 		createSzenario();
 		int anzahlSzenarien = 1;
-		
-		//Anzahl der Szenarien wird ermittelt
+
+		// Anzahl der Szenarien wird ermittelt
 		for (int i = 0; i < primeDelay.size(); i++) {
-			if(Integer.parseInt(primeDelay.get(i).getServiceJourneyID())>Integer.parseInt(primeDelay.get(i+1).getServiceJourneyID())){
+			if (Integer.parseInt(primeDelay.get(i).getServiceJourneyID()) > Integer
+					.parseInt(primeDelay.get(i + 1).getServiceJourneyID())) {
 				anzahlSzenarien++;
 			}
 		}
-		
+
 		for (int i = 0; i < anzahlSzenarien; i++) {
 			for (int j = 0; j < primeDelay.size(); j++) {
-				if(primeDelay.get(j).getSzenarioID()==i){
+				if (primeDelay.get(j).getSzenarioID() == i) {
 					primeDelayList.add(primeDelay.get(j));
 				}
 			}
-			Szenario szenario = new Szenario(i,primeDelayList,getFahrplanzugehoerigkeitSzenario(i));
+			// Erzeugt ein Szeanrioobjekt
+			Szenario szenario = new Szenario(i, primeDelayList,
+					getFahrplanzugehoerigkeitSzenario(i));
+			// Objekt wird einer Liste mit allen Szeanrien hinzugefügt
 			szenarioList.add(szenario);
 		}
 		return szenarioList;
-		
+
 	}
 
+	// Prüft zu welchem Fahrplan das Szenario gehört
 	private int getFahrplanzugehoerigkeitSzenario(int i) {
-		
+
 		int fahrplanID = 0;
 
 		this.db.initDBConnection();
@@ -1507,18 +1615,18 @@ public void deleteDienstplan(Dienstplan dienstplan){
 		try {
 			stmt = this.db.getConnection().createStatement();
 			ResultSet rest1 = stmt
-					.executeQuery("SELECT * FROM Szenario WHERE ID="
-							+ i);
+					.executeQuery("SELECT * FROM Szenario WHERE ID=" + i);
 			fahrplanID = rest1.getInt("FahrplanID");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		return fahrplanID;
 	}
 
+	// Erstellt ein Szenarioobjekt
 	private void createSzenario() {
-		
+
 		this.db.initDBConnection();
 		// Creating a sql query
 		try {
@@ -1528,65 +1636,70 @@ public void deleteDienstplan(Dienstplan dienstplan){
 			// All resulted datasets of the sql query will be added to the block
 			// array list
 			while (rest1.next()) {
-				String dutyID = rest1
-						.getString("DutyID");
+				String dutyID = rest1.getString("DutyID");
 				String vehicleID = rest1.getString("VehicleID");
 				String serviceJourneyID = rest1.getString("ServiceJourneyID");
 				String depTime = rest1.getString("DepTime");
-				int delay = Integer
-						.parseInt(rest1.getString("Delay"));
+				int delay = Integer.parseInt(rest1.getString("Delay"));
 				int szenarioID = Integer
 						.parseInt(rest1.getString("SzenarioID"));
-				primeDelay
-						.add(new PrimeDelay(dutyID, vehicleID, serviceJourneyID, depTime, delay, szenarioID));
+				// Objekt wird erzeugt
+				primeDelay.add(new PrimeDelay(dutyID, vehicleID,
+						serviceJourneyID, depTime, delay, szenarioID));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	public void benenneFahrplanUm(int fahrplanID, String bezeichnung){
-		
+
+	// Benennt den Namen des Fahrplans um
+	public void benenneFahrplanUm(int fahrplanID, String bezeichnung) {
+
 		this.db.initDBConnection();
 		// Creating a sql query
 		try {
 			stmt = this.db.getConnection().createStatement();
-			stmt.executeUpdate("UPDATE Fahrplan SET Name='"+bezeichnung+"' WHERE ID='"+fahrplanID+"'");
+			stmt.executeUpdate("UPDATE Fahrplan SET Name='" + bezeichnung
+					+ "' WHERE ID='" + fahrplanID + "'");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	public void benenneUmlaufplanUm(int umlaufplanID, String bezeichnung){
-		
+
+	// Benennt den Namen des Umlaufplans um
+	public void benenneUmlaufplanUm(int umlaufplanID, String bezeichnung) {
+
 		this.db.initDBConnection();
 		// Creating a sql query
 		try {
 			stmt = this.db.getConnection().createStatement();
-			stmt.executeUpdate("UPDATE Umlaufplan SET Name='"+bezeichnung+"' WHERE ID='"+umlaufplanID+"'");
+			stmt.executeUpdate("UPDATE Umlaufplan SET Name='" + bezeichnung
+					+ "' WHERE ID='" + umlaufplanID + "'");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	public void benenneDienstplanUm(int dienstplanID, String bezeichnung){
-		
+
+	// Benennt den Namen des Dienstplans um
+	public void benenneDienstplanUm(int dienstplanID, String bezeichnung) {
+
 		this.db.initDBConnection();
 		// Creating a sql query
 		try {
 			stmt = this.db.getConnection().createStatement();
-			stmt.executeUpdate("UPDATE Dienstplan SET Name='"+bezeichnung+"' WHERE ID='"+dienstplanID+"'");
+			stmt.executeUpdate("UPDATE Dienstplan SET Name='" + bezeichnung
+					+ "' WHERE ID='" + dienstplanID + "'");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	// *****************************
@@ -1606,6 +1719,6 @@ public void deleteDienstplan(Dienstplan dienstplan){
 
 	public Szenario getSzenario() {
 		return szenario;
-	}	
+	}
 
 }

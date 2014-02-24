@@ -10,6 +10,18 @@ public class P_VergleichLayoutController {
 
 	//  Arbeitsvariablen
 	@FXML
+	private Label as;
+	@FXML
+	private Label a1;
+	@FXML
+	private Label a2;
+	@FXML
+	private Label a3;
+	@FXML
+	private Label a4;
+	@FXML
+	private Label a5;
+	@FXML
 	private Label ms;
 	@FXML
 	private Label m1;
@@ -97,7 +109,12 @@ public class P_VergleichLayoutController {
 		int[][] pMatrix=kb.erstelleMatrixpVergleich(this.fahrplan);
 		double result = kb.berechneMatrixPVergleich(pMatrix);
 		
-		
+		this.as.setText(""+matrix[0][0]);
+		this.a1.setText(""+matrix[0][1]);
+		this.a2.setText(""+matrix[0][2]);
+		this.a3.setText(""+matrix[0][3]);
+		this.a4.setText(""+matrix[0][4]);
+		this.a5.setText(""+matrix[0][5]);
 		this.ms.setText(""+matrix[1][0]);
 		this.ds.setText(""+matrix[2][0]);
 		this.mis.setText(""+matrix[3][0]);
@@ -107,7 +124,7 @@ public class P_VergleichLayoutController {
 		this.m2.setText(""+matrix[1][2]);
 		this.m3.setText(""+matrix[1][3]);
 		this.m4.setText(""+matrix[1][4]);
-		this.m5.setText(""+matrix[2][5]);
+		this.m5.setText(""+matrix[1][5]);
 		this.d1.setText(""+matrix[2][1]);
 		this.d2.setText(""+matrix[2][2]);
 		this.d3.setText(""+matrix[2][3]);

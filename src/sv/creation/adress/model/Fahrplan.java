@@ -7,6 +7,7 @@ public class Fahrplan {
 	private int id;
 	private ArrayList <Stoppoint> haltestellen = new ArrayList<Stoppoint>();
 	private ArrayList<Line> line = new ArrayList<Line>();
+	private ArrayList<Linebundle> linebundle = new ArrayList<Linebundle>();
 	private ArrayList <VehicleType> fahrzeugtypen = new ArrayList<VehicleType>();
 	private ArrayList <VehicleTypeGroup> fahrzeugtypgruppen = new ArrayList<VehicleTypeGroup>();
 	private ArrayList <VehicleTypeToVehicleTypeGroup> fahrzeugtypzufahrzeugtypgruppen = new ArrayList<VehicleTypeToVehicleTypeGroup>();
@@ -33,6 +34,7 @@ public class Fahrplan {
 	public Fahrplan(int id,
 			ArrayList<Stoppoint> haltestellen,
 			ArrayList<Line> line,
+			ArrayList<Linebundle> linebundle,
 			ArrayList<VehicleType> fahrzeugtypen,
 			ArrayList<VehicleTypeGroup> fahrzeugtypgruppen,
 			ArrayList<VehicleTypeToVehicleTypeGroup> fahrzeugtypzufahrzeugtypgruppen,
@@ -49,6 +51,7 @@ public class Fahrplan {
 		this.id = id;
 		this.haltestellen = haltestellen;
 		this.line = line;
+		this.linebundle = linebundle;
 		this.fahrzeugtypen = fahrzeugtypen;
 		this.fahrzeugtypgruppen = fahrzeugtypgruppen;
 		this.fahrzeugtypzufahrzeugtypgruppen = fahrzeugtypzufahrzeugtypgruppen;

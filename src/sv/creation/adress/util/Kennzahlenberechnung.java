@@ -1032,13 +1032,13 @@ public double [][] matrixFahrplan(Fahrplan fahrplan){
 	for (int j = 0; j < fahrplan.getDays().size(); j++) {
 		if(fahrplan.getDays().get(j).getD1()==1){
 			fahrtenMontagGesamt++;
-		}else if(fahrplan.getDays().get(j).getD2()==1){
+		}if(fahrplan.getDays().get(j).getD2()==1){
 			fahrtenDienstagGesamt++;
-		}else if(fahrplan.getDays().get(j).getD3()==1){
+		}if(fahrplan.getDays().get(j).getD3()==1){
 			fahrtenMittwochGesamt++;
-		}else if(fahrplan.getDays().get(j).getD4()==1){
+		}if(fahrplan.getDays().get(j).getD4()==1){
 			fahrtenDonnerstagGesamt++;
-		}else if(fahrplan.getDays().get(j).getD5()==1){
+		}if(fahrplan.getDays().get(j).getD5()==1){
 			fahrtenFreitagGesamt++;
 		}
 	}

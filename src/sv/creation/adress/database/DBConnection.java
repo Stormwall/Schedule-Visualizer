@@ -469,16 +469,16 @@ public class DBConnection {
 			  stmnt.executeUpdate("INSERT INTO Day VALUES('6','So');"); 
 			}
 			
-			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('Color.SEAGREEEN');");
-			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('Color.LIGHTCORAL');");
-			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('Color.ANTIQUEWHITE');");
-			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('Color.WHITESMOKE');");
-			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('Color.GREEEN');");
-			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('Color.GREEEN');");
-			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('Color.GREEEN');");
-			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('Color.ORANGE');");
-			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('Color.LIGHTSKYBLUE');");
-			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('Color.GREEEN');");
+			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('SEAGREEEN');");
+			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('LIGHTCORAL');");
+			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('ANTIQUEWHITE');");
+			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('WHITESMOKE');");
+			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('GREEEN');");
+			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('GREEEN');");
+			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('GREEEN');");
+			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('ORANGE');");
+			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('LIGHTSKYBLUE');");
+			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('GREEEN');");
 			 
 
 		//catch for the whole table creation
