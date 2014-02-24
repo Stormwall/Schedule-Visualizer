@@ -231,15 +231,15 @@ public class DutyStatistics {
 			}
 			// Layover
 			if (dutystat.dutynumberOfLayovers != 0) {
-				dutystat.dutyaverageLengthOfLayovers = dutystat.dutyoveralldurationLayovers
-						/ dutystat.dutynumberOfLayovers;
+				dutystat.dutyaverageLengthOfLayovers = Math.round(1000.0*(dutystat.dutyoveralldurationLayovers
+						/ dutystat.dutynumberOfLayovers))/1000.0;
 			} else {
 				dutystat.dutyaverageLengthOfLayovers = 0;
 			}
 			// Ratio
 			if (dutystat.dutytotalRunTime != 0) {
-				dutystat.dutyserviceTimetotalDutyTimeRatio = dutystat.dutyoveralldurationServicetrips
-						/ dutystat.dutytotalRunTime;
+				dutystat.dutyserviceTimetotalDutyTimeRatio = Math.round(1000.0*((double)dutystat.dutyoveralldurationServicetrips
+						/ (double)dutystat.dutytotalRunTime))/1000.0;
 			} else {
 				dutystat.dutyserviceTimetotalDutyTimeRatio = 0;
 			}
@@ -428,5 +428,6 @@ public class DutyStatistics {
 	public int getDutynumberOfLines() {
 		return dutynumberOfLines;
 	}
+
 
 }

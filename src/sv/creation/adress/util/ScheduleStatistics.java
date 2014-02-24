@@ -18,12 +18,12 @@ public class ScheduleStatistics {
 	 */
 
 	// absolute numbers for both
-	double totalNumberOfTrips = 0;
-	double numberOfServiceTrips = 0;
-	double numberOfDeadheads = 0;
-	double numberOfWaitings = 0;
-	double numberOfPullOuts = 0;
-	double numberOfPullIns = 0;
+	int totalNumberOfTrips = 0;
+	int numberOfServiceTrips = 0;
+	int numberOfDeadheads = 0;
+	int numberOfWaitings = 0;
+	int numberOfPullOuts = 0;
+	int numberOfPullIns = 0;
 
 	// int numberOfLinesPerBundle = 0;
 	// number of bundles
@@ -70,17 +70,17 @@ public class ScheduleStatistics {
 	double sumavgnumberOfVehiclesPerBundle = 0;
 
 	// overall durations for both
-	double totalRunTime = 0;
-	double overalldurationServiceTrips = 0;
-	double overalldurationDeadHeads = 0;
-	double overalldurationWaitings = 0;
-	double overalldurationPullIns = 0;
-	double overalldurationPullOuts = 0;
-	double overalldurationPreparations = 0;
-	double overalldurationWrapUps = 0;
-	double overalldurationLayovers = 0;
-	double overalldurationTransfers = 0;
-	double overalldurationBreaks = 0;
+	long totalRunTime = 0;
+	long overalldurationServiceTrips = 0;
+	long overalldurationDeadHeads = 0;
+	long overalldurationWaitings = 0;
+	long overalldurationPullIns = 0;
+	long overalldurationPullOuts = 0;
+	long overalldurationPreparations = 0;
+	long overalldurationWrapUps = 0;
+	long overalldurationLayovers = 0;
+	long overalldurationTransfers = 0;
+	long overalldurationBreaks = 0;
 	// service time ratio
 	double serviceTimetotalTimeRatio = 0;
 	double sumserviceTimetotalTimeRatio = 0;
@@ -102,81 +102,81 @@ public class ScheduleStatistics {
 			dutystats = stat.calculateDutystatistics(dienstplanliste.get(i), fp);
 			for (int j = 0; j < dutystats.size(); j++) {
 				// Total Trips
-				schedulestats.totalNumberOfTrips = roundValue(schedulestats.totalNumberOfTrips
-						+ dutystats.get(j).dutytotalNumberOfTrips);
-				schedulestats.totalRunTime = roundValue(schedulestats.totalRunTime
-						+ dutystats.get(j).dutytotalRunTime);
+				schedulestats.totalNumberOfTrips = schedulestats.totalNumberOfTrips
+						+ dutystats.get(j).dutytotalNumberOfTrips;
+				schedulestats.totalRunTime = schedulestats.totalRunTime
+						+ dutystats.get(j).dutytotalRunTime;
 				// Service Trips
-				schedulestats.numberOfServiceTrips = roundValue(schedulestats.numberOfServiceTrips
-						+ dutystats.get(j).dutynumberOfServiceTrips);
+				schedulestats.numberOfServiceTrips = schedulestats.numberOfServiceTrips
+						+ dutystats.get(j).dutynumberOfServiceTrips;
 				schedulestats.sumavgServicetrips = roundValue(schedulestats.sumavgServicetrips
 						+ dutystats.get(j).dutyaverageLengthOfServiceTrips);
-				schedulestats.overalldurationServiceTrips = roundValue(schedulestats.overalldurationServiceTrips
-						+ dutystats.get(j).dutyoveralldurationServicetrips);
+				schedulestats.overalldurationServiceTrips = schedulestats.overalldurationServiceTrips
+						+ dutystats.get(j).dutyoveralldurationServicetrips;
 				// DeadHeads
-				schedulestats.numberOfDeadheads = roundValue(schedulestats.numberOfDeadheads
-						+ dutystats.get(j).dutynumberOfDeadheads);
+				schedulestats.numberOfDeadheads = schedulestats.numberOfDeadheads
+						+ dutystats.get(j).dutynumberOfDeadheads;
 				schedulestats.sumavgDeadheads = roundValue(schedulestats.sumavgDeadheads
 						+ dutystats.get(j).dutyaverageLengthOfDeadheads);
-				schedulestats.overalldurationDeadHeads = roundValue(schedulestats.overalldurationDeadHeads
-						+ dutystats.get(j).dutyoveralldurationDeadheads);
+				schedulestats.overalldurationDeadHeads = schedulestats.overalldurationDeadHeads
+						+ dutystats.get(j).dutyoveralldurationDeadheads;
 				// Waitings
-				schedulestats.numberOfWaitings = roundValue(schedulestats.numberOfWaitings
-						+ dutystats.get(j).dutynumberOfWaitings);
+				schedulestats.numberOfWaitings = schedulestats.numberOfWaitings
+						+ dutystats.get(j).dutynumberOfWaitings;
 				schedulestats.sumavgWaitings = roundValue(schedulestats.sumavgWaitings
 						+ dutystats.get(j).dutyaverageLengthOfWaitings);
-				schedulestats.overalldurationWaitings = roundValue(schedulestats.overalldurationWaitings
-						+ dutystats.get(j).dutyoveralldurationWaitings);
+				schedulestats.overalldurationWaitings = schedulestats.overalldurationWaitings
+						+ dutystats.get(j).dutyoveralldurationWaitings;
 				// POs
-				schedulestats.numberOfPullOuts = roundValue(schedulestats.numberOfPullOuts
-						+ dutystats.get(j).dutynumberOfPullOuts);
+				schedulestats.numberOfPullOuts = schedulestats.numberOfPullOuts
+						+ dutystats.get(j).dutynumberOfPullOuts;
 				schedulestats.sumavgPullouts = roundValue(schedulestats.sumavgPullouts
 						+ dutystats.get(j).dutyaverageLengthOfPullOuts);
-				schedulestats.overalldurationPullOuts = roundValue(schedulestats.overalldurationPullOuts
-						+ dutystats.get(j).dutynumberOfPullOuts);
+				schedulestats.overalldurationPullOuts = schedulestats.overalldurationPullOuts
+						+ dutystats.get(j).dutynumberOfPullOuts;
 				// PIs
-				schedulestats.numberOfPullIns = roundValue(schedulestats.numberOfPullIns
-						+ dutystats.get(j).dutynumberOfPullIns);
+				schedulestats.numberOfPullIns = schedulestats.numberOfPullIns
+						+ dutystats.get(j).dutynumberOfPullIns;
 				schedulestats.sumavgPullins = roundValue(schedulestats.sumavgPullins
 						+ dutystats.get(j).dutyaverageLengthOfPullIns);
-				schedulestats.overalldurationPullIns = roundValue(schedulestats.overalldurationPullIns
-						+ dutystats.get(j).dutyoveralldurationPullins);
+				schedulestats.overalldurationPullIns = schedulestats.overalldurationPullIns
+						+ dutystats.get(j).dutyoveralldurationPullins;
 				// Preps
 				schedulestats.numberOfPreparations = roundValue(schedulestats.numberOfPreparations
 						+ dutystats.get(j).dutynumberOfPreparations);
 				schedulestats.sumavgPreps = roundValue(schedulestats.sumavgPreps
 						+ dutystats.get(j).dutyaverageLengthOfPreparations);
-				schedulestats.overalldurationPreparations = roundValue(schedulestats.overalldurationPreparations
-						+ dutystats.get(j).dutyoveralldurationPreparations);
+				schedulestats.overalldurationPreparations = schedulestats.overalldurationPreparations
+						+ dutystats.get(j).dutyoveralldurationPreparations;
 				// Wraps
 				schedulestats.numberOfWrapUps = roundValue(schedulestats.numberOfWrapUps
 						+ dutystats.get(j).dutynumberOfWrapUps);
 				schedulestats.sumavgWraps = roundValue(schedulestats.sumavgWraps
 						+ dutystats.get(j).dutyaverageLengthOfWrapUps);
-				schedulestats.overalldurationWrapUps = roundValue(schedulestats.overalldurationWrapUps
-						+ dutystats.get(j).dutyoveralldurationWrapUps);
+				schedulestats.overalldurationWrapUps = schedulestats.overalldurationWrapUps
+						+ dutystats.get(j).dutyoveralldurationWrapUps;
 				// Layovers
 				schedulestats.numberOfLayovers = roundValue(schedulestats.numberOfLayovers
 						+ dutystats.get(j).dutynumberOfLayovers);
 				schedulestats.sumavgLayovers = roundValue(schedulestats.sumavgLayovers
 						+ dutystats.get(j).dutyaverageLengthOfLayovers);
-				schedulestats.overalldurationLayovers = roundValue(schedulestats.overalldurationLayovers
-						+ dutystats.get(j).dutyoveralldurationLayovers);
+				schedulestats.overalldurationLayovers = schedulestats.overalldurationLayovers
+						+ dutystats.get(j).dutyoveralldurationLayovers;
 				// Transfers
 				schedulestats.numberOfTransfers = roundValue(schedulestats.numberOfTransfers
 						+ dutystats.get(j).dutynumberOfTransfers);
 				schedulestats.sumavgTransfers = roundValue(schedulestats.sumavgTransfers
 						+ dutystats.get(j).dutyaverageLengthOfTransfers);
-				schedulestats.overalldurationTransfers = roundValue(schedulestats.overalldurationTransfers
-						+ dutystats.get(j).dutyoveralldurationTransfers);
+				schedulestats.overalldurationTransfers = schedulestats.overalldurationTransfers
+						+ dutystats.get(j).dutyoveralldurationTransfers;
 				// Breaks
 				schedulestats.numberOfBreaks = roundValue(schedulestats.numberOfBreaks
 						+ dutystats.get(j).dutynumberOfBreaks);
 				schedulestats.sumavgBreaks = roundValue(schedulestats.sumavgBreaks
 						+ dutystats.get(j).dutyaverageLengthOfBreaks);
-				schedulestats.overalldurationBreaks = roundValue(schedulestats.overalldurationBreaks
-						+ dutystats.get(j).dutyoveralldurationBreaks);
-				// Vehicles geht noch nicht!!!!!!
+				schedulestats.overalldurationBreaks = schedulestats.overalldurationBreaks
+						+ dutystats.get(j).dutyoveralldurationBreaks;
+				// Vehicles 
 				schedulestats.sumavgnumberOfVehiclesPerBundle = roundValue(schedulestats.sumavgnumberOfVehiclesPerBundle
 						+ dutystats.get(j).dutynumberOfVehicles);
 				// Ratio
@@ -206,8 +206,8 @@ public class ScheduleStatistics {
 			schedulestats.averageLengthOfBreaks = roundValue(schedulestats.overalldurationBreaks
 					/ dutystats.size());
 
-			schedulestats.sumserviceTimetotalTimeRatio = roundValue(schedulestats.sumserviceTimetotalTimeRatio
-					/ dutystats.size());
+			schedulestats.serviceTimetotalTimeRatio = (double)schedulestats.sumserviceTimetotalTimeRatio
+					/ (double) dutystats.size();
 			schedulestats.numberOfBundles = dutystats.size();
 			schedulestats.avgnumberOfVehiclesPerBundle = roundValue(schedulestats.sumavgnumberOfVehiclesPerBundle
 					/ dutystats.size());
@@ -322,8 +322,8 @@ public class ScheduleStatistics {
 			schedulestats.averageLengthOfBreaks = schedulestats.overalldurationBreaks
 					/ blockstats.size();
 
-			schedulestats.sumserviceTimetotalTimeRatio = schedulestats.sumserviceTimetotalTimeRatio
-					/ blockstats.size();
+			schedulestats.serviceTimetotalTimeRatio = (double)schedulestats.sumserviceTimetotalTimeRatio
+					/ (double)blockstats.size();
 
 			blockchedulestatisticslist.add(schedulestats);
 		}

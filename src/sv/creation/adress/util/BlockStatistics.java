@@ -63,7 +63,7 @@ public class BlockStatistics {
 				
 					if(up.getFahrtZuUmlauf().get(blockelement).getBlockID()==blockID){
 						blockstat.blockID = blockID;
-						long runtime = blockstat.calculateDriveTime(up.getFahrtZuUmlauf().get(blockelement).getDepTime(), up.getFahrtZuUmlauf().get(blockelement).getArrTime());
+						int runtime = (int) blockstat.calculateDriveTime(up.getFahrtZuUmlauf().get(blockelement).getDepTime(), up.getFahrtZuUmlauf().get(blockelement).getArrTime());
 								
 						blockstat.blocktotalNumberOfTrips++;
 						blockstat.blocktotalRunTime = blockstat.blocktotalRunTime + runtime;
@@ -175,8 +175,8 @@ public class BlockStatistics {
 			}
 			//Ratio
 			if (blockstat.blocktotalRunTime != 0) {
-				blockstat.blockserviceTimetotalBlockTimeRatio = blockstat.blockoveralldurationServicetrips
-						/ blockstat.blocktotalRunTime;
+				blockstat.blockserviceTimetotalBlockTimeRatio = Math.round(1000.0*((double)blockstat.blockoveralldurationServicetrips
+						/ (double)blockstat.blocktotalRunTime))/1000.0;
 			} else {
 				blockstat.blockserviceTimetotalBlockTimeRatio = 0;	
 			}

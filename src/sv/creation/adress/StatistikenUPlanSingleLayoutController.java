@@ -38,7 +38,7 @@ public class StatistikenUPlanSingleLayoutController {
 	@FXML
 	private Label aAusrueckfahrt;
 	@FXML
-	private Label aAnzahllinien;
+	private Label aServTotRatio;
 	@FXML
 	private Label dGesamt;
 	@FXML
@@ -52,8 +52,6 @@ public class StatistikenUPlanSingleLayoutController {
 	@FXML
 	private Label dAusrueckfahrt;
 	@FXML
-	private Label dAnzahllinien;
-	@FXML
 	private Label duGesamt;
 	@FXML
 	private Label duServicefahrten;
@@ -65,8 +63,7 @@ public class StatistikenUPlanSingleLayoutController {
 	private Label duEinrueckfahrt;
 	@FXML
 	private Label duAusrueckfahrt;
-	@FXML
-	private Label duAnzahllinien;
+
 
 	@FXML
 	private PieChart graphic;
@@ -113,68 +110,70 @@ public class StatistikenUPlanSingleLayoutController {
 
 		TableColumn<BlockStatistics, Integer> blockEleCol = new TableColumn<BlockStatistics, Integer>(
 				"Block-Ele.");
-		TableColumn<BlockStatistics, Double> blocktotalNumberOfTrips = new TableColumn<BlockStatistics, Double>(
+		TableColumn<BlockStatistics, Integer> blocktotalNumberOfTrips = new TableColumn<BlockStatistics, Integer>(
 				"# Fahrten Gesamt");
-		TableColumn<BlockStatistics, Double> blocktotalRunTime = new TableColumn<BlockStatistics, Double>(
+		TableColumn<BlockStatistics, Long> blocktotalRunTime = new TableColumn<BlockStatistics, Long>(
 				"Gesamtdauer");
-		TableColumn<BlockStatistics, Double> blocknumberOfServiceTrips = new TableColumn<BlockStatistics, Double>(
+		TableColumn<BlockStatistics, Integer> blocknumberOfServiceTrips = new TableColumn<BlockStatistics, Integer>(
 				"# Servicefahrten");
 		TableColumn<BlockStatistics, Double> blockaverageLengthOfServiceTrips = new TableColumn<BlockStatistics, Double>(
 				"Ø Dauer Serv.F.");
-		TableColumn<BlockStatistics, Double> blocknumberOfDeadheads = new TableColumn<BlockStatistics, Double>(
+		TableColumn<BlockStatistics, Integer> blocknumberOfDeadheads = new TableColumn<BlockStatistics, Integer>(
 				"# Verbindungsfahrten");
 		TableColumn<BlockStatistics, Double> blockaverageLengthOfDeadheads = new TableColumn<BlockStatistics, Double>(
 				"Ø Dauer Verb.F.");
-		TableColumn<BlockStatistics, Double> blocknumberOfWaitings = new TableColumn<BlockStatistics, Double>(
+		TableColumn<BlockStatistics, Integer> blocknumberOfWaitings = new TableColumn<BlockStatistics, Integer>(
 				"# Warten");
 		TableColumn<BlockStatistics, Double> blockaverageLengthOfWaitings = new TableColumn<BlockStatistics, Double>(
 				"Ø Dauer Warten");
-		TableColumn<BlockStatistics, Double> blocknumberOfPullIns = new TableColumn<BlockStatistics, Double>(
+		TableColumn<BlockStatistics, Integer> blocknumberOfPullIns = new TableColumn<BlockStatistics, Integer>(
 				"# Pull in");
 		TableColumn<BlockStatistics, Double> blockaverageLengthOfPullIns = new TableColumn<BlockStatistics, Double>(
 				"Ø Pull in");
-		TableColumn<BlockStatistics, Double> blocknumberOfPullOuts = new TableColumn<BlockStatistics, Double>(
+		TableColumn<BlockStatistics, Integer> blocknumberOfPullOuts = new TableColumn<BlockStatistics, Integer>(
 				"# Pull outs");
 		TableColumn<BlockStatistics, Double> blockaverageLengthOfPullOuts = new TableColumn<BlockStatistics, Double>(
 				"Ø Pull outs");
 		TableColumn<BlockStatistics, Double> blockserviceTimetotalBlockTimeRatio = new TableColumn<BlockStatistics, Double>(
 				"Servicefahrten / Gesamt");
+		TableColumn<BlockStatistics, Integer> blocknumberOfLines = new TableColumn<BlockStatistics, Integer>(
+				"# Linien");
 
 		blockEleCol
 				.setCellValueFactory(new PropertyValueFactory<BlockStatistics, Integer>(
 						"blockID"));
 		blocktotalNumberOfTrips
-				.setCellValueFactory(new PropertyValueFactory<BlockStatistics, Double>(
+				.setCellValueFactory(new PropertyValueFactory<BlockStatistics, Integer>(
 						"blocktotalNumberOfTrips"));
 		blocktotalRunTime
-				.setCellValueFactory(new PropertyValueFactory<BlockStatistics, Double>(
+				.setCellValueFactory(new PropertyValueFactory<BlockStatistics, Long>(
 						"blocktotalRunTime"));
 		blocknumberOfServiceTrips
-				.setCellValueFactory(new PropertyValueFactory<BlockStatistics, Double>(
+				.setCellValueFactory(new PropertyValueFactory<BlockStatistics, Integer>(
 						"blocknumberOfServiceTrips"));
 		blockaverageLengthOfServiceTrips
 				.setCellValueFactory(new PropertyValueFactory<BlockStatistics, Double>(
 						"blockaverageLengthOfServiceTrips"));
 		blocknumberOfDeadheads
-				.setCellValueFactory(new PropertyValueFactory<BlockStatistics, Double>(
+				.setCellValueFactory(new PropertyValueFactory<BlockStatistics, Integer>(
 						"blocknumberOfDeadheads"));
 		blockaverageLengthOfDeadheads
 				.setCellValueFactory(new PropertyValueFactory<BlockStatistics, Double>(
 						"blockaverageLengthOfDeadheads"));
 		blocknumberOfWaitings
-				.setCellValueFactory(new PropertyValueFactory<BlockStatistics, Double>(
+				.setCellValueFactory(new PropertyValueFactory<BlockStatistics, Integer>(
 						"blocknumberOfWaitings"));
 		blockaverageLengthOfWaitings
 				.setCellValueFactory(new PropertyValueFactory<BlockStatistics, Double>(
 						"blockaverageLengthOfWaitings"));
 		blocknumberOfPullIns
-				.setCellValueFactory(new PropertyValueFactory<BlockStatistics, Double>(
+				.setCellValueFactory(new PropertyValueFactory<BlockStatistics, Integer>(
 						"blocknumberOfPullIns"));
 		blockaverageLengthOfPullIns
 				.setCellValueFactory(new PropertyValueFactory<BlockStatistics, Double>(
 						"blockaverageLengthOfPullIns"));
 		blocknumberOfPullOuts
-				.setCellValueFactory(new PropertyValueFactory<BlockStatistics, Double>(
+				.setCellValueFactory(new PropertyValueFactory<BlockStatistics, Integer>(
 						"blocknumberOfPullOuts"));
 		blockaverageLengthOfPullOuts
 				.setCellValueFactory(new PropertyValueFactory<BlockStatistics, Double>(
@@ -182,6 +181,7 @@ public class StatistikenUPlanSingleLayoutController {
 		blockserviceTimetotalBlockTimeRatio
 				.setCellValueFactory(new PropertyValueFactory<BlockStatistics, Double>(
 						"blockserviceTimetotalBlockTimeRatio"));
+		blocknumberOfLines.setCellValueFactory(new PropertyValueFactory<BlockStatistics, Integer>("blocknumberOfLines"));
 
 		blockEleCol.prefWidthProperty().bind(blockEleCol.widthProperty());
 		blocktotalNumberOfTrips.prefWidthProperty().bind(
@@ -210,6 +210,8 @@ public class StatistikenUPlanSingleLayoutController {
 				blockaverageLengthOfPullOuts.widthProperty());
 		blockserviceTimetotalBlockTimeRatio.prefWidthProperty().bind(
 				blockserviceTimetotalBlockTimeRatio.widthProperty());
+		blocknumberOfLines.prefWidthProperty().bind(
+				blocknumberOfLines.widthProperty());
 
 		ObservableList<BlockStatistics> data = FXCollections
 				.observableArrayList();
@@ -226,7 +228,7 @@ public class StatistikenUPlanSingleLayoutController {
 				blocknumberOfWaitings, blockaverageLengthOfWaitings,
 				blocknumberOfPullIns, blockaverageLengthOfPullIns,
 				blocknumberOfPullOuts, blockaverageLengthOfPullOuts,
-				blockserviceTimetotalBlockTimeRatio);
+				blockserviceTimetotalBlockTimeRatio,blocknumberOfLines);
 		this.tablePane.setContent(this.detailsBlockTable);
 
 	}
@@ -251,53 +253,35 @@ public class StatistikenUPlanSingleLayoutController {
 		this.aAusrueckfahrt
 				.setText(String.valueOf(Math.round(this.scheduleStatistics.get(
 						0).getNumberOfPullOuts() * 100) / 100));
-		this.aAnzahllinien.setText("Folgt");
+		
 
-		this.dGesamt.setText(String.valueOf(Math.round(this.scheduleStatistics
-				.get(0).getTotalRunTime() * 100) / 100) + " sek");
-		this.dServicefahrten.setText(String.valueOf(Math
-				.round(this.scheduleStatistics.get(0)
-						.getOveralldurationServiceTrips() * 100) / 100)
-				+ " sek");
-		this.dVerbindungsfahrt.setText(String.valueOf(Math
-				.round(this.scheduleStatistics.get(0)
-						.getOveralldurationDeadHeads() * 100) / 100)
-				+ " sek");
-		this.dWarten.setText(String.valueOf(Math.round(this.scheduleStatistics
-				.get(0).getOveralldurationWaitings() * 100) / 100) + " sek");
-		this.dEinrueckfahrt.setText(String.valueOf(Math
-				.round(this.scheduleStatistics.get(0)
-						.getOveralldurationPullIns() * 100) / 100)
-				+ " sek");
-		this.dAusrueckfahrt.setText(String.valueOf(Math
-				.round(this.scheduleStatistics.get(0)
-						.getOveralldurationPullOuts() * 100) / 100)
-				+ " sek");
-		this.dAnzahllinien.setText("Folgt");
+		this.dGesamt.setText(changeTimeFormat((long)this.scheduleStatistics
+				.get(0).getTotalRunTime()));
+		this.dServicefahrten.setText(changeTimeFormat((long)this.scheduleStatistics.get(0)
+						.getOveralldurationServiceTrips()));
+		this.dVerbindungsfahrt.setText(changeTimeFormat((long)this.scheduleStatistics.get(0)
+						.getOveralldurationDeadHeads()));
+		this.dWarten.setText(changeTimeFormat((long)this.scheduleStatistics
+				.get(0).getOveralldurationWaitings()));
+		this.duEinrueckfahrt.setText(changeTimeFormat((long)this.scheduleStatistics.get(0)
+						.getOveralldurationPullIns()));
+		this.dAusrueckfahrt.setText(changeTimeFormat((long)this.scheduleStatistics.get(0)
+						.getOveralldurationPullOuts()));
+		this.aServTotRatio.setText(String.valueOf(this.scheduleStatistics.get(0).getServiceTimetotalTimeRatio()));
 
-		this.duGesamt.setText(String.valueOf(Math.round(this.scheduleStatistics.get(
-				0).getAverageLengthOfTotalTrips() * 100) / 100)
-				+ " sek");
-		this.duServicefahrten.setText(String.valueOf(Math
-				.round(this.scheduleStatistics.get(0)
-						.getAverageLengthOfServiceTrips() * 100) / 100)
-				+ " sek");
-		this.duVerbindungsfahrt.setText(String.valueOf(Math
-				.round(this.scheduleStatistics.get(0)
-						.getAverageLengthOfDeadheads() * 100) / 100)
-				+ " sek");
-		this.duWarten.setText(String.valueOf(Math.round(this.scheduleStatistics.get(
-				0).getAverageLengthOfWaitings() * 100) / 100)
-				+ " sek");
-		this.duEinrueckfahrt.setText(String.valueOf(Math
-				.round(this.scheduleStatistics.get(0)
-						.getAverageLengthOfPullIns() * 100) / 100)
-				+ " sek");
-		this.duAusrueckfahrt.setText(String.valueOf(Math
-				.round(this.scheduleStatistics.get(0)
-						.getAverageLengthOfPullOuts() * 100) / 100)
-				+ " sek");
-		this.duAnzahllinien.setText("Folgt");
+		this.duGesamt.setText(changeTimeFormat((long)this.scheduleStatistics.get(
+				0).getAverageLengthOfTotalTrips()));
+		this.duServicefahrten.setText(changeTimeFormat((long)this.scheduleStatistics.get(0)
+						.getAverageLengthOfServiceTrips()));
+		this.duVerbindungsfahrt.setText(changeTimeFormat((long)this.scheduleStatistics.get(0)
+						.getAverageLengthOfDeadheads()));
+		this.duWarten.setText(changeTimeFormat((long)this.scheduleStatistics.get(
+				0).getAverageLengthOfWaitings()));
+		this.dEinrueckfahrt.setText(changeTimeFormat((long)this.scheduleStatistics.get(0)
+						.getAverageLengthOfPullIns()));
+		this.duAusrueckfahrt.setText(changeTimeFormat((long)this.scheduleStatistics.get(0)
+						.getAverageLengthOfPullOuts()));
+		
 
 	}
 
@@ -332,7 +316,7 @@ public class StatistikenUPlanSingleLayoutController {
 								(int) (this.scheduleStatistics.get(0)
 										.getOveralldurationPreparations() * 100) / 100),
 						new PieChart.Data(
-								"WrapUps",
+								"Nachbereitung",
 								(int) (this.scheduleStatistics.get(0)
 										.getOveralldurationWrapUps() * 100) / 100),
 						new PieChart.Data(
@@ -341,7 +325,7 @@ public class StatistikenUPlanSingleLayoutController {
 										.getOveralldurationLayovers() * 100) / 100));
 		
 		this.graphic.setData(pieChartData);
-		this.graphic.setTitle("Zeitverteilung");
+		this.graphic.setTitle("Relative Anteile");
 	}
 
 	// Zuordnungsmethoden
@@ -382,6 +366,18 @@ public class StatistikenUPlanSingleLayoutController {
 		fillLabels();
 		createTableViewBlockStat();
 		fillPieChart();
+	}
+	public String changeTimeFormat(long seconds){
+		String time;
+		long hr = (long)(seconds/3600);
+		long rem = (long)(seconds%3600);
+		long mn = rem/60;
+		long sec = rem%60;
+	      String hrStr = (hr<10 ? "0" : "")+hr;
+	      String mnStr = (mn<10 ? "0" : "")+mn;
+	      String secStr = (sec<10 ? "0" : "")+sec;
+	    time = hrStr+" : " +mnStr+ " : "+secStr;
+	    return time;
 	}
 
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import sv.creation.adress.model.Dienstplan;
 import sv.creation.adress.model.Fahrplan;
+import sv.creation.adress.util.BlockStatistics;
 import sv.creation.adress.util.DutyStatistics;
 import sv.creation.adress.util.ScheduleStatistics;
 import javafx.collections.FXCollections;
@@ -38,7 +39,7 @@ public class StatistikenDPlanSingleLayoutController {
 	@FXML
 	private Label aAusrueckfahrt;
 	@FXML
-	private Label aAnzahllinien;
+	private Label aServTotRatio;
 	@FXML
 	private Label aTransfer;
 	@FXML
@@ -56,8 +57,6 @@ public class StatistikenDPlanSingleLayoutController {
 	@FXML
 	private Label dAusrueckfahrt;
 	@FXML
-	private Label dAnzahllinien;
-	@FXML
 	private Label dTransfer;
 	@FXML
 	private Label dPausen;
@@ -73,8 +72,7 @@ public class StatistikenDPlanSingleLayoutController {
 	private Label duEinrueckfahrt;
 	@FXML
 	private Label duAusrueckfahrt;
-	@FXML
-	private Label duAnzahllinien;
+
 	@FXML
 	private Label duTransfer;
 	@FXML
@@ -149,8 +147,12 @@ public class StatistikenDPlanSingleLayoutController {
 				"# Pull outs");
 		TableColumn<DutyStatistics, Double> dutyaverageLengthOfPullOuts = new TableColumn<DutyStatistics, Double>(
 				"Ø Pull outs");
-		TableColumn<DutyStatistics, Double> dutyserviceTimetotaldutyTimeRatio = new TableColumn<DutyStatistics, Double>(
+		TableColumn<DutyStatistics, Double> dutyserviceTimetotalDutyTimeRatio = new TableColumn<DutyStatistics, Double>(
 				"Servicefahrten / Gesamt");
+		TableColumn<DutyStatistics, Integer> dutynumberOfLines = new TableColumn<DutyStatistics, Integer>(
+				"# Linien");
+		TableColumn<DutyStatistics, Integer> dutynumberOfVehicles = new TableColumn<DutyStatistics, Integer>(
+				"# Fzg.");
 
 		dutyEleCol
 				.setCellValueFactory(new PropertyValueFactory<DutyStatistics, Integer>(
@@ -191,9 +193,11 @@ public class StatistikenDPlanSingleLayoutController {
 		dutyaverageLengthOfPullOuts
 				.setCellValueFactory(new PropertyValueFactory<DutyStatistics, Double>(
 						"dutyaverageLengthOfPullOuts"));
-		dutyserviceTimetotaldutyTimeRatio
+		dutyserviceTimetotalDutyTimeRatio
 				.setCellValueFactory(new PropertyValueFactory<DutyStatistics, Double>(
-						"dutyserviceTimetotaldutyTimeRatio"));
+						"dutyserviceTimetotalDutyTimeRatio"));
+		dutynumberOfLines.setCellValueFactory(new PropertyValueFactory<DutyStatistics, Integer>("dutynumberOfLines"));
+		dutynumberOfVehicles.setCellValueFactory(new PropertyValueFactory<DutyStatistics, Integer>("dutynumberOfVehicles"));
 
 		dutyEleCol.prefWidthProperty().bind(dutyEleCol.widthProperty());
 		dutytotalNumberOfTrips.prefWidthProperty().bind(
@@ -220,8 +224,12 @@ public class StatistikenDPlanSingleLayoutController {
 				dutynumberOfPullOuts.widthProperty());
 		dutyaverageLengthOfPullOuts.prefWidthProperty().bind(
 				dutyaverageLengthOfPullOuts.widthProperty());
-		dutyserviceTimetotaldutyTimeRatio.prefWidthProperty().bind(
-				dutyserviceTimetotaldutyTimeRatio.widthProperty());
+		dutyserviceTimetotalDutyTimeRatio.prefWidthProperty().bind(
+				dutyserviceTimetotalDutyTimeRatio.widthProperty());
+		dutynumberOfLines.prefWidthProperty().bind(
+				dutynumberOfLines.widthProperty());
+		dutynumberOfVehicles.prefWidthProperty().bind(
+				dutynumberOfVehicles.widthProperty());
 
 		ObservableList<DutyStatistics> data = FXCollections
 				.observableArrayList();
@@ -238,7 +246,7 @@ public class StatistikenDPlanSingleLayoutController {
 				dutynumberOfWaitings, dutyaverageLengthOfWaitings,
 				dutynumberOfPullIns, dutyaverageLengthOfPullIns,
 				dutynumberOfPullOuts, dutyaverageLengthOfPullOuts,
-				dutyserviceTimetotaldutyTimeRatio);
+				dutyserviceTimetotalDutyTimeRatio,dutynumberOfLines,dutynumberOfVehicles);
 		this.tablePane.setContent(this.detailsdutyTable);
 
 	}
@@ -263,71 +271,51 @@ public class StatistikenDPlanSingleLayoutController {
 		this.aAusrueckfahrt
 				.setText(String.valueOf(Math.round(this.scheduleStatistics.get(
 						0).getNumberOfPullOuts() * 100) / 100));
-		this.aAnzahllinien.setText("Folgt");
+		
 		this.aTransfer
 		.setText(String.valueOf(Math.round(this.scheduleStatistics.get(
 				0).getNumberOfTransfers() * 100) / 100));
 		this.aPausen
 		.setText(String.valueOf(Math.round(this.scheduleStatistics.get(
 				0).getNumberOfBreaks() * 100) / 100));
-
-		this.dGesamt.setText(String.valueOf(Math.round(this.scheduleStatistics
-				.get(0).getTotalRunTime() * 100) / 100) + " sek");
-		this.dServicefahrten.setText(String.valueOf(Math
-				.round(this.scheduleStatistics.get(0)
-						.getOveralldurationServiceTrips() * 100) / 100)
-				+ " sek");
-		this.dVerbindungsfahrt.setText(String.valueOf(Math
-				.round(this.scheduleStatistics.get(0)
-						.getOveralldurationDeadHeads() * 100) / 100)
-				+ " sek");
-		this.dWarten.setText(String.valueOf(Math.round(this.scheduleStatistics
-				.get(0).getOveralldurationWaitings() * 100) / 100) + " sek");
-		this.dEinrueckfahrt.setText(String.valueOf(Math
-				.round(this.scheduleStatistics.get(0)
-						.getOveralldurationPullIns() * 100) / 100)
-				+ " sek");
-		this.dAusrueckfahrt.setText(String.valueOf(Math
-				.round(this.scheduleStatistics.get(0)
-						.getOveralldurationPullOuts() * 100) / 100)
-				+ " sek");
-		this.dAnzahllinien.setText("Folgt");
+		this.aServTotRatio.setText(String.valueOf(this.scheduleStatistics.get(0).getServiceTimetotalTimeRatio()));
+		this.dGesamt.setText(changeTimeFormat((long)this.scheduleStatistics
+				.get(0).getTotalRunTime()));
+		this.dServicefahrten.setText(changeTimeFormat((long)this.scheduleStatistics.get(0)
+						.getOveralldurationServiceTrips()));
+		this.dVerbindungsfahrt.setText(changeTimeFormat((long)this.scheduleStatistics.get(0)
+						.getOveralldurationDeadHeads()));
+		this.dWarten.setText(changeTimeFormat((long)this.scheduleStatistics
+				.get(0).getOveralldurationWaitings()));
+		this.dEinrueckfahrt.setText(changeTimeFormat((long)this.scheduleStatistics.get(0)
+						.getOveralldurationPullIns()));
+		this.dAusrueckfahrt.setText(changeTimeFormat((long)this.scheduleStatistics.get(0)
+						.getOveralldurationPullOuts()));
 		this.dTransfer
-		.setText(String.valueOf(Math.round(this.scheduleStatistics.get(
-				0).getOveralldurationTransfers() * 100) / 100));
+		.setText(changeTimeFormat((long)this.scheduleStatistics.get(
+				0).getOveralldurationTransfers() ));
 		this.dPausen
-		.setText(String.valueOf(Math.round(this.scheduleStatistics.get(
-				0).getOveralldurationBreaks()* 100) / 100));
+		.setText(changeTimeFormat((long)this.scheduleStatistics.get(
+				0).getOveralldurationBreaks()));
 
-		this.duGesamt.setText(String.valueOf(Math.round(this.scheduleStatistics.get(
-				0).getAverageLengthOfTotalTrips() * 100) / 100)
-				+ " sek");
-		this.duServicefahrten.setText(String.valueOf(Math
-				.round(this.scheduleStatistics.get(0)
-						.getAverageLengthOfServiceTrips() * 100) / 100)
-				+ " sek");
-		this.duVerbindungsfahrt.setText(String.valueOf(Math
-				.round(this.scheduleStatistics.get(0)
-						.getAverageLengthOfDeadheads() * 100) / 100)
-				+ " sek");
-		this.duWarten.setText(String.valueOf(Math.round(this.scheduleStatistics.get(
-				0).getAverageLengthOfWaitings() * 100) / 100)
-				+ " sek");
-		this.duEinrueckfahrt.setText(String.valueOf(Math
-				.round(this.scheduleStatistics.get(0)
-						.getAverageLengthOfPullIns() * 100) / 100)
-				+ " sek");
-		this.duAusrueckfahrt.setText(String.valueOf(Math
-				.round(this.scheduleStatistics.get(0)
-						.getAverageLengthOfPullOuts() * 100) / 100)
-				+ " sek");
-		this.duAnzahllinien.setText("Folgt");
+		this.duGesamt.setText(changeTimeFormat((long)this.scheduleStatistics.get(
+				0).getAverageLengthOfTotalTrips()));
+		this.duServicefahrten.setText(changeTimeFormat((long)this.scheduleStatistics.get(0)
+						.getAverageLengthOfServiceTrips()));
+		this.duVerbindungsfahrt.setText(changeTimeFormat((long)this.scheduleStatistics.get(0)
+						.getAverageLengthOfDeadheads()));
+		this.duWarten.setText(changeTimeFormat((long)this.scheduleStatistics.get(
+				0).getAverageLengthOfWaitings()));
+		this.duEinrueckfahrt.setText(changeTimeFormat((long)this.scheduleStatistics.get(0)
+						.getAverageLengthOfPullIns()));
+		this.duAusrueckfahrt.setText(changeTimeFormat((long)this.scheduleStatistics.get(0)
+						.getAverageLengthOfPullOuts()));
 		this.duTransfer
-		.setText(String.valueOf(Math.round(this.scheduleStatistics.get(
-				0).getAverageLengthOfTranfers() * 100) / 100));
+		.setText(changeTimeFormat((long)this.scheduleStatistics.get(
+				0).getAverageLengthOfTranfers()));
 		this.duPausen
-		.setText(String.valueOf(Math.round(this.scheduleStatistics.get(
-				0).getAverageLengthOfBreaks() * 100) / 100));
+		.setText(changeTimeFormat((long)this.scheduleStatistics.get(
+				0).getAverageLengthOfBreaks()));
 
 	}
 
@@ -362,7 +350,7 @@ public class StatistikenDPlanSingleLayoutController {
 								(int) (this.scheduleStatistics.get(0)
 										.getOveralldurationPreparations() * 100) / 100),
 						new PieChart.Data(
-								"WrapUps",
+								"Nachbereitung",
 								(int) (this.scheduleStatistics.get(0)
 										.getOveralldurationWrapUps() * 100) / 100),
 						new PieChart.Data(
@@ -379,7 +367,7 @@ public class StatistikenDPlanSingleLayoutController {
 										.getOveralldurationBreaks() * 100) / 100));
 
 		this.graphic.setData(pieChartData);
-		this.graphic.setTitle("Zeitverteilung");
+		this.graphic.setTitle("Relative Anteile");
 	}
 
 	// Zuordnungsmethoden
@@ -421,5 +409,16 @@ public class StatistikenDPlanSingleLayoutController {
 		createTableViewDutyStat();
 		fillPieChart();
 	}
-
+	public String changeTimeFormat(long seconds){
+		String time;
+		long hr = (long)(seconds/3600);
+		long rem = (long)(seconds%3600);
+		long mn = rem/60;
+		long sec = rem%60;
+	      String hrStr = (hr<10 ? "0" : "")+hr;
+	      String mnStr = (mn<10 ? "0" : "")+mn;
+	      String secStr = (sec<10 ? "0" : "")+sec;
+	    time = hrStr+" : " +mnStr+ " : "+secStr;
+	    return time;
+	}
 }
