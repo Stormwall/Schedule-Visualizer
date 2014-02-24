@@ -3,6 +3,7 @@ package sv.creation.adress;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import sv.creation.adress.database.DBSave;
@@ -56,6 +57,8 @@ public class EditU_PlanController {
 
 	private Umlaufplan umlaufplan;
 	private boolean okClicked = false;
+	private ArrayList<Umlaufplan> umlaufplanliste = new ArrayList<Umlaufplan>();
+	private ArrayList<String> colors = new ArrayList<String>();
 
 	// Referenz zur MainApp
 
@@ -113,7 +116,7 @@ public class EditU_PlanController {
 				}
 
 			}
-			// �bergabe der Daten an Tabelle und Canvas
+			// Uebergabe der Daten an Tabelle und Canvas
 			this.elementsTable.setItems(data);
 			drawCanvas(blockAuswahl);
 		}
@@ -128,18 +131,24 @@ public class EditU_PlanController {
 		okClicked = true;
 		dialogStage.close();
 	}
-	
+
 	/**
 	 * Safes U-Plan
 	 */
 
 	@FXML
 	private void handleSaveUplanInDatabase() {
-		
+
 		DBSave dbm = new DBSave();
-		
+
 		try {
-			dbm.saveUmlaufplan(umlaufplan, this.mainApp.inputMeldung("Geben Sie bitte eine Bezeichnung f\u00fcr den Umlaufplan ein.", "Bitte eingeben", "Bezeichnung Umlaufplan"));
+			String name = this.mainApp
+					.inputMeldung(
+							"Geben Sie bitte eine Bezeichnung f\u00fcr den Umlaufplan ein.",
+							"Bitte eingeben", "Bezeichnung Umlaufplan");
+			this.umlaufplan.setBezeichnung(name);
+			this.umlaufplanliste.add(this.umlaufplan);
+			dbm.saveUmlaufplan(this.umlaufplan, name);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -681,8 +690,8 @@ public class EditU_PlanController {
 				}
 				// Kontrolliert den Fahrplan
 				if (this.umlaufplan.getFahrtZuUmlauf().get(i).getBlockID() == this.umlaufplan
-						.getUmlauf().size()-1) {					
-					
+						.getUmlauf().size() - 1) {
+
 				} else {
 					if (umlaufplan.getFahrtZuUmlauf().get(i + 1).getBlockID() != auswahl) {
 						endzeitVar = endHour + 1;
@@ -781,43 +790,53 @@ public class EditU_PlanController {
 
 					case 1:
 						// Servicefahrt
-						gc.setFill(Color.SEAGREEN);
+						gc.setFill(javafx.scene.paint.Color.valueOf(this.colors
+								.get(0)));
 						break;
 					case 2:
 						// Leerfahrt Haltestellen
-						gc.setFill(Color.LIGHTCORAL);
+						gc.setFill(javafx.scene.paint.Color.valueOf(this.colors
+								.get(1)));
 						break;
 					case 3:
 						// Fahrt ins Depot
-						gc.setFill(Color.ANTIQUEWHITE);
+						gc.setFill(javafx.scene.paint.Color.valueOf(this.colors
+								.get(2)));
 						break;
 					case 4:
 						// Fahrt aus dem Depot
-						gc.setFill(Color.WHITESMOKE);
+						gc.setFill(javafx.scene.paint.Color.valueOf(this.colors
+								.get(3)));
 						break;
 					case 5:
 						// Vorbereitung
-						gc.setFill(Color.GREEN);
+						gc.setFill(javafx.scene.paint.Color.valueOf(this.colors
+								.get(4)));
 						break;
 					case 6:
 						// Nachbereitung
-						gc.setFill(Color.GREEN);
+						gc.setFill(javafx.scene.paint.Color.valueOf(this.colors
+								.get(5)));
 						break;
 					case 7:
 						// Transfer
-						gc.setFill(Color.GREEN);
+						gc.setFill(javafx.scene.paint.Color.valueOf(this.colors
+								.get(6)));
 						break;
 					case 8:
 						// Pause
-						gc.setFill(Color.ORANGE);
+						gc.setFill(javafx.scene.paint.Color.valueOf(this.colors
+								.get(7)));
 						break;
 					case 9:
 						// Warten
-						gc.setFill(Color.LIGHTSKYBLUE);
+						gc.setFill(javafx.scene.paint.Color.valueOf(this.colors
+								.get(8)));
 						break;
 					case 10:
 						// LayoverTime
-						gc.setFill(Color.GREEN);
+						gc.setFill(javafx.scene.paint.Color.valueOf(this.colors
+								.get(9)));
 						break;
 					}
 
@@ -922,6 +941,22 @@ public class EditU_PlanController {
 
 	public void setMainApp(MainApplication mainApp) {
 		this.mainApp = mainApp;
+	}
+
+	public ArrayList<Umlaufplan> getUmlaufplanliste() {
+		return umlaufplanliste;
+	}
+
+	public void setUmlaufplanliste(ArrayList<Umlaufplan> umlaufplanliste) {
+		this.umlaufplanliste = umlaufplanliste;
+	}
+
+	public ArrayList<String> getColors() {
+		return colors;
+	}
+
+	public void setColors(ArrayList<String> colors) {
+		this.colors = colors;
 	}
 
 }

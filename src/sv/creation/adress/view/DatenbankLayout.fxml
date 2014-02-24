@@ -8,19 +8,19 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sv.creation.adress.DatenbankLayoutController">
+<AnchorPane prefHeight="500.0" prefWidth="900.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sv.creation.adress.DatenbankLayoutController">
   <!-- TODO Add Nodes -->
   <children>
     <SplitPane dividerPositions="" focusTraversable="true" orientation="VERTICAL" prefHeight="500.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <items>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
           <children>
-            <SplitPane dividerPositions="0.2471264367816092" focusTraversable="true" prefHeight="246.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <SplitPane dividerPositions="0.19196428571428573" focusTraversable="true" prefHeight="246.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <items>
-                <AnchorPane maxWidth="169.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="background">
+                <AnchorPane maxWidth="169.0" minHeight="0.0" minWidth="169.0" prefHeight="160.0" prefWidth="100.0" styleClass="background">
                   <children>
                     <Label styleClass="label-white" text="Datenbankverwaltung" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="6.0" />
-                    <Button mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Abbrechen" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="90.0" />
+                    <Button mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Abbrechen" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="90.0" />
                     <HBox id="HBox" alignment="CENTER" prefWidth="169.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="51.0">
                       <children>
                         <Button mnemonicParsing="false" onAction="#handleImport" prefWidth="78.0" styleClass="dark-blue" text="Import">
@@ -44,14 +44,11 @@
                                   <items>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                       <children>
-                                        <TableView fx:id="umlauftable" prefHeight="422.0" prefWidth="519.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                          <columns>
-                                            <TableColumn prefWidth="75.0" text="Bezeichnung" fx:id="uBezeichnung" />
-                                            <TableColumn prefWidth="75.0" text="ID" fx:id="uID" />
-                                            <TableColumn prefWidth="75.0" text="FahrplanID" fx:id="ufahrplanID" />
-                                            <TableColumn prefWidth="75.0" text="Upload Datum" fx:id="uUploadDate" />
-                                          </columns>
-                                        </TableView>
+                                        <ScrollPane fx:id="umlaufplanPane" fitToHeight="true" fitToWidth="true" prefHeight="422.0" prefWidth="519.0" styleClass="background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <content>
+                                            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                          </content>
+                                        </ScrollPane>
                                       </children>
                                     </AnchorPane>
                                     <AnchorPane maxHeight="35.0" minHeight="35.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="background">
@@ -74,14 +71,11 @@
                                   <items>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                       <children>
-                                        <TableView fx:id="diensttable" prefHeight="422.0" prefWidth="519.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                          <columns>
-                                            <TableColumn prefWidth="75.0" text="Bezeichnung" fx:id="dBezeichnung" />
-                                            <TableColumn prefWidth="75.0" text="ID" fx:id="dID" />
-                                            <TableColumn prefWidth="75.0" text="FahrplanID" fx:id="dfahrplanID" />
-                                            <TableColumn prefWidth="75.0" text="Upload Datum" fx:id="dUploadDate" />
-                                          </columns>
-                                        </TableView>
+                                        <ScrollPane fx:id="dienstplanPane" fitToHeight="true" fitToWidth="true" prefHeight="422.0" prefWidth="519.0" styleClass="background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <content>
+                                            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                          </content>
+                                        </ScrollPane>
                                       </children>
                                     </AnchorPane>
                                     <AnchorPane maxHeight="35.0" minHeight="35.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="background">
@@ -104,13 +98,11 @@
                                   <items>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                       <children>
-                                        <TableView fx:id="fahrtable" prefHeight="422.0" prefWidth="519.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                          <columns>
-                                            <TableColumn prefWidth="75.0" text="Bezeichnung" fx:id="fBezeichnung" />
-                                            <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="75.0" text="ID" fx:id="fID" />
-                                            <TableColumn prefWidth="75.0" text="Upload Datum" fx:id="fUploadDate" />
-                                          </columns>
-                                        </TableView>
+                                        <ScrollPane fx:id="fahrplanPane" fitToHeight="true" fitToWidth="true" prefHeight="422.0" prefWidth="519.0" styleClass="background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <content>
+                                            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                          </content>
+                                        </ScrollPane>
                                       </children>
                                     </AnchorPane>
                                     <AnchorPane maxHeight="35.0" minHeight="35.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="background">

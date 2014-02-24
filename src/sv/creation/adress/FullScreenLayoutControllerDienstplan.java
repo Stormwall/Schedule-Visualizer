@@ -57,6 +57,7 @@ public class FullScreenLayoutControllerDienstplan {
 	// Referenz zur MainApp
 
 	private MainApplication mainApp;
+	private ArrayList<String> colors = new ArrayList<String>();
 
 	/**
 	 * Initializes the controller class. This method is automatically called
@@ -495,43 +496,53 @@ public class FullScreenLayoutControllerDienstplan {
 
 						case 1:
 							// Servicefahrt
-							gc.setFill(Color.CORNFLOWERBLUE);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(0)));
 							break;
 						case 2:
 							// Leerfahrt Haltestellen
-							gc.setFill(Color.LIGHTCORAL);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(1)));
 							break;
 						case 3:
 							// Fahrt ins Depot
-							gc.setFill(Color.ANTIQUEWHITE);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(2)));
 							break;
 						case 4:
 							// Fahrt aus dem Depot
-							gc.setFill(Color.WHITESMOKE);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(3)));
 							break;
 						case 5:
 							// Vorbereitung
-							gc.setFill(Color.GREEN);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(4)));
 							break;
 						case 6:
 							// Nachbereitung
-							gc.setFill(Color.GREEN);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(5)));
 							break;
 						case 7:
 							// Transfer
-							gc.setFill(Color.GREEN);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(6)));
 							break;
 						case 8:
 							// Pause
-							gc.setFill(Color.ORANGE);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(7)));
 							break;
 						case 9:
 							// Warten
-							gc.setFill(Color.LIGHTSKYBLUE);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(8)));
 							break;
 						case 10:
 							// LayoverTime
-							gc.setFill(Color.GREEN);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(9)));
 							break;
 						}
 						// Malen der Elemente
@@ -675,6 +686,14 @@ public class FullScreenLayoutControllerDienstplan {
 		}
 		this.endzeitVar = this.endzeitVar + 1;
 
+	}
+
+	public ArrayList<String> getColors() {
+		return colors;
+	}
+
+	public void setColors(ArrayList<String> colors) {
+		this.colors = colors;
 	}
 
 }

@@ -72,17 +72,6 @@ public class ColorChoiceLayoutController {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@FXML
 	private void initialize() {
-
-		// Fill Color Array
-
-		 fillColorArray();
-
-		for (int i = 0; i < this.colors.size(); i++) {
-			
-			System.out.println(this.colors.get(i));
-//			javafx.scene.paint.Color c = javafx.scene.paint.Color.valueOf(this.colors.get(i));
-			
-		}
 		
 
 		// Action Listener
@@ -146,17 +135,17 @@ public class ColorChoiceLayoutController {
 				colors.set(9, colorPicker10.getValue().toString());
 				fillColors(9);
 			}
-		});
-
+		});		
+			
 	}
 
 	// Change a single Color
 
 	public void fillColors(int i) {
 
-		
 		Canvas canvas;
 		GraphicsContext gc;
+		Color color = new Color();
 
 		switch (i) {
 		case 0:
@@ -170,7 +159,7 @@ public class ColorChoiceLayoutController {
 					10);
 
 			this.a1.getChildren().add(canvas);
-
+			color.changeColor(i+1,javafx.scene.paint.Color.valueOf(this.colors.get(i)).toString());
 			break;
 		case 1:
 			this.a2.getChildren().clear();
@@ -183,7 +172,7 @@ public class ColorChoiceLayoutController {
 					10);
 
 			this.a2.getChildren().add(canvas);
-
+			color.changeColor(i+1,javafx.scene.paint.Color.valueOf(this.colors.get(i)).toString());
 			break;
 		case 2:
 			this.a3.getChildren().clear();
@@ -196,7 +185,7 @@ public class ColorChoiceLayoutController {
 					10);
 
 			this.a3.getChildren().add(canvas);
-
+			color.changeColor(i+1,javafx.scene.paint.Color.valueOf(this.colors.get(i)).toString());
 			break;
 		case 3:
 			this.a4.getChildren().clear();
@@ -209,7 +198,7 @@ public class ColorChoiceLayoutController {
 					10);
 
 			this.a4.getChildren().add(canvas);
-
+			color.changeColor(i+1,javafx.scene.paint.Color.valueOf(this.colors.get(i)).toString());
 			break;
 		case 4:
 			this.a5.getChildren().clear();
@@ -222,7 +211,7 @@ public class ColorChoiceLayoutController {
 					10);
 
 			this.a5.getChildren().add(canvas);
-
+			color.changeColor(i+1,javafx.scene.paint.Color.valueOf(this.colors.get(i)).toString());
 			break;
 		case 5:
 			this.a6.getChildren().clear();
@@ -235,7 +224,7 @@ public class ColorChoiceLayoutController {
 					10);
 
 			this.a6.getChildren().add(canvas);
-
+			color.changeColor(i+1,javafx.scene.paint.Color.valueOf(this.colors.get(i)).toString());
 			break;
 		case 6:
 			this.a7.getChildren().clear();
@@ -248,7 +237,7 @@ public class ColorChoiceLayoutController {
 					10);
 
 			this.a7.getChildren().add(canvas);
-
+			 color.changeColor(i+1,javafx.scene.paint.Color.valueOf(this.colors.get(i)).toString());
 			break;
 		case 7:
 			this.a8.getChildren().clear();
@@ -261,7 +250,7 @@ public class ColorChoiceLayoutController {
 					10);
 
 			this.a8.getChildren().add(canvas);
-
+			color.changeColor(i+1,javafx.scene.paint.Color.valueOf(this.colors.get(i)).toString());
 			break;
 		case 8:
 			this.a9.getChildren().clear();
@@ -274,7 +263,7 @@ public class ColorChoiceLayoutController {
 					10);
 
 			this.a9.getChildren().add(canvas);
-
+			 color.changeColor(i+1,javafx.scene.paint.Color.valueOf(this.colors.get(i)).toString());
 			break;
 		case 9:
 			this.a10.getChildren().clear();
@@ -287,7 +276,7 @@ public class ColorChoiceLayoutController {
 					10);
 
 			this.a10.getChildren().add(canvas);
-
+			 color.changeColor(i+1,javafx.scene.paint.Color.valueOf(this.colors.get(i)).toString());
 			break;
 
 		default:
@@ -301,27 +290,6 @@ public class ColorChoiceLayoutController {
 	public void endStage() {
 
 		dialogStage.close();
-	}
-
-	// Methode zum Befuellen der Farben
-
-	public void fillColorArray() {
-
-		Color color = new Color();
-
-		color.changeColor(1, "SEAGREEN");
-		color.changeColor(2, "LIGHTCORAL");
-		color.changeColor(3, "ANTIQUEWHITE");
-		color.changeColor(4, "WHITESMOKE");
-		color.changeColor(5, "GREEN");
-		color.changeColor(6, "GREEN");
-		color.changeColor(7, "GREEN");
-		color.changeColor(8, "ORANGE");
-		color.changeColor(9, "LIGHTSKYBLUE");
-		color.changeColor(10, "GREEN");
-		
-		this.colors = color.readColorTable();
-		
 	}
 
 	public Stage getDialogStage() {
@@ -338,6 +306,36 @@ public class ColorChoiceLayoutController {
 
 	public void setMainApp(MainApplication mainApp) {
 		this.mainApp = mainApp;
+	}
+
+	public ArrayList<String> getColors() {
+		return colors;
+	}
+
+	public void setColors(ArrayList<String> colors) {
+		this.colors = colors;
+		
+		this.colorPicker1.setValue(javafx.scene.paint.Color.valueOf(this.colors
+				.get(0)));
+		this.colorPicker2.setValue(javafx.scene.paint.Color.valueOf(this.colors
+				.get(1)));
+		this.colorPicker3.setValue(javafx.scene.paint.Color.valueOf(this.colors
+				.get(2)));
+		this.colorPicker4.setValue(javafx.scene.paint.Color.valueOf(this.colors
+				.get(3)));
+		this.colorPicker5.setValue(javafx.scene.paint.Color.valueOf(this.colors
+				.get(4)));
+		this.colorPicker6.setValue(javafx.scene.paint.Color.valueOf(this.colors
+				.get(5)));
+		this.colorPicker7.setValue(javafx.scene.paint.Color.valueOf(this.colors
+				.get(6)));
+		this.colorPicker8.setValue(javafx.scene.paint.Color.valueOf(this.colors
+				.get(7)));
+		this.colorPicker9.setValue(javafx.scene.paint.Color.valueOf(this.colors
+				.get(8)));
+		this.colorPicker10.setValue(javafx.scene.paint.Color
+				.valueOf(this.colors.get(9)));
+		
 	}
 
 }

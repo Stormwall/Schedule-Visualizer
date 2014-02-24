@@ -3,6 +3,7 @@ package sv.creation.adress;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import sv.creation.adress.database.DBSave;
@@ -56,6 +57,8 @@ public class EditD_PlanController {
 
 	private Dienstplan dienstplan;
 	private boolean okClicked = false;
+	private ArrayList<Dienstplan> dienstplanliste = new ArrayList<Dienstplan>();
+	private ArrayList<String> colors = new ArrayList<String>();
 
 	// Referenz zur MainApp
 
@@ -129,13 +132,17 @@ public class EditD_PlanController {
 		okClicked = true;
 		dialogStage.close();
 	}
-	
+
 	@FXML
 	private void handleSafeDplanInDatabase() {
-		
+
 		DBSave dbm = new DBSave();
-		
-		dbm.saveDienstplan(this.dienstplan, this.mainApp.inputMeldung("Geben Sie bitte eine Bezeichnung für den Dienstplan ein.", "Bitte eingeben", "Bezeichnung Dienstplan"));
+		String name = this.mainApp.inputMeldung(
+				"Geben Sie bitte eine Bezeichnung für den Dienstplan ein.",
+				"Bitte eingeben", "Bezeichnung Dienstplan");
+		this.dienstplan.setBezeichnung(name);
+		this.dienstplanliste.add(this.dienstplan);
+		dbm.saveDienstplan(this.dienstplan, name);
 	}
 
 	/**
@@ -642,7 +649,7 @@ public class EditD_PlanController {
 	// Draws the Canvas
 
 	public void drawCanvas(String auswahl) {
-		
+
 		this.canvas.getChildren().clear();
 
 		// Start und Endzeit
@@ -772,43 +779,53 @@ public class EditD_PlanController {
 
 					case 1:
 						// Servicefahrt
-						gc.setFill(Color.CORNFLOWERBLUE);
+						gc.setFill(javafx.scene.paint.Color.valueOf(this.colors
+								.get(0)));
 						break;
 					case 2:
 						// Leerfahrt Haltestellen
-						gc.setFill(Color.LIGHTCORAL);
+						gc.setFill(javafx.scene.paint.Color.valueOf(this.colors
+								.get(1)));
 						break;
 					case 3:
 						// Fahrt ins Depot
-						gc.setFill(Color.ANTIQUEWHITE);
+						gc.setFill(javafx.scene.paint.Color.valueOf(this.colors
+								.get(2)));
 						break;
 					case 4:
 						// Fahrt aus dem Depot
-						gc.setFill(Color.WHITESMOKE);
+						gc.setFill(javafx.scene.paint.Color.valueOf(this.colors
+								.get(3)));
 						break;
 					case 5:
 						// Vorbereitung
-						gc.setFill(Color.GREEN);
+						gc.setFill(javafx.scene.paint.Color.valueOf(this.colors
+								.get(4)));
 						break;
 					case 6:
 						// Nachbereitung
-						gc.setFill(Color.GREEN);
+						gc.setFill(javafx.scene.paint.Color.valueOf(this.colors
+								.get(5)));
 						break;
 					case 7:
 						// Transfer
-						gc.setFill(Color.GREEN);
+						gc.setFill(javafx.scene.paint.Color.valueOf(this.colors
+								.get(6)));
 						break;
 					case 8:
 						// Pause
-						gc.setFill(Color.ORANGE);
+						gc.setFill(javafx.scene.paint.Color.valueOf(this.colors
+								.get(7)));
 						break;
 					case 9:
 						// Warten
-						gc.setFill(Color.LIGHTSKYBLUE);
+						gc.setFill(javafx.scene.paint.Color.valueOf(this.colors
+								.get(8)));
 						break;
 					case 10:
 						// LayoverTime
-						gc.setFill(Color.GREEN);
+						gc.setFill(javafx.scene.paint.Color.valueOf(this.colors
+								.get(9)));
 						break;
 					}
 
@@ -914,4 +931,19 @@ public class EditD_PlanController {
 		this.mainApp = mainApp;
 	}
 
+	public ArrayList<Dienstplan> getDienstplanliste() {
+		return dienstplanliste;
+	}
+
+	public void setDienstplanliste(ArrayList<Dienstplan> dienstplanliste) {
+		this.dienstplanliste = dienstplanliste;
+	}
+
+	public ArrayList<String> getColors() {
+		return colors;
+	}
+
+	public void setColors(ArrayList<String> colors) {
+		this.colors = colors;
+	}
 }

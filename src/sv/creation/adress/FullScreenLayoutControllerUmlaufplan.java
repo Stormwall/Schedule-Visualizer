@@ -53,7 +53,7 @@ public class FullScreenLayoutControllerUmlaufplan {
 	private int endzeitVar = 24;
 	private int breite = 0;
 	private boolean beschriftungCheck = false;
-	
+	private ArrayList<String> colors = new ArrayList<String>();
 	// Referenz zur MainApp
 
 	private MainApplication mainApp;
@@ -361,43 +361,53 @@ public class FullScreenLayoutControllerUmlaufplan {
 
 						case 1:
 							// Servicefahrt
-							this.gc.setFill(Color.SEAGREEN);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(0)));
 							break;
 						case 2:
 							// Leerfahrt Haltestellen
-							this.gc.setFill(Color.LIGHTCORAL);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(1)));
 							break;
 						case 3:
 							// Fahrt ins Depot
-							this.gc.setFill(Color.ANTIQUEWHITE);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(2)));
 							break;
 						case 4:
 							// Fahrt aus dem Depot
-							this.gc.setFill(Color.WHITESMOKE);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(3)));
 							break;
 						case 5:
 							// Vorbereitung
-							this.gc.setFill(Color.GREEN);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(4)));
 							break;
 						case 6:
 							// Nachbereitung
-							this.gc.setFill(Color.GREEN);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(5)));
 							break;
 						case 7:
 							// Transfer
-							this.gc.setFill(Color.GREEN);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(6)));
 							break;
 						case 8:
 							// Pause
-							this.gc.setFill(Color.ORANGE);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(7)));
 							break;
 						case 9:
 							// Warten
-							this.gc.setFill(Color.LIGHTSKYBLUE);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(8)));
 							break;
 						case 10:
 							// LayoverTime
-							this.gc.setFill(Color.GREEN);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(9)));
 							break;
 						}
 
@@ -427,29 +437,30 @@ public class FullScreenLayoutControllerUmlaufplan {
 			}
 		}
 	}
-	
+
 	@FXML
 	public void saveAsPng() {
-		
-	  WritableImage image = GraphicPane.snapshot(new SnapshotParameters(), null);
-	  
-	    FileChooser fileChooser = new FileChooser();
+
+		WritableImage image = GraphicPane.snapshot(new SnapshotParameters(),
+				null);
+
+		FileChooser fileChooser = new FileChooser();
 
 		// Set extension filter
-	    FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
+		FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter(
+				"PNG files (*.png)", "*.PNG");
 		fileChooser.getExtensionFilters().add(extFilterPNG);
 
-	  // TODO: probably use a file chooser here
-		File fileF= fileChooser.showSaveDialog(this.mainApp.getPrimaryStage());
-		File file = new File(fileF.getAbsolutePath()+".png");
-	  
-	    try {
-	        ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
-	    } catch (IOException e) {
-	      // TODO: handle exception here
-	    }
+		// TODO: probably use a file chooser here
+		File fileF = fileChooser.showSaveDialog(this.mainApp.getPrimaryStage());
+		File file = new File(fileF.getAbsolutePath() + ".png");
+
+		try {
+			ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+		} catch (IOException e) {
+			// TODO: handle exception here
+		}
 	}
-	
 
 	// Methode zum Beenden des PopUp
 
@@ -538,6 +549,14 @@ public class FullScreenLayoutControllerUmlaufplan {
 		}
 		this.endzeitVar = this.endzeitVar + 1;
 
+	}
+
+	public ArrayList<String> getColors() {
+		return colors;
+	}
+
+	public void setColors(ArrayList<String> colors) {
+		this.colors = colors;
 	}
 
 }

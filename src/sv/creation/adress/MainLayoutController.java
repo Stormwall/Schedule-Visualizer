@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import sv.creation.adress.database.DBConnection;
-import sv.creation.adress.database.DBMatching;
 import sv.creation.adress.model.Blockelement;
 import sv.creation.adress.model.Dienstplan;
 import sv.creation.adress.model.Dutyelement;
@@ -271,10 +270,7 @@ public class MainLayoutController {
 	private ArrayList<Umlaufplan> umlaufplanliste = new ArrayList<Umlaufplan>();
 	private ArrayList<Dienstplan> dienstplanliste = new ArrayList<Dienstplan>();
 	private ArrayList<Fahrplan> fahrplanliste = new ArrayList<Fahrplan>();
-
-	// Erstellen eines DBMatching-Objekts
-
-	DBMatching dbm = new DBMatching();
+	private ArrayList<String> colors = new ArrayList<String>();
 
 	// Zuordnung der Umlaufplaene
 
@@ -474,12 +470,6 @@ public class MainLayoutController {
 		ft.setToValue(1.0);
 		ft.setAutoReverse(true);
 		ft.play();
-
-		// Befuellung der Dropdownmenues zur Auswahl der PlÃ¤ne
-
-		fillUmlaufplanliste();
-		fillDienstplanliste();
-		fillFahrplanliste();
 
 		// Sets the Standardelement condition of the Interface
 
@@ -1293,8 +1283,8 @@ public class MainLayoutController {
 			if (this.umlaufTabCounter >= 0) {
 
 				if (this.UPlan1.isVisible() == false) {
-					this.umlaufplanEins = this.umlaufplanliste.get(this.UPlan
-							.getSelectionModel().getSelectedIndex());
+					this.umlaufplanEins = this.getUmlaufplanliste().get(
+							this.UPlan.getSelectionModel().getSelectedIndex());
 					this.upperheightEins = this.umlaufplanEins.getUmlauf()
 							.size() * 40 + 10;
 					createUpperYScale(yUp1, upperYChart1, upperYgc1,
@@ -1365,7 +1355,6 @@ public class MainLayoutController {
 									firstCheckU1 = true;
 									changeCheckU1 = true;
 									refreshBothGraphics();
-									fillUmlaufplanliste();
 								}
 							}
 						});
@@ -1384,8 +1373,8 @@ public class MainLayoutController {
 				}
 				// Initiale Belegung der Grafik
 				if (this.UPlan2.isVisible() == false) {
-					this.umlaufplanZwei = this.umlaufplanliste.get(this.UPlan
-							.getSelectionModel().getSelectedIndex());
+					this.umlaufplanZwei = this.getUmlaufplanliste().get(
+							this.UPlan.getSelectionModel().getSelectedIndex());
 					this.upperheightZwei = this.umlaufplanZwei.getUmlauf()
 							.size() * 40 + 10;
 					createUpperYScale(yUp2, upperYChart2, upperYgc2,
@@ -1455,7 +1444,6 @@ public class MainLayoutController {
 									firstCheckU2 = true;
 									changeCheckU2 = true;
 									refreshBothGraphics();
-									fillUmlaufplanliste();
 								}
 							}
 						});
@@ -1473,8 +1461,8 @@ public class MainLayoutController {
 				}
 				// Initiale Belegung der Grafik
 				if (this.UPlan3.isVisible() == false) {
-					this.umlaufplanDrei = this.umlaufplanliste.get(this.UPlan
-							.getSelectionModel().getSelectedIndex());
+					this.umlaufplanDrei = this.getUmlaufplanliste().get(
+							this.UPlan.getSelectionModel().getSelectedIndex());
 					this.upperheightDrei = this.umlaufplanDrei.getUmlauf()
 							.size() * 40 + 10;
 					createUpperYScale(yUp3, upperYChart3, upperYgc3,
@@ -1541,7 +1529,6 @@ public class MainLayoutController {
 										.showEditUPlan(umlaufplanDrei);
 								if (okClicked) {
 									refreshBothGraphics();
-									fillUmlaufplanliste();
 								}
 							}
 						});
@@ -1559,8 +1546,8 @@ public class MainLayoutController {
 				}
 				// Initiale Belegung der Grafik
 				if (this.UPlan4.isVisible() == false) {
-					this.umlaufplanVier = this.umlaufplanliste.get(this.UPlan
-							.getSelectionModel().getSelectedIndex());
+					this.umlaufplanVier = this.getUmlaufplanliste().get(
+							this.UPlan.getSelectionModel().getSelectedIndex());
 					this.upperheightVier = this.umlaufplanVier.getUmlauf()
 							.size() * 40 + 10;
 					createUpperYScale(yUp4, upperYChart4, upperYgc4,
@@ -1626,7 +1613,6 @@ public class MainLayoutController {
 										.showEditUPlan(umlaufplanVier);
 								if (okClicked) {
 									refreshBothGraphics();
-									fillUmlaufplanliste();
 								}
 							}
 						});
@@ -1644,8 +1630,8 @@ public class MainLayoutController {
 				}
 				// Initiale Belegung der Grafik
 				if (this.UPlan5.isVisible() == false) {
-					this.umlaufplanFuenf = this.umlaufplanliste.get(this.UPlan
-							.getSelectionModel().getSelectedIndex());
+					this.umlaufplanFuenf = this.getUmlaufplanliste().get(
+							this.UPlan.getSelectionModel().getSelectedIndex());
 					this.upperheightFuenf = this.umlaufplanFuenf.getUmlauf()
 							.size() * 40 + 10;
 					createUpperYScale(yUp5, upperYChart5, upperYgc5,
@@ -1712,7 +1698,6 @@ public class MainLayoutController {
 										.showEditUPlan(umlaufplanFuenf);
 								if (okClicked) {
 									refreshBothGraphics();
-									fillUmlaufplanliste();
 								}
 							}
 						});
@@ -1730,8 +1715,8 @@ public class MainLayoutController {
 				}
 				// Initiale Belegung der Grafik
 				if (this.UPlan6.isVisible() == false) {
-					this.umlaufplanSechs = this.umlaufplanliste.get(this.UPlan
-							.getSelectionModel().getSelectedIndex());
+					this.umlaufplanSechs = this.getUmlaufplanliste().get(
+							this.UPlan.getSelectionModel().getSelectedIndex());
 					this.upperheightSechs = this.umlaufplanSechs.getUmlauf()
 							.size() * 40 + 10;
 					createUpperYScale(yUp6, upperYChart6, upperYgc6,
@@ -1797,7 +1782,6 @@ public class MainLayoutController {
 										.showEditUPlan(umlaufplanSechs);
 								if (okClicked) {
 									refreshBothGraphics();
-									fillUmlaufplanliste();
 								}
 							}
 						});
@@ -1815,8 +1799,8 @@ public class MainLayoutController {
 				}
 				// Initiale Belegung der Grafik
 				if (this.UPlan7.isVisible() == false) {
-					this.umlaufplanSieben = this.umlaufplanliste.get(this.UPlan
-							.getSelectionModel().getSelectedIndex());
+					this.umlaufplanSieben = this.getUmlaufplanliste().get(
+							this.UPlan.getSelectionModel().getSelectedIndex());
 					this.upperheightSieben = this.umlaufplanSieben.getUmlauf()
 							.size() * 40 + 10;
 					createUpperYScale(yUp7, upperYChart7, upperYgc7,
@@ -1883,7 +1867,6 @@ public class MainLayoutController {
 										.showEditUPlan(umlaufplanSieben);
 								if (okClicked) {
 									refreshBothGraphics();
-									fillUmlaufplanliste();
 								}
 							}
 						});
@@ -3941,43 +3924,53 @@ public class MainLayoutController {
 
 						case 1:
 							// Servicefahrt
-							gc.setFill(Color.SEAGREEN);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(0)));
 							break;
 						case 2:
 							// Leerfahrt Haltestellen
-							gc.setFill(Color.LIGHTCORAL);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(1)));
 							break;
 						case 3:
 							// Fahrt ins Depot
-							gc.setFill(Color.ANTIQUEWHITE);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(2)));
 							break;
 						case 4:
 							// Fahrt aus dem Depot
-							gc.setFill(Color.WHITESMOKE);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(3)));
 							break;
 						case 5:
 							// Vorbereitung
-							gc.setFill(Color.GREEN);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(4)));
 							break;
 						case 6:
 							// Nachbereitung
-							gc.setFill(Color.GREEN);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(5)));
 							break;
 						case 7:
 							// Transfer
-							gc.setFill(Color.GREEN);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(6)));
 							break;
 						case 8:
 							// Pause
-							gc.setFill(Color.ORANGE);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(7)));
 							break;
 						case 9:
 							// Warten
-							gc.setFill(Color.LIGHTSKYBLUE);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(8)));
 							break;
 						case 10:
 							// LayoverTime
-							gc.setFill(Color.GREEN);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(9)));
 							break;
 						}
 
@@ -4153,43 +4146,53 @@ public class MainLayoutController {
 
 						case 1:
 							// Servicefahrt
-							gc.setFill(Color.CORNFLOWERBLUE);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(0)));
 							break;
 						case 2:
 							// Leerfahrt Haltestellen
-							gc.setFill(Color.LIGHTCORAL);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(1)));
 							break;
 						case 3:
 							// Fahrt ins Depot
-							gc.setFill(Color.ANTIQUEWHITE);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(2)));
 							break;
 						case 4:
 							// Fahrt aus dem Depot
-							gc.setFill(Color.WHITESMOKE);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(3)));
 							break;
 						case 5:
 							// Vorbereitung
-							gc.setFill(Color.GREEN);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(4)));
 							break;
 						case 6:
 							// Nachbereitung
-							gc.setFill(Color.GREEN);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(5)));
 							break;
 						case 7:
 							// Transfer
-							gc.setFill(Color.GREEN);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(6)));
 							break;
 						case 8:
 							// Pause
-							gc.setFill(Color.ORANGE);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(7)));
 							break;
 						case 9:
 							// Warten
-							gc.setFill(Color.LIGHTSKYBLUE);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(8)));
 							break;
 						case 10:
 							// LayoverTime
-							gc.setFill(Color.GREEN);
+							gc.setFill(javafx.scene.paint.Color
+									.valueOf(this.colors.get(9)));
 							break;
 						}
 
@@ -4514,7 +4517,7 @@ public class MainLayoutController {
 			this.DPlanValue5.setStyle("-fx-background-color:white;");
 			this.DPlanValue6.setStyle("-fx-background-color:white;");
 			this.DPlanValue7.setStyle("-fx-background-color:white;");
-			if (this.current =="U4") {
+			if (this.current == "U4") {
 				this.current = "neu waehlen";
 			}
 			break;
@@ -4844,7 +4847,7 @@ public class MainLayoutController {
 			this.UPlanValue5.setStyle("-fx-background-color:white;");
 			this.UPlanValue6.setStyle("-fx-background-color:white;");
 			this.UPlanValue7.setStyle("-fx-background-color:white;");
-			if (this.current ==  "d7") {
+			if (this.current == "d7") {
 				this.current = "neu waehlen";
 			}
 			break;
@@ -4904,7 +4907,7 @@ public class MainLayoutController {
 		faaa.setToValue(1.0);
 		faaa.setAutoReverse(true);
 		faaa.play();
-		
+
 		FadeTransition faaaa = new FadeTransition(Duration.millis(1500),
 				this.fullscreen);
 		faaaa.setFromValue(0.0);
@@ -5015,17 +5018,13 @@ public class MainLayoutController {
 
 		// Fahrplaene -- Choicebox wird gefaellt
 
-		this.fahrplanliste.clear();
-
-		if (dbm.databaseIsEmpty() || dbm.fahrplanIsEmpty()) {
+		if (this.fahrplanliste.isEmpty()) {
 			this.FPlan.setDisable(true);
 		} else {
 			this.FPlan.setDisable(false);
-			this.fahrplanliste.clear();
-			this.fahrplanliste = dbm.createFahrplanObject();
 
 			this.FPlan.setItems(FXCollections.observableArrayList(fahrplanliste
-					.get(0).getBezeichnung()));
+					.get(0).getName()));
 			for (int i = 1; i < fahrplanliste.size(); i++) {
 				this.FPlan.getItems().add(fahrplanliste.get(i).getName());
 			}
@@ -5040,17 +5039,12 @@ public class MainLayoutController {
 
 	public void fillDienstplanliste() {
 
-		// DienstplÃ¤ne -- Choicebox wird gefÃ¼llt
+		// Dienstplaene -- Choicebox wird gefaellt
 
-		this.dienstplanliste.clear();
-
-		if (dbm.databaseIsEmpty() || dbm.dienstplanIsEmpty()) {
+		if (this.dienstplanliste.isEmpty()) {
 			this.DPlan.setDisable(true);
 		} else {
 			this.DPlan.setDisable(false);
-			this.dienstplanliste.clear();
-
-			this.dienstplanliste = dbm.createDienstplanObject();
 
 			if (this.firstLowergrafikErstellt == false) {
 				this.DPlan.setItems(FXCollections
@@ -5067,15 +5061,12 @@ public class MainLayoutController {
 
 	public void fillUmlaufplanliste() {
 
-		// UmlaufplÃ¤ne -- Choicebox wird gefÃ¼llt
+		// UmlaufplÃ¤ne -- Choicebox wird gefuellt
 
-		this.umlaufplanliste.clear();
-
-		if (dbm.databaseIsEmpty() || dbm.umlaufplanIsEmpty()) {
+		if (this.umlaufplanliste.isEmpty()) {
 			this.UPlan.setDisable(true);
 		} else {
 			this.UPlan.setDisable(false);
-			this.umlaufplanliste = dbm.createUmlaufplanObject();
 
 			if (this.firstUppergrafikErstellt == false) {
 				this.UPlan.setItems(FXCollections
@@ -5085,7 +5076,6 @@ public class MainLayoutController {
 				}
 			}
 		}
-
 	}
 
 	// Methoden zur Ueberpruefung der Verspaetungen
@@ -5230,6 +5220,44 @@ public class MainLayoutController {
 
 	public void setMainApp(MainApplication mainApp) {
 		this.mainApp = mainApp;
+	}
+
+	public ArrayList<Umlaufplan> getUmlaufplanliste() {
+		return umlaufplanliste;
+	}
+
+	public void setUmlaufplanliste(ArrayList<Umlaufplan> umlaufplanliste) {
+		this.umlaufplanliste = umlaufplanliste;
+
+		fillUmlaufplanliste();
+	}
+
+	public ArrayList<Dienstplan> getDienstplanliste() {
+		return dienstplanliste;
+	}
+
+	public void setDienstplanliste(ArrayList<Dienstplan> dienstplanliste) {
+		this.dienstplanliste = dienstplanliste;
+
+		fillDienstplanliste();
+	}
+
+	public ArrayList<Fahrplan> getFahrplanliste() {
+		return fahrplanliste;
+	}
+
+	public void setFahrplanliste(ArrayList<Fahrplan> fahrplanliste) {
+		this.fahrplanliste = fahrplanliste;
+
+		fillFahrplanliste();
+	}
+
+	public ArrayList<String> getColors() {
+		return colors;
+	}
+
+	public void setColors(ArrayList<String> colors) {
+		this.colors = colors;
 	}
 
 }

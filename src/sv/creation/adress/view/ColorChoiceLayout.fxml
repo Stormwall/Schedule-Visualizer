@@ -20,16 +20,16 @@
     <Label styleClass="label-white" text="Pause" GridPane.columnIndex="1" GridPane.rowIndex="16" />
     <Label styleClass="label-white" text="Warten" GridPane.columnIndex="1" GridPane.rowIndex="18" />
     <Label styleClass="label-white" text="LayoverTime" GridPane.columnIndex="1" GridPane.rowIndex="20" />
-    <AnchorPane fx:id="a1" maxHeight="36.0" maxWidth="28.0" minHeight="36.0" minWidth="28.0" prefHeight="14.0" prefWidth="8.0" styleClass="background-paper" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-    <AnchorPane fx:id="a2" maxHeight="36.0" maxWidth="28.0" minHeight="36.0" minWidth="28.0" prefHeight="14.0" prefWidth="8.0" styleClass="background-paper" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-    <AnchorPane fx:id="a3" maxHeight="36.0" maxWidth="28.0" minHeight="36.0" minWidth="28.0" prefHeight="14.0" prefWidth="8.0" styleClass="background-paper" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-    <AnchorPane fx:id="a4" maxHeight="36.0" maxWidth="28.0" minHeight="36.0" minWidth="28.0" prefHeight="14.0" prefWidth="8.0" styleClass="background-paper" GridPane.columnIndex="2" GridPane.rowIndex="8" />
-    <AnchorPane fx:id="a5" maxHeight="36.0" maxWidth="28.0" minHeight="36.0" minWidth="28.0" prefHeight="14.0" prefWidth="8.0" styleClass="background-paper" GridPane.columnIndex="2" GridPane.rowIndex="10" />
-    <AnchorPane fx:id="a6" maxHeight="36.0" maxWidth="28.0" minHeight="36.0" minWidth="28.0" prefHeight="14.0" prefWidth="8.0" styleClass="background-paper" GridPane.columnIndex="2" GridPane.rowIndex="12" />
-    <AnchorPane fx:id="a7" maxHeight="36.0" maxWidth="28.0" minHeight="36.0" minWidth="28.0" prefHeight="14.0" prefWidth="8.0" styleClass="background-paper" GridPane.columnIndex="2" GridPane.rowIndex="14" />
-    <AnchorPane fx:id="a9" maxHeight="36.0" maxWidth="28.0" minHeight="36.0" minWidth="28.0" prefHeight="14.0" prefWidth="8.0" styleClass="background-paper" GridPane.columnIndex="2" GridPane.rowIndex="18" />
-    <AnchorPane fx:id="a8" maxHeight="36.0" maxWidth="28.0" minHeight="36.0" minWidth="28.0" prefHeight="14.0" prefWidth="8.0" styleClass="background-paper" GridPane.columnIndex="2" GridPane.rowIndex="16" />
-    <AnchorPane fx:id="a10" maxHeight="36.0" maxWidth="28.0" minHeight="36.0" minWidth="28.0" prefHeight="14.0" prefWidth="8.0" styleClass="background-paper" GridPane.columnIndex="2" GridPane.rowIndex="20" />
+    <AnchorPane fx:id="a1" maxHeight="36.0" maxWidth="28.0" minHeight="36.0" minWidth="28.0" prefHeight="14.0" prefWidth="8.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+    <AnchorPane fx:id="a2" maxHeight="36.0" maxWidth="28.0" minHeight="36.0" minWidth="28.0" prefHeight="14.0" prefWidth="8.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+    <AnchorPane fx:id="a3" maxHeight="36.0" maxWidth="28.0" minHeight="36.0" minWidth="28.0" prefHeight="14.0" prefWidth="8.0" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+    <AnchorPane fx:id="a4" maxHeight="36.0" maxWidth="28.0" minHeight="36.0" minWidth="28.0" prefHeight="14.0" prefWidth="8.0" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+    <AnchorPane fx:id="a5" maxHeight="36.0" maxWidth="28.0" minHeight="36.0" minWidth="28.0" prefHeight="14.0" prefWidth="8.0" GridPane.columnIndex="2" GridPane.rowIndex="10" />
+    <AnchorPane fx:id="a6" maxHeight="36.0" maxWidth="28.0" minHeight="36.0" minWidth="28.0" prefHeight="14.0" prefWidth="8.0" GridPane.columnIndex="2" GridPane.rowIndex="12" />
+    <AnchorPane fx:id="a7" maxHeight="36.0" maxWidth="28.0" minHeight="36.0" minWidth="28.0" prefHeight="14.0" prefWidth="8.0" GridPane.columnIndex="2" GridPane.rowIndex="14" />
+    <AnchorPane fx:id="a9" maxHeight="36.0" maxWidth="28.0" minHeight="36.0" minWidth="28.0" prefHeight="14.0" prefWidth="8.0" GridPane.columnIndex="2" GridPane.rowIndex="18" />
+    <AnchorPane fx:id="a8" maxHeight="36.0" maxWidth="28.0" minHeight="36.0" minWidth="28.0" prefHeight="14.0" prefWidth="8.0" GridPane.columnIndex="2" GridPane.rowIndex="16" />
+    <AnchorPane fx:id="a10" maxHeight="36.0" maxWidth="28.0" minHeight="36.0" minWidth="28.0" prefHeight="14.0" prefWidth="8.0" GridPane.columnIndex="2" GridPane.rowIndex="20" />
     <Label text="Farbverwaltung" textFill="#dfdfdf" GridPane.columnIndex="1" GridPane.rowIndex="0">
       <font>
         <Font name="Arial Bold" size="14.0" />
@@ -39,8 +39,7 @@
       <children>
         <HBox id="HBox" alignment="CENTER" layoutX="-2.0" layoutY="7.0" spacing="5.0">
           <children>
-            <Button mnemonicParsing="false" styleClass="dark-blue" text="OK" />
-            <Button mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Abbrechen" />
+            <Button mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="OK" />
           </children>
         </HBox>
       </children>

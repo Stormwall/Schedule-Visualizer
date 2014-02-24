@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.TreeSet;
 
-import sv.creation.adress.database.DBMatching;
 import sv.creation.adress.model.Dienstplan;
 import sv.creation.adress.model.Fahrplan;
 import sv.creation.adress.model.Umlaufplan;
@@ -90,16 +89,6 @@ public class KennzahlenLayoutController {
 	private void initialize() {
 
 		// Befuellung der Planlisten zur Auswahl der Plaene
-
-		fillUmlaufplanliste();
-		fillDienstplanliste();
-		fillFahrplanliste();
-
-		// Belegen der Tableviews
-
-		createTableViewUmlauf();
-		createTableViewDienst();
-		createTableViewFahrplan();
 
 		// Sets the Standardelement condition of the Interface
 
@@ -959,7 +948,7 @@ public class KennzahlenLayoutController {
 
 		fBezeichnung
 				.setCellValueFactory(new PropertyValueFactory<Fahrplan, String>(
-						"bezeichnung"));
+						"name"));
 		fID.setCellValueFactory(new PropertyValueFactory<Fahrplan, Integer>(
 				"id"));
 		fUploadDate
@@ -983,79 +972,6 @@ public class KennzahlenLayoutController {
 
 	}
 
-	// Methoden zur Befuellung der Fahrplanliste
-
-	public void fillFahrplanliste() {
-
-		// Fahrplaene -- Choicebox wird gefaellt
-
-		DBMatching dbm = new DBMatching();
-
-		this.fahrplanliste.clear();
-
-		if (dbm.databaseIsEmpty() || dbm.fahrplanIsEmpty()) {
-
-		} else {
-
-			this.fahrplanliste.clear();
-			this.fahrplanliste = dbm.createFahrplanObject();
-			for (int i = 0; i < this.fahrplanliste.size(); i++) {
-				if (this.fahrplanliste.get(i).getBezeichnung() == null) {
-					this.fahrplanliste.get(i).setBezeichnung(
-							" Fahrplan " + (i + 1));
-				}
-			}
-		}
-	}
-
-	// Methoden zur Befüllung der Dienstplanliste
-
-	public void fillDienstplanliste() {
-
-		// Dienstpläne -- Choicebox wird gefüllt
-
-		DBMatching dbm = new DBMatching();
-
-		this.dienstplanliste.clear();
-
-		if (dbm.databaseIsEmpty() || dbm.dienstplanIsEmpty()) {
-
-		} else {
-			this.dienstplanliste.clear();
-
-			this.dienstplanliste = dbm.createDienstplanObject();
-			for (int i = 0; i < this.dienstplanliste.size(); i++) {
-				if (this.dienstplanliste.get(i).getName() == null) {
-					this.dienstplanliste.get(i).setName(
-							" Dienstplan " + (i + 1));
-				}
-			}
-		}
-	}
-
-	// Methoden zur Befuellung der Umlaufplanliste
-
-	public void fillUmlaufplanliste() {
-
-		// Umlaufpläne -- Choicebox wird gefüllt
-
-		DBMatching dbm = new DBMatching();
-
-		this.umlaufplanliste.clear();
-
-		if (dbm.databaseIsEmpty() || dbm.umlaufplanIsEmpty()) {
-		} else {
-			this.umlaufplanliste = dbm.createUmlaufplanObject();
-			for (int i = 0; i < this.umlaufplanliste.size(); i++) {
-				if (this.umlaufplanliste.get(i).getName() == null) {
-					this.umlaufplanliste.get(i).setName(
-							" Umlaufplan " + (i + 1));
-				}
-			}
-		}
-
-	}
-
 	// Zuordnungsmethoden
 
 	public Stage getDialogStage() {
@@ -1073,5 +989,34 @@ public class KennzahlenLayoutController {
 	public void setMainApp(MainApplication mainApp) {
 		this.mainApp = mainApp;
 	}
+
+	public ArrayList<Umlaufplan> getUmlaufplanliste() {
+		return umlaufplanliste;
+	}
+
+	public void setUmlaufplanliste(ArrayList<Umlaufplan> umlaufplanliste) {
+		this.umlaufplanliste = umlaufplanliste;		
+		createTableViewUmlauf();
+	}
+
+	public ArrayList<Dienstplan> getDienstplanliste() {
+		return dienstplanliste;
+	}
+
+	public void setDienstplanliste(ArrayList<Dienstplan> dienstplanliste) {
+		this.dienstplanliste = dienstplanliste;		
+		createTableViewDienst();
+	}
+
+	public ArrayList<Fahrplan> getFahrplanliste() {
+		return fahrplanliste;
+	}
+
+	public void setFahrplanliste(ArrayList<Fahrplan> fahrplanliste) {
+		this.fahrplanliste = fahrplanliste;
+		createTableViewFahrplan();
+	}
+	
+	
 
 }

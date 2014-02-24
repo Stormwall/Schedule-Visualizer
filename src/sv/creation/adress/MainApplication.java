@@ -3,9 +3,11 @@ package sv.creation.adress;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import sv.creation.adress.database.DBMatching;
 import sv.creation.adress.model.Dienstplan;
 import sv.creation.adress.model.Fahrplan;
 import sv.creation.adress.model.Umlaufplan;
+import sv.creation.adress.util.Color;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -24,7 +26,16 @@ public class MainApplication extends Application {
 	private Stage primaryStage;
 
 	private BorderPane rootLayout;
-	MainLayoutController controller = null;
+	MainLayoutController controller;
+
+	// Erstellen eines DBMatching-Objekts
+
+	DBMatching dbm = new DBMatching();
+
+	private ArrayList<Umlaufplan> umlaufplanliste = new ArrayList<Umlaufplan>();
+	private ArrayList<Dienstplan> dienstplanliste = new ArrayList<Dienstplan>();
+	private ArrayList<Fahrplan> fahrplanliste = new ArrayList<Fahrplan>();
+	private ArrayList<String> color = new ArrayList<String>();
 
 	// Stageübergabeobjekte
 
@@ -35,6 +46,13 @@ public class MainApplication extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
+
+		// Fill Datenbank
+
+		fillUmlaufplanliste();
+		fillDienstplanliste();
+		fillFahrplanliste();
+		fillColorArray();
 
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle(" Schedule-Visualizer - "
@@ -53,6 +71,9 @@ public class MainApplication extends Application {
 			// Give the controller access to the main app
 			RootLayoutController controller = loader.getController();
 			controller.setMainApp(this);
+			controller.setUmlaufplanliste(this.umlaufplanliste);
+			controller.setDienstplanliste(this.dienstplanliste);
+			controller.setFahrplanliste(this.fahrplanliste);
 
 			Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
 			primaryStage.setX(bounds.getMinX());
@@ -83,6 +104,10 @@ public class MainApplication extends Application {
 			MainLayoutController controller = loader.getController();
 			this.controller = controller;
 			controller.setMainApp(this);
+			controller.setUmlaufplanliste(this.umlaufplanliste);
+			controller.setDienstplanliste(this.dienstplanliste);
+			controller.setFahrplanliste(this.fahrplanliste);
+			controller.setColors(this.color);
 
 		} catch (IOException e) {
 			// Exception gets thrown if the fxml file could not be loaded
@@ -114,7 +139,9 @@ public class MainApplication extends Application {
 			KennzahlenLayoutController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setMainApp(this);
-			
+			controller.setUmlaufplanliste(this.umlaufplanliste);
+			controller.setDienstplanliste(this.dienstplanliste);
+			controller.setFahrplanliste(this.fahrplanliste);
 
 			dialogStage.show();
 
@@ -123,8 +150,9 @@ public class MainApplication extends Application {
 			e.printStackTrace();
 		}
 	}
-	
-	public void showStatistikUPlanSingle(ArrayList<Umlaufplan> umlaufplanliste, Fahrplan fahrplan) {
+
+	public void showStatistikUPlanSingle(ArrayList<Umlaufplan> umlaufplanliste,
+			Fahrplan fahrplan) {
 
 		try {
 
@@ -144,7 +172,8 @@ public class MainApplication extends Application {
 			dialogStage.setScene(scene);
 
 			// Set the controller
-			StatistikenUPlanSingleLayoutController controller = loader.getController();
+			StatistikenUPlanSingleLayoutController controller = loader
+					.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setFahrplan(fahrplan);
 			controller.setUmlaufplanliste(umlaufplanliste);
@@ -156,8 +185,9 @@ public class MainApplication extends Application {
 			e.printStackTrace();
 		}
 	}
-	
-	public void showStatistikDPlanSingle(ArrayList<Dienstplan> dienstplanliste, Fahrplan fahrplan) {
+
+	public void showStatistikDPlanSingle(ArrayList<Dienstplan> dienstplanliste,
+			Fahrplan fahrplan) {
 
 		try {
 
@@ -177,7 +207,8 @@ public class MainApplication extends Application {
 			dialogStage.setScene(scene);
 
 			// Set the controller
-			StatistikenDPlanSingleLayoutController controller = loader.getController();
+			StatistikenDPlanSingleLayoutController controller = loader
+					.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setFahrplan(fahrplan);
 			controller.setDienstplanliste(dienstplanliste);
@@ -192,7 +223,9 @@ public class MainApplication extends Application {
 
 	// Initiate DatenbankLayout fxml
 
-	public void showDatenbank() {
+	public void showDatenbank(ArrayList<Umlaufplan> umlaufplanliste,
+			ArrayList<Dienstplan> dienstplanliste,
+			ArrayList<Fahrplan> fahrplanliste) {
 
 		try {
 
@@ -213,6 +246,9 @@ public class MainApplication extends Application {
 
 			// Set the controller
 			DatenbankLayoutController controller = loader.getController();
+			controller.setUmlaufplanliste(umlaufplanliste);
+			controller.setDienstplanliste(dienstplanliste);
+			controller.setFahrplanliste(fahrplanliste);
 			controller.setDialogStage(dialogStage);
 			controller.setMainApp(this);
 
@@ -221,6 +257,7 @@ public class MainApplication extends Application {
 			this.controller.fillUmlaufplanliste();
 			this.controller.fillDienstplanliste();
 			this.controller.fillFahrplanliste();
+
 
 		} catch (IOException e) {
 			// Exception gets thrown if the fxml file could not be loaded
@@ -255,8 +292,10 @@ public class MainApplication extends Application {
 			controller.setDialogStage(dialogStage);
 			controller.setUmlaufplan(umlaufplan);
 			controller.setMainApp(this);
+			controller.setColors(this.color);
 
 			dialogStage.show();
+
 
 		} catch (IOException e) {
 			// Exception gets thrown if the fxml file could not be loade
@@ -290,6 +329,7 @@ public class MainApplication extends Application {
 			controller.setDialogStage(dialogStage);
 			controller.setDienstplan(dienstplan);
 			controller.setMainApp(this);
+			controller.setColors(this.color);
 
 			dialogStage.show();
 
@@ -333,7 +373,7 @@ public class MainApplication extends Application {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// Initiate Color Choice fxml
 
 	public void showColorChoice() {
@@ -358,6 +398,7 @@ public class MainApplication extends Application {
 			ColorChoiceLayoutController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setMainApp(this);
+			controller.setColors(this.color);
 
 			dialogStage.show();
 
@@ -369,13 +410,15 @@ public class MainApplication extends Application {
 
 	// Initiate KostenLayout fxml
 
-	public void showKostenU(ArrayList<Umlaufplan> umlaufplanliste, ArrayList<Fahrplan> fahrplanliste) {
+	public void showKostenU(ArrayList<Umlaufplan> umlaufplanliste,
+			ArrayList<Fahrplan> fahrplanliste) {
 
 		try {
 
 			// Load the fxml file and create a new stage for the popup
 			FXMLLoader loader = new FXMLLoader(
-					MainApplication.class.getResource("view/KostenLayoutU.fxml"));
+					MainApplication.class
+							.getResource("view/KostenLayoutU.fxml"));
 			AnchorPane page = (AnchorPane) loader.load();
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("Kostenkalkulation");
@@ -399,16 +442,18 @@ public class MainApplication extends Application {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// Initiate KostenLayout fxml
 
-	public void showKostenD(ArrayList<Dienstplan> dienstplanChoiceliste, ArrayList<Fahrplan> fahrplanliste) {
+	public void showKostenD(ArrayList<Dienstplan> dienstplanChoiceliste,
+			ArrayList<Fahrplan> fahrplanliste) {
 
 		try {
 
 			// Load the fxml file and create a new stage for the popup
 			FXMLLoader loader = new FXMLLoader(
-					MainApplication.class.getResource("view/KostenLayoutD.fxml"));
+					MainApplication.class
+							.getResource("view/KostenLayoutD.fxml"));
 			AnchorPane page = (AnchorPane) loader.load();
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("Kostenkalkulation");
@@ -430,7 +475,7 @@ public class MainApplication extends Application {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// Initiate P-Vergleich Layout fxml
 
 	public void showP_Vergleich(Fahrplan fahrplan) {
@@ -439,7 +484,8 @@ public class MainApplication extends Application {
 
 			// Load the fxml file and create a new stage for the popup
 			FXMLLoader loader = new FXMLLoader(
-					MainApplication.class.getResource("view/P_VergleichLayout.fxml"));
+					MainApplication.class
+							.getResource("view/P_VergleichLayout.fxml"));
 			AnchorPane page = (AnchorPane) loader.load();
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("Kostenkalkulation");
@@ -487,9 +533,13 @@ public class MainApplication extends Application {
 			controller.setUmlaufplan(umlaufplan);
 			controller.setMainApp(this);
 			controller.setDialogStage(dialogStage);
+			controller.setUmlaufplanliste(this.umlaufplanliste);
+			controller.setColors(this.color);
 
 			// Show the dialog and wait until the user closes it
 			dialogStage.showAndWait();
+			
+			this.controller.fillUmlaufplanliste();
 
 			return controller.isOkClicked();
 
@@ -525,9 +575,13 @@ public class MainApplication extends Application {
 			controller.setDienstplan(dienstplan);
 			controller.setMainApp(this);
 			controller.setDialogStage(dialogStage);
+			controller.setDienstplanliste(this.dienstplanliste);
+			controller.setColors(this.color);
 
 			// Show the dialog and wait until the user closes it
 			dialogStage.showAndWait();
+			
+			this.controller.fillDienstplanliste();
 
 			return controller.isOkClicked();
 
@@ -629,23 +683,84 @@ public class MainApplication extends Application {
 		Dialogs.showErrorDialog(primaryStage, fehlermeldungA, fehlermeldungB,
 				fehlermeldungC);
 	}
+
 	public void warnungsMeldung(String fehlermeldungA, String fehlermeldungB,
 			String fehlermeldungC) {
 
 		Dialogs.showWarningDialog(primaryStage, fehlermeldungA, fehlermeldungB,
 				fehlermeldungC);
 	}
-	public void informationMeldung(String fehlermeldungA, String fehlermeldungB,
-			String fehlermeldungC) {
 
-		Dialogs.showInformationDialog(primaryStage, fehlermeldungA, fehlermeldungB,
-				fehlermeldungC);
+	public void informationMeldung(String fehlermeldungA,
+			String fehlermeldungB, String fehlermeldungC) {
+
+		Dialogs.showInformationDialog(primaryStage, fehlermeldungA,
+				fehlermeldungB, fehlermeldungC);
 	}
+
 	public String inputMeldung(String fehlermeldungA, String fehlermeldungB,
 			String fehlermeldungC) {
 
-		return Dialogs.showInputDialog(primaryStage, fehlermeldungA, fehlermeldungB,
-				fehlermeldungC);
+		return Dialogs.showInputDialog(primaryStage, fehlermeldungA,
+				fehlermeldungB, fehlermeldungC);
+	}
+
+	// Methoden zur Befuellung der Fahrplanliste
+
+	public void fillFahrplanliste() {
+
+		this.fahrplanliste.clear();
+
+		if (dbm.databaseIsEmpty() || dbm.fahrplanIsEmpty()) {
+
+		} else {
+			
+			this.fahrplanliste = dbm.createFahrplanObject();
+
+		}
+	}
+
+	// Methoden zur BefÃ¼llung der Dienstplanliste
+
+	public void fillDienstplanliste() {
+
+
+		this.dienstplanliste.clear();
+
+		if (dbm.databaseIsEmpty() || dbm.dienstplanIsEmpty()) {
+
+		} else {
+
+			this.dienstplanliste = dbm.createDienstplanObject();
+
+		}
+
+	}
+
+	// Methoden zur Befuellung der Umlaufplanliste
+
+	public void fillUmlaufplanliste() {
+
+
+		this.umlaufplanliste.clear();
+
+		if (dbm.databaseIsEmpty() || dbm.umlaufplanIsEmpty()) {
+
+		} else {
+
+			this.umlaufplanliste = dbm.createUmlaufplanObject();
+
+		}
+	}
+	
+	// Methode zum Befuellen der Farben
+
+	public void fillColorArray() {
+
+		Color color = new Color();
+
+		this.color = color.readColorTable();
+
 	}
 
 	// Übergabemethoden der Stageobjekte
