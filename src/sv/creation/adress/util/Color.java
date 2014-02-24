@@ -17,7 +17,8 @@ public class Color {
 		
 		this.dbc.initDBConnection();
 		try {
-			stmt.executeUpdate("UPDATE Color SET Farbe = '"+farbe+"' WHERE ID='"+id+"';");
+			stmt = this.dbc.getConnection().createStatement();
+			stmt.executeUpdate("UPDATE Colors SET Farbe = '"+farbe+"' WHERE ID='"+id+"'");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
