@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.text.*?>
 
-<GridPane prefHeight="600.0" prefWidth="300.0" styleClass="background" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sv.creation.adress.SzenarienLayoutController">
+<GridPane prefHeight="600.0" prefWidth="500.0" styleClass="background" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sv.creation.adress.SzenarienLayoutController">
   <!-- TODO Add Nodes -->
   <children>
     <ScrollPane fx:id="szenarienPane" fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" styleClass="background" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -19,7 +19,7 @@
       <children>
         <HBox id="HBox" alignment="CENTER" layoutY="5.0" spacing="5.0" AnchorPane.leftAnchor="0.0">
           <children>
-            <Button mnemonicParsing="false" styleClass="dark-blue" text="Szenario anwenden" />
+            <Button mnemonicParsing="false" onAction="#handleOk" styleClass="dark-blue" text="Szenario anwenden" />
             <Button mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Abbrechen" />
           </children>
         </HBox>
@@ -27,14 +27,14 @@
     </AnchorPane>
     <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
       <children>
-        <HBox id="HBox" alignment="CENTER" prefHeight="35.0" prefWidth="280.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <HBox id="HBox" alignment="CENTER" prefHeight="35.0" prefWidth="480.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
           <children>
             <Label text="Szenarien für den Plan :" textFill="WHITE">
               <font>
                 <Font name="Arial" size="14.0" fx:id="x1" />
               </font>
             </Label>
-            <Label fx:id="referencePlan" font="$x1" prefWidth="117.0" text="Label" textFill="WHITE" />
+            <Label fx:id="referencePlan" font="$x1" prefWidth="310.0" text="Label" textFill="WHITE" />
           </children>
         </HBox>
       </children>

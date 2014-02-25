@@ -29,9 +29,10 @@ public class SzenarienLayoutController {
 
 	private ArrayList<Szenario> szenarienListe = new ArrayList<Szenario>();
 	private String fahrplanName;
-
+	private boolean okClicked = false;
 	private Stage dialogStage;
 	private MainApplication mainApp;
+	private MainLayoutController mainLayoutcontroller;
 
 	/**
 	 * Initializes the controller class. This method is automatically called
@@ -54,6 +55,21 @@ public class SzenarienLayoutController {
 	}
 
 	/**
+	 * Called when the user clicks ok.
+	 */
+	@FXML
+	private void handleOk() {
+
+		if (this.szenarienTable.getSelectionModel().getSelectedItem() != null) {
+			Szenario sz = this.szenarienTable.getSelectionModel()
+					.getSelectedItem();
+			this.mainLayoutcontroller.setSzenario(sz);
+			this.okClicked = true;
+			dialogStage.close();
+		}
+	}
+
+	/**
 	 * Builds Umlaufplantableview.
 	 */
 	@SuppressWarnings("unchecked")
@@ -65,10 +81,10 @@ public class SzenarienLayoutController {
 		this.szenarienTable.setEditable(true);
 
 		TableColumn<Szenario, Integer> szID = new TableColumn<Szenario, Integer>(
-				"Bezeichnung");
+				"Szenario ID");
 
 		szID.setCellValueFactory(new PropertyValueFactory<Szenario, Integer>(
-				"name"));
+				"id"));
 
 		szID.prefWidthProperty().bind(szID.widthProperty());
 
@@ -107,7 +123,6 @@ public class SzenarienLayoutController {
 
 	public void setSzenarienListe(ArrayList<Szenario> szenarienListe) {
 		this.szenarienListe = szenarienListe;
-		
 		refreshSzenario();
 	}
 
@@ -117,7 +132,20 @@ public class SzenarienLayoutController {
 
 	public void setFahrplanName(String fahrplanName) {
 		this.fahrplanName = fahrplanName;
+		this.referencePlan.setText(this.fahrplanName);
 	}
-	
+
+	public MainLayoutController getMainLayoutcontroller() {
+		return mainLayoutcontroller;
+	}
+
+	public void setMainLayoutcontroller(
+			MainLayoutController mainLayoutcontroller) {
+		this.mainLayoutcontroller = mainLayoutcontroller;
+	}
+
+	public boolean isOkClicked() {
+		return okClicked;
+	}
 
 }

@@ -27,7 +27,7 @@ public class MainApplication extends Application {
 	private Stage primaryStage;
 
 	private BorderPane rootLayout;
-	MainLayoutController controller;
+	MainLayoutController mainLayoutcontroller;
 
 	// Erstellen eines DBMatching-Objekts
 
@@ -105,7 +105,7 @@ public class MainApplication extends Application {
 
 			// Give the controller access to the main app
 			MainLayoutController controller = loader.getController();
-			this.controller = controller;
+			this.mainLayoutcontroller = controller;
 			controller.setMainApp(this);
 			controller.setUmlaufplanliste(this.umlaufplanliste);
 			controller.setDienstplanliste(this.dienstplanliste);
@@ -258,9 +258,9 @@ public class MainApplication extends Application {
 
 			dialogStage.showAndWait();
 			
-			this.controller.fillUmlaufplanliste();
-			this.controller.fillDienstplanliste();
-			this.controller.fillFahrplanliste();
+			this.mainLayoutcontroller.fillUmlaufplanliste();
+			this.mainLayoutcontroller.fillDienstplanliste();
+			this.mainLayoutcontroller.fillFahrplanliste();
 
 
 		} catch (IOException e) {
@@ -545,7 +545,7 @@ public class MainApplication extends Application {
 			// Show the dialog and wait until the user closes it
 			dialogStage.showAndWait();
 			
-			this.controller.fillUmlaufplanliste();
+			this.mainLayoutcontroller.fillUmlaufplanliste();
 
 			return controller.isOkClicked();
 
@@ -587,7 +587,7 @@ public class MainApplication extends Application {
 			// Show the dialog and wait until the user closes it
 			dialogStage.showAndWait();
 			
-			this.controller.fillDienstplanliste();
+			this.mainLayoutcontroller.fillDienstplanliste();
 
 			return controller.isOkClicked();
 
@@ -641,7 +641,9 @@ public class MainApplication extends Application {
 	}
 	// Initiate Szenarien fxml
 
-	public void showSzenario(ArrayList<Szenario> szenarienChoiceListe, String fahrplanName) {
+	public boolean showSzenario(ArrayList<Szenario> szenarienChoiceListe, String fahrplanName) {
+		
+		boolean okClicked = false;
 
 		try {
 
@@ -664,13 +666,17 @@ public class MainApplication extends Application {
 			controller.setMainApp(this);
 			controller.setSzenarienListe(szenarienChoiceListe);
 			controller.setFahrplanName(fahrplanName);
+			controller.setMainLayoutcontroller(this.mainLayoutcontroller);
 
-			dialogStage.show();
+			dialogStage.showAndWait();
+			
+			okClicked = controller.isOkClicked();
 
 		} catch (IOException e) {
 			// Exception gets thrown if the fxml file could not be loade
 			e.printStackTrace();
 		}
+		return okClicked;
 	}
 
 	public int[] showEditMultipleTimeDetails(int before, int after,

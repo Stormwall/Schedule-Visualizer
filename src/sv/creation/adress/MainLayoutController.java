@@ -158,6 +158,8 @@ public class MainLayoutController {
 	@FXML
 	private Button szenarienAnzeigen;
 	@FXML
+	private Button szenarienVerbergen;
+	@FXML
 	private Slider startzeitSlider;
 	@FXML
 	private Slider endzeitSlider;
@@ -275,6 +277,7 @@ public class MainLayoutController {
 	private ArrayList<Fahrplan> fahrplanliste = new ArrayList<Fahrplan>();
 	private ArrayList<Szenario> szenarienListe = new ArrayList<Szenario>();
 	private ArrayList<String> colors = new ArrayList<String>();
+	private Szenario szenario;
 
 	// Zuordnung der Umlaufplaene
 
@@ -440,8 +443,9 @@ public class MainLayoutController {
 	private boolean umlaufIsCurrent = false;
 	private boolean dienstIsCurrent = false;
 	private String current;
-
+	private int fahrplanID;
 	private boolean hilfslinienAktiv = false;
+	private boolean szenarienAktiv = false;
 	private boolean fehlerAnzeigenAktiv = false;
 	private boolean addButtonPressed = true;
 
@@ -3999,6 +4003,26 @@ public class MainLayoutController {
 						gc.strokeRoundRect(startPixelX, startPixelY,
 								fahrtDauer, 20, 20, 10);
 
+						// Szenarien
+						if (this.szenarienAktiv && umlaufplan.getFahrplanID() == this.fahrplanID) {
+							double delay;
+							for (int k = 0; k < this.szenario.getPrimeDelay().size(); k++) {
+								if (this.szenario.getPrimeDelay().get(k).getServiceJourneyID().equals(umlaufplan.getFahrtZuUmlauf().get(i).getServiceJourneyID())) {
+									delay = (abstandNetz / 60) * (this.szenario.getPrimeDelay().get(k).getDelay()/60);
+									
+									gc.setStroke(Color.RED);
+									gc.setFill(Color.RED);
+									gc.setLineWidth(2);
+									
+									gc.strokeRoundRect(startPixelX, startPixelY-4, fahrtDauer + delay, 28, 20, 10);
+									
+								}
+							}	
+							
+							gc.setStroke(Color.BLACK);
+							gc.setLineWidth(1);
+						}						
+						
 						// Beschriftet die Elemente
 
 						if (fahrtDauer > 30) {
@@ -4086,7 +4110,7 @@ public class MainLayoutController {
 			int changeMin = 100;
 			Boolean anfangDienst = true;
 
-			// Auslesen Blockelementanzahl
+			// Auslesen Dutyelementanzahl
 			for (int i = 0; i < dienstplan.getDutyelement().size(); i++) {
 
 				// Abgleich mit den Werten
@@ -4220,7 +4244,26 @@ public class MainLayoutController {
 								20, 20, 10);
 						gc.strokeRoundRect(startPixelX, startPixelY,
 								fahrtDauer, 20, 20, 10);
-
+						
+						// Szenarien
+						if (this.szenarienAktiv && dienstplan.getFahrplanID() == this.fahrplanID) {
+							double delay;
+							for (int k = 0; k < this.szenario.getPrimeDelay().size(); k++) {
+								if (this.szenario.getPrimeDelay().get(k).getServiceJourneyID().equals(dienstplan.getDutyelement().get(i).getServiceJourneyID())) {
+									delay = (abstandNetz / 60) * (this.szenario.getPrimeDelay().get(k).getDelay()/60);
+									
+									gc.setStroke(Color.RED);
+									gc.setFill(Color.RED);
+									gc.setLineWidth(2);
+									
+									gc.strokeRoundRect(startPixelX, startPixelY-4, fahrtDauer + delay, 28, 20, 10);
+									
+								}
+							}	
+							
+							gc.setStroke(Color.BLACK);
+							gc.setLineWidth(1);
+						}	
 						// Beschriftet die Elemente
 
 						if (fahrtDauer > 30) {
@@ -4389,7 +4432,7 @@ public class MainLayoutController {
 			gc.strokeLine(pixel, 0, pixel, canvas.getHeight() - 3);
 
 		}
-	}
+	}	
 
 	/**
 	 * Deletes the latest U-Plan
@@ -5238,23 +5281,35 @@ public class MainLayoutController {
 
 		return false;
 	}
+	// Methoden zum Verbergen der Szenarien
 
-	// Methoden zur Festsetzung der Main
+	public void dontshowSzenarien() {
+		this.szenarienAktiv = false;		
+		refreshBothGraphics();
+		FadeTransition fb = new FadeTransition(Duration.millis(1500),
+				this.szenarienVerbergen);
+		fb.setFromValue(1.0);
+		fb.setToValue(0.0);
+		fb.setAutoReverse(true);
+		fb.play();
+	}
+
+	// Methoden zum Zeigen der Szenarien
 
 	public void showSzenarien() {
 		
-		int fahrplanID=0;
+		
 		String fahrplanName = null;
 		
 		switch (this.current) {
 		case "u1":
-			fahrplanID = this.umlaufplanEins.getFahrplanID();			
+			fahrplanID = this.umlaufplanEins.getFahrplanID();
 			for (int i = 0; i < this.fahrplanliste.size(); i++) {
 				if (this.fahrplanliste.get(i).getId() == fahrplanID) {
 					fahrplanName = this.fahrplanliste.get(i).getName();
 				}
 			}
-			this.mainApp.showSzenario(generateChoiceKrit(fahrplanID), fahrplanName);
+			generateChoiceKrit(fahrplanID, fahrplanName);			
 			break;
 		case "u2":
 			fahrplanID = this.umlaufplanZwei.getFahrplanID();
@@ -5263,7 +5318,7 @@ public class MainLayoutController {
 					fahrplanName = this.fahrplanliste.get(i).getName();
 				}
 			}
-			this.mainApp.showSzenario(generateChoiceKrit(fahrplanID), fahrplanName);
+			generateChoiceKrit(fahrplanID, fahrplanName);
 			break;
 		case "u3":
 			fahrplanID = this.umlaufplanDrei.getFahrplanID();
@@ -5272,7 +5327,7 @@ public class MainLayoutController {
 					fahrplanName = this.fahrplanliste.get(i).getName();
 				}
 			}
-			this.mainApp.showSzenario(generateChoiceKrit(fahrplanID), fahrplanName);
+			generateChoiceKrit(fahrplanID, fahrplanName);
 			break;
 		case "u4":
 			fahrplanID = this.umlaufplanVier.getFahrplanID();
@@ -5281,7 +5336,7 @@ public class MainLayoutController {
 					fahrplanName = this.fahrplanliste.get(i).getName();
 				}
 			}
-			this.mainApp.showSzenario(generateChoiceKrit(fahrplanID), fahrplanName);
+			generateChoiceKrit(fahrplanID, fahrplanName);
 			break;
 		case "u5":
 			fahrplanID = this.umlaufplanFuenf.getFahrplanID();
@@ -5290,7 +5345,7 @@ public class MainLayoutController {
 					fahrplanName = this.fahrplanliste.get(i).getName();
 				}
 			}
-			this.mainApp.showSzenario(generateChoiceKrit(fahrplanID), fahrplanName);
+			generateChoiceKrit(fahrplanID, fahrplanName);
 			break;
 		case "u6":
 			fahrplanID = this.umlaufplanSechs.getFahrplanID();
@@ -5299,7 +5354,7 @@ public class MainLayoutController {
 					fahrplanName = this.fahrplanliste.get(i).getName();
 				}
 			}
-			this.mainApp.showSzenario(generateChoiceKrit(fahrplanID), fahrplanName);
+			generateChoiceKrit(fahrplanID, fahrplanName);
 			break;
 		case "u7":
 			fahrplanID = this.umlaufplanSieben.getFahrplanID();
@@ -5308,7 +5363,7 @@ public class MainLayoutController {
 					fahrplanName = this.fahrplanliste.get(i).getName();
 				}
 			}
-			this.mainApp.showSzenario(generateChoiceKrit(fahrplanID), fahrplanName);
+			generateChoiceKrit(fahrplanID, fahrplanName);
 			break;
 		case "d1":
 			fahrplanID = this.dienstplanEins.getFahrplanID();
@@ -5317,7 +5372,7 @@ public class MainLayoutController {
 					fahrplanName = this.fahrplanliste.get(i).getName();
 				}
 			}
-			this.mainApp.showSzenario(generateChoiceKrit(fahrplanID), fahrplanName);
+			generateChoiceKrit(fahrplanID, fahrplanName);
 			break;
 		case "d2":
 			fahrplanID = this.dienstplanZwei.getFahrplanID();
@@ -5326,7 +5381,7 @@ public class MainLayoutController {
 					fahrplanName = this.fahrplanliste.get(i).getName();
 				}
 			}
-			this.mainApp.showSzenario(generateChoiceKrit(fahrplanID), fahrplanName);
+			generateChoiceKrit(fahrplanID, fahrplanName);
 			break;
 		case "d3":
 			fahrplanID = this.dienstplanDrei.getFahrplanID();
@@ -5335,7 +5390,7 @@ public class MainLayoutController {
 					fahrplanName = this.fahrplanliste.get(i).getName();
 				}
 			}
-			this.mainApp.showSzenario(generateChoiceKrit(fahrplanID), fahrplanName);
+			generateChoiceKrit(fahrplanID, fahrplanName);
 			break;
 		case "d4":
 			fahrplanID = this.dienstplanVier.getFahrplanID();
@@ -5344,7 +5399,7 @@ public class MainLayoutController {
 					fahrplanName = this.fahrplanliste.get(i).getName();
 				}
 			}
-			this.mainApp.showSzenario(generateChoiceKrit(fahrplanID), fahrplanName);
+			generateChoiceKrit(fahrplanID, fahrplanName);
 			break;
 		case "d5":
 			fahrplanID = this.dienstplanFuenf.getFahrplanID();
@@ -5353,7 +5408,7 @@ public class MainLayoutController {
 					fahrplanName = this.fahrplanliste.get(i).getName();
 				}
 			}
-			this.mainApp.showSzenario(generateChoiceKrit(fahrplanID), fahrplanName);
+			generateChoiceKrit(fahrplanID, fahrplanName);
 			break;
 		case "d6":
 			fahrplanID = this.dienstplanSechs.getFahrplanID();
@@ -5362,7 +5417,7 @@ public class MainLayoutController {
 					fahrplanName = this.fahrplanliste.get(i).getName();
 				}
 			}
-			this.mainApp.showSzenario(generateChoiceKrit(fahrplanID), fahrplanName);
+			generateChoiceKrit(fahrplanID, fahrplanName);
 			break;
 		case "d7":
 			fahrplanID = this.dienstplanSieben.getFahrplanID();
@@ -5371,41 +5426,59 @@ public class MainLayoutController {
 					fahrplanName = this.fahrplanliste.get(i).getName();
 				}
 			}
-			this.mainApp.showSzenario(generateChoiceKrit(fahrplanID), fahrplanName);
+			generateChoiceKrit(fahrplanID, fahrplanName);
 			break;
 		case "neu waehlen":
 			String fehlerA = "Nach dem Entfernen eines Planes bitte neu waehlen";
 			String fehlerB = "Vollbild anzeigen ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
-			System.out.println();
-			break;
+			generateChoiceKrit(fahrplanID, fahrplanName);
+			break;			
 		case "":
 			String fehlerD = "Es wurde noch Element ausgewaehlt";
 			String fehlerE = "Was soll bearbeitet werden ?";
 			String fehlerF = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerD, fehlerE, fehlerF);
+			generateChoiceKrit(fahrplanID, fahrplanName);
 			break;
-
 		default:
 			break;
 		}
 	}
 	
 	// Generate Choice Scenario
-	@SuppressWarnings("null")
-	public ArrayList<Szenario> generateChoiceKrit(int fahrplanID){
+	public void generateChoiceKrit(int fahrplanID, String fahrplanName){
 		
-		ArrayList<Szenario> choice = null;
-		System.out.println(fahrplanID);
+		boolean szVorhanden = false;
+		
+		if (this.szenarienVerbergen.getOpacity() != 1) {
+			FadeTransition fb = new FadeTransition(Duration.millis(1500),
+					this.szenarienVerbergen);
+			fb.setFromValue(0.0);
+			fb.setToValue(1.0);
+			fb.setAutoReverse(true);
+			fb.play();
+		}		
+		
+		ArrayList<Szenario> choice = new ArrayList<Szenario>();
 		for (int i = 0; i < this.szenarienListe.size(); i++) {
 			if (this.szenarienListe.get(i).getFahrplanID() == fahrplanID) {
 				choice.add(this.szenarienListe.get(i));
-				System.out.println("test");
+				szVorhanden = true;
 			}
 		}
-		
-		return choice;		
+		if (szVorhanden == true) {
+			if (this.mainApp.showSzenario(choice, fahrplanName)) {
+				this.szenarienAktiv = true;
+				refreshBothGraphics();
+			}
+		}else{
+			String fehlerA = "Zum Plan wurden keine zugehörigen Pläne gefunden";
+			String fehlerB = "Szenarien anzeigen ?";
+			String fehlerC = "Fehler";
+			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+		}
 	}
 
 	// Methoden zur Festsetzung der Main
@@ -5462,6 +5535,14 @@ public class MainLayoutController {
 
 	public void setColors(ArrayList<String> colors) {
 		this.colors = colors;
+	}
+
+	public Szenario getSzenario() {
+		return szenario;
+	}
+
+	public void setSzenario(Szenario szenario) {
+		this.szenario = szenario;
 	}
 
 }
