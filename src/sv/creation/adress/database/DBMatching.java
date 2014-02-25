@@ -766,6 +766,27 @@ public class DBMatching {
 		return idList;
 
 	}
+	
+	// Erstellt eine Liste mit allen IDs zu den vorhandenen Dienstplänen
+	private ArrayList<Integer> createSzenarioIDs() {
+
+		this.db.initDBConnection();
+		ArrayList<Integer> idList = new ArrayList<Integer>();
+		// Creating a sql query
+		try {
+			stmt = this.db.getConnection().createStatement();
+			ResultSet rest1 = stmt.executeQuery("SELECT ID FROM Szenario");
+			// All resulted datasets of the sql query will be added to the block
+			// array list
+			while (rest1.next()) {
+				idList.add(rest1.getInt("ID"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return idList;
+
+	}
 
 	// Erstellt eine Liste von Uploaddaten der vorhandenen Dienstpläne
 	private void createDienstplanDate() {
@@ -1578,26 +1599,27 @@ public class DBMatching {
 
 		ArrayList<Szenario> szenarioList = new ArrayList<Szenario>();
 		ArrayList<PrimeDelay> primeDelayList = new ArrayList<PrimeDelay>();
+		ArrayList<Integer> idList= createSzenarioIDs();
 		createSzenario();
 		int anzahlSzenarien = 1;
 
 		// Anzahl der Szenarien wird ermittelt
-		for (int i = 0; i < primeDelay.size(); i++) {
+		for (int i = 0; i < primeDelay.size()-1; i++) {
 			if (Integer.parseInt(primeDelay.get(i).getServiceJourneyID()) > Integer
 					.parseInt(primeDelay.get(i + 1).getServiceJourneyID())) {
 				anzahlSzenarien++;
 			}
 		}
 
-		for (int i = 0; i < anzahlSzenarien; i++) {
+		for (int i = 1; i < anzahlSzenarien; i++) {
 			for (int j = 0; j < primeDelay.size(); j++) {
 				if (primeDelay.get(j).getSzenarioID() == i) {
 					primeDelayList.add(primeDelay.get(j));
 				}
 			}
-			// Erzeugt ein Szeanrioobjekt
+     
 			Szenario szenario = new Szenario(i, primeDelayList,
-					getFahrplanzugehoerigkeitSzenario(i));
+					getFahrplanzugehoerigkeitSzenario(idList.get(i-1)));
 			// Objekt wird einer Liste mit allen Szeanrien hinzugefügt
 			szenarioList.add(szenario);
 		}
