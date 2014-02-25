@@ -179,6 +179,11 @@
                             <CheckBox id="hilfslinien" fx:id="fehlerAnzeigen" mnemonicParsing="false" opacity="0.0" styleClass="label-white" text="Verspätungen" />
                           </children>
                         </VBox>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="8">
+                          <children>
+                            <Button fx:id="szenarienAnzeigen" mnemonicParsing="false" onAction="#showSzenarien" opacity="0.0" styleClass="dark-blue" text="Szenarien anzeigen" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="1.0" />
+                          </children>
+                        </AnchorPane>
                       </children>
                       <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

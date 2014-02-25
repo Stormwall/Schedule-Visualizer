@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import sv.creation.adress.database.DBMatching;
 import sv.creation.adress.model.Dienstplan;
 import sv.creation.adress.model.Fahrplan;
+import sv.creation.adress.model.Szenario;
 import sv.creation.adress.model.Umlaufplan;
 import sv.creation.adress.util.Color;
 import javafx.application.Application;
@@ -35,6 +36,7 @@ public class MainApplication extends Application {
 	private ArrayList<Umlaufplan> umlaufplanliste = new ArrayList<Umlaufplan>();
 	private ArrayList<Dienstplan> dienstplanliste = new ArrayList<Dienstplan>();
 	private ArrayList<Fahrplan> fahrplanliste = new ArrayList<Fahrplan>();
+	private ArrayList<Szenario> szenarienListe = new ArrayList<Szenario>();
 	private ArrayList<String> color = new ArrayList<String>();
 
 	// Stageübergabeobjekte
@@ -52,6 +54,7 @@ public class MainApplication extends Application {
 		fillUmlaufplanliste();
 		fillDienstplanliste();
 		fillFahrplanliste();
+//		fillSzenarienliste();
 		fillColorArray();
 
 		this.primaryStage = primaryStage;
@@ -107,6 +110,7 @@ public class MainApplication extends Application {
 			controller.setUmlaufplanliste(this.umlaufplanliste);
 			controller.setDienstplanliste(this.dienstplanliste);
 			controller.setFahrplanliste(this.fahrplanliste);
+			controller.setSzenarienListe(this.szenarienListe);
 			controller.setColors(this.color);
 
 		} catch (IOException e) {
@@ -442,7 +446,7 @@ public class MainApplication extends Application {
 			e.printStackTrace();
 		}
 	}
-
+	
 	// Initiate KostenLayout fxml
 
 	public void showKostenD(ArrayList<Dienstplan> dienstplanChoiceliste,
@@ -468,6 +472,8 @@ public class MainApplication extends Application {
 			// Set the controller
 			KostenLayoutControllerD controller = loader.getController();
 			controller.setDialogStage(dialogStage);
+			controller.setDienstplanliste(dienstplanChoiceliste);
+			controller.setFahrplanliste(fahrplanliste);
 
 			dialogStage.show();
 		} catch (IOException e) {
@@ -633,6 +639,39 @@ public class MainApplication extends Application {
 		}
 
 	}
+	// Initiate Szenarien fxml
+
+	public void showSzenario(ArrayList<Szenario> szenarienChoiceListe, String fahrplanName) {
+
+		try {
+
+			// Load the fxml file and create a new stage for the popup
+			FXMLLoader loader = new FXMLLoader(
+					MainApplication.class
+							.getResource("view/SzenarienLayout.fxml"));
+			GridPane page = (GridPane) loader.load();
+			Stage dialogStage = new Stage();
+			dialogStage.getIcons().add(
+					new Image("file:resources/images/IconFinal.png"));
+			dialogStage.initModality(Modality.NONE);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+
+			// Set the controller
+			SzenarienLayoutController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			controller.setMainApp(this);
+			controller.setSzenarienListe(szenarienChoiceListe);
+			controller.setFahrplanName(fahrplanName);
+
+			dialogStage.show();
+
+		} catch (IOException e) {
+			// Exception gets thrown if the fxml file could not be loade
+			e.printStackTrace();
+		}
+	}
 
 	public int[] showEditMultipleTimeDetails(int before, int after,
 			int elementID) {
@@ -704,6 +743,19 @@ public class MainApplication extends Application {
 		return Dialogs.showInputDialog(primaryStage, fehlermeldungA,
 				fehlermeldungB, fehlermeldungC);
 	}
+	
+	// Methoden zur Befuellung der Fahrplanliste
+
+		public void fillSzenarienliste() {
+
+			this.szenarienListe.clear();
+
+			if (dbm.databaseIsEmpty()) {
+
+			} else {
+				this.szenarienListe = dbm.createSzenarioObject();
+			}
+		}
 
 	// Methoden zur Befuellung der Fahrplanliste
 

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="226.0" prefWidth="300.0" styleClass="background" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sv.creation.adress.KostenLayoutControllerD">
+  <!-- TODO Add Nodes -->
+  <children>
+    <TextField fx:id="vk" layoutX="169.0" layoutY="13.0" prefWidth="67.0" text="0.73" />
+    <TextField fx:id="fpf" layoutX="168.0" layoutY="49.0" prefWidth="67.0" text="67.54" />
+    <Label layoutX="10.0" layoutY="17.0" styleClass="label-white" text="Variabler Kostensatz pro" />
+    <Label layoutX="10.0" layoutY="53.0" styleClass="label-white" text="Fixkosten pro Fahrzeug" />
+    <Button fx:id="berrechnen" layoutX="203.0" layoutY="83.0" mnemonicParsing="false" onAction="#berrechnen" styleClass="dark-blue" text="Berrechnen" />
+    <GridPane prefHeight="71.0" prefWidth="300.0" AnchorPane.bottomAnchor="43.5" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="111.5">
+      <children>
+        <Label styleClass="label-white" text="Fixkosten Gesamt" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+        <Label styleClass="label-white" text="Variable Kosten Gesamt" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <Label styleClass="label-white" text="Gesamtkosten" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        <Label fx:id="fixkostenGesamt" styleClass="label-white" text="" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+        <Label fx:id="variableKostenGesamt" styleClass="label-white" text="" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+        <Label fx:id="gesamtKosten" styleClass="label-white" text="" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+        <Label styleClass="label-white" text="Euro" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+        <Label styleClass="label-white" text="Euro" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+        <Label styleClass="label-white" text="Euro" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+      </children>
+      <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="98.0" minWidth="10.0" prefWidth="10.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="190.0" minWidth="10.0" prefWidth="142.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="153.0" minWidth="10.0" prefWidth="77.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="153.0" minWidth="10.0" prefWidth="71.0" />
+      </columnConstraints>
+      <rowConstraints>
+        <RowConstraints maxHeight="23.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="24.0" minHeight="10.0" prefHeight="24.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="24.0" minHeight="10.0" prefHeight="24.0" vgrow="SOMETIMES" />
+      </rowConstraints>
+    </GridPane>
+    <Button layoutX="211.0" layoutY="192.0" mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Schließen" />
+    <Label layoutX="244.0" layoutY="17.0" styleClass="label-white" text="Euro" />
+    <Label layoutX="244.0" layoutY="53.0" styleClass="label-white" text="Euro" />
+  </children>
+  <stylesheets>
+    <URL value="@MainLayout.css" />
+  </stylesheets>
+</AnchorPane>

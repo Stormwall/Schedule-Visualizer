@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import sv.creation.adress.model.Dienstplan;
 import sv.creation.adress.model.Fahrplan;
-import sv.creation.adress.util.BlockStatistics;
 import sv.creation.adress.util.DutyStatistics;
 import sv.creation.adress.util.ScheduleStatistics;
 import javafx.collections.FXCollections;

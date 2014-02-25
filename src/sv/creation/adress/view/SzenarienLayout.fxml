@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.text.*?>
+
+<GridPane prefHeight="600.0" prefWidth="300.0" styleClass="background" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sv.creation.adress.SzenarienLayoutController">
+  <!-- TODO Add Nodes -->
+  <children>
+    <ScrollPane fx:id="szenarienPane" fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" styleClass="background" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <content>
+        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+      </content>
+    </ScrollPane>
+    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <children>
+        <HBox id="HBox" alignment="CENTER" layoutY="5.0" spacing="5.0" AnchorPane.leftAnchor="0.0">
+          <children>
+            <Button mnemonicParsing="false" styleClass="dark-blue" text="Szenario anwenden" />
+            <Button mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Abbrechen" />
+          </children>
+        </HBox>
+      </children>
+    </AnchorPane>
+    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+      <children>
+        <HBox id="HBox" alignment="CENTER" prefHeight="35.0" prefWidth="280.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+          <children>
+            <Label text="Szenarien für den Plan :" textFill="WHITE">
+              <font>
+                <Font name="Arial" size="14.0" fx:id="x1" />
+              </font>
+            </Label>
+            <Label fx:id="referencePlan" font="$x1" prefWidth="117.0" text="Label" textFill="WHITE" />
+          </children>
+        </HBox>
+      </children>
+    </AnchorPane>
+  </children>
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="35.0" minHeight="35.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="35.0" minHeight="35.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+  <stylesheets>
+    <URL value="@MainLayout.css" />
+  </stylesheets>
+</GridPane>
