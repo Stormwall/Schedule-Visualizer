@@ -54,7 +54,7 @@ public class MainApplication extends Application {
 		fillUmlaufplanliste();
 		fillDienstplanliste();
 		fillFahrplanliste();
-//		fillSzenarienliste();
+		fillSzenarienliste();
 		fillColorArray();
 
 		this.primaryStage = primaryStage;
