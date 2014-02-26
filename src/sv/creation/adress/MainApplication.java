@@ -765,13 +765,13 @@ public class MainApplication extends Application {
 	
 
 	
-	// Methoden zur Befuellung der Fahrplanliste
+	// Methoden zur Befuellung der Szenarienliste
 
 		public void fillSzenarienliste() {
 
 			this.szenarienListe.clear();
 
-			if (dbm.databaseIsEmpty()) {
+			if (dbm.databaseIsEmpty()||dbm.szenarioIsEmpty()) {
 
 			} else {
 				this.szenarienListe = dbm.createSzenarioObject();

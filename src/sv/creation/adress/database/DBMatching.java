@@ -1598,6 +1598,33 @@ public class DBMatching {
 		}
 		return isEmpty;
 	}
+	
+	// Prüft, ob kein Szenario vorhanden ist
+	public boolean szenarioIsEmpty() {
+		boolean isEmpty = false;
+
+		this.db.initDBConnection();
+
+		ArrayList<Integer> fahrplan = new ArrayList<Integer>();
+
+		// Creating a sql query
+		try {
+
+			stmt = this.db.getConnection().createStatement();
+			ResultSet rest1 = stmt.executeQuery("SELECT * FROM Szenario;");
+			while (rest1.next()) {
+				fahrplan.add(Integer.parseInt(rest1.getString("ID")));
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		if (fahrplan.isEmpty()) {
+			isEmpty = true;
+		}
+		return isEmpty;
+	}
 
 	// Wandelt einen String in das richte Datumsformat um
 	public String changeDateFormat(String date) {
