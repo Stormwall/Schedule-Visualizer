@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import sv.creation.adress.database.DBMatching;
 import sv.creation.adress.model.Dienstplan;
 import sv.creation.adress.model.Fahrplan;
+import sv.creation.adress.model.Szenario;
 import sv.creation.adress.model.Umlaufplan;
 import sv.creation.adress.util.Import;
 import javafx.collections.FXCollections;
@@ -21,30 +22,33 @@ import javafx.stage.Stage;
 public class DatenbankLayoutController {
 
 	// Strukturelemente dieser Stage
-	
+
 	@FXML
 	private ScrollPane umlaufplanPane;
 	@FXML
 	private ScrollPane dienstplanPane;
 	@FXML
 	private ScrollPane fahrplanPane;
-	
+	@FXML
+	private ScrollPane szenarienPane;
+
 	// Erstellung der Detailtableviews
 
 	private TableView<Umlaufplan> detailsUmlaufTable = new TableView<Umlaufplan>();
 	private TableView<Dienstplan> detailsDienstTable = new TableView<Dienstplan>();
 	private TableView<Fahrplan> detailsFahrplanTable = new TableView<Fahrplan>();
-
+	private TableView<Szenario> szenarienTable = new TableView<Szenario>();
 
 	// Bau der Zugriffslisten
 
 	private ArrayList<Umlaufplan> umlaufplanliste = new ArrayList<Umlaufplan>();
 	private ArrayList<Dienstplan> dienstplanliste = new ArrayList<Dienstplan>();
 	private ArrayList<Fahrplan> fahrplanliste = new ArrayList<Fahrplan>();
+	private ArrayList<Szenario> szenarienListe = new ArrayList<Szenario>();
 
 	private Stage dialogStage;
 	private MainApplication mainApp;
-	
+
 	private DBMatching dbm = new DBMatching();
 
 	/**
@@ -62,163 +66,183 @@ public class DatenbankLayoutController {
 				.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		this.detailsFahrplanTable
 				.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+		this.szenarienTable
+				.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
 	}
 
-
-	
 	/**
 	 * Deletes U-Plan
 	 */
 
 	@FXML
 	private void deleteUplan() {
-		
-		
-		if (this.detailsUmlaufTable.getSelectionModel().getSelectedItem()!=null) {
-			Umlaufplan umlaufplan = this.detailsUmlaufTable.getSelectionModel().getSelectedItem();
+
+		if (this.detailsUmlaufTable.getSelectionModel().getSelectedItem() != null) {
+			Umlaufplan umlaufplan = this.detailsUmlaufTable.getSelectionModel()
+					.getSelectedItem();
 			this.dbm.deleteUmlaufplan(umlaufplan);
 			for (int i = 0; i < this.umlaufplanliste.size(); i++) {
 				if (this.umlaufplanliste.get(i).equals(umlaufplan)) {
 					this.umlaufplanliste.remove(i);
 				}
 			}
-			
+
 			// Aktualisieren der Listen und Anzeigen
 			refreshUmlaufplan();
-		}else{
+		} else {
 			String fehlerA = "Es wurde noch Element ausgewählt";
 			String fehlerB = "Was soll geloescht werden ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
 		}
-				
+
 	}
-	
+
 	/**
 	 * Deletes D-Plan
 	 */
 
 	@FXML
 	private void deleteDplan() {
-;
-		
-		if (this.detailsDienstTable.getSelectionModel().getSelectedItem()!=null) {
-			Dienstplan dienstplan = this.detailsDienstTable.getSelectionModel().getSelectedItem();
+		;
+
+		if (this.detailsDienstTable.getSelectionModel().getSelectedItem() != null) {
+			Dienstplan dienstplan = this.detailsDienstTable.getSelectionModel()
+					.getSelectedItem();
 			this.dbm.deleteDienstplan(dienstplan);
-			
+
 			for (int i = 0; i < this.dienstplanliste.size(); i++) {
 				if (this.dienstplanliste.get(i).equals(dienstplan)) {
 					this.dienstplanliste.remove(i);
 				}
 			}
-			
+
 			// Aktualisieren der Listen und Anzeigen
 			refreshDienstplan();
-		}else{
+		} else {
 			String fehlerA = "Es wurde noch Element ausgewählt";
 			String fehlerB = "Was soll geloescht werden ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
 		}
 	}
-	
+
 	/**
 	 * Deletes F-Plan
 	 */
 
 	@FXML
 	private void deleteFplan() {
-		
-		if (this.detailsFahrplanTable.getSelectionModel().getSelectedItem()!=null) {
-			Fahrplan fahrplan = this.detailsFahrplanTable.getSelectionModel().getSelectedItem();
+
+		if (this.detailsFahrplanTable.getSelectionModel().getSelectedItem() != null) {
+			Fahrplan fahrplan = this.detailsFahrplanTable.getSelectionModel()
+					.getSelectedItem();
 			this.dbm.deleteFahrplan(fahrplan);
 			for (int i = 0; i < this.fahrplanliste.size(); i++) {
 				if (this.fahrplanliste.get(i).equals(fahrplan)) {
 					this.fahrplanliste.remove(i);
-					for (int j = 0; j < this.umlaufplanliste.size(); j++) {
-						System.out.println(this.umlaufplanliste.get(j).getFahrplanID());
-						if (this.umlaufplanliste.get(j).getFahrplanID() == fahrplan.getId()) {
-							this.umlaufplanliste.remove(j);
-						}						
+					for (int j = 0; j < this.umlaufplanliste.size(); j++) {						
+						if (fahrplan.getId() == umlaufplanliste.get(j).getFahrplanID()) {
+							this.umlaufplanliste.remove(j);							
+							--j;
+						}
 					}
-					for (int j = 0; j < this.dienstplanliste.size(); j++) {
-						if (this.dienstplanliste.get(j).getFahrplanID() == fahrplan.getId()) {
-							this.dienstplanliste.remove(j);
-						}						
+					
+					for (int j = 0; j < this.dienstplanliste.size(); j++) {						
+						if (fahrplan.getId() == this.dienstplanliste.get(j).getFahrplanID()) {
+							this.dienstplanliste.remove(j);							
+							--j;
+						}
 					}
+					
+					for (int j = 0; j < this.szenarienListe.size(); j++) {						
+						if (fahrplan.getId() == this.szenarienListe.get(j).getFahrplanID()) {
+							this.szenarienListe.remove(j);							
+							--j;
+						}
+					}	
 				}
 			}
-			
+
 			// Aktualisieren der Listen und Anzeigen
 			refreshUmlaufplan();
 			refreshDienstplan();
 			refreshFahrplan();
-		}else{
+			refreshSzenario();
+		} else {
 			String fehlerA = "Es wurde noch Element ausgewählt";
 			String fehlerB = "Was soll geloescht werden ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
-		}	
+		}
 	}
-	
+
 	/**
 	 * Renames U-Plan
 	 */
 
 	@FXML
 	private void renamesUplan() {
-		
+
 		if (this.detailsUmlaufTable.getSelectionModel().getSelectedItem() != null) {
-			String name = this.mainApp.inputMeldung("Geben Sie bitte eine Bezeichnung für den Umlaufplan ein.", "Bitte eingeben", "Bezeichnung Dienstplan");
-			if(name != null){
-				this.dbm.benenneUmlaufplanUm(this.detailsUmlaufTable.getSelectionModel().getSelectedItem().getId(),name);
-				Umlaufplan umlaufplan = this.detailsUmlaufTable.getSelectionModel().getSelectedItem();
+			String name = this.mainApp.inputMeldung(
+					"Geben Sie bitte eine Bezeichnung für den Umlaufplan ein.",
+					"Bitte eingeben", "Bezeichnung Dienstplan");
+			if (name != null) {
+				this.dbm.benenneUmlaufplanUm(this.detailsUmlaufTable
+						.getSelectionModel().getSelectedItem().getId(), name);
+				Umlaufplan umlaufplan = this.detailsUmlaufTable
+						.getSelectionModel().getSelectedItem();
 				for (int i = 0; i < this.umlaufplanliste.size(); i++) {
 					if (this.umlaufplanliste.get(i).equals(umlaufplan)) {
-						this.umlaufplanliste.get(i).setName(name);						
+						this.umlaufplanliste.get(i).setName(name);
 					}
 				}
 				refreshUmlaufplan();
-			}else{
+			} else {
 				String fehlerA = "Es wurde noch kein Name angegeben";
 				String fehlerB = "Wie soll der Plan bennant werden ?";
 				String fehlerC = "Fehler";
 				this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
 			}
-		}else{
+		} else {
 			String fehlerA = "Es wurde noch Element ausgewaehlt";
 			String fehlerB = "Was soll bearbeitet werden ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
-		}			
+		}
 	}
-	
+
 	/**
 	 * Renames D-Plan
 	 */
 
 	@FXML
 	private void renamesDplan() {
-		
+
 		if (this.detailsDienstTable.getSelectionModel().getSelectedItem() != null) {
-			String name = this.mainApp.inputMeldung("Geben Sie bitte eine Bezeichnung für den Dienstplan ein.", "Bitte eingeben", "Bezeichnung Dienstplan");
-			if(name != null){
-				this.dbm.benenneDienstplanUm(this.detailsDienstTable.getSelectionModel().getSelectedItem().getId(),name);
-				Dienstplan dienstplan = this.detailsDienstTable.getSelectionModel().getSelectedItem();
+			String name = this.mainApp.inputMeldung(
+					"Geben Sie bitte eine Bezeichnung für den Dienstplan ein.",
+					"Bitte eingeben", "Bezeichnung Dienstplan");
+			if (name != null) {
+				this.dbm.benenneDienstplanUm(this.detailsDienstTable
+						.getSelectionModel().getSelectedItem().getId(), name);
+				Dienstplan dienstplan = this.detailsDienstTable
+						.getSelectionModel().getSelectedItem();
 				for (int i = 0; i < this.dienstplanliste.size(); i++) {
 					if (this.dienstplanliste.get(i).equals(dienstplan)) {
-						this.dienstplanliste.get(i).setName(name);						
+						this.dienstplanliste.get(i).setName(name);
 					}
 				}
 				refreshDienstplan();
-			}else{
+			} else {
 				String fehlerA = "Es wurde noch kein Name angegeben";
 				String fehlerB = "Wie soll der Plan bennant werden ?";
 				String fehlerC = "Fehler";
 				this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
 			}
-		}else{
+		} else {
 			String fehlerA = "Es wurde noch Element ausgewaehlt";
 			String fehlerB = "Was soll bearbeitet werden ?";
 			String fehlerC = "Fehler";
@@ -226,32 +250,36 @@ public class DatenbankLayoutController {
 		}
 		refreshDienstplan();
 	}
-	
+
 	/**
 	 * Renames F-Plan
 	 */
 
 	@FXML
 	private void renamesFplan() {
-		
+
 		if (this.detailsFahrplanTable.getSelectionModel().getSelectedItem() != null) {
-			String name = this.mainApp.inputMeldung("Geben Sie bitte eine Bezeichnung für den Fahrplan ein.", "Bitte eingeben", "Bezeichnung Fahrplan");
-			if(name != null){
-				this.dbm.benenneFahrplanUm(this.detailsFahrplanTable.getSelectionModel().getSelectedItem().getId(),name);
-				Fahrplan fahplan = this.detailsFahrplanTable.getSelectionModel().getSelectedItem();
+			String name = this.mainApp.inputMeldung(
+					"Geben Sie bitte eine Bezeichnung für den Fahrplan ein.",
+					"Bitte eingeben", "Bezeichnung Fahrplan");
+			if (name != null) {
+				this.dbm.benenneFahrplanUm(this.detailsFahrplanTable
+						.getSelectionModel().getSelectedItem().getId(), name);
+				Fahrplan fahplan = this.detailsFahrplanTable
+						.getSelectionModel().getSelectedItem();
 				for (int i = 0; i < this.fahrplanliste.size(); i++) {
 					if (this.fahrplanliste.get(i).equals(fahplan)) {
-						this.fahrplanliste.get(i).setName(name);						
+						this.fahrplanliste.get(i).setName(name);
 					}
 				}
 				refreshFahrplan();
-			}else{
+			} else {
 				String fehlerA = "Es wurde noch kein Name angegeben";
 				String fehlerB = "Wie soll der Plan bennant werden ?";
 				String fehlerC = "Fehler";
 				this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
 			}
-		}else{
+		} else {
 			String fehlerA = "Es wurde noch Element ausgewaehlt";
 			String fehlerB = "Was soll bearbeitet werden ?";
 			String fehlerC = "Fehler";
@@ -259,7 +287,6 @@ public class DatenbankLayoutController {
 		}
 		refreshFahrplan();
 	}
-	
 
 	// Methode zum Beenden des PopUp
 
@@ -276,21 +303,20 @@ public class DatenbankLayoutController {
 	public void handleImport() {
 
 		FileChooser fileChooser = new FileChooser();
-//
-//		// // Set extension filter
-		FileChooser.ExtensionFilter extFilter = new
-		 FileChooser.ExtensionFilter(
-		"TXT files (*.txt)", "*.txt");
-		 fileChooser.getExtensionFilters().add(extFilter);
+		//
+		// // // Set extension filter
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+				"TXT files (*.txt)", "*.txt");
+		fileChooser.getExtensionFilters().add(extFilter);
 
-//		// Show open file dialog
-		 File file = fileChooser.showOpenDialog(dialogStage);
+		// // Show open file dialog
+		File file = fileChooser.showOpenDialog(dialogStage);
 
-		 Import im = new Import();
-		 im.importFile(file);
+		Import im = new Import();
+		im.importFile(file);
 
 	}
-	
+
 	/**
 	 * Builds Umlaufplantableview.
 	 */
@@ -438,6 +464,43 @@ public class DatenbankLayoutController {
 
 	}
 
+	/**
+	 * Builds Szenarientableview.
+	 */
+	@SuppressWarnings("unchecked")
+	@FXML
+	private void refreshSzenario() {
+
+		this.szenarienPane.setContent(null);
+
+		this.szenarienTable.setEditable(true);
+
+		TableColumn<Szenario, String> szName = new TableColumn<Szenario, String>(
+				"Bezeichnung");
+		TableColumn<Szenario, Integer> szID = new TableColumn<Szenario, Integer>(
+				"Szenario ID");
+
+		szName.setCellValueFactory(new PropertyValueFactory<Szenario, String>(
+				"bezeichnung"));
+		szID.setCellValueFactory(new PropertyValueFactory<Szenario, Integer>(
+				"id"));
+
+		szName.prefWidthProperty().bind(szName.widthProperty());
+		szID.prefWidthProperty().bind(szID.widthProperty());
+
+		ObservableList<Szenario> data = FXCollections.observableArrayList();
+
+		for (int i = 0; i < this.szenarienListe.size(); i++) {
+			data.add(this.szenarienListe.get(i));
+		}
+
+		this.szenarienTable.setItems(data);
+		this.szenarienTable.getColumns().clear();
+		this.szenarienTable.getColumns().addAll(szName, szID);
+		this.szenarienPane.setContent(this.szenarienTable);
+
+	}
+
 	public Stage getDialogStage() {
 		return dialogStage;
 	}
@@ -459,7 +522,7 @@ public class DatenbankLayoutController {
 	}
 
 	public void setUmlaufplanliste(ArrayList<Umlaufplan> umlaufplanliste) {
-		this.umlaufplanliste = umlaufplanliste;		
+		this.umlaufplanliste = umlaufplanliste;
 		refreshUmlaufplan();
 	}
 
@@ -479,6 +542,15 @@ public class DatenbankLayoutController {
 	public void setFahrplanliste(ArrayList<Fahrplan> fahrplanliste) {
 		this.fahrplanliste = fahrplanliste;
 		refreshFahrplan();
+	}
+
+	public ArrayList<Szenario> getSzenarienListe() {
+		return szenarienListe;
+	}
+
+	public void setSzenarienListe(ArrayList<Szenario> szenarienListe) {
+		this.szenarienListe = szenarienListe;
+		refreshSzenario();
 	}
 
 }

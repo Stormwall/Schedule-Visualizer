@@ -85,9 +85,6 @@ public class MainApplication extends Application {
 			// Give the controller access to the main app
 			RootLayoutController controller = loader.getController();
 			controller.setMainApp(this);
-			controller.setUmlaufplanliste(this.umlaufplanliste);
-			controller.setDienstplanliste(this.dienstplanliste);
-			controller.setFahrplanliste(this.fahrplanliste);
 
 			Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
 			primaryStage.setX(bounds.getMinX());
@@ -238,9 +235,7 @@ public class MainApplication extends Application {
 
 	// Initiate DatenbankLayout fxml
 
-	public void showDatenbank(ArrayList<Umlaufplan> umlaufplanliste,
-			ArrayList<Dienstplan> dienstplanliste,
-			ArrayList<Fahrplan> fahrplanliste) {
+	public void showDatenbank() {
 
 		try {
 
@@ -261,9 +256,10 @@ public class MainApplication extends Application {
 
 			// Set the controller
 			DatenbankLayoutController controller = loader.getController();
-			controller.setUmlaufplanliste(umlaufplanliste);
-			controller.setDienstplanliste(dienstplanliste);
-			controller.setFahrplanliste(fahrplanliste);
+			controller.setUmlaufplanliste(this.umlaufplanliste);
+			controller.setDienstplanliste(this.dienstplanliste);
+			controller.setFahrplanliste(this.fahrplanliste);
+			controller.setSzenarienListe(this.szenarienListe);
 			controller.setDialogStage(dialogStage);
 			controller.setMainApp(this);
 

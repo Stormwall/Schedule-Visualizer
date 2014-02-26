@@ -10,6 +10,7 @@ public class Dutyelement {
 	private String depTime;
 	private String arrTime;
 	private int elementType;
+	private String elementTypeName;
 	// private String servicejourneycode;
 	private int dienstplanID;
 	private String driveTime;
@@ -33,7 +34,7 @@ public class Dutyelement {
 	 */
 	public Dutyelement(int id, String dutyID, int blockID,
 			String serviceJourneyID, int fromStopID, int toStopID,
-			String depTime, String arrTime, int elementType, int dienstplanID,
+			String depTime, String arrTime, int elementType, String elementTypeName, int dienstplanID,
 			int dutyHilfsID) {
 		super();
 		this.id = id;
@@ -45,6 +46,7 @@ public class Dutyelement {
 		this.depTime = depTime;
 		this.arrTime = arrTime;
 		this.elementType = elementType;
+		this.elementTypeName = elementTypeName;
 		// this.servicejourneycode = servicejourneycode;
 		this.dienstplanID = dienstplanID;
 		this.dutyHilfsID = dutyHilfsID;
@@ -80,6 +82,10 @@ public class Dutyelement {
 
 	public int getElementType() {
 		return elementType;
+	}
+
+	public String getElementTypeName() {
+		return elementTypeName;
 	}
 
 	public String getDutyID() {

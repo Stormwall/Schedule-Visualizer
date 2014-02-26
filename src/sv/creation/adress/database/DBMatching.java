@@ -469,13 +469,47 @@ public class DBMatching {
 						.getString("ElementType"));
 				int dienstplanID = Integer.parseInt(rest2
 						.getString("DienstplanID"));
+				// Bezeichnung für den Elementtyp wird entsprechend hinzugefügt
+				String elementTypeName = "";
+				switch (elementType) {
+				case 1:
+					elementTypeName = "Servicefahrt";
+					break;
+				case 2:
+					elementTypeName = "Leerfahrt";
+					break;
+				case 3:
+					elementTypeName = "Einrückfahrt";
+					break;
+				case 4:
+					elementTypeName = "Ausrückfahrt";
+					break;
+				case 5:
+					elementTypeName = "Vorbereitung";
+					break;
+				case 6:
+					elementTypeName = "Nachbereitung";
+					break;
+				case 7:
+					elementTypeName = "Transfer";
+					break;
+				case 8:
+					elementTypeName = "Pause";
+					break;
+				case 9:
+					elementTypeName = "Warten";
+					break;
+				case 10:
+					elementTypeName = "Layover";
+					break;
+				}
 				// rest4=stmt4.executeQuery("SELECT ID FROM Duty WHERE DutyID ="+rest3.getString("DutyID"));
 				int dutyHilfsID = Integer.parseInt(rest3.getString("DutyID"));
 
 				// all variables will be sum up to an umlaufelement
 				dutyelement.add(new Dutyelement(id, dutyID, blockID,
 						serviceJourneyID, fromStopID, toStopID, depTime,
-						arrTime, elementType, dienstplanID, dutyHilfsID));
+						arrTime, elementType,elementTypeName, dienstplanID, dutyHilfsID));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

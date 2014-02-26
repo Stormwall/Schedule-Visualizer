@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 import sv.creation.adress.util.StringSplitter;
 
 public class EditMultipleTimeDetailsLayoutController {
-	
+
 	private Stage dialogStage;
 
 	// Strukturobjekte der Stage
@@ -51,28 +51,32 @@ public class EditMultipleTimeDetailsLayoutController {
 
 	@FXML
 	private void initialize() {
-		
+
 		// Ausgangsbelegung
-		
+
 		this.beforeCheckbox.setSelected(true);
-		this.addOrMinus.setItems(FXCollections.observableArrayList(
-			    "+", "-"));
-		
+		this.addOrMinus.setItems(FXCollections.observableArrayList("+", "-"));
+
 		this.beforeCheckbox.selectedProperty().addListener(
 				new ChangeListener<Boolean>() {
 					public void changed(ObservableValue<? extends Boolean> ov,
 							Boolean old_val, Boolean new_val) {
 						// Handhabung wenn die Checkbox angewaehlt wird
 						if (new_val == true) {
-							afterCheckbox.setSelected(false);
+							if (afterCheckbox.isSelected() == true) {
+								afterCheckbox.setSelected(false);
+							}
 							elementChoicebox.getItems().clear();
 							if (before != 0) {
 								for (int i = 0; i < before; i++) {
-									elementChoicebox.getItems().add(i+1);
+									elementChoicebox.getItems().add(i + 1);
 								}
 							}
-							
-						}						
+
+						}
+						if (new_val == false) {
+							afterCheckbox.setSelected(true);
+						}
 					}
 				});
 		this.afterCheckbox.selectedProperty().addListener(
@@ -81,14 +85,19 @@ public class EditMultipleTimeDetailsLayoutController {
 							Boolean old_val, Boolean new_val) {
 						// Handhabung wenn die Checkbox angewaehlt wird
 						if (new_val == true) {
-							beforeCheckbox.setSelected(false);
+							if (beforeCheckbox.isSelected() == true) {
+								beforeCheckbox.setSelected(false);
+							}
 							elementChoicebox.getItems().clear();
 							if (after != 0) {
 								for (int i = 0; i < after; i++) {
-									elementChoicebox.getItems().add(i+1);
+									elementChoicebox.getItems().add(i + 1);
 								}
 							}
-						}						
+						}
+						if (new_val == false) {
+							beforeCheckbox.setSelected(true);
+						}
 					}
 				});
 
@@ -99,82 +108,84 @@ public class EditMultipleTimeDetailsLayoutController {
 	 */
 	@FXML
 	private void handleOk() {
-		
+
 		boolean fehler = false;
-		
+
 		// Methoden zur Fehlerbehebung und Formatierung
 
-				int startStunde = 0;
-				String hour = "";
-				try {
-					startStunde = Integer.parseInt(this.stunde.getText());
-					if (startStunde < 24) {
-						if (startStunde < 10) {
-							hour = ("0" + String.valueOf(startStunde));
-						} else {
-							hour = String.valueOf(startStunde);
-						}
-					} else {
-						String fehlerA = "Das ist keine Stunde";
-						String fehlerB = "Falsche Eingabe ?";
-						String fehlerC = "Fehler";
-						this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
-						hour = "0";
-						fehler = true;
-					}
-				} catch (NumberFormatException e) {
-					String fehlerA = "Das ist keine Stunde";
-					String fehlerB = "Falsche Eingabe ?";
-					String fehlerC = "Fehler";
-					this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
-					fehler = true;
+		int startStunde = 0;
+		String hour = "";
+		try {
+			startStunde = Integer.parseInt(this.stunde.getText());
+			if (startStunde < 24) {
+				if (startStunde < 10) {
+					hour = ("0" + String.valueOf(startStunde));
+				} else {
+					hour = String.valueOf(startStunde);
 				}
-				int startMinute = 0;
-				String minute = "";
-				try {
-					startMinute = Integer.parseInt(this.minute.getText());
-					if (startMinute < 60) {
-						if (startMinute < 10) {
-							minute = ("0" + String.valueOf(startMinute));
-						} else {
-							minute = String.valueOf(startMinute);
-						}
-					} else {
-						String fehlerA = "Das ist keine Minute";
-						String fehlerB = "Falsche Eingabe ?";
-						String fehlerC = "Fehler";
-						this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
-						minute = "0";
-						fehler = true;
-					}
-				} catch (NumberFormatException e) {
-					String fehlerA = "Das ist keine Minute";
-					String fehlerB = "Falsche Eingabe ?";
-					String fehlerC = "Fehler";
-					this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
-					fehler = true;
+			} else {
+				String fehlerA = "Das ist keine Stunde";
+				String fehlerB = "Falsche Eingabe ?";
+				String fehlerC = "Fehler";
+				this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+				hour = "0";
+				fehler = true;
+			}
+		} catch (NumberFormatException e) {
+			String fehlerA = "Das ist keine Stunde";
+			String fehlerB = "Falsche Eingabe ?";
+			String fehlerC = "Fehler";
+			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+			fehler = true;
+		}
+		int startMinute = 0;
+		String minute = "";
+		try {
+			startMinute = Integer.parseInt(this.minute.getText());
+			if (startMinute < 60) {
+				if (startMinute < 10) {
+					minute = ("0" + String.valueOf(startMinute));
+				} else {
+					minute = String.valueOf(startMinute);
 				}
-				// Übergabe der Ergebnisse
-				
-				if (fehler == false && this.elementChoicebox.getSelectionModel().getSelectedItem()!=null && this.addOrMinus.getSelectionModel().getSelectedItem()!= null) {
-					this.result[0]=1;
-					if (this.beforeCheckbox.isSelected()) {
-						this.result[1]=0;
-					} else {
-						this.result[1]=1;
-					}
-					this.result[2]=this.elementChoicebox.getSelectionModel().getSelectedItem();
-					this.result[3] = Integer.parseInt(hour);
-					this.result[4] = Integer.parseInt(minute);
-					if (this.addOrMinus.getSelectionModel().getSelectedIndex() == 0) {
-						this.result[5]=0;
-					} else {
-						this.result[5]=1;
-					}
-					dialogStage.close();
-				}
-		
-		
+			} else {
+				String fehlerA = "Das ist keine Minute";
+				String fehlerB = "Falsche Eingabe ?";
+				String fehlerC = "Fehler";
+				this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+				minute = "0";
+				fehler = true;
+			}
+		} catch (NumberFormatException e) {
+			String fehlerA = "Das ist keine Minute";
+			String fehlerB = "Falsche Eingabe ?";
+			String fehlerC = "Fehler";
+			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
+			fehler = true;
+		}
+		// Übergabe der Ergebnisse
+
+		if (fehler == false
+				&& this.elementChoicebox.getSelectionModel().getSelectedItem() != null
+				&& this.addOrMinus.getSelectionModel().getSelectedItem() != null) {
+			this.result[0] = 1;
+			if (this.beforeCheckbox.isSelected()) {
+				this.result[1] = 0;
+			} else {
+				this.result[1] = 1;
+			}
+			this.result[2] = this.elementChoicebox.getSelectionModel()
+					.getSelectedItem();
+			this.result[3] = Integer.parseInt(hour);
+			this.result[4] = Integer.parseInt(minute);
+			if (this.addOrMinus.getSelectionModel().getSelectedIndex() == 0) {
+				this.result[5] = 0;
+			} else {
+				this.result[5] = 1;
+			}
+			dialogStage.close();
+		}
+
 	}
 
 	// Methode zum Beenden des PopUp
@@ -202,8 +213,6 @@ public class EditMultipleTimeDetailsLayoutController {
 	}
 
 	// Zuordnungsmethoden
-
-
 
 	public Stage getDialogStage() {
 		return dialogStage;
@@ -235,11 +244,11 @@ public class EditMultipleTimeDetailsLayoutController {
 
 	public void setBefore(int before) {
 		this.before = before;
-		
+
 		this.elementChoicebox.getItems().clear();
 		if (before != 0) {
 			for (int i = 0; i < before; i++) {
-				this.elementChoicebox.getItems().add(i+1);
+				this.elementChoicebox.getItems().add(i + 1);
 			}
 		}
 	}
@@ -258,13 +267,12 @@ public class EditMultipleTimeDetailsLayoutController {
 
 	public void setElementID(int elementID) {
 		this.elementID = elementID;
-		
+
 		this.elementIDLabel.setText(String.valueOf(elementID));
 	}
 
 	public int[] getResult() {
 		return result;
 	}
-	
 
 }

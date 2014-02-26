@@ -70,7 +70,7 @@ public class SzenarienLayoutController {
 	}
 
 	/**
-	 * Builds Umlaufplantableview.
+	 * Builds Szenarientableview.
 	 */
 	@SuppressWarnings("unchecked")
 	@FXML
@@ -80,12 +80,17 @@ public class SzenarienLayoutController {
 
 		this.szenarienTable.setEditable(true);
 
+		TableColumn<Szenario, String> szName = new TableColumn<Szenario, String>(
+				"Bezeichnung");
 		TableColumn<Szenario, Integer> szID = new TableColumn<Szenario, Integer>(
 				"Szenario ID");
 
+		szName.setCellValueFactory(new PropertyValueFactory<Szenario, String>(
+				"bezeichnung"));
 		szID.setCellValueFactory(new PropertyValueFactory<Szenario, Integer>(
 				"id"));
 
+		szName.prefWidthProperty().bind(szName.widthProperty());
 		szID.prefWidthProperty().bind(szID.widthProperty());
 
 		ObservableList<Szenario> data = FXCollections.observableArrayList();
@@ -96,7 +101,7 @@ public class SzenarienLayoutController {
 
 		this.szenarienTable.setItems(data);
 		this.szenarienTable.getColumns().clear();
-		this.szenarienTable.getColumns().addAll(szID);
+		this.szenarienTable.getColumns().addAll(szName,szID);
 		this.szenarienPane.setContent(this.szenarienTable);
 
 	}

@@ -124,7 +124,7 @@ public class FahrplanGraphicLayoutController {
 
 		// Belegung der Grafik
 
-		this.fahrplanvergleich.setTitle(this.fahrplan.getBezeichnung());
+		this.fahrplanvergleich.setTitle(this.fahrplan.getName());
 
 		// Liste aus allen Grafiken
 		ArrayList<XYChart.Series<Number, Number>> mainChart = new ArrayList<XYChart.Series<Number, Number>>();

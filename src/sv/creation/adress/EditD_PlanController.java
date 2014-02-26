@@ -44,7 +44,7 @@ public class EditD_PlanController {
 	@FXML
 	private TableColumn<Dutyelement, String> endzeitCol;
 	@FXML
-	private TableColumn<Dutyelement, Integer> eleTypeCol;
+	private TableColumn<Dutyelement, String> eleTypeCol;
 	@FXML
 	private TableColumn<Dutyelement, Integer> dutyCol;
 	@FXML
@@ -896,8 +896,8 @@ public class EditD_PlanController {
 				.setCellValueFactory(new PropertyValueFactory<Dutyelement, String>(
 						"arrTime"));
 		eleTypeCol
-				.setCellValueFactory(new PropertyValueFactory<Dutyelement, Integer>(
-						"elementType"));
+				.setCellValueFactory(new PropertyValueFactory<Dutyelement, String>(
+						"elementTypeName"));
 		dutyCol.setCellValueFactory(new PropertyValueFactory<Dutyelement, Integer>(
 				"dutyHilfsID"));
 		dauerCol.setCellValueFactory(new PropertyValueFactory<Dutyelement, String>(

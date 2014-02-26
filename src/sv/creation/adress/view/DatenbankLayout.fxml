@@ -53,7 +53,7 @@
                                     </AnchorPane>
                                     <AnchorPane maxHeight="35.0" minHeight="35.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="background">
                                       <children>
-                                        <Button layoutY="5.0" mnemonicParsing="false" onAction="#renamesUplan" styleClass="dark-blue" text="Umbennen" AnchorPane.rightAnchor="14.0" />
+                                        <Button layoutY="5.0" mnemonicParsing="false" onAction="#renamesUplan" styleClass="dark-blue" text="Umbenennen" AnchorPane.rightAnchor="14.0" />
                                         <Button layoutY="5.0" mnemonicParsing="false" onAction="#deleteUplan" styleClass="dark-blue" text="Löschen" AnchorPane.leftAnchor="14.0" />
                                       </children>
                                     </AnchorPane>
@@ -80,7 +80,7 @@
                                     </AnchorPane>
                                     <AnchorPane maxHeight="35.0" minHeight="35.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="background">
                                       <children>
-                                        <Button layoutY="5.0" mnemonicParsing="false" onAction="#renamesDplan" styleClass="dark-blue" text="Umbennen" AnchorPane.rightAnchor="14.0" />
+                                        <Button layoutY="5.0" mnemonicParsing="false" onAction="#renamesDplan" styleClass="dark-blue" text="Umbenennen" AnchorPane.rightAnchor="14.0" />
                                         <Button layoutY="5.0" mnemonicParsing="false" onAction="#deleteDplan" styleClass="dark-blue" text="Löschen" AnchorPane.leftAnchor="14.0" />
                                       </children>
                                     </AnchorPane>
@@ -107,12 +107,25 @@
                                     </AnchorPane>
                                     <AnchorPane maxHeight="35.0" minHeight="35.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="background">
                                       <children>
-                                        <Button layoutY="5.0" mnemonicParsing="false" onAction="#renamesFplan" styleClass="dark-blue" text="Umbennen" AnchorPane.rightAnchor="14.0" />
+                                        <Button layoutY="5.0" mnemonicParsing="false" onAction="#renamesFplan" styleClass="dark-blue" text="Umbenennen" AnchorPane.rightAnchor="14.0" />
                                         <Button layoutY="5.0" mnemonicParsing="false" onAction="#deleteFplan" styleClass="dark-blue" text="Löschen" AnchorPane.leftAnchor="14.0" />
                                       </children>
                                     </AnchorPane>
                                   </items>
                                 </SplitPane>
+                              </children>
+                            </AnchorPane>
+                          </content>
+                        </Tab>
+                        <Tab text="Szenarien">
+                          <content>
+                            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                              <children>
+                                <ScrollPane fx:id="szenarienPane" fitToHeight="true" fitToWidth="true" prefHeight="465.0" prefWidth="721.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                  <content>
+                                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" styleClass="dark-blue" />
+                                  </content>
+                                </ScrollPane>
                               </children>
                             </AnchorPane>
                           </content>

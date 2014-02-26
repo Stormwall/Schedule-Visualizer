@@ -110,14 +110,16 @@ public class KennzahlenLayoutController {
 	private void handleStatistikenUplan() {
 
 		if (this.umlaufplanChoiceliste.size() == 1) {
-			
+
 			Fahrplan fahrplan = null;
 			for (int i = 0; i < this.fahrplanliste.size(); i++) {
-				if (this.umlaufplanChoiceliste.get(0).getFahrplanID()==this.fahrplanliste.get(i).getId()) {
+				if (this.umlaufplanChoiceliste.get(0).getFahrplanID() == this.fahrplanliste
+						.get(i).getId()) {
 					fahrplan = this.fahrplanliste.get(i);
 				}
 			}
-			this.mainApp.showStatistikUPlanSingle(this.umlaufplanChoiceliste,fahrplan);
+			this.mainApp.showStatistikUPlanSingle(this.umlaufplanChoiceliste,
+					fahrplan);
 		} else {
 			String fehlerA = "Es wurde noch Element ausgew�hlt";
 			String fehlerB = "Welche Statistik soll angezeigt werden ?";
@@ -133,14 +135,16 @@ public class KennzahlenLayoutController {
 	private void handleStatistikenDplan() {
 
 		if (this.dienstplanChoiceliste.size() == 1) {
-			
+
 			Fahrplan fahrplan = null;
 			for (int i = 0; i < this.fahrplanliste.size(); i++) {
-				if (this.dienstplanChoiceliste.get(0).getFahrplanID()==this.fahrplanliste.get(i).getId()) {
+				if (this.dienstplanChoiceliste.get(0).getFahrplanID() == this.fahrplanliste
+						.get(i).getId()) {
 					fahrplan = this.fahrplanliste.get(i);
 				}
 			}
-			this.mainApp.showStatistikDPlanSingle(this.dienstplanChoiceliste, fahrplan);
+			this.mainApp.showStatistikDPlanSingle(this.dienstplanChoiceliste,
+					fahrplan);
 
 		} else {
 			String fehlerA = "Es wurde noch Element ausgew�hlt";
@@ -173,11 +177,17 @@ public class KennzahlenLayoutController {
 		}
 
 		// Berrechnung der Plaene
-		double result = calc.berechneDurschnittlicheWiederholrateUmlaufplanAll(
-				this.umlaufplanChoiceliste, fahrplan);
+		double resultAll = calc
+				.berechneDurschnittlicheWiederholrateUmlaufplanAll(
+						this.umlaufplanChoiceliste, fahrplan);
+		double resultReg = calc
+				.berechneDurschnittlicheWiederholrateUmlaufplanRegular(
+						this.umlaufplanChoiceliste, fahrplan);
 
-		String fehlerA = "Die durschnittliche Wiederholrate der eingebenen Umlaufplaene lautet : "
-				+ result;
+		String fehlerA = "Die durschnittliche Wiederholrate der eingebenen Umlaufplaene mit Berücksichtigung aller Fahrten lautet :\n\n"
+				+ resultAll
+				+ "\n\nDie durschnittliche Wiederholrate der eingebenen Umlaufplaene mit Berücksichtigung der regelmäßigen Fahrten lautet : \n\n"
+				+ resultReg;
 		String fehlerB = "Ihr Ergebnis";
 		String fehlerC = "Ausgabe";
 		this.mainApp.informationMeldung(fehlerA, fehlerB, fehlerC);
@@ -207,11 +217,17 @@ public class KennzahlenLayoutController {
 		}
 
 		// Berrechnung der Plaene
-		double result = calc.berechneDurschnittlicheWiederholrateDienstplanAll(
-				this.dienstplanChoiceliste, fahrplan);
+		double resultAll = calc
+				.berechneDurschnittlicheWiederholrateDienstplanAll(
+						this.dienstplanChoiceliste, fahrplan);
+		double resultReg = calc
+				.berechneDurschnittlicheWiederholrateDienstplanRegular(
+						this.dienstplanChoiceliste, fahrplan);
 
-		String fehlerA = "Die durschnittliche Wiederholrate der eingebenen Dienstplaene lautet : "
-				+ result;
+		String fehlerA = "Die durschnittliche Wiederholrate der eingebenen Dienstpläne mit Berücksichtigung aller Fahrten lautet :\n\n"
+				+ resultAll
+				+ "\n\nDie durschnittliche Wiederholrate der eingebenen Dienstpläne mit Berücksichtigung der regelmäßigen Fahrten lautet : \n\n"
+				+ resultReg;
 		String fehlerB = "Ihr Ergebnis";
 		String fehlerC = "Ausgabe";
 		this.mainApp.informationMeldung(fehlerA, fehlerB, fehlerC);
@@ -241,7 +257,8 @@ public class KennzahlenLayoutController {
 		}
 
 		// Berrechnung der Plaene
-		double result = calc.berechneDistanzVehSchedule(this.umlaufplanChoiceliste, fahrplan);
+		double result = calc.berechneDistanzVehSchedule(
+				this.umlaufplanChoiceliste, fahrplan);
 
 		String fehlerA = "Das Distanzma� der eingebenen Umlaufplaene lautet : "
 				+ result;
@@ -274,7 +291,8 @@ public class KennzahlenLayoutController {
 		}
 
 		// Berrechnung der Plaene
-		double result = calc.berechneDistanzCrewSchedule(this.dienstplanChoiceliste, fahrplan);
+		double result = calc.berechneDistanzCrewSchedule(
+				this.dienstplanChoiceliste, fahrplan);
 
 		String fehlerA = "Das Distanzma� der eingebenen Dienstplaene lautet : "
 				+ result;
@@ -289,8 +307,9 @@ public class KennzahlenLayoutController {
 	 */
 	@FXML
 	private void handleKostenU() {
-		
-		this.mainApp.showKostenU(this.umlaufplanChoiceliste, this.fahrplanliste);
+
+		this.mainApp
+				.showKostenU(this.umlaufplanChoiceliste, this.fahrplanliste);
 	}
 
 	/**
@@ -298,16 +317,17 @@ public class KennzahlenLayoutController {
 	 */
 	@FXML
 	private void handleKostenD() {
-		
-		this.mainApp.showKostenD(this.dienstplanChoiceliste, this.fahrplanliste);
+
+		this.mainApp
+				.showKostenD(this.dienstplanChoiceliste, this.fahrplanliste);
 	}
-	
+
 	/**
 	 * Opens the P-Vergleich.
 	 */
 	@FXML
 	private void handleP_Vergleich() {
-		
+
 		this.mainApp.showP_Vergleich(this.fahrplanChoiceliste.get(0));
 	}
 
@@ -354,6 +374,14 @@ public class KennzahlenLayoutController {
 					fa.setAutoReverse(true);
 					fa.play();
 					this.statisitkU.setDisable(false);
+
+					FadeTransition faa = new FadeTransition(
+							Duration.millis(1000), this.kostenU);
+					faa.setFromValue(0.0);
+					faa.setToValue(1.0);
+					faa.setAutoReverse(true);
+					faa.play();
+					this.kostenU.setDisable(false);
 				}
 				if (this.umlaufplanChoiceliste.size() > 1
 						&& this.statisitkU.getOpacity() == 1) {
@@ -364,16 +392,14 @@ public class KennzahlenLayoutController {
 					faa.setAutoReverse(true);
 					faa.play();
 					this.statisitkU.setDisable(true);
-				}
-				if (this.umlaufplanChoiceliste.size() >= 1
-						&& this.kostenU.getOpacity() != 1) {
+
 					FadeTransition fa = new FadeTransition(
 							Duration.millis(1000), this.kostenU);
-					fa.setFromValue(0.0);
-					fa.setToValue(1.0);
+					fa.setFromValue(1.0);
+					fa.setToValue(0.0);
 					fa.setAutoReverse(true);
 					fa.play();
-					this.kostenU.setDisable(false);
+					this.kostenU.setDisable(true);
 				}
 				if (this.umlaufplanChoiceliste.size() == 2
 						&& this.dMU.getOpacity() != 1) {
@@ -474,6 +500,15 @@ public class KennzahlenLayoutController {
 				fa.setAutoReverse(true);
 				fa.play();
 				this.statisitkU.setDisable(false);
+
+				FadeTransition faaa = new FadeTransition(Duration.millis(1000),
+						this.kostenU);
+				faaa.setFromValue(0.0);
+				faaa.setToValue(1.0);
+				faaa.setAutoReverse(true);
+				faaa.play();
+				this.kostenU.setDisable(false);
+
 			}
 			if (this.umlaufplanChoiceliste.size() > 1
 					&& this.statisitkU.getOpacity() == 1) {
@@ -484,16 +519,14 @@ public class KennzahlenLayoutController {
 				faa.setAutoReverse(true);
 				faa.play();
 				this.statisitkU.setDisable(true);
-			}
-			if (this.umlaufplanChoiceliste.size() >= 1
-					&& this.kostenU.getOpacity() != 1) {
-				FadeTransition fa = new FadeTransition(Duration.millis(1000),
+
+				FadeTransition faaa = new FadeTransition(Duration.millis(1000),
 						this.kostenU);
-				fa.setFromValue(0.0);
-				fa.setToValue(1.0);
-				fa.setAutoReverse(true);
-				fa.play();
-				this.kostenU.setDisable(false);
+				faaa.setFromValue(1.0);
+				faaa.setToValue(0.0);
+				faaa.setAutoReverse(true);
+				faaa.play();
+				this.kostenU.setDisable(true);
 			}
 			if (this.umlaufplanChoiceliste.size() == 2
 					&& this.dMU.getOpacity() != 1) {
@@ -581,6 +614,14 @@ public class KennzahlenLayoutController {
 					fa.setAutoReverse(true);
 					fa.play();
 					this.statistikD.setDisable(false);
+
+					FadeTransition faa = new FadeTransition(
+							Duration.millis(1000), this.kostenD);
+					faa.setFromValue(0.0);
+					faa.setToValue(1.0);
+					faa.setAutoReverse(true);
+					faa.play();
+					this.kostenD.setDisable(false);
 				}
 				if (this.dienstplanChoiceliste.size() > 1
 						&& this.statistikD.getOpacity() == 1) {
@@ -591,16 +632,14 @@ public class KennzahlenLayoutController {
 					faa.setAutoReverse(true);
 					faa.play();
 					this.statistikD.setDisable(true);
-				}
-				if (this.dienstplanChoiceliste.size() >= 1
-						&& this.kostenD.getOpacity() != 1) {
+
 					FadeTransition fa = new FadeTransition(
 							Duration.millis(1000), this.kostenD);
-					fa.setFromValue(0.0);
-					fa.setToValue(1.0);
+					fa.setFromValue(1.0);
+					fa.setToValue(0.0);
 					fa.setAutoReverse(true);
 					fa.play();
-					this.kostenD.setDisable(false);
+					this.kostenD.setDisable(true);
 				}
 				if (this.dienstplanChoiceliste.size() == 2
 						&& this.dMD.getOpacity() != 1) {
@@ -701,6 +740,14 @@ public class KennzahlenLayoutController {
 				fa.setAutoReverse(true);
 				fa.play();
 				this.statistikD.setDisable(false);
+				
+				FadeTransition faaa = new FadeTransition(Duration.millis(1000),
+						this.kostenD);
+				faaa.setFromValue(0.0);
+				faaa.setToValue(1.0);
+				faaa.setAutoReverse(true);
+				faaa.play();
+				this.kostenD.setDisable(true);
 			}
 			if (this.dienstplanChoiceliste.size() > 1
 					&& this.statistikD.getOpacity() == 1) {
@@ -711,16 +758,14 @@ public class KennzahlenLayoutController {
 				faa.setAutoReverse(true);
 				faa.play();
 				this.statistikD.setDisable(true);
-			}
-			if (this.dienstplanChoiceliste.size() >= 1
-					&& this.kostenD.getOpacity() != 1) {
-				FadeTransition fa = new FadeTransition(Duration.millis(1000),
+				
+				FadeTransition faaa = new FadeTransition(Duration.millis(1000),
 						this.kostenD);
-				fa.setFromValue(0.0);
-				fa.setToValue(1.0);
-				fa.setAutoReverse(true);
-				fa.play();
-				this.kostenD.setDisable(false);
+				faaa.setFromValue(1.0);
+				faaa.setToValue(0.0);
+				faaa.setAutoReverse(true);
+				faaa.play();
+				this.kostenD.setDisable(true);
 			}
 			if (this.dienstplanChoiceliste.size() == 2
 					&& this.dMD.getOpacity() != 1) {
@@ -778,7 +823,7 @@ public class KennzahlenLayoutController {
 			this.fahrplanChoiceliste.add(this.detailsFahrplanTable
 					.getSelectionModel().getSelectedItem());
 			this.auswahlFahrplan.setText(fahrplanChoiceliste.get(0)
-					.getBezeichnung());			
+					.getBezeichnung());
 			FadeTransition faa = new FadeTransition(Duration.millis(1000),
 					this.pVergleich);
 			faa.setFromValue(0.0);
@@ -786,7 +831,7 @@ public class KennzahlenLayoutController {
 			faa.setAutoReverse(true);
 			faa.play();
 			this.pVergleich.setDisable(false);
-			
+
 		} else {
 			String fehlerA = "Es wurde noch Element ausgew�hlt";
 			String fehlerB = "Was soll ausgewaehlt werden ?";
@@ -811,7 +856,7 @@ public class KennzahlenLayoutController {
 		} else {
 			this.fahrplanChoiceliste.clear();
 			this.auswahlFahrplan.setText("");
-			
+
 			FadeTransition faa = new FadeTransition(Duration.millis(1000),
 					this.pVergleich);
 			faa.setFromValue(1.0);
@@ -996,7 +1041,7 @@ public class KennzahlenLayoutController {
 	}
 
 	public void setUmlaufplanliste(ArrayList<Umlaufplan> umlaufplanliste) {
-		this.umlaufplanliste = umlaufplanliste;		
+		this.umlaufplanliste = umlaufplanliste;
 		createTableViewUmlauf();
 	}
 
@@ -1005,7 +1050,7 @@ public class KennzahlenLayoutController {
 	}
 
 	public void setDienstplanliste(ArrayList<Dienstplan> dienstplanliste) {
-		this.dienstplanliste = dienstplanliste;		
+		this.dienstplanliste = dienstplanliste;
 		createTableViewDienst();
 	}
 
@@ -1017,7 +1062,5 @@ public class KennzahlenLayoutController {
 		this.fahrplanliste = fahrplanliste;
 		createTableViewFahrplan();
 	}
-	
-	
 
 }

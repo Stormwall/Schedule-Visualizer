@@ -3719,7 +3719,7 @@ public class MainLayoutController {
 	}
 
 	/**
-	 * Fills the DetailPane fÃ¼r die DienstplÃ¤ne
+	 * Fills the DetailPane für die Dienstplaene
 	 */
 	private void fillDetailPaneDienst(Dienstplan dienstplan) {
 		// Anzahl Blockelemente ermitteln und ausgeben
@@ -3751,7 +3751,7 @@ public class MainLayoutController {
 	}
 
 	/**
-	 * Creates DetailsTable for U-Plan.
+	 * Creates DetailsTable for D-Plan.
 	 */
 	@SuppressWarnings("unchecked")
 	private void createDDetailsTable(Dienstplan dienstplan) {
@@ -3764,7 +3764,7 @@ public class MainLayoutController {
 				"Startzeit");
 		TableColumn<Dutyelement, String> endzeitCol = new TableColumn<Dutyelement, String>(
 				"Endzeit");
-		TableColumn<Dutyelement, Integer> eleTypeCol = new TableColumn<Dutyelement, Integer>(
+		TableColumn<Dutyelement, String> eleTypeCol = new TableColumn<Dutyelement, String>(
 				"Ele.-Type");
 		TableColumn<Dutyelement, Integer> dutyCol = new TableColumn<Dutyelement, Integer>(
 				"Dienst");
@@ -3781,8 +3781,8 @@ public class MainLayoutController {
 				.setCellValueFactory(new PropertyValueFactory<Dutyelement, String>(
 						"arrTime"));
 		eleTypeCol
-				.setCellValueFactory(new PropertyValueFactory<Dutyelement, Integer>(
-						"elementType"));
+				.setCellValueFactory(new PropertyValueFactory<Dutyelement, String>(
+						"elementTypeName"));
 		dutyCol.setCellValueFactory(new PropertyValueFactory<Dutyelement, Integer>(
 				"dutyHilfsID"));
 		dauerCol.setCellValueFactory(new PropertyValueFactory<Dutyelement, String>(
