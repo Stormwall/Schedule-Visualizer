@@ -7,6 +7,7 @@ encoding//src/sv/creation/adress/MainApplication.java=UTF-8
 encoding//src/sv/creation/adress/MainLayoutController.java=UTF-8
 encoding//src/sv/creation/adress/database/DBConnection.java=UTF-8
 encoding//src/sv/creation/adress/database/DBMatching.java=UTF-8
+encoding//src/sv/creation/adress/util/Export.java=UTF-8
 encoding//src/sv/creation/adress/util/Kennzahlenberechnung.java=UTF-8
 encoding//src/sv/creation/adress/util/StringSplitter.java=UTF-8
 encoding//src/sv/creation/adress/util/Vergleich.java=UTF-8

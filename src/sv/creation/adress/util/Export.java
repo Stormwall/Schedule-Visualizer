@@ -112,5 +112,11 @@ public class Export {
 			e1.printStackTrace();
 		}
 	}
+	
+	//Erstellt für die Dienstplan Statistik ein CSV-File
+	public void exportDienstplanStatistik(Dienstplan dienstplan, File file){
+		
+		
+	}
 
 }
