@@ -1,6 +1,7 @@
 package sv.creation.adress;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import sv.creation.adress.database.DBMatching;
@@ -77,6 +78,8 @@ public class DatenbankLayoutController {
 
 	@FXML
 	private void deleteUplan() {
+		
+		this.mainApp.confirmMeldung("Soll wirklich gelöscht werden?");
 
 		if (this.detailsUmlaufTable.getSelectionModel().getSelectedItem() != null) {
 			Umlaufplan umlaufplan = this.detailsUmlaufTable.getSelectionModel()
@@ -313,8 +316,36 @@ public class DatenbankLayoutController {
 		File file = fileChooser.showOpenDialog(dialogStage);
 
 		Import im = new Import();
+		if(file.getName().startsWith("vs")){
 		im.importFile(file);
-
+			if(im.isUmlaufplanImportFailed()==true){
+			this.mainApp.fehlerMeldung("Bitte überprüfen Sie die Datenbank.", "Kein passender Fahrplan vorhanden!", "Importfehler");
+			}
+		}else if(file.getName().startsWith("cs")){
+			im.importFile(file);
+			if(im.isDienstplanImportDiensttypenFailed()==true){
+				this.mainApp.fehlerMeldung("Bitte überprüfen Sie die Datenbank.", "Keine passenden Diensttypen vorhanden!", "Importfehler");	
+			}else if(im.isDienstplanImportUmlaufplanFailed()==true){
+				this.mainApp.fehlerMeldung("Bitte überprüfen Sie die Datenbank.", "Kein passender Umlaufplan vorhanden!", "Importfehler");	
+			}else if(im.isDienstplanImportFahrplanFailed()==true){
+				this.mainApp.fehlerMeldung("Bitte überprüfen Sie die Datenbank.", "Kein passender Fahrplan vorhanden!", "Importfehler");	
+			}
+		}else if(file.getName().startsWith("dt")){
+			im.importFile(file);
+			if(im.isDiensttypenImportFailed()==true){
+				this.mainApp.fehlerMeldung("Bitte überprüfen Sie die Datenbank.", "Kein passender Fahrplan vorhanden!", "Importfehler");		
+			}
+		}else if(file.getName().startsWith("real")){
+			im.importFile(file);
+			if(im.isFahrplanImportFailed()){
+				this.mainApp.fehlerMeldung("Bitte neustarten.", "Es ist ein Fehler aufgetreten!", "Importfehler");	
+			}
+		}else if(file.getName().startsWith("sc")){
+			im.importFile(file);
+			if(im.isSzenarienImportFailed()==true){
+				this.mainApp.fehlerMeldung("Bitte überprüfen Sie die Datenbank.", "Kein passender Fahrplan vorhanden!", "Importfehler");		
+			}
+		}else this.mainApp.informationMeldung("Importfehler", "Falsche Dateibezeichnung", "Bitte überprüfen Sie die genaue Dateibezeichnung!");
 	}
 
 	/**

@@ -104,6 +104,14 @@ public class ServiceJourney {
 	public void setiD(int iD) {
 		this.iD = iD;
 	}
+
+	public int getServiceJourneyID() {
+		return serviceJourneyID;
+	}
+
+	public void setServiceJourneyID(int serviceJourneyID) {
+		this.serviceJourneyID = serviceJourneyID;
+	}
 	
 	
  

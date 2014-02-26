@@ -244,6 +244,16 @@ public class StringSplitter {
 
 	// file name
 	private String filename = null;
+	
+	//booleans if txt files were imported
+	private boolean umlaufplanImportiert=false;
+	private boolean dienstplanImportiert=false;
+	private boolean fahrplanImportiert=false;
+	private boolean diensttypenImportiert=false;
+	private boolean szenarienImportiert=false;
+	private boolean dienstplanFahrplanFail=false;
+	private boolean dienstplanUmlaufplanFail=false;
+	private boolean dienstplanDiensttypenFail=false;
 
 	// Singleton
 	public static  StringSplitter getInstance() {
@@ -662,6 +672,7 @@ public class StringSplitter {
 			}
 			fahrplan.close();
 			dbc.fillFahrplanIntoTables(getFilename());
+			fahrplanImportiert=true;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -783,9 +794,7 @@ public class StringSplitter {
 							zeilenelemente.clear();
 						}
 						if (day == false) {
-//							String dayId = "NULL";
-//							blockelementDayID.add(dayId);
-//							zeilenelemente.clear();
+
 						}
 
 						// Size of the zeilenelemente array list will be reset
@@ -796,13 +805,15 @@ public class StringSplitter {
 				umlaufplan.close();
 				dbc.fillUmlaufplanIntoTables(getFilename());
 				clearUmlaufplanArraylists();
+				umlaufplanImportiert=true;
 				}
 				
 				else {
 					System.out.println("Es ist kein passender Fahrplan vorhanden!");
 				}
 				
-			} catch (IOException e) {
+			} 
+			catch (IOException e) {
 				e.printStackTrace();
 			}
 			
@@ -961,7 +972,9 @@ public class StringSplitter {
 					}
 				}
 				diensttypen.close();
-				dbc.fillDiensttypenIntoTables(getFilename());}
+				dbc.fillDiensttypenIntoTables(getFilename());
+				diensttypenImportiert=true;
+				}
 				else {
 					System.out.println("Es ist kein passender Fahrplan vorhanden!");
 				}
@@ -1102,8 +1115,6 @@ public class StringSplitter {
 						zeilenelemente.clear();
 					}
 					if (day == false) {
-//						String dayId = "NULL";
-//						dutyelementDayID.add(dayId);
 						zeilenelemente.clear();
 					}
 
@@ -1114,15 +1125,20 @@ public class StringSplitter {
 
 			}
 			dienstplan.close();
-			dbc.fillDienstplanIntoTable(getFilename());}
+			dbc.fillDienstplanIntoTable(getFilename());
+			dienstplanImportiert=true;
+			}
 					
 					else{
+						dienstplanDiensttypenFail=true;
 				System.out.println("Es sind keine passenden Diensttypen vorhanden!");}}
 			
 				else{
+					dienstplanUmlaufplanFail=true;
 				System.out.println("Es ist kein passender Umlaufplan vorhanden!");	
 			}}
 			else {
+				dienstplanFahrplanFail=true;
 				System.out.println("Es ist kein passender Fahrplan vorhanden!");
 			}
 		} catch (IOException e) {
@@ -1169,7 +1185,9 @@ public class StringSplitter {
 			}
 			szenario.close();
 			dbc.fillSzenarioIntoTables(getFilename());
-			clearSzenarioArrayLists();}
+			clearSzenarioArrayLists();
+			szenarienImportiert=true;
+			}
 			else{
 				System.out.println("Kein passender Fahrplan vorhanden!");
 			}
@@ -1929,6 +1947,61 @@ public class StringSplitter {
 
 	public ArrayList<Integer> getSzenarioDelay() {
 		return szenarioDelay;
+	}
+	
+	
+
+	public boolean isUmlaufplanImportiert() {
+		return umlaufplanImportiert;
+	}
+
+	public void setUmlaufplanImportiert(boolean umlaufplanImportiert) {
+		this.umlaufplanImportiert = umlaufplanImportiert;
+	}
+
+	public boolean isDienstplanImportiert() {
+		return dienstplanImportiert;
+	}
+
+	public void setDienstplanImportiert(boolean dienstplanImportiert) {
+		this.dienstplanImportiert = dienstplanImportiert;
+	}
+
+	public boolean isFahrplanImportiert() {
+		return fahrplanImportiert;
+	}
+
+	public void setFahrplanImportiert(boolean fahrplanImportiert) {
+		this.fahrplanImportiert = fahrplanImportiert;
+	}
+
+	public boolean isDiensttypenImportiert() {
+		return diensttypenImportiert;
+	}
+
+	public void setDiensttypenImportiert(boolean diensttypenImportiert) {
+		this.diensttypenImportiert = diensttypenImportiert;
+	}
+
+	public boolean isSzenarienImportiert() {
+		return szenarienImportiert;
+	}
+
+	public void setSzenarienImportiert(boolean szenarienImportiert) {
+		this.szenarienImportiert = szenarienImportiert;
+	}
+	
+
+	public boolean isDienstplanFahrplanFail() {
+		return dienstplanFahrplanFail;
+	}
+
+	public boolean isDienstplanUmlaufplanFail() {
+		return dienstplanUmlaufplanFail;
+	}
+
+	public boolean isDienstplanDiensttypenFail() {
+		return dienstplanDiensttypenFail;
 	}
 
 	public String changeDateFormat(String date) {

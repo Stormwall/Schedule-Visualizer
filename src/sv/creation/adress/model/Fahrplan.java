@@ -222,6 +222,16 @@ public class Fahrplan {
 	}
 
 
+	public ArrayList<Linebundle> getLinebundle() {
+		return linebundle;
+	}
+
+
+	public void setLinebundle(ArrayList<Linebundle> linebundle) {
+		this.linebundle = linebundle;
+	}
+
+
 	
 	
 	
