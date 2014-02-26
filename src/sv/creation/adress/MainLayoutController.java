@@ -3846,6 +3846,10 @@ public class MainLayoutController {
 			ScrollPane scrollPane, Canvas canvas, GraphicsContext gc,
 			boolean firstCheck) {
 
+		if (this.hilfslinienAktiv) {
+			createHelpLines(canvas, gc);
+		}
+		
 		// Variablen der Methode
 
 		double abstandNetz = (canvas.getWidth() - 30)
@@ -4082,10 +4086,6 @@ public class MainLayoutController {
 
 			firstCheck = false;
 		}
-
-		if (this.hilfslinienAktiv) {
-			createHelpLines(canvas, gc);
-		}
 	}
 
 	/**
@@ -4094,6 +4094,10 @@ public class MainLayoutController {
 	private void createDienstElementGraphic(Dienstplan dienstplan,
 			ScrollPane scrollPane, Canvas canvas, GraphicsContext gc,
 			boolean firstCheck) {
+		
+		if (this.hilfslinienAktiv) {
+			createHelpLines(canvas, gc);
+		}
 
 		// Arbeitsvariablen der Methode
 		double abstandNetz = (canvas.getWidth() - 30)
@@ -4322,10 +4326,7 @@ public class MainLayoutController {
 
 			firstCheck = false;
 		}
-
-		if (this.hilfslinienAktiv) {
-			createHelpLines(canvas, gc);
-		}
+		
 	}
 
 	/**
@@ -4432,6 +4433,7 @@ public class MainLayoutController {
 			gc.strokeLine(pixel, 0, pixel, canvas.getHeight() - 3);
 
 		}
+		gc.setStroke(Color.BLACK);
 	}	
 
 	/**
