@@ -1157,11 +1157,11 @@ public class DBConnection {
 		
 		try{
 			Statement stmnt=getConnection().createStatement();
-			ResultSet rest1=stmnt.executeQuery("SELECT b.BlockID FROM Block AS b, Umlaufplan AS u, Fahrplan AS f WHERE b.UmlaufplanID=u.ID AND u.FahrplanID=f.ID AND f.Bezeichnung='"+test+"';");
+			ResultSet rest1=stmnt.executeQuery("SELECT b.BlockID FROM Block AS b, Umlaufplan AS u, Fahrplan AS f WHERE b.UmlaufplanID=u.ID AND u.FahrplanID=f.ID AND f.Bezeichnung LIKE'%"+test+"%';");
 			if(!rest1.next()){
-			umlaufplanVorhanden=true;
+			umlaufplanVorhanden=false;
 			}else{
-				umlaufplanVorhanden=false;
+				umlaufplanVorhanden=true;
 			}
 		}catch (SQLException e){
 			e.printStackTrace();
