@@ -6,14 +6,18 @@ public class Szenario {
 	
 	private int id;
 	private ArrayList<PrimeDelay> primeDelay = new ArrayList<PrimeDelay>();
+	private String bezeichnung;
 	private int fahrplanID;
+	private String date;
 	
 	
-	public Szenario(int id, ArrayList<PrimeDelay> primeDelay, int fahrplanID) {
+	public Szenario(int id, ArrayList<PrimeDelay> primeDelay, int fahrplanID, String bezeichnung, String date) {
 		super();
 		this.id = id;
 		this.primeDelay = primeDelay;
 		this.fahrplanID = fahrplanID;
+		this.bezeichnung = bezeichnung;
+		this.date = date;
 	}
 	
 	//getter and setter methods
@@ -34,6 +38,22 @@ public class Szenario {
 	}
 	public void setFahrplanID(int fahrplanID) {
 		this.fahrplanID = fahrplanID;
+	}
+
+	public String getBezeichnung() {
+		return bezeichnung;
+	}
+
+	public void setBezeichnung(String bezeichnung) {
+		this.bezeichnung = bezeichnung;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
 	}
 	
 

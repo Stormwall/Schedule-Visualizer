@@ -70,7 +70,8 @@ public class DBMatching {
 	ArrayList<String> dienstplanBezeichnungList = new ArrayList<String>();
 	ArrayList<String> umlaufplanBezeichnungList = new ArrayList<String>();
 	ArrayList<Integer> diesntplanUplanIDList = new ArrayList<Integer>();
-	// ArrayList<String> fahrplanBezeichnungList = new ArrayList<String>();
+	ArrayList<String> szenarioBezeichnungList = new ArrayList<String>();
+	ArrayList<String> szenarioDateList = new ArrayList<String>();
 
 	ArrayList<Days> daysList = new ArrayList<Days>();
 	// *************************************************************
@@ -712,6 +713,22 @@ public class DBMatching {
 		}
 		return bezeichnungList;
 	}
+	
+	// Erstellt eine List mit den Bezeichungen zu den vorhandenen Szenarien
+	private ArrayList<String> createSzenarioBezeichnungList() {
+		this.db.initDBConnection();
+		ArrayList<String> bezeichnungList = new ArrayList<String>();
+		ResultSet rest1;
+		try {
+			rest1 = stmt.executeQuery("SELECT Bezeichnung FROM Szenario;");
+			while (rest1.next()) {
+				bezeichnungList.add(rest1.getString("Bezeichnung"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return bezeichnungList;
+	}
 
 	// Erstellt eine Liste von Tagen an den die jeweiligen Dienstpläne gültig
 	// sind
@@ -801,6 +818,26 @@ public class DBMatching {
 			while (rest1.next()) {
 				String datum = rest1.getString("Datum").toString();
 				dienstplanDateList.add(datum);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	// Erstellt eine Liste von Uploaddaten der vorhandenen Szenarien
+	private void createSzenarioDate() {
+
+		this.db.initDBConnection();
+		// Creating a sql query
+		try {
+			stmt = this.db.getConnection().createStatement();
+			ResultSet rest1 = stmt.executeQuery("SELECT Datum FROM Szenario");
+			// All resulted datasets of the sql query will be added to the block
+			// array list
+			while (rest1.next()) {
+				String datum = rest1.getString("Datum").toString();
+				szenarioDateList.add(datum);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -1601,6 +1638,8 @@ public class DBMatching {
 		ArrayList<PrimeDelay> primeDelayList = new ArrayList<PrimeDelay>();
 		ArrayList<Integer> idList= createSzenarioIDs();
 		createSzenario();
+		this.szenarioBezeichnungList=createSzenarioBezeichnungList();
+		createSzenarioDate();
 		int anzahlSzenarien = 1;
 
 		// Anzahl der Szenarien wird ermittelt
@@ -1617,9 +1656,10 @@ public class DBMatching {
 					primeDelayList.add(primeDelay.get(j));
 				}
 			}
+			
      
 			Szenario szenario = new Szenario(i, primeDelayList,
-					getFahrplanzugehoerigkeitSzenario(idList.get(i-1)));
+					getFahrplanzugehoerigkeitSzenario(idList.get(i-1)),szenarioBezeichnungList.get(i-1),szenarioDateList.get(i-1));
 			// Objekt wird einer Liste mit allen Szeanrien hinzugefügt
 			szenarioList.add(szenario);
 		}

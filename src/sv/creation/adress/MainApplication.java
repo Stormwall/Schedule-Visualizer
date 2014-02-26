@@ -1,5 +1,6 @@
 package sv.creation.adress;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -49,13 +50,23 @@ public class MainApplication extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 
-		// Fill Datenbank
-
-		fillUmlaufplanliste();
-		fillDienstplanliste();
-		fillFahrplanliste();
-		fillSzenarienliste();
-		fillColorArray();
+		File file=new File( System.getProperty("user.home") + "/"
+				+ "PlanB_DB.db");
+			
+			if(file.exists()){
+			// Fill Datenbank
+			
+			fillUmlaufplanliste();
+			fillDienstplanliste();
+			fillFahrplanliste();
+			fillSzenarienliste();
+			fillColorArray();
+			}else{
+				String fehlermeldungA="Es wurde keine Datenbank gefunden.";
+				String fehlermeldungB="Es wurde eine leere Datenbank im User-Verzeichnis erstellt.\nBitte starten Sie die Anwendung neu!";
+				String fehlermeldungC="Fehler";
+				fehlerMeldung(fehlermeldungB, fehlermeldungA, fehlermeldungC);
+			}
 
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle(" Schedule-Visualizer - "

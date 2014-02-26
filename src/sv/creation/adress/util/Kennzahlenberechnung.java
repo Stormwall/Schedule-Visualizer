@@ -1043,36 +1043,42 @@ public double [][] matrixFahrplan(Fahrplan fahrplan){
 		}
 	}
 	
-	matrix[1][0]=fahrtenMontagAlle;
-	matrix[2][0]=fahrtenDienstagAlle;
-	matrix[3][0]=fahrtenMittwochAlle;
-	matrix[4][0]=fahrtenDonnerstagAlle;
-	matrix[5][0]=fahrtenFreitagAlle;
-	matrix[1][1]=fahrtenMontagAlle/fahrtenMontagGesamt;
-	matrix[1][2]=fahrtenMontag4/fahrtenMontagGesamt;
+	
+	matrix[0][5]=fahrtenMontagAlle/anzahlFahrtenGesamt;
+	matrix[0][2]=fahrtenMontag4/fahrtenMontagGesamt;
+	matrix[0][3]=fahrtenMontag3/fahrtenMontagGesamt;
+	matrix[0][4]=fahrtenMontag2/fahrtenMontagGesamt;
+	matrix[0][1]=(fahrtenMontag1+fahrtenDienstag1+fahrtenMittwoch1+fahrtenDonnerstag1+fahrtenFreitag1)/anzahlFahrtenGesamt;
+	matrix[1][0]=fahrtenMontagGesamt;
+	matrix[2][0]=fahrtenDienstagGesamt;
+	matrix[3][0]=fahrtenMittwochGesamt;
+	matrix[4][0]=fahrtenDonnerstagGesamt;
+	matrix[5][0]=fahrtenFreitagGesamt;
+	matrix[1][5]=fahrtenMontagAlle/fahrtenMontagGesamt;
+	matrix[1][4]=fahrtenMontag4/fahrtenMontagGesamt;
 	matrix[1][3]=fahrtenMontag3/fahrtenMontagGesamt;
-	matrix[1][4]=fahrtenMontag2/fahrtenMontagGesamt;
-	matrix[1][5]=fahrtenMontag1/fahrtenMontagGesamt;
-	matrix[2][1]=fahrtenDienstagAlle/fahrtenDienstagGesamt;
-	matrix[2][2]=fahrtenDienstag4/fahrtenDienstagGesamt;
+	matrix[1][2]=fahrtenMontag2/fahrtenMontagGesamt;
+	matrix[1][1]=fahrtenMontag1/fahrtenMontagGesamt;
+	matrix[2][5]=fahrtenDienstagAlle/fahrtenDienstagGesamt;
+	matrix[2][4]=fahrtenDienstag4/fahrtenDienstagGesamt;
 	matrix[2][3]=fahrtenDienstag3/fahrtenDienstagGesamt;
-	matrix[2][4]=fahrtenDienstag2/fahrtenDienstagGesamt;
-	matrix[2][5]=fahrtenDienstag1/fahrtenDienstagGesamt;
-	matrix[3][1]=fahrtenMittwochAlle/fahrtenMittwochGesamt;
-	matrix[3][2]=fahrtenMittwoch4/fahrtenMittwochGesamt;
+	matrix[2][2]=fahrtenDienstag2/fahrtenDienstagGesamt;
+	matrix[2][1]=fahrtenDienstag1/fahrtenDienstagGesamt;
+	matrix[3][5]=fahrtenMittwochAlle/fahrtenMittwochGesamt;
+	matrix[3][4]=fahrtenMittwoch4/fahrtenMittwochGesamt;
 	matrix[3][3]=fahrtenMittwoch3/fahrtenMittwochGesamt;
-	matrix[3][4]=fahrtenMittwoch2/fahrtenMittwochGesamt;
-	matrix[3][5]=fahrtenMittwoch1/fahrtenMittwochGesamt;
-	matrix[4][1]=fahrtenDonnerstagAlle/fahrtenDonnerstagGesamt;
-	matrix[4][2]=fahrtenDonnerstag4/fahrtenDonnerstagGesamt;
+	matrix[3][2]=fahrtenMittwoch2/fahrtenMittwochGesamt;
+	matrix[3][1]=fahrtenMittwoch1/fahrtenMittwochGesamt;
+	matrix[4][5]=fahrtenDonnerstagAlle/fahrtenDonnerstagGesamt;
+	matrix[4][4]=fahrtenDonnerstag4/fahrtenDonnerstagGesamt;
 	matrix[4][3]=fahrtenDonnerstag3/fahrtenDonnerstagGesamt;
-	matrix[4][4]=fahrtenDonnerstag2/fahrtenDonnerstagGesamt;
-	matrix[4][5]=fahrtenDonnerstag1/fahrtenDonnerstagGesamt;
-	matrix[5][1]=fahrtenFreitagAlle/fahrtenFreitagGesamt;
-	matrix[5][2]=fahrtenFreitag4/fahrtenFreitagGesamt;
+	matrix[4][2]=fahrtenDonnerstag2/fahrtenDonnerstagGesamt;
+	matrix[4][1]=fahrtenDonnerstag1/fahrtenDonnerstagGesamt;
+	matrix[5][5]=fahrtenFreitagAlle/fahrtenFreitagGesamt;
+	matrix[5][4]=fahrtenFreitag4/fahrtenFreitagGesamt;
 	matrix[5][3]=fahrtenFreitag3/fahrtenFreitagGesamt;
-	matrix[5][4]=fahrtenFreitag2/fahrtenFreitagGesamt;
-	matrix[5][5]=fahrtenFreitag1/fahrtenFreitagGesamt;
+	matrix[5][2]=fahrtenFreitag2/fahrtenFreitagGesamt;
+	matrix[5][1]=fahrtenFreitag1/fahrtenFreitagGesamt;
 	return matrix;
 	}
 
