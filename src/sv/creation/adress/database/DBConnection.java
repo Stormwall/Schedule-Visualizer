@@ -469,16 +469,16 @@ public class DBConnection {
 			  stmnt.executeUpdate("INSERT INTO Day VALUES('6','So');"); 
 			}
 			
-			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('SEAGREEEN');");
-			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('LIGHTCORAL');");
-			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('ANTIQUEWHITE');");
-			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('WHITESMOKE');");
-			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('GREEEN');");
-			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('GREEEN');");
-			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('GREEEN');");
-			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('ORANGE');");
-			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('LIGHTSKYBLUE');");
-			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('GREEEN');");
+			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('0x669966ff');");
+			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('0xff9966ff');");
+			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('0x334db3ff');");
+			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('0xffffffff');");
+			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('0xb3b34dff');");
+			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('0xe6b34dff');");
+			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('0x1a1a1aff');");
+			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('0xffff4dff');");
+			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('0x80334dff');");
+			 stmnt.executeUpdate("INSERT INTO Colors(Farbe) VALUES('0x336666ff');");
 			 
 
 		//catch for the whole table creation
@@ -1065,7 +1065,8 @@ public class DBConnection {
 		  stmnt.executeUpdate("INSERT INTO Szenario (Bezeichnung, FahrplanID, Datum) VALUES('"+fileNameVergleich+"',(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%')), CURRENT_DATE);");
 		  
 		  while((it1.hasNext()&&it2.hasNext()&&it3.hasNext()&&it4.hasNext()&&it5.hasNext())){
-			  stmnt.executeUpdate("INSERT INTO PrimeDelaySzenario (DutyID, VehicleID, ServiceJourneyID, DepTime, Delay, SzenarioID) VALUES('"+it1.next()+"','"+it2.next()+"','"+it3.next()+"','"+it4.next()+"','"+it5.next()+"',(SELECT s.ID FROM Szenario AS s WHERE s.Bezeichnung LIKE('"+fileNameVergleich+"')));");
+
+			  stmnt.executeUpdate("INSERT INTO PrimeDelaySzenario (DutyID, VehicleID, ServiceJourneyID, DepTime, Delay, SzenarioID) VALUES('"+it1.next()+"','"+it2.next()+"',(SELECT ID FROM ServiceJourney WHERE ServiceJourneyID='"+it3.next()+"'),'"+it4.next()+"','"+it5.next()+"',(SELECT s.ID FROM Szenario AS s WHERE s.Bezeichnung LIKE('"+fileNameVergleich+"')));");
 		  }
 		  
 		  closeConnection();

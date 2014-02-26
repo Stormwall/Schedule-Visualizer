@@ -1678,13 +1678,14 @@ public class DBMatching {
 
 		// Anzahl der Szenarien wird ermittelt
 		for (int i = 0; i < primeDelay.size()-1; i++) {
-			if (Integer.parseInt(primeDelay.get(i).getServiceJourneyID()) > Integer
+			if (i >= 1&&Integer.parseInt(primeDelay.get(i).getServiceJourneyID()) > Integer
 					.parseInt(primeDelay.get(i + 1).getServiceJourneyID())) {
 				anzahlSzenarien++;
 			}
 		}
+	
 
-		for (int i = 1; i < anzahlSzenarien; i++) {
+		for (int i = 1; i <= anzahlSzenarien; i++) {
 			for (int j = 0; j < primeDelay.size(); j++) {
 				if (primeDelay.get(j).getSzenarioID() == i) {
 					primeDelayList.add(primeDelay.get(j));
