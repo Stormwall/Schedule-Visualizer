@@ -1,10 +1,12 @@
 package sv.creation.adress;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import sv.creation.adress.model.Fahrplan;
 import sv.creation.adress.model.Umlaufplan;
 import sv.creation.adress.util.BlockStatistics;
+import sv.creation.adress.util.Export;
 import sv.creation.adress.util.ScheduleStatistics;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,6 +17,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class StatistikenUPlanSingleLayoutController {
@@ -117,23 +120,23 @@ public class StatistikenUPlanSingleLayoutController {
 		TableColumn<BlockStatistics, Integer> blocknumberOfServiceTrips = new TableColumn<BlockStatistics, Integer>(
 				"# Servicefahrten");
 		TableColumn<BlockStatistics, Double> blockaverageLengthOfServiceTrips = new TableColumn<BlockStatistics, Double>(
-				"Ø Dauer Serv.F.");
+				"ï¿½ Dauer Serv.F.");
 		TableColumn<BlockStatistics, Integer> blocknumberOfDeadheads = new TableColumn<BlockStatistics, Integer>(
 				"# Verbindungsfahrten");
 		TableColumn<BlockStatistics, Double> blockaverageLengthOfDeadheads = new TableColumn<BlockStatistics, Double>(
-				"Ø Dauer Verb.F.");
+				"ï¿½ Dauer Verb.F.");
 		TableColumn<BlockStatistics, Integer> blocknumberOfWaitings = new TableColumn<BlockStatistics, Integer>(
 				"# Warten");
 		TableColumn<BlockStatistics, Double> blockaverageLengthOfWaitings = new TableColumn<BlockStatistics, Double>(
-				"Ø Dauer Warten");
+				"ï¿½ Dauer Warten");
 		TableColumn<BlockStatistics, Integer> blocknumberOfPullIns = new TableColumn<BlockStatistics, Integer>(
 				"# Pull in");
 		TableColumn<BlockStatistics, Double> blockaverageLengthOfPullIns = new TableColumn<BlockStatistics, Double>(
-				"Ø Pull in");
+				"ï¿½ Pull in");
 		TableColumn<BlockStatistics, Integer> blocknumberOfPullOuts = new TableColumn<BlockStatistics, Integer>(
 				"# Pull outs");
 		TableColumn<BlockStatistics, Double> blockaverageLengthOfPullOuts = new TableColumn<BlockStatistics, Double>(
-				"Ø Pull outs");
+				"ï¿½ Pull outs");
 		TableColumn<BlockStatistics, Double> blockserviceTimetotalBlockTimeRatio = new TableColumn<BlockStatistics, Double>(
 				"Servicefahrten / Gesamt");
 		TableColumn<BlockStatistics, Integer> blocknumberOfLines = new TableColumn<BlockStatistics, Integer>(
@@ -366,6 +369,28 @@ public class StatistikenUPlanSingleLayoutController {
 		fillLabels();
 		createTableViewBlockStat();
 		fillPieChart();
+	}
+	
+	public void handleExportCSV(){
+		FileChooser fileChooser = new FileChooser();
+
+		// Set extension filter
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+				"CSV files (*.csv)", "*.csv");
+		fileChooser.getExtensionFilters().add(extFilter);
+
+//		// Show save file dialog
+		File file = fileChooser.showSaveDialog(this.getDialogStage());
+
+		if (file != null) {
+			// Make sure it has the correct extension
+			if (!file.getPath().endsWith(".csv")) {
+				file = new File(file.getPath() + ".csv");
+			}
+
+			Export export = new Export();
+			export.exportUmlaufplanStatistik(blockStatistics, file);
+		}
 	}
 	public String changeTimeFormat(long seconds){
 		String time;

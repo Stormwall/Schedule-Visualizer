@@ -1,10 +1,12 @@
 package sv.creation.adress;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import sv.creation.adress.model.Dienstplan;
 import sv.creation.adress.model.Fahrplan;
 import sv.creation.adress.util.DutyStatistics;
+import sv.creation.adress.util.Export;
 import sv.creation.adress.util.ScheduleStatistics;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,6 +17,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class StatistikenDPlanSingleLayoutController {
@@ -129,23 +132,23 @@ public class StatistikenDPlanSingleLayoutController {
 		TableColumn<DutyStatistics, Double> dutynumberOfServiceTrips = new TableColumn<DutyStatistics, Double>(
 				"# Servicefahrten");
 		TableColumn<DutyStatistics, Double> dutyaverageLengthOfServiceTrips = new TableColumn<DutyStatistics, Double>(
-				"Ø Dauer Serv.F.");
+				"ï¿½ Dauer Serv.F.");
 		TableColumn<DutyStatistics, Double> dutynumberOfDeadheads = new TableColumn<DutyStatistics, Double>(
 				"# Verbindungsfahrten");
 		TableColumn<DutyStatistics, Double> dutyaverageLengthOfDeadheads = new TableColumn<DutyStatistics, Double>(
-				"Ø Dauer Verb.F.");
+				"ï¿½ Dauer Verb.F.");
 		TableColumn<DutyStatistics, Double> dutynumberOfWaitings = new TableColumn<DutyStatistics, Double>(
 				"# Warten");
 		TableColumn<DutyStatistics, Double> dutyaverageLengthOfWaitings = new TableColumn<DutyStatistics, Double>(
-				"Ø Dauer Warten");
+				"ï¿½ Dauer Warten");
 		TableColumn<DutyStatistics, Double> dutynumberOfPullIns = new TableColumn<DutyStatistics, Double>(
 				"# Pull in");
 		TableColumn<DutyStatistics, Double> dutyaverageLengthOfPullIns = new TableColumn<DutyStatistics, Double>(
-				"Ø Pull in");
+				"ï¿½ Pull in");
 		TableColumn<DutyStatistics, Double> dutynumberOfPullOuts = new TableColumn<DutyStatistics, Double>(
 				"# Pull outs");
 		TableColumn<DutyStatistics, Double> dutyaverageLengthOfPullOuts = new TableColumn<DutyStatistics, Double>(
-				"Ø Pull outs");
+				"ï¿½ Pull outs");
 		TableColumn<DutyStatistics, Double> dutyserviceTimetotalDutyTimeRatio = new TableColumn<DutyStatistics, Double>(
 				"Servicefahrten / Gesamt");
 		TableColumn<DutyStatistics, Integer> dutynumberOfLines = new TableColumn<DutyStatistics, Integer>(
@@ -408,6 +411,29 @@ public class StatistikenDPlanSingleLayoutController {
 		createTableViewDutyStat();
 		fillPieChart();
 	}
+	
+	public void handleExportCSV(){
+		FileChooser fileChooser = new FileChooser();
+
+		// Set extension filter
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+				"CSV files (*.csv)", "*.csv");
+		fileChooser.getExtensionFilters().add(extFilter);
+
+		// Show save file dialog
+		File file = fileChooser.showSaveDialog(this.getDialogStage());
+
+		if (file != null) {
+			// Make sure it has the correct extension
+			if (!file.getPath().endsWith(".csv")) {
+				file = new File(file.getPath() + ".csv");
+			}
+
+			Export export = new Export();
+			export.exportDienstplanStatistik(dutyStatistics, file);
+		}
+	}
+	
 	public String changeTimeFormat(long seconds){
 		String time;
 		long hr = (long)(seconds/3600);

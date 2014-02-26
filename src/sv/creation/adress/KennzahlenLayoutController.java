@@ -119,7 +119,7 @@ public class KennzahlenLayoutController {
 			}
 			this.mainApp.showStatistikUPlanSingle(this.umlaufplanChoiceliste,fahrplan);
 		} else {
-			String fehlerA = "Es wurde noch Element ausgewählt";
+			String fehlerA = "Es wurde noch Element ausgewï¿½hlt";
 			String fehlerB = "Welche Statistik soll angezeigt werden ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
@@ -136,14 +136,14 @@ public class KennzahlenLayoutController {
 			
 			Fahrplan fahrplan = null;
 			for (int i = 0; i < this.fahrplanliste.size(); i++) {
-				if (this.umlaufplanChoiceliste.get(0).getFahrplanID()==this.fahrplanliste.get(i).getId()) {
+				if (this.dienstplanChoiceliste.get(0).getFahrplanID()==this.fahrplanliste.get(i).getId()) {
 					fahrplan = this.fahrplanliste.get(i);
 				}
 			}
 			this.mainApp.showStatistikDPlanSingle(this.dienstplanChoiceliste, fahrplan);
 
 		} else {
-			String fehlerA = "Es wurde noch Element ausgewählt";
+			String fehlerA = "Es wurde noch Element ausgewï¿½hlt";
 			String fehlerB = "Welche Statistik soll angezeigt werden ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
@@ -243,7 +243,7 @@ public class KennzahlenLayoutController {
 		// Berrechnung der Plaene
 		double result = calc.berechneDistanzVehSchedule(this.umlaufplanChoiceliste, fahrplan);
 
-		String fehlerA = "Das Distanzmaß der eingebenen Umlaufplaene lautet : "
+		String fehlerA = "Das Distanzmaï¿½ der eingebenen Umlaufplaene lautet : "
 				+ result;
 		String fehlerB = "Ihr Ergebnis";
 		String fehlerC = "Ausgabe";
@@ -276,7 +276,7 @@ public class KennzahlenLayoutController {
 		// Berrechnung der Plaene
 		double result = calc.berechneDistanzCrewSchedule(this.dienstplanChoiceliste, fahrplan);
 
-		String fehlerA = "Das Distanzmaß der eingebenen Dienstplaene lautet : "
+		String fehlerA = "Das Distanzmaï¿½ der eingebenen Dienstplaene lautet : "
 				+ result;
 		String fehlerB = "Ihr Ergebnis";
 		String fehlerC = "Ausgabe";
@@ -412,7 +412,7 @@ public class KennzahlenLayoutController {
 				this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
 			}
 		} else {
-			String fehlerA = "Es wurde noch Element ausgewählt";
+			String fehlerA = "Es wurde noch Element ausgewï¿½hlt";
 			String fehlerB = "Was soll ausgewaehlt werden ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
@@ -426,7 +426,7 @@ public class KennzahlenLayoutController {
 	private void deleteUmlaufplan() {
 
 		if (this.umlaufplanChoiceliste.isEmpty()) {
-			String fehlerA = "Es wurde noch Element ausgewählt";
+			String fehlerA = "Es wurde noch Element ausgewï¿½hlt";
 			String fehlerB = "Was soll geloescht werden ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
@@ -639,7 +639,7 @@ public class KennzahlenLayoutController {
 				this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
 			}
 		} else {
-			String fehlerA = "Es wurde noch Element ausgewählt";
+			String fehlerA = "Es wurde noch Element ausgewï¿½hlt";
 			String fehlerB = "Was soll ausgewaehlt werden ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
@@ -654,7 +654,7 @@ public class KennzahlenLayoutController {
 	private void deleteDienstplan() {
 
 		if (this.dienstplanChoiceliste.isEmpty()) {
-			String fehlerA = "Es wurde noch Element ausgewählt";
+			String fehlerA = "Es wurde noch Element ausgewï¿½hlt";
 			String fehlerB = "Was soll geloescht werden ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
@@ -788,7 +788,7 @@ public class KennzahlenLayoutController {
 			this.pVergleich.setDisable(false);
 			
 		} else {
-			String fehlerA = "Es wurde noch Element ausgewählt";
+			String fehlerA = "Es wurde noch Element ausgewï¿½hlt";
 			String fehlerB = "Was soll ausgewaehlt werden ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
@@ -804,7 +804,7 @@ public class KennzahlenLayoutController {
 
 		if (this.fahrplanChoiceliste.isEmpty()) {
 
-			String fehlerA = "Es wurde noch Element ausgewählt";
+			String fehlerA = "Es wurde noch Element ausgewï¿½hlt";
 			String fehlerB = "Was soll geloescht werden ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
