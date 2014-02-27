@@ -15,8 +15,6 @@ public class Export {
 	
 	FileWriter writer;
 	String lineSeparator = System.getProperty("line.separator");
-
-//	private ArrayList<DutyStatistics> dutyStatistics;
 	
 	
 	// Creates the txt-file of a selected dienstplan

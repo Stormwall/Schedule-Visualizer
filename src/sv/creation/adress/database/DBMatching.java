@@ -102,7 +102,6 @@ public class DBMatching {
 	Statement stmt4;
 
 	public DBMatching() {
-		System.out.println("DBMatching");
 	}
 
 	// **********************************************************************

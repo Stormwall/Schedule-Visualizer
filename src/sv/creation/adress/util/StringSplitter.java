@@ -270,7 +270,6 @@ public class StringSplitter {
 		// ursprï¿½ï¿½nglichen String ignoriert werden.
 		Collections.addAll(stringList, str.split("\\s*,\\s*"));
 
-		System.out.println(stringList);
 		return stringList;
 	}
 	
@@ -809,7 +808,6 @@ public class StringSplitter {
 				}
 				
 				else {
-					System.out.println("Es ist kein passender Fahrplan vorhanden!");
 				}
 				
 			} 
@@ -976,7 +974,6 @@ public class StringSplitter {
 				diensttypenImportiert=true;
 				}
 				else {
-					System.out.println("Es ist kein passender Fahrplan vorhanden!");
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -1131,15 +1128,14 @@ public class StringSplitter {
 					
 					else{
 						dienstplanDiensttypenFail=true;
-				System.out.println("Es sind keine passenden Diensttypen vorhanden!");}}
+					}}
 			
 				else{
 					dienstplanUmlaufplanFail=true;
-				System.out.println("Es ist kein passender Umlaufplan vorhanden!");	
+				
 			}}
 			else {
 				dienstplanFahrplanFail=true;
-				System.out.println("Es ist kein passender Fahrplan vorhanden!");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -1189,7 +1185,6 @@ public class StringSplitter {
 			szenarienImportiert=true;
 			}
 			else{
-				System.out.println("Kein passender Fahrplan vorhanden!");
 			}
 			}catch (IOException e) {
 				e.printStackTrace();

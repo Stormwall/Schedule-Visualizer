@@ -58,7 +58,6 @@ public class DBConnection {
 	}
 	
 	public DBConnection(){
-		System.out.println("DBConnection");
 	}
 	//Create connection to database
 	
@@ -483,7 +482,6 @@ public class DBConnection {
 
 		//catch for the whole table creation
 		} catch (SQLException e) {
-			System.out.println("Could not execute SQL-Query!");
 			e.printStackTrace();
 		}
 		}
@@ -715,7 +713,6 @@ public class DBConnection {
 		  //All Fahrplan array lists will be cleared
 		  ss.clearFahrplanArraylists();
 		  
-		  System.out.println("Fahrplan importiert!");
 		  closeConnection();
 		  
 	//catch for filling schedule data into tables
@@ -821,8 +818,7 @@ public class DBConnection {
 		 
 		//All umlaufplan array lists will be cleared
 		  closeConnection();
-		  System.out.println("Umlaufplan importiert!");
-		  
+		 
 		 
 		  
 		  //catch for filling tour plan tables
@@ -900,7 +896,6 @@ public class DBConnection {
 			  		+ "(SELECT f.ID FROM Fahrplan AS f WHERE f.Bezeichnung LIKE('%"+finalString+"%')));");
 		  }
 		  
-		  System.out.println("Diensttypen importiert!");
 		  closeConnection();
 		  
 		  //catch for filling duty type
@@ -1031,7 +1026,6 @@ public class DBConnection {
 		  //All Dienstplan array lists will be cleared
 		  ss.clearDienstplanArraylists();
 		  closeConnection();
-		  System.out.println("Dienstplan importiert!");
 		  //catch for filling duty roster tables
 		  }catch(SQLException e){
 		  System.out.println("Could not execute SQL-Query!");
@@ -1075,7 +1069,6 @@ public class DBConnection {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} 
-		System.out.println("Szenario importiert!");
 	}
 	
 	//Prüft, ob ein Fahrplan in der Datenbank existiert
