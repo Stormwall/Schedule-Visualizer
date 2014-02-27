@@ -57,7 +57,7 @@ public class BlockStatistics {
 			blockID = up.getUmlauf().get(block).getId();
 			HashSet blocklineID = new HashSet();			
 			BlockStatistics blockstat = new BlockStatistics();
-			for (int blockelement = 0; blockelement < up.getFahrtZuUmlauf().size(); blockelement++){
+			for (int blockelement = 0; blockelement < up.getFahrtZuUmlauf().size()-1; blockelement++){
 				
 				
 				
@@ -72,8 +72,8 @@ public class BlockStatistics {
 							//Service Trip
 							blockstat.blocknumberOfServiceTrips++;
 							blockstat.blockoveralldurationServicetrips = blockstat.blockoveralldurationServicetrips + runtime;
-							int test = fp.getServicejourney().get(Integer.parseInt(up.getFahrtZuUmlauf().get(blockelement).getServiceJourneyID())).getLineID();
-							blocklineID.add(fp.getServicejourney().get(Integer.parseInt(up.getFahrtZuUmlauf().get(blockelement).getServiceJourneyID())).getLineID());
+//							int test = fp.getServicejourney().get(Integer.parseInt(up.getFahrtZuUmlauf().get(blockelement).getServiceJourneyID())).getLineID();
+							blocklineID.add(fp.getServicejourney().get((Integer.parseInt(up.getFahrtZuUmlauf().get(blockelement).getServiceJourneyID()))-1).getLineID());
 							
 							break;
 						case 2:

@@ -98,10 +98,10 @@ public class DutyStatistics {
 
 						dutylineID.add(fp
 								.getServicejourney()
-								.get(Integer
+								.get((Integer
 										.parseInt(dp.getDutyelement()
 												.get(dutyelement)
-												.getServiceJourneyID()))
+												.getServiceJourneyID()))-1)
 								.getLineID());
 						break;
 					case 2:
