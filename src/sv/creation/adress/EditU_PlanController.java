@@ -89,7 +89,7 @@ public class EditU_PlanController {
 	}
 
 	/**
-	 * Called when the user clicks ausw�hlen.
+	 * Called when the user clicks ausw���hlen.
 	 */
 	@FXML
 	private void handleauswaehlen() {
@@ -123,7 +123,7 @@ public class EditU_PlanController {
 	}
 
 	/**
-	 * Called when the user clicks �bernehmen.
+	 * Called when the user clicks ���bernehmen.
 	 */
 	@FXML
 	private void handleuebernehemen() {
@@ -133,7 +133,7 @@ public class EditU_PlanController {
 	}
 
 	/**
-	 * Safes U-Plan
+	 * Saves U-Plan
 	 */
 
 	@FXML
@@ -149,6 +149,7 @@ public class EditU_PlanController {
 			this.umlaufplan.setBezeichnung(name);
 			this.umlaufplanliste.add(this.umlaufplan);
 			dbm.saveUmlaufplan(this.umlaufplan, name);
+			this.mainApp.informationMeldung("", "Der Plan wurde erfolgreich unter dem Namen '"+name+"' gespeichert.", "Speichervorgang erfolgreich");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -165,7 +166,7 @@ public class EditU_PlanController {
 
 		if (this.elementsTable.getSelectionModel().getSelectedItem() != null) {
 
-			// Ausgew�hltes Element auslesen
+			// Ausgew���hltes Element auslesen
 
 			Blockelement blockelement = this.elementsTable.getSelectionModel()
 					.getSelectedItem();
@@ -201,7 +202,7 @@ public class EditU_PlanController {
 			}
 
 		} else {
-			String fehlerA = "Es wurde noch Element ausgew�hlt";
+			String fehlerA = "Es wurde noch Element ausgew���hlt";
 			String fehlerB = "Was soll bearbeitet werden ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
@@ -218,7 +219,7 @@ public class EditU_PlanController {
 		// Fehlerbehebung bei keiner Auswahl
 		if (this.elementsTable.getSelectionModel().getSelectedItem() != null) {
 
-			// Ausgew�hltes Element auslesen
+			// Ausgew���hltes Element auslesen
 
 			Blockelement blockelement = this.elementsTable.getSelectionModel()
 					.getSelectedItem();
@@ -783,7 +784,7 @@ public class EditU_PlanController {
 
 					fahrtDauer = (int) (differenz * (abstandNetz / 60));
 
-					// F�rben der Elemente
+					// F���rben der Elemente
 
 					switch (umlaufplan.getFahrtZuUmlauf().get(i)
 							.getElementType()) {

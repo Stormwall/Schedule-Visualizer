@@ -1,14 +1,14 @@
 package sv.creation.adress.model;
 
 public class Verbindung {
-	
+
 	private int fromStopID;
 	private int toStopID;
 	private String fromTime;
 	private String toTime;
 	private int distanz;
 	private int fahrzeit;
-	
+
 	/**
 	 * @param fromStopID
 	 * @param toStopID
@@ -28,6 +28,7 @@ public class Verbindung {
 		this.fahrzeit = fahrzeit;
 	}
 
+	// Getter- und setter-Methoden
 	public int getFromStopID() {
 		return fromStopID;
 	}
@@ -75,8 +76,5 @@ public class Verbindung {
 	public void setFahrzeit(int fahrzeit) {
 		this.fahrzeit = fahrzeit;
 	}
-	
-	
-	
 
 }

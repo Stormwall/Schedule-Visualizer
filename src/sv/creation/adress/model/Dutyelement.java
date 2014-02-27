@@ -11,7 +11,6 @@ public class Dutyelement {
 	private String arrTime;
 	private int elementType;
 	private String elementTypeName;
-	// private String servicejourneycode;
 	private int dienstplanID;
 	private String driveTime;
 	private int dutyHilfsID;
@@ -47,11 +46,11 @@ public class Dutyelement {
 		this.arrTime = arrTime;
 		this.elementType = elementType;
 		this.elementTypeName = elementTypeName;
-		// this.servicejourneycode = servicejourneycode;
 		this.dienstplanID = dienstplanID;
 		this.dutyHilfsID = dutyHilfsID;
 	}
 
+	//Getter- und setter-Methoden
 	public int getId() {
 		return id;
 	}

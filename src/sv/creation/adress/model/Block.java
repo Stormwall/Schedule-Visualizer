@@ -1,12 +1,11 @@
 package sv.creation.adress.model;
 
 public class Block {
-	
+
 	private int id;
 	private int vehTypeID;
 	private int depotID;
-	
-	
+
 	/**
 	 * @param id
 	 * @param vehTypeID
@@ -19,6 +18,7 @@ public class Block {
 		this.depotID = depotID;
 	}
 
+	// Getter- und setter-Methoden
 	public int getId() {
 		return id;
 	}
@@ -42,9 +42,5 @@ public class Block {
 	public void setdepotID(int depotID) {
 		this.depotID = depotID;
 	}
-	
-	
-	
-	
 
 }

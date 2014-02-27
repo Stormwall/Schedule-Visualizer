@@ -10,7 +10,7 @@ public class VehicleType {
 	private int hourCost;
 	private int capacity;
 	private int fahrplanID;
-	
+
 	/**
 	 * @param iD
 	 * @param code
@@ -18,10 +18,12 @@ public class VehicleType {
 	 * @param fahrzeugkosten
 	 * @param kilometerkosten
 	 * @param stundenkosten
-	 * @param kapazit�t
+	 * @param kapazit
+	 *            ���t
 	 */
 	public VehicleType(int iD, int code, int name, int fahrzeugkosten,
-			int kilometerkosten, int stundenkosten, int kapazitaet, int fahrplanID) {
+			int kilometerkosten, int stundenkosten, int kapazitaet,
+			int fahrplanID) {
 		super();
 		this.ID = iD;
 		this.code = code;
@@ -33,6 +35,7 @@ public class VehicleType {
 		this.fahrplanID = fahrplanID;
 	}
 
+	// Getter- und setter-Methoden
 	public int getID() {
 		return ID;
 	}
@@ -96,6 +99,5 @@ public class VehicleType {
 	public void setFahrplanID(int fahrplanID) {
 		this.fahrplanID = fahrplanID;
 	}
- 
-	
+
 }

@@ -18,6 +18,7 @@ public class Duty {
 		this.type = type;
 	}
 
+	//Getter- und setter-Methoden
 	public String getId() {
 		return id;
 	}

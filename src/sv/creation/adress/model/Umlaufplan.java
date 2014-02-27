@@ -3,7 +3,7 @@ package sv.creation.adress.model;
 import java.util.ArrayList;
 
 public class Umlaufplan {
-	
+
 	private int id;
 	private String name;
 	private String bezeichnung;
@@ -16,18 +16,21 @@ public class Umlaufplan {
 	/**
 	 * @param umlaufplan
 	 */
-	public Umlaufplan(int id, String bezeichnung,ArrayList<Block> umlauf, ArrayList<Blockelement> fahrtZuUmlauf,int dayID, int fahrplanID, String name,String date) {
+	public Umlaufplan(int id, String bezeichnung, ArrayList<Block> umlauf,
+			ArrayList<Blockelement> fahrtZuUmlauf, int dayID, int fahrplanID,
+			String name, String date) {
 		super();
-		this.id=id;
+		this.id = id;
 		this.bezeichnung = bezeichnung;
 		this.umlauf = umlauf;
-		this.fahrtZuUmlauf=fahrtZuUmlauf;
+		this.fahrtZuUmlauf = fahrtZuUmlauf;
 		this.dayID = dayID;
 		this.fahrplanID = fahrplanID;
 		this.name = name;
 		this.date = date;
 	}
- 
+
+	// Getter- und setter-Methoden
 	public int getId() {
 		return id;
 	}
@@ -79,11 +82,5 @@ public class Umlaufplan {
 	public void setBezeichnung(String bezeichnung) {
 		this.bezeichnung = bezeichnung;
 	}
-	
-
-	
-
-	
-	
 
 }

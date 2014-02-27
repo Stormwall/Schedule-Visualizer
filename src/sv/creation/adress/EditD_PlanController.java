@@ -143,6 +143,7 @@ public class EditD_PlanController {
 		this.dienstplan.setBezeichnung(name);
 		this.dienstplanliste.add(this.dienstplan);
 		dbm.saveDienstplan(this.dienstplan, name);
+		this.mainApp.informationMeldung("", "Der Plan wurde erfolgreich unter dem Namen '"+name+"' gespeichert.", "Speichervorgang erfolgreich");
 	}
 
 	/**

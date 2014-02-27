@@ -1078,6 +1078,7 @@ public class DBConnection {
 		System.out.println("Szenario importiert!");
 	}
 	
+	//Prüft, ob ein Fahrplan in der Datenbank existiert
 	public boolean checkFahrplan(String filename){
 		
 		ArrayList <String> fahrplaene=new ArrayList<String>();

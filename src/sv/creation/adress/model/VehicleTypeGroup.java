@@ -21,7 +21,7 @@ public class VehicleTypeGroup {
 		this.fahrplanID = fahrplanID;
 	}
 
-
+	//Getter- und setter-Methoden
 	public int getId() {
 		return id;
 	}

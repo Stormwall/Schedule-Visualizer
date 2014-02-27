@@ -10,6 +10,7 @@ public class DBSave {
 
 	Statement stmt;
 
+	//Speichert den Umlauflplan in die Datenbank
 	public void saveUmlaufplan(Umlaufplan umlaufplan, String name) {
 
 		DBConnection db = new DBConnection();
@@ -114,6 +115,7 @@ public class DBSave {
 		}
 	}
 
+	//Speichert den Dienstplan in die Datenbank
 	public void saveDienstplan(Dienstplan dienstplan, String name) {
 
 		DBConnection db = new DBConnection();

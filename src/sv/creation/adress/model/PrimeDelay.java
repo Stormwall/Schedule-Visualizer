@@ -1,14 +1,14 @@
 package sv.creation.adress.model;
 
 public class PrimeDelay {
-	
+
 	private String dutyID;
 	private String vehicleID;
 	private String serviceJourneyID;
 	private String depTime;
 	private int delay;
 	private int szenarioID;
-	
+
 	public PrimeDelay(String dutyID, String vehicleID, String serviceJourneyID,
 			String depTime, int delay, int szenarioID) {
 		super();
@@ -20,7 +20,7 @@ public class PrimeDelay {
 		this.szenarioID = szenarioID;
 	}
 
-	//getter and setter methods
+	// getter and setter methods
 	public String getDutyID() {
 		return dutyID;
 	}
@@ -68,7 +68,5 @@ public class PrimeDelay {
 	public void setSzenarioID(int szenarioID) {
 		this.szenarioID = szenarioID;
 	}
-	
-
 
 }

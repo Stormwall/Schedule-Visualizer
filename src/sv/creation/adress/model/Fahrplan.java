@@ -69,7 +69,6 @@ public class Fahrplan {
 
 
 	//Getter an setter methods
-	
 	public ArrayList<Stoppoint> getHaltestellen() {
 		return haltestellen;
 	}
@@ -230,12 +229,5 @@ public class Fahrplan {
 	public void setLinebundle(ArrayList<Linebundle> linebundle) {
 		this.linebundle = linebundle;
 	}
-
-
-	
-	
-	
-	
-	
 
 }

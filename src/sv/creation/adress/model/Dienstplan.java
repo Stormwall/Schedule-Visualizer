@@ -32,6 +32,7 @@ public class Dienstplan {
 		
 	}
 
+	//Getter- und setter-Methoden
 	public int getId() {
 		return id;
 	}

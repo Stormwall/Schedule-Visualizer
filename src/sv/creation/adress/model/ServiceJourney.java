@@ -1,7 +1,7 @@
 package sv.creation.adress.model;
 
 public class ServiceJourney {
-	
+
 	private int iD;
 	private int serviceJourneyID;
 	private int lineID;
@@ -18,29 +18,33 @@ public class ServiceJourney {
 	private int toStopBreakFacility;
 	private String code;
 	private int fahrplanID;
-	
-	public ServiceJourney(int iD, int serviceJourneyID, int lineID, int fromStopID, int toStopID, String depTime, String arrTime, int minAheadTime, int minLayoverTime, int vehTypeGroupID, int maxShiftBackwardSeconds, int maxShiftForwardSeconds, int fromStopBreakFacility, int toStopBreakFacility, String code, int fahrplanID){
+
+	public ServiceJourney(int iD, int serviceJourneyID, int lineID,
+			int fromStopID, int toStopID, String depTime, String arrTime,
+			int minAheadTime, int minLayoverTime, int vehTypeGroupID,
+			int maxShiftBackwardSeconds, int maxShiftForwardSeconds,
+			int fromStopBreakFacility, int toStopBreakFacility, String code,
+			int fahrplanID) {
 		super();
-		this.iD=iD;
+		this.iD = iD;
 		this.serviceJourneyID = serviceJourneyID;
-		this.lineID=lineID;
-		this.fromStopID=fromStopID;
-		this.toStopID=toStopID;
-		this.depTime=depTime;
-		this.arrTime=arrTime;
-		this.minAheadTime=minAheadTime;
-		this.minLayoverTime=minLayoverTime;
-		this.vehTypeGroupID=vehTypeGroupID;
-		this.maxShiftBackwardSeconds=maxShiftBackwardSeconds;
-		this.maxShiftForwardSeconds=maxShiftForwardSeconds;
-		this.fromStopBreakFacility=fromStopBreakFacility;
-		this.toStopBreakFacility=toStopBreakFacility;
-		this.code=code;
+		this.lineID = lineID;
+		this.fromStopID = fromStopID;
+		this.toStopID = toStopID;
+		this.depTime = depTime;
+		this.arrTime = arrTime;
+		this.minAheadTime = minAheadTime;
+		this.minLayoverTime = minLayoverTime;
+		this.vehTypeGroupID = vehTypeGroupID;
+		this.maxShiftBackwardSeconds = maxShiftBackwardSeconds;
+		this.maxShiftForwardSeconds = maxShiftForwardSeconds;
+		this.fromStopBreakFacility = fromStopBreakFacility;
+		this.toStopBreakFacility = toStopBreakFacility;
+		this.code = code;
 		this.fahrplanID = fahrplanID;
 	}
-	
-	//Getter methods
 
+	//Getter- und setter-Methoden
 	public int getiD() {
 		return iD;
 	}
@@ -112,8 +116,5 @@ public class ServiceJourney {
 	public void setServiceJourneyID(int serviceJourneyID) {
 		this.serviceJourneyID = serviceJourneyID;
 	}
-	
-	
- 
 
 }

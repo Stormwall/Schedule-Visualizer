@@ -30,6 +30,7 @@ public class Deadruntime {
 		this.fahrplanID = fahrplanID;
 	}
 
+	//Getter- und setter-Methoden
 	public int getFromStopID() {
 		return fromStopID;
 	}

@@ -26,7 +26,7 @@ public class Days {
 		this.fahrplanID = fahrplanID;
 	}
 
-
+	//Getter- und setter-Methoden
 	public int getTripID() {
 		return tripID;
 	}

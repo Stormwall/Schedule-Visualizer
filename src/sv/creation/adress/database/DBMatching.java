@@ -450,8 +450,6 @@ public class DBMatching {
 									+ rest3.getString("ServiceJourneyID")
 									+ "' AND ex.ID='"
 									+ rest3.getString("ID")
-									// + "' AND b.BlockID='"
-									// + rest3.getString("BlockID")
 									+ "' AND d.ID='"
 									+ rest3.getString("DutyID") + "';");
 				}

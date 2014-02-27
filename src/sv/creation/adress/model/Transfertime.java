@@ -8,7 +8,7 @@ public class Transfertime {
 	private String toTime;
 	private int runtime;
 	private int fahrplanID;
-	
+
 	public Transfertime(int fromtStopID, int toStopID, String fromTime,
 			String toTime, int runtime, int fahrplanID) {
 		super();
@@ -20,6 +20,7 @@ public class Transfertime {
 		this.fahrplanID = fahrplanID;
 	}
 
+	// Getter- und setter-Methoden
 	public int getFromtStopID() {
 		return fromtStopID;
 	}
@@ -67,8 +68,5 @@ public class Transfertime {
 	public void setFahrplanID(int fahrplanID) {
 		this.fahrplanID = fahrplanID;
 	}
-	
-	 
-	
-	
+
 }

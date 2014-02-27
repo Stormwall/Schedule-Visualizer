@@ -46,6 +46,8 @@ public class Blockelement {
 		
 		
 	}
+	
+	//Getter- und Setter-Methoden
 	public int getId() {
 		return id;
 	}

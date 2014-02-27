@@ -7,7 +7,7 @@ public class Reliefpoint {
 	private int haltestellenID;
 	private String wechselZeit;
 	private int fahrplanID;
-	
+
 	/**
 	 * @param iD
 	 * @param serviceJourneyID
@@ -24,6 +24,7 @@ public class Reliefpoint {
 		this.fahrplanID = fahrplanID;
 	}
 
+	//Getter- und setter-Methoden
 	public int getID() {
 		return ID;
 	}
@@ -63,9 +64,5 @@ public class Reliefpoint {
 	public void setFahrplanID(int fahrplanID) {
 		this.fahrplanID = fahrplanID;
 	}
-	
-	 
-	
-	
-	
+
 }
