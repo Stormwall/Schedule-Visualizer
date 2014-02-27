@@ -20,7 +20,7 @@
                 <AnchorPane maxWidth="169.0" minHeight="0.0" minWidth="169.0" prefHeight="160.0" prefWidth="100.0" styleClass="background">
                   <children>
                     <Label styleClass="label-white" text="Datenbankverwaltung" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="6.0" />
-                    <Button mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Abbrechen" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="90.0" />
+                    <Button mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Abbrechen" AnchorPane.leftAnchor="45.0" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="458.0" />
                     <HBox id="HBox" alignment="CENTER" prefWidth="169.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="51.0">
                       <children>
                         <Button mnemonicParsing="false" onAction="#handleImport" prefWidth="78.0" styleClass="dark-blue" text="Import">
@@ -28,6 +28,7 @@
                             <Insets right="10.0" />
                           </HBox.margin>
                         </Button>
+                        <ProgressIndicator fx:id="pIndik" opacity="0.0" progress="-1.0" visible="true" />
                       </children>
                     </HBox>
                   </children>

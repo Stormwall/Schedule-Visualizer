@@ -29,7 +29,7 @@ public class MainApplication extends Application {
 	private Stage primaryStage;
 
 	private BorderPane rootLayout;
-	MainLayoutController mainLayoutcontroller;
+	private MainLayoutController mainLayoutcontroller;
 
 	// Erstellen eines DBMatching-Objekts
 
@@ -262,6 +262,7 @@ public class MainApplication extends Application {
 			controller.setFahrplanliste(this.fahrplanliste);
 			controller.setSzenarienListe(this.szenarienListe);
 			controller.setDialogStage(dialogStage);
+			controller.setMainLayoutcontroller(this.mainLayoutcontroller);
 			controller.setMainApp(this);
 
 			dialogStage.showAndWait();
@@ -374,9 +375,10 @@ public class MainApplication extends Application {
 			// Set the controller
 			FahrplanGraphicLayoutController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
+			controller.setMainApp(this);
 			controller.setFahrplan(fahrplan);
 			controller.setErstauswahl(auswahl);
-			controller.setMainApp(this);
+			
 
 			dialogStage.show();
 
@@ -412,7 +414,8 @@ public class MainApplication extends Application {
 			controller.setMainApp(this);
 			controller.setColors(this.color);
 
-			dialogStage.show();
+			dialogStage.showAndWait();
+			this.mainLayoutcontroller.refreshBothGraphics();
 
 		} catch (IOException e) {
 			// Exception gets thrown if the fxml file could not be loade
@@ -860,8 +863,39 @@ public class MainApplication extends Application {
 
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
+	}	
+
+	public ArrayList<Umlaufplan> getUmlaufplanliste() {
+		return umlaufplanliste;
 	}
 
+	public void setUmlaufplanliste(ArrayList<Umlaufplan> umlaufplanliste) {
+		this.umlaufplanliste = umlaufplanliste;
+	}
+
+	public ArrayList<Dienstplan> getDienstplanliste() {
+		return dienstplanliste;
+	}
+
+	public void setDienstplanliste(ArrayList<Dienstplan> dienstplanliste) {
+		this.dienstplanliste = dienstplanliste;
+	}
+
+	public ArrayList<Fahrplan> getFahrplanliste() {
+		return fahrplanliste;
+	}
+
+	public void setFahrplanliste(ArrayList<Fahrplan> fahrplanliste) {
+		this.fahrplanliste = fahrplanliste;
+	}
+
+	public ArrayList<Szenario> getSzenarienListe() {
+		return szenarienListe;
+	}
+
+	public void setSzenarienListe(ArrayList<Szenario> szenarienListe) {
+		this.szenarienListe = szenarienListe;
+	}
 	// Main Method
 
 	public static void main(String[] args) {

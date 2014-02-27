@@ -275,44 +275,53 @@ public class FahrplanGraphicLayoutController {
 	@FXML
 	public void changeTimewindow() {
 
-		if (this.tagStart <= this.tagEnde) {
+		try {
+			if (this.startTag.getSelectionModel().getSelectedIndex() <= this.endTag.getSelectionModel().getSelectedIndex()) {
 
-			// Clearen des Planes
+				// Clearen des Planes
 
-			this.fahrplanvergleich.getData().clear();
+				this.fahrplanvergleich.getData().clear();
 
-			// Clearen der Legende
+				// Clearen der Legende
 
-			ArrayList<Label> labelListe = new ArrayList<Label>();
-			labelListe.add(this.monday);
-			labelListe.add(this.tuesday);
-			labelListe.add(this.wednsday);
-			labelListe.add(this.thursday);
-			labelListe.add(this.friday);
-			labelListe.add(this.saturday);
-			labelListe.add(this.sunday);
+				ArrayList<Label> labelListe = new ArrayList<Label>();
+				labelListe.add(this.monday);
+				labelListe.add(this.tuesday);
+				labelListe.add(this.wednsday);
+				labelListe.add(this.thursday);
+				labelListe.add(this.friday);
+				labelListe.add(this.saturday);
+				labelListe.add(this.sunday);
 
-			ArrayList<Pane> paneListe = new ArrayList<Pane>();
-			paneListe.add(this.mondayP);
-			paneListe.add(this.tuesdayP);
-			paneListe.add(this.wednsdayP);
-			paneListe.add(this.thursdayP);
-			paneListe.add(this.fridayP);
-			paneListe.add(this.saturdayP);
-			paneListe.add(this.sundayP);
+				ArrayList<Pane> paneListe = new ArrayList<Pane>();
+				paneListe.add(this.mondayP);
+				paneListe.add(this.tuesdayP);
+				paneListe.add(this.wednsdayP);
+				paneListe.add(this.thursdayP);
+				paneListe.add(this.fridayP);
+				paneListe.add(this.saturdayP);
+				paneListe.add(this.sundayP);
 
-			for (int i = 0; i < labelListe.size(); i++) {
-				labelListe.get(i).setOpacity(0);
-				paneListe.get(i).setOpacity(0);
+				for (int i = 0; i < labelListe.size(); i++) {
+					labelListe.get(i).setOpacity(0);
+					paneListe.get(i).setOpacity(0);
+				}
+
+				// Auslesen der Dropdownmenues
+
+				this.tagStart = this.startTag.getSelectionModel()
+						.getSelectedIndex();
+				this.tagEnde = this.endTag.getSelectionModel().getSelectedIndex();
+
+				drawFahrplanvergleich();
+			}else{
+				String fehlerA = "Reihenfolge der Tage unmöglich";
+				String fehlerB = "Bitte Auswahl kontrollieren";
+				String fehlerC = "Fehler";
+				this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
 			}
-
-			// Auslesen der Dropdownmenues
-
-			this.tagStart = this.startTag.getSelectionModel()
-					.getSelectedIndex();
-			this.tagEnde = this.endTag.getSelectionModel().getSelectedIndex();
-
-			drawFahrplanvergleich();
+		} catch (Exception e) {
+		
 		}
 	}
 
@@ -1059,7 +1068,7 @@ public class FahrplanGraphicLayoutController {
 		this.endTag.getSelectionModel().select(this.erstauswahl);
 
 		if(this.fahrplan.getDays().size()==0){
-//		this.mainApp.warnungsMeldung("", "Die notwendigen Informationen sind in diesem Fahrplan nicht vorhanden.", "Fehler beim Vergleich");
+		this.mainApp.warnungsMeldung("", "Die notwendigen Informationen sind in diesem Fahrplan nicht vorhanden.", "Fehler beim Vergleich");
 		}else{
 		// Zeichnet die Grafik
 		drawFahrplanvergleich();
