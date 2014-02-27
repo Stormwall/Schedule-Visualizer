@@ -327,8 +327,12 @@ public class KennzahlenLayoutController {
 	 */
 	@FXML
 	private void handleP_Vergleich() {
-
+		
+		if(this.fahrplanChoiceliste.get(0).getDays().size()==0){
+			this.mainApp.warnungsMeldung("", "Die notwendigen Informationen sind in diesem Fahrplan nicht vorhanden.", "Fehler beim Vergleich");
+		}else{
 		this.mainApp.showP_Vergleich(this.fahrplanChoiceliste.get(0));
+		}
 	}
 
 	/**

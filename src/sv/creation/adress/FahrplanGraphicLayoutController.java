@@ -128,7 +128,7 @@ public class FahrplanGraphicLayoutController {
 
 		// Liste aus allen Grafiken
 		ArrayList<XYChart.Series<Number, Number>> mainChart = new ArrayList<XYChart.Series<Number, Number>>();
-
+		
 		// Zuordnung der entsprechenden Fahrplaene
 
 		for (int i = this.tagStart; i <= this.tagEnde; i++) {
@@ -266,6 +266,7 @@ public class FahrplanGraphicLayoutController {
 		
 		this.fahrplanvergleich.getData().addAll(mainChart);
 		changeInfoColors();
+		
 	}
 
 	/**
@@ -1057,10 +1058,12 @@ public class FahrplanGraphicLayoutController {
 		// Belegt das Endtagdropdownmenu
 		this.endTag.getSelectionModel().select(this.erstauswahl);
 
+		if(this.fahrplan.getDays().size()==0){
+//		this.mainApp.warnungsMeldung("", "Die notwendigen Informationen sind in diesem Fahrplan nicht vorhanden.", "Fehler beim Vergleich");
+		}else{
 		// Zeichnet die Grafik
-
 		drawFahrplanvergleich();
-
+		}
 	}
 	
 
