@@ -139,7 +139,6 @@ public class DBConnection {
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Linebundle (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
 																	+ "LinebundleID INTEGER NOT NULL, "   													
 																	+ "LineID INTEGER NOT NULL, "
-//																	+ "LineID_txt INTEGER NOT NULL, "
 																	+ "FahrplanID INTEGER NOT NULL, "
 																	+ "FOREIGN KEY (FahrplanID) REFERENCES Fahrplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);");
 			
@@ -166,9 +165,7 @@ public class DBConnection {
 			//matching of vehicle types to vehicle type groups
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS VehicleTypeToVehicleTypeGroup (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
 																						+ "VehTypeID INTEGER NOT NULL, "
-//																						+ "VehTypeID_txt INTEGER NOT NULL, "
 																						+ "VehTypeGroupID INTEGER NOT NULL, "
-//																						+ "VehTypeGroupID_txt INTEGER NOT NULL, "
 																						+ "FahrplanID INTEGER NOT NULL, "
 																						+ "FOREIGN KEY (VehTypeID) REFERENCES VehicleType(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
 																						+ "FOREIGN KEY (VehTypeGroupID) REFERENCES VehicleTypeGroup(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
@@ -177,9 +174,7 @@ public class DBConnection {
 			//tables for capacities of depots according to vehicle type
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS VehicleCapToStoppoint (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
 																				+ "VehTypeID INTEGER NOT NULL, "
-//																				+ "VehTypeID_txt INTEGER NOT NULL, "
 																				+ "StoppointID INTEGER NOT NULL, "
-//																				+ "StoppointID_txt INTEGER NOT NULL, "
 																				+ "Min INTEGER NOT NULL, "
 																				+ "Max INTEGER NOT NULL, "
 																				+ "FahrplanID INTEGER NOT NULL, "
@@ -190,17 +185,13 @@ public class DBConnection {
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS ServiceJourney (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
 																		 + "ServiceJourneyID INTEGER NOT NULL, "
 																		 + "LineID INTEGER NOT NULL, "
-//																		 + "LineID_txt INTEGER NOT NULL, "
 																		 + "FromStopID INTEGER NOT NULL, "
-//																		 + "FromStopID_txt INTEGER NOT NULL, "
 																		 + "ToStopID INTEGER NOT NULL, "
-//																		 + "ToStopID_txt INTEGER NOT NULL, "
 																		 + "DepTime VARCHAR(10) NOT NULL, "
 																		 + "ArrTime VARCHAR(10) NOT NULL, "
 																		 + "MinAheadTime INTEGER NOT NULL, "
 																		 + "MinLayoverTime INTEGER NOT NULL, "
 																		 + "VehTypeGroupID INTEGER NOT NULL, "
-//																		 + "VehTypeGroupID_txt INTEGER NOT NULL, "
 																		 + "MaxShiftBackwardSeconds INTEGER NOT NULL, "
 																		 + "MaxShiftForwardSeconds INTEGER NOT NULL, "
 																		 + "FromStopBreakFacility INTEGER NOT NULL, "
@@ -216,9 +207,7 @@ public class DBConnection {
 			//table for deadheading journeys depending on the day time
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Deadruntime (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
 																	  + "FromStopID INTEGER NOT NULL, "
-//																	  + "FromStopID_txt INTEGER NOT NULL, "
 																	  + "ToStopID INTEGER NOT NULL, "
-//																	  + "ToStopID_txt INTEGER NOT NULL, "
 																	  + "FromTime VARCHAR(10) NOT NULL, "
 																	  + "ToTime VARCHAR(10) NOT NULL, "
 																	  + "Distance INTEGER NOT NULL, "
@@ -232,9 +221,7 @@ public class DBConnection {
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Reliefpoint (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
 																	  + "ReliefpointID INTEGER NOT NULL, "
 																	  + "ServiceJourneyID INTEGER NOT NULL, "
-//																	  + "ServiceJourneyID_txt INTEGER NOT NULL, "
 																	  + "StoppointID INTEGER NOT NULL, "
-//																	  + "StoppointID_txt INTEGER NOT NULL, "
 																	  + "StopTime VARCHAR(30), "
 																	  + "FahrplanID INTEGER NOT NULL, "
 																 	  + "FOREIGN KEY(ServiceJourneyID) REFERENCES ServiceJourney(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
@@ -244,7 +231,6 @@ public class DBConnection {
 			//table for days in which the respective service journey is valid
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Days (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
 															   + "TRIPID INTEGER NOT NULL, "
-//															   + "TRIPID_txt INTEGER NOT NULL, "
 															   + "d1 INTEGER NOT NULL, "
 															   + "d2 INTEGER NOT NULL, "
 															   + "d3 INTEGER NOT NULL, "
@@ -261,9 +247,7 @@ public class DBConnection {
 			//Transfertime
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Transfertime (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
 																			+ "FromStopID INTEGER, "
-//																			+ "FromStopID_txt INTEGER, "
 																			+ "ToStopID INTEGER, "
-//																			+ "ToStopID_txt INTEGER, "
 																			+ "FromTime VARCHAR(30) NOT NULL, "
 																			+ "ToTime VARCHAR(30) NOT NULL, "
 																			+ "Runtime INTEGER NOT NULL, "
@@ -284,9 +268,7 @@ public class DBConnection {
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Block (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
 																+ "BlockID INTEGER NOT NULL, "
 																+ "VehTypeID INTEGER NOT NULL, "
-//																+ "VehTypeID_txt INTEGER NOT NULL, "
 																+ "DepotID INTEGER NOT NULL, "
-//																+ "DepotID_txt INTEGER NOT NULL, "
 																+ "UmlaufplanID INTEGER NOT NULL, "
 																+ "FOREIGN KEY (VehTypeID) REFERENCES VehicleType(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
 																+ "FOREIGN KEY (DepotID) REFERENCES Stoppoint(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
@@ -295,9 +277,7 @@ public class DBConnection {
 			//table for tour elements (journeys)
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Blockelement (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
 																	   + "BlockID INTEGER NOT NULL, "
-//																	   + "BlockID_txt INTEGER NOT NULL, "
 																	   + "ServiceJourneyID VARCHAR(30) NOT NULL, "
-//																	   + "ServiceJourneyID_txt VARCHAR(30) NOT NULL, "
 																	   + "ElementType INTEGER NOT NULL, "
 																	   + "UmlaufplanID INTEGER NOT NULL, "
 																	   + "MatchingPos INTEGER NOT NULL, "
@@ -309,11 +289,8 @@ public class DBConnection {
 			//e.g. journeys from or to depots, waiting times etc.
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS ExceptionalBlockelement (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
 																					+ "BlockID INTEGER NOT NULL, "
-//																					+ "BlockID_txt VARCHAR(30) NOT NULL, "
 																					+ "ServiceJourneyID VARCHAR(30) NOT NULL, "
-//																					+ "FromStopID_txt INTEGER NOT NULL,"
 																					+ "FromStopID INTEGER NOT NULL,"
-//																					+ "ToStopID_txt INTEGER NOT NULL,"
 																					+ "ToStopID INTEGER NOT NULL,"
 																					+ "DepTime VARCHAR(30) NOT NULL,"
 																					+ "ArrTime VARCHAR(30) NOT NULL,"
@@ -385,7 +362,6 @@ public class DBConnection {
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Duty (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
 															   + "DutyID VARCHAR(30) NOT NULL, "
 															   + "DutyTypeID VARCHAR(50) NOT NULL, "
-//															   + "DutyTypeID_txt VARCHAR(50) NOT NULL, "
 															   + "DienstplanID INTERGER NOT NULL, "
 															   + "FOREIGN KEY (DutyTypeID) REFERENCES Dutytype(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
 															   + "FOREIGN KEY (DienstplanID) REFERENCES Dienstplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);");
@@ -394,7 +370,6 @@ public class DBConnection {
 			//e.g. journeys from or to depots, waiting times etc.
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS ExceptionalDutyelement (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
 																					+ "DutyID VARCHAR(30) , "
-//																					+ "DutyID_txt INTEGER NOT NULL, "
 																					+ "BlockID INTEGER , "
 																					+ "ServiceJourneyID VARCHAR(30) , "
 																					+ "FromStopID INTEGER ,"
@@ -410,16 +385,12 @@ public class DBConnection {
 			//table for duty elements
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS Dutyelement (ID INTEGER PRIMARY KEY AUTOINCREMENT,"
 																	  + "DutyID INTEGER NOT NULL, "
-//																	  + "DutyID_txt INTEGER NOT NULL, "
 																	  + "BlockID INTEGER NOT NULL, "
-//																	  + "BlockID_txt INTEGER NOT NULL, "
 																	  + "ServiceJourneyID VARCHAR(30) NOT NULL, "
-//																	  + "ServiceJourneyID_txt VARCHAR(30) NOT NULL, "
 																	  + "ElementType INTEGER NOT NULL, "
 																	  + "DienstplanID INTEGER NOT NULL, "
 																	  + "MatchingPos INTEGER NOT NULL, "
 																	  + "FOREIGN KEY (DutyID) REFERENCES Duty(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
-//																	  + "FOREIGN KEY (BlockID) REFERENCES Block(ID, UmlaufplanID) ON UPDATE CASCADE ON DELETE CASCADE, "
 																	  + "FOREIGN KEY (ServiceJourneyID) REFERENCES ServiceJourney(ID) ON UPDATE CASCADE ON DELETE CASCADE, "
 																	  + "FOREIGN KEY (DienstplanID) REFERENCES Dienstplan(ID) ON UPDATE CASCADE ON DELETE CASCADE);");
 			
@@ -429,10 +400,8 @@ public class DBConnection {
 
 			stmnt.executeUpdate("CREATE TABLE IF NOT EXISTS PrimeDelaySzenario (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
 																				+ "DutyID VARCHAR(30), "
-//																				+ "DutyID_txt VARCHAR(30), "
 																				+ "VehicleID VARCHAR(30), "
 																				+ "ServiceJourneyID VARCHAR(30) NOT NULL, "
-//																				+ "ServiceJourneyID_txt VARCHAR(30) NOT NULL, "
 																				+ "DepTime VARCHAR(30) NOT NULL, "
 																				+ "Delay INTEGER NOT NULL, "
 																				+ "SzenarioID INTEGER NOT NULL, "
@@ -496,7 +465,6 @@ public class DBConnection {
 		//temporary stringsplitter object that contains the the data from text files in array lists
 		StringSplitter ss = StringSplitter.getInstance();
 		//invoke stringsplitter method for reading the data in  txt-files
-//		ss.readTxtFahrplan();
 		
 		String fileNameVergleich=filename;
 		
@@ -522,7 +490,6 @@ public class DBConnection {
 		  
 		  //linebundle
 		  Iterator<Integer> it62 = ss.getLinebundleID().iterator();
-//		  Iterator<Integer> it63 = ss.getLinebundleline().iterator();
 		  
 		  Iterator<Integer> it64 = ss.getLinebundleline().iterator();
 		  
@@ -1060,7 +1027,9 @@ public class DBConnection {
 		  
 		  while((it1.hasNext()&&it2.hasNext()&&it3.hasNext()&&it4.hasNext()&&it5.hasNext())){
 
-			  stmnt.executeUpdate("INSERT INTO PrimeDelaySzenario (DutyID, VehicleID, ServiceJourneyID, DepTime, Delay, SzenarioID) VALUES('"+it1.next()+"','"+it2.next()+"',(SELECT ID FROM ServiceJourney WHERE ServiceJourneyID='"+it3.next()+"'),'"+it4.next()+"','"+it5.next()+"',(SELECT s.ID FROM Szenario AS s WHERE s.Bezeichnung LIKE('"+fileNameVergleich+"')));");
+			  String [] string=it4.next().split(":");
+			  String time=string[1]+":"+string[2];
+			  stmnt.executeUpdate("INSERT INTO PrimeDelaySzenario (DutyID, VehicleID, ServiceJourneyID, DepTime, Delay, SzenarioID) VALUES('"+it1.next()+"','"+it2.next()+"',(SELECT ID FROM ServiceJourney WHERE ServiceJourneyID='"+it3.next()+"' AND DepTime='"+time+"'),'"+time+"','"+it5.next()+"',(SELECT s.ID FROM Szenario AS s WHERE s.Bezeichnung ='"+fileNameVergleich+"'));");
 		  }
 		  
 		  closeConnection();
@@ -1098,13 +1067,12 @@ public class DBConnection {
 		ArrayList <Integer> diensttypenListe=new ArrayList<Integer>();
 		try{
 			Statement stmnt=getConnection().createStatement();
-			ResultSet rest1=stmnt.executeQuery("SELECT dt.FahrplanID, f.Bezeichnung FROM Dutytype AS dt, Fahrplan AS f WHERE dt.FahrplanID=f.ID;");
-			while(rest1.next()){
-			diensttypenListe.add(Integer.parseInt(rest1.getString("FahrplanID")));
-			}
-				if(!diensttypenListe.isEmpty()){
+			ResultSet rest1=stmnt.executeQuery("SELECT dt.FahrplanID, f.Bezeichnung FROM Dutytype AS dt, Fahrplan AS f WHERE dt.FahrplanID=f.ID AND f.Bezeichnung LIKE '%"+filename+"%';");
+			if(!rest1.next()){
+				diensttypenVorhanden=false;
+			}else{
 					diensttypenVorhanden=true;
-				}
+					}
 			
 		}catch (SQLException e){
 			e.printStackTrace();
@@ -1149,9 +1117,10 @@ public class DBConnection {
 	}
 	public boolean checkUmlaufplan(String test) {
 		
+		
 		try{
 			Statement stmnt=getConnection().createStatement();
-			ResultSet rest1=stmnt.executeQuery("SELECT b.BlockID FROM Block AS b, Umlaufplan AS u, Fahrplan AS f WHERE b.UmlaufplanID=u.ID AND u.FahrplanID=f.ID AND f.Bezeichnung LIKE'%"+test+"%';");
+			ResultSet rest1=stmnt.executeQuery("SELECT b.BlockID FROM Block AS b, Umlaufplan AS u, Fahrplan AS f WHERE b.UmlaufplanID=u.ID AND u.FahrplanID=f.ID AND u.Bezeichnung LIKE'%"+test+"%';");
 			if(!rest1.next()){
 			umlaufplanVorhanden=false;
 			}else{
@@ -1163,6 +1132,7 @@ public class DBConnection {
 		return umlaufplanVorhanden;
 		
 	}
+	
 	
 	//getter for DB connection
 	public Connection getConnection() {

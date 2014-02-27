@@ -1670,6 +1670,25 @@ public class DBMatching {
 		}
 
 	}
+	
+	// Löscht ein Szenario
+	public void deleteSzenario(Szenario szenario) {
+
+		this.db.initDBConnection();
+
+		// Creating a sql query
+		try {
+
+			stmt = this.db.getConnection().createStatement();
+			stmt.executeUpdate("DELETE FROM Szenario WHERE ID='"
+					+ szenario.getId() + "';");
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+	}
 
 	// Löscht einen Umlaufplan
 	public void deleteUmlaufplan(Umlaufplan umlaufplan) {
@@ -1693,7 +1712,6 @@ public class DBMatching {
 	public ArrayList<Szenario> createSzenarioObject() {
 
 		ArrayList<Szenario> szenarioList = new ArrayList<Szenario>();
-		ArrayList<PrimeDelay> primeDelayList = new ArrayList<PrimeDelay>();
 		ArrayList<Integer> idList= createSzenarioIDs();
 		createSzenario();
 		this.szenarioBezeichnungList=createSzenarioBezeichnungList();
@@ -1707,11 +1725,13 @@ public class DBMatching {
 			}
 		}
 	
-
+		int counter=0;
 		for (int i = 1; i <= anzahlSzenarien; i++) {
-			for (int j = 0; j < primeDelay.size(); j++) {
+			ArrayList<PrimeDelay> primeDelayList = new ArrayList<PrimeDelay>();
+			for (int j = counter; j < primeDelay.size(); j++) {
 				if (primeDelay.get(j).getSzenarioID() == i) {
 					primeDelayList.add(primeDelay.get(j));
+					counter++;
 				}
 			}
 			

@@ -999,10 +999,12 @@ public class StringSplitter {
 			BufferedReader dienstplan = new BufferedReader(new FileReader(file));
 			filename = file.getName();
 			
+			String[] string=filename.split("_");
+			String name=string[3]+"_"+string[4];
 			
 			String test=dbc.getVehicleScheduleName(getFilename());
 			dbc.checkFahrplan(test);
-			dbc.checkUmlaufplan(test);
+			dbc.checkUmlaufplan(name);
 			dbc.checkDiensttypen(test);
 			if(dbc.isFahrplanVorhanden()){
 				if(dbc.isUmlaufplanVorhanden()){
