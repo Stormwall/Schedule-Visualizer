@@ -96,6 +96,7 @@ public class DutyStatistics {
 						dutystat.dutyoveralldurationServicetrips = dutystat.dutyoveralldurationServicetrips
 								+ runtime;
 
+						
 						dutylineID.add(fp
 								.getServicejourney()
 								.get((Integer

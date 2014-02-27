@@ -72,7 +72,6 @@ public class BlockStatistics {
 							//Service Trip
 							blockstat.blocknumberOfServiceTrips++;
 							blockstat.blockoveralldurationServicetrips = blockstat.blockoveralldurationServicetrips + runtime;
-//							int test = fp.getServicejourney().get(Integer.parseInt(up.getFahrtZuUmlauf().get(blockelement).getServiceJourneyID())).getLineID();
 							blocklineID.add(fp.getServicejourney().get((Integer.parseInt(up.getFahrtZuUmlauf().get(blockelement).getServiceJourneyID()))-1).getLineID());
 							
 							break;
