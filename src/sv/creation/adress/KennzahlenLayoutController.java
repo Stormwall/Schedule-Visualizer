@@ -121,7 +121,7 @@ public class KennzahlenLayoutController {
 			this.mainApp.showStatistikUPlanSingle(this.umlaufplanChoiceliste,
 					fahrplan);
 		} else {
-			String fehlerA = "Es wurde noch Element ausgew�hlt";
+			String fehlerA = "Es wurde noch Element ausgewählt";
 			String fehlerB = "Welche Statistik soll angezeigt werden ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
@@ -184,9 +184,9 @@ public class KennzahlenLayoutController {
 				.berechneDurschnittlicheWiederholrateUmlaufplanRegular(
 						this.umlaufplanChoiceliste, fahrplan);
 
-		String fehlerA = "Die durschnittliche Wiederholrate der eingebenen Umlaufplaene mit Berücksichtigung aller Fahrten lautet :\n\n"
+		String fehlerA = "Die durschnittliche Wiederholrate der ausgewählten Umlaufplaene beträgt unter Berücksichtigung aller Servicefahrten :\n\n"
 				+ resultAll
-				+ "\n\nDie durschnittliche Wiederholrate der eingebenen Umlaufplaene mit Berücksichtigung der regelmäßigen Fahrten lautet : \n\n"
+				+ "\n\nDie durschnittliche Wiederholrate der ausgewählten Umlaufplaene beträgt unter ausschlißlicher Berücksichtigung der regelmäßigen Fahrten : \n\n"
 				+ resultReg;
 		String fehlerB = "Ihr Ergebnis";
 		String fehlerC = "Ausgabe";
@@ -224,9 +224,9 @@ public class KennzahlenLayoutController {
 				.berechneDurschnittlicheWiederholrateDienstplanRegular(
 						this.dienstplanChoiceliste, fahrplan);
 
-		String fehlerA = "Die durschnittliche Wiederholrate der eingebenen Dienstpläne mit Berücksichtigung aller Fahrten lautet :\n\n"
+		String fehlerA = "Die durschnittliche Wiederholrate der ausgewählten Umlaufplaene beträgt unter Berücksichtigung aller Fahrten :\n\n"
 				+ resultAll
-				+ "\n\nDie durschnittliche Wiederholrate der eingebenen Dienstpläne mit Berücksichtigung der regelmäßigen Fahrten lautet : \n\n"
+				+ "\n\nDie durschnittliche Wiederholrate der ausgewählten Umlaufplaene beträgt unter ausschlißlicher Berücksichtigung der regelmäßigen Servicefahrten : \n\n"
 				+ resultReg;
 		String fehlerB = "Ihr Ergebnis";
 		String fehlerC = "Ausgabe";
@@ -260,7 +260,7 @@ public class KennzahlenLayoutController {
 		double result = calc.berechneDistanzVehSchedule(
 				this.umlaufplanChoiceliste, fahrplan);
 
-		String fehlerA = "Das Distanzma� der eingebenen Umlaufplaene lautet : "
+		String fehlerA = "Das Distanzmaß der eingebenen Umlaufplaene beträgt : "
 				+ result;
 		String fehlerB = "Ihr Ergebnis";
 		String fehlerC = "Ausgabe";
@@ -294,7 +294,7 @@ public class KennzahlenLayoutController {
 		double result = calc.berechneDistanzCrewSchedule(
 				this.dienstplanChoiceliste, fahrplan);
 
-		String fehlerA = "Das Distanzma� der eingebenen Dienstplaene lautet : "
+		String fehlerA = "Das Distanzmaß der eingebenen Dienstplaene beträgt : "
 				+ result;
 		String fehlerB = "Ihr Ergebnis";
 		String fehlerC = "Ausgabe";
@@ -456,7 +456,7 @@ public class KennzahlenLayoutController {
 	private void deleteUmlaufplan() {
 
 		if (this.umlaufplanChoiceliste.isEmpty()) {
-			String fehlerA = "Es wurde noch Element ausgew�hlt";
+			String fehlerA = "Es wurde noch Element ausgewählt";
 			String fehlerB = "Was soll geloescht werden ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
@@ -697,7 +697,7 @@ public class KennzahlenLayoutController {
 	private void deleteDienstplan() {
 
 		if (this.dienstplanChoiceliste.isEmpty()) {
-			String fehlerA = "Es wurde noch Element ausgew�hlt";
+			String fehlerA = "Es wurde noch Element ausgewählt";
 			String fehlerB = "Was soll geloescht werden ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
@@ -837,7 +837,7 @@ public class KennzahlenLayoutController {
 			this.pVergleich.setDisable(false);
 
 		} else {
-			String fehlerA = "Es wurde noch Element ausgew�hlt";
+			String fehlerA = "Es wurde noch Element ausgewählt";
 			String fehlerB = "Was soll ausgewaehlt werden ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
@@ -853,7 +853,7 @@ public class KennzahlenLayoutController {
 
 		if (this.fahrplanChoiceliste.isEmpty()) {
 
-			String fehlerA = "Es wurde noch Element ausgew�hlt";
+			String fehlerA = "Es wurde noch Element ausgewählt";
 			String fehlerB = "Was soll geloescht werden ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);

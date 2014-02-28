@@ -64,8 +64,8 @@ public class DutyStatistics {
 
 			String dutyiD = dp.getDuty().get(duty).getId();
 			int hilfsID = dp.getDuty().get(duty).getHilfsID();
-			HashSet dutyblockID = new HashSet();
-			HashSet dutylineID = new HashSet();
+			HashSet<Integer> dutyblockID = new HashSet<Integer>();
+			HashSet<Integer> dutylineID = new HashSet<Integer>();
 			// ArrayList<Integer> dutyblockID = new ArrayList<Integer>();
 			// ArrayList<Integer> dutylineID = new ArrayList<Integer>();
 			DutyStatistics dutystat = new DutyStatistics();
@@ -95,15 +95,28 @@ public class DutyStatistics {
 						dutystat.dutynumberOfServiceTrips++;
 						dutystat.dutyoveralldurationServicetrips = dutystat.dutyoveralldurationServicetrips
 								+ runtime;
+						int lineID = 0;
+						int beID = dp.getDutyelement().get(dutyelement)
+							.getId();
+						int sj = 0;
+						int sjbe = 0;
 
+						for (int i = 0; i < fp.getServicejourney().size(); i++) {
+							if (fp.getServicejourney().get(i).getiD() == Integer
+									.parseInt(dp.getDutyelement()
+											.get(dutyelement)
+											.getServiceJourneyID())) {
+								sj = fp.getServicejourney().get(i).getiD();
+								sjbe = Integer.parseInt(dp.getDutyelement()
+									.get(dutyelement)
+									.getServiceJourneyID());
+								lineID = fp.getServicejourney().get(i)
+									.getLineID();
+							}
+						}
+							
 						
-						dutylineID.add(fp
-								.getServicejourney()
-								.get((Integer
-										.parseInt(dp.getDutyelement()
-												.get(dutyelement)
-												.getServiceJourneyID()))-1)
-								.getLineID());
+						dutylineID.add(lineID);
 						break;
 					case 2:
 						// Deadheading
@@ -164,9 +177,9 @@ public class DutyStatistics {
 				}// if
 			}
 			// Vehicles per Duty
-			dutystat.dutynumberOfVehicles = dutyblockID.size();
+			dutystat.dutynumberOfVehicles = dutyblockID.size()+1;
 			// Lines per Duty
-			dutystat.dutynumberOfLines = dutylineID.size();
+			dutystat.dutynumberOfLines = dutylineID.size()+1;
 			// Elementtypes
 			if (dutystat.dutynumberOfServiceTrips != 0) {
 				dutystat.dutyaverageLengthOfServiceTrips = dutystat.dutyoveralldurationServicetrips

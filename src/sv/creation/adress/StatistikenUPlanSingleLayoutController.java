@@ -120,23 +120,23 @@ public class StatistikenUPlanSingleLayoutController {
 		TableColumn<BlockStatistics, Integer> blocknumberOfServiceTrips = new TableColumn<BlockStatistics, Integer>(
 				"# Servicefahrten");
 		TableColumn<BlockStatistics, Double> blockaverageLengthOfServiceTrips = new TableColumn<BlockStatistics, Double>(
-				"� Dauer Serv.F.");
+				"ø Dauer Serv.F.");
 		TableColumn<BlockStatistics, Integer> blocknumberOfDeadheads = new TableColumn<BlockStatistics, Integer>(
 				"# Verbindungsfahrten");
 		TableColumn<BlockStatistics, Double> blockaverageLengthOfDeadheads = new TableColumn<BlockStatistics, Double>(
-				"� Dauer Verb.F.");
+				"ø Dauer Verb.F.");
 		TableColumn<BlockStatistics, Integer> blocknumberOfWaitings = new TableColumn<BlockStatistics, Integer>(
 				"# Warten");
 		TableColumn<BlockStatistics, Double> blockaverageLengthOfWaitings = new TableColumn<BlockStatistics, Double>(
-				"� Dauer Warten");
+				"ø Dauer Warten");
 		TableColumn<BlockStatistics, Integer> blocknumberOfPullIns = new TableColumn<BlockStatistics, Integer>(
 				"# Pull in");
 		TableColumn<BlockStatistics, Double> blockaverageLengthOfPullIns = new TableColumn<BlockStatistics, Double>(
-				"� Pull in");
+				"ø Pull in");
 		TableColumn<BlockStatistics, Integer> blocknumberOfPullOuts = new TableColumn<BlockStatistics, Integer>(
 				"# Pull outs");
 		TableColumn<BlockStatistics, Double> blockaverageLengthOfPullOuts = new TableColumn<BlockStatistics, Double>(
-				"� Pull outs");
+				"ø Pull outs");
 		TableColumn<BlockStatistics, Double> blockserviceTimetotalBlockTimeRatio = new TableColumn<BlockStatistics, Double>(
 				"Servicefahrten / Gesamt");
 		TableColumn<BlockStatistics, Integer> blocknumberOfLines = new TableColumn<BlockStatistics, Integer>(

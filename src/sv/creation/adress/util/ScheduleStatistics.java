@@ -206,8 +206,8 @@ public class ScheduleStatistics {
 			schedulestats.averageLengthOfBreaks = roundValue(schedulestats.overalldurationBreaks
 					/ dutystats.size());
 
-			schedulestats.serviceTimetotalTimeRatio = (double)schedulestats.sumserviceTimetotalTimeRatio
-					/ (double) dutystats.size();
+			schedulestats.serviceTimetotalTimeRatio = Math.round(1000.0*((double)schedulestats.sumserviceTimetotalTimeRatio
+					/ (double)dutystats.size()))/1000.0;
 			schedulestats.numberOfBundles = dutystats.size();
 			schedulestats.avgnumberOfVehiclesPerBundle = roundValue(schedulestats.sumavgnumberOfVehiclesPerBundle
 					/ dutystats.size());
@@ -322,8 +322,8 @@ public class ScheduleStatistics {
 			schedulestats.averageLengthOfBreaks = schedulestats.overalldurationBreaks
 					/ blockstats.size();
 
-			schedulestats.serviceTimetotalTimeRatio = (double)schedulestats.sumserviceTimetotalTimeRatio
-					/ (double)blockstats.size();
+			schedulestats.serviceTimetotalTimeRatio = Math.round(1000.0*((double)schedulestats.sumserviceTimetotalTimeRatio
+					/ (double)blockstats.size()))/1000.0;
 
 			blockchedulestatisticslist.add(schedulestats);
 		}

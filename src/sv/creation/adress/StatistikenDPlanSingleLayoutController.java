@@ -132,23 +132,23 @@ public class StatistikenDPlanSingleLayoutController {
 		TableColumn<DutyStatistics, Double> dutynumberOfServiceTrips = new TableColumn<DutyStatistics, Double>(
 				"# Servicefahrten");
 		TableColumn<DutyStatistics, Double> dutyaverageLengthOfServiceTrips = new TableColumn<DutyStatistics, Double>(
-				"� Dauer Serv.F.");
+				"ø Dauer Serv.F.");
 		TableColumn<DutyStatistics, Double> dutynumberOfDeadheads = new TableColumn<DutyStatistics, Double>(
 				"# Verbindungsfahrten");
 		TableColumn<DutyStatistics, Double> dutyaverageLengthOfDeadheads = new TableColumn<DutyStatistics, Double>(
-				"� Dauer Verb.F.");
+				"ø Dauer Verb.F.");
 		TableColumn<DutyStatistics, Double> dutynumberOfWaitings = new TableColumn<DutyStatistics, Double>(
 				"# Warten");
 		TableColumn<DutyStatistics, Double> dutyaverageLengthOfWaitings = new TableColumn<DutyStatistics, Double>(
-				"� Dauer Warten");
+				"ø Dauer Warten");
 		TableColumn<DutyStatistics, Double> dutynumberOfPullIns = new TableColumn<DutyStatistics, Double>(
-				"# Pull in");
+				"# Pullins");
 		TableColumn<DutyStatistics, Double> dutyaverageLengthOfPullIns = new TableColumn<DutyStatistics, Double>(
-				"� Pull in");
+				"ø Pull ins");
 		TableColumn<DutyStatistics, Double> dutynumberOfPullOuts = new TableColumn<DutyStatistics, Double>(
 				"# Pull outs");
 		TableColumn<DutyStatistics, Double> dutyaverageLengthOfPullOuts = new TableColumn<DutyStatistics, Double>(
-				"� Pull outs");
+				"ø Pull outs");
 		TableColumn<DutyStatistics, Double> dutyserviceTimetotalDutyTimeRatio = new TableColumn<DutyStatistics, Double>(
 				"Servicefahrten / Gesamt");
 		TableColumn<DutyStatistics, Integer> dutynumberOfLines = new TableColumn<DutyStatistics, Integer>(

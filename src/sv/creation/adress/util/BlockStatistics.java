@@ -55,9 +55,10 @@ public class BlockStatistics {
 			
 
 			blockID = up.getUmlauf().get(block).getId();
-			HashSet blocklineID = new HashSet();			
+			HashSet<Integer> blocklineID = new HashSet<Integer>();			
 			BlockStatistics blockstat = new BlockStatistics();
-			for (int blockelement = 0; blockelement < up.getFahrtZuUmlauf().size(); blockelement++){
+			
+			for (int blockelement = 0; blockelement < up.getFahrtZuUmlauf().size()-1; blockelement++){
 				
 				
 				
@@ -72,8 +73,28 @@ public class BlockStatistics {
 							//Service Trip
 							blockstat.blocknumberOfServiceTrips++;
 							blockstat.blockoveralldurationServicetrips = blockstat.blockoveralldurationServicetrips + runtime;
-//							int test = fp.getServicejourney().get(Integer.parseInt(up.getFahrtZuUmlauf().get(blockelement).getServiceJourneyID())).getLineID();
-							blocklineID.add(fp.getServicejourney().get((Integer.parseInt(up.getFahrtZuUmlauf().get(blockelement).getServiceJourneyID()))-1).getLineID());
+							int lineID = 0;
+							int beID = up.getFahrtZuUmlauf().get(blockelement)
+								.getId();
+							int sj = 0;
+							int sjbe = 0;
+
+							for (int i = 0; i < fp.getServicejourney().size(); i++) {
+								if (fp.getServicejourney().get(i).getiD() == Integer
+										.parseInt(up.getFahrtZuUmlauf()
+												.get(blockelement)
+												.getServiceJourneyID())) {
+									sj = fp.getServicejourney().get(i).getiD();
+									sjbe = Integer.parseInt(up.getFahrtZuUmlauf()
+										.get(blockelement)
+										.getServiceJourneyID());
+									lineID = fp.getServicejourney().get(i)
+										.getLineID();
+								}
+							}
+								
+							
+							blocklineID.add(lineID);
 							
 							break;
 						case 2:
@@ -116,7 +137,7 @@ public class BlockStatistics {
 					
 			}
 			//Lines per Block
-			blockstat.blocknumberOfLines = blocklineID.size();
+			blockstat.blocknumberOfLines = blocklineID.size()+1;
 			//Elementtypes
 			if (blockstat.blocknumberOfServiceTrips != 0) {
 				blockstat.blockaverageLengthOfServiceTrips = blockstat.blockoveralldurationServicetrips
