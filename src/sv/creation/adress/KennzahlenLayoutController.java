@@ -147,7 +147,7 @@ public class KennzahlenLayoutController {
 					fahrplan);
 
 		} else {
-			String fehlerA = "Es wurde noch Element ausgew�hlt";
+			String fehlerA = "Es wurde noch Element ausgewählt";
 			String fehlerB = "Welche Statistik soll angezeigt werden ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
@@ -184,9 +184,9 @@ public class KennzahlenLayoutController {
 				.berechneDurschnittlicheWiederholrateUmlaufplanRegular(
 						this.umlaufplanChoiceliste, fahrplan);
 
-		String fehlerA = "Die durschnittliche Wiederholrate der ausgewählten Umlaufplaene beträgt unter Berücksichtigung aller Servicefahrten :\n\n"
+		String fehlerA = "Die durschnittliche Wiederholrate der ausgewählten Umlaufpläne beträgt unter Berücksichtigung aller Servicefahrten :\n\n"
 				+ resultAll
-				+ "\n\nDie durschnittliche Wiederholrate der ausgewählten Umlaufplaene beträgt unter ausschlißlicher Berücksichtigung der regelmäßigen Fahrten : \n\n"
+				+ "\n\nDie durschnittliche Wiederholrate der ausgewählten Umlaufpläne beträgt unter ausschlißlicher Berücksichtigung der regelmäßigen Fahrten : \n\n"
 				+ resultReg;
 		String fehlerB = "Ihr Ergebnis";
 		String fehlerC = "Ausgabe";
@@ -224,9 +224,9 @@ public class KennzahlenLayoutController {
 				.berechneDurschnittlicheWiederholrateDienstplanRegular(
 						this.dienstplanChoiceliste, fahrplan);
 
-		String fehlerA = "Die durschnittliche Wiederholrate der ausgewählten Umlaufplaene beträgt unter Berücksichtigung aller Fahrten :\n\n"
+		String fehlerA = "Die durschnittliche Wiederholrate der ausgewählten Dienstpläne beträgt unter Berücksichtigung aller Fahrten :\n\n"
 				+ resultAll
-				+ "\n\nDie durschnittliche Wiederholrate der ausgewählten Umlaufplaene beträgt unter ausschlißlicher Berücksichtigung der regelmäßigen Servicefahrten : \n\n"
+				+ "\n\nDie durschnittliche Wiederholrate der ausgewählten Dienstpläne beträgt unter ausschlißlicher Berücksichtigung der regelmäßigen Servicefahrten : \n\n"
 				+ resultReg;
 		String fehlerB = "Ihr Ergebnis";
 		String fehlerC = "Ausgabe";
@@ -260,7 +260,7 @@ public class KennzahlenLayoutController {
 		double result = calc.berechneDistanzVehSchedule(
 				this.umlaufplanChoiceliste, fahrplan);
 
-		String fehlerA = "Das Distanzmaß der eingebenen Umlaufplaene beträgt : "
+		String fehlerA = "Das Distanzmaß der eingebenen Umlaufpläne beträgt : "
 				+ result;
 		String fehlerB = "Ihr Ergebnis";
 		String fehlerC = "Ausgabe";
@@ -294,7 +294,7 @@ public class KennzahlenLayoutController {
 		double result = calc.berechneDistanzCrewSchedule(
 				this.dienstplanChoiceliste, fahrplan);
 
-		String fehlerA = "Das Distanzmaß der eingebenen Dienstplaene beträgt : "
+		String fehlerA = "Das Distanzmaß der eingebenen Dienstpläne beträgt : "
 				+ result;
 		String fehlerB = "Ihr Ergebnis";
 		String fehlerC = "Ausgabe";
@@ -436,13 +436,13 @@ public class KennzahlenLayoutController {
 					this.dWU.setDisable(false);
 				}
 			} else {
-				String fehlerA = "Das Element wurde bereits ausgewaehlt.";
+				String fehlerA = "Das Element wurde bereits ausgewählt.";
 				String fehlerB = "Was soll ausgewaehlt werden ?";
 				String fehlerC = "Fehler";
 				this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
 			}
 		} else {
-			String fehlerA = "Es wurde noch Element ausgew�hlt";
+			String fehlerA = "Es wurde noch Element ausgewählt";
 			String fehlerB = "Was soll ausgewaehlt werden ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
@@ -676,13 +676,13 @@ public class KennzahlenLayoutController {
 					this.dWD.setDisable(false);
 				}
 			} else {
-				String fehlerA = "Das Element wurde bereits ausgewaehlt.";
+				String fehlerA = "Das Element wurde bereits ausgewählt.";
 				String fehlerB = "Was soll ausgewaehlt werden ?";
 				String fehlerC = "Fehler";
 				this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
 			}
 		} else {
-			String fehlerA = "Es wurde noch Element ausgew�hlt";
+			String fehlerA = "Es wurde noch Element ausgewählt";
 			String fehlerB = "Was soll ausgewaehlt werden ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);

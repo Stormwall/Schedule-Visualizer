@@ -552,6 +552,7 @@ public class MainApplication extends Application {
 			controller.setDialogStage(dialogStage);
 			controller.setUmlaufplanliste(this.umlaufplanliste);
 			controller.setColors(this.color);
+			controller.setMainLayoutcontroller(this.mainLayoutcontroller);
 
 			// Show the dialog and wait until the user closes it
 			dialogStage.showAndWait();
@@ -594,9 +595,12 @@ public class MainApplication extends Application {
 			controller.setDialogStage(dialogStage);
 			controller.setDienstplanliste(this.dienstplanliste);
 			controller.setColors(this.color);
+			controller.setMainLayoutcontroller(this.mainLayoutcontroller);
 
 			// Show the dialog and wait until the user closes it
 			dialogStage.showAndWait();
+			
+			this.mainLayoutcontroller.fillDienstplanliste();
 			
 			this.mainLayoutcontroller.fillDienstplanliste();
 

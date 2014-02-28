@@ -60,7 +60,7 @@ public class KostenLayoutControllerD {
 		}
 
 		ArrayList<ScheduleCosts> result = sc.calculateCrewScheduleCosts(
-				this.dienstplanliste,fahrplan, variablen, fixen);
+				this.dienstplanliste,fahrplan, fixen, variablen);
 		this.gesamtKosten.setText(String.valueOf(result.get(0)
 				.getSchedulecosts()));
 		this.variableKostenGesamt.setText(String.valueOf(result.get(0)

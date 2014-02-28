@@ -1064,7 +1064,6 @@ public class DBConnection {
 	
 	public boolean checkDiensttypen(String filename){
 		
-		ArrayList <Integer> diensttypenListe=new ArrayList<Integer>();
 		try{
 			Statement stmnt=getConnection().createStatement();
 			ResultSet rest1=stmnt.executeQuery("SELECT dt.FahrplanID, f.Bezeichnung FROM Dutytype AS dt, Fahrplan AS f WHERE dt.FahrplanID=f.ID AND f.Bezeichnung LIKE '%"+filename+"%';");

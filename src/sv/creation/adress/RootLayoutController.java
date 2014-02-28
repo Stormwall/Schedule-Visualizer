@@ -35,6 +35,17 @@ public class RootLayoutController {
 	private void handleDatenbank() {
 		mainApp.showDatenbank();
 	}
+	
+	/**
+	 * Opens the Contactview.
+	 */
+	@FXML
+	private void handleContact() {
+		String fehlerA = "Grafische Visualisierung\nErik Haus\nerikhaus.home@googlemail.com\n\nDatenbankverwaltung\nDennis Than\ndennis.than703@gmail.com\n\n Kennzahlen und Organisation\n Fabian Riebold und Dimitrios Anapliotis\n f.riebold@hotmail.de und dimitrios_anapliotis@yahoo.de ";
+		String fehlerB = "Kontaktinformation";
+		String fehlerC = "Kontakt";
+		this.mainApp.informationMeldung(fehlerA, fehlerB, fehlerC);
+	}
 
 	/**
 	 * Closes the application.

@@ -63,7 +63,8 @@ public class EditU_PlanController {
 	// Referenz zur MainApp
 
 	private MainApplication mainApp;
-
+	private MainLayoutController mainLayoutcontroller;
+	
 	/**
 	 * Initializes the controller class. This method is automatically called
 	 * after the fxml file has been loaded.
@@ -149,6 +150,9 @@ public class EditU_PlanController {
 			this.umlaufplan.setBezeichnung(name);
 			this.umlaufplanliste.add(this.umlaufplan);
 			dbm.saveUmlaufplan(this.umlaufplan, name);
+			this.mainApp.setUmlaufplanliste(this.umlaufplanliste);
+			this.mainLayoutcontroller.setUmlaufplanliste(this.umlaufplanliste);
+			this.mainLayoutcontroller.fillUmlaufplanliste();
 			this.mainApp.informationMeldung("", "Der Plan wurde erfolgreich unter dem Namen '"+name+"' gespeichert.", "Speichervorgang erfolgreich");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -958,6 +962,10 @@ public class EditU_PlanController {
 
 	public void setColors(ArrayList<String> colors) {
 		this.colors = colors;
+	}
+
+	public void setMainLayoutcontroller(MainLayoutController mainLayoutcontroller) {
+		this.mainLayoutcontroller = mainLayoutcontroller;
 	}
 
 }

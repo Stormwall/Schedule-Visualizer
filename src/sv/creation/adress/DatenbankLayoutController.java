@@ -108,7 +108,7 @@ public class DatenbankLayoutController {
 			refreshDienstplan();
 		} else {
 			String fehlerA = "Es wurde noch Element ausgewählt";
-			String fehlerB = "Was soll geloescht werden ?";
+			String fehlerB = "Was soll gelöscht werden ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
 		}
@@ -138,7 +138,7 @@ public class DatenbankLayoutController {
 			refreshDienstplan();
 		} else {
 			String fehlerA = "Es wurde noch Element ausgewählt";
-			String fehlerB = "Was soll geloescht werden ?";
+			String fehlerB = "Was soll gelöscht werden ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
 		}
@@ -191,7 +191,7 @@ public class DatenbankLayoutController {
 			refreshSzenario();
 		} else {
 			String fehlerA = "Es wurde noch Element ausgewählt";
-			String fehlerB = "Was soll geloescht werden ?";
+			String fehlerB = "Was soll gelöscht werden ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
 		}
@@ -262,7 +262,7 @@ public class DatenbankLayoutController {
 				this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
 			}
 		} else {
-			String fehlerA = "Es wurde noch Element ausgewaehlt";
+			String fehlerA = "Es wurde noch Element ausgewählt";
 			String fehlerB = "Was soll bearbeitet werden ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
@@ -299,7 +299,7 @@ public class DatenbankLayoutController {
 				this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
 			}
 		} else {
-			String fehlerA = "Es wurde noch Element ausgewaehlt";
+			String fehlerA = "Es wurde noch Element ausgewählt";
 			String fehlerB = "Was soll bearbeitet werden ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);

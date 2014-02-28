@@ -63,6 +63,7 @@ public class EditD_PlanController {
 	// Referenz zur MainApp
 
 	private MainApplication mainApp;
+	private MainLayoutController mainLayoutcontroller;
 
 	/**
 	 * Initializes the controller class. This method is automatically called
@@ -143,6 +144,9 @@ public class EditD_PlanController {
 		this.dienstplan.setBezeichnung(name);
 		this.dienstplanliste.add(this.dienstplan);
 		dbm.saveDienstplan(this.dienstplan, name);
+		this.mainApp.setDienstplanliste(this.dienstplanliste);
+		this.mainLayoutcontroller.setDienstplanliste(this.dienstplanliste);
+		this.mainLayoutcontroller.fillDienstplanliste();
 		this.mainApp.informationMeldung("", "Der Plan wurde erfolgreich unter dem Namen '"+name+"' gespeichert.", "Speichervorgang erfolgreich");
 	}
 
@@ -947,4 +951,8 @@ public class EditD_PlanController {
 	public void setColors(ArrayList<String> colors) {
 		this.colors = colors;
 	}
+	public void setMainLayoutcontroller(MainLayoutController mainLayoutcontroller) {
+		this.mainLayoutcontroller = mainLayoutcontroller;
+	}
+	
 }
