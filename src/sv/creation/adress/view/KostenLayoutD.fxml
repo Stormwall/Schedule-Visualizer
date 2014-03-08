@@ -12,7 +12,7 @@
   <children>
     <TextField fx:id="vk" layoutX="169.0" layoutY="13.0" prefWidth="67.0" text="12.73" />
     <TextField fx:id="fpf" layoutX="168.0" layoutY="49.0" prefWidth="67.0" text="0" />
-    <Label layoutX="10.0" layoutY="17.0" styleClass="label-white" text="Variabler Kostensatz pro H" />
+    <Label layoutX="10.0" layoutY="17.0" styleClass="label-white" text="Variabler Kostensatz pro h" />
     <Label layoutX="10.0" layoutY="53.0" styleClass="label-white" text="Fixkosten pro Tag" />
     <Button fx:id="berrechnen" layoutX="209.0" layoutY="80.0" mnemonicParsing="false" onAction="#berrechnen" styleClass="dark-blue" text="Berechnen" />
     <GridPane prefHeight="71.0" prefWidth="300.0" AnchorPane.bottomAnchor="43.5" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="111.5">

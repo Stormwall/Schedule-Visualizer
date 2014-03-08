@@ -3,11 +3,10 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/Stormlord/git/Schedule-Visualizer/javafx-dialogs-0.0.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Stormlord/git/Schedule-Visualizer/jfxrt.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Stormlord/git/Schedule-Visualizer/sqlite-jdbc-3.7.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Stormlord/git/Schedule-Visualizer/xmlpull-1.1.3.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Stormlord/git/Schedule-Visualizer/xpp3_min-1.1.4c.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Stormlord/git/Schedule-Visualizer/xstream-1.4.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Mitsakos/Documents/Uni/Master/WiSe1314/Projektarbeit/java Libraries/javafx-dialogs-0.0.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Mitsakos/Documents/Uni/Master/WiSe1314/Projektarbeit/java Libraries/sqlite-jdbc-3.7.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Mitsakos/Documents/Uni/Master/WiSe1314/Projektarbeit/java Libraries/xmlpull-1.1.3.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Mitsakos/Documents/Uni/Master/WiSe1314/Projektarbeit/java Libraries/xpp3_min-1.1.4c.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Mitsakos/Documents/Uni/Master/WiSe1314/Projektarbeit/java Libraries/xstream-1.4.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

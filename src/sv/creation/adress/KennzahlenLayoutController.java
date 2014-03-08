@@ -184,12 +184,12 @@ public class KennzahlenLayoutController {
 				.berechneDurschnittlicheWiederholrateUmlaufplanRegular(
 						this.umlaufplanChoiceliste, fahrplan);
 
-		String fehlerA = "Die durschnittliche Wiederholrate der ausgewählten Umlaufpläne beträgt unter Berücksichtigung aller Servicefahrten :\n\n"
+		String fehlerA = "Die durschnittliche Wiederholrate der ausgewählten Umlaufpläne unter Berücksichtigung aller Servicefahrten ist :\n\n"
 				+ resultAll
-				+ "\n\nDie durschnittliche Wiederholrate der ausgewählten Umlaufpläne beträgt unter ausschlißlicher Berücksichtigung der regelmäßigen Fahrten : \n\n"
+				+ "\n\nDie durschnittliche Wiederholrate der ausgewählten Umlaufpläne unter Berücksichtigung der regelmäßigen Fahrten ist : \n\n"
 				+ resultReg;
-		String fehlerB = "Ihr Ergebnis";
-		String fehlerC = "Ausgabe";
+		String fehlerB = "Ergebnis";
+		String fehlerC = "Durchschnitliche Wiederholrate";
 		this.mainApp.informationMeldung(fehlerA, fehlerB, fehlerC);
 
 	}
@@ -224,12 +224,12 @@ public class KennzahlenLayoutController {
 				.berechneDurschnittlicheWiederholrateDienstplanRegular(
 						this.dienstplanChoiceliste, fahrplan);
 
-		String fehlerA = "Die durschnittliche Wiederholrate der ausgewählten Dienstpläne beträgt unter Berücksichtigung aller Fahrten :\n\n"
+		String fehlerA = "Die durschnittliche Wiederholrate der ausgewählten Dienstpläne unter Berücksichtigung aller Servicefahrten ist :\n\n"
 				+ resultAll
-				+ "\n\nDie durschnittliche Wiederholrate der ausgewählten Dienstpläne beträgt unter ausschlißlicher Berücksichtigung der regelmäßigen Servicefahrten : \n\n"
+				+ "\n\nDie durschnittliche Wiederholrate der ausgewählten Dienstpläne unter Berücksichtigung der regelmäßigen Fahrten ist : \n\n"
 				+ resultReg;
-		String fehlerB = "Ihr Ergebnis";
-		String fehlerC = "Ausgabe";
+		String fehlerB = "Ergebnis";
+		String fehlerC = "Durchschnitliche Wiederholrate";
 		this.mainApp.informationMeldung(fehlerA, fehlerB, fehlerC);
 
 	}
@@ -260,10 +260,10 @@ public class KennzahlenLayoutController {
 		double result = calc.berechneDistanzVehSchedule(
 				this.umlaufplanChoiceliste, fahrplan);
 
-		String fehlerA = "Das Distanzmaß der eingebenen Umlaufpläne beträgt : "
+		String fehlerA = "Das Distanzmaß der ausgewählten Umlaufpläne ist : "
 				+ result;
-		String fehlerB = "Ihr Ergebnis";
-		String fehlerC = "Ausgabe";
+		String fehlerB = "Ergebnis";
+		String fehlerC = "Distanzmaß";
 		this.mainApp.informationMeldung(fehlerA, fehlerB, fehlerC);
 
 	}
@@ -294,10 +294,10 @@ public class KennzahlenLayoutController {
 		double result = calc.berechneDistanzCrewSchedule(
 				this.dienstplanChoiceliste, fahrplan);
 
-		String fehlerA = "Das Distanzmaß der eingebenen Dienstpläne beträgt : "
+		String fehlerA = "Das Distanzmaß der ausgewählten Dienstpläne ist : "
 				+ result;
-		String fehlerB = "Ihr Ergebnis";
-		String fehlerC = "Ausgabe";
+		String fehlerB = "Ergebnis";
+		String fehlerC = "Distanzmaß";
 		this.mainApp.informationMeldung(fehlerA, fehlerB, fehlerC);
 
 	}
@@ -838,7 +838,7 @@ public class KennzahlenLayoutController {
 
 		} else {
 			String fehlerA = "Es wurde noch Element ausgewählt";
-			String fehlerB = "Was soll ausgewaehlt werden ?";
+			String fehlerB = "Was soll ausgewählt werden ?";
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
 		}

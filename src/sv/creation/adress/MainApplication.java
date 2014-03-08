@@ -505,7 +505,7 @@ public class MainApplication extends Application {
 							.getResource("view/P_VergleichLayout.fxml"));
 			AnchorPane page = (AnchorPane) loader.load();
 			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Kostenkalkulation");
+			dialogStage.setTitle("P-Vergleich");
 			dialogStage.getIcons().add(
 					new Image("file:resources/images/IconFinal.png"));
 			dialogStage.initModality(Modality.WINDOW_MODAL);
