@@ -260,7 +260,7 @@ public class KennzahlenLayoutController {
 		double result = calc.berechneDistanzVehSchedule(
 				this.umlaufplanChoiceliste, fahrplan);
 
-		String fehlerA = "Das Distanzmaß der ausgewählten Umlaufpläne ist : "
+		String fehlerA = "Das Distanzmaß der ausgewählen Umlaufpläne ist : "
 				+ result;
 		String fehlerB = "Ergebnis";
 		String fehlerC = "Distanzmaß";
