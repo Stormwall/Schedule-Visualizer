@@ -26,7 +26,7 @@ public class ScheduleStatistics {
 	int numberOfPullIns = 0;
 
 	// int numberOfLinesPerBundle = 0;
-	// number of bundles
+
 	double numberOfBundles = 0;
 
 	// additional numbers for crew schedules
@@ -321,7 +321,7 @@ public class ScheduleStatistics {
 					/ blockstats.size();
 			schedulestats.averageLengthOfBreaks = schedulestats.overalldurationBreaks
 					/ blockstats.size();
-
+			schedulestats.numberOfBundles = blockstats.size();
 			schedulestats.serviceTimetotalTimeRatio = Math.round(1000.0*((double)schedulestats.sumserviceTimetotalTimeRatio
 					/ (double)blockstats.size()))/1000.0;
 

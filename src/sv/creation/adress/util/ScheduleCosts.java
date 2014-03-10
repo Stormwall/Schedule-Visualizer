@@ -23,9 +23,9 @@ public class ScheduleCosts {
 
 		for (int i = 0; i < sstats.size(); i++) {
 			ScheduleCosts scosts = new ScheduleCosts();
-			scosts.fixedschedulecosts = Kf;
-			scosts.variableschedulecosts = kvhour
-					* (sstats.get(i).getTotalRunTime() / 60 / 60);
+			scosts.fixedschedulecosts = Math.round(Kf*sstats.get(i).getNumberOfBundles());
+			scosts.variableschedulecosts = Math.round((kvhour
+					* (sstats.get(i).getTotalRunTime() / 60 / 60)));
 			scosts.schedulecosts = scosts.fixedschedulecosts
 					+ scosts.variableschedulecosts;
 			scostslist.add(scosts);
@@ -45,12 +45,12 @@ public class ScheduleCosts {
 
 		for (int i = 0; i < sstats.size(); i++) {
 			ScheduleCosts scosts = new ScheduleCosts();
-			scosts.fixedschedulecosts = Kf;
-			scosts.variableschedulecosts = kvhour
+			scosts.fixedschedulecosts = Math.round(Kf*sstats.get(i).getNumberOfBundles());
+			scosts.variableschedulecosts = Math.round(kvhour
 					* ((sstats.get(i).getOveralldurationServiceTrips()
 							+ sstats.get(i).getOveralldurationDeadHeads()
 							+ sstats.get(i).getOveralldurationPullOuts() + sstats
-							.get(i).getOveralldurationPullIns()) / 60 / 60);
+							.get(i).getOveralldurationPullIns()) / 60 / 60));
 			scosts.schedulecosts = scosts.fixedschedulecosts
 					+ scosts.variableschedulecosts;
 			scostslist.add(scosts);
