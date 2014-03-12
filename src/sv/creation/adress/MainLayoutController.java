@@ -449,6 +449,10 @@ public class MainLayoutController {
 	private boolean fehlerAnzeigenAktiv = false;
 	private boolean addButtonPressed = true;
 
+	// Auswahl;
+
+	private int[] choiceArray;
+
 	// Referenz zur MainApp
 
 	private MainApplication mainApp;
@@ -1189,7 +1193,6 @@ public class MainLayoutController {
 				});
 	}
 
-	
 	public void refreshBothGraphics() {
 
 		// Hier wird das Feld gecleared und geprueft ob es schon existiert
@@ -1290,7 +1293,8 @@ public class MainLayoutController {
 
 					if (this.UPlan1.isVisible() == false) {
 						this.umlaufplanEins = this.getUmlaufplanliste().get(
-								this.UPlan.getSelectionModel().getSelectedIndex());
+								this.UPlan.getSelectionModel()
+										.getSelectedIndex());
 						this.upperheightEins = this.umlaufplanEins.getUmlauf()
 								.size() * 40 + 10;
 						createUpperYScale(yUp1, upperYChart1, upperYgc1,
@@ -1327,11 +1331,12 @@ public class MainLayoutController {
 
 									umlaufIsCurrent = true;
 									dienstIsCurrent = false;
-									current ="u1";
+									current = "u1";
 								}
 							});
 
-					// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
+					// Zur Kontrolle ob es sich um einen Buttonklick handelt
+					// oder
 					// nicht
 
 					if (this.addButtonPressed == true) {
@@ -1356,8 +1361,9 @@ public class MainLayoutController {
 							new EventHandler<MouseEvent>() {
 								@Override
 								public void handle(MouseEvent e) {
-									boolean okClicked = mainApp
-											.showEditUPlan(umlaufplanEins);
+									boolean okClicked = mainApp.showEditUPlan(
+											umlaufplanEins, szenario,
+											szenarienAktiv, fahrplanID);
 									if (okClicked) {
 										firstCheckU1 = true;
 										changeCheckU1 = true;
@@ -1375,13 +1381,15 @@ public class MainLayoutController {
 				if (this.umlaufTabCounter >= 1) {
 
 					if (this.secondUppergrafikErstellt == true) {
-						this.uppergc2.clearRect(0, 0, this.upperChart2.getWidth(),
+						this.uppergc2.clearRect(0, 0,
+								this.upperChart2.getWidth(),
 								this.upperChart2.getHeight());
 					}
 					// Initiale Belegung der Grafik
 					if (this.UPlan2.isVisible() == false) {
 						this.umlaufplanZwei = this.getUmlaufplanliste().get(
-								this.UPlan.getSelectionModel().getSelectedIndex());
+								this.UPlan.getSelectionModel()
+										.getSelectedIndex());
 						this.upperheightZwei = this.umlaufplanZwei.getUmlauf()
 								.size() * 40 + 10;
 						createUpperYScale(yUp2, upperYChart2, upperYgc2,
@@ -1396,9 +1404,10 @@ public class MainLayoutController {
 
 						umlaufIsCurrent = true;
 						dienstIsCurrent = false;
-						current ="u2";
+						current = "u2";
 					}
-					// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne und Enabling des Tabs
+					// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne und Enabling des
+					// Tabs
 
 					this.Plan2.setDisable(false);
 					this.UPlan2.setVisible(true);
@@ -1418,7 +1427,8 @@ public class MainLayoutController {
 								}
 							});
 
-					// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
+					// Zur Kontrolle ob es sich um einen Buttonklick handelt
+					// oder
 					// nicht
 
 					if (this.addButtonPressed == true) {
@@ -1446,8 +1456,9 @@ public class MainLayoutController {
 							new EventHandler<MouseEvent>() {
 								@Override
 								public void handle(MouseEvent e) {
-									boolean okClicked = mainApp
-											.showEditUPlan(umlaufplanZwei);
+									boolean okClicked = mainApp.showEditUPlan(
+											umlaufplanZwei, szenario,
+											szenarienAktiv, fahrplanID);
 									if (okClicked) {
 										firstCheckU2 = true;
 										changeCheckU2 = true;
@@ -1464,13 +1475,15 @@ public class MainLayoutController {
 				if (this.umlaufTabCounter >= 2) {
 
 					if (this.thirdUppergrafikErstellt == true) {
-						this.uppergc3.clearRect(0, 0, this.upperChart3.getWidth(),
+						this.uppergc3.clearRect(0, 0,
+								this.upperChart3.getWidth(),
 								this.upperChart3.getHeight());
 					}
 					// Initiale Belegung der Grafik
 					if (this.UPlan3.isVisible() == false) {
 						this.umlaufplanDrei = this.getUmlaufplanliste().get(
-								this.UPlan.getSelectionModel().getSelectedIndex());
+								this.UPlan.getSelectionModel()
+										.getSelectedIndex());
 						this.upperheightDrei = this.umlaufplanDrei.getUmlauf()
 								.size() * 40 + 10;
 						createUpperYScale(yUp3, upperYChart3, upperYgc3,
@@ -1486,7 +1499,8 @@ public class MainLayoutController {
 						umlaufIsCurrent = true;
 						dienstIsCurrent = false;
 					}
-					// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne und Enabling des Tabs
+					// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne und Enabling des
+					// Tabs
 
 					this.Plan3.setDisable(false);
 					this.UPlan3.setVisible(true);
@@ -1503,10 +1517,11 @@ public class MainLayoutController {
 
 									umlaufIsCurrent = true;
 									dienstIsCurrent = false;
-									current ="u3";
+									current = "u3";
 								}
 							});
-					// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
+					// Zur Kontrolle ob es sich um einen Buttonklick handelt
+					// oder
 					// nicht
 
 					if (this.addButtonPressed == true) {
@@ -1534,8 +1549,9 @@ public class MainLayoutController {
 							new EventHandler<MouseEvent>() {
 								@Override
 								public void handle(MouseEvent e) {
-									boolean okClicked = mainApp
-											.showEditUPlan(umlaufplanDrei);
+									boolean okClicked = mainApp.showEditUPlan(
+											umlaufplanDrei, szenario,
+											szenarienAktiv, fahrplanID);
 									if (okClicked) {
 										refreshBothGraphics();
 									}
@@ -1550,13 +1566,15 @@ public class MainLayoutController {
 				if (this.umlaufTabCounter >= 3) {
 
 					if (this.fourthUppergrafikErstellt == true) {
-						this.uppergc4.clearRect(0, 0, this.upperChart4.getWidth(),
+						this.uppergc4.clearRect(0, 0,
+								this.upperChart4.getWidth(),
 								this.upperChart4.getHeight());
 					}
 					// Initiale Belegung der Grafik
 					if (this.UPlan4.isVisible() == false) {
 						this.umlaufplanVier = this.getUmlaufplanliste().get(
-								this.UPlan.getSelectionModel().getSelectedIndex());
+								this.UPlan.getSelectionModel()
+										.getSelectedIndex());
 						this.upperheightVier = this.umlaufplanVier.getUmlauf()
 								.size() * 40 + 10;
 						createUpperYScale(yUp4, upperYChart4, upperYgc4,
@@ -1572,7 +1590,8 @@ public class MainLayoutController {
 						umlaufIsCurrent = true;
 						dienstIsCurrent = false;
 					}
-					// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne und Enabling des Tabs
+					// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne und Enabling des
+					// Tabs
 
 					this.Plan4.setDisable(false);
 					this.UPlan4.setVisible(true);
@@ -1589,10 +1608,11 @@ public class MainLayoutController {
 
 									umlaufIsCurrent = true;
 									dienstIsCurrent = false;
-									current ="u4";
+									current = "u4";
 								}
 							});
-					// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
+					// Zur Kontrolle ob es sich um einen Buttonklick handelt
+					// oder
 					// nicht
 
 					if (this.addButtonPressed == true) {
@@ -1619,8 +1639,9 @@ public class MainLayoutController {
 							new EventHandler<MouseEvent>() {
 								@Override
 								public void handle(MouseEvent e) {
-									boolean okClicked = mainApp
-											.showEditUPlan(umlaufplanVier);
+									boolean okClicked = mainApp.showEditUPlan(
+											umlaufplanVier, szenario,
+											szenarienAktiv, fahrplanID);
 									if (okClicked) {
 										refreshBothGraphics();
 									}
@@ -1635,15 +1656,17 @@ public class MainLayoutController {
 				if (this.umlaufTabCounter >= 4) {
 
 					if (this.fifthUppergrafikErstellt == true) {
-						this.uppergc5.clearRect(0, 0, this.upperChart5.getWidth(),
+						this.uppergc5.clearRect(0, 0,
+								this.upperChart5.getWidth(),
 								this.upperChart5.getHeight());
 					}
 					// Initiale Belegung der Grafik
 					if (this.UPlan5.isVisible() == false) {
 						this.umlaufplanFuenf = this.getUmlaufplanliste().get(
-								this.UPlan.getSelectionModel().getSelectedIndex());
-						this.upperheightFuenf = this.umlaufplanFuenf.getUmlauf()
-								.size() * 40 + 10;
+								this.UPlan.getSelectionModel()
+										.getSelectedIndex());
+						this.upperheightFuenf = this.umlaufplanFuenf
+								.getUmlauf().size() * 40 + 10;
 						createUpperYScale(yUp5, upperYChart5, upperYgc5,
 								this.upperheightFuenf, this.umlaufplanFuenf);
 						this.UPlanValue5.setText(" "
@@ -1657,7 +1680,8 @@ public class MainLayoutController {
 						umlaufIsCurrent = true;
 						dienstIsCurrent = false;
 					}
-					// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne und Enabling des Tabs
+					// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne und Enabling des
+					// Tabs
 
 					this.Plan5.setDisable(false);
 					this.UPlan5.setVisible(true);
@@ -1674,10 +1698,11 @@ public class MainLayoutController {
 
 									umlaufIsCurrent = true;
 									dienstIsCurrent = false;
-									current ="u5";
+									current = "u5";
 								}
 							});
-					// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
+					// Zur Kontrolle ob es sich um einen Buttonklick handelt
+					// oder
 					// nicht
 
 					if (this.addButtonPressed == true) {
@@ -1705,8 +1730,9 @@ public class MainLayoutController {
 							new EventHandler<MouseEvent>() {
 								@Override
 								public void handle(MouseEvent e) {
-									boolean okClicked = mainApp
-											.showEditUPlan(umlaufplanFuenf);
+									boolean okClicked = mainApp.showEditUPlan(
+											umlaufplanFuenf, szenario,
+											szenarienAktiv, fahrplanID);
 									if (okClicked) {
 										refreshBothGraphics();
 									}
@@ -1721,15 +1747,17 @@ public class MainLayoutController {
 				if (this.umlaufTabCounter >= 5) {
 
 					if (this.sixthUppergrafikErstellt == true) {
-						this.uppergc6.clearRect(0, 0, this.upperChart6.getWidth(),
+						this.uppergc6.clearRect(0, 0,
+								this.upperChart6.getWidth(),
 								this.upperChart6.getHeight());
 					}
 					// Initiale Belegung der Grafik
 					if (this.UPlan6.isVisible() == false) {
 						this.umlaufplanSechs = this.getUmlaufplanliste().get(
-								this.UPlan.getSelectionModel().getSelectedIndex());
-						this.upperheightSechs = this.umlaufplanSechs.getUmlauf()
-								.size() * 40 + 10;
+								this.UPlan.getSelectionModel()
+										.getSelectedIndex());
+						this.upperheightSechs = this.umlaufplanSechs
+								.getUmlauf().size() * 40 + 10;
 						createUpperYScale(yUp6, upperYChart6, upperYgc6,
 								this.upperheightSechs, this.umlaufplanSechs);
 						this.UPlanValue6.setText(" "
@@ -1743,7 +1771,8 @@ public class MainLayoutController {
 						umlaufIsCurrent = true;
 						dienstIsCurrent = false;
 					}
-					// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne und Enabling des Tabs
+					// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne und Enabling des
+					// Tabs
 
 					this.Plan6.setDisable(false);
 					this.UPlan6.setVisible(true);
@@ -1760,10 +1789,11 @@ public class MainLayoutController {
 
 									umlaufIsCurrent = true;
 									dienstIsCurrent = false;
-									current ="u6";
+									current = "u6";
 								}
 							});
-					// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
+					// Zur Kontrolle ob es sich um einen Buttonklick handelt
+					// oder
 					// nicht
 
 					if (this.addButtonPressed == true) {
@@ -1790,8 +1820,9 @@ public class MainLayoutController {
 							new EventHandler<MouseEvent>() {
 								@Override
 								public void handle(MouseEvent e) {
-									boolean okClicked = mainApp
-											.showEditUPlan(umlaufplanSechs);
+									boolean okClicked = mainApp.showEditUPlan(
+											umlaufplanSechs, szenario,
+											szenarienAktiv, fahrplanID);
 									if (okClicked) {
 										refreshBothGraphics();
 									}
@@ -1806,15 +1837,17 @@ public class MainLayoutController {
 				if (this.umlaufTabCounter >= 6) {
 
 					if (this.seventhUppergrafikErstellt == true) {
-						this.uppergc7.clearRect(0, 0, this.upperChart7.getWidth(),
+						this.uppergc7.clearRect(0, 0,
+								this.upperChart7.getWidth(),
 								this.upperChart7.getHeight());
 					}
 					// Initiale Belegung der Grafik
 					if (this.UPlan7.isVisible() == false) {
 						this.umlaufplanSieben = this.getUmlaufplanliste().get(
-								this.UPlan.getSelectionModel().getSelectedIndex());
-						this.upperheightSieben = this.umlaufplanSieben.getUmlauf()
-								.size() * 40 + 10;
+								this.UPlan.getSelectionModel()
+										.getSelectedIndex());
+						this.upperheightSieben = this.umlaufplanSieben
+								.getUmlauf().size() * 40 + 10;
 						createUpperYScale(yUp7, upperYChart7, upperYgc7,
 								this.upperheightSieben, this.umlaufplanSieben);
 						this.UPlanValue7.setText(" "
@@ -1828,7 +1861,8 @@ public class MainLayoutController {
 						umlaufIsCurrent = true;
 						dienstIsCurrent = false;
 					}
-					// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne und Enabling des Tabs
+					// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne und Enabling des
+					// Tabs
 
 					this.Plan7.setDisable(false);
 					this.UPlan7.setVisible(true);
@@ -1845,10 +1879,11 @@ public class MainLayoutController {
 
 									umlaufIsCurrent = true;
 									dienstIsCurrent = false;
-									current ="u7";
+									current = "u7";
 								}
 							});
-					// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
+					// Zur Kontrolle ob es sich um einen Buttonklick handelt
+					// oder
 					// nicht
 
 					if (this.addButtonPressed == true) {
@@ -1876,8 +1911,9 @@ public class MainLayoutController {
 							new EventHandler<MouseEvent>() {
 								@Override
 								public void handle(MouseEvent e) {
-									boolean okClicked = mainApp
-											.showEditUPlan(umlaufplanSieben);
+									boolean okClicked = mainApp.showEditUPlan(
+											umlaufplanSieben, szenario,
+											szenarienAktiv, fahrplanID);
 									if (okClicked) {
 										refreshBothGraphics();
 									}
@@ -1972,9 +2008,11 @@ public class MainLayoutController {
 				if (this.dienstTabCounter >= 0) {
 
 					if (this.DPlan1.isVisible() == false) {
-						this.dienstplanEins = this.dienstplanliste.get(this.DPlan
-								.getSelectionModel().getSelectedIndex());
-						this.lowerheightEins = this.dienstplanEins.getDuty().size() * 40 + 10;
+						this.dienstplanEins = this.dienstplanliste
+								.get(this.DPlan.getSelectionModel()
+										.getSelectedIndex());
+						this.lowerheightEins = this.dienstplanEins.getDuty()
+								.size() * 40 + 10;
 						createLowerYScale(yLow1, lowerYChart1, lowerYgc1,
 								this.lowerheightEins, this.dienstplanEins);
 						this.DPlanValue1.setText(" "
@@ -2008,11 +2046,12 @@ public class MainLayoutController {
 
 									umlaufIsCurrent = false;
 									dienstIsCurrent = true;
-									current ="d1";
+									current = "d1";
 								}
 							});
 
-					// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
+					// Zur Kontrolle ob es sich um einen Buttonklick handelt
+					// oder
 					// nicht
 
 					if (this.addButtonPressed == true) {
@@ -2039,8 +2078,9 @@ public class MainLayoutController {
 							new EventHandler<MouseEvent>() {
 								@Override
 								public void handle(MouseEvent e) {
-									boolean okClicked = mainApp
-											.showEditDPlan(dienstplanEins);
+									boolean okClicked = mainApp.showEditDPlan(
+											dienstplanEins, szenario,
+											szenarienAktiv, fahrplanID);
 									if (okClicked) {
 										firstCheckD1 = true;
 										changeCheckD1 = true;
@@ -2059,14 +2099,17 @@ public class MainLayoutController {
 				if (this.dienstTabCounter >= 1) {
 
 					if (this.secondLowergrafikErstellt == true) {
-						this.lowergc2.clearRect(0, 0, this.lowerChart2.getWidth(),
+						this.lowergc2.clearRect(0, 0,
+								this.lowerChart2.getWidth(),
 								this.lowerChart2.getHeight());
 					}
 					// Initiale Belegung der Grafik
 					if (this.DPlan2.isVisible() == false) {
-						this.dienstplanZwei = this.dienstplanliste.get(this.DPlan
-								.getSelectionModel().getSelectedIndex());
-						this.lowerheightZwei = this.dienstplanZwei.getDuty().size() * 40 + 10;
+						this.dienstplanZwei = this.dienstplanliste
+								.get(this.DPlan.getSelectionModel()
+										.getSelectedIndex());
+						this.lowerheightZwei = this.dienstplanZwei.getDuty()
+								.size() * 40 + 10;
 						createLowerYScale(yLow2, lowerYChart2, lowerYgc2,
 								this.lowerheightZwei, this.dienstplanZwei);
 						this.DPlanValue2.setText(" "
@@ -2077,7 +2120,8 @@ public class MainLayoutController {
 						this.umlaufIsCurrent = false;
 						this.dienstIsCurrent = true;
 					}
-					// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne und Enabling des Tabs
+					// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne und Enabling des
+					// Tabs
 
 					this.Plan2.setDisable(false);
 					this.DPlan2.setVisible(true);
@@ -2094,11 +2138,12 @@ public class MainLayoutController {
 
 									umlaufIsCurrent = false;
 									dienstIsCurrent = true;
-									current ="d2";
+									current = "d2";
 								}
 							});
 
-					// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
+					// Zur Kontrolle ob es sich um einen Buttonklick handelt
+					// oder
 					// nicht
 
 					if (this.addButtonPressed == true) {
@@ -2126,8 +2171,9 @@ public class MainLayoutController {
 							new EventHandler<MouseEvent>() {
 								@Override
 								public void handle(MouseEvent e) {
-									boolean okClicked = mainApp
-											.showEditDPlan(dienstplanZwei);
+									boolean okClicked = mainApp.showEditDPlan(
+											dienstplanZwei, szenario,
+											szenarienAktiv, fahrplanID);
 									if (okClicked) {
 										firstCheckD2 = true;
 										changeCheckD2 = true;
@@ -2143,14 +2189,17 @@ public class MainLayoutController {
 				if (this.dienstTabCounter >= 2) {
 
 					if (this.thirdLowergrafikErstellt == true) {
-						this.lowergc3.clearRect(0, 0, this.lowerChart3.getWidth(),
+						this.lowergc3.clearRect(0, 0,
+								this.lowerChart3.getWidth(),
 								this.lowerChart3.getHeight());
 					}
 					// Initiale Belegung der Grafik
 					if (this.DPlan3.isVisible() == false) {
-						this.dienstplanDrei = this.dienstplanliste.get(this.DPlan
-								.getSelectionModel().getSelectedIndex());
-						this.lowerheightDrei = this.dienstplanDrei.getDuty().size() * 40 + 10;
+						this.dienstplanDrei = this.dienstplanliste
+								.get(this.DPlan.getSelectionModel()
+										.getSelectedIndex());
+						this.lowerheightDrei = this.dienstplanDrei.getDuty()
+								.size() * 40 + 10;
 						createLowerYScale(yLow3, lowerYChart3, lowerYgc3,
 								this.lowerheightDrei, this.dienstplanDrei);
 						this.DPlanValue3.setText(" "
@@ -2161,7 +2210,8 @@ public class MainLayoutController {
 						this.umlaufIsCurrent = false;
 						this.dienstIsCurrent = true;
 					}
-					// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne und Enabling des Tabs
+					// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne und Enabling des
+					// Tabs
 
 					this.Plan3.setDisable(false);
 					this.DPlan3.setVisible(true);
@@ -2178,10 +2228,11 @@ public class MainLayoutController {
 
 									umlaufIsCurrent = false;
 									dienstIsCurrent = true;
-									current ="d3";
+									current = "d3";
 								}
 							});
-					// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
+					// Zur Kontrolle ob es sich um einen Buttonklick handelt
+					// oder
 					// nicht
 
 					if (this.addButtonPressed == true) {
@@ -2209,8 +2260,9 @@ public class MainLayoutController {
 							new EventHandler<MouseEvent>() {
 								@Override
 								public void handle(MouseEvent e) {
-									boolean okClicked = mainApp
-											.showEditDPlan(dienstplanDrei);
+									boolean okClicked = mainApp.showEditDPlan(
+											dienstplanDrei, szenario,
+											szenarienAktiv, fahrplanID);
 									if (okClicked) {
 										firstCheckD3 = true;
 										changeCheckD3 = true;
@@ -2226,14 +2278,17 @@ public class MainLayoutController {
 				if (this.dienstTabCounter >= 3) {
 
 					if (this.fourthLowergrafikErstellt == true) {
-						this.lowergc4.clearRect(0, 0, this.lowerChart4.getWidth(),
+						this.lowergc4.clearRect(0, 0,
+								this.lowerChart4.getWidth(),
 								this.lowerChart4.getHeight());
 					}
 					// Initiale Belegung der Grafik
 					if (this.DPlan4.isVisible() == false) {
-						this.dienstplanVier = this.dienstplanliste.get(this.DPlan
-								.getSelectionModel().getSelectedIndex());
-						this.lowerheightVier = this.dienstplanVier.getDuty().size() * 40 + 10;
+						this.dienstplanVier = this.dienstplanliste
+								.get(this.DPlan.getSelectionModel()
+										.getSelectedIndex());
+						this.lowerheightVier = this.dienstplanVier.getDuty()
+								.size() * 40 + 10;
 						createLowerYScale(yLow4, lowerYChart4, lowerYgc4,
 								this.lowerheightVier, this.dienstplanVier);
 						this.DPlanValue4.setText(" "
@@ -2244,7 +2299,8 @@ public class MainLayoutController {
 						this.umlaufIsCurrent = false;
 						this.dienstIsCurrent = true;
 					}
-					// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne und Enabling des Tabs
+					// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne und Enabling des
+					// Tabs
 
 					this.Plan4.setDisable(false);
 					this.DPlan4.setVisible(true);
@@ -2261,10 +2317,11 @@ public class MainLayoutController {
 
 									umlaufIsCurrent = false;
 									dienstIsCurrent = true;
-									current ="d4";
+									current = "d4";
 								}
 							});
-					// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
+					// Zur Kontrolle ob es sich um einen Buttonklick handelt
+					// oder
 					// nicht
 
 					if (this.addButtonPressed == true) {
@@ -2292,8 +2349,9 @@ public class MainLayoutController {
 							new EventHandler<MouseEvent>() {
 								@Override
 								public void handle(MouseEvent e) {
-									boolean okClicked = mainApp
-											.showEditDPlan(dienstplanVier);
+									boolean okClicked = mainApp.showEditDPlan(
+											dienstplanVier, szenario,
+											szenarienAktiv, fahrplanID);
 									if (okClicked) {
 										firstCheckD4 = true;
 										changeCheckD4 = true;
@@ -2311,13 +2369,15 @@ public class MainLayoutController {
 				if (this.dienstTabCounter >= 4) {
 
 					if (this.fifthLowergrafikErstellt == true) {
-						this.lowergc5.clearRect(0, 0, this.lowerChart5.getWidth(),
+						this.lowergc5.clearRect(0, 0,
+								this.lowerChart5.getWidth(),
 								this.lowerChart5.getHeight());
 					}
 					// Initiale Belegung der Grafik
 					if (this.DPlan5.isVisible() == false) {
-						this.dienstplanFuenf = this.dienstplanliste.get(this.DPlan
-								.getSelectionModel().getSelectedIndex());
+						this.dienstplanFuenf = this.dienstplanliste
+								.get(this.DPlan.getSelectionModel()
+										.getSelectedIndex());
 						this.lowerheightFuenf = this.dienstplanFuenf.getDuty()
 								.size() * 40 + 10;
 						createLowerYScale(yLow5, lowerYChart5, lowerYgc5,
@@ -2330,7 +2390,8 @@ public class MainLayoutController {
 						this.umlaufIsCurrent = false;
 						this.dienstIsCurrent = true;
 					}
-					// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne und Enabling des Tabs
+					// Labelbeschriftungen fÃ¼r UmlaufplÃ¤ne und Enabling des
+					// Tabs
 
 					this.Plan5.setDisable(false);
 					this.DPlan5.setVisible(true);
@@ -2347,10 +2408,11 @@ public class MainLayoutController {
 
 									umlaufIsCurrent = false;
 									dienstIsCurrent = true;
-									current ="d5";
+									current = "d5";
 								}
 							});
-					// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
+					// Zur Kontrolle ob es sich um einen Buttonklick handelt
+					// oder
 					// nicht
 
 					if (this.addButtonPressed == true) {
@@ -2378,8 +2440,9 @@ public class MainLayoutController {
 							new EventHandler<MouseEvent>() {
 								@Override
 								public void handle(MouseEvent e) {
-									boolean okClicked = mainApp
-											.showEditDPlan(dienstplanFuenf);
+									boolean okClicked = mainApp.showEditDPlan(
+											dienstplanFuenf, szenario,
+											szenarienAktiv, fahrplanID);
 									if (okClicked) {
 										firstCheckD5 = true;
 										changeCheckD5 = true;
@@ -2397,13 +2460,15 @@ public class MainLayoutController {
 				if (this.dienstTabCounter >= 5) {
 
 					if (this.sixthLowergrafikErstellt == true) {
-						this.lowergc6.clearRect(0, 0, this.lowerChart6.getWidth(),
+						this.lowergc6.clearRect(0, 0,
+								this.lowerChart6.getWidth(),
 								this.lowerChart6.getHeight());
 					}
 					// Initiale Belegung der Grafik
 					if (this.DPlan6.isVisible() == false) {
-						this.dienstplanSechs = this.dienstplanliste.get(this.DPlan
-								.getSelectionModel().getSelectedIndex());
+						this.dienstplanSechs = this.dienstplanliste
+								.get(this.DPlan.getSelectionModel()
+										.getSelectedIndex());
 						this.lowerheightSechs = this.dienstplanSechs.getDuty()
 								.size() * 40 + 10;
 						createLowerYScale(yLow6, lowerYChart6, lowerYgc6,
@@ -2416,7 +2481,8 @@ public class MainLayoutController {
 						this.umlaufIsCurrent = false;
 						this.dienstIsCurrent = true;
 					}
-					// Labelbeschriftungen fuer UmlaufplÃ¤ne und Enabling des Tabs
+					// Labelbeschriftungen fuer UmlaufplÃ¤ne und Enabling des
+					// Tabs
 
 					this.Plan6.setDisable(false);
 					this.DPlan6.setVisible(true);
@@ -2433,10 +2499,11 @@ public class MainLayoutController {
 
 									umlaufIsCurrent = false;
 									dienstIsCurrent = true;
-									current ="d6";
+									current = "d6";
 								}
 							});
-					// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
+					// Zur Kontrolle ob es sich um einen Buttonklick handelt
+					// oder
 					// nicht
 
 					if (this.addButtonPressed == true) {
@@ -2463,8 +2530,9 @@ public class MainLayoutController {
 							new EventHandler<MouseEvent>() {
 								@Override
 								public void handle(MouseEvent e) {
-									boolean okClicked = mainApp
-											.showEditDPlan(dienstplanSechs);
+									boolean okClicked = mainApp.showEditDPlan(
+											dienstplanSechs, szenario,
+											szenarienAktiv, fahrplanID);
 									if (okClicked) {
 										firstCheckD6 = true;
 										changeCheckD6 = true;
@@ -2482,15 +2550,17 @@ public class MainLayoutController {
 				if (this.dienstTabCounter >= 6) {
 
 					if (this.seventhLowergrafikErstellt == true) {
-						this.lowergc7.clearRect(0, 0, this.lowerChart7.getWidth(),
+						this.lowergc7.clearRect(0, 0,
+								this.lowerChart7.getWidth(),
 								this.lowerChart7.getHeight());
 					}
 					// Initiale Belegung der Grafik
 					if (this.DPlan7.isVisible() == false) {
-						this.dienstplanSieben = this.dienstplanliste.get(this.DPlan
-								.getSelectionModel().getSelectedIndex());
-						this.lowerheightSieben = this.dienstplanSieben.getDuty()
-								.size() * 40 + 10;
+						this.dienstplanSieben = this.dienstplanliste
+								.get(this.DPlan.getSelectionModel()
+										.getSelectedIndex());
+						this.lowerheightSieben = this.dienstplanSieben
+								.getDuty().size() * 40 + 10;
 						createLowerYScale(yLow7, lowerYChart7, lowerYgc7,
 								this.lowerheightSieben, this.dienstplanSieben);
 						this.DPlanValue7.setText(" "
@@ -2501,7 +2571,8 @@ public class MainLayoutController {
 						this.umlaufIsCurrent = false;
 						this.dienstIsCurrent = true;
 					}
-					// Labelbeschriftungen fuer Umlaufplaene und Enabling des Tabs
+					// Labelbeschriftungen fuer Umlaufplaene und Enabling des
+					// Tabs
 
 					this.Plan7.setDisable(false);
 					this.DPlan7.setVisible(true);
@@ -2518,10 +2589,11 @@ public class MainLayoutController {
 
 									umlaufIsCurrent = false;
 									dienstIsCurrent = true;
-									current ="d7";
+									current = "d7";
 								}
 							});
-					// Zur Kontrolle ob es sich um einen Buttonklick handelt oder
+					// Zur Kontrolle ob es sich um einen Buttonklick handelt
+					// oder
 					// nicht
 
 					if (this.addButtonPressed == true) {
@@ -2549,8 +2621,9 @@ public class MainLayoutController {
 							new EventHandler<MouseEvent>() {
 								@Override
 								public void handle(MouseEvent e) {
-									boolean okClicked = mainApp
-											.showEditDPlan(dienstplanSieben);
+									boolean okClicked = mainApp.showEditDPlan(
+											dienstplanSieben, szenario,
+											szenarienAktiv, fahrplanID);
 									if (okClicked) {
 										firstCheckD7 = true;
 										changeCheckD7 = true;
@@ -3853,7 +3926,7 @@ public class MainLayoutController {
 		if (this.hilfslinienAktiv) {
 			createHelpLines(canvas, gc);
 		}
-		
+
 		// Variablen der Methode
 
 		double abstandNetz = (canvas.getWidth() - 30)
@@ -4012,25 +4085,36 @@ public class MainLayoutController {
 								fahrtDauer, 20, 20, 10);
 
 						// Szenarien
-						if (this.szenarienAktiv && umlaufplan.getFahrplanID() == this.fahrplanID) {
+						if (this.szenarienAktiv
+								&& umlaufplan.getFahrplanID() == this.fahrplanID) {
 							double delay;
-							for (int k = 0; k < this.szenario.getPrimeDelay().size(); k++) {
-								if (this.szenario.getPrimeDelay().get(k).getServiceJourneyID().equals(umlaufplan.getFahrtZuUmlauf().get(i).getServiceJourneyID())) {
-									delay = (abstandNetz / 60) * (this.szenario.getPrimeDelay().get(k).getDelay()/60);
-									
+							for (int k = 0; k < this.szenario.getPrimeDelay()
+									.size(); k++) {
+								if (this.szenario
+										.getPrimeDelay()
+										.get(k)
+										.getServiceJourneyID()
+										.equals(umlaufplan.getFahrtZuUmlauf()
+												.get(i).getServiceJourneyID())) {
+									delay = (abstandNetz / 60)
+											* (this.szenario.getPrimeDelay()
+													.get(k).getDelay() / 60);
+
 									gc.setStroke(Color.RED);
 									gc.setFill(Color.RED);
 									gc.setLineWidth(2);
-									
-									gc.strokeRoundRect(startPixelX, startPixelY-4, fahrtDauer + delay, 28, 20, 10);
-									
+
+									gc.strokeRoundRect(startPixelX,
+											startPixelY - 4,
+											fahrtDauer + delay, 28, 20, 10);
+
 								}
-							}	
-							
+							}
+
 							gc.setStroke(Color.BLACK);
 							gc.setLineWidth(1);
-						}						
-						
+						}
+
 						// Beschriftet die Elemente
 
 						if (fahrtDauer > 30) {
@@ -4098,7 +4182,7 @@ public class MainLayoutController {
 	private void createDienstElementGraphic(Dienstplan dienstplan,
 			ScrollPane scrollPane, Canvas canvas, GraphicsContext gc,
 			boolean firstCheck) {
-		
+
 		if (this.hilfslinienAktiv) {
 			createHelpLines(canvas, gc);
 		}
@@ -4252,26 +4336,37 @@ public class MainLayoutController {
 								20, 20, 10);
 						gc.strokeRoundRect(startPixelX, startPixelY,
 								fahrtDauer, 20, 20, 10);
-						
+
 						// Szenarien
-						if (this.szenarienAktiv && dienstplan.getFahrplanID() == this.fahrplanID) {
+						if (this.szenarienAktiv
+								&& dienstplan.getFahrplanID() == this.fahrplanID) {
 							double delay;
-							for (int k = 0; k < this.szenario.getPrimeDelay().size(); k++) {
-								if (this.szenario.getPrimeDelay().get(k).getServiceJourneyID().equals(dienstplan.getDutyelement().get(i).getServiceJourneyID())) {
-									delay = (abstandNetz / 60) * (this.szenario.getPrimeDelay().get(k).getDelay()/60);
-									
+							for (int k = 0; k < this.szenario.getPrimeDelay()
+									.size(); k++) {
+								if (this.szenario
+										.getPrimeDelay()
+										.get(k)
+										.getServiceJourneyID()
+										.equals(dienstplan.getDutyelement()
+												.get(i).getServiceJourneyID())) {
+									delay = (abstandNetz / 60)
+											* (this.szenario.getPrimeDelay()
+													.get(k).getDelay() / 60);
+
 									gc.setStroke(Color.RED);
 									gc.setFill(Color.RED);
 									gc.setLineWidth(2);
-									
-									gc.strokeRoundRect(startPixelX, startPixelY-4, fahrtDauer + delay, 28, 20, 10);
-									
+
+									gc.strokeRoundRect(startPixelX,
+											startPixelY - 4,
+											fahrtDauer + delay, 28, 20, 10);
+
 								}
-							}	
-							
+							}
+
 							gc.setStroke(Color.BLACK);
 							gc.setLineWidth(1);
-						}	
+						}
 						// Beschriftet die Elemente
 
 						if (fahrtDauer > 30) {
@@ -4330,7 +4425,7 @@ public class MainLayoutController {
 
 			firstCheck = false;
 		}
-		
+
 	}
 
 	/**
@@ -4438,7 +4533,7 @@ public class MainLayoutController {
 
 		}
 		gc.setStroke(Color.BLACK);
-	}	
+	}
 
 	/**
 	 * Deletes the latest U-Plan
@@ -4941,15 +5036,15 @@ public class MainLayoutController {
 				int auswahl = 0;
 				auswahl = this.ATage.getSelectionModel().getSelectedIndex();
 				if (this.FPlan.getSelectionModel().getSelectedItem() != null) {
-					mainApp.showFullScreenFahrplan(
-							this.fahrplanliste.get(this.FPlan.getSelectionModel()
+					mainApp.showFullScreenFahrplan(this.fahrplanliste
+							.get(this.FPlan.getSelectionModel()
 									.getSelectedIndex()), auswahl);
 				} else {
 					System.out.println("Fehlende Daten oder Auswahl");
 				}
 			}
 		} catch (Exception e) {
-			
+
 		}
 	}
 
@@ -4986,7 +5081,7 @@ public class MainLayoutController {
 		faaaa.setToValue(1.0);
 		faaaa.setAutoReverse(true);
 		faaaa.play();
-		
+
 		FadeTransition fb = new FadeTransition(Duration.millis(1500),
 				this.szenarienAnzeigen);
 		fb.setFromValue(0.0);
@@ -5004,46 +5099,60 @@ public class MainLayoutController {
 
 		switch (this.current) {
 		case "u1":
-			this.mainApp.showFullScreenGraphicUmlaufplan(this.umlaufplanEins);
+			this.mainApp.showFullScreenGraphicUmlaufplan(this.umlaufplanEins,
+					szenario, szenarienAktiv, fahrplanID);
 			break;
 		case "u2":
-			this.mainApp.showFullScreenGraphicUmlaufplan(this.umlaufplanZwei);
+			this.mainApp.showFullScreenGraphicUmlaufplan(this.umlaufplanZwei,
+					szenario, szenarienAktiv, fahrplanID);
 			break;
 		case "u3":
-			this.mainApp.showFullScreenGraphicUmlaufplan(this.umlaufplanDrei);
+			this.mainApp.showFullScreenGraphicUmlaufplan(this.umlaufplanDrei,
+					szenario, szenarienAktiv, fahrplanID);
 			break;
 		case "u4":
-			this.mainApp.showFullScreenGraphicUmlaufplan(this.umlaufplanVier);
+			this.mainApp.showFullScreenGraphicUmlaufplan(this.umlaufplanVier,
+					szenario, szenarienAktiv, fahrplanID);
 			break;
 		case "u5":
-			this.mainApp.showFullScreenGraphicUmlaufplan(this.umlaufplanFuenf);
+			this.mainApp.showFullScreenGraphicUmlaufplan(this.umlaufplanFuenf,
+					szenario, szenarienAktiv, fahrplanID);
 			break;
 		case "u6":
-			this.mainApp.showFullScreenGraphicUmlaufplan(this.umlaufplanSechs);
+			this.mainApp.showFullScreenGraphicUmlaufplan(this.umlaufplanSechs,
+					szenario, szenarienAktiv, fahrplanID);
 			break;
 		case "u7":
-			this.mainApp.showFullScreenGraphicUmlaufplan(this.umlaufplanSieben);
+			this.mainApp.showFullScreenGraphicUmlaufplan(this.umlaufplanSieben,
+					szenario, szenarienAktiv, fahrplanID);
 			break;
 		case "d1":
-			this.mainApp.showFullScreenGraphicDienstplan(this.dienstplanEins);
+			this.mainApp.showFullScreenGraphicDienstplan(this.dienstplanEins,
+					szenario, szenarienAktiv, fahrplanID);
 			break;
 		case "d2":
-			this.mainApp.showFullScreenGraphicDienstplan(this.dienstplanZwei);
+			this.mainApp.showFullScreenGraphicDienstplan(this.dienstplanZwei,
+					szenario, szenarienAktiv, fahrplanID);
 			break;
 		case "d3":
-			this.mainApp.showFullScreenGraphicDienstplan(this.dienstplanDrei);
+			this.mainApp.showFullScreenGraphicDienstplan(this.dienstplanDrei,
+					szenario, szenarienAktiv, fahrplanID);
 			break;
 		case "d4":
-			this.mainApp.showFullScreenGraphicDienstplan(this.dienstplanVier);
+			this.mainApp.showFullScreenGraphicDienstplan(this.dienstplanVier,
+					szenario, szenarienAktiv, fahrplanID);
 			break;
 		case "d5":
-			this.mainApp.showFullScreenGraphicDienstplan(this.dienstplanFuenf);
+			this.mainApp.showFullScreenGraphicDienstplan(this.dienstplanFuenf,
+					szenario, szenarienAktiv, fahrplanID);
 			break;
 		case "d6":
-			this.mainApp.showFullScreenGraphicDienstplan(this.dienstplanSechs);
+			this.mainApp.showFullScreenGraphicDienstplan(this.dienstplanSechs,
+					szenario, szenarienAktiv, fahrplanID);
 			break;
 		case "d7":
-			this.mainApp.showFullScreenGraphicDienstplan(this.dienstplanSieben);
+			this.mainApp.showFullScreenGraphicDienstplan(this.dienstplanSieben,
+					szenario, szenarienAktiv, fahrplanID);
 			break;
 		case "neu waehlen":
 			String fehlerA = "Nach dem Entfernen eines Planes bitte neu waehlen";
@@ -5103,8 +5212,8 @@ public class MainLayoutController {
 			this.FPlan.setDisable(false);
 
 			this.FPlan.setItems(FXCollections.observableArrayList(fahrplanliste
-					.get(0).getName()));
-			for (int i = 1; i < fahrplanliste.size(); i++) {
+					.get(this.choiceArray[4]).getName()));
+			for (int i = this.choiceArray[4]+1; i < this.choiceArray[5]; i++) {
 				this.FPlan.getItems().add(fahrplanliste.get(i).getName());
 			}
 
@@ -5127,8 +5236,8 @@ public class MainLayoutController {
 
 			if (this.firstLowergrafikErstellt == false) {
 				this.DPlan.setItems(FXCollections
-						.observableArrayList(dienstplanliste.get(0).getName()));
-				for (int i = 1; i < dienstplanliste.size(); i++) {
+						.observableArrayList(dienstplanliste.get(this.choiceArray[2]).getName()));
+				for (int i = this.choiceArray[2]+1; i < this.choiceArray[3]; i++) {
 					this.DPlan.getItems().add(dienstplanliste.get(i).getName());
 				}
 			}
@@ -5149,8 +5258,8 @@ public class MainLayoutController {
 
 			if (this.firstUppergrafikErstellt == false) {
 				this.UPlan.setItems(FXCollections
-						.observableArrayList(umlaufplanliste.get(0).getName()));
-				for (int i = 1; i < umlaufplanliste.size(); i++) {
+						.observableArrayList(umlaufplanliste.get(this.choiceArray[0]).getName()));
+				for (int i = this.choiceArray[0]+1; i < this.choiceArray[1]; i++) {
 					this.UPlan.getItems().add(umlaufplanliste.get(i).getName());
 				}
 			}
@@ -5290,10 +5399,11 @@ public class MainLayoutController {
 
 		return false;
 	}
+
 	// Methoden zum Verbergen der Szenarien
 
 	public void dontshowSzenarien() {
-		this.szenarienAktiv = false;		
+		this.szenarienAktiv = false;
 		refreshBothGraphics();
 		FadeTransition fb = new FadeTransition(Duration.millis(1500),
 				this.szenarienVerbergen);
@@ -5306,10 +5416,9 @@ public class MainLayoutController {
 	// Methoden zum Zeigen der Szenarien
 
 	public void showSzenarien() {
-		
-		
+
 		String fahrplanName = null;
-		
+
 		switch (this.current) {
 		case "u1":
 			fahrplanID = this.umlaufplanEins.getFahrplanID();
@@ -5318,7 +5427,7 @@ public class MainLayoutController {
 					fahrplanName = this.fahrplanliste.get(i).getName();
 				}
 			}
-			generateChoiceKrit(fahrplanID, fahrplanName);			
+			generateChoiceKrit(fahrplanID, fahrplanName);
 			break;
 		case "u2":
 			fahrplanID = this.umlaufplanZwei.getFahrplanID();
@@ -5443,7 +5552,7 @@ public class MainLayoutController {
 			String fehlerC = "Fehler";
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
 			generateChoiceKrit(fahrplanID, fahrplanName);
-			break;			
+			break;
 		case "":
 			String fehlerD = "Es wurde noch Element ausgewaehlt";
 			String fehlerE = "Was soll bearbeitet werden ?";
@@ -5455,12 +5564,12 @@ public class MainLayoutController {
 			break;
 		}
 	}
-	
+
 	// Generate Choice Scenario
-	public void generateChoiceKrit(int fahrplanID, String fahrplanName){
-		
+	public void generateChoiceKrit(int fahrplanID, String fahrplanName) {
+
 		boolean szVorhanden = false;
-		
+
 		if (this.szenarienVerbergen.getOpacity() != 1) {
 			FadeTransition fb = new FadeTransition(Duration.millis(1500),
 					this.szenarienVerbergen);
@@ -5468,8 +5577,8 @@ public class MainLayoutController {
 			fb.setToValue(1.0);
 			fb.setAutoReverse(true);
 			fb.play();
-		}		
-		
+		}
+
 		ArrayList<Szenario> choice = new ArrayList<Szenario>();
 		for (int i = 0; i < this.szenarienListe.size(); i++) {
 			if (this.szenarienListe.get(i).getFahrplanID() == fahrplanID) {
@@ -5482,7 +5591,7 @@ public class MainLayoutController {
 				this.szenarienAktiv = true;
 				refreshBothGraphics();
 			}
-		}else{
+		} else {
 			String fehlerA = "Zum Plan wurden keine zugehörigen Szenarien gefunden";
 			String fehlerB = "Szenarien anzeigen ?";
 			String fehlerC = "Fehler";
@@ -5528,7 +5637,7 @@ public class MainLayoutController {
 		this.fahrplanliste = fahrplanliste;
 
 		fillFahrplanliste();
-	}	
+	}
 
 	public ArrayList<Szenario> getSzenarienListe() {
 		return szenarienListe;
@@ -5553,5 +5662,10 @@ public class MainLayoutController {
 	public void setSzenario(Szenario szenario) {
 		this.szenario = szenario;
 	}
+
+	public void setChoiceArray(int[] choiceArray) {
+		this.choiceArray = choiceArray;
+	}
+	
 
 }

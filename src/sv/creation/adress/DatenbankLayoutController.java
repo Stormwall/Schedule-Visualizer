@@ -17,6 +17,7 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -36,6 +37,18 @@ public class DatenbankLayoutController {
 	private ScrollPane szenarienPane;
 	@FXML
 	private ProgressIndicator pIndik;
+	@FXML
+	private TextField UPlanStart;
+	@FXML
+	private TextField DPlanStart;
+	@FXML
+	private TextField FPlanStart;
+	@FXML
+	private TextField UPlanEnd;
+	@FXML
+	private TextField DPlanEnd;
+	@FXML
+	private TextField FPlanEnd;
 
 	// Erstellung der Detailtableviews
 
@@ -54,6 +67,11 @@ public class DatenbankLayoutController {
 	private Stage dialogStage;
 	private MainApplication mainApp;
 	private MainLayoutController mainLayoutcontroller;
+	
+	// Auswahl;
+	
+	private int[] choiceArray;
+	
 
 	private DBMatching dbm = new DBMatching();
 
@@ -305,6 +323,28 @@ public class DatenbankLayoutController {
 			this.mainApp.fehlerMeldung(fehlerA, fehlerB, fehlerC);
 		}
 		refreshFahrplan();
+	}
+	
+	/**
+	 * Changes ChoiceArray
+	 */
+
+	@FXML
+	private void choiceUplan() {		
+		this.choiceArray[0] =Integer.parseInt(this.UPlanStart.getText())-1;
+		this.choiceArray[1] =Integer.parseInt(this.UPlanEnd.getText());		
+	}
+	
+	@FXML
+	private void choiceDplan() {		
+		this.choiceArray[2] =Integer.parseInt(this.DPlanStart.getText())-1;
+		this.choiceArray[3] =Integer.parseInt(this.DPlanEnd.getText());		
+	}
+	
+	@FXML
+	private void choiceFplan() {		
+		this.choiceArray[4] =Integer.parseInt(this.FPlanStart.getText())-1;
+		this.choiceArray[5] =Integer.parseInt(this.FPlanEnd.getText());		
 	}
 
 	// Methode zum Beenden des PopUp
@@ -755,4 +795,17 @@ public class DatenbankLayoutController {
 		this.mainLayoutcontroller = mainLayoutcontroller;
 	}
 
+	public void setDropdownChoice(int[] dropdownChoice) {
+		this.choiceArray = dropdownChoice;
+		
+		this.UPlanStart.setText(String.valueOf(this.choiceArray[0]+1));
+		this.UPlanEnd.setText(String.valueOf(this.choiceArray[1]));
+		this.DPlanStart.setText(String.valueOf(this.choiceArray[2]+1));
+		this.DPlanEnd.setText(String.valueOf(this.choiceArray[3]));
+		this.FPlanStart.setText(String.valueOf(this.choiceArray[4]+1));
+		this.FPlanEnd.setText(String.valueOf(this.choiceArray[5]));
+		
+		
+	}
+	
 }

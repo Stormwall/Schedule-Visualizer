@@ -8,6 +8,7 @@ import java.util.Date;
 
 import sv.creation.adress.database.DBSave;
 import sv.creation.adress.model.Blockelement;
+import sv.creation.adress.model.Szenario;
 import sv.creation.adress.model.Umlaufplan;
 import sv.creation.adress.util.Export;
 import sv.creation.adress.util.StringSplitter;
@@ -59,11 +60,16 @@ public class EditU_PlanController {
 	private boolean okClicked = false;
 	private ArrayList<Umlaufplan> umlaufplanliste = new ArrayList<Umlaufplan>();
 	private ArrayList<String> colors = new ArrayList<String>();
+	private Szenario szenario;
+	private boolean szenarienAktiv = false;
+	private int fahrplanID;
 
 	// Referenz zur MainApp
 
 	private MainApplication mainApp;
 	private MainLayoutController mainLayoutcontroller;
+	
+	
 	
 	/**
 	 * Initializes the controller class. This method is automatically called
@@ -851,6 +857,26 @@ public class EditU_PlanController {
 							20, 10);
 					gc.strokeRoundRect(startPixelX, startPixelY, fahrtDauer,
 							20, 20, 10);
+					
+					// Szenarien
+					if (this.szenarienAktiv && umlaufplan.getFahrplanID() == this.fahrplanID) {
+						double delay;
+						for (int k = 0; k < this.szenario.getPrimeDelay().size(); k++) {
+							if (this.szenario.getPrimeDelay().get(k).getServiceJourneyID().equals(umlaufplan.getFahrtZuUmlauf().get(i).getServiceJourneyID())) {
+								delay = (abstandNetz / 60) * (this.szenario.getPrimeDelay().get(k).getDelay()/60);
+								
+								gc.setStroke(Color.RED);
+								gc.setFill(Color.RED);
+								gc.setLineWidth(2);
+								
+								gc.strokeRoundRect(startPixelX, startPixelY-4, fahrtDauer + delay, 28, 20, 10);
+								
+							}
+						}	
+						
+						gc.setStroke(Color.BLACK);
+						gc.setLineWidth(1);
+					}
 
 					// Beschriftet die Elemente
 					if (fahrtDauer > 30) {
@@ -875,7 +901,7 @@ public class EditU_PlanController {
 	 */
 	@FXML
 	private void handleFullsreen() {
-		mainApp.showFullScreenGraphicUmlaufplan(this.umlaufplan);
+		mainApp.showFullScreenGraphicUmlaufplan(this.umlaufplan,szenario,szenarienAktiv,fahrplanID);
 	}
 
 	// Methode zum Beenden des PopUp
@@ -967,5 +993,18 @@ public class EditU_PlanController {
 	public void setMainLayoutcontroller(MainLayoutController mainLayoutcontroller) {
 		this.mainLayoutcontroller = mainLayoutcontroller;
 	}
+
+	public void setSzenario(Szenario szenario) {
+		this.szenario = szenario;
+	}
+
+	public void setSzenarienAktiv(boolean szenarienAktiv) {
+		this.szenarienAktiv = szenarienAktiv;
+	}
+
+	public void setFahrplanID(int fahrplanID) {
+		this.fahrplanID = fahrplanID;
+	}
+	
 
 }

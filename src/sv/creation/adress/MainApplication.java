@@ -41,6 +41,10 @@ public class MainApplication extends Application {
 	private ArrayList<Szenario> szenarienListe = new ArrayList<Szenario>();
 	private ArrayList<String> color = new ArrayList<String>();
 
+	// Dropdownauswahl;
+
+	private int[] choiceArray = new int[6];
+
 	// Stageübergabeobjekte
 
 	private String startzeit;
@@ -51,23 +55,23 @@ public class MainApplication extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 
-		File file=new File( System.getProperty("user.home") + "/"
+		File file = new File(System.getProperty("user.home") + "/"
 				+ "PlanB_DB.db");
-			
-			if(file.exists()){
+
+		if (file.exists()) {
 			// Fill Datenbank
-			
+
 			fillUmlaufplanliste();
 			fillDienstplanliste();
 			fillFahrplanliste();
 			fillSzenarienliste();
 			fillColorArray();
-			}else{
-				String fehlermeldungA="Es wurde keine Datenbank gefunden.";
-				String fehlermeldungB="Es wurde eine leere Datenbank im User-Verzeichnis erstellt.\nBitte starten Sie die Anwendung neu!";
-				String fehlermeldungC="Fehler";
-				fehlerMeldung(fehlermeldungB, fehlermeldungA, fehlermeldungC);
-			}
+		} else {
+			String fehlermeldungA = "Es wurde keine Datenbank gefunden.";
+			String fehlermeldungB = "Es wurde eine leere Datenbank im User-Verzeichnis erstellt.\nBitte starten Sie die Anwendung neu!";
+			String fehlermeldungC = "Fehler";
+			fehlerMeldung(fehlermeldungB, fehlermeldungA, fehlermeldungC);
+		}
 
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle(" Schedule-Visualizer - "
@@ -116,6 +120,7 @@ public class MainApplication extends Application {
 			MainLayoutController controller = loader.getController();
 			this.mainLayoutcontroller = controller;
 			controller.setMainApp(this);
+			controller.setChoiceArray(this.choiceArray);
 			controller.setUmlaufplanliste(this.umlaufplanliste);
 			controller.setDienstplanliste(this.dienstplanliste);
 			controller.setFahrplanliste(this.fahrplanliste);
@@ -257,6 +262,7 @@ public class MainApplication extends Application {
 
 			// Set the controller
 			DatenbankLayoutController controller = loader.getController();
+			controller.setDropdownChoice(this.choiceArray);
 			controller.setUmlaufplanliste(this.umlaufplanliste);
 			controller.setDienstplanliste(this.dienstplanliste);
 			controller.setFahrplanliste(this.fahrplanliste);
@@ -266,11 +272,10 @@ public class MainApplication extends Application {
 			controller.setMainApp(this);
 
 			dialogStage.showAndWait();
-			
+
 			this.mainLayoutcontroller.fillUmlaufplanliste();
 			this.mainLayoutcontroller.fillDienstplanliste();
 			this.mainLayoutcontroller.fillFahrplanliste();
-
 
 		} catch (IOException e) {
 			// Exception gets thrown if the fxml file could not be loaded
@@ -281,7 +286,8 @@ public class MainApplication extends Application {
 
 	// Initiate Fullscreen fxml
 
-	public void showFullScreenGraphicUmlaufplan(Umlaufplan umlaufplan) {
+	public void showFullScreenGraphicUmlaufplan(Umlaufplan umlaufplan,
+			Szenario szenario, boolean szenarienAktiv, int fahrplanID) {
 
 		try {
 
@@ -303,12 +309,14 @@ public class MainApplication extends Application {
 			FullScreenLayoutControllerUmlaufplan controller = loader
 					.getController();
 			controller.setDialogStage(dialogStage);
+			controller.setSzenario(szenario);
+			controller.setSzenarienAktiv(szenarienAktiv);
+			controller.setFahrplanID(fahrplanID);
 			controller.setUmlaufplan(umlaufplan);
 			controller.setMainApp(this);
 			controller.setColors(this.color);
 
 			dialogStage.show();
-
 
 		} catch (IOException e) {
 			// Exception gets thrown if the fxml file could not be loade
@@ -318,7 +326,8 @@ public class MainApplication extends Application {
 
 	// Initiate Fullscreen fxml
 
-	public void showFullScreenGraphicDienstplan(Dienstplan dienstplan) {
+	public void showFullScreenGraphicDienstplan(Dienstplan dienstplan,
+			Szenario szenario, boolean szenarienAktiv, int fahrplanID) {
 
 		try {
 
@@ -340,6 +349,9 @@ public class MainApplication extends Application {
 			FullScreenLayoutControllerDienstplan controller = loader
 					.getController();
 			controller.setDialogStage(dialogStage);
+			controller.setSzenario(szenario);
+			controller.setSzenarienAktiv(szenarienAktiv);
+			controller.setFahrplanID(fahrplanID);
 			controller.setDienstplan(dienstplan);
 			controller.setMainApp(this);
 			controller.setColors(this.color);
@@ -378,7 +390,6 @@ public class MainApplication extends Application {
 			controller.setMainApp(this);
 			controller.setFahrplan(fahrplan);
 			controller.setErstauswahl(auswahl);
-			
 
 			dialogStage.show();
 
@@ -457,7 +468,7 @@ public class MainApplication extends Application {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// Initiate KostenLayout fxml
 
 	public void showKostenD(ArrayList<Dienstplan> dienstplanChoiceliste,
@@ -528,7 +539,8 @@ public class MainApplication extends Application {
 
 	// Initiate Edit U-Plan fxml
 
-	public boolean showEditUPlan(Umlaufplan umlaufplan) {
+	public boolean showEditUPlan(Umlaufplan umlaufplan, Szenario szenario,
+			boolean szenarienAktiv, int fahrplanID) {
 
 		try {
 
@@ -550,13 +562,16 @@ public class MainApplication extends Application {
 			controller.setUmlaufplan(umlaufplan);
 			controller.setMainApp(this);
 			controller.setDialogStage(dialogStage);
+			controller.setSzenario(szenario);
+			controller.setSzenarienAktiv(szenarienAktiv);
+			controller.setFahrplanID(fahrplanID);
 			controller.setUmlaufplanliste(this.umlaufplanliste);
 			controller.setColors(this.color);
 			controller.setMainLayoutcontroller(this.mainLayoutcontroller);
 
 			// Show the dialog and wait until the user closes it
 			dialogStage.showAndWait();
-			
+
 			this.mainLayoutcontroller.fillUmlaufplanliste();
 
 			return controller.isOkClicked();
@@ -571,7 +586,8 @@ public class MainApplication extends Application {
 
 	// Initiate Edit U-Plan fxml
 
-	public boolean showEditDPlan(Dienstplan dienstplan) {
+	public boolean showEditDPlan(Dienstplan dienstplan, Szenario szenario,
+			boolean szenarienAktiv, int fahrplanID) {
 
 		try {
 
@@ -593,15 +609,18 @@ public class MainApplication extends Application {
 			controller.setDienstplan(dienstplan);
 			controller.setMainApp(this);
 			controller.setDialogStage(dialogStage);
+			controller.setSzenario(szenario);
+			controller.setSzenarienAktiv(szenarienAktiv);
+			controller.setFahrplanID(fahrplanID);
 			controller.setDienstplanliste(this.dienstplanliste);
 			controller.setColors(this.color);
 			controller.setMainLayoutcontroller(this.mainLayoutcontroller);
 
 			// Show the dialog and wait until the user closes it
 			dialogStage.showAndWait();
-			
+
 			this.mainLayoutcontroller.fillDienstplanliste();
-			
+
 			this.mainLayoutcontroller.fillDienstplanliste();
 
 			return controller.isOkClicked();
@@ -654,10 +673,12 @@ public class MainApplication extends Application {
 		}
 
 	}
+
 	// Initiate Szenarien fxml
 
-	public boolean showSzenario(ArrayList<Szenario> szenarienChoiceListe, String fahrplanName) {
-		
+	public boolean showSzenario(ArrayList<Szenario> szenarienChoiceListe,
+			String fahrplanName) {
+
 		boolean okClicked = false;
 
 		try {
@@ -684,7 +705,7 @@ public class MainApplication extends Application {
 			controller.setMainLayoutcontroller(this.mainLayoutcontroller);
 
 			dialogStage.showAndWait();
-			
+
 			okClicked = controller.isOkClicked();
 
 		} catch (IOException e) {
@@ -764,26 +785,24 @@ public class MainApplication extends Application {
 		return Dialogs.showInputDialog(primaryStage, fehlermeldungA,
 				fehlermeldungB, fehlermeldungC);
 	}
-	
+
 	public DialogResponse confirmMeldung(String message) {
 
 		return Dialogs.showConfirmDialog(primaryStage, message);
 	}
-	
 
-	
 	// Methoden zur Befuellung der Szenarienliste
 
-		public void fillSzenarienliste() {
+	public void fillSzenarienliste() {
 
-			this.szenarienListe.clear();
+		this.szenarienListe.clear();
 
-			if (dbm.databaseIsEmpty()||dbm.szenarioIsEmpty()) {
+		if (dbm.databaseIsEmpty() || dbm.szenarioIsEmpty()) {
 
-			} else {
-				this.szenarienListe = dbm.createSzenarioObject();
-			}
+		} else {
+			this.szenarienListe = dbm.createSzenarioObject();
 		}
+	}
 
 	// Methoden zur Befuellung der Fahrplanliste
 
@@ -794,16 +813,17 @@ public class MainApplication extends Application {
 		if (dbm.databaseIsEmpty() || dbm.fahrplanIsEmpty()) {
 
 		} else {
-			
-			this.fahrplanliste = dbm.createFahrplanObject();
 
+			this.fahrplanliste = dbm.createFahrplanObject();
+			
+			this.choiceArray[4]=0;
+			this.choiceArray[5]=this.fahrplanliste.size();
 		}
 	}
 
 	// Methoden zur BefÃ¼llung der Dienstplanliste
 
 	public void fillDienstplanliste() {
-
 
 		this.dienstplanliste.clear();
 
@@ -812,7 +832,9 @@ public class MainApplication extends Application {
 		} else {
 
 			this.dienstplanliste = dbm.createDienstplanObject();
-
+			
+			this.choiceArray[2]=0;
+			this.choiceArray[3]=this.dienstplanliste.size();
 		}
 
 	}
@@ -821,7 +843,6 @@ public class MainApplication extends Application {
 
 	public void fillUmlaufplanliste() {
 
-
 		this.umlaufplanliste.clear();
 
 		if (dbm.databaseIsEmpty() || dbm.umlaufplanIsEmpty()) {
@@ -829,10 +850,13 @@ public class MainApplication extends Application {
 		} else {
 
 			this.umlaufplanliste = dbm.createUmlaufplanObject();
+			
+			this.choiceArray[0]=0;
+			this.choiceArray[1]=this.umlaufplanliste.size();
 
 		}
 	}
-	
+
 	// Methode zum Befuellen der Farben
 
 	public void fillColorArray() {
@@ -867,7 +891,7 @@ public class MainApplication extends Application {
 
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
-	}	
+	}
 
 	public ArrayList<Umlaufplan> getUmlaufplanliste() {
 		return umlaufplanliste;
@@ -900,6 +924,7 @@ public class MainApplication extends Application {
 	public void setSzenarienListe(ArrayList<Szenario> szenarienListe) {
 		this.szenarienListe = szenarienListe;
 	}
+
 	// Main Method
 
 	public static void main(String[] args) {

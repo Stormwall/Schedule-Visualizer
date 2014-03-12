@@ -20,7 +20,7 @@
                 <AnchorPane maxWidth="169.0" minHeight="0.0" minWidth="169.0" prefHeight="160.0" prefWidth="100.0" styleClass="background">
                   <children>
                     <Label styleClass="label-white" text="Datenbankverwaltung" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="6.0" />
-                    <Button mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Abbrechen" AnchorPane.leftAnchor="45.0" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="458.0" />
+                    <Button layoutX="45.0" mnemonicParsing="false" onAction="#endStage" styleClass="dark-blue" text="Abbrechen" AnchorPane.bottomAnchor="14.0" />
                     <HBox id="HBox" alignment="CENTER" prefWidth="169.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="51.0">
                       <children>
                         <Button mnemonicParsing="false" onAction="#handleImport" prefWidth="78.0" styleClass="dark-blue" text="Import">
@@ -54,8 +54,25 @@
                                     </AnchorPane>
                                     <AnchorPane maxHeight="35.0" minHeight="35.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="background">
                                       <children>
-                                        <Button layoutY="5.0" mnemonicParsing="false" onAction="#renamesUplan" styleClass="dark-blue" text="Umbenennen" AnchorPane.rightAnchor="14.0" />
-                                        <Button layoutY="5.0" mnemonicParsing="false" onAction="#deleteUplan" styleClass="dark-blue" text="Löschen" AnchorPane.leftAnchor="14.0" />
+                                        <HBox id="HBox" alignment="CENTER" layoutY="5.0" spacing="5.0" AnchorPane.rightAnchor="14.0">
+                                          <children>
+                                            <Button mnemonicParsing="false" onAction="#deleteUplan" styleClass="dark-blue" text="Löschen" />
+                                            <Button mnemonicParsing="false" onAction="#renamesUplan" styleClass="dark-blue" text="Umbenennen" />
+                                          </children>
+                                        </HBox>
+                                        <HBox id="HBox" alignment="CENTER" layoutX="9.0" layoutY="5.0" spacing="5.0">
+                                          <children>
+                                            <Label styleClass="label-white" text="Anzeigen von Plan :" />
+                                            <TextField fx:id="UPlanStart" prefWidth="50.0" />
+                                            <Label styleClass="label-white" text="bis :" />
+                                            <TextField fx:id="UPlanEnd" prefWidth="50.0" />
+                                            <Button mnemonicParsing="false" onAction="#choiceUplan" styleClass="dark-blue" text="Anpassen">
+                                              <HBox.margin>
+                                                <Insets left="10.0" fx:id="x1" />
+                                              </HBox.margin>
+                                            </Button>
+                                          </children>
+                                        </HBox>
                                       </children>
                                     </AnchorPane>
                                   </items>
@@ -81,8 +98,21 @@
                                     </AnchorPane>
                                     <AnchorPane maxHeight="35.0" minHeight="35.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="background">
                                       <children>
-                                        <Button layoutY="5.0" mnemonicParsing="false" onAction="#renamesDplan" styleClass="dark-blue" text="Umbenennen" AnchorPane.rightAnchor="14.0" />
-                                        <Button layoutY="5.0" mnemonicParsing="false" onAction="#deleteDplan" styleClass="dark-blue" text="Löschen" AnchorPane.leftAnchor="14.0" />
+                                        <HBox id="HBox" alignment="CENTER" layoutY="5.0" spacing="5.0" AnchorPane.rightAnchor="14.0">
+                                          <children>
+                                            <Button mnemonicParsing="false" onAction="#deleteDplan" styleClass="dark-blue" text="Löschen" />
+                                            <Button mnemonicParsing="false" onAction="#renamesDplan" styleClass="dark-blue" text="Umbenennen" />
+                                          </children>
+                                        </HBox>
+                                        <HBox id="HBox" alignment="CENTER" layoutY="5.0" spacing="5.0" AnchorPane.leftAnchor="9.0">
+                                          <children>
+                                            <Label styleClass="label-white" text="Anzeigen von Plan :" />
+                                            <TextField fx:id="DPlanStart" prefWidth="50.0" />
+                                            <Label styleClass="label-white" text="bis :" />
+                                            <TextField fx:id="DPlanEnd" prefWidth="50.0" />
+                                            <Button mnemonicParsing="false" onAction="#choiceDplan" styleClass="dark-blue" text="Anpassen" HBox.margin="$x1" />
+                                          </children>
+                                        </HBox>
                                       </children>
                                     </AnchorPane>
                                   </items>
@@ -108,8 +138,21 @@
                                     </AnchorPane>
                                     <AnchorPane maxHeight="35.0" minHeight="35.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="background">
                                       <children>
-                                        <Button layoutY="5.0" mnemonicParsing="false" onAction="#renamesFplan" styleClass="dark-blue" text="Umbenennen" AnchorPane.rightAnchor="14.0" />
-                                        <Button layoutY="5.0" mnemonicParsing="false" onAction="#deleteFplan" styleClass="dark-blue" text="Löschen" AnchorPane.leftAnchor="14.0" />
+                                        <HBox id="HBox" alignment="CENTER" layoutY="5.0" spacing="5.0" AnchorPane.rightAnchor="14.0">
+                                          <children>
+                                            <Button mnemonicParsing="false" onAction="#deleteFplan" styleClass="dark-blue" text="Löschen" />
+                                            <Button mnemonicParsing="false" onAction="#renamesFplan" styleClass="dark-blue" text="Umbenennen" />
+                                          </children>
+                                        </HBox>
+                                        <HBox id="HBox" alignment="CENTER" layoutY="5.0" spacing="5.0" AnchorPane.leftAnchor="9.0">
+                                          <children>
+                                            <Label styleClass="label-white" text="Anzeigen von Plan :" />
+                                            <TextField fx:id="FPlanStart" prefWidth="50.0" />
+                                            <Label styleClass="label-white" text="bis :" />
+                                            <TextField fx:id="FPlanEnd" prefWidth="50.0" />
+                                            <Button mnemonicParsing="false" onAction="#choiceFplan" styleClass="dark-blue" text="Anpassen" HBox.margin="$x1" />
+                                          </children>
+                                        </HBox>
                                       </children>
                                     </AnchorPane>
                                   </items>

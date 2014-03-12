@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.imageio.ImageIO;
 
 import sv.creation.adress.model.Dienstplan;
+import sv.creation.adress.model.Szenario;
 import sv.creation.adress.util.StringSplitter;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -53,6 +54,9 @@ public class FullScreenLayoutControllerDienstplan {
 	private int endzeitVar = 24;
 	private int breite = 0;
 	private boolean beschriftungCheck = false;
+	private Szenario szenario;
+	private boolean szenarienAktiv = false;
+	private int fahrplanID;
 
 	// Referenz zur MainApp
 
@@ -551,6 +555,26 @@ public class FullScreenLayoutControllerDienstplan {
 								fahrtDauer, breite / 2, 20, 10);
 						this.gc.strokeRoundRect(startPixelX, startPixelY,
 								fahrtDauer, breite / 2, 20, 10);
+						
+						// Szenarien
+						if (this.szenarienAktiv && dienstplan.getFahrplanID() == this.fahrplanID) {
+							double delay;
+							for (int k = 0; k < this.szenario.getPrimeDelay().size(); k++) {
+								if (this.szenario.getPrimeDelay().get(k).getServiceJourneyID().equals(dienstplan.getDutyelement().get(i).getServiceJourneyID())) {
+									delay = (abstandNetz / 60) * (this.szenario.getPrimeDelay().get(k).getDelay()/60);
+									
+									gc.setStroke(Color.RED);
+									gc.setFill(Color.RED);
+									gc.setLineWidth(2);
+									
+									gc.strokeRoundRect(startPixelX, startPixelY-breite/10, fahrtDauer + delay, breite / 1.5, 20, 10);
+									
+								}
+							}	
+							
+							gc.setStroke(Color.BLACK);
+							gc.setLineWidth(1);
+						}	
 
 						// Beschriftet die Elemente
 						if (beschriftungCheck) {
@@ -694,6 +718,18 @@ public class FullScreenLayoutControllerDienstplan {
 
 	public void setColors(ArrayList<String> colors) {
 		this.colors = colors;
+	}
+
+	public void setSzenario(Szenario szenario) {
+		this.szenario = szenario;
+	}
+
+	public void setSzenarienAktiv(boolean szenarienAktiv) {
+		this.szenarienAktiv = szenarienAktiv;
+	}
+
+	public void setFahrplanID(int fahrplanID) {
+		this.fahrplanID = fahrplanID;
 	}
 
 }

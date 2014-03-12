@@ -9,6 +9,7 @@ import java.util.Date;
 import sv.creation.adress.database.DBSave;
 import sv.creation.adress.model.Dienstplan;
 import sv.creation.adress.model.Dutyelement;
+import sv.creation.adress.model.Szenario;
 import sv.creation.adress.util.Export;
 import sv.creation.adress.util.StringSplitter;
 import javafx.beans.value.ChangeListener;
@@ -59,6 +60,9 @@ public class EditD_PlanController {
 	private boolean okClicked = false;
 	private ArrayList<Dienstplan> dienstplanliste = new ArrayList<Dienstplan>();
 	private ArrayList<String> colors = new ArrayList<String>();
+	private Szenario szenario;
+	private boolean szenarienAktiv = false;
+	private int fahrplanID;
 
 	// Referenz zur MainApp
 
@@ -840,6 +844,27 @@ public class EditD_PlanController {
 							20, 10);
 					gc.strokeRoundRect(startPixelX, startPixelY, fahrtDauer,
 							20, 20, 10);
+					
+					// Szenarien
+					if (this.szenarienAktiv && dienstplan.getFahrplanID() == this.fahrplanID) {
+						double delay;
+						for (int k = 0; k < this.szenario.getPrimeDelay().size(); k++) {
+							if (this.szenario.getPrimeDelay().get(k).getServiceJourneyID().equals(dienstplan.getDutyelement().get(i).getServiceJourneyID())) {
+								delay = (abstandNetz / 60) * (this.szenario.getPrimeDelay().get(k).getDelay()/60);
+								
+								gc.setStroke(Color.RED);
+								gc.setFill(Color.RED);
+								gc.setLineWidth(2);
+								
+								gc.strokeRoundRect(startPixelX, startPixelY-4, fahrtDauer + delay, 28, 20, 10);
+								
+							}
+						}	
+						
+						gc.setStroke(Color.BLACK);
+						gc.setLineWidth(1);
+					}	
+					
 					// Beschriftet die Elemente
 					if (fahrtDauer > 30) {
 						gc.setFill(Color.BLACK);
@@ -869,7 +894,7 @@ public class EditD_PlanController {
 	 */
 	@FXML
 	private void handleFullsreen() {
-		mainApp.showFullScreenGraphicDienstplan(this.dienstplan);
+		mainApp.showFullScreenGraphicDienstplan(this.dienstplan,szenario,szenarienAktiv,fahrplanID);
 	}
 
 	// Zuordnungsmethoden
@@ -953,6 +978,18 @@ public class EditD_PlanController {
 	}
 	public void setMainLayoutcontroller(MainLayoutController mainLayoutcontroller) {
 		this.mainLayoutcontroller = mainLayoutcontroller;
+	}
+
+	public void setSzenario(Szenario szenario) {
+		this.szenario = szenario;
+	}
+
+	public void setSzenarienAktiv(boolean szenarienAktiv) {
+		this.szenarienAktiv = szenarienAktiv;
+	}
+
+	public void setFahrplanID(int fahrplanID) {
+		this.fahrplanID = fahrplanID;
 	}
 	
 }
