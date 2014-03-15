@@ -114,7 +114,7 @@ public class FahrplanGraphicLayoutController {
 		// Belegung der X-Achse
 
 		this.xAxis.setLowerBound(0);
-		this.xAxis.setUpperBound(1440 / 60);
+		this.xAxis.setUpperBound(1680 / 60);
 		this.xAxis.setTickUnit(1);
 
 		// Belegung der Y-Achse
