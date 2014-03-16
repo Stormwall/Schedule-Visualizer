@@ -17,7 +17,7 @@
       <children>
         <AreaChart fx:id="fahrplanvergleich" alternativeRowFillVisible="false" legendVisible="false" prefHeight="735.0" prefWidth="760.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
           <xAxis>
-            <NumberAxis fx:id="xAxis" autoRanging="false" minorTickCount="4" side="BOTTOM" tickLabelFill="WHITE">
+            <NumberAxis fx:id="xAxis" autoRanging="false" minorTickCount="4" side="BOTTOM" tickLabelFill="WHITE" tickLabelsVisible="true">
               <tickLabelFont>
                 <Font name="Arial" size="10.0" fx:id="x1" />
               </tickLabelFont>
@@ -79,7 +79,7 @@
     </AnchorPane>
     <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
       <children>
-        <Label font="$x2" layoutY="6.0" text="Uhrzeit" textFill="WHITE" AnchorPane.rightAnchor="30.0" />
+        <Label font="$x2" layoutY="6.0" text="Stunde des Plantages" textFill="WHITE" AnchorPane.rightAnchor="30.0" />
         <GridPane prefWidth="760.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
           <children>
             <Label fx:id="monday" opacity="0.0" text="Montag" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="0">
