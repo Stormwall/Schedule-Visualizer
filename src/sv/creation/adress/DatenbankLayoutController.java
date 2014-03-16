@@ -67,11 +67,10 @@ public class DatenbankLayoutController {
 	private Stage dialogStage;
 	private MainApplication mainApp;
 	private MainLayoutController mainLayoutcontroller;
-	
+
 	// Auswahl;
-	
+
 	private int[] choiceArray;
-	
 
 	private DBMatching dbm = new DBMatching();
 
@@ -111,12 +110,12 @@ public class DatenbankLayoutController {
 			for (int i = 0; i < this.umlaufplanliste.size(); i++) {
 				if (this.umlaufplanliste.get(i).equals(umlaufplan)) {
 					for (int j = 0; j < this.dienstplanliste.size(); j++) {
-						if (this.umlaufplanliste.get(i).getId() == this.dienstplanliste.get(j)
-								.getUmlaufplanID()) {
+						if (this.umlaufplanliste.get(i).getId() == this.dienstplanliste
+								.get(j).getUmlaufplanID()) {
 							this.dienstplanliste.remove(j);
 							--j;
 						}
-					}					
+					}
 					this.umlaufplanliste.remove(i);
 				}
 			}
@@ -324,27 +323,67 @@ public class DatenbankLayoutController {
 		}
 		refreshFahrplan();
 	}
-	
+
 	/**
 	 * Changes ChoiceArray
 	 */
 
 	@FXML
-	private void choiceUplan() {		
-		this.choiceArray[0] =Integer.parseInt(this.UPlanStart.getText())-1;
-		this.choiceArray[1] =Integer.parseInt(this.UPlanEnd.getText());		
+	private void choiceUplan() {
+
+		try {
+			int inputStart = Integer.parseInt(this.UPlanStart.getText()) - 1;
+			int inputEnd = Integer.parseInt(this.UPlanEnd.getText());
+
+			if ((inputStart >= 0) && (inputEnd <= this.umlaufplanliste.size()) && (inputStart<inputEnd)) {
+				this.choiceArray[0] = inputStart;
+				this.choiceArray[1] = inputEnd;
+			} else {
+				this.UPlanStart.setText("1");
+				this.UPlanEnd.setText(String.valueOf(this.umlaufplanliste.size()));
+			}
+		} catch (NumberFormatException e) {
+			this.UPlanStart.setText("1");
+			this.UPlanEnd.setText(String.valueOf(this.umlaufplanliste.size()));
+		}		
 	}
-	
+
 	@FXML
-	private void choiceDplan() {		
-		this.choiceArray[2] =Integer.parseInt(this.DPlanStart.getText())-1;
-		this.choiceArray[3] =Integer.parseInt(this.DPlanEnd.getText());		
+	private void choiceDplan() {
+		try {
+			int inputStart = Integer.parseInt(this.DPlanStart.getText()) - 1;
+			int inputEnd = Integer.parseInt(this.DPlanEnd.getText());
+
+			if ((inputStart >= 0) && (inputEnd <= this.dienstplanliste.size()) && (inputStart<inputEnd)) {
+				this.choiceArray[2] = inputStart;
+				this.choiceArray[3] = inputEnd;
+			} else {
+				this.DPlanStart.setText("1");
+				this.DPlanEnd.setText(String.valueOf(this.dienstplanliste.size()));
+			}
+		} catch (NumberFormatException e) {
+			this.DPlanStart.setText("1");
+			this.DPlanEnd.setText(String.valueOf(this.dienstplanliste.size()));
+		}
 	}
-	
+
 	@FXML
-	private void choiceFplan() {		
-		this.choiceArray[4] =Integer.parseInt(this.FPlanStart.getText())-1;
-		this.choiceArray[5] =Integer.parseInt(this.FPlanEnd.getText());		
+	private void choiceFplan() {
+		try {
+			int inputStart = Integer.parseInt(this.FPlanStart.getText()) - 1;
+			int inputEnd = Integer.parseInt(this.FPlanEnd.getText());
+
+			if ((inputStart >= 0) && (inputEnd <= this.fahrplanliste.size()) && (inputStart<inputEnd)) {
+				this.choiceArray[4] = inputStart;
+				this.choiceArray[5] = inputEnd;
+			} else {
+				this.FPlanStart.setText("1");
+				this.FPlanEnd.setText(String.valueOf(this.fahrplanliste.size()));
+			}
+		} catch (NumberFormatException e) {
+			this.FPlanStart.setText("1");
+			this.FPlanEnd.setText(String.valueOf(this.fahrplanliste.size()));
+		}
 	}
 
 	// Methode zum Beenden des PopUp
@@ -364,15 +403,15 @@ public class DatenbankLayoutController {
 		// // Show open file dialog
 		File file = null;
 		try {
-					
+
 			FileChooser fileChooser = new FileChooser();
-			
+
 			// Set extension filter
 			FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
 					"TXT files (*.txt)", "*.txt");
 			fileChooser.getExtensionFilters().add(extFilter);
 			FadeTransition fa = new FadeTransition(Duration.millis(1500),
-					this.pIndik);			
+					this.pIndik);
 			fa.setFromValue(0.0);
 			fa.setToValue(1.0);
 			fa.setAutoReverse(true);
@@ -380,9 +419,7 @@ public class DatenbankLayoutController {
 			file = fileChooser.showOpenDialog(dialogStage);
 
 			Import im = new Import();
-			
-			
-			
+
 			if (file.getName().startsWith("vs")) {
 				im.importFile(file);
 				if (im.isUmlaufplanImportFailed() == true) {
@@ -461,7 +498,7 @@ public class DatenbankLayoutController {
 			this.mainApp.setDienstplanliste(this.dienstplanliste);
 			this.mainApp.setFahrplanliste(this.fahrplanliste);
 			this.mainApp.setSzenarienListe(this.szenarienListe);
-			
+
 			this.mainLayoutcontroller.setUmlaufplanliste(this.umlaufplanliste);
 			this.mainLayoutcontroller.setDienstplanliste(this.dienstplanliste);
 			this.mainLayoutcontroller.setFahrplanliste(this.fahrplanliste);
@@ -471,7 +508,7 @@ public class DatenbankLayoutController {
 			refreshDienstplan();
 			refreshFahrplan();
 			refreshSzenario();
-			
+
 			fa.setFromValue(1.0);
 			fa.setToValue(0.0);
 			fa.setAutoReverse(true);
@@ -791,21 +828,21 @@ public class DatenbankLayoutController {
 		return mainLayoutcontroller;
 	}
 
-	public void setMainLayoutcontroller(MainLayoutController mainLayoutcontroller) {
+	public void setMainLayoutcontroller(
+			MainLayoutController mainLayoutcontroller) {
 		this.mainLayoutcontroller = mainLayoutcontroller;
 	}
 
 	public void setDropdownChoice(int[] dropdownChoice) {
 		this.choiceArray = dropdownChoice;
-		
-		this.UPlanStart.setText(String.valueOf(this.choiceArray[0]+1));
+
+		this.UPlanStart.setText(String.valueOf(this.choiceArray[0] + 1));
 		this.UPlanEnd.setText(String.valueOf(this.choiceArray[1]));
-		this.DPlanStart.setText(String.valueOf(this.choiceArray[2]+1));
+		this.DPlanStart.setText(String.valueOf(this.choiceArray[2] + 1));
 		this.DPlanEnd.setText(String.valueOf(this.choiceArray[3]));
-		this.FPlanStart.setText(String.valueOf(this.choiceArray[4]+1));
+		this.FPlanStart.setText(String.valueOf(this.choiceArray[4] + 1));
 		this.FPlanEnd.setText(String.valueOf(this.choiceArray[5]));
-		
-		
+
 	}
-	
+
 }
