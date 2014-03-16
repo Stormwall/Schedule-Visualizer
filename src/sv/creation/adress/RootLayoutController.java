@@ -41,7 +41,7 @@ public class RootLayoutController {
 	 */
 	@FXML
 	private void handleContact() {
-		String fehlerA = "Grafische Visualisierung\nErik Haus\nerikhaus.home@googlemail.com\n\nDatenbankverwaltung\nDennis Than\ndennis.than703@gmail.com\n\n Kennzahlen und Organisation\n Fabian Riebold und Dimitrios Anapliotis\n f.riebold@hotmail.de und dimitrios_anapliotis@yahoo.de ";
+		String fehlerA = "Grafische Visualisierung:\nErik Haus\nerikhaus.home@googlemail.com\n\nDatenbankverwaltung:\nDennis Than\ndennis.than703@gmail.com\n\nKennzahlen und Organisation:\nFabian Riebold\nf.riebold@hotmail.de\n\nDimitrios Anapliotis\ndimitrios_anapliotis@yahoo.de ";
 		String fehlerB = "Kontaktinformation";
 		String fehlerC = "Kontakt";
 		this.mainApp.informationMeldung(fehlerA, fehlerB, fehlerC);

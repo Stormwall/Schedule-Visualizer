@@ -303,7 +303,10 @@ public class Vergleich {
 		default:
 			break;
 		}
-		return this.anzahlServiceFahrten;
+		
+		int[] sortierteFahrten=new int[1680];
+		sortierteFahrten=sortArray(this.anzahlServiceFahrten);
+		return sortierteFahrten;
 	}
 
 	public String timeFormat(int i) {
@@ -340,6 +343,22 @@ public class Vergleich {
 			array[i]=0;
 		}
 		return array;
+	}
+	
+	//Methode sortiert das Array, dh. es werden tagesuebergreifende Fahrten an das Ende des Tages gelegt
+	public int[] sortArray(int[]array){
+		
+		int[] sortedArray = new int[1680];
+		for (int i = 0; i < array.length; i++) {
+			//Nur die ersten vier Stunden des Tages werden betrachtet, um zu pruefen, ob tagesübergreifende Fahrten vorhanden sind
+			if(array[i]>0&&i<array.length-1200){
+				sortedArray[array.length+i]=array[i];
+			}else{
+				sortedArray[i]=array[i];
+			}
+		}
+		
+		return sortedArray;
 	}
 
 }

@@ -376,6 +376,7 @@ public class MainApplication extends Application {
 							.getResource("view/FahrplanGraphicLayout.fxml"));
 			GridPane page = (GridPane) loader.load();
 			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Tagesauslastung");
 			dialogStage.getIcons().add(
 					new Image("file:resources/images/IconFinal.png"));
 			dialogStage.setFullScreen(true);
@@ -411,6 +412,7 @@ public class MainApplication extends Application {
 							.getResource("view/ColorChoiceLayout.fxml"));
 			GridPane page = (GridPane) loader.load();
 			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Farbauswahl");
 			dialogStage.getIcons().add(
 					new Image("file:resources/images/IconFinal.png"));
 			dialogStage.initModality(Modality.WINDOW_MODAL);
