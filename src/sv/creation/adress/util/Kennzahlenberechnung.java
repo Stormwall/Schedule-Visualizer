@@ -67,7 +67,7 @@ public class Kennzahlenberechnung {
 			}
 		}
 
-		avgrepeat = anzahlDutyGesamt / (anzahlDutyGesamt - anzahlGleicheDuty);
+		avgrepeat = roundValue(anzahlDutyGesamt / (anzahlDutyGesamt - anzahlGleicheDuty));
 
 		return avgrepeat;
 	}
@@ -130,8 +130,8 @@ public class Kennzahlenberechnung {
 			}
 		}
 
-		avgrepeat = anzahlBlockGesamt
-				/ (anzahlBlockGesamt - anzahlGleicheBloecke);
+		avgrepeat = roundValue(anzahlBlockGesamt
+				/ (anzahlBlockGesamt - anzahlGleicheBloecke));
 
 		return avgrepeat;
 	}
@@ -227,7 +227,7 @@ public class Kennzahlenberechnung {
 			}
 		}
 
-		avgrepeat = anzahlDutyGesamt / (anzahlDutyGesamt - anzahlGleicheDuty);
+		avgrepeat = roundValue(anzahlDutyGesamt / (anzahlDutyGesamt - anzahlGleicheDuty));
 
 		return avgrepeat;
 
@@ -338,8 +338,8 @@ public class Kennzahlenberechnung {
 			}
 		}
 
-		avgrepeat = anzahlBlockGesamt
-				/ (anzahlBlockGesamt - anzahlGleicherBlock);
+		avgrepeat = roundValue(anzahlBlockGesamt
+				/ (anzahlBlockGesamt - anzahlGleicherBlock));
 
 		return avgrepeat;
 
