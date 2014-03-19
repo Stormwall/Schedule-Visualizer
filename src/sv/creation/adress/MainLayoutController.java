@@ -1292,9 +1292,16 @@ public class MainLayoutController {
 				if (this.umlaufTabCounter >= 0) {
 
 					if (this.UPlan1.isVisible() == false) {
-						this.umlaufplanEins = this.getUmlaufplanliste().get(
-								this.UPlan.getSelectionModel()
-										.getSelectedIndex());
+						for (int i = 0; i < this.umlaufplanliste.size(); i++) {
+							if (this.umlaufplanliste
+									.get(i)
+									.getBezeichnung()
+									.equals(this.UPlan.getSelectionModel()
+											.getSelectedItem())) {
+								this.umlaufplanEins = this.umlaufplanliste
+										.get(i);
+							}
+						}
 						this.upperheightEins = this.umlaufplanEins.getUmlauf()
 								.size() * 40 + 10;
 						createUpperYScale(yUp1, upperYChart1, upperYgc1,
@@ -1387,9 +1394,16 @@ public class MainLayoutController {
 					}
 					// Initiale Belegung der Grafik
 					if (this.UPlan2.isVisible() == false) {
-						this.umlaufplanZwei = this.getUmlaufplanliste().get(
-								this.UPlan.getSelectionModel()
-										.getSelectedIndex());
+						for (int i = 0; i < this.umlaufplanliste.size(); i++) {
+							if (this.umlaufplanliste
+									.get(i)
+									.getBezeichnung()
+									.equals(this.UPlan.getSelectionModel()
+											.getSelectedItem())) {
+								this.umlaufplanZwei = this.umlaufplanliste
+										.get(i);
+							}
+						}
 						this.upperheightZwei = this.umlaufplanZwei.getUmlauf()
 								.size() * 40 + 10;
 						createUpperYScale(yUp2, upperYChart2, upperYgc2,
@@ -1481,9 +1495,16 @@ public class MainLayoutController {
 					}
 					// Initiale Belegung der Grafik
 					if (this.UPlan3.isVisible() == false) {
-						this.umlaufplanDrei = this.getUmlaufplanliste().get(
-								this.UPlan.getSelectionModel()
-										.getSelectedIndex());
+						for (int i = 0; i < this.umlaufplanliste.size(); i++) {
+							if (this.umlaufplanliste
+									.get(i)
+									.getBezeichnung()
+									.equals(this.UPlan.getSelectionModel()
+											.getSelectedItem())) {
+								this.umlaufplanDrei = this.umlaufplanliste
+										.get(i);
+							}
+						}
 						this.upperheightDrei = this.umlaufplanDrei.getUmlauf()
 								.size() * 40 + 10;
 						createUpperYScale(yUp3, upperYChart3, upperYgc3,
@@ -1572,9 +1593,11 @@ public class MainLayoutController {
 					}
 					// Initiale Belegung der Grafik
 					if (this.UPlan4.isVisible() == false) {
-						this.umlaufplanVier = this.getUmlaufplanliste().get(
-								this.UPlan.getSelectionModel()
-										.getSelectedIndex());
+						for (int i = 0; i < this.umlaufplanliste.size(); i++) {
+							if (this.umlaufplanliste.get(i).getBezeichnung().equals(this.UPlan.getSelectionModel().getSelectedItem())) {
+								this.umlaufplanVier = this.umlaufplanliste.get(i);
+							}
+						}
 						this.upperheightVier = this.umlaufplanVier.getUmlauf()
 								.size() * 40 + 10;
 						createUpperYScale(yUp4, upperYChart4, upperYgc4,
@@ -1662,9 +1685,11 @@ public class MainLayoutController {
 					}
 					// Initiale Belegung der Grafik
 					if (this.UPlan5.isVisible() == false) {
-						this.umlaufplanFuenf = this.getUmlaufplanliste().get(
-								this.UPlan.getSelectionModel()
-										.getSelectedIndex());
+						for (int i = 0; i < this.umlaufplanliste.size(); i++) {
+							if (this.umlaufplanliste.get(i).getBezeichnung().equals(this.UPlan.getSelectionModel().getSelectedItem())) {
+								this.umlaufplanFuenf = this.umlaufplanliste.get(i);
+							}
+						}
 						this.upperheightFuenf = this.umlaufplanFuenf
 								.getUmlauf().size() * 40 + 10;
 						createUpperYScale(yUp5, upperYChart5, upperYgc5,
@@ -1753,9 +1778,11 @@ public class MainLayoutController {
 					}
 					// Initiale Belegung der Grafik
 					if (this.UPlan6.isVisible() == false) {
-						this.umlaufplanSechs = this.getUmlaufplanliste().get(
-								this.UPlan.getSelectionModel()
-										.getSelectedIndex());
+						for (int i = 0; i < this.umlaufplanliste.size(); i++) {
+							if (this.umlaufplanliste.get(i).getBezeichnung().equals(this.UPlan.getSelectionModel().getSelectedItem())) {
+								this.umlaufplanSechs = this.umlaufplanliste.get(i);
+							}
+						}
 						this.upperheightSechs = this.umlaufplanSechs
 								.getUmlauf().size() * 40 + 10;
 						createUpperYScale(yUp6, upperYChart6, upperYgc6,
@@ -1843,9 +1870,11 @@ public class MainLayoutController {
 					}
 					// Initiale Belegung der Grafik
 					if (this.UPlan7.isVisible() == false) {
-						this.umlaufplanSieben = this.getUmlaufplanliste().get(
-								this.UPlan.getSelectionModel()
-										.getSelectedIndex());
+						for (int i = 0; i < this.umlaufplanliste.size(); i++) {
+							if (this.umlaufplanliste.get(i).getBezeichnung().equals(this.UPlan.getSelectionModel().getSelectedItem())) {
+								this.umlaufplanSieben = this.umlaufplanliste.get(i);
+							}
+						}
 						this.upperheightSieben = this.umlaufplanSieben
 								.getUmlauf().size() * 40 + 10;
 						createUpperYScale(yUp7, upperYChart7, upperYgc7,
@@ -2008,9 +2037,11 @@ public class MainLayoutController {
 				if (this.dienstTabCounter >= 0) {
 
 					if (this.DPlan1.isVisible() == false) {
-						this.dienstplanEins = this.dienstplanliste
-								.get(this.DPlan.getSelectionModel()
-										.getSelectedIndex());
+						for (int i = 0; i < this.dienstplanliste.size(); i++) {
+							if (this.dienstplanliste.get(i).getBezeichnung().equals(this.DPlan.getSelectionModel().getSelectedItem())) {
+								this.dienstplanEins = this.dienstplanliste.get(i);
+							}
+						}
 						this.lowerheightEins = this.dienstplanEins.getDuty()
 								.size() * 40 + 10;
 						createLowerYScale(yLow1, lowerYChart1, lowerYgc1,
@@ -2105,9 +2136,11 @@ public class MainLayoutController {
 					}
 					// Initiale Belegung der Grafik
 					if (this.DPlan2.isVisible() == false) {
-						this.dienstplanZwei = this.dienstplanliste
-								.get(this.DPlan.getSelectionModel()
-										.getSelectedIndex());
+						for (int i = 0; i < this.dienstplanliste.size(); i++) {
+							if (this.dienstplanliste.get(i).getBezeichnung().equals(this.DPlan.getSelectionModel().getSelectedItem())) {
+								this.dienstplanZwei = this.dienstplanliste.get(i);
+							}
+						}
 						this.lowerheightZwei = this.dienstplanZwei.getDuty()
 								.size() * 40 + 10;
 						createLowerYScale(yLow2, lowerYChart2, lowerYgc2,
@@ -2195,9 +2228,11 @@ public class MainLayoutController {
 					}
 					// Initiale Belegung der Grafik
 					if (this.DPlan3.isVisible() == false) {
-						this.dienstplanDrei = this.dienstplanliste
-								.get(this.DPlan.getSelectionModel()
-										.getSelectedIndex());
+						for (int i = 0; i < this.dienstplanliste.size(); i++) {
+							if (this.dienstplanliste.get(i).getBezeichnung().equals(this.DPlan.getSelectionModel().getSelectedItem())) {
+								this.dienstplanDrei = this.dienstplanliste.get(i);
+							}
+						}
 						this.lowerheightDrei = this.dienstplanDrei.getDuty()
 								.size() * 40 + 10;
 						createLowerYScale(yLow3, lowerYChart3, lowerYgc3,
@@ -2284,9 +2319,11 @@ public class MainLayoutController {
 					}
 					// Initiale Belegung der Grafik
 					if (this.DPlan4.isVisible() == false) {
-						this.dienstplanVier = this.dienstplanliste
-								.get(this.DPlan.getSelectionModel()
-										.getSelectedIndex());
+						for (int i = 0; i < this.dienstplanliste.size(); i++) {
+							if (this.dienstplanliste.get(i).getBezeichnung().equals(this.DPlan.getSelectionModel().getSelectedItem())) {
+								this.dienstplanVier = this.dienstplanliste.get(i);
+							}
+						}
 						this.lowerheightVier = this.dienstplanVier.getDuty()
 								.size() * 40 + 10;
 						createLowerYScale(yLow4, lowerYChart4, lowerYgc4,
@@ -2375,9 +2412,11 @@ public class MainLayoutController {
 					}
 					// Initiale Belegung der Grafik
 					if (this.DPlan5.isVisible() == false) {
-						this.dienstplanFuenf = this.dienstplanliste
-								.get(this.DPlan.getSelectionModel()
-										.getSelectedIndex());
+						for (int i = 0; i < this.dienstplanliste.size(); i++) {
+							if (this.dienstplanliste.get(i).getBezeichnung().equals(this.DPlan.getSelectionModel().getSelectedItem())) {
+								this.dienstplanFuenf = this.dienstplanliste.get(i);
+							}
+						}
 						this.lowerheightFuenf = this.dienstplanFuenf.getDuty()
 								.size() * 40 + 10;
 						createLowerYScale(yLow5, lowerYChart5, lowerYgc5,
@@ -2466,9 +2505,11 @@ public class MainLayoutController {
 					}
 					// Initiale Belegung der Grafik
 					if (this.DPlan6.isVisible() == false) {
-						this.dienstplanSechs = this.dienstplanliste
-								.get(this.DPlan.getSelectionModel()
-										.getSelectedIndex());
+						for (int i = 0; i < this.dienstplanliste.size(); i++) {
+							if (this.dienstplanliste.get(i).getBezeichnung().equals(this.DPlan.getSelectionModel().getSelectedItem())) {
+								this.dienstplanSechs = this.dienstplanliste.get(i);
+							}
+						}
 						this.lowerheightSechs = this.dienstplanSechs.getDuty()
 								.size() * 40 + 10;
 						createLowerYScale(yLow6, lowerYChart6, lowerYgc6,
@@ -2556,9 +2597,11 @@ public class MainLayoutController {
 					}
 					// Initiale Belegung der Grafik
 					if (this.DPlan7.isVisible() == false) {
-						this.dienstplanSieben = this.dienstplanliste
-								.get(this.DPlan.getSelectionModel()
-										.getSelectedIndex());
+						for (int i = 0; i < this.dienstplanliste.size(); i++) {
+							if (this.dienstplanliste.get(i).getBezeichnung().equals(this.DPlan.getSelectionModel().getSelectedItem())) {
+								this.dienstplanSieben = this.dienstplanliste.get(i);
+							}
+						}
 						this.lowerheightSieben = this.dienstplanSieben
 								.getDuty().size() * 40 + 10;
 						createLowerYScale(yLow7, lowerYChart7, lowerYgc7,
@@ -5213,7 +5256,7 @@ public class MainLayoutController {
 
 			this.FPlan.setItems(FXCollections.observableArrayList(fahrplanliste
 					.get(this.choiceArray[4]).getName()));
-			for (int i = this.choiceArray[4]+1; i < this.choiceArray[5]; i++) {
+			for (int i = this.choiceArray[4] + 1; i < this.choiceArray[5]; i++) {
 				this.FPlan.getItems().add(fahrplanliste.get(i).getName());
 			}
 
@@ -5236,8 +5279,9 @@ public class MainLayoutController {
 
 			if (this.firstLowergrafikErstellt == false) {
 				this.DPlan.setItems(FXCollections
-						.observableArrayList(dienstplanliste.get(this.choiceArray[2]).getName()));
-				for (int i = this.choiceArray[2]+1; i < this.choiceArray[3]; i++) {
+						.observableArrayList(dienstplanliste.get(
+								this.choiceArray[2]).getName()));
+				for (int i = this.choiceArray[2] + 1; i < this.choiceArray[3]; i++) {
 					this.DPlan.getItems().add(dienstplanliste.get(i).getName());
 				}
 			}
@@ -5258,8 +5302,9 @@ public class MainLayoutController {
 
 			if (this.firstUppergrafikErstellt == false) {
 				this.UPlan.setItems(FXCollections
-						.observableArrayList(umlaufplanliste.get(this.choiceArray[0]).getName()));
-				for (int i = this.choiceArray[0]+1; i < this.choiceArray[1]; i++) {
+						.observableArrayList(umlaufplanliste.get(
+								this.choiceArray[0]).getName()));
+				for (int i = this.choiceArray[0] + 1; i < this.choiceArray[1]; i++) {
 					this.UPlan.getItems().add(umlaufplanliste.get(i).getName());
 				}
 			}
@@ -5666,6 +5711,5 @@ public class MainLayoutController {
 	public void setChoiceArray(int[] choiceArray) {
 		this.choiceArray = choiceArray;
 	}
-	
 
 }
